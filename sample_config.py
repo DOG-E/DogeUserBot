@@ -33,7 +33,7 @@ class Config(object):
         "UPSTREAM_REPO", "https://github.com/DOG-E/DogeUserBot.git"
     )
     # Set Doge language
-    DOGELANG = os.environ.get('DOGELANG', 'en')
+    DOGELANG = os.environ.get("DOGELANG", "en")
 
     # BASIC & MAIN CONFIG VARS
     # For profile default name
