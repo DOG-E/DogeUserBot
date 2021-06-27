@@ -1,0 +1,5 @@
+build:
+  docker:
+      doge: Dockerfile
+run:
+   doge: python3 doge.py
