@@ -19,7 +19,7 @@ plugin_category = "tools"
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cbutton(?:\s|$)([\s\S]*)",
     command=("cbutton", plugin_category),
     info={
@@ -86,7 +86,7 @@ async def _(event):
         os.remove(tgbot_reply_message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ibutton(?:\s|$)([\s\S]*)",
     command=("ibutton", plugin_category),
     info={

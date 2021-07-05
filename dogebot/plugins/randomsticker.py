@@ -22,7 +22,7 @@ BASE_URL = "https://headp.at/pats/{}"
 PAT_IMAGE = "pat.webp"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cat$",
     command=("cat", plugin_category),
     info={
@@ -48,7 +48,7 @@ async def _(event):
 # credit to @r4v4n4
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dab$",
     command=("dab", plugin_category),
     info={
@@ -90,7 +90,7 @@ async def _(event):
     await event.respond(file=random.choice(docs), reply_to=reply_to_id)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="brain$",
     command=("brain", plugin_category),
     info={
@@ -122,7 +122,7 @@ async def handler(event):
 # By:- git: jaskaranSM tg: @Zero_cool7870
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pat$",
     command=("pat", plugin_category),
     info={

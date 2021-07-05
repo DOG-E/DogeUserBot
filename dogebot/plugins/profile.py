@@ -33,7 +33,7 @@ USERNAME_TAKEN = "```This username is already taken.```"
 # ===============================================================
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
@@ -51,7 +51,7 @@ async def _(event):
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
@@ -77,7 +77,7 @@ async def _(event):
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ppic$",
     command=("ppic", plugin_category),
     info={
@@ -133,7 +133,7 @@ async def _(event):
         LOGS.info(str(e))
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
@@ -153,7 +153,7 @@ async def update_username(username):
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="count$",
     command=("count", plugin_category),
     info={
@@ -197,7 +197,7 @@ async def count(event):
     await dogevent.edit(result)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
@@ -232,7 +232,7 @@ async def remove_profilepic(delpfp):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="myusernames$",
     command=("myusernames", plugin_category),
     info={

@@ -241,7 +241,7 @@ async def add_to_pack(
     return pack, packname
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kang(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
@@ -393,7 +393,7 @@ async def kang(args):  # sourcery no-metrics
                 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pkang(?:\s|$)([\s\S]*)",
     command=("pkang", plugin_category),
     info={
@@ -564,7 +564,7 @@ async def pack_kang(event):  # sourcery no-metrics
     await dogevent.edit(result)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gridpack(?:\s|$)([\s\S]*)",
     command=("gridpack", plugin_category),
     info={
@@ -677,7 +677,7 @@ async def pic2packcmd(event):
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stkrinfo$",
     command=("stkrinfo", plugin_category),
     info={
@@ -731,7 +731,7 @@ async def get_pack_info(event):
     await dogevent.edit(OUTPUT)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stickers ?([\s\S]*)",
     command=("stickers", plugin_category),
     info={

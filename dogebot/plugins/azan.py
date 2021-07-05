@@ -13,7 +13,7 @@ from . import doge, edit_delete, edit_or_reply
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="azan(?:\s|$)([\s\S]*)",
     command=("azan", plugin_category),
     info={

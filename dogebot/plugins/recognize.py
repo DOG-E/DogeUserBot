@@ -11,7 +11,7 @@ from ..helpers.functions.functions import rekognitionb
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="recognize ?([\s\S]*)",
     command=("recognize", plugin_category),
     info={

@@ -10,7 +10,7 @@ from ..helpers.utils import _format
 plugin_category = "tools"
 
 # yaml_format is ported from uniborg
-@doge.ub(
+@doge.doge_cmd(
     pattern="json$",
     command=("json", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def _(event):
     await edit_or_reply(event, the_real_message, parse_mode=_format.parse_pre)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="yaml$",
     command=("yaml", plugin_category),
     info={

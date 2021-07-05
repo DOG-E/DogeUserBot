@@ -87,7 +87,7 @@ async def _(event):  # sourcery no-metrics
         update_previous_welcome(event.chat_id, current_message.id)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
@@ -149,7 +149,7 @@ async def save_welcome(event):
     await edit_or_reply("Error while setting welcome in this group")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
@@ -166,7 +166,7 @@ async def del_welcome(event):
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listwelcome$",
     command=("listwelcome", plugin_category),
     info={
@@ -194,7 +194,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={

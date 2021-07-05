@@ -26,7 +26,7 @@ def get_size(inputbytes, suffix="B"):
         inputbytes /= factor
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="spc$",
     command=("spc", plugin_category),
     info={
@@ -82,7 +82,7 @@ async def psu(event):
     await event.edit(help_string)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cpu$",
     command=("cpu", plugin_category),
     info={
@@ -99,7 +99,7 @@ async def cpu(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sysd$",
     command=("sysd", plugin_category),
     info={

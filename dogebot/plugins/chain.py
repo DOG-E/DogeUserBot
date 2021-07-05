@@ -9,7 +9,7 @@ from . import doge
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="chain$",
     command=("chain", plugin_category),
     info={

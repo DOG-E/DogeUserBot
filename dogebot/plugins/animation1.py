@@ -10,7 +10,7 @@ from . import ALIVE_NAME, doge, edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stupid$",
     command=("stupid", plugin_category),
     info={
@@ -44,7 +44,7 @@ async def _(event):
         await event.edit(animation_chars[i % 14])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bombs$",
     command=("bombs", plugin_category),
     info={
@@ -77,7 +77,7 @@ async def _(event):
     await asyncio.sleep(2)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="call$",
     command=("call", plugin_category),
     info={
@@ -115,7 +115,7 @@ async def _(event):
         await event.edit(animation_chars[i % 18])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kill$",
     command=("kill", plugin_category),
     info={
@@ -147,7 +147,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wtf$",
     command=("wtf", plugin_category),
     info={
@@ -172,7 +172,7 @@ async def _(event):
         await event.edit(animation_chars[i % 5], link_preview=True)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ding$",
     command=("ding", plugin_category),
     info={
@@ -202,7 +202,7 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hypno$",
     command=("hypno", plugin_category),
     info={
@@ -237,7 +237,7 @@ async def _(event):
         await event.edit(animation_chars[i % 15])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="candy$",
     command=("candy", plugin_category),
     info={
@@ -255,7 +255,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gangasta$",
     command=("gangasta", plugin_category),
     info={
@@ -283,7 +283,7 @@ async def _(event):
     await event.edit("EVERyBOdy iZ GangSTur UNtIL I ArRivE 🔥🔥🔥")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="charging$",
     command=("charging", plugin_category),
     info={

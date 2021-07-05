@@ -24,7 +24,7 @@ def convert_from_bytes(size):
     return f"{round(size, 2)} {units[n]}"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="speedtest(?:\s|$)([\s\S]*)",
     command=("speedtest", plugin_category),
     info={

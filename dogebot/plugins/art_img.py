@@ -11,7 +11,7 @@ from . import _dogetools, convert_toimage, doge, reply_id
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="iascii ?([\s\S]*)",
     command=("iascii", plugin_category),
     info={
@@ -39,7 +39,7 @@ async def horny(event):
         os.remove(output_file)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="line ?([\s\S]*)",
     command=("line", plugin_category),
     info={
@@ -67,7 +67,7 @@ async def pussy(event):
         os.remove(output_file)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="clip ?([\s\S]*)",
     command=("clip", plugin_category),
     info={

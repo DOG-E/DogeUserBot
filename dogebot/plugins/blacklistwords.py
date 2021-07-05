@@ -15,7 +15,7 @@ from ..utils import is_admin
 plugin_category = "admin"
 
 
-@doge.ub(incoming=True, groups_only=True)
+@doge.doge_cmd(incoming=True, groups_only=True)
 async def on_new_message(event):
     name = event.raw_text
     snips = sql.get_chat_blacklist(event.chat_id)
@@ -38,7 +38,7 @@ async def on_new_message(event):
             break
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="addblacklist (?:\s|$)([\s\S]*)",
     command=("addblacklist", plugin_category),
     info={
@@ -69,7 +69,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rmblacklist (?:\s|$)([\s\S]*)",
     command=("rmblacklist", plugin_category),
     info={
@@ -98,7 +98,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listblacklist$",
     command=("listblacklist", plugin_category),
     info={

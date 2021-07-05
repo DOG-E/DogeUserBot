@@ -36,7 +36,7 @@ headers = {
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="airing ([\s\S]*)",
     command=("airing", plugin_category),
     info={
@@ -62,7 +62,7 @@ async def anilist(event):
     await edit_or_reply(event, ms_g)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="anime(?:\s|$)([\s\S]*)",
     command=("anime", plugin_category),
     info={
@@ -85,7 +85,7 @@ async def anilist(event):
     await event.edit(msg, link_preview=True)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="manga(?:\s|$)([\s\S]*)",
     command=("manga", plugin_category),
     info={
@@ -117,7 +117,7 @@ async def get_manga(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sanime(?:\s|$)([\s\S]*)",
     command=("sanime", plugin_category),
     info={
@@ -163,7 +163,7 @@ async def get_manga(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="char(?:\s|$)([\s\S]*)",
     command=("char", plugin_category),
     info={
@@ -220,7 +220,7 @@ async def character(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="a(kaizoku|kayo|indi)(?:\s|$)([\s\S]*)",
     command=("akaizoku", plugin_category),
     info={
@@ -297,7 +297,7 @@ async def anime_download(event):
     await dogevent.edit(result, parse_mode="html")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="upcoming$",
     command=("upcoming", plugin_category),
     info={
@@ -319,7 +319,7 @@ async def upcoming(event):
     await edit_or_reply(event, rep, parse_mode="html")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="w(hat)?anime$",
     command=("whatanime", plugin_category),
     info={

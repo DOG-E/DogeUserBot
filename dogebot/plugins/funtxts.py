@@ -11,7 +11,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tcat$",
     command=("tcat", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def hmm(cat):
     await edit_or_reply(cat, reactdog)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="why$",
     command=("why", plugin_category),
     info={
@@ -39,7 +39,7 @@ async def hmm(dog):
     await edit_or_reply(dog, whydog)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fact$",
     command=("fact", plugin_category),
     info={

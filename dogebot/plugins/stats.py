@@ -43,7 +43,7 @@ def user_full_name(user):
     return " ".join(names)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stat$",
     command=("stat", plugin_category),
     info={
@@ -124,7 +124,7 @@ async def stats(event):  # sourcery no-metrics
     await dog.edit(response)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stat (c|ca|co)$",
 )
 async def stats(event):  # sourcery no-metrics
@@ -175,7 +175,7 @@ async def stats(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stat (g|ga|go)$",
 )
 async def stats(event):  # sourcery no-metrics
@@ -234,7 +234,7 @@ async def stats(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ustat(?:\s|$)([\s\S]*)",
     command=("ustat", plugin_category),
     info={

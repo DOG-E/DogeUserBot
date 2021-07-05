@@ -19,7 +19,7 @@ ANTI_FLOOD_WARN_MODE = ChatBannedRights(
 )
 
 
-@doge.ub(incoming=True, groups_only=True)
+@doge.doge_cmd(incoming=True, groups_only=True)
 async def _(event):
     if not CHAT_FLOOD:
         return
@@ -59,7 +59,7 @@ because he reached the defined flood limit.""",
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={

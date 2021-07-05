@@ -17,7 +17,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
     return str(path.absolute()) if full else path.stem + path.suffix
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="d(own)?l(oad)?(?:\s|$)([\s\S]*)",
     command=("download", plugin_category),
     info={
@@ -161,7 +161,7 @@ async def _(event):  # sourcery no-metrics
         await mone.edit("`Reply to a message to download to my local server.`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
     command=("dlto", plugin_category),
     info={

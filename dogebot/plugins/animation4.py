@@ -9,7 +9,7 @@ from . import ALIVE_NAME, doge, edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kilr(?:\s|$)([\s\S]*)",
     command=("kilr", plugin_category),
     info={
@@ -40,7 +40,7 @@ async def _(event):
         await event.edit(animation_chars[i % 8])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="eye$",
     command=("eye", plugin_category),
     info={
@@ -72,7 +72,7 @@ async def _(event):
     await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="thinking$",
     command=("thinking", plugin_category),
     info={
@@ -128,7 +128,7 @@ async def _(event):
         await event.edit(animation_chars[i % 36])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="snake$",
     command=("snake", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def _(event):
         await event.edit(animation_chars[i % 27])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="human$",
     command=("human", plugin_category),
     info={
@@ -211,7 +211,7 @@ async def _(event):
         await event.edit(animation_chars[i % 16])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mc$",
     command=("mc", plugin_category),
     info={
@@ -259,7 +259,7 @@ async def _(event):
         await event.edit(animation_chars[i % 28])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="virus$",
     command=("virus", plugin_category),
     info={
@@ -309,7 +309,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="repe$",
     command=("repe", plugin_category),
     info={
@@ -359,7 +359,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="nikal$",
     command=("nikal", plugin_category),
     info={
@@ -385,7 +385,7 @@ async def _(event):
         await event.edit(animation_chars[i % 6])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="music$",
     command=("music", plugin_category),
     info={
@@ -416,7 +416,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="squ$",
     command=("squ", plugin_category),
     info={

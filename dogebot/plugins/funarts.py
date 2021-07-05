@@ -9,7 +9,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="join$",
     command=("join", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="climb$",
     command=("climb", plugin_category),
     info={
@@ -40,7 +40,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="aag$",
     command=("aag", plugin_category),
     info={
@@ -53,7 +53,7 @@ async def _(event):
     await edit_or_reply(event, "`😲💨  🔥\n/|\     🔥🔥\n/ \   🔥🔥🔥`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="push$",
     command=("push", plugin_category),
     info={
@@ -69,7 +69,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="work$",
     command=("work", plugin_category),
     info={
@@ -84,7 +84,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmoon$",
     command=("lmoon", plugin_category),
     info={
@@ -100,7 +100,7 @@ async def test(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="city$",
     command=("city", plugin_category),
     info={

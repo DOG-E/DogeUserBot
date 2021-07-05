@@ -115,7 +115,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="spam ([\s\S]*)",
     command=("spam", plugin_category),
     info={
@@ -146,7 +146,7 @@ async def spammer(event):
     await spam_function(event, teledoge, dog, sleeptimem, sleeptimet)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="spspam$",
     command=("spspam", plugin_category),
     info={
@@ -219,7 +219,7 @@ async def stickerpack_spam(event):
         await event.client.send_file(BOTLOG_CHATID, reqd_sticker_set.documents[0])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cspam ([\s\S]*)",
     command=("cspam", plugin_category),
     info={
@@ -254,7 +254,7 @@ async def tmeme(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wspam ([\s\S]*)",
     command=("wspam", plugin_category),
     info={
@@ -289,7 +289,7 @@ async def tmeme(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(delayspam|dspam) ([\s\S]*)",
     command=("delayspam", plugin_category),
     info={

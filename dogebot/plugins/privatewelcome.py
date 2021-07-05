@@ -83,7 +83,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="savepwel(?:\s|$)([\s\S]*)",
     command=("savepwel", plugin_category),
     info={
@@ -146,7 +146,7 @@ async def save_welcome(event):
     await edit_or_reply("Error while setting welcome in this group")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="clearpwel$",
     command=("clearpwel", plugin_category),
     info={
@@ -163,7 +163,7 @@ async def del_welcome(event):
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listpwel$",
     command=("listpwel", plugin_category),
     info={

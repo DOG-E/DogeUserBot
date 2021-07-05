@@ -14,7 +14,7 @@ from ..helpers import reply_id
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="score$",
     command=("score", plugin_category),
     info={
@@ -57,7 +57,7 @@ async def _(event):
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cric ([\s\S]*)",
     command=("cric", plugin_category),
     info={

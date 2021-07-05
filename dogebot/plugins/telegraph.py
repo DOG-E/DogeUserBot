@@ -32,7 +32,7 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
     command=("telegraph", plugin_category),
     info={

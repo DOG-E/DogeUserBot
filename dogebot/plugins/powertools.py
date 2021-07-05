@@ -22,7 +22,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="restart$",
     command=("restart", plugin_category),
     info={
@@ -59,7 +59,7 @@ async def _(event):
         LOGS.error(e)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="shutdown$",
     command=("shutdown", plugin_category),
     info={
@@ -79,7 +79,7 @@ async def _(event):
         sys.exit(0)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
@@ -103,7 +103,7 @@ async def _(event):
     await event.edit("`OK, I'm awake now.`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="notify (on|off)$",
     command=("notify", plugin_category),
     info={

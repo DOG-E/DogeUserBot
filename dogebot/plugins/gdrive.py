@@ -919,7 +919,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gauth$",
     command=("gauth", plugin_category),
     info={
@@ -1000,7 +1000,7 @@ async def generate_credentials(gdrive):
     return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="greset",
     command=("greset", plugin_category),
     info={
@@ -1020,7 +1020,7 @@ async def reset_credentials(gdrive):
     return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="glist(?: |$)(-l \d+)?(?: |$)?([\s\S]*)?(?: |$)",
     command=("glist", plugin_category),
     info={
@@ -1045,7 +1045,7 @@ async def dogelists(gdrive):
     await lists(gdrive)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gdf (mkdir|rm|info) ([\s\S]*)",
     command=("gdf", plugin_category),
     info={
@@ -1217,7 +1217,7 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
     await gdrive.edit(reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gabort$",
     command=("gabort", plugin_category),
     info={
@@ -1242,7 +1242,7 @@ async def cancel_process(gdrive):
     await gdrive.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ugd(?:\s|$)([\s\S]*)",
     command=("ugd", plugin_category),
     info={
@@ -1426,7 +1426,7 @@ async def google_drive(gdrive):  # sourcery no-metrics
     return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gclear$",
     command=("gclear", plugin_category),
     info={
@@ -1461,7 +1461,7 @@ async def set_upload_folder(gdrive):
             return None
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gset(?:\s|$)([\s\S]*)",
     command=("gset", plugin_category),
     info={
@@ -1504,7 +1504,7 @@ async def set_upload_folder(gdrive):
     return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gdown ?(-u)? ([\s\S]*)",
     command=("gdown", plugin_category),
     info={
@@ -1558,7 +1558,7 @@ async def g_download(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gshare ([\s\S]*)",
     command=("gshare", plugin_category),
     info={

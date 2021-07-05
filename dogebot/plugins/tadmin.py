@@ -21,7 +21,7 @@ NO_ADMIN = "`I am not an admin nub nibba!`"
 NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tmute(?:\s|$)([\s\S]*)",
     command=("tmute", plugin_category),
     info={
@@ -108,7 +108,7 @@ async def tmuter(event):  # sourcery no-metrics
         return await dogevent.edit(f"`{str(e)}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tban(?:\s|$)([\s\S]*)",
     command=("tban", plugin_category),
     info={

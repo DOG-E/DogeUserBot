@@ -55,7 +55,7 @@ async def ban_user(chat_id, i, rights):
         return False, str(exc)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kickme$",
     command=("kickme", plugin_category),
     info={
@@ -72,7 +72,7 @@ async def kickme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kickall$",
     command=("kickall", plugin_category),
     info={
@@ -116,7 +116,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="banall$",
     command=("banall", plugin_category),
     info={
@@ -162,7 +162,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unbanall$",
     command=("unbanall", plugin_category),
     info={
@@ -217,7 +217,7 @@ async def _(event):
 
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
-@doge.ub(
+@doge.doge_cmd(
     pattern="zombies ?([\s\S]*)",
     command=("zombies", plugin_category),
     info={
@@ -282,7 +282,7 @@ async def rm_deletedacc(show):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ikuck ?([\s\S]*)",
     command=("ikuck", plugin_category),
     info={

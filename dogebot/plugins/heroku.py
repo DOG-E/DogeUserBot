@@ -29,7 +29,7 @@ HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(set|get|del) var ([\s\S]*)",
     command=("var", plugin_category),
     info={
@@ -118,7 +118,7 @@ async def variable(var):  # sourcery no-metrics
         del heroku_var[variable]
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(usage|dyno)$",
     command=("usage", plugin_category),
     info={
@@ -211,7 +211,7 @@ async def dyno_usage(dyno):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(hlog|logs)$",
     command=("logs", plugin_category),
     info={

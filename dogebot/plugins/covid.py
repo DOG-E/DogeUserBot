@@ -9,7 +9,7 @@ from . import covidindia, covidturkey, doge, edit_delete, edit_or_reply
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="covid(?:\s|$)([\s\S]*)",
     command=("covid", plugin_category),
     info={
@@ -70,7 +70,7 @@ async def coronaid(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="covidtr(?:\s|$)([\s\S]*)",
     command=("covidtr", plugin_category),
     info={

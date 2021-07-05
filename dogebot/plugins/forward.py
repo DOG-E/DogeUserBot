@@ -35,7 +35,7 @@ async def all_groups_id(dog):
     return dogegroups
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="frwd$",
     command=("frwd", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def _(event):
             LOGS.info(str(e))
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="resend$",
     command=("resend", plugin_category),
     info={
@@ -87,7 +87,7 @@ async def _(event):
     await event.client.send_message(event.chat_id, m.text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fpost ([\s\S]*)",
     command=("fpost", plugin_category),
     info={

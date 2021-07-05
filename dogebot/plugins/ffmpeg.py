@@ -59,7 +59,7 @@ async def cult_small_video(
     return None
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ffmpegsave$",
     command=("ffmpegsave", plugin_category),
     info={
@@ -106,7 +106,7 @@ async def ff_mpeg_trim_cmd(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="vtrim(?:\s|$)([\s\S]*)",
     command=("vtrim", plugin_category),
     info={
@@ -192,7 +192,7 @@ async def ff_mpeg_trim_cmd(event):
     await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="atrim(?:\s|$)([\s\S]*)",
     command=("atrim", plugin_category),
     info={
@@ -256,7 +256,7 @@ async def ff_mpeg_trim_cmd(event):
     await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ffmpegclear$",
     command=("ffmpegclear", plugin_category),
     info={

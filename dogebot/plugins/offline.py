@@ -17,7 +17,7 @@ plugin_category = "utils"
 OFFLINE_TAG = "[OFFLINE]"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="offline$",
     command=("offline", plugin_category),
     info={
@@ -60,7 +60,7 @@ async def offlineyourself(event):
     await edit_delete(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="online$",
     command=("online", plugin_category),
     info={

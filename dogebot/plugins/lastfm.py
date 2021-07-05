@@ -160,7 +160,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
     LASTFM_.RUNNING = False
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lastfm$",
     command=("lastfm", plugin_category),
     info={
@@ -207,7 +207,7 @@ async def last_fm(lastFM):
         await lastFM.edit(f"{output}", parse_mode="md")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
@@ -240,7 +240,7 @@ async def lastbio(lfmbio):
         await lfmbio.edit(LFM_BIO_ERR)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={

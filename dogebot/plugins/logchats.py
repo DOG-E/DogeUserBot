@@ -30,7 +30,7 @@ class LOG_CHATS:
 LOG_CHATS_ = LOG_CHATS()
 
 
-@doge.ub(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
+@doge.doge_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def monito_p_m_s(event):  # sourcery no-metrics
     if Config.PM_LOGGER_GROUP_ID == -100:
         return
@@ -70,7 +70,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                 LOGS.warn(str(e))
 
 
-@doge.ub(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
+@doge.doge_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
 async def log_tagged_messages(event):
     hmm = await event.get_chat()
     from .afk import AFK_
@@ -109,7 +109,7 @@ async def log_tagged_messages(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="save(?:\s|$)([\s\S]*)",
     command=("save", plugin_category),
     info={
@@ -140,7 +140,7 @@ async def log(log_text):
     await log_text.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="log$",
     command=("log", plugin_category),
     info={
@@ -162,7 +162,7 @@ async def set_no_log_p_m(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="nolog$",
     command=("nolog", plugin_category),
     info={
@@ -184,7 +184,7 @@ async def set_no_log_p_m(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pmlog (on|off)$",
     command=("pmlog", plugin_category),
     info={
@@ -220,7 +220,7 @@ async def set_pmlog(event):
         await event.edit("`Pm logging is already disabled`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="grplog (on|off)$",
     command=("grplog", plugin_category),
     info={

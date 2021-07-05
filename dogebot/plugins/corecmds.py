@@ -15,7 +15,7 @@ DELETE_TIMEOUT = 5
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="install$",
     command=("install", plugin_category),
     info={
@@ -51,7 +51,7 @@ async def install(event):
             os.remove(downloaded_file_name)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="load ([\s\S]*)",
     command=("load", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def load(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="send ([\s\S]*)",
     command=("send", plugin_category),
     info={
@@ -110,7 +110,7 @@ async def send(event):
         await edit_or_reply(event, "404: File Not Found")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unload ([\s\S]*)",
     command=("unload", plugin_category),
     info={
@@ -130,7 +130,7 @@ async def unload(event):
         await edit_or_reply(event, f"Successfully unload {shortname}\n{str(e)}")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="uninstall ([\s\S]*)",
     command=("uninstall", plugin_category),
     info={

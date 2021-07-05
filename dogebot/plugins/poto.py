@@ -12,7 +12,7 @@ plugin_category = "extra"
 name = "Profile Photos"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
     info={

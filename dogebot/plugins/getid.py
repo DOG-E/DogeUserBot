@@ -14,7 +14,7 @@ plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={

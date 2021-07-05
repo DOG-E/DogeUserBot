@@ -29,7 +29,7 @@ from . import lang, mention
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="alive$",
     command=("alive", plugin_category),
     info={
@@ -91,7 +91,7 @@ temp = "**{ALIVE_TEXT}**\n\n\
 **{EMOJI} {lang('database')} :** `{dbhealth}`\n"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ialive$",
     command=("ialive", plugin_category),
     info={

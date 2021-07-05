@@ -17,7 +17,7 @@ from ..helpers.utils import _dogetools, _dogeutils, reply_id
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="glitch(s)?(?:\s|$)([1-8])?",
     command=("glitch", plugin_category),
     info={

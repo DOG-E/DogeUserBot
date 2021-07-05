@@ -18,7 +18,7 @@ from . import awooify, baguette, convert_toimage, iphonex, lolice
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mask$",
     command=("mask", plugin_category),
     info={
@@ -66,7 +66,7 @@ async def _(dogebot):
             return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="awooify$",
     command=("awooify", plugin_category),
     info={
@@ -113,7 +113,7 @@ async def dogebot(dogememes):
     await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lolice$",
     command=("lolice", plugin_category),
     info={
@@ -160,7 +160,7 @@ async def dogebot(dogememes):
     await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bun$",
     command=("bun", plugin_category),
     info={
@@ -207,7 +207,7 @@ async def dogebot(dogememes):
     await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="iphx$",
     command=("iphx", plugin_category),
     info={

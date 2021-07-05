@@ -52,7 +52,7 @@ PATH = os.path.join("./temp", "temp_vid.mp4")
 thumb_loc = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="spin(?:\s|$)((-)?(s)?)$",
     command=("spin", plugin_category),
     info={
@@ -148,7 +148,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
             os.remove(i)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="circle ?((-)?s)?$",
     command=("circle", plugin_category),
     info={
@@ -305,7 +305,7 @@ async def video_dogefile(event):  # sourcery no-metrics
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stoi$",
     command=("stoi", plugin_category),
     info={
@@ -334,7 +334,7 @@ async def _(event):
     await output[0].delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="itos$",
     command=("itos", plugin_category),
     info={
@@ -363,7 +363,7 @@ async def _(event):
     await output[0].delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ttf ([\s\S]*)",
     command=("ttf", plugin_category),
     info={
@@ -389,7 +389,7 @@ async def get(event):
         await edit_or_reply(event, "reply to text message as `.ttf <file name>`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ftt$",
     command=("ftt", plugin_category),
     info={
@@ -437,7 +437,7 @@ async def get(event):
         os.remove(file_loc)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ftoi$",
     command=("ftoi", plugin_category),
     info={
@@ -478,7 +478,7 @@ async def on_file_to_photo(event):
     await doget.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gif(?:\s|$)([\s\S]*)",
     command=("gif", plugin_category),
     info={
@@ -546,7 +546,7 @@ async def _(event):  # sourcery no-metrics
             os.remove(files)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="nfc (mp3|voice)",
     command=("nfc", plugin_category),
     info={
@@ -657,7 +657,7 @@ async def _(event):
             await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="itog(?:\s|$)((-)?(r|l|u|d|s|i)?)$",
     command=("itog", plugin_category),
     info={
@@ -738,7 +738,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
             os.remove(i)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="vtog ?([0-9.]+)?$",
     command=("vtog", plugin_category),
     info={

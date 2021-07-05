@@ -21,7 +21,7 @@ from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category="external"
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hibuddy(?:\s|$)([\s\S]*)",
     command=("hibuddy", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def hi_buddy(event):
 
 - For more information refer this [docs](https://docs.telethon.dev/en/latest/)
 
-### **Arguments in *"ub"* of *@doge.ub* are as follows:**
+### **Arguments in *"doge_cmd"* of *@doge.doge_cmd* are as follows:**
 
 ```python
 pattern="Regex for command"

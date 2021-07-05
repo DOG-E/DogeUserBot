@@ -13,7 +13,7 @@ from . import BOTLOG, BOTLOG_CHATID, get_message_link
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="\#(\S+)",
 )
 async def incom_note(event):
@@ -49,7 +49,7 @@ async def incom_note(event):
         pass
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="snips (\w*)",
     command=("snips", plugin_category),
     info={
@@ -109,7 +109,7 @@ async def add_snip(event):
     return await edit_or_reply(event, success.format(keyword, "added", keyword))
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="snipl$",
     command=("snipl", plugin_category),
     info={
@@ -137,7 +137,7 @@ async def on_snip_list(event):
     await edit_or_reply(event, message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="snipd (\S+)",
     command=("snipd", plugin_category),
     info={

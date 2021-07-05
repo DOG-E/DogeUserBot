@@ -12,7 +12,7 @@ from . import dogememes
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gm$",
     command=("gm", plugin_category),
     info={
@@ -26,7 +26,7 @@ async def morning(morning):
     await edit_or_reply(morning, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gnoon$",
     command=("gnoon", plugin_category),
     info={
@@ -40,7 +40,7 @@ async def noon(noon):
     await edit_or_reply(noon, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gn$",
     command=("gn", plugin_category),
     info={
@@ -54,7 +54,7 @@ async def night(night):
     await edit_or_reply(night, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gmg$",
     command=("gmg", plugin_category),
     info={
@@ -70,7 +70,7 @@ async def gm(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gnt$",
     command=("gnt", plugin_category),
     info={
@@ -89,7 +89,7 @@ async def gn(event):
 # @PhycoNinja13b 's Part begin from here
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hi(?:\s|$)([\s\S]*)",
     command=("hi", plugin_category),
     info={
@@ -112,7 +112,7 @@ async def hi(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cheer$",
     command=("cheer", plugin_category),
     info={
@@ -128,7 +128,7 @@ async def cheer(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="getwell$",
     command=("getwell", plugin_category),
     info={
@@ -143,7 +143,7 @@ async def getwell(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="luck$",
     command=("luck", plugin_category),
     info={
@@ -158,7 +158,7 @@ async def luck(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sprinkle$",
     command=("sprinkle", plugin_category),
     info={

@@ -11,7 +11,7 @@ from ..helpers.utils import get_user_from_event, reply_id
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(tagall|all)(?:\s|$)([\s\S]*)",
     command=("tagall", plugin_category),
     info={
@@ -34,7 +34,7 @@ async def _(event):
     await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="report$",
     command=("report", plugin_category),
     info={
@@ -56,7 +56,7 @@ async def _(event):
     await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="men ([\s\S]*)",
     command=("mention", plugin_category),
     info={

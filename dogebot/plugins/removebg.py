@@ -49,7 +49,7 @@ def ReTrieveURL(input_url):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(rmbg|srmbg)(?:\s|$)([\s\S]*)",
     command=("rmbg", plugin_category),
     info={

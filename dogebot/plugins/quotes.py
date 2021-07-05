@@ -17,7 +17,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="quote(?:\s|$)([\s\S]*)",
     command=("quote", plugin_category),
     info={
@@ -37,7 +37,7 @@ async def quote_search(event):
     await edit_or_reply(event, response, parse_mode=parse_pre)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pquote$",
     command=("pquote", plugin_category),
     info={

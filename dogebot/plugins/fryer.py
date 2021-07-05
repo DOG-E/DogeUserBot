@@ -78,7 +78,7 @@ async def check_media(reply_message):
     return data
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="frybot",
     command=("frybot", plugin_category),
     info={
@@ -143,7 +143,7 @@ async def _(event):
             return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="deepfry(?:\s|$)([1-9])?",
     command=("deepfry", plugin_category),
     info={

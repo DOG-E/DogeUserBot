@@ -26,7 +26,7 @@ game_name = [
 game_list = "1.`ttt` :- Tic-Tac-Toe\n2.`ttf` :- Tic-Tac-Four\n3.`cf` :- Connect Four\n4.`rps` :- Rock-Paper-Scissors\n5.`rpsls` :- Rock-Paper-Scissors-Lizard-Spock\n6.`rr` :- Russian Roulette\n7.`c` :- Checkers\n8.`pc` :- Pool Checkers"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="game(?:\s|$)([\s\S]*)",
     command=("game", plugin_category),
     info={

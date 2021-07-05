@@ -7,7 +7,7 @@ from . import ALIVE_NAME, doge, edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ded ([\s\S]*)",
     command=("ded", plugin_category),
     info={
@@ -37,7 +37,7 @@ async def _(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="killer ([\s\S]*)",
     command=("killer", plugin_category),
     info={
@@ -335,7 +335,7 @@ R = (
 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="monster$",
     command=("monster", plugin_category),
     info={
@@ -348,7 +348,7 @@ async def bluedevilmonster(monster):
     await edit_or_reply(monster, A)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pig$",
     command=("pig", plugin_category),
     info={
@@ -361,7 +361,7 @@ async def bluedevilpig(pig):
     await edit_or_reply(pig, B)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gun$",
     command=("gun", plugin_category),
     info={
@@ -374,7 +374,7 @@ async def bluedevilgun(gun):
     await edit_or_reply(gun, D)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dog$",
     command=("dog", plugin_category),
     info={
@@ -387,7 +387,7 @@ async def bluedevildog(dog):
     await edit_or_reply(dog, E)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hello$",
     command=("hello", plugin_category),
     info={
@@ -400,7 +400,7 @@ async def bluedevilhello(hello):
     await edit_or_reply(hello, F)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hmf$",
     command=("hmf", plugin_category),
     info={
@@ -413,7 +413,7 @@ async def bluedevilhmf(hmf):
     await edit_or_reply(hmf, G)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="couple$",
     command=("couple", plugin_category),
     info={
@@ -426,7 +426,7 @@ async def bluedevilcouple(couple):
     await edit_or_reply(couple, H)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sup$",
     command=("sup", plugin_category),
     info={
@@ -439,7 +439,7 @@ async def bluedevilsupreme(supreme):
     await edit_or_reply(supreme, I)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="india$",
     command=("india", plugin_category),
     info={
@@ -452,7 +452,7 @@ async def bluedevilindia(india):
     await edit_or_reply(india, J)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wc$",
     command=("wc", plugin_category),
     info={
@@ -465,7 +465,7 @@ async def bluedevilwelcome(welcome):
     await edit_or_reply(welcome, K)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="snk$",
     command=("snk", plugin_category),
     info={
@@ -478,7 +478,7 @@ async def bluedevilsnake(snake):
     await edit_or_reply(snake, L)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bye$",
     command=("bye", plugin_category),
     info={
@@ -491,7 +491,7 @@ async def bluedevilbye(bye):
     await edit_or_reply(bye, O)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="shitos$",
     command=("shitos", plugin_category),
     info={
@@ -504,7 +504,7 @@ async def bluedevilshitos(shitos):
     await edit_or_reply(shitos, P)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dislike$",
     command=("dislike", plugin_category),
     info={

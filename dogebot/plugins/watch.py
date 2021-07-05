@@ -90,7 +90,7 @@ def get_provider(url):
     return url
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="watch ([\s\S]*)",
     command=("watch", plugin_category),
     info={

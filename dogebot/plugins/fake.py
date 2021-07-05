@@ -18,7 +18,7 @@ from . import ALIVE_NAME
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="scam(?:\s|$)([\s\S]*)",
     command=("scam", plugin_category),
     info={
@@ -82,7 +82,7 @@ async def _(event):
         return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="prankpromote(?:\s|$)([\s\S]*)",
     command=("prankpromote", plugin_category),
     info={
@@ -114,7 +114,7 @@ async def _(event):
     await dogevent.edit("`Promoted Successfully! Now gib Party`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="padmin$",
     command=("padmin", plugin_category),
     info={

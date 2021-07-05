@@ -18,7 +18,7 @@ from . import make_gif
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="collage(?:\s|$)([\s\S]*)",
     command=("collage", plugin_category),
     info={

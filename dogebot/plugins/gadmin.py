@@ -45,7 +45,7 @@ UNBAN_RIGHTS = ChatBannedRights(
 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gban(?:\s|$)([\s\S]*)",
     command=("gban", plugin_category),
     info={
@@ -129,7 +129,7 @@ async def dogegban(event):  # sourcery no-metrics
             pass
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ungban(?:\s|$)([\s\S]*)",
     command=("ungban", plugin_category),
     info={
@@ -207,7 +207,7 @@ async def dogegban(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listgban$",
     command=("listgban", plugin_category),
     info={
@@ -232,7 +232,7 @@ async def gablist(event):
     await edit_or_reply(event, GBANNED_LIST)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gmute(?:\s|$)([\s\S]*)",
     command=("gmute", plugin_category),
     info={
@@ -298,7 +298,7 @@ async def startgmute(event):
             await reply.forward_to(BOTLOG_CHATID)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ungmute(?:\s|$)([\s\S]*)",
     command=("ungmute", plugin_category),
     info={
@@ -360,13 +360,13 @@ async def endgmute(event):
             )
 
 
-@doge.ub(incoming=True)
+@doge.doge_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "gmute"):
         await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gkick(?:\s|$)([\s\S]*)",
     command=("gkick", plugin_category),
     info={

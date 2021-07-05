@@ -18,7 +18,7 @@ from ..helpers.utils import _dogetools
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="imirror(s)? ?(-)?(l|r|u|b)?$",
     command=("imirror", plugin_category),
     info={
@@ -109,7 +109,7 @@ async def imirror(event):  # sourcery no-metrics
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="irotate(?:\s|$)(\d+)$",
     command=("irotate", plugin_category),
     info={
@@ -153,7 +153,7 @@ async def irotate(event):
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="iresize(?:\s|$)([\s\S]*)$",
     command=("iresize", plugin_category),
     info={
@@ -213,7 +213,7 @@ async def iresize(event):
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="square$",
     command=("square", plugin_category),
     info={
@@ -255,7 +255,7 @@ async def square_cmd(event):
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dotify(?:\s|$)(\d+)?$",
     command=("dotify", plugin_category),
     info={

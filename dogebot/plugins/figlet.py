@@ -28,7 +28,7 @@ CMD_FIG = {
 }
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="figlet(?:\s|$)([\s\S]*)",
     command=("figlet", plugin_category),
     info={

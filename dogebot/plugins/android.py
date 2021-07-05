@@ -16,7 +16,7 @@ from ..languages import lang
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="magisk$",
     command=("magisk", plugin_category),
     info={
@@ -45,7 +45,7 @@ async def kakashi(event):
 deviceusg = f"{lang('deviceusg')}"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(device|cihaz)(?:\s|$)([\s\S]*)",
     command=("device", plugin_category),
     info={
@@ -83,7 +83,7 @@ async def device_info(event):
     await edit_or_reply(event, reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="codename(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("codename", plugin_category),
     info={
@@ -133,7 +133,7 @@ async def codename_info(event):
     await edit_or_reply(event, reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("specs", plugin_category),
     info={
@@ -200,7 +200,7 @@ async def devices_specifications(event):
     await edit_or_reply(event, reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="twrp(?:\s|$)(\S*)",
     command=("twrp", plugin_category),
     info={

@@ -63,7 +63,7 @@ async def scam(results, lim):
     return imglinks
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
@@ -146,7 +146,7 @@ async def gsearch(q_event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="grs$",
     command=("grs", plugin_category),
     info={
@@ -220,7 +220,7 @@ async def _(event):
     await edit_or_reply(dogevent, OUTPUT_STR, parse_mode="HTML", link_preview=False)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="reverse(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
@@ -289,7 +289,7 @@ async def _(img):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="google(?:\s|$)([\s\S]*)",
     command=("google", plugin_category),
     info={

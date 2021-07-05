@@ -21,7 +21,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "misc"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="direct(?:\s|$)([\s\S]*)",
     command=("direct", plugin_category),
     info={

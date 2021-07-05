@@ -14,7 +14,7 @@ from . import *
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
@@ -54,7 +54,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={

@@ -16,7 +16,7 @@ from . import Build_Poll, reply_id
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="poll(?:\s|$)([\s\S]*)",
     command=("poll", plugin_category),
     info={

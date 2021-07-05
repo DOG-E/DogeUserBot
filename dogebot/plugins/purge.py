@@ -45,7 +45,7 @@ purgetype = {
 }
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="del(\s*| \d+)$",
     command=("del", plugin_category),
     info={
@@ -92,7 +92,7 @@ async def delete_it(event):
         await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="purgefrom$",
     command=("purgefrom", plugin_category),
     info={
@@ -115,7 +115,7 @@ async def purge_from(event):
         await edit_delete(event, "`Reply to a message to let me know what to delete.`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="purgeto$",
     command=("purgeto", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def purge_to(event):
         await edit_delete(event, f"**Error**\n`{str(e)}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="purgeme",
     command=("purgeme", plugin_category),
     info={
@@ -202,7 +202,7 @@ async def purgeme(event):
     await smsg.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="purge(?:\s|$)([\s\S]*)",
     command=("purge", plugin_category),
     info={
@@ -454,7 +454,7 @@ async def fastpurger(event):  # sourcery no-metrics
     await hi.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="upurge( -a)?(?:\s|$)([\s\S]*)",
     command=("upurge", plugin_category),
     info={

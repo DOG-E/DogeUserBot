@@ -16,7 +16,7 @@ from ..helpers.utils import _format
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sg(u)?(?:\s|$)([\s\S]*)",
     command=("sg", plugin_category),
     info={

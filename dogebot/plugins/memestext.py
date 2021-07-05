@@ -12,7 +12,7 @@ from . import dogememes
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="congo$",
     command=("congo", plugin_category),
     info={
@@ -26,7 +26,7 @@ async def _(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="shg$",
     command=("shg", plugin_category),
     info={
@@ -40,7 +40,7 @@ async def shrugger(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="runs$",
     command=("runs", plugin_category),
     info={
@@ -54,7 +54,7 @@ async def runner_lol(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="noob$",
     command=("noob", plugin_category),
     info={
@@ -68,7 +68,7 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="insult$",
     command=("insult", plugin_category),
     info={
@@ -82,7 +82,7 @@ async def insult(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hey$",
     command=("hey", plugin_category),
     info={
@@ -96,7 +96,7 @@ async def hoi(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pro$",
     command=("pro", plugin_category),
     info={
@@ -110,7 +110,7 @@ async def proo(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="react ?([\s\S]*)",
     command=("react", plugin_category),
     info={
@@ -156,7 +156,7 @@ async def _(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="10iq$",
     command=("10iq", plugin_category),
     info={
@@ -169,7 +169,7 @@ async def iqless(e):
     await edit_or_reply(e, "♿")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fp$",
     command=("fp", plugin_category),
     info={
@@ -182,7 +182,7 @@ async def facepalm(e):
     await edit_or_reply(e, "🤦‍♂")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bt$",
     command=("bt", plugin_category),
     info={
@@ -200,7 +200,7 @@ async def bluetext(e):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="session$",
     command=("session", plugin_category),
     info={

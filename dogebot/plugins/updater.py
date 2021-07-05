@@ -20,7 +20,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="update$",
     command=("update", plugin_category),
     info={
@@ -52,7 +52,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="devdoge$",
     command=("devdoge", plugin_category),
     info={

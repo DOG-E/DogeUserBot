@@ -11,7 +11,7 @@ from ..helpers.functions.functions import linkpreviewb
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ctg$",
     command=("ctg", plugin_category),
     info={

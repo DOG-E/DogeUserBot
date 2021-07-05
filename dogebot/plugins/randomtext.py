@@ -18,7 +18,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sing$",
     command=("sing", plugin_category),
     info={
@@ -163,7 +163,7 @@ async def _(event):
         await event.edit("Not in a mood to sing. Sorry!")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hp$",
     command=("hp", plugin_category),
     info={
@@ -258,7 +258,7 @@ async def _(event):  # sourcery no-metrics
         await event.edit("**Wingardium Leviosa**")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gott$",
     command=("gott", plugin_category),
     info={
@@ -413,7 +413,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gotm$",
     command=("gotm", plugin_category),
     info={
@@ -578,7 +578,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bello$",
     command=("bello", plugin_category),
     info={
@@ -969,7 +969,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tip$",
     command=("tip", plugin_category),
     info={
@@ -1336,7 +1336,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="qt$",
     command=("qt", plugin_category),
     info={
@@ -1529,7 +1529,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="logic$",
     command=("logic", plugin_category),
     info={

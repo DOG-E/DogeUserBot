@@ -14,7 +14,7 @@ from . import ALIVE_NAME, doge, edit_or_reply
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={

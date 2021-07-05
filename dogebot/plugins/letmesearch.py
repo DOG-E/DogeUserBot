@@ -14,7 +14,7 @@ from ..core.managers import edit_delete, edit_or_reply
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmg ([\s\S]*)",
     command=("lmg", plugin_category),
     info={
@@ -41,7 +41,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmy ([\s\S]*)",
     command=("lmy", plugin_category),
     info={
@@ -70,7 +70,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ddg ([\s\S]*)",
     command=("ddg", plugin_category),
     info={
@@ -99,7 +99,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmalt ([\s\S]*)",
     command=("lmalt", plugin_category),
     info={
@@ -126,7 +126,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmvar$",
     command=("lmvar", plugin_category),
     info={
@@ -156,7 +156,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmlog$",
     command=("lmlog", plugin_category),
     info={
@@ -184,7 +184,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lmkp ([\s\S]*)",
     command=("lmkp", plugin_category),
     info={
@@ -211,7 +211,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gem ([\s\S]*)",
     command=("gem", plugin_category),
     info={
@@ -238,7 +238,7 @@ async def _(event):
         await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="archive ([\s\S]*)",
     command=("archive", plugin_category),
     info={

@@ -25,7 +25,7 @@ from . import (
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fakegs(?:\s|$)([\s\S]*)",
     command=("fakegs", plugin_category),
     info={
@@ -62,7 +62,7 @@ async def nekobot(dog):
         os.remove(dogefile)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="trump(?:\s|$)([\s\S]*)",
     command=("trump", plugin_category),
     info={
@@ -93,7 +93,7 @@ async def nekobot(dog):
         os.remove(dogefile)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="modi(?:\s|$)([\s\S]*)",
     command=("modi", plugin_category),
     info={
@@ -124,7 +124,7 @@ async def nekobot(dog):
         os.remove(dogefile)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cmm(?:\s|$)([\s\S]*)",
     command=("cmm", plugin_category),
     info={
@@ -154,7 +154,7 @@ async def nekobot(dog):
         os.remove(dogefile)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kanna(?:\s|$)([\s\S]*)",
     command=("kanna", plugin_category),
     info={
@@ -185,7 +185,7 @@ async def nekobot(dog):
         os.remove(dogefile)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tweet(?:\s|$)([\s\S]*)",
     command=("tweet", plugin_category),
     info={

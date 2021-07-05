@@ -48,7 +48,7 @@ async def get_tz(con):
         return
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ctime(?:\s|$)([\s\S]*)(?<![0-9])(?:\s|$)([0-9]+)?",
     command=("ctime", plugin_category),
     info={
@@ -115,7 +115,7 @@ async def time_func(tdata):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="time(?:\s|$)([\s\S]*)",
     command=("time", plugin_category),
     info={

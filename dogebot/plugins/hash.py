@@ -19,7 +19,7 @@ from . import media_type, progress
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hash ([\s\S]*)",
     command=("hash", plugin_category),
     info={
@@ -56,7 +56,7 @@ async def gethash(hash_q):
     await edit_or_reply(hash_q, ans)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hbase (en|de) ([\s\S]*)",
     command=("hbase", plugin_category),
     info={

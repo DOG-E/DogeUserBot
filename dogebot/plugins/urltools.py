@@ -12,7 +12,7 @@ from ..core.managers import edit_delete, edit_or_reply
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
@@ -47,7 +47,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
@@ -84,7 +84,7 @@ async def _(event):
         await edit_or_reply(event, "`Something is wrong, please try again later.`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
@@ -126,7 +126,7 @@ async def _(event):
 
 
 # By Priyam Kalra
-@doge.ub(
+@doge.doge_cmd(
     pattern="hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={

@@ -12,7 +12,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="filext(?:\s|$)([\s\S]*)",
     command=("filext", plugin_category),
     info={

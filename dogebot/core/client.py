@@ -42,7 +42,7 @@ sudo_enabledcmds = sudo_enabled_cmds()
 
 
 class DogeUserBotClient(TelegramClient):
-    def ub(
+    def doge_cmd(
         self: TelegramClient,
         pattern: str or tuple = None,
         info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
@@ -210,7 +210,7 @@ class DogeUserBotClient(TelegramClient):
 
         return decorator
 
-    def hb(
+    def bot_cmd(
         self: TelegramClient,
         disable_errors: bool = False,
         edited: bool = False,

@@ -22,7 +22,7 @@ vars_list = {
 plugin_category = "useless"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(|s)logo(?:\s|$)([\s\S]*)",
     command=("logo", plugin_category),
     info={
@@ -117,7 +117,7 @@ async def very(event):
         os.remove(file_name)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
     info={
@@ -186,7 +186,7 @@ async def dogelogo(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
@@ -346,7 +346,7 @@ async def cufont(event):
                     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
     info={
@@ -420,7 +420,7 @@ async def dog(event):
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
-@doge.ub(
+@doge.doge_cmd(
     pattern="logoo([\s\S]*)",
     command=("logoo", plugin_category),
     info={

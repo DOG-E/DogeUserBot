@@ -32,7 +32,7 @@ def weird_division(n, d):
     return n / d if d else 0
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="chatfs(?:\s|$)([\s\S]*)",
     command=("chatfs", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def _(event):  # sourcery no-metrics
     await dogevent.edit(result, parse_mode="HTML", link_preview=False)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="userfs(?:\s|$)([\s\S]*)",
     command=("userfs", plugin_category),
     info={

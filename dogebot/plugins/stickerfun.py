@@ -45,7 +45,7 @@ async def get_font_file(client, channel_id, search_kw=""):
     return await client.download_media(font_file_message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="[wW]sc(?:\s|$)([\s\S]*)",
     command=("wsc", plugin_category),
     info={
@@ -71,7 +71,7 @@ async def waifu(animu):
 
 
 # 12 21 28 30
-@doge.ub(
+@doge.doge_cmd(
     pattern="rgb ?(?:(.*?) ?; )?([\s\S]*)",
     command=("rgb", plugin_category),
     info={
@@ -139,7 +139,7 @@ async def sticklet(event):
         pass
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="honk(?:\s|$)([\s\S]*)",
     command=("honk", plugin_category),
     info={
@@ -165,7 +165,7 @@ async def honk(event):
     await hide_inlinebot_point(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="twt(?:\s|$)([\s\S]*)",
     command=("twt", plugin_category),
     info={
@@ -191,7 +191,7 @@ async def twt(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="doge(?:\s|$)([\s\S]*)",
     command=("doge", plugin_category),
     info={
@@ -217,7 +217,7 @@ async def doge(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="glax(|r)(?:\s|$)([\s\S]*)",
     command=("glax", plugin_category),
     info={

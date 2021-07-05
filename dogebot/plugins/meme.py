@@ -11,7 +11,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="^\:/$",
     command=("\:", plugin_category),
     info={
@@ -29,7 +29,7 @@ async def kek(keks):
         await keks.edit(txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="^\-_-$",
     command=("-_-", plugin_category),
     info={
@@ -47,7 +47,7 @@ async def lol(lel):
         await lel.edit(okay)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="^\;_;$",
     command=(";_;", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def fun(e):
         await e.edit(t)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="oof$",
     command=("oof", plugin_category),
     info={
@@ -83,7 +83,7 @@ async def Oof(e):
         await dogevent.edit(t)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="type ([\s\S]*)",
     command=("type", plugin_category),
     info={
@@ -108,7 +108,7 @@ async def typewriter(typew):
         await asyncio.sleep(sleep_time)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="repeat (\d*) ([\s\S]*)",
     command=("repeat", plugin_category),
     info={
@@ -126,7 +126,7 @@ async def _(event):
     await edit_or_reply(event, repsmessage)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="meme",
     command=("meme", plugin_category),
     info={
@@ -203,7 +203,7 @@ async def meme(event):
     await event.edit(memeVar)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="give",
     command=("give", plugin_category),
     info={
@@ -258,7 +258,7 @@ async def give(event):
     await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sadmin$",
     command=("sadmin", plugin_category),
     info={

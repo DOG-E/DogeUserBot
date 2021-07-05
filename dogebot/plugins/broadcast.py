@@ -19,7 +19,7 @@ plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
@@ -62,7 +62,7 @@ async def dogebroadcast_add(event):
     await edit_delete(event, "__Successfully sent the message.__")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
@@ -110,7 +110,7 @@ async def dogebroadcast_add(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
@@ -159,7 +159,7 @@ async def dogebroadcast_list(event):
     await edit_or_reply(dogevent, finaloutput)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listall$",
     command=("listall", plugin_category),
     info={
@@ -182,7 +182,7 @@ async def dogebroadcast_list(event):
     await edit_or_reply(event, resultext)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
@@ -247,7 +247,7 @@ async def dogebroadcast_send(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
@@ -312,7 +312,7 @@ async def dogebroadcast_send(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
@@ -360,7 +360,7 @@ async def dogebroadcast_remove(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
@@ -429,7 +429,7 @@ async def dogebroadcast_remove(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={

@@ -12,7 +12,7 @@ from ..Config import Config
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="otransfer ([\s\S]*)",
     command=("otransfer", plugin_category),
     info={

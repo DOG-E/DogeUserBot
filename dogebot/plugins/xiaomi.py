@@ -14,7 +14,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="firmware ([\s\S]*)",
     command=("firmware", plugin_category),
     info={
@@ -44,7 +44,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="vendor ([\s\S]*)",
     command=("vendor", plugin_category),
     info={
@@ -74,7 +74,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="xspecs ([\s\S]*)",
     command=("xspecs", plugin_category),
     info={
@@ -104,7 +104,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fastboot ([\s\S]*)",
     command=("fastboot", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="recovery ([\s\S]*)",
     command=("recovery", plugin_category),
     info={
@@ -164,7 +164,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pb ([\s\S]*)",
     command=("pb", plugin_category),
     info={
@@ -194,7 +194,7 @@ async def _(event):
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="of ([\s\S]*)",
     command=("of", plugin_category),
     info={

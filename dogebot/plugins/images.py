@@ -14,7 +14,7 @@ from ..helpers.utils import reply_id
 plugin_category = "misc"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="img(?:\s|$)(\d*)? ?([\s\S]*)",
     command=("img", plugin_category),
     info={

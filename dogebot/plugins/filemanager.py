@@ -19,7 +19,7 @@ from . import humanbytes
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ls(?:\s|$)([\s\S]*)",
     command=("ls", plugin_category),
     info={
@@ -109,7 +109,7 @@ async def lst(event):  # sourcery no-metrics
         await edit_or_reply(event, msg)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rem ([\s\S]*)",
     command=("rem", plugin_category),
     info={
@@ -141,7 +141,7 @@ async def lst(event):
         await edit_or_reply(event, f"Successfully removed `{path}` file")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mkdir(?:\s|$)([\s\S]*)",
     command=("mkdir", plugin_category),
     info={
@@ -178,7 +178,7 @@ async def _(event):
         await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cpto(?:\s|$)([\s\S]*)",
     command=("cpto", plugin_category),
     info={
@@ -224,7 +224,7 @@ async def _(event):
         await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mvto(?:\s|$)([\s\S]*)",
     command=("mvto", plugin_category),
     info={

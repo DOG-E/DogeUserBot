@@ -37,7 +37,7 @@ SONG_SENDING_STRING = "<code>yeah..! i found something wi8..🥰...</code>"
 # =========================================================== #
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="song(320)?(?:\s|$)([\s\S]*)",
     command=("song", plugin_category),
     info={
@@ -124,7 +124,7 @@ async def delete_messages(event, chat, from_message):
     await event.client.send_read_acknowledge(chat)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="vsong(?:\s|$)([\s\S]*)",
     command=("vsong", plugin_category),
     info={
@@ -198,7 +198,7 @@ async def _(event):
             os.remove(files)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="shazam$",
     command=("shazam", plugin_category),
     info={
@@ -243,7 +243,7 @@ async def shazamcmd(event):
     await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="song2(?:\s|$)([\s\S]*)",
     command=("song2", plugin_category),
     info={
@@ -306,7 +306,7 @@ async def _(event):
 
 
 # reverse search by  @Lal_bakthan
-@doge.ub(
+@doge.doge_cmd(
     pattern="szm$",
     command=("szm", plugin_category),
     info={

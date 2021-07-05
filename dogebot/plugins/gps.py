@@ -13,7 +13,7 @@ from ..helpers import reply_id
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gps ([\s\S]*)",
     command=("gps", plugin_category),
     info={

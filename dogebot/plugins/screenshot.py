@@ -20,7 +20,7 @@ from . import reply_id
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ss ([\s\S]*)",
     command=("ss", plugin_category),
     info={
@@ -91,7 +91,7 @@ async def _(event):
         await dogevent.edit(f"`{traceback.format_exc()}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="scapture ([\s\S]*)",
     command=("scapture", plugin_category),
     info={

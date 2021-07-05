@@ -25,7 +25,7 @@ plugin_category = "misc"
 GIT_TEMP_DIR = "./temp/"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="repo$",
     command=("repo", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def source(e):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="github( -l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
@@ -109,7 +109,7 @@ async def _(event):
             await dogevent.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="commit$",
     command=("commit", plugin_category),
     info={

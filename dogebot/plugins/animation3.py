@@ -10,7 +10,7 @@ from . import doge, edit_delete, edit_or_reply, mention
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="deploy$",
     command=("deploy", plugin_category),
     info={
@@ -42,7 +42,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="star$",
     command=("star", plugin_category),
     info={
@@ -60,7 +60,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="boxs$",
     command=("boxs", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rain$",
     command=("rain", plugin_category),
     info={
@@ -96,7 +96,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="dump(?:\s|$)([\s\S]*)",
     command=("dump", plugin_category),
     info={
@@ -142,7 +142,7 @@ async def _(event):
             await event.edit(something_else)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fleaveme$",
     command=("fleaveme", plugin_category),
     info={
@@ -173,7 +173,7 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="loveu$",
     command=("loveu", plugin_category),
     info={
@@ -228,7 +228,7 @@ async def _(event):
         await event.edit(animation_chars[i % 35])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="plane$",
     command=("plane", plugin_category),
     info={
@@ -256,7 +256,7 @@ async def _(event):
     await asyncio.sleep(3)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="police$",
     command=("police", plugin_category),
     info={
@@ -288,7 +288,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="jio$",
     command=("jio", plugin_category),
     info={
@@ -327,7 +327,7 @@ async def _(event):
         await event.edit(animation_chars[i % 19])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="solarsystem$",
     command=("solarsystem", plugin_category),
     info={

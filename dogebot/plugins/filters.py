@@ -19,7 +19,7 @@ from . import BOTLOG, BOTLOG_CHATID
 plugin_category = "utils"
 
 
-@doge.ub(incoming=True)
+@doge.doge_cmd(incoming=True)
 async def filter_incoming_handler(handler):
     if handler.sender_id == handler.client.uid:
         return
@@ -89,7 +89,7 @@ async def filter_incoming_handler(handler):
                 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="filter ([\s\S]*)",
     command=("filter", plugin_category),
     info={
@@ -154,7 +154,7 @@ async def add_new_filter(new_handler):
     await edit_or_reply(new_handler, f"Error while setting filter for {keyword}")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="filters$",
     command=("filters", plugin_category),
     info={
@@ -179,7 +179,7 @@ async def on_snip_list(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
@@ -196,7 +196,7 @@ async def remove_a_filter(r_handler):
         await r_handler.edit("Filter `{} `was deleted successfully".format(filt))
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rmfilters$",
     command=("rmfilters", plugin_category),
     info={

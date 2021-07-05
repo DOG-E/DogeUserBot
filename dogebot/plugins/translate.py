@@ -27,7 +27,7 @@ async def getTranslate(text, **kwargs):
     return result
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tl ([\s\S]*)",
     command=("tl", plugin_category),
     info={
@@ -66,7 +66,7 @@ async def _(event):
         await edit_delete(event, f"**Error:**\n`{str(exc)}`", time=5)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="trt(?:\s|$)([\s\S]*)",
     command=("trt", plugin_category),
     info={
@@ -107,7 +107,7 @@ async def translateme(trans):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lang (ai|trt) ([\s\S]*)",
     command=("lang", plugin_category),
     info={

@@ -66,7 +66,7 @@ async def subprocess_run(megadl, cmd):
     return stdout.decode().strip(), stderr.decode().strip(), exitCode
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mega(?:\s|$)([\s\S]*)",
     command=("mega", plugin_category),
     info={

@@ -33,7 +33,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="admins(?:\s|$)([\s\S]*)",
     command=("admins", plugin_category),
     info={
@@ -88,7 +88,7 @@ async def _(event):
     await event.delete()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bots(?:\s|$)([\s\S]*)",
     command=("bots", plugin_category),
     info={
@@ -130,7 +130,7 @@ async def _(event):
     await edit_or_reply(event, mentions)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="users(?:\s|$)([\s\S]*)",
     command=("users", plugin_category),
     info={
@@ -180,7 +180,7 @@ async def get_users(show):
     await edit_or_reply(dogevent, mentions)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="chatinfo(?:\s|$)([\s\S]*)",
     command=("chatinfo", plugin_category),
     info={

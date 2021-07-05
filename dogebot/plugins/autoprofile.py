@@ -291,7 +291,7 @@ async def autopfp_start():
         AUTOPFP_START = gvarstatus("autopfp_strings") is not None
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="batmanpfp$",
     command=("batmanpfp", plugin_category),
     info={
@@ -312,7 +312,7 @@ async def _(event):
     await autopfp_start()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="thorpfp$",
     command=("thorpfp", plugin_category),
     info={
@@ -333,7 +333,7 @@ async def _(event):
     await autopfp_start()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
@@ -379,7 +379,7 @@ async def _(event):
     await autopicloop()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="digitalpfp$",
     command=("digitalpfp", plugin_category),
     info={
@@ -403,7 +403,7 @@ async def _(event):
     await digitalpicloop()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="bloom$",
     command=("bloom", plugin_category),
     info={
@@ -434,7 +434,7 @@ async def _(event):
     await bloom_pfploop()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="c(ustom)?pfp(?:\s|$)([\s\S]*)",
     command=("custompfp", plugin_category),
     info={
@@ -520,7 +520,7 @@ async def useless(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="autoname$",
     command=("autoname", plugin_category),
     info={
@@ -539,7 +539,7 @@ async def _(event):
     await autoname_loop()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="autobio$",
     command=("autobio", plugin_category),
     info={
@@ -558,7 +558,7 @@ async def _(event):
     await autobio_loop()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="end ([\s\S]*)",
     command=("end", plugin_category),
     info={

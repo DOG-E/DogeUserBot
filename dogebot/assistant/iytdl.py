@@ -48,7 +48,7 @@ PATH = "./dogebot/cache/ytsearch.json"
 plugin_category = "bot"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="iytdl(?:\s|$)([\s\S]*)",
     command=("iytdl", plugin_category),
     info={

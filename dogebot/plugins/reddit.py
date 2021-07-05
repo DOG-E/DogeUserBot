@@ -22,7 +22,7 @@ API = "https://meme-api.herokuapp.com/gimme"
 plugin_category = "misc"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={

@@ -43,7 +43,7 @@ oldvars = {
 }
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(set|get|del)dv(?:\s|$)([\s\S]*)",
     command=("dv", plugin_category),
     info={
@@ -119,7 +119,7 @@ async def customize(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("custom", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def custom_dogeuserbot(event):
     await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),
     info={

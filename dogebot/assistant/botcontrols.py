@@ -32,7 +32,7 @@ botusername = Config.TG_BOT_USERNAME
 cmhd = Config.COMMAND_HAND_LER
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/help$",
     from_users=Config.OWNER_ID,
 )
@@ -60,7 +60,7 @@ async def bot_help(event):
     )
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/broadcast$",
     from_users=Config.OWNER_ID,
 )
@@ -121,7 +121,7 @@ async def bot_broadcast(event):
     await br_cast.edit(b_info, parse_mode="html")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern=f"bot_users$",
     command=("bot_users", plugin_category),
     info={
@@ -141,7 +141,7 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/ban\s+([\s\S]*)",
     from_users=Config.OWNER_ID,
 )
@@ -176,7 +176,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/unban(?:\s|$)([\s\S]*)",
     from_users=Config.OWNER_ID,
 )
@@ -203,7 +203,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern=f"bblist$",
     command=("bblist", plugin_category),
     info={
@@ -223,7 +223,7 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern=f"bot_antif (on|off)$",
     command=("bot_antif", plugin_category),
     info={

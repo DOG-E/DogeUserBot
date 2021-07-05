@@ -68,7 +68,7 @@ async def check_bot_started_users(user, event):
         await event.client.send_message(BOTLOG_CHATID, notification)
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/start({botusername})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_private,
@@ -143,7 +143,7 @@ async def bot_start(event):
         await check_bot_started_users(chat, event)
 
 
-@doge.hb(incoming=True, func=lambda e: e.is_private)
+@doge.bot_cmd(incoming=True, func=lambda e: e.is_private)
 async def bot_pms(event):
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -200,7 +200,7 @@ async def bot_pms(event):
                     )
 
 
-@doge.hb(edited=True)
+@doge.bot_cmd(edited=True)
 async def bot_pms_edit(event):
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -293,7 +293,7 @@ async def handler(event):
                 LOGS.error(str(e))
 
 
-@doge.hb(
+@doge.bot_cmd(
     pattern=f"^/uinfo$",
     from_users=Config.OWNER_ID,
 )
@@ -465,8 +465,8 @@ async def settings_toggle(c_q: CallbackQuery):
     await c_q.edit("**ℹ BOT_ANTIFLOOD is now disabled!**")
 
 
-@doge.hb(incoming=True, func=lambda e: e.is_private)
-@doge.hb(edited=True, func=lambda e: e.is_private)
+@doge.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@doge.bot_cmd(edited=True, func=lambda e: e.is_private)
 async def antif_on_msg(event):
     if gvarstatus("bot_antif") is None:
         return

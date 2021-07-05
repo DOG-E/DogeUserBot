@@ -1,10 +1,8 @@
-# Credits to @sandy1709 (@mrconfused)
-#
-# Forked, developed and edited for @DogeUserbot
-#
 import sys
 
-from . import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, __copyright__, __license__
+import dogebot
+from dogebot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
+
 from .Config import Config
 from .core.logger import logging
 from .core.session import doge
@@ -19,8 +17,8 @@ from .utils import (
 
 LOGS = logging.getLogger("DogeUserbot")
 
-print(__copyright__)
-print("Licensed under the terms of the " + __license__)
+print(dogebot.__copyright__)
+print("Licensed under the terms of the " + dogebot.__license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
@@ -33,18 +31,18 @@ except Exception as e:
     sys.exit()
 
 
-class CheckDoge:
+class DogeCheck:
     def __init__(self):
         self.sucess = True
 
 
-checkDoge = CheckDoge()
+Dogecheck = DogeCheck()
 
 
 async def startup_process():
     check = await ipchange()
     if check is not None:
-        checkDoge.sucess = False
+        Dogecheck.sucess = False
         return
     await verifyLoggerGroup()
     await load_plugins("plugins")
@@ -61,7 +59,7 @@ async def startup_process():
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
     await startupmessage()
-    checkDoge.sucess = True
+    Dogecheck.sucess = True
     return
 
 
@@ -69,7 +67,7 @@ doge.loop.run_until_complete(startup_process())
 
 if len(sys.argv) not in (1, 3, 4):
     doge.disconnect()
-elif not checkDoge.sucess:
+elif not Dogecheck.sucess:
     if HEROKU_APP is not None:
         HEROKU_APP.restart()
 else:

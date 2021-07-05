@@ -12,7 +12,7 @@ from ..sql_helper import warns_sql as sql
 plugin_category = "admin"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="warn(?:\s|$)([\s\S]*)",
     command=("warn", plugin_category),
     info={
@@ -52,7 +52,7 @@ async def _(event):
     await edit_or_reply(event, reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="warns",
     command=("warns", plugin_category),
     info={
@@ -84,7 +84,7 @@ async def _(event):
     await event.edit(text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="r(eset)?warns$",
     command=("resetwarns", plugin_category),
     info={

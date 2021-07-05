@@ -16,7 +16,7 @@ from . import deEmojify, reply_id
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tts ([\s\S]*)",
     command=("tts", plugin_category),
     info={

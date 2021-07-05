@@ -21,7 +21,7 @@ from . import BOTLOG, get_user_from_event
 plugin_category = "admin"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lock ([\s\S]*)",
     command=("lock", plugin_category),
     info={
@@ -209,7 +209,7 @@ async def _(event):  # sourcery no-metrics
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unlock ([\s\S]*)",
     command=("unlock", plugin_category),
     info={
@@ -397,7 +397,7 @@ async def _(event):  # sourcery no-metrics
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="locks$",
     command=("locks", plugin_category),
     info={
@@ -456,7 +456,7 @@ async def _(event):  # sourcery no-metrics
     await edit_or_reply(event, res)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="plock ([\s\S]*)",
     command=("plock", plugin_category),
     info={
@@ -703,7 +703,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="punlock ([\s\S]*)",
     command=("punlock", plugin_category),
     info={
@@ -954,7 +954,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="uperm(?:\s|$)([\s\S]*)",
     command=("uperm", plugin_category),
     info={
@@ -1031,7 +1031,7 @@ async def _(event):  # sourcery no-metrics
     await edit_or_reply(event, output)
 
 
-@doge.ub(incoming=True, forword=None)
+@doge.doge_cmd(incoming=True, forword=None)
 async def check_incoming_messages(event):  # sourcery no-metrics
     if not event.is_private:
         chat = await event.get_chat()

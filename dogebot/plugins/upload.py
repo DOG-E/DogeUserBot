@@ -137,7 +137,7 @@ async def upload(path, event, udir_event, dogeflag=None):  # sourcery no-metrics
         UPLOAD_.uploaded += 1
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="upload( -f)? ([\s\S]*)",
     command=("upload", plugin_category),
     info={

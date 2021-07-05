@@ -1,7 +1,3 @@
-# Credits to @sandy1709 (@mrconfused)
-#
-# Forked, developed and edited for @DogeUserbot
-#
 import time
 
 import heroku3

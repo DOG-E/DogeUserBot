@@ -13,7 +13,7 @@ from . import dogememes
 plugin_category = "extra"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="abuse$",
     command=("abuse", plugin_category),
     info={
@@ -27,7 +27,7 @@ async def abusing(abused):
     await edit_or_reply(abused, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="abusehard$",
     command=("abusehard", plugin_category),
     info={
@@ -41,7 +41,7 @@ async def fuckedd(abusehard):
     await edit_or_reply(abusehard, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rendi$",
     command=("rendi", plugin_category),
     info={
@@ -55,7 +55,7 @@ async def metoo(e):
     await edit_or_reply(e, txt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rape$",
     command=("rape", plugin_category),
     info={
@@ -69,7 +69,7 @@ async def raping(raped):
     await edit_or_reply(raped, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fuck$",
     command=("fuck", plugin_category),
     info={
@@ -83,7 +83,7 @@ async def chutiya(fuks):
     await edit_or_reply(fuks, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="thanos$",
     command=("thanos", plugin_category),
     info={
@@ -97,7 +97,7 @@ async def thanos(thanos):
     await edit_or_reply(thanos, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kiss$",
     command=("kiss", plugin_category),
     info={
@@ -116,7 +116,7 @@ async def _(event):
         await dogevent.edit(animation_chars[i % 4])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fuk$",
     command=("fuk", plugin_category),
     info={
@@ -135,7 +135,7 @@ async def _(event):
         await dogevent.edit(animation_chars[i % 4])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="sex$",
     command=("sex", plugin_category),
     info={

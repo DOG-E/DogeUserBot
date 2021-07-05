@@ -14,7 +14,7 @@ from . import ALIVE_NAME
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="hack$",
     command=("hack", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="thack$",
     command=("thack", plugin_category),
     info={
@@ -94,7 +94,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wahack$",
     command=("wahack", plugin_category),
     info={

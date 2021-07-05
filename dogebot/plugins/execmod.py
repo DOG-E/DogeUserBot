@@ -10,7 +10,7 @@ from ..helpers.utils import _dogeutils, parse_pre, yaml_format
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="suicide$",
     command=("suicide", plugin_category),
     info={
@@ -26,7 +26,7 @@ async def _(event):
     event = await edit_or_reply(event, OUTPUT)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="plugins$",
     command=("plugins", plugin_category),
     info={
@@ -42,7 +42,7 @@ async def _(event):
     await edit_or_reply(event, OUTPUT)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="env$",
     command=("env", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def _(event):
     await edit_or_reply(event, OUTPUT)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="noformat$",
     command=("noformat", plugin_category),
     info={
@@ -79,7 +79,7 @@ async def _(event):
     await edit_or_reply(event, reply.text, parse_mode=parse_pre)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="when$",
     command=("when", plugin_category),
     info={

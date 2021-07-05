@@ -9,7 +9,7 @@ from dogebot import doge
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="schd (\d*) ([\s\S]*)",
     command=("schd", plugin_category),
     info={

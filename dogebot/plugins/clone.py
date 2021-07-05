@@ -28,7 +28,7 @@ DEFAULTUSERBIO = (
 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="clone(?:\s|$)([\s\S]*)",
     command=("clone", plugin_category),
     info={
@@ -69,7 +69,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="revert$",
     command=("revert", plugin_category),
     info={

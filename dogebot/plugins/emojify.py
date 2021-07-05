@@ -12,7 +12,7 @@ from ..helpers import fonts as emojify
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="emoji(?:\s|$)([\s\S]*)",
     command=("emoji", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def default(event):
     await edit_or_reply(event, result)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="cmoji(?:\s|$)([\s\S]*)",
     command=("cmoji", plugin_category),
     info={

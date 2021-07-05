@@ -13,7 +13,7 @@ from . import doge, edit_or_reply
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="getc(?:\s|$)([\s\S]*)",
     command=("getc", plugin_category),
     info={
@@ -55,7 +55,7 @@ async def get_media(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="geta(?:\s|$)([\s\S]*)",
     command=("geta", plugin_category),
     info={

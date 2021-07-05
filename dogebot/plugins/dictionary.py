@@ -15,7 +15,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
     info={
@@ -47,7 +47,7 @@ async def _(event):
         LOGS.info(e)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
     info={

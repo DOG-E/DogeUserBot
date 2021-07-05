@@ -16,7 +16,7 @@ plugin_category = "extra"
 GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lyrics ?([\s\S]*)",
     command=("lyrics", plugin_category),
     info={
@@ -53,7 +53,7 @@ async def _(event):
     await edit_or_reply(dogevent, reply)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="glyrics ?([\s\S]*)",
     command=("glyrics", plugin_category),
     info={

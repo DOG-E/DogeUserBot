@@ -11,7 +11,7 @@ from ..core.managers import edit_delete, edit_or_reply
 plugin_category = "utils"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(invite|add) ([\s\S]*)",
     command=("invite", plugin_category),
     info={

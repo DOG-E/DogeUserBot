@@ -12,7 +12,7 @@ from ..core.managers import edit_or_reply
 plugin_category = "tools"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ping(a|$)",
     command=("ping", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def _(event):
         await dogevent.edit(f"Pong!\n`{ms} ms`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="fping$",
     command=("fping", plugin_category),
     info={"header": "Shows the server ping with extra animation", "usage": "{tr}fping"},

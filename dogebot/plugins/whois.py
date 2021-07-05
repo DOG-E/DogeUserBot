@@ -76,7 +76,7 @@ async def fetch_info(replied_user, event):
     return photo, caption
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="userinfo(?:\s|$)([\s\S]*)",
     command=("userinfo", plugin_category),
     info={
@@ -148,7 +148,7 @@ async def _(event):
     await edit_or_reply(dogevent, caption)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="whois(?:\s|$)([\s\S]*)",
     command=("whois", plugin_category),
     info={
@@ -188,7 +188,7 @@ async def who(event):
         await dog.edit(caption, parse_mode="html")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="link(?:\s|$)([\s\S]*)",
     command=("link", plugin_category),
     info={

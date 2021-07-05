@@ -44,7 +44,7 @@ async def ocr_space_file(
     return r.json()
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ocr(?:\s|$)([\s\S]*)",
     command=("ocr", plugin_category),
     info={

@@ -38,7 +38,7 @@ class AFK:
 AFK_ = AFK()
 
 
-@doge.ub(outgoing=True, edited=False)
+@doge.doge_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
     if AFK_.afk_on is False:
         return
@@ -84,7 +84,7 @@ async def set_not_afk(event):
             )
 
 
-@doge.ub(incoming=True, func=lambda e: bool(e.mentioned or e.is_private), edited=False)
+@doge.doge_cmd(incoming=True, func=lambda e: bool(e.mentioned or e.is_private), edited=False)
 async def on_afk(event):  # sourcery no-metrics
     if AFK_.afk_on is False:
         return
@@ -167,7 +167,7 @@ async def on_afk(event):  # sourcery no-metrics
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="afk(?:\s|$)([\s\S]*)",
     command=("afk", plugin_category),
     info={
@@ -227,7 +227,7 @@ async def _(event):
                 )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mafk(?:\s|$)([\s\S]*)",
     command=("mafk", plugin_category),
     info={

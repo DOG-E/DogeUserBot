@@ -58,7 +58,7 @@ async def get_user(event):
     return replied_user
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(\w+)say ([\s\S]*)",
     command=("cowsay", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def univsaye(cowmsg):
     await edit_or_reply(cowmsg, f"`{cheese.milk(text).replace('`', '´')}`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="coin ?([\s\S]*)",
     command=("coin", plugin_category),
     info={
@@ -179,7 +179,7 @@ async def _(event):
         await edit_or_reply(event, r"¯\_(ツ)_/¯")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="slap(?:\s|$)([\s\S]*)",
     command=("slap", plugin_category),
     info={
@@ -201,7 +201,7 @@ async def who(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(yes|no|maybe|decide)$",
     command=("decide", plugin_category),
     info={
@@ -229,7 +229,7 @@ async def decide(event):
     await _dogeutils.unsavegif(event, teledoge)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="shout",
     command=("shout", plugin_category),
     info={
@@ -255,7 +255,7 @@ async def shout(args):
     await edit_or_reply(args, "`" + msg + "`")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="owo ?([\s\S]*)",
     command=("owo", plugin_category),
     info={
@@ -285,7 +285,7 @@ async def faces(owo):
     await edit_or_reply(owo, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="clap(?:\s|$)([\s\S]*)",
     command=("clap", plugin_category),
     info={
@@ -310,7 +310,7 @@ async def claptext(event):
     await edit_or_reply(event, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="smk(?:\s|$)([\s\S]*)",
     command=("smk", plugin_category),
     info={
@@ -338,7 +338,7 @@ async def smrk(smk):
         await edit_or_reply(smk, reply_text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="f ([\s\S]*)",
     command=("f", plugin_category),
     info={
@@ -368,7 +368,7 @@ async def payf(event):
     await edit_or_reply(event, pay)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wish(?:\s|$)([\s\S]*)",
     command=("wish", plugin_category),
     info={
@@ -395,7 +395,7 @@ async def wish_check(event):
     await edit_or_reply(event, reslt)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="lfy(?:\s|$)([\s\S]*)",
     command=("lfy", plugin_category),
     info={
@@ -432,7 +432,7 @@ async def _(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gbun(?:\s|$)([\s\S]*)",
     command=("gbun", plugin_category),
     info={

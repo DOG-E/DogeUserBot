@@ -19,7 +19,7 @@ plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
@@ -75,7 +75,7 @@ async def chat_blacklist(event):
     await edit_delete(event, "It was turned off already")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="addblkchat(s)? (?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
@@ -154,7 +154,7 @@ async def add_blacklist_chat(event):
     await event.client.reload(msg)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="rmblkchat(s)? (?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
@@ -218,7 +218,7 @@ async def add_blacklist_chat(event):
     await event.client.reload(msg)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listblkchats$",
     command=("listblkchats", plugin_category),
     info={

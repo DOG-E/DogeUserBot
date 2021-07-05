@@ -20,7 +20,7 @@ plugin_category = "utils"
 moviepath = os.path.join(os.getcwd(), "temp", "moviethumb.jpg")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="wiki ([\s\S]*)",
     command=("wiki", plugin_category),
     info={
@@ -68,7 +68,7 @@ async def wiki(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="imdb ([\s\S]*)",
     command=("imdb", plugin_category),
     info={

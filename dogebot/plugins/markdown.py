@@ -162,7 +162,7 @@ def parse(message, old_entities=None):
         LOGS.info(str(e))
 
 
-@doge.ub(outgoing=True)
+@doge.doge_cmd(outgoing=True)
 async def reparse(event):
     old_entities = event.message.entities or []
     parser = partial(parse, old_entities=old_entities)
@@ -184,7 +184,7 @@ async def reparse(event):
         raise events.StopPropagation
 
 
-@doge.ub(outgoing=True)
+@doge.doge_cmd(outgoing=True)
 async def mention(event):
     newstr = event.text
     if event.entities:

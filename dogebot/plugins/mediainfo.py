@@ -55,7 +55,7 @@ async def file_data(reply):
     return hmm
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="minfo$",
     command=("minfo", plugin_category),
     info={

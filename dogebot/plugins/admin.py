@@ -72,7 +72,7 @@ plugin_category = "admin"
 # ================================================
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="gpic( -s| -d)$",
     command=("gpic", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def set_group_photo(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="promote(?:\s|$)([\s\S]*)",
     command=("promote", plugin_category),
     info={
@@ -180,7 +180,7 @@ async def promote(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="demote(?:\s|$)([\s\S]*)",
     command=("demote", plugin_category),
     info={
@@ -225,7 +225,7 @@ async def demote(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
@@ -286,7 +286,7 @@ async def _ban_person(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unban(?:\s|$)([\s\S]*)",
     command=("unban", plugin_category),
     info={
@@ -325,7 +325,7 @@ async def nothanos(event):
         await dogevent.edit(f"**Error :**\n`{e}`")
 
 
-@doge.ub(incoming=True)
+@doge.doge_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, event.chat_id):
         try:
@@ -334,7 +334,7 @@ async def watcher(event):
             LOGS.info(str(e))
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="mute(?:\s|$)([\s\S]*)",
     command=("mute", plugin_category),
     info={
@@ -439,7 +439,7 @@ async def startmute(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unmute(?:\s|$)([\s\S]*)",
     command=("unmute", plugin_category),
     info={
@@ -511,7 +511,7 @@ async def endmute(event):
             )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="kick(?:\s|$)([\s\S]*)",
     command=("kick", plugin_category),
     info={
@@ -551,7 +551,7 @@ async def endmute(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pin( loud|$)",
     command=("pin", plugin_category),
     info={
@@ -589,7 +589,7 @@ async def pin(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unpin( all|$)",
     command=("unpin", plugin_category),
     info={
@@ -636,7 +636,7 @@ async def pin(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="undlt( -u)?(?:\s|$)(\d*)?",
     command=("undlt", plugin_category),
     info={

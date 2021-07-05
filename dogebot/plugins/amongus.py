@@ -75,7 +75,7 @@ async def get_imposter_img(text: str) -> str:
     return webp_file
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="amongus(?:\s|$)([\s\S]*)",
     command=("amongus", plugin_category),
     info={
@@ -133,7 +133,7 @@ async def sayliecmd(event):
     await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="imposter(?:\s|$)([\s\S]*)",
     command=("imposter", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def procces_img(event):
     await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="imp(|n) ([\s\S]*)",
     command=("imp", plugin_category),
     info={
@@ -261,7 +261,7 @@ async def _(event):
         await event.client.send_file(event.chat_id, "CAADAQADQAADnjOcH-WOkB8DEctJAg")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="timp(|n) ([\s\S]*)",
     command=("timp", plugin_category),
     info={

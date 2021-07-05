@@ -31,7 +31,7 @@ def zipdir(dirName):
     return filePaths
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
@@ -72,7 +72,7 @@ async def zip_file(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
@@ -114,7 +114,7 @@ async def tar_file(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
@@ -197,7 +197,7 @@ async def zip_file(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={

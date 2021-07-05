@@ -94,7 +94,7 @@ async def on_edit(event):
             break
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
     command=("sed", plugin_category),
     info={

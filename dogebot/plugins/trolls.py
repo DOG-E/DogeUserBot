@@ -16,7 +16,7 @@ from . import convert_toimage, deEmojify, phcomment, threats, trap, trash
 plugin_category = "fun"
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="trash$",
     command=("trash", plugin_category),
     info={
@@ -56,7 +56,7 @@ async def dogebot(event):
     await event.client.send_file(event.chat_id, dog, reply_to=dogeid)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="threats$",
     command=("threats", plugin_category),
     info={
@@ -95,7 +95,7 @@ async def dogebot(event):
     await event.client.send_file(event.chat_id, dog, reply_to=dogeid)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="trap(?:\s|$)([\s\S]*)",
     command=("trap", plugin_category),
     info={
@@ -144,7 +144,7 @@ async def dogebot(event):
     await event.client.send_file(event.chat_id, dog, reply_to=dogeid)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="phub(?:\s|$)([\s\S]*)",
     command=("phub", plugin_category),
     info={

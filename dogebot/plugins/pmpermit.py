@@ -405,7 +405,7 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         return
 
 
-@doge.ub(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
+@doge.doge_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def on_new_private_message(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -427,7 +427,7 @@ async def on_new_private_message(event):
     await do_pm_permit_action(event, chat)
 
 
-@doge.ub(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
+@doge.doge_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -607,7 +607,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pmguard (on|off)$",
     command=("pmguard", plugin_category),
     info={
@@ -635,7 +635,7 @@ async def pmpermit_on(event):
         await edit_delete(event, "__Pmpermit is already disabled for your account__")
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="pmmenu (on|off)$",
     command=("pmmenu", plugin_category),
     info={
@@ -668,7 +668,7 @@ async def pmpermit_on(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(a|approve)(?:\s|$)([\s\S]*)",
     command=("approve", plugin_category),
     info={
@@ -744,7 +744,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="(da|disapprove)(?:\s|$)([\s\S]*)",
     command=("disapprove", plugin_category),
     info={
@@ -795,7 +795,7 @@ async def disapprove_p_m(event):
         )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="block(?:\s|$)([\s\S]*)",
     command=("block", plugin_category),
     info={
@@ -851,7 +851,7 @@ async def block_p_m(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="unblock(?:\s|$)([\s\S]*)",
     command=("unblock", plugin_category),
     info={
@@ -884,7 +884,7 @@ async def unblock_pm(event):
     )
 
 
-@doge.ub(
+@doge.doge_cmd(
     pattern="listapproved$",
     command=("listapproved", plugin_category),
     info={
