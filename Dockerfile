@@ -2,10 +2,10 @@
 FROM teledoge/dogeuserbot:test
 
 # Clone Doge repository
-RUN git clone https://github.com/DOG-E/DogeUserBot.git /root
+RUN git clone https://github.com/DOG-E/DogeUserBot.git /DogeUserBot
 
 # Work directory
-WORKDIR /root
+WORKDIR /DogeUserBot
 
 # Minor adjustment
 ENV PATH="/home/dogebot/bin:$PATH"
