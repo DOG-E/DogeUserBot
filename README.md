@@ -146,7 +146,7 @@ apk update
 
 ## **💻 Wɪɴᴅᴏᴡs 10 & 11**
 
-🖥️ **Download Termux from the button below**
+🖥️ **Download Python 3.9 from the button below**
 
 🖥️ **Python 3.9'u aşağıdaki butondan indirin**
 
@@ -186,7 +186,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 ---
 <br>
 
-### **⌨ Tᴇʀᴍɪɴᴀʟ, ᴇᴛᴄ.**
+### **⌨️ Tᴇʀᴍɪɴᴀʟ, ᴇᴛᴄ.**
 
 ```sh
 git clone -b SETUP https://github.com/DOG-E/Source
@@ -295,7 +295,7 @@ align="center">
 ---
 <br>
 
-### **🔐 Lɪᴄᴇɴsᴇ | Lɪsᴀɴs**
+## **🔐 Lɪᴄᴇɴsᴇ | Lɪsᴀɴs**
 
 <a
 href="https://github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE">
