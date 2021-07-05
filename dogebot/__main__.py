@@ -4,14 +4,7 @@
 #
 import sys
 
-from . import (
-    BOTLOG_CHATID,
-    HEROKU_APP,
-    PM_LOGGER_GROUP_ID,
-    __copyright__,
-    __license__,
-)
-
+from . import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, __copyright__, __license__
 from .Config import Config
 from .core.logger import logging
 from .core.session import doge
