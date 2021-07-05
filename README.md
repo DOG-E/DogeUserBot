@@ -5,46 +5,52 @@ href="https://bit.do/DogeUserBot">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/DogeTemplate.png">
 </a>
+<br>
+<br>
 <h1
 align="center">
-🐶 ＤＯＧＥ ＵＳＥＲＢＯＴ 🐾
+🐶 DOGE USERBOT 🐾
 </h1>
 <h3
 align="center">
 ❤️ Hᴀᴠᴇ ᴀ Dᴏɢ ɪɴ Tᴇʟᴇɢʀᴀᴍ! ❤️
+<br>
 <br>
 ❤️ Tᴇʟᴇɢʀᴀᴍ'ᴅᴀ Biʀ Köᴘᴇɢ̆iɴiᴢ Oʟsᴜɴ! ❤️
 <br>
 <br>
 <a
 href="https://bit.do/DogeUserBot">
-📣 Uᴘᴅᴀᴛᴇs | Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ  📣
+📣 Uᴘᴅᴀᴛᴇs ~ Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ  📣
 </a>
 <br>
 <br>
 <a
 href="https://t.me/DogeSup">
-💬 Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ | Dᴇsᴛᴇᴋ Gʀᴜʙᴜ 💬
+💬 Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ~ Dᴇsᴛᴇᴋ Gʀᴜʙᴜ 💬
 </a>
 <br>
 <br>
 <a
 href="https://t.me/DogePlugin">
-🧩 Pʟᴜɢɪɴs | Pʟᴜɢɪɴʟᴇʀ 🧩
+🧩 Pʟᴜɢɪɴs ~ Pʟᴜɢɪɴʟᴇʀ 🧩
 </a>
 <br>
 <br>
 <a
 href="https://github.com/DOG-E/DogeUserBot/wiki">
-⚡ Iɴsᴛᴀʟʟᴀᴛɪᴏɴs | Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
+⚡ Iɴsᴛᴀʟʟᴀᴛɪᴏɴs ~ Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
 </a>
+<br>
+<br>
 
 ---
 
 <br>
 
-## **🔗 Aᴜᴛᴏᴍᴀᴛɪᴄ Sᴇᴛᴜᴘs | Oᴛᴏᴍᴀᴛɪᴋ Kᴜʀᴜʟᴜᴍʟᴀʀ**
+## **🔗 Aᴜᴛᴏᴍᴀᴛɪᴄ Sᴇᴛᴜᴘs ~ Oᴛᴏᴍᴀᴛɪᴋ Kᴜʀᴜʟᴜᴍʟᴀʀ**
 
+<br>
 <p
 align="center">
 <a
@@ -52,11 +58,10 @@ href="https://">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Replit.png">
 </a>
-
+<br>
 <br>
 
 ---
-
 <br>
 
 ## **🤖 Aɴᴅʀᴏɪᴅ**
@@ -65,6 +70,12 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Replit.png">
 
 📲 **Termux'u aşağıdaki butonlardan indirin**
 
+<a
+href='https://github.com/termux/termux-app/releases'>
+<img
+alt='Termux on GitHub APKs' 
+src='https://f-droid.org/repo/com.termux/en-US/icon_7jMZ7XD80oeucmGEaTwktIRZexLtGWvJfKdVD6Wu2SI=.png'
+width="80">
 <a
 href='https://play.google.com/store/apps/details?id=com.termux'>
 <img
@@ -77,12 +88,6 @@ href="https://f-droid.org/packages/com.termux">
 src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 alt="Termux on F-Droid"
 width="235">
-<a
-href='https://github.com/termux/termux-app/releases'>
-<img
-alt='Termux on GitHub APKs' 
-src='https://f-droid.org/repo/com.termux/en-US/icon_7jMZ7XD80oeucmGEaTwktIRZexLtGWvJfKdVD6Wu2SI=.png'
-width="85">
 </a>
 
 📋 **Then paste the code below into Termux**
@@ -92,11 +97,9 @@ width="85">
 ```sh
 bash <(curl -L https://)
 ```
-
 <br>
 
 ---
-
 <br>
 
 ## **🍎 IOS**
@@ -136,11 +139,9 @@ apk update
 && chmod +x Source.sh
 && bash Source.sh
 ```
-
 <br>
 
 ---
-
 <br>
 
 ## **💻 Wɪɴᴅᴏᴡs 10 & 11**
@@ -164,15 +165,14 @@ width='185'/>
 ```ps
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://')
 ```
-
 <br>
 
 ---
-
 <br>
 
 ## **⏳ Mᴀɴᴜᴇʟ Sᴇᴛᴜᴘ | Mᴀɴᴜᴇʟ Kᴜʀᴜʟᴜᴍ**
 
+<br>
 <p
 align="center">
 <a
@@ -180,11 +180,10 @@ href="https://heroku.com/deploy?template=https://github.com/dog-e/dogeuserbot">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 </a>
-
+<br>
 <br>
 
 ---
-
 <br>
 
 ### **⌨ Tᴇʀᴍɪɴᴀʟ, ᴇᴛᴄ.**
@@ -195,21 +194,19 @@ cd Source
 pip install -r requirements.txt
 python3 -m dogesetup.py
 ```
-
 <br>
 
 ---
-
 <br>
 
 ## **💠 Iɴғᴏ**
 
 ```
-- This bot,
-- helps manage your account,
-- groups & channels on Telegram.
+🐾 Doge UserBot,
+-   helps manage your account,
+-   groups & channels on Telegram.
 
-- Makes Telegram fun and easy to use.
+-   Makes Telegram fun and easy to use.
 ```
 
 ```
@@ -229,36 +226,39 @@ python3 -m dogesetup.py
 📍  By installing Doge UserBot,
 -   you accept all these responsibilities.
 ```
-
 <br>
 
-- **💬 For any questions & feedback, you can reach us through our [🐶 Doge Support group](https://t.me/DogeSup).**
+**💬 For any questions & feedback, you can reach us through our [🐶 Doge Support group](https://t.me/DogeSup).**
+<h2
+align="center">
+🐶 THANKS FOR 
 
->- ``🐶      THANKS FOR USING OUR BOT         🐾``
-
+🐾 USING OUR BOT
+</h2>
 <br>
 
 ## **💠 Bɪʟɢɪ**
 
 ```
-- Bu bot,
-- Telegram'da hesabınızı,
-- gruplarınızı & kanallarınızı
-- yönetmenize yardımcı olur.
+🐾  Doge UserBot,
+-   Telegram'da hesabınızı,
+-   gruplarınızı & kanallarınızı
+-   yönetmenize yardımcı olur.
 
-- Telegram'ı eğlenceli hale getirmek
-- ve kullanımını kolaylaştırmak içindir.
+-   Telegram'ı eğlenceli hale getirmek
+-   ve kullanımını kolaylaştırmak içindir.
 ```
 
 ```
 💡  Doge UserBot sebebiyle;
 
-🚫  Telegram hesabınız kısıtlanabilir/yasaklanabilir.
+🚫  Telegram hesabınız kısıtlanabilir.
 
 🔔  AYRICA:
 -   Gruplara spam gönderip,
 -   Telegram'a şikayet edildiğinizde
--   ve hesabınız silindiğinde BİZİ SUÇLAMAYIN!
+-   ve hesabınız silindiğinde
+-   BİZİ SUÇLAMAYIN!
 
 ⛔️  Doge UserBot ve yöneticileri,
 -   hesabınız için hiçbir sorumluluk kabul etmemektedir.
@@ -266,25 +266,33 @@ python3 -m dogesetup.py
 📍  Doge UserBot kurarak,
 -   tüm bu sorumlulukları kabul etmiş olursunuz.
 ```
-
 <br>
 
-- **💬 Herhangi bir soru & geribildirim için bize [🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz.**
+**💬 Herhangi bir soru & geribildirim için bize [🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz.**
+<h2
+align="center">
+🐶 BİZİ TERCİH ETTİĞİNİZ
 
->- ``🐶 BOTUMUZU KULLANDIĞINIZ İÇİN TEŞEKKÜRLER 🐾``
+🐾 İÇİN TEŞEKKÜR EDERİZ
+</h2>
+<br>
 
+---
 <br>
 
 ## **🤍 Cʀᴇᴅɪᴛs | Tᴇşᴇᴋᴋüʀʟᴇʀ**
 
 [🔮 Telethon](https://github.com/LonamiWebs/Telethon)
 
-[😽 Cat UserBot](https://github.com/Sandy1709/CatUserBot)
+[😸 Cat UserBot](https://github.com/Sandy1709/CatUserBot)
 
 [🐺 Asena Dev](https://github.com/AsenaDev)
 
 [👾 Team Ultroid](https://github.com/TeamUltroid)
 
+<br>
+
+---
 <br>
 
 ### **🔐 Lɪᴄᴇɴsᴇ | Lɪsᴀɴs**
@@ -296,14 +304,13 @@ src="https://upload.wikimedia.org/wikipedia/commons/0/06/AGPLv3_Logo.svg"
 width="150">
 </a>
 
-🛡 This project is protected by the GNU Affero General Public License.
+🛡 This project is protected by [The GNU Affero General Public License](https://github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE).
 
 - ✅ All rights reserved.
 
 <br>
 
 ---
-
 <br>
 
 [🐶](https://bit.do/DogeUserBot) Made with [❤](https://bit.do/TeleDoge) by [@TeleDoge](https://github.com/TeleDoge)
