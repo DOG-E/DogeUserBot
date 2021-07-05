@@ -170,7 +170,7 @@ Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://')
 ---
 <br>
 
-## **⏳ Mᴀɴᴜᴇʟ Sᴇᴛᴜᴘ | Mᴀɴᴜᴇʟ Kᴜʀᴜʟᴜᴍ**
+## **⏳ Mᴀɴᴜᴇʟ Sᴇᴛᴜᴘ ~ Mᴀɴᴜᴇʟ Kᴜʀᴜʟᴜᴍ**
 
 <br>
 <p
@@ -275,12 +275,10 @@ align="center">
 
 🐾 İÇİN TEŞEKKÜR EDERİZ
 </h2>
+
 <br>
 
----
-<br>
-
-## **🤍 Cʀᴇᴅɪᴛs | Tᴇşᴇᴋᴋüʀʟᴇʀ**
+## **🤍 Cʀᴇᴅɪᴛs ~ Tᴇşᴇᴋᴋüʀʟᴇʀ**
 
 [🔮 Telethon](https://github.com/LonamiWebs/Telethon)
 
@@ -295,7 +293,7 @@ align="center">
 ---
 <br>
 
-## **🔐 Lɪᴄᴇɴsᴇ | Lɪsᴀɴs**
+## **🔐 Lɪᴄᴇɴsᴇ ~ Lɪsᴀɴs**
 
 <a
 href="https://github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE">
