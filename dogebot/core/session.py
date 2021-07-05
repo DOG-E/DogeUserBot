@@ -17,7 +17,7 @@ loop = None
 if Config.STRING_SESSION:
     session = StringSession(str(Config.STRING_SESSION))
 else:
-    session = "dogeuserbot"
+    session = "DogeUserBot"
 
 try:
     doge = DogeUserBotClient(
@@ -36,7 +36,7 @@ except Exception as e:
 
 
 doge.tgbot = tgbot = DogeUserBotClient(
-    session="DogeTgbot",
+    session="DogeTgBot",
     api_id=Config.APP_ID,
     api_hash=Config.API_HASH,
     loop=loop,

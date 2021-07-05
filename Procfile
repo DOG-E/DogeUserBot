@@ -1,1 +1,1 @@
-doge: python3 -m dogebot
+rundoge: python3 -m dogebot

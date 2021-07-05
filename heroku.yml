@@ -1,5 +1,5 @@
 build:
   docker:
-      doge: Dockerfile
+      rundoge: Dockerfile
 run:
-   doge: python3 -m dogebot
+   rundoge: python3 -m dogebot
