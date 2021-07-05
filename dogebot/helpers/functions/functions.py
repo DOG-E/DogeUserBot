@@ -182,7 +182,7 @@ def higlighted_text(
 
 
 # For ascii image
-async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
+async def asciiart(borg, msg, chat_id, event, reply_to_id):
     chat = "@asciiart_bot"
     async with borg.conversation(chat) as conv:
         try:
@@ -190,7 +190,7 @@ async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit(
+                await event.edit(
                     "**⛔ You've previously blocked @AsciiArt_Bot!\
                     \n🔔 I unblocked @AsciiArt_Bot and I'm trying again.**"
                 )
@@ -199,11 +199,11 @@ async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
             response = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
             if response.text.startswith("Forward"):
-                await dogevent.edit(
+                await event.edit(
                     "```Can you kindly disable your forward privacy settings for good?```"
                 )
             else:
-                await dogevent.delete()
+                await event.delete()
                 await borg.send_file(
                     chat_id,
                     response,
@@ -215,11 +215,11 @@ async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
                 await borg.send_read_acknowledge(conv.chat_id)
 
         except:
-            return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+            return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
 # For clippy image
-async def clippyart(borg, dogevent, msg, chat_id, reply_to_id):
+async def clippyart(borg, event, msg, chat_id, reply_to_id):
     chat = "@clippy"
     async with borg.conversation(chat) as conv:
         try:
@@ -227,7 +227,7 @@ async def clippyart(borg, dogevent, msg, chat_id, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit(
+                await event.edit(
                     "**⛔ You've previously blocked @Clippy bot!\
                     \n🔔 I unblocked @Clippy bot and I'm trying again.**"
                 )
@@ -235,7 +235,7 @@ async def clippyart(borg, dogevent, msg, chat_id, reply_to_id):
 
             pic = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
-            await dogevent.delete()
+            await event.delete()
             await borg.send_file(
                 chat_id,
                 pic,
@@ -245,11 +245,11 @@ async def clippyart(borg, dogevent, msg, chat_id, reply_to_id):
                     \n\nby:** {mention}",
             )
         except:
-            return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+            return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
 # For line50 image
-async def lines50art(borg, dogevent, msg, chat_id, reply_to_id):
+async def lines50art(borg, event, msg, chat_id, reply_to_id):
     chat = "@Lines50Bot"
     async with borg.conversation(chat) as conv:
         try:
@@ -257,7 +257,7 @@ async def lines50art(borg, dogevent, msg, chat_id, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit(
+                await event.edit(
                     "**⛔ You've previously blocked @Lines50Bot!\
                     \n🔔 I unblocked @Lines50Bot and I'm trying again.**"
                 )
@@ -265,7 +265,7 @@ async def lines50art(borg, dogevent, msg, chat_id, reply_to_id):
 
             pic = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
-            await dogevent.delete()
+            await event.delete()
             await borg.send_file(
                 chat_id,
                 pic,
@@ -275,11 +275,11 @@ async def lines50art(borg, dogevent, msg, chat_id, reply_to_id):
                     \n\nby:** {mention}",
             )
         except:
-            return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+            return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
 # For linkpreview
-async def linkpreviewb(borg, dogevent, chat_id, reply_message):
+async def linkpreviewb(borg, event, chat_id, reply_message):
     chat = "@chotamreaderbot"
     async with borg.conversation(chat) as conv:
         try:
@@ -289,7 +289,7 @@ async def linkpreviewb(borg, dogevent, chat_id, reply_message):
                 )
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit(
+                await event.edit(
                     "**⛔ You've previously blocked @ChotamReaderBot!\
                     \n🔔 I unblocked @ChotamReaderBot and I'm trying again.**"
                 )
@@ -301,16 +301,16 @@ async def linkpreviewb(borg, dogevent, chat_id, reply_message):
             response = await response
             await borg.send_read_acknowledge(conv.chat_id)
             if response.text.startswith(""):
-                await dogevent.edit("Am I Dumb Or Am I Dumb?")
+                await event.edit("Am I Dumb Or Am I Dumb?")
             else:
-                await dogevent.delete()
+                await event.delete()
                 await borg.send_message(chat_id, response.message)
         except:
-            return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+            return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
 # For recognize image
-async def rekognitionb(borg, dogevent, msg, reply_message):
+async def rekognitionb(borg, event, msg, reply_message):
     chat = "@Rekognition_Bot"
     async with borg.conversation(chat) as conv:
         try:
@@ -320,7 +320,7 @@ async def rekognitionb(borg, dogevent, msg, reply_message):
                 )
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit(
+                await event.edit(
                     "**⛔ You've previously blocked @Rekognition_Bot!\
                     \n🔔 I unblocked @Rekognition_Bot and I'm trying again.**"
                 )
@@ -336,13 +336,13 @@ async def rekognitionb(borg, dogevent, msg, reply_message):
                 )
                 response = await response
                 msg = response.message.message
-                await dogevent.edit(msg)
+                await event.edit(msg)
 
             else:
-                await dogevent.edit("Sorry, I couldnt find it")
+                await event.edit("Sorry, I couldnt find it")
             await borg.send_read_acknowledge(conv.chat_id)
         except:
-            return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+            return await edit_delete(event, "**🔔 Something went wrong!**")
 
 
 # For memes

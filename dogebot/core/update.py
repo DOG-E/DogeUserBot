@@ -184,7 +184,7 @@ async def update(eve):
         await eve.edit(
             "`Successfully Updated!\nBot is restarting... Wait for a second!`"
         )
-        os.execl(sys.executable, sys.executable, "-m", "doge.py")
+        os.execl(sys.executable, sys.executable, "-m", "dogebot")
 
 
 @callbacq("changes")

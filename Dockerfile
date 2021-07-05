@@ -15,4 +15,4 @@ WORKDIR /root/dogebot
 ENV PATH="/home/dogebot/bin:$PATH"
 
 # Run Doge
-CMD ["python3", "doge.py"]
+CMD ["python3", "-m", "dogebot"]

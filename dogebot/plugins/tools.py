@@ -65,7 +65,6 @@ async def currency(event):
         aresponse = await AioHttp().get_json(
             f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}"
         )
-        os.getcwd()
         symbols = await AioHttp().get_raw(
             f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Core/currency.py"
         )

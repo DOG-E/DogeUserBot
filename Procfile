@@ -1,1 +1,1 @@
-doge: python3 doge.py
+doge: python3 -m dogebot
