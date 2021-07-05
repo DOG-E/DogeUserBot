@@ -8,6 +8,7 @@ from telethon.errors import FloodWaitError, MessageNotModifiedError
 from telethon.events import CallbackQuery
 
 from dogebot import doge
+
 from ..Config import Config
 from ..sql_helper.globals import gvarstatus
 
@@ -15,7 +16,9 @@ from ..sql_helper.globals import gvarstatus
 def callbacq(dat):
     def dugee(func):
         doge.tgbot.add_event_handler(func, CallbackQuery(data=dat))
+
     return dugee
+
 
 def check_owner(func):
     async def wrapper(c_q: CallbackQuery):

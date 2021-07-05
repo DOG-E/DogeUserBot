@@ -12,8 +12,8 @@
 from git import Repo
 from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
+from ..core.update import dev_doge, updater
 from . import *
-from ..core.update import updater, dev_doge
 
 LOGS = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ plugin_category = "tools"
     info={
         "header": "To update Doge.",
         "description": "I recommend you to do update deploy atlest once a week.",
-        "usage": "{tr}update"
+        "usage": "{tr}update",
     },
 )
 async def _(event):

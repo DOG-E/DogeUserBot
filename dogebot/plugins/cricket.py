@@ -8,7 +8,7 @@ from telethon.tl.functions.contacts import UnblockRequest
 
 from dogebot import doge
 
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import reply_id
 
 plugin_category = "extra"
@@ -33,8 +33,10 @@ async def _(event):
                 msg_start = await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Cricbuzz_Bot!\
-                    \n🔔 I unblocked @Cricbuzz_Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Cricbuzz_Bot!\
+                    \n🔔 I unblocked @Cricbuzz_Bot and I'm trying again.**"
+                )
                 msg_start = await conv.send_message("/start")
 
             response = await conv.get_response()
@@ -77,10 +79,12 @@ async def _(event):
                 msg_start = await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Cricbuzz_Bot!\
-                    \n🔔 I unblocked @Cricbuzz_Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Cricbuzz_Bot!\
+                    \n🔔 I unblocked @Cricbuzz_Bot and I'm trying again.**"
+                )
                 msg_start = await conv.send_message("/start")
-        
+
                 response = await conv.get_response()
                 msg = await conv.send_message(f"{details}")
                 respond = await conv.get_response()

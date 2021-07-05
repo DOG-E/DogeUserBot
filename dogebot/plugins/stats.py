@@ -272,12 +272,14 @@ async def _(event):
                 await conv.send_message(f"{uid}")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @TgScanRobot!\
-                    \n🔔 I unblocked @TgScanRobot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @TgScanRobot!\
+                    \n🔔 I unblocked @TgScanRobot and I'm trying again.**"
+                )
                 await conv.send_message(f"{uid}")
             response = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
             await dogevent.edit(response.text)
-        
+
         except:
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")

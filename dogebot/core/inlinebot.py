@@ -105,12 +105,12 @@ def main_menu():
                 f"🧩 Exᴛᴇʀɴᴀʟ ({len(GRP_INFO['external'])})",
                 data=f"external_menu",
             ),
-        (
-            Button.inline(
-                f"⛔ CLOSE ⛔",
-                data="close",
+            (
+                Button.inline(
+                    f"⛔ CLOSE ⛔",
+                    data="close",
+                ),
             ),
-        ),
         ),
     ]
     return text, buttons
@@ -208,18 +208,12 @@ def paginate_help(
                     Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),
                     Button.inline("⏩", data=f"{prefix}_next({modulo_page})_plugin"),
                 ),
-                (
-                    Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),
-                )
+                (Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),),
             ]
         else:
             pairs = pairs + [
-                (
-                    Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),
-                ),
-                (
-                    Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),
-                )
+                (Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),),
+                (Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),),
             ]
     elif len(pairs) > number_of_rows:
         pairs = pairs[
@@ -239,22 +233,18 @@ def paginate_help(
                     data=f"{prefix}_next({modulo_page})_command_{category_plugins}_{category_pgno}",
                 ),
             ),
-            (
-                Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),
-            ),
-            (
-                Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),
-            )
+            (Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),),
+            (Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),),
         ]
     else:
         pairs = pairs + [
             (
-                Button.inline("⬅️ Bᴀᴄᴋ ", data=f"back_plugin_{category_plugins}_{category_pgno}"),
+                Button.inline(
+                    "⬅️ Bᴀᴄᴋ ", data=f"back_plugin_{category_plugins}_{category_pgno}"
+                ),
                 Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),
             ),
-            (
-                Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),
-            )
+            (Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),),
         ]
     return pairs
 
@@ -637,7 +627,9 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=re.compile(rb"([\s\S]*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?([\s\S]*)?"))
+    CallbackQuery(
+        data=re.compile(rb"([\s\S]*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?([\s\S]*)?")
+    )
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -669,7 +661,9 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=re.compile(rb"([\s\S]*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?([\s\S]*)?"))
+    CallbackQuery(
+        data=re.compile(rb"([\s\S]*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?([\s\S]*)?")
+    )
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -697,7 +691,9 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=re.compile(b"([\s\S]*)_cmdhelp_([a-z]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
+    CallbackQuery(
+        data=re.compile(b"([\s\S]*)_cmdhelp_([a-z]+)_([0-9]+)_([a-z]+)_([0-9]+)")
+    )
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -714,9 +710,7 @@ async def on_plug_in_callback_query_handler(event):
             ),
             Button.inline("🐶 Mᴀɪɴ Mᴇɴᴜ 🐶", data="mainmenu"),
         ),
-        (
-            Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),
-        )
+        (Button.inline("⛔ Cʟᴏsᴇ ⛔", data="close"),),
     ]
     text = f"**🐶 𝘿𝙊𝙂𝙀\n🐾 𝙐𝙎𝙀𝙍𝘽𝙊𝙏**\
         \n\n**⌨ Cᴏᴍᴍᴀɴᴅ:** `{tr}{cmd}`\

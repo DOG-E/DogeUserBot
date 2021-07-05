@@ -140,7 +140,9 @@ async def dogelogo(event):
     "To change background of logo"
     cmd = event.pattern_match.group(1).lower()
     input_str = event.pattern_match.group(2)
-    source = requests.get("https://github.com/DOG-E/Source/tree/DOGE/Material/Logo/Backgrouds")
+    source = requests.get(
+        "https://github.com/DOG-E/Source/tree/DOGE/Material/Logo/Backgrouds"
+    )
     soup = BeautifulSoup(source.text, features="html.parser")
     links = soup.find_all("a", class_="js-navigation-open Link--primary")
     bg_name = []
@@ -223,7 +225,9 @@ async def cufont(event):
     cmd = event.pattern_match.group(1).lower()
     input_str = event.pattern_match.group(2)
     if cmd == "":
-        source = requests.get("https://github.com/DOG-E/Source/tree/DOGE/Material/Logo/Fonts")
+        source = requests.get(
+            "https://github.com/DOG-E/Source/tree/DOGE/Material/Logo/Fonts"
+        )
         soup = BeautifulSoup(source.text, features="html.parser")
         links = soup.find_all("a", class_="js-navigation-open Link--primary")
         logo_font = []

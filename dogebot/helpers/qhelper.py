@@ -41,11 +41,21 @@ logger.setLevel(logging.DEBUG)
 
 async def process(msg, user, client, reply, replied=None):
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("dogebot/helpers/styles/Roboto_Medium.ttf", 43, encoding="utf-16")
-    font2 = ImageFont.truetype("dogebot/helpers/styles/Roboto_Regular.ttf", 33, encoding="utf-16")
-    mono = ImageFont.truetype("dogebot/helpers/styles/DroidSansMono.ttf", 30, encoding="utf-16")
-    italic = ImageFont.truetype("dogebot/helpers/styles/Roboto_Italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype("dogebot/helpers/styles/Quivira.otf", 43, encoding="utf-16")
+    font = ImageFont.truetype(
+        "dogebot/helpers/styles/Roboto_Medium.ttf", 43, encoding="utf-16"
+    )
+    font2 = ImageFont.truetype(
+        "dogebot/helpers/styles/Roboto_Regular.ttf", 33, encoding="utf-16"
+    )
+    mono = ImageFont.truetype(
+        "dogebot/helpers/styles/DroidSansMono.ttf", 30, encoding="utf-16"
+    )
+    italic = ImageFont.truetype(
+        "dogebot/helpers/styles/Roboto_Italic.ttf", 33, encoding="utf-16"
+    )
+    fallback = ImageFont.truetype(
+        "dogebot/helpers/styles/Quivira.otf", 43, encoding="utf-16"
+    )
 
     # Splitting text
     maxlength = 0
@@ -227,7 +237,9 @@ async def process(msg, user, client, reply, replied=None):
 
     # Writing User's Name
     space = pfpbg.width + 30
-    namefallback = ImageFont.truetype("dogebot/helpers/styles/Quivira.otf", 43, encoding="utf-16")
+    namefallback = ImageFont.truetype(
+        "dogebot/helpers/styles/Quivira.otf", 43, encoding="utf-16"
+    )
     for letter in tot:
         if letter in emoji.UNICODE_EMOJI["en"]:
             newemoji, mask = await emoji_fetch(letter)
@@ -251,7 +263,9 @@ async def process(msg, user, client, reply, replied=None):
     bold, mono, italic, link = await get_entity(reply)
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype("dogebot/helpers/styles/Quivira.otf", 33, encoding="utf-16")
+    textfallback = ImageFont.truetype(
+        "dogebot/helpers/styles/Quivira.otf", 33, encoding="utf-16"
+    )
     textcolor = "white"
     for line in text:
         for letter in line:
@@ -261,25 +275,33 @@ async def process(msg, user, client, reply, replied=None):
             for offset, length in bold.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "dogebot/helpers/styles/Roboto_Medium.ttf", 33, encoding="utf-16"
+                        "dogebot/helpers/styles/Roboto_Medium.ttf",
+                        33,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "dogebot/helpers/styles/Roboto_Italic.ttf", 33, encoding="utf-16"
+                        "dogebot/helpers/styles/Roboto_Italic.ttf",
+                        33,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "dogebot/helpers/styles/DroidSansMono.ttf", 30, encoding="utf-16"
+                        "dogebot/helpers/styles/DroidSansMono.ttf",
+                        30,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "dogebot/helpers/styles/Roboto_Regular.ttf", 30, encoding="utf-16"
+                        "dogebot/helpers/styles/Roboto_Regular.ttf",
+                        30,
+                        encoding="utf-16",
                     )
                     textcolor = "#898989"
             if letter in emoji.UNICODE_EMOJI["en"]:

@@ -11,6 +11,7 @@ from os import listdir, path
 from typing import Any, Dict, List, Union
 
 from yaml import safe_load
+
 from ..sql_helper.globals import gvarstatus
 
 langs = {}

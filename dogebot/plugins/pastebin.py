@@ -310,13 +310,15 @@ async def _(event):
                 await event.client.send_message(chat, url)
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @CorsaBot!\
-                    \n🔔 I unblocked @CorsaBot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @CorsaBot!\
+                    \n🔔 I unblocked @CorsaBot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     MessageEdited(incoming=True, from_users=conv.chat_id), timeout=10
                 )
                 await event.client.send_message(chat, url)
-            
+
             response = await response
             result = ""
             if response:

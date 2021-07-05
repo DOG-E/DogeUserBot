@@ -18,8 +18,8 @@ from telethon.utils import get_display_name
 
 from dogebot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
 from ..core.logger import logging
+from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import convert_tosticker, media_type, process
 from ..helpers.utils import _dogetools, reply_id
 
@@ -258,7 +258,9 @@ async def _(event):
                     events.NewMessage(incoming=True, from_users=chat)
                 )
                 if messages_id != []:
-                    await event.client.forward_messages(chat, messages_id, event.chat_id)
+                    await event.client.forward_messages(
+                        chat, messages_id, event.chat_id
+                    )
                 elif message != "":
                     await event.client.send_message(conv.chat_id, message)
                 else:
@@ -267,20 +269,24 @@ async def _(event):
                     )
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @QuotLyBot!\
-                    \n🔔 I unblocked @QuotLyBot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @QuotLyBot!\
+                    \n🔔 I unblocked @QuotLyBot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=chat)
                 )
                 if messages_id != []:
-                    await event.client.forward_messages(chat, messages_id, event.chat_id)
+                    await event.client.forward_messages(
+                        chat, messages_id, event.chat_id
+                    )
                 elif message != "":
                     await event.client.send_message(conv.chat_id, message)
                 else:
                     return await edit_delete(
                         dogevent, "`I guess you have used a invalid syntax`"
                     )
-            
+
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
             await dogevent.delete()

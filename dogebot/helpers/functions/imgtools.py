@@ -141,7 +141,8 @@ async def dotify(image, pix, mode):
     out.seek(0)
     return out
 
-# Credit: Ultroid ~ github.com/TeamUltroid 
+
+# Credit: Ultroid ~ github.com/TeamUltroid
 def mediainfo(media):
     xx = str((str(media)).split("(", maxsplit=1)[0])
     m = ""

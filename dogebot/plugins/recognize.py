@@ -3,13 +3,10 @@
 #
 # Forked, developed and edited for @DogeUserbot
 #
-from ..helpers.functions.functions import rekognitionb
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-
 from dogebot import doge
 
 from ..core.managers import edit_or_reply
+from ..helpers.functions.functions import rekognitionb
 
 plugin_category = "utils"
 
@@ -32,6 +29,6 @@ async def _(event):
         return await edit_or_reply(event, "reply to media file")
     if reply_message.sender.bot:
         return await event.edit("Reply to actual users message.")
-    dogevent = await edit_or_reply(event, "recognizeing this media")
-    
+    await edit_or_reply(event, "recognizeing this media")
+
     await rekognitionb(event.client, event.chat_id, reply_message)

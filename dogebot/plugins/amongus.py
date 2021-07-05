@@ -24,10 +24,13 @@ plugin_category = "extra"
 
 
 async def amongus_gen(text: str, clr: int) -> str:
-    FONT_FILE = 'dogebot/helpers/styles/otherfonts/Modern.ttf'
+    FONT_FILE = "dogebot/helpers/styles/otherfonts/Modern.ttf"
     url = "https://github.com/DOG-E/Source/raw/DOGE/Material/AmongUs/"
-    font = ImageFont.truetype(FONT_FILE, 60,)
-    
+    font = ImageFont.truetype(
+        FONT_FILE,
+        60,
+    )
+
     impostor = Image.open(BytesIO(get(f"{url}{clr}.png").content))
     text_ = "\n".join("\n".join(wrap(part, 30)) for part in text.split("\n"))
     w, h = ImageDraw.Draw(Image.new("RGB", (1, 1))).multiline_textsize(
@@ -51,7 +54,7 @@ async def amongus_gen(text: str, clr: int) -> str:
 
 
 async def get_imposter_img(text: str) -> str:
-    FONT_FILE = 'dogebot/helpers/styles/Roboto_Regular.ttf'
+    FONT_FILE = "dogebot/helpers/styles/Roboto_Regular.ttf"
     background = get(
         f"https://github.com/DOG-E/Source/raw/DOGE/Source/impostor/{randint(1,22)}.png"
     ).content

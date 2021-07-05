@@ -4,8 +4,8 @@ import time
 import heroku3
 import requests
 
-from ...languages import lang
 from ...Config import Config
+from ...languages import lang
 from .utils import get_readable_time
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)

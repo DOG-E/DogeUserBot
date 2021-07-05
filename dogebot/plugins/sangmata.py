@@ -52,10 +52,12 @@ async def _(event):  # sourcery no-metrics
                 await conv.send_message(f"/search_id {uid}")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @SangMataInfo_bot!\
-                    \n🔔 I unblocked @SangMataInfo_bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @SangMataInfo_bot!\
+                    \n🔔 I unblocked @SangMataInfo_bot and I'm trying again.**"
+                )
                 await conv.send_message(f"/search_id {uid}")
-            
+
             responses = []
             while True:
                 try:

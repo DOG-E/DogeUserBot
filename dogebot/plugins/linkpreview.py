@@ -2,8 +2,6 @@
 #
 # Forked, developed and edited for @DogeUserbot
 #
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from dogebot import doge
 
@@ -30,6 +28,5 @@ async def _(event):
     if not reply_message.text:
         await edit_or_reply(event, "```Reply to a Link```")
         return
-    dogevent = await edit_or_reply(event, "```Processing```")
+    await edit_or_reply(event, "```Processing```")
     await linkpreviewb(event.client, event.chat_id, reply_message)
-    

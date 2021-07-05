@@ -41,6 +41,7 @@ async def _(event):
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 12])
 
+
 @doge.ub(
     pattern="star$",
     command=("star", plugin_category),
@@ -93,7 +94,6 @@ async def _(event):
         await asyncio.sleep(0.3)
         await event.edit("".join(deq))
         deq.rotate(1)
-
 
 
 @doge.ub(

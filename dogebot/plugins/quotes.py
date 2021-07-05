@@ -36,6 +36,7 @@ async def quote_search(event):
         return await edit_delete(event, "`Sorry Zero results found`", 5)
     await edit_or_reply(event, response, parse_mode=parse_pre)
 
+
 @doge.ub(
     pattern="pquote$",
     command=("pquote", plugin_category),

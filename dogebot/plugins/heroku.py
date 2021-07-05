@@ -166,7 +166,7 @@ async def dyno_usage(dyno):
     minutes_remaining = remaining_quota / 60
     hours = math.floor(minutes_remaining / 60)
     minutes = math.floor(minutes_remaining % 60)
-    days = math.floor(hours / 24) # Cr: @coshgyn for days
+    days = math.floor(hours / 24)  # Cr: @coshgyn for days
     mounth = math.floor(days / 30)
     # - Current -
     App = result["apps"]

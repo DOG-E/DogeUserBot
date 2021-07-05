@@ -354,8 +354,10 @@ async def kakashi(event):
                 await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @instasavegrambot!\
-                    \n🔔 I unblocked @instasavegrambot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @instasavegrambot!\
+                    \n🔔 I unblocked @instasavegrambot and I'm trying again.**"
+                )
                 await conv.send_message("/start")
 
             await conv.get_response()

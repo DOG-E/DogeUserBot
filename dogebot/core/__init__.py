@@ -2,7 +2,7 @@
 #
 # Forked, developed and edited for @DogeUserbot
 #
-from .decorators import check_owner, callbacq
+from .decorators import callbacq, check_owner
 
 CMD_INFO = {}
 PLG_INFO = {}

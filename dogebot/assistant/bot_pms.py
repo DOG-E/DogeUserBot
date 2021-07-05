@@ -346,7 +346,8 @@ async def send_flood_alert(user_) -> None:
         except Exception as e:
             if BOTLOG:
                 await doge.tgbot.send_message(
-                    BOTLOG_CHATID, f"**❗ ERROR:**\nℹ While updating flood count\n➡ `{str(e)}`"
+                    BOTLOG_CHATID,
+                    f"**❗ ERROR:**\nℹ While updating flood count\n➡ `{str(e)}`",
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
     else:
@@ -456,7 +457,9 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
-        return await c_q.answer(f"**ℹ Bot Antiflood was already disabled.**", alert=False)
+        return await c_q.answer(
+            f"**ℹ Bot Antiflood was already disabled.**", alert=False
+        )
     delgvar("bot_antif")
     await c_q.answer(f"ℹ Bot Antiflood disabled.**", alert=False)
     await c_q.edit("**ℹ BOT_ANTIFLOOD is now disabled!**")

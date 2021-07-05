@@ -155,7 +155,9 @@ async def dogegban(event):
     count = 0
     teledoge = len(san)
     if teledoge == 0:
-        return await edit_delete(dogee, "`you are not even admin of atleast one group `")
+        return await edit_delete(
+            dogee, "`you are not even admin of atleast one group `"
+        )
     await dogee.edit(
         f"initiating ungban of the [user](tg://user?id={user.id}) in `{len(san)}` groups"
     )

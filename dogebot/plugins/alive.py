@@ -20,11 +20,11 @@ from dogebot import StartTime, doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.functions import dogealive, check_data_base_heal_th, get_readable_time
+from ..helpers.functions import check_data_base_heal_th, dogealive, get_readable_time
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
-from . import mention, lang
 from . import dogeversion as dogever
+from . import lang, mention
 
 plugin_category = "utils"
 
@@ -62,7 +62,9 @@ async def amireallyalive(event):
         pyver(),
         ping,
     )
-    DOG_IMG = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    DOG_IMG = (
+        gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    )
     if DOG_IMG:
         DOG = [x for x in DOG_IMG.split()]
         PIC = random.choice(DOG)
@@ -78,6 +80,7 @@ async def amireallyalive(event):
             )
     else:
         await edit_or_reply(event, caption)
+
 
 temp = "**{ALIVE_TEXT}**\n\n\
 **{EMOJI} Master : {mention}**\n\

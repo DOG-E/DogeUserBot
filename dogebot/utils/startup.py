@@ -12,6 +12,7 @@ from pathlib import Path
 import requests
 from telethon import Button, functions, types, utils
 from telethon.tl.functions.channels import EditPhotoRequest
+
 from dogebot import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 
 from ..Config import Config
@@ -214,9 +215,8 @@ async def verifyLoggerGroup():
         _, groupid = await create_supergroup(
             "🐾 Dᴏɢᴇ Bᴏᴛ Lᴏɢ", doge, Config.TG_BOT_USERNAME, descript
         )
-        Photo = await doge.upload_file(file='dogebot/helpers/styles/DogeBotLog.jpg')
-        await doge(EditPhotoRequest(channel=groupid, 
-            photo=Photo))
+        Photo = await doge.upload_file(file="dogebot/helpers/styles/DogeBotLog.jpg")
+        await doge(EditPhotoRequest(channel=groupid, photo=Photo))
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         msg = await doge.send_message(groupid, descript)
         await msg.pin()
@@ -224,7 +224,7 @@ async def verifyLoggerGroup():
             "Private Group for PRIVATE_GROUP_BOT_API_ID is created successfully and added to vars."
         )
         flag = True
-    if PM_LOGGER_GROUP_ID!= -100:
+    if PM_LOGGER_GROUP_ID != -100:
         try:
             entity = await doge.get_entity(PM_LOGGER_GROUP_ID)
             if not isinstance(entity, types.User) and not entity.creator:

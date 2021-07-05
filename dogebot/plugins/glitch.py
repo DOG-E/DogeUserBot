@@ -67,7 +67,9 @@ async def glitch(event):
             duration=DURATION,
             loop=LOOP,
         )
-        teledoge = await event.client.send_file(event.chat_id, glitched, reply_to=dogeid)
+        teledoge = await event.client.send_file(
+            event.chat_id, glitched, reply_to=dogeid
+        )
         await _dogeutils.unsavegif(event, teledoge)
     await glitch_file[0].delete()
     for files in (glitch_file[1], glitched):

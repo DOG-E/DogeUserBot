@@ -223,7 +223,10 @@ async def cffont(event):
         await asyncio.sleep(1)
         await dogevent.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
     else:
-        arg = f"dogebot/helpers/styles/{input_str}" or f"dogebot/helpers/styles/otherfonts/{input_str}"
+        arg = (
+            f"dogebot/helpers/styles/{input_str}"
+            or f"dogebot/helpers/styles/otherfonts/{input_str}"
+        )
         addgvar("CNG_FONTS", arg)
         await edit_or_reply(event, f"**Fonts for Memify changed to :-** `{input_str}`")
 

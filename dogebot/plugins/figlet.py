@@ -5,7 +5,7 @@
 import pyfiglet
 
 from ..helpers.utils import _format
-from . import _format, doge, deEmojify, edit_delete, edit_or_reply
+from . import _format, deEmojify, doge, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 

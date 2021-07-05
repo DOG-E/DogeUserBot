@@ -4,11 +4,11 @@
 #
 import os
 import zipfile
+from datetime import date
+from json import loads
 from random import choice
 from textwrap import wrap
 from uuid import uuid4
-from json import loads
-from datetime import date
 
 import requests
 from PIL import Image, ImageColor, ImageDraw, ImageFont
@@ -17,11 +17,12 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest
 
 from ...Config import Config
-from ...sql_helper.globals import gvarstatus
 from ...core.managers import edit_delete
-from ..resources.states import states
 from ...plugins import mention
+from ...sql_helper.globals import gvarstatus
+from ..resources.states import states
 from ..utils.extdl import install_pip
+
 try:
     from imdb import IMDb
 except ModuleNotFoundError:
@@ -189,14 +190,18 @@ async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @AsciiArt_Bot!\
-                    \n🔔 I unblocked @AsciiArt_Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @AsciiArt_Bot!\
+                    \n🔔 I unblocked @AsciiArt_Bot and I'm trying again.**"
+                )
                 msg = await conv.send_file(msg)
-            
+
             response = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
             if response.text.startswith("Forward"):
-                await dogevent.edit("```Can you kindly disable your forward privacy settings for good?```")
+                await dogevent.edit(
+                    "```Can you kindly disable your forward privacy settings for good?```"
+                )
             else:
                 await dogevent.delete()
                 await borg.send_file(
@@ -208,7 +213,7 @@ async def asciiart(borg, msg, chat_id, dogevent, reply_to_id):
                         \n\nby:** {mention}",
                 )
                 await borg.send_read_acknowledge(conv.chat_id)
-        
+
         except:
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
 
@@ -222,10 +227,12 @@ async def clippyart(borg, dogevent, msg, chat_id, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Clippy bot!\
-                    \n🔔 I unblocked @Clippy bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Clippy bot!\
+                    \n🔔 I unblocked @Clippy bot and I'm trying again.**"
+                )
                 msg = await conv.send_file(msg)
-            
+
             pic = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
             await dogevent.delete()
@@ -250,10 +257,12 @@ async def lines50art(borg, dogevent, msg, chat_id, reply_to_id):
                 msg = await conv.send_file(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Lines50Bot!\
-                    \n🔔 I unblocked @Lines50Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Lines50Bot!\
+                    \n🔔 I unblocked @Lines50Bot and I'm trying again.**"
+                )
                 msg = await conv.send_file(msg)
-            
+
             pic = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
             await dogevent.delete()
@@ -280,12 +289,14 @@ async def linkpreviewb(borg, dogevent, chat_id, reply_message):
                 )
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @ChotamReaderBot!\
-                    \n🔔 I unblocked @ChotamReaderBot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @ChotamReaderBot!\
+                    \n🔔 I unblocked @ChotamReaderBot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=chat)
                 )
-            
+
             await borg.forward_messages(chat, reply_message)
             response = await response
             await borg.send_read_acknowledge(conv.chat_id)
@@ -309,12 +320,14 @@ async def rekognitionb(borg, dogevent, msg, reply_message):
                 )
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Rekognition_Bot!\
-                    \n🔔 I unblocked @Rekognition_Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Rekognition_Bot!\
+                    \n🔔 I unblocked @Rekognition_Bot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=chat)
                 )
-                
+
             await borg.forward_messages(chat, reply_message)
             response = await response
             if response.text.startswith("See next message."):
@@ -324,12 +337,13 @@ async def rekognitionb(borg, dogevent, msg, reply_message):
                 response = await response
                 msg = response.message.message
                 await dogevent.edit(msg)
-        
+
             else:
                 await dogevent.edit("Sorry, I couldnt find it")
             await borg.send_read_acknowledge(conv.chat_id)
         except:
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
+
 
 # For memes
 async def mememaker(borg, msg, dogevent, chat_id, reply_to_id):
@@ -340,10 +354,12 @@ async def mememaker(borg, msg, dogevent, chat_id, reply_to_id):
                 msg = await conv.send_message(msg)
             except YouBlockedUserError:
                 borg(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @TheMemeMakerBot!\
-                    \n🔔 I unblocked @TheMemeMakerBot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @TheMemeMakerBot!\
+                    \n🔔 I unblocked @TheMemeMakerBot and I'm trying again.**"
+                )
                 msg = await conv.send_message(msg)
-            
+
             pic = await conv.get_response()
             await borg.send_read_acknowledge(conv.chat_id)
             await dogevent.delete()
@@ -405,33 +421,52 @@ async def covidturkey(event, ignore=False):
         if ignore is False:
             today = date.today()
             d1 = today.strftime("%d.%m.%Y")
-            if d1 != durum['tarih']:
-                return await event.edit("**Bugüne ait Covid - 19 günlük hasta tablosu henüz yayınlanmadı!**")
+            if d1 != durum["tarih"]:
+                return await event.edit(
+                    "**Bugüne ait Covid - 19 günlük hasta tablosu henüz yayınlanmadı!**"
+                )
         print(str(durum))
         message = "**🇹🇷 COVID - 19 HASTA TABLOSU 🦠**\n\n"
-        message += "**📅 %s - GÜNLÜK VERİLER 😷**\n" % durum['tarih']
-        message += "**Test Sayısı:** `%s`\n" % durum['gunluk_test']
-        message += "**Vaka Sayısı:** `%s`\n" % durum['gunluk_vaka']
-        message += "**Hasta Sayısı:** `%s`\n" % durum['gunluk_hasta']
-        message += "**Vefat Sayısı:** `%s`\n" % durum['gunluk_vefat']
-        message += "**İyileşen Sayısı:** `%s`\n\n\n" % durum['gunluk_iyilesen']
+        message += "**📅 %s - GÜNLÜK VERİLER 😷**\n" % durum["tarih"]
+        message += "**Test Sayısı:** `%s`\n" % durum["gunluk_test"]
+        message += "**Vaka Sayısı:** `%s`\n" % durum["gunluk_vaka"]
+        message += "**Hasta Sayısı:** `%s`\n" % durum["gunluk_hasta"]
+        message += "**Vefat Sayısı:** `%s`\n" % durum["gunluk_vefat"]
+        message += "**İyileşen Sayısı:** `%s`\n\n\n" % durum["gunluk_iyilesen"]
         message += "**📆 BU HAFTANIN VERİLERİ 🤒**\n"
-        message += "**Hastalarda Zatürre Oranı:** `%"+ durum['hastalarda_zaturre_oran'] + "`\n"
-        message += "**Yatak Doluluk Oranı:** `%"+durum['yatak_doluluk_orani']+"`\n"
-        message += "**Erişkin Yoğun Bakım Doluluk Oranı:** `%"+durum['eriskin_yogun_bakim_doluluk_orani']+"`\n"
-        message += "**Ventilatör Doluluk Oranı:** `%"+durum['ventilator_doluluk_orani']+"`\n"
-        message += "**Ortalama Temaslı Tespit Süresi:** `%s SAAT`\n" % durum['ortalama_temasli_tespit_suresi']
-        message += "**Filyasyon Oranı:** `%"+durum['filyasyon_orani']+"`\n\n\n"
+        message += (
+            "**Hastalarda Zatürre Oranı:** `%"
+            + durum["hastalarda_zaturre_oran"]
+            + "`\n"
+        )
+        message += "**Yatak Doluluk Oranı:** `%" + durum["yatak_doluluk_orani"] + "`\n"
+        message += (
+            "**Erişkin Yoğun Bakım Doluluk Oranı:** `%"
+            + durum["eriskin_yogun_bakim_doluluk_orani"]
+            + "`\n"
+        )
+        message += (
+            "**Ventilatör Doluluk Oranı:** `%"
+            + durum["ventilator_doluluk_orani"]
+            + "`\n"
+        )
+        message += (
+            "**Ortalama Temaslı Tespit Süresi:** `%s SAAT`\n"
+            % durum["ortalama_temasli_tespit_suresi"]
+        )
+        message += "**Filyasyon Oranı:** `%" + durum["filyasyon_orani"] + "`\n\n\n"
         message += "**📊 TOPLAM VERİLER 🩺**\n"
-        message += "**Test Sayısı:** `%s`\n" % durum['toplam_test']
-        message += "**Hasta Sayısı:** `%s`\n" % durum['toplam_hasta']
-        message += "**Vefat Sayısı:** `%s`\n" % durum['toplam_vefat']
-        message += "**Ağır Hasta Sayısı:** `%s`\n" % durum['agir_hasta_sayisi']
-        message += "**İyileşen Sayısı:** `%s`" % durum['toplam_iyilesen']
+        message += "**Test Sayısı:** `%s`\n" % durum["toplam_test"]
+        message += "**Hasta Sayısı:** `%s`\n" % durum["toplam_hasta"]
+        message += "**Vefat Sayısı:** `%s`\n" % durum["toplam_vefat"]
+        message += "**Ağır Hasta Sayısı:** `%s`\n" % durum["agir_hasta_sayisi"]
+        message += "**İyileşen Sayısı:** `%s`" % durum["toplam_iyilesen"]
         await event.edit(message)
     except Exception as err:
         print(str(err))
-        await event.edit("**⛔ Teknik bir hata nedeniyle Covid-19 hasta tablosunu getiremedim!**")
+        await event.edit(
+            "**⛔ Teknik bir hata nedeniyle Covid-19 hasta tablosunu getiremedim!**"
+        )
 
 
 async def hide_inlinebot(borg, bot_name, text, chat_id, reply_to_id, c_lick=0):

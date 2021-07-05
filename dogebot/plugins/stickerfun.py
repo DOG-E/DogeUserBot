@@ -17,7 +17,12 @@ from telethon.tl.types import InputMessagesFilterDocument
 from dogebot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import deEmojify, hide_inlinebot, hide_inlinebot_point, waifutxt
+from ..helpers.functions import (
+    deEmojify,
+    hide_inlinebot,
+    hide_inlinebot_point,
+    waifutxt,
+)
 from ..helpers.utils import reply_id
 
 plugin_category = "fun"

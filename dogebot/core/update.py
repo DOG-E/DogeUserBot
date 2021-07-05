@@ -13,16 +13,16 @@ import asyncio
 import os
 import sys
 
-import urllib3
 import heroku3
+import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from telethon import Button
 
-from . import *
 from .. import UPSTREAM_REPO_URL, dogeversion
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
+from . import *
 
 UPSTREAM_REPO_BRANCH = Config.UPSTREAM_REPO_BRANCH
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
@@ -55,7 +55,9 @@ async def update_requirements():
     reqs = str(requirements_path)
     try:
         process = await asyncio.create_subprocess_shell(
-            " ".join([sys.executable, "-m", "pip", "install", "--no-cache-dir", "-r", reqs]),
+            " ".join(
+                [sys.executable, "-m", "pip", "install", "--no-cache-dir", "-r", reqs]
+            ),
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
@@ -70,10 +72,14 @@ async def updater(event):
     try:
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n\n`directory {error} is not found`")
+        await event.edit(
+            f"`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n\n`directory {error} is not found`"
+        )
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n\n`Early failure!\n{error}`")
+        await event.edit(
+            f"`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n\n`Early failure!\n{error}`"
+        )
         return repo.__del__()
     except InvalidGitRepositoryError:
         repo = Repo.init()
@@ -193,7 +199,8 @@ async def changes(okk):
         file = open(f"DogeUserBot_changelog.txt", "w+")
         file.write(tl_chnglog)
         file.close()
-        await okk.edit("Click the below button to update.",
+        await okk.edit(
+            "Click the below button to update.",
             file="DogeUserBot_changelog.txt",
             buttons=Button.inline("Update Now", data="updatenow"),
         )
@@ -205,4 +212,3 @@ async def changes(okk):
             buttons=Button.inline("Update Now", data="updatenow"),
             parse_mode="html",
         )
-

@@ -13,7 +13,7 @@ from telethon.tl.types import DocumentAttributeFilename
 
 from dogebot import doge
 
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import reply_id
 
 plugin_category = "extra"
@@ -118,13 +118,15 @@ async def _(event):
                 await event.client.forward_messages(chat, reply_message)
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await event.edit("**⛔ You've previously blocked @Image_DeepFryBot!\
-                    \n🔔 I unblocked @Image_DeepFryBot and I'm trying again.**")
+                await event.edit(
+                    "**⛔ You've previously blocked @Image_DeepFryBot!\
+                    \n🔔 I unblocked @Image_DeepFryBot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=chat)
                 )
                 await event.client.forward_messages(chat, reply_message)
-            
+
             response = await response
             await event.client.send_read_acknowledge(conv.chat_id)
 
@@ -139,7 +141,6 @@ async def _(event):
             await event.delete()
         except:
             return await edit_delete(event, "**🔔 Something went wrong!**")
-
 
 
 @doge.ub(

@@ -4,11 +4,9 @@
 #
 import os
 
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import asciiart, lines50art, clippyart
-from . import _dogetools, doge, convert_toimage, mention, reply_id
+from ..helpers.functions import asciiart, clippyart, lines50art
+from . import _dogetools, convert_toimage, doge, reply_id
 
 plugin_category = "extra"
 
@@ -29,7 +27,7 @@ async def horny(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edit_delete(event, "```Reply to a media file...```")
-    dogevent = await edit_or_reply(event, "```Wait making ASCII...```")
+    await edit_or_reply(event, "```Wait making ASCII...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -57,7 +55,7 @@ async def pussy(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edit_delete(event, "```Reply to a media file...```")
-    dogevent = await edit_or_reply(event, "```Processing...```")
+    await edit_or_reply(event, "```Processing...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -85,7 +83,7 @@ async def fck(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edit_delete(event, "```Reply to a media file...```")
-    dogevent = await edit_or_reply(event, "```Processing...```")
+    await edit_or_reply(event, "```Processing...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")

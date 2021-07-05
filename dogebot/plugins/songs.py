@@ -265,10 +265,12 @@ async def _(event):
                 purgeflag = await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Songdl_Bot!\
-                    \n🔔 I unblocked @Songdl_Bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Songdl_Bot!\
+                    \n🔔 I unblocked @Songdl_Bot and I'm trying again.**"
+                )
                 purgeflag = await conv.send_message("/start")
-            
+
             await conv.get_response()
             await conv.send_message(song)
             hmm = await conv.get_response()
@@ -298,10 +300,9 @@ async def _(event):
             )
             await dogevent.delete()
             await delete_messages(event, chat, purgeflag)
-        
+
         except:
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
-
 
 
 # reverse search by  @Lal_bakthan
@@ -327,10 +328,12 @@ async def _(event):
                 await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @AuddBot!\
-                    \n🔔 I unblocked @AuddBot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @AuddBot!\
+                    \n🔔 I unblocked @AuddBot and I'm trying again.**"
+                )
                 await conv.send_message("/start")
-            
+
             await conv.get_response()
             await conv.send_message(reply_message)
             check = await conv.get_response()
@@ -341,7 +344,7 @@ async def _(event):
             await dogevent.edit("Wait just a sec...")
             result = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
-        
+
         except:
             return await edit_delete(dogevent, "**🔔 Something went wrong!**")
 

@@ -187,7 +187,9 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=re.compile(b"^ytdl_(listall|back|next|detail)_([a-z0-9]+)_([\s\S]*)"))
+    CallbackQuery(
+        data=re.compile(b"^ytdl_(listall|back|next|detail)_([a-z0-9]+)_([\s\S]*)")
+    )
 )
 @check_owner
 async def ytdl_callback(c_q: CallbackQuery):

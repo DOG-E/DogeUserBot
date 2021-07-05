@@ -84,7 +84,6 @@ class MessageEdited(NewMessage):
         pass
 
 
-
 async def safe_check_text(msg):  # sourcery no-metrics
     if not msg:
         return False

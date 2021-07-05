@@ -1,4 +1,4 @@
-# Credit: @Zero_cool7870 
+# Credit: @Zero_cool7870
 #
 # Credits to @sandy1709 (@mrconfused)
 #

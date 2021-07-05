@@ -15,6 +15,7 @@ from ..languages import lang
 
 plugin_category = "extra"
 
+
 @doge.ub(
     pattern="magisk$",
     command=("magisk", plugin_category),
@@ -42,6 +43,8 @@ async def kakashi(event):
 
 
 deviceusg = f"{lang('deviceusg')}"
+
+
 @doge.ub(
     pattern="(device|cihaz)(?:\s|$)([\s\S]*)",
     command=("device", plugin_category),

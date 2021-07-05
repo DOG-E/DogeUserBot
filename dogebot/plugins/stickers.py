@@ -82,7 +82,9 @@ def char_is_emoji(character):
 def pack_nick(username, pack, is_anim):
     if gvarstatus("CUSTOM_STICKER_PACKNAME"):
         if is_anim:
-            packnick = f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} {pack} @DogeUserBot Anim"
+            packnick = (
+                f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} {pack} @DogeUserBot Anim"
+            )
         else:
             packnick = f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} {pack} @DogeUserBot"
     elif is_anim:
@@ -631,10 +633,12 @@ async def pic2packcmd(event):
                 await event.client.send_message(chat, "/cancel")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @Stickers bot!\
-                    \n🔔 I unblocked @Stickers bot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @Stickers bot!\
+                    \n🔔 I unblocked @Stickers bot and I'm trying again.**"
+                )
                 await event.client.send_message(chat, "/cancel")
-            
+
             await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
             await event.client.send_message(chat, "/newpack")
             await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))

@@ -12,7 +12,7 @@ from telethon.tl.functions.contacts import UnblockRequest
 from dogebot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 from . import awooify, baguette, convert_toimage, iphonex, lolice
 
 plugin_category = "extra"
@@ -44,13 +44,15 @@ async def _(dogebot):
                 await dogebot.client.send_message(chat, reply_message)
             except YouBlockedUserError:
                 dogebot.client(UnblockRequest(chat))
-                await event.edit("**⛔ You've previously blocked @Hazmat_Suit_Bot!\
-                    \n🔔 I unblocked @Hazmat_Suit_Bot and I'm trying again.**")
+                await event.edit(
+                    "**⛔ You've previously blocked @Hazmat_Suit_Bot!\
+                    \n🔔 I unblocked @Hazmat_Suit_Bot and I'm trying again.**"
+                )
                 response = conv.wait_event(
                     events.NewMessage(incoming=True, from_users=chat)
                 )
                 await dogebot.client.send_message(chat, reply_message)
-            
+
             response = await response
             if response.text.startswith("Forward"):
                 await event.edit(

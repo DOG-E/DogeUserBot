@@ -65,7 +65,7 @@ async def currency(event):
         aresponse = await AioHttp().get_json(
             f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}"
         )
-        path = os.getcwd()
+        os.getcwd()
         symbols = await AioHttp().get_raw(
             f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Core/currency.py"
         )
@@ -115,10 +115,12 @@ async def _(event):
                 await conv.send_message("/start")
             except YouBlockedUserError:
                 event.client(UnblockRequest(chat))
-                await dogevent.edit("**⛔ You've previously blocked @VS_Robot!\
-                    \n🔔 I unblocked @VS_Robot and I'm trying again.**")
+                await dogevent.edit(
+                    "**⛔ You've previously blocked @VS_Robot!\
+                    \n🔔 I unblocked @VS_Robot and I'm trying again.**"
+                )
                 await conv.send_message("/start")
-            
+
             await conv.get_response()
             await event.client.forward_messages(chat, reply_message)
             response1 = await conv.get_response()

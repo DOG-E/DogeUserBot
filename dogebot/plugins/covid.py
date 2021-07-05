@@ -4,7 +4,7 @@
 #
 from covid import Covid
 
-from . import doge, covidindia, covidturkey, edit_delete, edit_or_reply
+from . import covidindia, covidturkey, doge, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
@@ -68,6 +68,7 @@ async def coronaid(event):
                 ),
                 5,
             )
+
 
 @doge.ub(
     pattern="covidtr(?:\s|$)([\s\S]*)",

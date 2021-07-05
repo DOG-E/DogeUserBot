@@ -29,7 +29,6 @@ from ..sql_helper.global_list import (
     is_in_list,
     rm_from_list,
 )
-from ..helpers.utils import _format
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import (
     AUTONAME,
