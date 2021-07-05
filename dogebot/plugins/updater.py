@@ -12,7 +12,7 @@
 from git import Repo
 from telethon.tl.functions.channels import ExportMessageLinkRequest as GetLink
 
-from ..core.update import dev_doge, updater
+from ..core.updater import dev_doge, updater
 from . import *
 
 LOGS = logging.getLogger(__name__)

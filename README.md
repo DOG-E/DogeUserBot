@@ -39,7 +39,7 @@ href="https://github.com/DOG-E/DogeUserBot/wiki">
 ⚡ Iɴsᴛᴀʟʟᴀᴛɪᴏɴs | Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
 </a>
 
-----
+---
 
 <br>
 
@@ -55,7 +55,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Replit.png">
 
 <br>
 
-----
+---
 
 <br>
 
@@ -89,13 +89,13 @@ width="85">
 
 📋 **Daha sonra aşağıdaki kodu Termux'a yapıştırın**
 
-````sh
+```sh
 bash <(curl -L https://)
-````
+```
 
 <br>
 
-----
+---
 
 <br>
 
@@ -128,18 +128,18 @@ width="200">
 
 📋 **Daha sonra aşağıdaki kodun hepsini kopyalayın ve iSH'a yapıştırın**
 
-````sh
+```sh
 apk update
 && apk add bash
 && apk add curl
 && curl -L -o Source.sh https://
 && chmod +x Source.sh
 && bash Source.sh
-````
+```
 
 <br>
 
-----
+---
 
 <br>
 
@@ -161,13 +161,13 @@ width='185'/>
 
 📋 **Daha sonra aşağıdaki kodu PowerShell'e yapıştırın**
 
-````ps
+```ps
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://')
-````
+```
 
 <br>
 
-----
+---
 
 <br>
 
@@ -183,7 +183,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 
 <br>
 
-----
+---
 
 <br>
 
@@ -198,21 +198,21 @@ python3 -m dogesetup.py
 
 <br>
 
-----
+---
 
 <br>
 
 ## **💠 Iɴғᴏ**
 
-````
+```
 - This bot,
 - helps manage your account,
 - groups & channels on Telegram.
 
 - Makes Telegram fun and easy to use.
-````
+```
 
-````
+```
 💡  Doge UserBot due;
 
 🚫  Your Telegram account may be restricted/banned.
@@ -228,7 +228,7 @@ python3 -m dogesetup.py
 
 📍  By installing Doge UserBot,
 -   you accept all these responsibilities.
-````
+```
 
 <br>
 
@@ -240,7 +240,7 @@ python3 -m dogesetup.py
 
 ## **💠 Bɪʟɢɪ**
 
-````
+```
 - Bu bot,
 - Telegram'da hesabınızı,
 - gruplarınızı & kanallarınızı
@@ -248,9 +248,9 @@ python3 -m dogesetup.py
 
 - Telegram'ı eğlenceli hale getirmek
 - ve kullanımını kolaylaştırmak içindir.
-````
+```
 
-````
+```
 💡  Doge UserBot sebebiyle;
 
 🚫  Telegram hesabınız kısıtlanabilir/yasaklanabilir.
@@ -265,7 +265,7 @@ python3 -m dogesetup.py
 
 📍  Doge UserBot kurarak,
 -   tüm bu sorumlulukları kabul etmiş olursunuz.
-````
+```
 
 <br>
 
@@ -298,11 +298,11 @@ width="150">
 
 🛡 This project is protected by the GNU Affero General Public License.
 
-✅ All rights reserved.
+- ✅ All rights reserved.
 
 <br>
 
-----
+---
 
 <br>
 
