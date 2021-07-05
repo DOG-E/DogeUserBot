@@ -1,11 +1,11 @@
 # Get Docker image
-FROM teledoge/dogeuserbot:test
+FROM teledoge/dogeuserbot:latest
 
 # Clone Doge repository
-RUN git clone https://github.com/DOG-E/DogeUserBot.git /DogeUserBot
+RUN git clone https://github.com/DOG-E/DogeUserBot.git /root
 
 # Work directory
-WORKDIR /DogeUserBot
+WORKDIR /root
 
 # Minor adjustment
 ENV PATH="/home/dogebot/bin:$PATH"
