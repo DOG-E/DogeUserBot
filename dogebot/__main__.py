@@ -4,8 +4,7 @@
 #
 import sys
 
-import dogebot
-from dogebot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
+from dogebot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, __copyright__, __license__
 
 from .Config import Config
 from .core.logger import logging
@@ -21,8 +20,8 @@ from .utils import (
 
 LOGS = logging.getLogger("DogeUserbot")
 
-print(dogebot.__copyright__)
-print("Licensed under the terms of the " + dogebot.__license__)
+print(__copyright__)
+print("Licensed under the terms of the " + __license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
