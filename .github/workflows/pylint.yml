@@ -24,7 +24,6 @@ jobs:
       - name: lint with black
         run: |
           black --exclude "exampleconfig\.py" .
-      # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: '🤖 Pylint: Auto fixes'

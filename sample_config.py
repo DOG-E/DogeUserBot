@@ -19,9 +19,9 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH") or None
     # Database url Heroku sets it automatically else get this from ElephantSQL
     DB_URI = os.environ.get("DATABASE_URL", None)
-    # Get this value by running ### or https://
+    # Get this value by running ### or https://@DogeUserBot/DogeString
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
-    # Telegram Bot Token and Bot Username from @BotFather(https://T.me/BotFather)
+    # Telegram Bot Token and Bot Username from @BotFather ( https://t.me/BotFather )
     TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get(
         "TG_BOT_TOKEN_BF_HER", None
     )
@@ -61,10 +61,10 @@ class Config(object):
     # Set this will channel ID of your custom plugins
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL") or 0)
     # Set this value with your required name for Telegraph plugin
-    TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "dogeuserbot")
+    TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "DogeUserBot")
     # For custom thumb image set this with your required thumb Telegraph link
     THUMB_IMAGE = os.environ.get(
-        "THUMB_IMAGE", "https://telegra.ph/file/30772e5649e947279315f.jpg"
+        "THUMB_IMAGE", "https://telegra.ph/file/6086da8c041f5de3227ed.jpg"
     )
     # Specify NO_LOAD with plugin names for not loading in userbot
     NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
@@ -127,7 +127,7 @@ class Config(object):
     LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
     LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
     LASTFM_PASSWORD_PLAIN = os.environ.get("LASTFM_PASSWORD", None)
-    # SpamWatch API you can get it from get api from http://t.me/SpamWatchBot?start=token
+    # SpamWatch API you can get it from get api from https://t.me/SpamWatchBot?start=token
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     # Can get from https://coffeehouse.intellivoid.net/
     RANDOM_STUFF_API_KEY = os.environ.get("RANDOM_STUFF_API_KEY", None)

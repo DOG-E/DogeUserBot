@@ -25,11 +25,11 @@
       "value": ""
     },
     "APP_ID": {
-      "description": "Get this value from https://my.telegram.org! Please do not steal!",
+      "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
       "value": ""
     },
     "API_HASH": {
-      "description": "Get this value from https://my.telegram.org! Please do not steal!",
+      "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
       "value": ""
     },
     "STRING_SESSION": {
@@ -45,7 +45,7 @@
       "value": ""
     },
     "HEROKU_API_KEY": {
-      "description": "Required for updating the bot and other stuff get it from https://dashboard.heroku.com/account",
+      "description": "Required for updating the bot and other stuff get it from https://dashboard.heroku.com/account Please don't steal!",
       "value": "",
       "required": true
     },
@@ -55,13 +55,13 @@
       "required": true
     },
     "UPSTREAM_REPO": {
-      "description": "Required for installation and updates. I recommend not changing it.",
+      "description": "Required for installation and updates. Recommend don't change it.",
       "value": "https://github.com/DOG-E/DogeUserBot",
       "required": true
     },
     "DOGELANG": {
-      "description": "Which language should the Doge speak?",
-      "value": "tr",
+      "description": "Which language should the Doge speak? Available languages: Turkish(tr), English(en)",
+      "value": "en",
       "reqired": true
     },
     "TZ": {
@@ -97,7 +97,7 @@
       "telethon",
       "postgresql"
   ],
-  "logo": "https://raw.githubusercontent.com/DOG-E/Sources/DOGE/Material/DogeUserBot.jpg",
+  "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
   "name": "Telegram Doge UserBot",
   "repository": "https://github.com/DOG-E/DogeUserBot",
   "stack": "container",

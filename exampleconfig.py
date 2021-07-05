@@ -9,9 +9,9 @@ class Development(Config):
     ALIVE_NAME = "Your value"
     # Create any PostgreSQL database (recommend to use ElephantSQL) and paste that link here
     DB_URI = "Your value"
-    # Get this value by running ### or https://
+    # Get this value by running ### or https://repl.it/@DogeUserBot/DogeString
     STRING_SESSION = "Your value"
-    # Create a new bot in @BotFather(https://t.me/BotFather) and fill the following vales with Bot TokenAPI and username respectively
+    # Create a new bot in @BotFather ( https://t.me/BotFather ) and fill the following vales with Bot TokenAPI and username respectively
     TG_BOT_TOKEN = "Your value"
     TG_BOT_USERNAME = "Your value"
     # Set Doge language
