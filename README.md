@@ -109,7 +109,7 @@ bash <(curl -L https://)
 href="https://apps.apple.com/us/app/testflight/id899247664?itsct=apps_box_badge&amp;itscg=30200">
 <img
 src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1406073600&h=56f9327554e3f4a3efa25cd1a21dcc2f" alt="TestFlight on the App Store"
-style="border-radius: 10px; width: 200px; height: 83px;">
+width="200">
 </a>
 
 📲 **Download the iSH Shell app from the button below and tap Start Testing**
@@ -121,7 +121,7 @@ href="https://apps.apple.com/us/app/ish-shell/id1436902243?itsct=apps_box_badge&
 <img
 src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-us?size=250x83&amp;releaseDate=1603324800&h=74c20865aa899ea5488f70731bfa6fcb"
 alt="iSH Shell on the App Store"
-style="border-radius: 10px; width: 200px; height: 83px;">
+width="200">
 </a>
 
 📋 **Then copy all of the code below and paste it into iSH**
@@ -154,7 +154,7 @@ href='//www.microsoft.com/store/apps/9p7qfqmjrfp7?cid=storebadge&ocid=badge'>
 <img
 src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png'
 alt='Python on the Microsoft Store'
-style='width: 200px'/>
+width='185'/>
 </a>
 
 📋 **Then paste the code below into PowerShell**
@@ -204,7 +204,7 @@ python3 -m dogesetup.py
 
 ## **💠 Iɴғᴏ**
 
-````md
+````
 - This bot,
 - helps manage your account,
 - groups & channels on Telegram.
@@ -212,7 +212,7 @@ python3 -m dogesetup.py
 - Makes Telegram fun and easy to use.
 ````
 
-````md
+````
 💡  Doge UserBot due;
 
 🚫  Your Telegram account may be restricted/banned.
@@ -232,17 +232,15 @@ python3 -m dogesetup.py
 
 <br>
 
-> 💬 For any questions & feedback, you can reach us through our [🐶 Doge Support](https://t.me/DogeSup) group.
+- **💬 For any questions & feedback, you can reach us through our [🐶 Doge Support group](https://t.me/DogeSup).**
 
-````md
-🐶      THANKS FOR USING OUR BOT         🐾
-````
+>- ``🐶      THANKS FOR USING OUR BOT         🐾``
 
 <br>
 
 ## **💠 Bɪʟɢɪ**
 
-````md
+````
 - Bu bot,
 - Telegram'da hesabınızı,
 - gruplarınızı & kanallarınızı
@@ -252,7 +250,7 @@ python3 -m dogesetup.py
 - ve kullanımını kolaylaştırmak içindir.
 ````
 
-````md
+````
 💡  Doge UserBot sebebiyle;
 
 🚫  Telegram hesabınız kısıtlanabilir/yasaklanabilir.
@@ -271,11 +269,9 @@ python3 -m dogesetup.py
 
 <br>
 
-> 💬 Herhangi bir soru & geribildirim için bize [🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz.
+- **💬 Herhangi bir soru & geribildirim için bize [🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz.**
 
-````md
-🐶      BOTUMUZU KULLANDIĞINIZ İÇİN TEŞEKKÜRLER         🐾
-````
+>- ``🐶 BOTUMUZU KULLANDIĞINIZ İÇİN TEŞEKKÜRLER 🐾``
 
 <br>
 
