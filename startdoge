@@ -1,7 +1,6 @@
 #!/bin/bash
 
 _set_doge () {
-    ../requirements.txt requirements.txt
     chmod -R 755 bin
     echo "
                 ⏳⏳⏳⏳⏳⏳⏳⏳⏳⏳
