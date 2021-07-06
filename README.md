@@ -9,10 +9,13 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/DogeTemplate.p
 <br>
 <h1
 align="center">
-🐶 DOGE USERBOT 🐾
+
+**🐶 DOGE USERBOT 🐾**
+
 </h1>
 <h3
 align="center">
+
 ❤️ Hᴀᴠᴇ ᴀ Dᴏɢ ɪɴ Tᴇʟᴇɢʀᴀᴍ! ❤️
 <br>
 <br>
@@ -41,6 +44,7 @@ href="https://t.me/DogePlugin">
 href="https://github.com/DOG-E/DogeUserBot/wiki">
 ⚡ Iɴsᴛᴀʟʟᴀᴛɪᴏɴs ~ Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
 </a>
+</h3>
 <br>
 <br>
 
@@ -95,7 +99,7 @@ width="235">
 📋 **Daha sonra aşağıdaki kodu Termux'a yapıştırın**
 
 ```sh
-bash <(curl -L https://)
+# TODO
 ```
 <br>
 
@@ -132,12 +136,7 @@ width="200">
 📋 **Daha sonra aşağıdaki kodun hepsini kopyalayın ve iSH'a yapıştırın**
 
 ```sh
-apk update
-&& apk add bash
-&& apk add curl
-&& curl -L -o Source.sh https://
-&& chmod +x Source.sh
-&& bash Source.sh
+# TODO
 ```
 <br>
 
@@ -163,7 +162,7 @@ width='185'/>
 📋 **Daha sonra aşağıdaki kodu PowerShell'e yapıştırın**
 
 ```ps
-Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://')
+# TODO
 ```
 <br>
 
@@ -189,10 +188,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 ### **⌨️ Tᴇʀᴍɪɴᴀʟ, ᴇᴛᴄ.**
 
 ```sh
-git clone -b SETUP https://github.com/DOG-E/Source
-cd Source
-pip install -r requirements.txt
-python3 -m dogesetup.py
+# TODO
 ```
 <br>
 
@@ -227,14 +223,13 @@ python3 -m dogesetup.py
 -   you accept all these responsibilities.
 ```
 <br>
-
-**💬 For any questions & feedback, you can reach us through our [🐶 Doge Support group](https://t.me/DogeSup).**
-<h2
+<h3
 align="center">
-🐶 THANKS FOR 
 
-🐾 USING OUR BOT
-</h2>
+**💬 For any questions & feedback can**
+
+**write our [🐶 Doge Support group](https://t.me/DogeSup)**
+</h3>
 <br>
 
 ## **💠 Bɪʟɢɪ**
@@ -267,15 +262,13 @@ align="center">
 -   tüm bu sorumlulukları kabul etmiş olursunuz.
 ```
 <br>
-
-**💬 Herhangi bir soru & geribildirim için bize [🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz.**
-<h2
+<h3
 align="center">
-🐶 BİZİ TERCİH ETTİĞİNİZ
 
-🐾 İÇİN TEŞEKKÜR EDERİZ
-</h2>
+**💬 Herhangi bir soru & geribildirim için bize**
 
+**[🐶 Doge Destek grubumuzdan](https://t.me/DogeSup) ulaşabilirsiniz**
+</h3>
 <br>
 
 ## **🤍 Cʀᴇᴅɪᴛs ~ Tᴇşᴇᴋᴋüʀʟᴇʀ**
@@ -310,5 +303,14 @@ width="150">
 
 ---
 <br>
+<br>
+<br>
+<h2
+align="center">
 
-[🐶](https://bit.do/DogeUserBot) Made with [❤](https://bit.do/TeleDoge) by [@TeleDoge](https://github.com/TeleDoge)
+**[🐶](https://bit.do/DogeUserBot) Made with [❤](https://bit.do/TeleDoge) by [@TeleDoge](https://github.com/TeleDoge) [🐾](https://bit.do/TeleDoge)**
+
+</h2>
+<br>
+<br>
+<br>

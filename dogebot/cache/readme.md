@@ -1,1 +1,0 @@
-# Cache files of [@DogeUserBot](https://t.me/DogeUserBot)

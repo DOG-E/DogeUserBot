@@ -1,6 +1,6 @@
 {
   "name": "Telegram Doge UserBot",
-  "description": "Doge UserBot: is an excellent assistant telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
+  "description": "Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
   "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
   "keywords": [
       "powerful",
@@ -30,7 +30,7 @@
       "value": ""
     },
     "STRING_SESSION": {
-      "description": "Go to https://repl.it/@DogeUserBot/DogeString or paste the ### code into a program like termux, terminal, run it and paste the code you get here.",
+      "description": "Go to https://repl.it/@DogeUserBot/DogeString or paste the # TODO code into a program like termux, terminal, run it and paste the code you get here.",
       "value": ""
     },
     "TG_BOT_USERNAME": {
@@ -53,13 +53,8 @@
     },
     "UPSTREAM_REPO": {
       "description": "Required for installation and updates. Recommend don't change it.",
-      "value": "stabledoge",
+      "value": "https://github.com/DOG-E/DogeUserBot",
       "required": true
-    },
-    "DOGELANG": {
-      "description": "Which language should the Doge speak? Available languages: Turkish(tr), English(en)",
-      "value": "en",
-      "reqired": true
     },
     "TZ": {
       "description": "Required for correct time on autopic/get time. Write your time zone location closest to your current location in English. Know your timezone from http://www.timezoneconverter.com/cgi-bin/findzone.tzc",

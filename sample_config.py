@@ -19,7 +19,7 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH") or None
     # Database url Heroku sets it automatically else get this from ElephantSQL
     DB_URI = os.environ.get("DATABASE_URL", None)
-    # Get this value by running ### or https://@DogeUserBot/DogeString
+    # Get this value by running https://repl.it/@DogeUserBot/DogeString or # TODO
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     # Telegram Bot Token and Bot Username from @BotFather ( https://t.me/BotFather )
     TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get(
@@ -32,8 +32,6 @@ class Config(object):
     UPSTREAM_REPO = os.environ.get(
         "UPSTREAM_REPO", "https://github.com/DOG-E/DogeUserBot.git"
     )
-    # Set Doge language
-    DOGELANG = os.environ.get("DOGELANG", "en")
 
     # BASIC & MAIN CONFIG VARS
     # For profile default name
@@ -74,7 +72,7 @@ class Config(object):
     DEFAULT_PIC = os.environ.get("DEFAULT_PIC", None)
     # Set this with your default bio
     DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
-    # Set this with your deafult name
+    # Set this with your default name
     DEFAULT_NAME = os.environ.get("DEFAULT_NAME", None)
     # Specify command handler that should be used for the plugins
     # This should be a valid "regex" pattern
@@ -88,14 +86,14 @@ class Config(object):
     CHANGE_TIME = int(os.environ.get("CHANGE_TIME", 60))
     # SpamWatch, CAS, SpamProtection ban needed or not
     ANTISPAMBOT_BAN = os.environ.get("ANTISPAMBOT_BAN", False)
-    # Is dual logging needed or not true or false
+    # Is dual logging needed? Write; True or False
     DUAL_LOG = os.environ.get("DUAL_LOG", False)
     # Progress bar progress
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
 
     # API VARS FOR USERBOT
-    # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screen shot
+    # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screenshot
     SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
     # Get your own APPID from https://api.openweathermap.org/data/2.5/weather
     OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
@@ -103,6 +101,8 @@ class Config(object):
     # https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
     IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
     IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
+    # Get free api from https://dashboard.ipdata.co/sign-up.html
+    IPDATA_API = os.environ.get("IPDATA_API", None)
     # Get a Free API Key from OCR.Space
     OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
     # Genius lyrics get this value from https://genius.com/developers both has
@@ -111,7 +111,7 @@ class Config(object):
     REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
     # Get this value from https://free.currencyconverterapi.com/
     CURRENCY_API = os.environ.get("CURRENCY_API", None)
-    # Google Drive plugin for info: https://
+    # Google Drive plugin for info: # TODO
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
     G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID", None)
@@ -121,7 +121,7 @@ class Config(object):
     TG_2STEP_VERIFICATION_CODE = os.environ.get("TG_2STEP_VERIFICATION_CODE", None)
     # JustWatch Country for watch plugin
     WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "IN")
-    # Last.fm plugin for info: https://
+    # Last.fm plugin for info: # TODO
     BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
     LASTFM_API = os.environ.get("LASTFM_API", None)
     LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
@@ -137,7 +137,7 @@ class Config(object):
     # DeepAI value can get from https://deepai.org/
     DEEP_AI = os.environ.get("DEEP_AI", None)
 
-    # DO NOT EDIT BELOW THIS LINE IF YOU DO NOT KNOW WHAT YOU ARE DOING
+    # DON'T EDIT BELOW THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING
     # TG API limit. A message can have maximum 4096 characters!
     MAX_MESSAGE_SIZE_LIMIT = 4095
     # Specify LOAD and NO_LOAD
@@ -161,7 +161,7 @@ class Config(object):
     UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE")
     # DON'T TOUCH THIS AT ALL
     SUDO_USERS: Set[int] = set()
-    DOGEBOTLOGO = None
+    DOGEUBLOGO = None
     BOTLOG = False
     BOTLOG_CHATID = 0
 

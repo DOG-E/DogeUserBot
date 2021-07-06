@@ -1,1 +1,1 @@
-doger: bash start
+doger: bash startdoge

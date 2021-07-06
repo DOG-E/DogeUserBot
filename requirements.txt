@@ -9,6 +9,7 @@ cowpy
 dataclasses
 DateTime
 emoji
+fake_useragent
 fonttools
 geopy
 gitpython
@@ -22,10 +23,12 @@ hachoir
 git+https://github.com/TeleDoge/heroku3.py
 html-telegraph-poster
 humanize
+IMDbPY
 jikanpy
 justwatch
 lottie
 lyricsgenius
+markdown
 motor
 moviepy
 nekos.py
@@ -53,8 +56,6 @@ selenium
 ShazamAPI
 spamwatch
 speedtest-cli
-spotdl
-spotify_token
 sqlalchemy-json
 sqlalchemy==1.4.20
 telegraph

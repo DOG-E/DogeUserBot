@@ -1,14 +1,17 @@
 # Get Docker image
-FROM teledoge/dogeuserbot:latest
+FROM sandy1709/catuserbot:alpine
 
 # Clone Doge repository
-RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/dogebot
+RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/userbot
 
 # Work directory
-WORKDIR /root/dogebot
+WORKDIR /root/userbot
+
+# Install requirements
+RUN pip3 install -U -r requirements.txt
 
 # Minor adjustment
-ENV PATH="/home/dogebot/bin:$PATH"
+ENV PATH="/home/userbot/bin:$PATH"
 
 # Run Doge
-CMD ["python3", "doger"]
+CMD ["python3", "doger.py"]
