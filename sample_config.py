@@ -57,7 +57,7 @@ class Config(object):
         or 0
     )
 
-    # Custom vars for userbot
+    # CUSTOM VARS FOR USERBOT
     # Set this will channel ID of your custom plugins
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL") or 0)
     # Set this value with your required name for Telegraph plugin

@@ -16,16 +16,19 @@ doge.version = __version__
 doge.tgbot.version = __version__
 LOGS = logging.getLogger("DogeUserbot")
 bot = doge
-
 StartTime = time.time()
 dogeversion = "0.1"
 
+
 if Config.UPSTREAM_REPO == "devdoge":
     UPSTREAM_REPO_URL = "https://github.com/TeleDoge/DogeUserBot"
+
 elif Config.UPSTREAM_REPO == "stabledoge":
     UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot"
+
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
+
 
 if Config.PRIVATE_GROUP_BOT_API_ID == 0:
     if gvarstatus("PRIVATE_GROUP_BOT_API_ID") is None:
@@ -35,6 +38,7 @@ if Config.PRIVATE_GROUP_BOT_API_ID == 0:
         Config.BOTLOG_CHATID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
         Config.PRIVATE_GROUP_BOT_API_ID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
         Config.BOTLOG = True
+
 else:
     if str(Config.PRIVATE_GROUP_BOT_API_ID)[0] != "-":
         Config.BOTLOG_CHATID = int("-" + str(Config.PRIVATE_GROUP_BOT_API_ID))
@@ -42,13 +46,16 @@ else:
         Config.BOTLOG_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
     Config.BOTLOG = True
 
+
 if Config.PM_LOGGER_GROUP_ID == 0:
     if gvarstatus("PM_LOGGER_GROUP_ID") is None:
         Config.PM_LOGGER_GROUP_ID = -100
     else:
         Config.PM_LOGGER_GROUP_ID = int(gvarstatus("PM_LOGGER_GROUP_ID"))
+
 elif str(Config.PM_LOGGER_GROUP_ID)[0] != "-":
     Config.PM_LOGGER_GROUP_ID = int("-" + str(Config.PM_LOGGER_GROUP_ID))
+
 
 try:
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:
@@ -57,6 +64,7 @@ try:
         ]
     else:
         HEROKU_APP = None
+
 except Exception:
     HEROKU_APP = None
 
@@ -71,7 +79,7 @@ ISAFK = False
 AFKREASON = None
 CMD_LIST = {}
 SUDO_LIST = {}
-# for later purposes
+# For later purposes
 INT_PLUG = ""
 LOAD_PLUG = {}
 

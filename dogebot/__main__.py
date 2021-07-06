@@ -22,10 +22,12 @@ print("Licensed under the terms of the " + dogebot.__license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
+
 try:
     LOGS.info("Doge is waiking up...")
     doge.loop.run_until_complete(setup_bot())
     LOGS.info("Doge lives!")
+
 except Exception as e:
     LOGS.error(f"{str(e)}")
     sys.exit()
@@ -65,11 +67,14 @@ async def startup_process():
 
 doge.loop.run_until_complete(startup_process())
 
+
 if len(sys.argv) not in (1, 3, 4):
     doge.disconnect()
+
 elif not Dogecheck.sucess:
     if HEROKU_APP is not None:
         HEROKU_APP.restart()
+
 else:
     try:
         doge.run_until_disconnected()

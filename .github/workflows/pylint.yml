@@ -29,6 +29,6 @@ jobs:
           commit_message: '🤖 Pylint: Auto fixes'
           commit_options: '--no-verify'
           repository: .
-          commit_user_name: teledoge
-          commit_user_email: dogeuserbot@gmail.com
-          commit_author: teledoge <dogeuserbot@gmail.com>
+          commit_user_name: TeleDoge
+          commit_user_email: DogeUserBot@gmail.com
+          commit_author: TeleDoge <DogeUserBot@gmail.com>

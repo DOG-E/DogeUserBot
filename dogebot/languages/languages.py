@@ -17,6 +17,7 @@ from ..sql_helper.globals import gvarstatus
 langs = {}
 langs_folder = path.join(path.dirname(path.realpath(__file__)), "languages")
 
+
 for file in listdir(langs_folder):
     if file.endswith(".yml"):
         code = file[:-4]

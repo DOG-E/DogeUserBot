@@ -1,0 +1,104 @@
+{
+  "name": "Telegram Doge UserBot",
+  "description": "Doge UserBot: is an excellent assistant telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
+  "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
+  "keywords": [
+      "powerful",
+      "telegram",
+      "userbot",
+      "python",
+      "doge",
+      "plugin",
+      "modular",
+      "telethon",
+      "postgresql"
+  ],
+  "repository": "https://github.com/DOG-E/DogeUserBot",
+  "website": "https://t.me/DogeUserBot",
+  "success_url": "https://t.me/DogeSup",
+  "env": {
+    "ALIVE_NAME": {
+      "description": "Give me your name.",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
+      "value": ""
+    },
+    "STRING_SESSION": {
+      "description": "Go to https://repl.it/@DogeUserBot/DogeString or paste the ### code into a program like termux, terminal, run it and paste the code you get here.",
+      "value": ""
+    },
+    "TG_BOT_USERNAME": {
+      "description": "Needed for inline buttons maker. Make a bot at https://t.me/BotFather and get the username of your bot,",
+      "value": ""
+    },
+    "TG_BOT_TOKEN": {
+      "description": "Needed for inline buttons maker. Make a bot at https://t.me/BotFather and get the token of your bot. Worth it. Get it.",
+      "value": ""
+    },
+    "HEROKU_API_KEY": {
+      "description": "Required for updating the bot and other stuff get it from https://dashboard.heroku.com/account Please don't steal!",
+      "value": "",
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Add the Heroku app name you specified above here. It helps to keep Doge up to date.",
+      "value": "",
+      "required": true
+    },
+    "UPSTREAM_REPO": {
+      "description": "Required for installation and updates. Recommend don't change it.",
+      "value": "stabledoge",
+      "required": true
+    },
+    "DOGELANG": {
+      "description": "Which language should the Doge speak? Available languages: Turkish(tr), English(en)",
+      "value": "en",
+      "reqired": true
+    },
+    "TZ": {
+      "description": "Required for correct time on autopic/get time. Write your time zone location closest to your current location in English. Know your timezone from http://www.timezoneconverter.com/cgi-bin/findzone.tzc",
+      "value": "Europe/Istanbul",
+      "required": true
+    },
+    "COMMAND_HAND_LER": {
+      "description": "(Optional) Set this one with only one the symbol to use it before your command to run like . , ! ' `",
+      "value": ".",
+      "required": false
+    },
+    "ENV": {
+      "description": "Setting this to ANYTHING will enable Heroku.",
+      "value": "ANYTHING",
+      "required": false
+    }
+  },
+  "addons": [{
+    "plan": "heroku-postgresql"
+  }],
+  "formation": {
+    "doger": {
+        "quantity": 1,
+        "size": "free"
+    }
+  },
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-google-chrome"
+  },{
+    "url":"https://github.com/heroku/heroku-buildpack-chromedriver"
+  },{
+    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+  },{
+    "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+  },{
+    "url": "https://github.com/chrismytton/heroku-buildpack-jq"
+  },{
+    "url": "heroku/python"
+  }]
+}
