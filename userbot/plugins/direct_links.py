@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 from humanize import naturalsize
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_or_reply
@@ -17,7 +17,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "misc"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="direct(?: |$)([\s\S]*)",
     command=("direct", plugin_category),
     info={
@@ -46,12 +46,12 @@ async def direct_link_generator(event):
             message = textx.text
         else:
             return await edit_delete(event, "`Usage: .direct <url>`")
-    catevent = await edit_or_reply(event, "`Processing...`")
+    dogevent = await edit_or_reply(event, "`Processing...`")
     reply = ""
     links = re.findall(r"\bhttps?://.*\.\S+", message)
     if not links:
         reply = "`No links found!`"
-        await catevent.edit(reply)
+        await dogevent.edit(reply)
     for link in links:
         if "drive.google.com" in link:
             reply += gdrive(link)
@@ -75,7 +75,7 @@ async def direct_link_generator(event):
             reply += androidfilehost(link)
         else:
             reply += re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + "is not supported"
-    await catevent.edit(reply)
+    await dogevent.edit(reply)
 
 
 def gdrive(url: str) -> str:

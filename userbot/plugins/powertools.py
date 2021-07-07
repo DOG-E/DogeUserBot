@@ -2,7 +2,7 @@ import sys
 from asyncio.exceptions import CancelledError
 from time import sleep
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_or_reply
@@ -18,7 +18,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="restart$",
     command=("restart", plugin_category),
     info={
@@ -31,7 +31,7 @@ async def _(event):
     "Restarts the bot !!"
     if BOTLOG:
         await event.client.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot Restarted")
-    sandy = await edit_or_reply(
+    teledoge = await edit_or_reply(
         event,
         "Restarted. `.ping` me or `.help` to check if I am online, actually it takes 1-2 min for restarting",
     )
@@ -43,19 +43,19 @@ async def _(event):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [sandy.chat_id, sandy.id])
+        add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
         LOGS.error(e)
     try:
         delgvar("ipaddress")
-        await catub.disconnect()
+        await doge.disconnect()
     except CancelledError:
         pass
     except Exception as e:
         LOGS.error(e)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="shutdown$",
     command=("shutdown", plugin_category),
     info={
@@ -75,7 +75,7 @@ async def _(event):
         sys.exit(0)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
@@ -99,7 +99,7 @@ async def _(event):
     await event.edit("`OK, I'm awake now.`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="notify (on|off)$",
     command=("notify", plugin_category),
     info={

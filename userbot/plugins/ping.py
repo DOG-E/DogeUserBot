@@ -2,12 +2,12 @@ import asyncio
 from datetime import datetime
 
 from ..core.managers import edit_or_reply
-from . import catub, hmention
+from . import doge, hmention
 
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ping( -a|$)",
     command=("ping", plugin_category),
     info={
@@ -21,26 +21,26 @@ async def _(event):
     flag = event.pattern_match.group(1)
     start = datetime.now()
     if flag == " -a":
-        catevent = await edit_or_reply(event, "`!....`")
+        dogevent = await edit_or_reply(event, "`!....`")
         await asyncio.sleep(0.3)
-        await catevent.edit("`..!..`")
+        await dogevent.edit("`..!..`")
         await asyncio.sleep(0.3)
-        await catevent.edit("`....!`")
+        await dogevent.edit("`....!`")
         end = datetime.now()
         tms = (end - start).microseconds / 1000
         ms = round((tms - 0.6) / 3, 3)
-        await catevent.edit(f"**☞ Average Pong!**\n➥ {ms} ms")
+        await dogevent.edit(f"**☞ Average Pong!**\n➥ {ms} ms")
     else:
-        catevent = await edit_or_reply(event, "<b><i>☞ Pong!</b></i>", "html")
+        dogevent = await edit_or_reply(event, "<b><i>☞ Pong!</b></i>", "html")
         end = datetime.now()
         ms = (end - start).microseconds / 1000
-        await catevent.edit(
+        await dogevent.edit(
             f"<b><i>☞ Pong</b></i>\n➥ {ms} <b><i>ms\n➥ Bot of {hmention}</b></i>",
             parse_mode="html",
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fping$",
     command=("fping", plugin_category),
     info={"header": "Shows the server ping with extra animation", "usage": "{tr}fping"},

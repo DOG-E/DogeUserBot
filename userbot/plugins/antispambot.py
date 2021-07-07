@@ -10,21 +10,21 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from ..Config import Config
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, catub, edit_or_reply, logging, spamwatch
+from . import BOTLOG, BOTLOG_CHATID, doge, edit_or_reply, logging, spamwatch
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
 if Config.ANTISPAMBOT_BAN:
 
-    @catub.on(ChatAction())
+    @doge.on(ChatAction())
     async def anti_spambot(event):  # sourcery no-metrics
         if not event.user_joined and not event.user_added:
             return
         user = await event.get_user()
-        catadmin = await is_admin(event.client, event.chat_id, event.client.uid)
-        if not catadmin:
+        dogadmin = await is_admin(event.client, event.chat_id, event.client.uid)
+        if not dogadmin:
             return
-        catbanned = None
+        dogbanned = None
         adder = None
         ignore = None
         if event.user_added:
@@ -41,10 +41,10 @@ if Config.ANTISPAMBOT_BAN:
         if ignore:
             return
         if is_gbanned(user.id):
-            catgban = get_gbanuser(user.id)
-            if catgban.reason:
+            doggban = get_gbanuser(user.id)
+            if doggban.reason:
                 hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) was gbanned by you for the reason `{catgban.reason}`"
+                    f"[{user.first_name}](tg://user?id={user.id}) was gbanned by you for the reason `{doggban.reason}`"
                 )
             else:
                 hmm = await event.reply(
@@ -54,10 +54,10 @@ if Config.ANTISPAMBOT_BAN:
                 await event.client.edit_permissions(
                     event.chat_id, user.id, view_messages=False
                 )
-                catbanned = True
+                dogbanned = True
             except Exception as e:
                 LOGS.info(e)
-        if spamwatch and not catbanned:
+        if spamwatch and not dogbanned:
             ban = spamwatch.get_ban(user.id)
             if ban:
                 hmm = await event.reply(
@@ -67,10 +67,10 @@ if Config.ANTISPAMBOT_BAN:
                     await event.client.edit_permissions(
                         event.chat_id, user.id, view_messages=False
                     )
-                    catbanned = True
+                    dogbanned = True
                 except Exception as e:
                     LOGS.info(e)
-        if not catbanned:
+        if not dogbanned:
             try:
                 casurl = "https://api.cas.chat/check?user_id={}".format(user.id)
                 data = get(casurl).json()
@@ -88,10 +88,10 @@ if Config.ANTISPAMBOT_BAN:
                     await event.client.edit_permissions(
                         event.chat_id, user.id, view_messages=False
                     )
-                    catbanned = True
+                    dogbanned = True
                 except Exception as e:
                     LOGS.info(e)
-        if BOTLOG and catbanned:
+        if BOTLOG and dogbanned:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#ANTISPAMBOT\n"
@@ -101,7 +101,7 @@ if Config.ANTISPAMBOT_BAN:
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cascheck$",
     command=("cascheck", plugin_category),
     info={
@@ -114,7 +114,7 @@ if Config.ANTISPAMBOT_BAN:
 )
 async def caschecker(event):
     "Searches for cas(combot antispam service) banned users in group and shows you the list"
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         "`checking any cas(combot antispam service) banned users here, this may take several minutes too......`",
     )
@@ -141,15 +141,15 @@ async def caschecker(event):
         if not cas_count:
             text = "No CAS Banned users found!"
     except ChatAdminRequiredError:
-        await catevent.edit("`CAS check failed: Admin privileges are required`")
+        await dogevent.edit("`CAS check failed: Admin privileges are required`")
         return
     except BaseException:
-        await catevent.edit("`CAS check failed`")
+        await dogevent.edit("`CAS check failed`")
         return
-    await catevent.edit(text)
+    await dogevent.edit(text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spamcheck$",
     command=("spamcheck", plugin_category),
     info={
@@ -163,7 +163,7 @@ async def caschecker(event):
 async def caschecker(event):
     "Searches for spamwatch federation banned users in group and shows you the list"
     text = ""
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         "`checking any spamwatch banned users here, this may take several minutes too......`",
     )
@@ -190,12 +190,12 @@ async def caschecker(event):
         if not cas_count:
             text = "No spamwatch Banned users found!"
     except ChatAdminRequiredError:
-        await catevent.edit("`spamwatch check failed: Admin privileges are required`")
+        await dogevent.edit("`spamwatch check failed: Admin privileges are required`")
         return
     except BaseException:
-        await catevent.edit("`spamwatch check failed`")
+        await dogevent.edit("`spamwatch check failed`")
         return
-    await catevent.edit(text)
+    await dogevent.edit(text)
 
 
 def banchecker(user_id):

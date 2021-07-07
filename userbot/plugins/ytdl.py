@@ -22,7 +22,7 @@ from youtube_dl.utils import (
 )
 
 from ..helpers.utils import _format
-from . import catub, edit_delete, edit_or_reply, hmention, progress, reply_id, ytsearch
+from . import doge, edit_delete, edit_or_reply, hmention, progress, reply_id, ytsearch
 
 plugin_category = "misc"
 
@@ -151,7 +151,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
     return str(path.absolute()) if full else path.stem + path.suffix
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="yta(?:\s|$)([\s\S]*)",
     command=("yta", plugin_category),
     info={
@@ -172,28 +172,28 @@ async def download_audio(event):
         url = re.search("(?P<url>https?://[^\s]+)", myString).group("url")
     if not url:
         return await edit_or_reply(event, "`What I am Supposed to find? Give link`")
-    catevent = await edit_or_reply(event, "`Preparing to download...`")
+    dogevent = await edit_or_reply(event, "`Preparing to download...`")
     reply_to_id = await reply_id(event)
-    ytdl_data = await ytdl_down(catevent, audio_opts, url)
+    ytdl_data = await ytdl_down(dogevent, audio_opts, url)
     if ytdl_data is None:
         return
-    await catevent.edit(
+    await dogevent.edit(
         f"`Preparing to upload song:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*"
     )
     f = pathlib.Path(f"{ytdl_data['title']}.mp3".replace("|", "_"))
-    catthumb = pathlib.Path(f"{ytdl_data['title']}.mp3.jpg".replace("|", "_"))
-    if not os.path.exists(catthumb):
-        catthumb = pathlib.Path(f"{ytdl_data['title']}.mp3.webp".replace("|", "_"))
-    if not os.path.exists(catthumb):
-        catthumb = None
+    dogthumb = pathlib.Path(f"{ytdl_data['title']}.mp3.jpg".replace("|", "_"))
+    if not os.path.exists(dogthumb):
+        dogthumb = pathlib.Path(f"{ytdl_data['title']}.mp3.webp".replace("|", "_"))
+    if not os.path.exists(dogthumb):
+        dogthumb = None
     c_time = time.time()
     ul = io.open(f, "rb")
     uploaded = await event.client.fast_upload_file(
         file=ul,
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, catevent, c_time, "upload", file_name=f)
+            progress(d, t, dogevent, c_time, "upload", file_name=f)
         ),
     )
     ul.close()
@@ -202,7 +202,7 @@ async def download_audio(event):
         file=uploaded,
         mime_type=mime_type,
         attributes=attributes,
-        thumb=await event.client.upload_file(catthumb) if catthumb else None,
+        thumb=await event.client.upload_file(dogthumb) if dogthumb else None,
     )
     await event.client.send_file(
         event.chat_id,
@@ -213,12 +213,12 @@ async def download_audio(event):
         force_document=False,
     )
     os.remove(f)
-    if catthumb:
-        os.remove(catthumb)
-    await catevent.delete()
+    if dogthumb:
+        os.remove(dogthumb)
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ytv(?:\s|$)([\s\S]*)",
     command=("ytv", plugin_category),
     info={
@@ -239,18 +239,18 @@ async def download_video(event):
         url = re.search("(?P<url>https?://[^\s]+)", myString).group("url")
     if not url:
         return await edit_or_reply(event, "What I am Supposed to find? Give link")
-    catevent = await edit_or_reply(event, "`Preparing to download...`")
+    dogevent = await edit_or_reply(event, "`Preparing to download...`")
     reply_to_id = await reply_id(event)
-    ytdl_data = await ytdl_down(catevent, video_opts, url)
+    ytdl_data = await ytdl_down(dogevent, video_opts, url)
     if ytdl_down is None:
         return
     f = pathlib.Path(f"{ytdl_data['title']}.mp4".replace("|", "_"))
-    catthumb = pathlib.Path(f"{ytdl_data['title']}.jpg".replace("|", "_"))
-    if not os.path.exists(catthumb):
-        catthumb = pathlib.Path(f"{ytdl_data['title']}.webp".replace("|", "_"))
-    if not os.path.exists(catthumb):
-        catthumb = None
-    await catevent.edit(
+    dogthumb = pathlib.Path(f"{ytdl_data['title']}.jpg".replace("|", "_"))
+    if not os.path.exists(dogthumb):
+        dogthumb = pathlib.Path(f"{ytdl_data['title']}.webp".replace("|", "_"))
+    if not os.path.exists(dogthumb):
+        dogthumb = None
+    await dogevent.edit(
         f"`Preparing to upload video:`\
         \n**{ytdl_data['title']}**\
         \nby *{ytdl_data['uploader']}*"
@@ -261,7 +261,7 @@ async def download_video(event):
     uploaded = await event.client.fast_upload_file(
         file=ul,
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, catevent, c_time, "upload", file_name=f)
+            progress(d, t, dogevent, c_time, "upload", file_name=f)
         ),
     )
     ul.close()
@@ -269,7 +269,7 @@ async def download_video(event):
         file=uploaded,
         mime_type=mime_type,
         attributes=attributes,
-        thumb=await event.client.upload_file(catthumb) if catthumb else None,
+        thumb=await event.client.upload_file(dogthumb) if dogthumb else None,
     )
     await event.client.send_file(
         event.chat_id,
@@ -278,12 +278,12 @@ async def download_video(event):
         caption=ytdl_data["title"],
     )
     os.remove(f)
-    if catthumb:
-        os.remove(catthumb)
+    if dogthumb:
+        os.remove(dogthumb)
     await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="yts(?: |$)(\d*)? ?([\s\S]*)",
     command=("yts", plugin_category),
     info={
@@ -321,7 +321,7 @@ async def yt_search(event):
     await edit_or_reply(video_q, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="insta ([\s\S]*)",
     command=("insta", plugin_category),
     info={
@@ -342,7 +342,7 @@ async def kakashi(event):
         )
     else:
         start = datetime.now()
-        catevent = await edit_or_reply(event, "**Downloading.....**")
+        dogevent = await edit_or_reply(event, "**Downloading.....**")
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
@@ -352,16 +352,16 @@ async def kakashi(event):
             details = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await catevent.edit("**Error:** `unblock` @instasavegrambot `and retry!`")
+            await dogevent.edit("**Error:** `unblock` @instasavegrambot `and retry!`")
             return
-        await catevent.delete()
-        cat = await event.client.send_file(
+        await dogevent.delete()
+        dog = await event.client.send_file(
             event.chat_id,
             video,
         )
         end = datetime.now()
         ms = (end - start).seconds
-        await cat.edit(
+        await dog.edit(
             f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
             parse_mode="html",
         )

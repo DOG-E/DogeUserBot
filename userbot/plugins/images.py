@@ -2,7 +2,7 @@
 import os
 import shutil
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers.google_image_download import googleimagesdownload
@@ -11,7 +11,7 @@ from ..helpers.utils import reply_id
 plugin_category = "misc"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="img(?: |$)(\d*)? ?([\s\S]*)",
     command=("img", plugin_category),
     info={
@@ -19,9 +19,9 @@ plugin_category = "misc"
         "description": "To search images in google. By default will send 3 images.you can get more images(upto 10 only by changing limit value as shown in usage and examples.",
         "usage": ["{tr}img <1-10> <query>", "{tr}img <query>"],
         "examples": [
-            "{tr}img 10 catuserbot",
-            "{tr}img catuserbot",
-            "{tr}img 7 catuserbot",
+            "{tr}img 10 DogeUserBot",
+            "{tr}img DogeUserBot",
+            "{tr}img 7 DogeUserBot",
         ],
     },
 )
@@ -37,7 +37,7 @@ async def img_sampler(event):
         return await edit_or_reply(
             event, "Reply to a message or pass a query to search!"
         )
-    cat = await edit_or_reply(event, "`Processing...`")
+    dog = await edit_or_reply(event, "`Processing...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))
         if lim > 10:
@@ -58,8 +58,8 @@ async def img_sampler(event):
     try:
         paths = response.download(arguments)
     except Exception as e:
-        return await cat.edit(f"Error: \n`{e}`")
+        return await dog.edit(f"Error: \n`{e}`")
     lst = paths[0][query]
     await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
-    await cat.delete()
+    await dog.delete()

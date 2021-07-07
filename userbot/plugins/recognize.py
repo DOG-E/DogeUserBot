@@ -2,14 +2,14 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="recognize ?([\s\S]*)",
     command=("recognize", plugin_category),
     info={
@@ -28,7 +28,7 @@ async def _(event):
     chat = "@Rekognition_Bot"
     if reply_message.sender.bot:
         return await event.edit("Reply to actual users message.")
-    cat = await edit_or_reply(event, "recognizeing this media")
+    dog = await edit_or_reply(event, "recognizeing this media")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -37,7 +37,7 @@ async def _(event):
             await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await cat.edit("unblock @Rekognition_Bot and try again")
+            await dog.edit("unblock @Rekognition_Bot and try again")
             return
         if response.text.startswith("See next message."):
             response = conv.wait_event(
@@ -45,7 +45,7 @@ async def _(event):
             )
             response = await response
             msg = response.message.message
-            await cat.edit(msg)
+            await dog.edit(msg)
         else:
-            await cat.edit("sorry, I couldnt find it")
+            await dog.edit("sorry, I couldnt find it")
         await event.client.send_read_acknowledge(conv.chat_id)

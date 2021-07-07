@@ -8,12 +8,12 @@ You remove this, you gay.
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..core.managers import edit_delete, edit_or_reply
-from . import catub, reply_id
+from . import doge, reply_id
 
 plugin_category = "fun"
 
 
-async def mememaker(borg, msg, cat, chat_id, reply_to_id):
+async def mememaker(borg, msg, dog, chat_id, reply_to_id):
     async with borg.conversation("@themememakerbot") as conv:
         try:
             msg = await conv.send_message(msg)
@@ -22,7 +22,7 @@ async def mememaker(borg, msg, cat, chat_id, reply_to_id):
         except YouBlockedUserError:
             await kakashi.edit("Please unblock @clippy and try again")
             return
-        await cat.delete()
+        await dog.delete()
         await borg.send_file(
             chat_id,
             pic,
@@ -31,7 +31,7 @@ async def mememaker(borg, msg, cat, chat_id, reply_to_id):
     await borg.delete_messages(conv.chat_id, [msg.id, pic.id])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fox ?([\s\S]*)",
     command=("fox", plugin_category),
     info={
@@ -40,18 +40,18 @@ async def mememaker(borg, msg, cat, chat_id, reply_to_id):
         "usage": "{tr}fox <text>",
     },
 )
-async def cat(event):
+async def dog(event):
     "sneeky fox troll"
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
         return await edit_delete(event, "`Give me some text to process...`")
     msg = f"/sf {input_text}"
-    cat = await edit_or_reply(event, "```Fox is on your way...```")
-    await mememaker(event.client, msg, cat, event.chat_id, reply_to_id)
+    dog = await edit_or_reply(event, "```Fox is on your way...```")
+    await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="talkme ?([\s\S]*)",
     command=("talkme", plugin_category),
     info={
@@ -60,18 +60,18 @@ async def cat(event):
         "usage": "{tr}talkme <text>",
     },
 )
-async def cat(event):
+async def dog(event):
     "talk to me troll"
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
         return await edit_delete(event, "`Give me some text to process...`")
     msg = f"/ttm {input_text}"
-    cat = await edit_or_reply(event, "```Wait making your hardcore meme...```")
-    await mememaker(event.client, msg, cat, event.chat_id, reply_to_id)
+    dog = await edit_or_reply(event, "```Wait making your hardcore meme...```")
+    await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sleep ?([\s\S]*)",
     command=("sleep", plugin_category),
     info={
@@ -80,18 +80,18 @@ async def cat(event):
         "usage": "{tr}sleep <text>",
     },
 )
-async def cat(event):
+async def dog(event):
     "Sleeping brain meme."
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
         return await edit_delete(event, "`Give me some text to process...`")
     msg = f"/bbn {input_text}"
-    cat = await edit_or_reply(event, "```You can't sleep...```")
-    await mememaker(event.client, msg, cat, event.chat_id, reply_to_id)
+    dog = await edit_or_reply(event, "```You can't sleep...```")
+    await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sbob ?([\s\S]*)",
     command=("sbob", plugin_category),
     info={
@@ -100,18 +100,18 @@ async def cat(event):
         "usage": "{tr}sbob <text>",
     },
 )
-async def cat(event):
+async def dog(event):
     "spongebob troll"
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
         return await edit_delete(event, "`Give me some text to process...`")
     msg = f"/sp {input_text}"
-    cat = await edit_or_reply(event, "```Yaah wait for spongebob...```")
-    await mememaker(event.client, msg, cat, event.chat_id, reply_to_id)
+    dog = await edit_or_reply(event, "```Yaah wait for spongebob...```")
+    await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="child ?([\s\S]*)",
     command=("child", plugin_category),
     info={
@@ -120,12 +120,12 @@ async def cat(event):
         "usage": "{tr}child <text>",
     },
 )
-async def cat(event):
+async def dog(event):
     "child troll"
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
         return await edit_delete(event, "`Give me some text to process...`")
     msg = f"/love {input_text}"
-    cat = await edit_or_reply(event, "```Wait for your son......```")
-    await mememaker(event.client, msg, cat, event.chat_id, reply_to_id)
+    dog = await edit_or_reply(event, "```Wait for your son......```")
+    await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)

@@ -1,9 +1,9 @@
-from . import ALIVE_NAME, catub, edit_or_reply
+from . import ALIVE_NAME, doge, edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ded ([\s\S]*)",
     command=("ded", plugin_category),
     info={
@@ -33,7 +33,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="killer ([\s\S]*)",
     command=("killer", plugin_category),
     info={
@@ -331,7 +331,7 @@ R = (
 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="monster$",
     command=("monster", plugin_category),
     info={
@@ -344,7 +344,7 @@ async def bluedevilmonster(monster):
     await edit_or_reply(monster, A)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pig$",
     command=("pig", plugin_category),
     info={
@@ -357,7 +357,7 @@ async def bluedevilpig(pig):
     await edit_or_reply(pig, B)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gun$",
     command=("gun", plugin_category),
     info={
@@ -370,7 +370,7 @@ async def bluedevilgun(gun):
     await edit_or_reply(gun, D)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dog$",
     command=("dog", plugin_category),
     info={
@@ -383,7 +383,7 @@ async def bluedevildog(dog):
     await edit_or_reply(dog, E)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hello$",
     command=("hello", plugin_category),
     info={
@@ -396,7 +396,7 @@ async def bluedevilhello(hello):
     await edit_or_reply(hello, F)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hmf$",
     command=("hmf", plugin_category),
     info={
@@ -409,7 +409,7 @@ async def bluedevilhmf(hmf):
     await edit_or_reply(hmf, G)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="couple$",
     command=("couple", plugin_category),
     info={
@@ -422,7 +422,7 @@ async def bluedevilcouple(couple):
     await edit_or_reply(couple, H)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sup$",
     command=("sup", plugin_category),
     info={
@@ -435,7 +435,7 @@ async def bluedevilsupreme(supreme):
     await edit_or_reply(supreme, I)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="india$",
     command=("india", plugin_category),
     info={
@@ -448,7 +448,7 @@ async def bluedevilindia(india):
     await edit_or_reply(india, J)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="wc$",
     command=("wc", plugin_category),
     info={
@@ -461,7 +461,7 @@ async def bluedevilwelcome(welcome):
     await edit_or_reply(welcome, K)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="snk$",
     command=("snk", plugin_category),
     info={
@@ -474,7 +474,7 @@ async def bluedevilsnake(snake):
     await edit_or_reply(snake, L)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bye$",
     command=("bye", plugin_category),
     info={
@@ -487,7 +487,7 @@ async def bluedevilbye(bye):
     await edit_or_reply(bye, O)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="shitos$",
     command=("shitos", plugin_category),
     info={
@@ -500,7 +500,7 @@ async def bluedevilshitos(shitos):
     await edit_or_reply(shitos, P)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dislike$",
     command=("dislike", plugin_category),
     info={

@@ -5,17 +5,17 @@ import shutil
 import time
 from pathlib import Path
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _catutils, _format
+from ..helpers.utils import _dogutils, _format
 from . import humanbytes
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ls(?:\s|$)([\s\S]*)",
     command=("ls", plugin_category),
     info={
@@ -27,17 +27,17 @@ plugin_category = "utils"
 )
 async def lst(event):  # sourcery no-metrics
     "To list all files and folders."
-    cat = "".join(event.text.split(maxsplit=1)[1:])
-    path = cat or os.getcwd()
+    dog = "".join(event.text.split(maxsplit=1)[1:])
+    path = dog or os.getcwd()
     if not os.path.exists(path):
         await edit_or_reply(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"there is no such directory or file with the name `{dog}` check again",
         )
         return
-    path = Path(cat) if cat else os.getcwd()
+    path = Path(dog) if dog else os.getcwd()
     if os.path.isdir(path):
-        if cat:
+        if dog:
             msg = "Folders and Files in `{}` :\n".format(path)
         else:
             msg = "Folders and Files in Current Directory :\n"
@@ -45,9 +45,9 @@ async def lst(event):  # sourcery no-metrics
         files = ""
         folders = ""
         for contents in sorted(lists):
-            catpath = os.path.join(path, contents)
-            if not os.path.isdir(catpath):
-                size = os.stat(catpath).st_size
+            dogpath = os.path.join(path, contents)
+            if not os.path.isdir(dogpath):
+                size = os.stat(dogpath).st_size
                 if str(contents).endswith((".mp3", ".flac", ".wav", ".m4a")):
                     files += "🎵" + f"`{contents}`\n"
                 if str(contents).endswith((".opus")):
@@ -105,7 +105,7 @@ async def lst(event):  # sourcery no-metrics
         await edit_or_reply(event, msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rem ([\s\S]*)",
     command=("rem", plugin_category),
     info={
@@ -116,34 +116,34 @@ async def lst(event):  # sourcery no-metrics
 )
 async def lst(event):
     "To delete a file or folder."
-    cat = event.pattern_match.group(1)
-    if cat:
-        path = Path(cat)
+    dog = event.pattern_match.group(1)
+    if dog:
+        path = Path(dog)
     else:
         await edit_or_reply(event, "what should i delete")
         return
     if not os.path.exists(path):
         await edit_or_reply(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"there is no such directory or file with the name `{dog}` check again",
         )
         return
-    catcmd = f"rm -rf {path}"
+    dogecmd = f"rm -rf {path}"
     if os.path.isdir(path):
-        await _catutils.runcmd(catcmd)
-        await edit_or_reply(event, f"Succesfully removed `{path}` directory")
+        await _dogutils.runcmd(dogecmd)
+        await edit_or_reply(event, f"Successfully removed `{path}` directory")
     else:
-        await _catutils.runcmd(catcmd)
-        await edit_or_reply(event, f"Succesfully removed `{path}` file")
+        await _dogutils.runcmd(dogecmd)
+        await edit_or_reply(event, f"Successfully removed `{path}` file")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mkdir(?:\s|$)([\s\S]*)",
     command=("mkdir", plugin_category),
     info={
         "header": "To create a new directory.",
         "usage": "{tr}mkdir <topic>",
-        "examples": "{tr}mkdir cat",
+        "examples": "{tr}mkdir dog",
     },
 )
 async def _(event):
@@ -168,13 +168,13 @@ async def _(event):
     )
     await asyncio.sleep(2)
     try:
-        await _catutils.runcmd(f"mkdir {original}")
+        await _dogutils.runcmd(f"mkdir {original}")
         await mone.edit(f"Successfully created the directory `{original}`")
     except Exception as e:
         await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cpto(?:\s|$)([\s\S]*)",
     command=("cpto", plugin_category),
     info={
@@ -206,7 +206,7 @@ async def _(event):
     if not os.path.exists(original):
         await edit_delete(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"there is no such directory or file with the name `{dog}` check again",
         )
         return
     mone = await edit_or_reply(
@@ -214,13 +214,13 @@ async def _(event):
     )
     await asyncio.sleep(2)
     try:
-        await _catutils.runcmd(f"cp -r {original} {location}")
+        await _dogutils.runcmd(f"cp -r {original} {location}")
         await mone.edit(f"Successfully copied the `{original}` to `{location}`")
     except Exception as e:
         await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mvto(?:\s|$)([\s\S]*)",
     command=("mvto", plugin_category),
     info={

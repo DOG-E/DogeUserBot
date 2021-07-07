@@ -2,7 +2,7 @@ from datetime import datetime
 
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..core.data import blacklist_chats_list
@@ -15,7 +15,7 @@ plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
@@ -34,7 +34,7 @@ async def chat_blacklist(event):
         if gvarstatus("blacklist_chats") is not None:
             return await edit_delete(event, "__Already it was turned on.__")
         addgvar("blacklist_chats", "true")
-        text = "__From now on, your CatUserbot doesn't work in the chats stored in database.__"
+        text = "__From now on, your DogeUserBot doesn't work in the chats stored in database.__"
         if len(blkchats) != 0:
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
@@ -52,7 +52,7 @@ async def chat_blacklist(event):
             )
     if gvarstatus("blacklist_chats") is not None:
         delgvar("blacklist_chats")
-        text = "__Your CatUserbot is as free as a bird.It works in Every Chat .__"
+        text = "__Your DogeUserBot is as free as a bird.It works in Every Chat .__"
         if len(blkchats) != 0:
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
@@ -71,7 +71,7 @@ async def chat_blacklist(event):
     await edit_delete(event, "It was turned off already")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addblkchat(s)? ?((.|\n)*)?",
     command=("addblkchat", plugin_category),
     info={
@@ -113,7 +113,7 @@ async def add_blacklist_chat(event):
                 }
                 blacklistchats[str(chat.id)] = chatdata
                 result += (
-                    f"Succesfully added {get_display_name(chat)} to blacklist chats.\n"
+                    f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
                 )
             except Exception as e:
                 errors += f"**While adding the {chatid}** - __{str(e)}__\n"
@@ -133,7 +133,7 @@ async def add_blacklist_chat(event):
                 }
                 blacklistchats[str(chat.id)] = chatdata
                 result += (
-                    f"Succesfully added {get_display_name(chat)} to blacklist chats.\n"
+                    f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
                 )
         except Exception as e:
             errors += f"**While adding the {chatid}** - __{str(e)}__\n"
@@ -150,7 +150,7 @@ async def add_blacklist_chat(event):
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmblkchat(s)? ?((.|\n)*)?",
     command=("rmblkchat", plugin_category),
     info={
@@ -183,7 +183,7 @@ async def add_blacklist_chat(event):
                     chatname = blacklistchats[str(chatid)]["chat_name"]
                     del blacklistchats[str(chatid)]
                     result += (
-                        f"Succesfully removed {chatname} from blacklisted chats.\n"
+                        f"Successfully removed {chatname} from blacklisted chats.\n"
                     )
                 else:
                     errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
@@ -196,7 +196,7 @@ async def add_blacklist_chat(event):
             if chatid in blkchats:
                 chatname = blacklistchats[str(chatid)]["chat_name"]
                 del blacklistchats[str(chatid)]
-                result += f"Succesfully removed {chatname} from blacklisted chats.\n"
+                result += f"Successfully removed {chatname} from blacklisted chats.\n"
             else:
                 errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
         except Exception as e:
@@ -214,7 +214,7 @@ async def add_blacklist_chat(event):
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listblkchats$",
     command=("listblkchats", plugin_category),
     info={

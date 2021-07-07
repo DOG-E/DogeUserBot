@@ -2,7 +2,7 @@
 # thx to @r4v4n4
 import asyncio
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers.utils import _format
@@ -11,7 +11,7 @@ from . import ALIVE_NAME
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hack$",
     command=("hack", plugin_category),
     info={
@@ -58,7 +58,7 @@ async def _(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="thack$",
     command=("thack", plugin_category),
     info={
@@ -91,7 +91,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="wahack$",
     command=("wahack", plugin_category),
     info={

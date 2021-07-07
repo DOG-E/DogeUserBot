@@ -14,7 +14,7 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
@@ -99,7 +99,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
         try:
             if LASTFM_.USER_ID == 0:
                 LASTFM_.USER_ID = (await lfmbio.client.get_me()).id
-            user_info = await catub(GetFullUserRequest(LASTFM_.USER_ID))
+            user_info = await doge(GetFullUserRequest(LASTFM_.USER_ID))
             LASTFM_.RUNNING = True
             playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
             LASTFM_.SONG = playing.get_title()
@@ -119,45 +119,45 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     lfmbio = f"🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
                 try:
                     if BOTLOG and LASTFM_.LastLog:
-                        await catub.send_message(
+                        await doge.send_message(
                             BOTLOG_CHATID, f"Attempted to change bio to\n{lfmbio}"
                         )
-                    await catub(UpdateProfileRequest(about=lfmbio))
+                    await doge(UpdateProfileRequest(about=lfmbio))
                 except AboutTooLongError:
                     short_bio = f"🎧: {LASTFM_.SONG}"
-                    await catub(UpdateProfileRequest(about=short_bio))
+                    await doge(UpdateProfileRequest(about=short_bio))
             if playing is None and user_info.about != DEFAULT_BIO:
                 await sleep(6)
-                await catub(UpdateProfileRequest(about=DEFAULT_BIO))
+                await doge(UpdateProfileRequest(about=DEFAULT_BIO))
                 if BOTLOG and LASTFM_.LastLog:
-                    await catub.send_message(
+                    await doge.send_message(
                         BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
                     )
         except AttributeError:
             try:
                 if user_info.about != DEFAULT_BIO:
                     await sleep(6)
-                    await catub(UpdateProfileRequest(about=DEFAULT_BIO))
+                    await doge(UpdateProfileRequest(about=DEFAULT_BIO))
                     if BOTLOG and LASTFM_.LastLog:
-                        await catub.send_message(
+                        await doge.send_message(
                             BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
                         )
             except FloodWaitError as err:
                 if BOTLOG and LASTFM_.LastLog:
-                    await catub.send_message(
+                    await doge.send_message(
                         BOTLOG_CHATID, f"Error changing bio:\n{err}"
                     )
         except FloodWaitError as err:
             if BOTLOG and LASTFM_.LastLog:
-                await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
+                await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         except WSError as err:
             if BOTLOG and LASTFM_.LastLog:
-                await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
+                await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         await sleep(2)
     LASTFM_.RUNNING = False
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lastfm$",
     command=("lastfm", plugin_category),
     info={
@@ -204,7 +204,7 @@ async def last_fm(lastFM):
         await lastFM.edit(f"{output}", parse_mode="md")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="now$",
     command=("now", plugin_category),
     info={
@@ -223,7 +223,7 @@ async def now(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="inow$",
     command=("inow", plugin_category),
     info={
@@ -242,7 +242,7 @@ async def nowimg(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
@@ -275,7 +275,7 @@ async def lastbio(lfmbio):
         await lfmbio.edit(LFM_BIO_ERR)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={

@@ -20,7 +20,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -68,7 +68,7 @@ plugin_category = "admin"
 # ================================================
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gpic( -s| -d)$",
     command=("gpic", plugin_category),
     info={
@@ -120,7 +120,7 @@ async def set_group_photo(event):  # sourcery no-metrics
         except Exception as e:
             return await edit_delete(event, f"**Error : **`{str(e)}`")
         process = "deleted"
-        await edit_delete(event, "```Succesfully group profile pic deleted.```")
+        await edit_delete(event, "```Successfully group profile pic deleted.```")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -130,7 +130,7 @@ async def set_group_photo(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="promote(?:\s|$)([\s\S]*)",
     command=("promote", plugin_category),
     info={
@@ -160,12 +160,12 @@ async def promote(event):
         rank = "Admin"
     if not user:
         return
-    catevent = await edit_or_reply(event, "`Promoting...`")
+    dogevent = await edit_or_reply(event, "`Promoting...`")
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await catevent.edit(NO_PERM)
-    await catevent.edit("`Promoted Successfully! Now gib Party`")
+        return await dogevent.edit(NO_PERM)
+    await dogevent.edit("`Promoted Successfully! Now gib Party`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -175,7 +175,7 @@ async def promote(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="demote(?:\s|$)([\s\S]*)",
     command=("demote", plugin_category),
     info={
@@ -195,7 +195,7 @@ async def demote(event):
     user, _ = await get_user_from_event(event)
     if not user:
         return
-    catevent = await edit_or_reply(event, "`Demoting...`")
+    dogevent = await edit_or_reply(event, "`Demoting...`")
     newrights = ChatAdminRights(
         add_admins=None,
         invite_users=None,
@@ -208,8 +208,8 @@ async def demote(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, newrights, rank))
     except BadRequestError:
-        return await catevent.edit(NO_PERM)
-    await catevent.edit("`Demoted Successfully! Betterluck next time`")
+        return await dogevent.edit(NO_PERM)
+    await dogevent.edit("`Demoted Successfully! Betterluck next time`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -219,7 +219,7 @@ async def demote(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
@@ -241,25 +241,25 @@ async def _ban_person(event):
         return
     if user.id == event.client.uid:
         return await edit_delete(event, "__You cant ban yourself.__")
-    catevent = await edit_or_reply(event, "`Whacking the pest!`")
+    dogevent = await edit_or_reply(event, "`Whacking the pest!`")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
     except BadRequestError:
-        return await catevent.edit(NO_PERM)
+        return await dogevent.edit(NO_PERM)
     try:
         reply = await event.get_reply_message()
         if reply:
             await reply.delete()
     except BadRequestError:
-        return await catevent.edit(
+        return await dogevent.edit(
             "`I dont have message nuking rights! But still he is banned!`"
         )
     if reason:
-        await catevent.edit(
+        await dogevent.edit(
             f"{_format.mentionuser(user.first_name ,user.id)}` is banned !!`\n**Reason : **`{reason}`"
         )
     else:
-        await catevent.edit(
+        await dogevent.edit(
             f"{_format.mentionuser(user.first_name ,user.id)} `is banned !!`"
         )
     if BOTLOG:
@@ -280,7 +280,7 @@ async def _ban_person(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unban(?:\s|$)([\s\S]*)",
     command=("unban", plugin_category),
     info={
@@ -300,10 +300,10 @@ async def nothanos(event):
     user, _ = await get_user_from_event(event)
     if not user:
         return
-    catevent = await edit_or_reply(event, "`Unbanning...`")
+    dogevent = await edit_or_reply(event, "`Unbanning...`")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
-        await catevent.edit(
+        await dogevent.edit(
             f"{_format.mentionuser(user.first_name ,user.id)} `is Unbanned Successfully. Granting another chance.`"
         )
         if BOTLOG:
@@ -314,12 +314,12 @@ async def nothanos(event):
                 f"CHAT: {event.chat.title}(`{event.chat_id}`)",
             )
     except UserIdInvalidError:
-        await catevent.edit("`Uh oh my unban logic broke!`")
+        await dogevent.edit("`Uh oh my unban logic broke!`")
     except Exception as e:
-        await catevent.edit(f"**Error :**\n`{e}`")
+        await dogevent.edit(f"**Error :**\n`{e}`")
 
 
-@catub.cat_cmd(incoming=True)
+@doge.bot_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, event.chat_id):
         try:
@@ -328,7 +328,7 @@ async def watcher(event):
             LOGS.info(str(e))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mute(?:\s|$)([\s\S]*)",
     command=("mute", plugin_category),
     info={
@@ -353,7 +353,7 @@ async def startmute(event):
             return await event.edit(
                 "`This user is already muted in this chat ~~lmfao sed rip~~`"
             )
-        if event.chat_id == catub.uid:
+        if event.chat_id == doge.uid:
             return await edit_delete(event, "`You cant mute yourself`")
         try:
             mute(event.chat_id, event.chat_id)
@@ -378,7 +378,7 @@ async def startmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == catub.uid:
+        if user.id == doge.uid:
             return await edit_or_reply(event, "`Sorry, I can't mute myself`")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
@@ -433,7 +433,7 @@ async def startmute(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unmute(?:\s|$)([\s\S]*)",
     command=("unmute", plugin_category),
     info={
@@ -505,7 +505,7 @@ async def endmute(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kick(?:\s|$)([\s\S]*)",
     command=("kick", plugin_category),
     info={
@@ -525,17 +525,17 @@ async def endmute(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    catevent = await edit_or_reply(event, "`Kicking...`")
+    dogevent = await edit_or_reply(event, "`Kicking...`")
     try:
         await event.client.kick_participant(event.chat_id, user.id)
     except Exception as e:
-        return await catevent.edit(NO_PERM + f"\n{str(e)}")
+        return await dogevent.edit(NO_PERM + f"\n{str(e)}")
     if reason:
-        await catevent.edit(
+        await dogevent.edit(
             f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`\nReason: {reason}"
         )
     else:
-        await catevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
+        await dogevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -545,7 +545,7 @@ async def endmute(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pin( loud|$)",
     command=("pin", plugin_category),
     info={
@@ -577,13 +577,13 @@ async def pin(event):
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#PIN\
-                \n__Succesfully pinned a message in chat__\
+                \n__Successfully pinned a message in chat__\
                 \nCHAT: {event.chat.title}(`{event.chat_id}`)\
                 \nLOUD: {is_silent}",
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unpin( all|$)",
     command=("unpin", plugin_category),
     info={
@@ -625,12 +625,12 @@ async def pin(event):
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#UNPIN\
-                \n__Succesfully unpinned message(s) in chat__\
+                \n__Successfully unpinned message(s) in chat__\
                 \nCHAT: {event.chat.title}(`{event.chat_id}`)",
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="undlt( -u)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
@@ -653,7 +653,7 @@ async def pin(event):
 )
 async def _iundlt(event):  # sourcery no-metrics
     "To check recent deleted messages in group"
-    catevent = await edit_or_reply(event, "`Searching recent actions .....`")
+    dogevent = await edit_or_reply(event, "`Searching recent actions .....`")
     flag = event.pattern_match.group(1)
     if event.pattern_match.group(2) != "":
         lim = int(event.pattern_match.group(2))
@@ -677,9 +677,9 @@ async def _iundlt(event):  # sourcery no-metrics
                 deleted_msg += f"\n☞ __{msg.old.message}__ **Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
             else:
                 deleted_msg += f"\n☞ __{_media_type}__ **Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
-        await edit_or_reply(catevent, deleted_msg)
+        await edit_or_reply(dogevent, deleted_msg)
     else:
-        main_msg = await edit_or_reply(catevent, deleted_msg)
+        main_msg = await edit_or_reply(dogevent, deleted_msg)
         for msg in adminlog:
             ruser = (
                 await event.client(GetFullUserRequest(msg.old.from_id.user_id))

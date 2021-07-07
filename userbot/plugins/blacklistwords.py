@@ -2,8 +2,9 @@ import re
 
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
+from . import BOTLOG_CHATID
 from ..core.managers import edit_or_reply
 from ..sql_helper import blacklist_sql as sql
 from ..utils import is_admin
@@ -11,12 +12,12 @@ from ..utils import is_admin
 plugin_category = "admin"
 
 
-@catub.cat_cmd(incoming=True, groups_only=True)
+@doge.bot_cmd(incoming=True, groups_only=True)
 async def on_new_message(event):
     name = event.raw_text
     snips = sql.get_chat_blacklist(event.chat_id)
-    catadmin = await is_admin(event.client, event.chat_id, event.client.uid)
-    if not catadmin:
+    dogadmin = await is_admin(event.client, event.chat_id, event.client.uid)
+    if not dogadmin:
         return
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
@@ -34,7 +35,7 @@ async def on_new_message(event):
             break
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addblacklist ((.|\n)*)",
     command=("addblacklist", plugin_category),
     info={
@@ -65,7 +66,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmblacklist ((.|\n)*)",
     command=("rmblacklist", plugin_category),
     info={
@@ -94,7 +95,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listblacklist$",
     command=("listblacklist", plugin_category),
     info={

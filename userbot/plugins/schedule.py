@@ -1,11 +1,11 @@
 from asyncio import sleep
 
-from userbot import catub
+from userbot import doge
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="schd (\d*) ([\s\S]*)",
     command=("schd", plugin_category),
     info={
@@ -16,9 +16,9 @@ plugin_category = "utils"
 )
 async def _(event):
     "To schedule a message after given time"
-    cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
-    message = cat[1]
-    ttl = int(cat[0])
+    dog = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
+    message = dog[1]
+    ttl = int(dog[0])
     await event.delete()
     await sleep(ttl)
     await event.respond(message)

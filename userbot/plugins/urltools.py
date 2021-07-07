@@ -1,14 +1,14 @@
 import requests
 from validators.url import url
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
@@ -29,8 +29,8 @@ async def _(event):
         )
     check = url(input_str)
     if not check:
-        catstr = "http://" + input_str
-        check = url(catstr)
+        dogstr = "http://" + input_str
+        check = url(dogstr)
     if not check:
         return await edit_delete(event, "`the given link is not supported`", 5)
     sample_url = f"https://da.gd/dns/{input_str}"
@@ -43,13 +43,13 @@ async def _(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
         "header": "To short the given url.",
         "usage": "{tr}short <url/reply to url>",
-        "examples": "{tr}short https://github.com/sandy1709/catuserbot",
+        "examples": "{tr}short https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
@@ -64,8 +64,8 @@ async def _(event):
         )
     check = url(input_str)
     if not check:
-        catstr = f"http://" + input_str
-        check = url(catstr)
+        dogstr = f"http://" + input_str
+        check = url(dogstr)
     if not check:
         return await edit_delete(event, "`the given link is not supported`", 5)
     if not input_str.startswith("http"):
@@ -80,7 +80,7 @@ async def _(event):
         await edit_or_reply(event, "`Something is wrong, please try again later.`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
@@ -101,8 +101,8 @@ async def _(event):
         )
     check = url(input_str)
     if not check:
-        catstr = "http://" + input_str
-        check = url(catstr)
+        dogstr = "http://" + input_str
+        check = url(dogstr)
     if not check:
         return await edit_delete(event, "`the given link is not supported`", 5)
     if not input_str.startswith("http"):
@@ -122,7 +122,7 @@ async def _(event):
 
 
 # By Priyam Kalra
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={
@@ -143,8 +143,8 @@ async def _(event):
         )
     check = url(input_str)
     if not check:
-        catstr = "http://" + input_str
-        check = url(catstr)
+        dogstr = "http://" + input_str
+        check = url(dogstr)
     if not check:
         return await edit_delete(event, "`the given link is not supported`", 5)
     await edit_or_reply(event, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input_str + ")")

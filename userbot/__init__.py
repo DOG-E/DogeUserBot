@@ -4,26 +4,26 @@ import heroku3
 
 from .Config import Config
 from .core.logger import logging
-from .core.session import catub
+from .core.session import doge
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
 __version__ = "3.0.3"
 __license__ = "GNU Affero General Public License v3.0"
-__author__ = "CatUserBot <https://github.com/Jisan09/catuserbot>"
-__copyright__ = "CatUserBot Copyright (C) 2020 - 2021  " + __author__
+__author__ = "DogeUserBot <https://github.com/DOG-E/dogeuserbot>"
+__copyright__ = "DogeUserBot Copyright (C) 2020 - 2021  " + __author__
 
-catub.version = __version__
-catub.tgbot.version = __version__
-LOGS = logging.getLogger("CatUserbot")
-bot = catub
+doge.version = __version__
+doge.tgbot.version = __version__
+LOGS = logging.getLogger("DogeUserBot")
+bot = doge
 
 StartTime = time.time()
-catversion = "3.0.3"
+dogeversion = "3.0.3"
 
-if Config.UPSTREAM_REPO == "badcat":
-    UPSTREAM_REPO_URL = "https://github.com/Jisan09/catuserbot"
-elif Config.UPSTREAM_REPO == "goodcat":
-    UPSTREAM_REPO_URL = "https://github.com/sandy1709/catuserbot"
+if Config.UPSTREAM_REPO == "shiba":
+    UPSTREAM_REPO_URL = "https://github.com/TeleDoge/DogeUserBot"
+elif Config.UPSTREAM_REPO == "doge":
+    UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 

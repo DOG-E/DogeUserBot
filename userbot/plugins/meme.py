@@ -1,13 +1,13 @@
 import asyncio
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="^\:/$",
     command=("\:", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def kek(keks):
         await keks.edit(txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="^\-_-$",
     command=("-_-", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def lol(lel):
         await lel.edit(okay)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="^\;_;$",
     command=(";_;", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def fun(e):
         await e.edit(t)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="oof$",
     command=("oof", plugin_category),
     info={
@@ -72,14 +72,14 @@ async def fun(e):
 async def Oof(e):
     "Animation command."
     t = "Oof"
-    catevent = await edit_or_reply(e, t)
+    dogevent = await edit_or_reply(e, t)
     for _ in range(15):
         await asyncio.sleep(0.5)
         t = t[:-1] + "of"
-        await catevent.edit(t)
+        await dogevent.edit(t)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="type ([\s\S]*)",
     command=("type", plugin_category),
     info={
@@ -104,25 +104,25 @@ async def typewriter(typew):
         await asyncio.sleep(sleep_time)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="repeat (\d*) ([\s\S]*)",
     command=("repeat", plugin_category),
     info={
         "header": "repeats the given text with given no of times.",
         "usage": "{tr}repeat <count> <text>",
-        "examples": "{tr}repeat 10 catuserbot",
+        "examples": "{tr}repeat 10 DogeUserBot",
     },
 )
 async def _(event):
     "To repeat the given text."
-    cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
-    message = cat[1]
-    count = int(cat[0])
+    dog = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
+    message = dog[1]
+    count = int(dog[0])
     repsmessage = (f"{message} ") * count
     await edit_or_reply(event, repsmessage)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="meme",
     command=("meme", plugin_category),
     info={
@@ -199,7 +199,7 @@ async def meme(event):
     await event.edit(memeVar)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="give",
     command=("give", plugin_category),
     info={
@@ -254,7 +254,7 @@ async def give(event):
     await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sadmin$",
     command=("sadmin", plugin_category),
     info={

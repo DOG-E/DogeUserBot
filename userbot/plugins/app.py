@@ -7,12 +7,12 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, catub, edit_or_reply
+from . import ALIVE_NAME, doge, edit_or_reply
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={

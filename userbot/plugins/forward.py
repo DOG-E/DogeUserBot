@@ -2,7 +2,7 @@ import string
 
 from telethon.tl.types import Channel, MessageMediaWebPage
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
@@ -22,16 +22,16 @@ class FPOST:
 FPOST_ = FPOST()
 
 
-async def all_groups_id(cat):
-    catgroups = []
-    async for dialog in cat.client.iter_dialogs():
+async def all_groups_id(dog):
+    doggroups = []
+    async for dialog in dog.client.iter_dialogs():
         entity = dialog.entity
         if isinstance(entity, Channel) and entity.megagroup:
-            catgroups.append(entity.id)
-    return catgroups
+            doggroups.append(entity.id)
+    return doggroups
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="frwd$",
     command=("frwd", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def _(event):
             LOGS.info(str(e))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="resend$",
     command=("resend", plugin_category),
     info={
@@ -83,13 +83,13 @@ async def _(event):
     await event.client.send_message(event.chat_id, m.text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fpost ([\s\S]*)",
     command=("fpost", plugin_category),
     info={
         "header": "Split the word and forwards each letter from previous messages in that group",
         "usage": "{tr}fpost <text>",
-        "examples": "{tr}fpost catuserbot",
+        "examples": "{tr}fpost DogeUserBot",
     },
 )
 async def _(event):

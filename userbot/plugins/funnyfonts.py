@@ -1,7 +1,7 @@
 import random
 import re
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from . import fonts
@@ -9,13 +9,13 @@ from . import fonts
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="str(?:\s|$)([\s\S]*)",
     command=("str", plugin_category),
     info={
         "header": "stretches the given text",
         "usage": ["{tr}str <text>", "{tr}str reply this command to text message"],
-        "examples": "{tr}str catuserbot",
+        "examples": "{tr}str DogeUserBot",
     },
 )
 async def stretch(stret):
@@ -36,13 +36,13 @@ async def stretch(stret):
     await edit_or_reply(stret, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="zal(?:\s|$)([\s\S]*)",
     command=("zal", plugin_category),
     info={
         "header": "chages given text into some funny way",
         "usage": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
-        "examples": "{tr}zal catuserbot",
+        "examples": "{tr}zal DogeUserBot",
     },
 )
 async def zal(zgfy):
@@ -80,13 +80,13 @@ async def zal(zgfy):
     await edit_or_reply(zgfy, "".join(reply_text))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cp(?:\s|$)([\s\S]*)",
     command=("cp", plugin_category),
     info={
         "header": "chages given text into some funny way",
         "usage": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
-        "examples": "{tr}cp catuserbot",
+        "examples": "{tr}cp DogeUserBot",
     },
 )
 async def copypasta(cp_e):
@@ -119,13 +119,13 @@ async def copypasta(cp_e):
     await edit_or_reply(cp_e, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="weeb(?:\s|$)([\s\S]*)",
     command=("weeb", plugin_category),
     info={
         "header": "chages given text into some funny way",
         "usage": ["{tr}weeb <text>", "{tr}weeb reply this command to text message"],
-        "examples": "{tr}weeb catuserbot",
+        "examples": "{tr}weeb DogeUserBot",
     },
 )
 async def weebify(event):
@@ -145,7 +145,7 @@ async def weebify(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="downside(?:\s|$)([\s\S]*)",
     command=("downside", plugin_category),
     info={
@@ -154,7 +154,7 @@ async def weebify(event):
             "{tr}downside <text>",
             "{tr}downside reply this command to text message",
         ],
-        "examples": "{tr}downside catuserbot",
+        "examples": "{tr}downside DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -176,7 +176,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="subscript(?:\s|$)([\s\S]*)",
     command=("subscript", plugin_category),
     info={
@@ -185,7 +185,7 @@ async def stylish_generator(event):
             "{tr}subscript <text>",
             "{tr}subscript reply this command to text message",
         ],
-        "examples": "{tr}subscript catuserbot",
+        "examples": "{tr}subscript DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -207,7 +207,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="superscript(?:\s|$)([\s\S]*)",
     command=("superscript", plugin_category),
     info={
@@ -216,7 +216,7 @@ async def stylish_generator(event):
             "{tr}superscript <text>",
             "{tr}superscript reply this command to text message",
         ],
-        "examples": "{tr}superscript catuserbot",
+        "examples": "{tr}superscript DogeUserBot",
     },
 )
 async def stylish_generator(event):

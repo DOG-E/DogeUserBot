@@ -12,7 +12,7 @@ import requests
 from selenium import webdriver
 from validators.url import url
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -21,13 +21,13 @@ from . import reply_id
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ss ([\s\S]*)",
     command=("ss", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
         "usage": "{tr}ss <link>",
-        "examples": "{tr}ss https://github.com/sandy1709/catuserbot",
+        "examples": "{tr}ss https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
@@ -36,7 +36,7 @@ async def _(event):
         return await edit_or_reply(
             event, "Need to install Google Chrome. Module Stopping."
         )
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await edit_or_reply(event, "`Processing ...`")
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -51,14 +51,14 @@ async def _(event):
         driver = webdriver.Chrome(chrome_options=chrome_options)
         input_str = event.pattern_match.group(1)
         inputstr = input_str
-        caturl = url(inputstr)
-        if not caturl:
+        dogurl = url(inputstr)
+        if not dogurl:
             inputstr = "http://" + input_str
-            caturl = url(inputstr)
-        if not caturl:
-            return await catevent.edit("`The given input is not supported url`")
+            dogurl = url(inputstr)
+        if not dogurl:
+            return await dogevent.edit("`The given input is not supported url`")
         driver.get(inputstr)
-        await catevent.edit("`Calculating Page Dimensions`")
+        await dogevent.edit("`Calculating Page Dimensions`")
         height = driver.execute_script(
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
         )
@@ -70,13 +70,13 @@ async def _(event):
         # for good measure to make the scroll bars disappear
         im_png = driver.get_screenshot_as_png()
         # saves screenshot of entire page
-        await catevent.edit("`Stoppping Chrome Bin`")
+        await dogevent.edit("`Stoppping Chrome Bin`")
         driver.close()
         message_id = await reply_id(event)
         end = datetime.now()
         ms = (end - start).seconds
         hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
-        await catevent.delete()
+        await dogevent.delete()
         with io.BytesIO(im_png) as out_file:
             out_file.name = input_str + ".PNG"
             await event.client.send_file(
@@ -89,17 +89,17 @@ async def _(event):
                 silent=True,
             )
     except Exception:
-        await catevent.edit(f"`{traceback.format_exc()}`")
+        await dogevent.edit(f"`{traceback.format_exc()}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="scapture ([\s\S]*)",
     command=("scapture", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
         "description": "For functioning of this command you need to set SCREEN_SHOT_LAYER_ACCESS_KEY var",
         "usage": "{tr}scapture <link>",
-        "examples": "{tr}scapture https://github.com/sandy1709/catuserbot",
+        "examples": "{tr}scapture https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
@@ -111,16 +111,16 @@ async def _(event):
             event,
             "`Need to get an API key from https://screenshotlayer.com/product and need to set it SCREEN_SHOT_LAYER_ACCESS_KEY !`",
         )
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await edit_or_reply(event, "`Processing ...`")
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
     input_str = event.pattern_match.group(1)
     inputstr = input_str
-    caturl = url(inputstr)
-    if not caturl:
+    dogurl = url(inputstr)
+    if not dogurl:
         inputstr = "http://" + input_str
-        caturl = url(inputstr)
-    if not caturl:
-        return await catevent.edit("`The given input is not supported url`")
+        dogurl = url(inputstr)
+    if not dogurl:
+        return await dogevent.edit("`The given input is not supported url`")
     response_api = requests.get(
         sample_url.format(
             Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"
@@ -142,8 +142,8 @@ async def _(event):
                     force_document=True,
                     reply_to=message_id,
                 )
-                await catevent.delete()
+                await dogevent.delete()
             except Exception as e:
-                await catevent.edit(str(e))
+                await dogevent.edit(str(e))
     else:
-        await catevent.edit(f"`{response_api.text}`")
+        await dogevent.edit(f"`{response_api.text}`")

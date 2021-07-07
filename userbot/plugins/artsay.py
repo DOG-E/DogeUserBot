@@ -3,12 +3,12 @@ Created by  Md Jisan.  tg @Jisan7509
 Plugin for CatUserbot
 """
 
-from . import catub, edit_or_reply, mention
+from . import doge, edit_or_reply, mention
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="carry ([\s\S]*)",
     command=("carry", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ded(?:\s|$)([\s\S]*)",
     command=("ded", plugin_category),
     info={
@@ -57,7 +57,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="killer(?:\s|$)([\s\S]*)",
     command=("killer", plugin_category),
     info={
@@ -96,7 +96,7 @@ G = (
 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sthink ([\s\S]*)",
     command=("sthink", plugin_category),
     info={
@@ -128,7 +128,7 @@ async def kakashi(think):
     await edit_or_reply(think, A)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sfrog ([\s\S]*)",
     command=("sfrog", plugin_category),
     info={
@@ -160,7 +160,7 @@ async def kakashi(frogsay):
     await edit_or_reply(frogsay, C)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sputin ([\s\S]*)",
     command=("sputin", plugin_category),
     info={
@@ -193,7 +193,7 @@ async def kakashi(putinsay):
     await edit_or_reply(putinsay, D)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sdead ([\s\S]*)",
     command=("sdead", plugin_category),
     info={
@@ -225,7 +225,7 @@ async def kakashi(deadfrog):
     await edit_or_reply(deadfrog, E)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="strump ([\s\S]*)",
     command=("strump", plugin_category),
     info={
@@ -257,7 +257,7 @@ async def kakashi(trumpsay):
     await edit_or_reply(trumpsay, J)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="schina ([\s\S]*)",
     command=("schina", plugin_category),
     info={
@@ -290,7 +290,7 @@ async def kakashi(ckmkb):
     await edit_or_reply(ckmkb, K)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sshit$",
     command=("sshit", plugin_category),
     info={

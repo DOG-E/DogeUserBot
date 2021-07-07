@@ -1,1 +1,1 @@
-from .catub_config import Config
+from .doge_config import Config

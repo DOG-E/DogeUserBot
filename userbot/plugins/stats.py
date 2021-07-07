@@ -5,7 +5,7 @@ from telethon.tl.custom import Dialog
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import Channel, Chat, User
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
@@ -37,7 +37,7 @@ def user_full_name(user):
     return " ".join(names)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stat$",
     command=("stat", plugin_category),
     info={
@@ -57,7 +57,7 @@ def user_full_name(user):
 )
 async def stats(event):  # sourcery no-metrics
     "To get statistics of your telegram account."
-    cat = await edit_or_reply(event, STAT_INDICATION)
+    dog = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
     private_chats = 0
     bots = 0
@@ -115,17 +115,17 @@ async def stats(event):  # sourcery no-metrics
     response += f"**Unread:** {unread} \n"
     response += f"**Unread Mentions:** {unread_mentions} \n\n"
     response += f"📌 __It Took:__ {stop_time:.02f}s \n"
-    await cat.edit(response)
+    await dog.edit(response)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stat (c|ca|co)$",
 )
 async def stats(event):  # sourcery no-metrics
-    catcmd = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, STAT_INDICATION)
+    dogecmd = event.pattern_match.group(1)
+    dogevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
     hica = []
     hico = []
@@ -137,46 +137,46 @@ async def stats(event):  # sourcery no-metrics
                 hica.append([entity.title, entity.id])
             if entity.creator:
                 hico.append([entity.title, entity.id])
-    if catcmd == "c":
+    if dogecmd == "c":
         output = CHANNELS_STR
         for k, i in enumerate(hi, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = CHANNELS_STR
-    elif catcmd == "ca":
+    elif dogecmd == "ca":
         output = CHANNELS_ADMINSTR
         for k, i in enumerate(hica, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = CHANNELS_ADMINSTR
-    elif catcmd == "co":
+    elif dogecmd == "co":
         output = CHANNELS_OWNERSTR
         for k, i in enumerate(hico, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = CHANNELS_OWNERSTR
     stop_time = time.time() - start_time
     try:
-        cat = Get(cat)
-        await event.client(cat)
+        dog = Get(dog)
+        await event.client(dog)
     except BaseException:
         pass
     output += f"\n**Time Taken : ** {stop_time:.02f}s"
     try:
-        await catevent.edit(output)
+        await dogevent.edit(output)
     except Exception:
         await edit_or_reply(
-            catevent,
+            dogevent,
             output,
             caption=caption,
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stat (g|ga|go)$",
 )
 async def stats(event):  # sourcery no-metrics
-    catcmd = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, STAT_INDICATION)
+    dogecmd = event.pattern_match.group(1)
+    dogevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
     higa = []
     higo = []
@@ -196,39 +196,39 @@ async def stats(event):  # sourcery no-metrics
                 higa.append([entity.title, entity.id])
             if entity.creator:
                 higo.append([entity.title, entity.id])
-    if catcmd == "g":
+    if dogecmd == "g":
         output = GROUPS_STR
         for k, i in enumerate(hi, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = GROUPS_STR
-    elif catcmd == "ga":
+    elif dogecmd == "ga":
         output = GROUPS_ADMINSTR
         for k, i in enumerate(higa, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = GROUPS_ADMINSTR
-    elif catcmd == "go":
+    elif dogecmd == "go":
         output = GROUPS_OWNERSTR
         for k, i in enumerate(higo, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = GROUPS_OWNERSTR
     stop_time = time.time() - start_time
     try:
-        cat = Get(cat)
-        await event.client(cat)
+        dog = Get(dog)
+        await event.client(dog)
     except BaseException:
         pass
     output += f"\n**Time Taken : ** {stop_time:.02f}s"
     try:
-        await catevent.edit(output)
+        await dogevent.edit(output)
     except Exception:
         await edit_or_reply(
-            catevent,
+            dogevent,
             output,
             caption=caption,
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ustat(?:\s|$)([\s\S]*)",
     command=("ustat", plugin_category),
     info={
@@ -259,12 +259,12 @@ async def _(event):
     else:
         uid = reply_message.sender_id
     chat = "@tgscanrobot"
-    catevent = await edit_or_reply(event, "`Processing...`")
+    dogevent = await edit_or_reply(event, "`Processing...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"{uid}")
         except Exception:
-            await edit_delete(catevent, "`unblock `@tgscanrobot` and then try`")
+            await edit_delete(dogevent, "`unblock `@tgscanrobot` and then try`")
         response = await conv.get_response()
         await event.client.send_read_acknowledge(conv.chat_id)
-        await catevent.edit(response.text)
+        await dogevent.edit(response.text)

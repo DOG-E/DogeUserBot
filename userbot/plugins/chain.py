@@ -1,11 +1,11 @@
 from telethon.tl.functions.messages import SaveDraftRequest
 
-from . import catub
+from . import doge
 
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="chain$",
     command=("chain", plugin_category),
     info={

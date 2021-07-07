@@ -9,7 +9,7 @@ from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from telegraph import exceptions, upload_file
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import media_type, readable_time, time_formatter
@@ -22,7 +22,7 @@ from ..helpers.functions import (
     memory_file,
     replace_text,
 )
-from ..helpers.utils import _cattools, reply_id
+from ..helpers.utils import _dogtools, reply_id
 
 jikan = Jikan()
 url = "https://graphql.anilist.co"
@@ -32,7 +32,7 @@ headers = {
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="airing ([\s\S]*)",
     command=("airing", plugin_category),
     info={
@@ -58,7 +58,7 @@ async def anilist(event):
     await edit_or_reply(event, ms_g)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="anime(?:\s|$)([\s\S]*)",
     command=("anime", plugin_category),
     info={
@@ -81,7 +81,7 @@ async def anilist(event):
     await event.edit(msg, link_preview=True)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="manga(?:\s|$)([\s\S]*)",
     command=("manga", plugin_category),
     info={
@@ -102,18 +102,18 @@ async def get_manga(event):
             return await edit_delete(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    catevent = await edit_or_reply(event, "`Searching Manga..`")
+    dogevent = await edit_or_reply(event, "`Searching Manga..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", input_str)
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_manga", event.chat_id)
-    await catevent.delete()
+    await dogevent.delete()
     await event.client.send_file(
         event.chat_id, file=image, caption=caption, parse_mode="html", reply_to=reply_to
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sanime(?:\s|$)([\s\S]*)",
     command=("sanime", plugin_category),
     info={
@@ -134,13 +134,13 @@ async def get_manga(event):
             return await edit_delete(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    catevent = await edit_or_reply(event, "`Searching Anime..`")
+    dogevent = await edit_or_reply(event, "`Searching Anime..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", input_str)
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_anime", event.chat_id)
     try:
-        await catevent.delete()
+        await dogevent.delete()
         await event.client.send_file(
             event.chat_id,
             file=image,
@@ -159,7 +159,7 @@ async def get_manga(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="char(?:\s|$)([\s\S]*)",
     command=("char", plugin_category),
     info={
@@ -180,11 +180,11 @@ async def character(event):
             return await edit_delete(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    catevent = await edit_or_reply(event, "`Searching Character...`")
+    dogevent = await edit_or_reply(event, "`Searching Character...`")
     try:
         search_result = jikan.search("character", search_query)
     except APIException:
-        return await edit_delete(catevent, "`Character not found.`")
+        return await edit_delete(dogevent, "`Character not found.`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
     caption = f"[{character['name']}]({character['url']})"
@@ -207,7 +207,7 @@ async def character(event):
             character[entity] = "Unknown"
     caption += f"\n🔰**Extracted Character Data**🔰\n\n{about_string}"
     caption += f" [Read More]({mal_url})..."
-    await catevent.delete()
+    await dogevent.delete()
     await event.client.send_file(
         event.chat_id,
         file=character["image_url"],
@@ -216,7 +216,7 @@ async def character(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="a(kaizoku|kayo|indi)(?: |$)([\S\s]*)",
     command=("akaizoku", plugin_category),
     info={
@@ -244,7 +244,7 @@ async def anime_download(event):  # sourcery no-metrics
         return await edit_delete(
             event, "__What should i search ? Gib me Something to Search__"
         )
-    catevent = await edit_or_reply(event, "`Searching anime...`")
+    dogevent = await edit_or_reply(event, "`Searching anime...`")
     search_query = search_query.replace(" ", "+")
     if input_str == "kaizoku":
         search_url = f"https://animekaizoku.com/?s={search_query}"
@@ -291,10 +291,10 @@ async def anime_download(event):  # sourcery no-metrics
                 result += f"• <a href={post_link}>{post_name}</a>\n"
         else:
             result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>IndiAnime</code>"
-    await catevent.edit(result, parse_mode="html")
+    await dogevent.edit(result, parse_mode="html")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="upcoming$",
     command=("upcoming", plugin_category),
     info={
@@ -316,7 +316,7 @@ async def upcoming(event):
     await edit_or_reply(event, rep, parse_mode="html")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="w(hat)?anime$",
     command=("whatanime", plugin_category),
     info={
@@ -340,7 +340,7 @@ async def whatanime(event):
             event,
             f"__Reply to proper media that is expecting photo/video/gif/sticker. not {mediatype}__.",
         )
-    output = await _cattools.media_to_pic(event, reply)
+    output = await _dogtools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -353,11 +353,11 @@ async def whatanime(event):
             response = upload_file(output[1])
         except exceptions.TelegraphException as exc:
             return await edit_delete(output[0], f"**Error :**\n__{str(exc)}__")
-    cat = f"https://telegra.ph{response[0]}"
+    dog = f"https://telegra.ph{response[0]}"
     await output[0].edit("`Searching for result..`")
     async with aiohttp.ClientSession() as session:
         async with session.post(
-            f"https://api.trace.moe/search?anilistInfo&url={quote_plus(cat)}"
+            f"https://api.trace.moe/search?anilistInfo&url={quote_plus(dog)}"
         ) as raw_resp0:
             resp0 = await raw_resp0.json()
         framecount = resp0["frameCount"]

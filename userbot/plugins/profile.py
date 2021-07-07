@@ -7,7 +7,7 @@ from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputPhoto, User
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
@@ -29,7 +29,7 @@ USERNAME_TAKEN = "```This username is already taken.```"
 # ===============================================================
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
@@ -42,12 +42,12 @@ async def _(event):
     bio = event.pattern_match.group(1)
     try:
         await event.client(functions.account.UpdateProfileRequest(about=bio))
-        await edit_delete(event, "`Succesfully changed my profile bio`")
+        await edit_delete(event, "`Successfully changed my profile bio`")
     except Exception as e:
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
@@ -73,7 +73,7 @@ async def _(event):
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ppic$",
     command=("ppic", plugin_category),
     info={
@@ -84,7 +84,7 @@ async def _(event):
 async def _(event):
     "To set profile pic for this account."
     reply_message = await event.get_reply_message()
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event, "`Downloading Profile Picture to my local ...`"
     )
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
@@ -95,33 +95,33 @@ async def _(event):
             reply_message, Config.TMP_DOWNLOAD_DIRECTORY
         )
     except Exception as e:
-        await catevent.edit(str(e))
+        await dogevent.edit(str(e))
     else:
         if photo:
-            await catevent.edit("`now, Uploading to Telegram ...`")
+            await dogevent.edit("`now, Uploading to Telegram ...`")
             if photo.endswith((".mp4", ".MP4")):
                 # https://t.me/tgbetachat/324694
                 size = os.stat(photo).st_size
                 if size > 2097152:
-                    await catevent.edit("`size must be less than 2 mb`")
+                    await dogevent.edit("`size must be less than 2 mb`")
                     os.remove(photo)
                     return
-                catpic = None
-                catvideo = await event.client.upload_file(photo)
+                dogepic = None
+                dogevideo = await event.client.upload_file(photo)
             else:
-                catpic = await event.client.upload_file(photo)
-                catvideo = None
+                dogepic = await event.client.upload_file(photo)
+                dogevideo = None
             try:
                 await event.client(
                     functions.photos.UploadProfilePhotoRequest(
-                        file=catpic, video=catvideo, video_start_ts=0.01
+                        file=dogepic, video=dogevideo, video_start_ts=0.01
                     )
                 )
             except Exception as e:
-                await catevent.edit(f"**Error:**\n`{str(e)}`")
+                await dogevent.edit(f"**Error:**\n`{str(e)}`")
             else:
                 await edit_or_reply(
-                    catevent, "`My profile picture was successfully changed`"
+                    dogevent, "`My profile picture was successfully changed`"
                 )
     try:
         os.remove(photo)
@@ -129,7 +129,7 @@ async def _(event):
         LOGS.info(str(e))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
@@ -142,14 +142,14 @@ async def update_username(username):
     newusername = username.pattern_match.group(1)
     try:
         await username.client(UpdateUsernameRequest(newusername))
-        await edit_delete(event, USERNAME_SUCCESS)
+        await edit_delete(username, USERNAME_SUCCESS)
     except UsernameOccupiedError:
-        await edit_or_reply(event, USERNAME_TAKEN)
+        await edit_or_reply(username, USERNAME_TAKEN)
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
+        await edit_or_reply(username, f"**Error:**\n`{str(e)}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="count$",
     command=("count", plugin_category),
     info={
@@ -165,7 +165,7 @@ async def count(event):
     bc = 0
     b = 0
     result = ""
-    catevent = await edit_or_reply(event, "`Processing..`")
+    dogevent = await edit_or_reply(event, "`Processing..`")
     dialogs = await event.client.get_dialogs(limit=None, ignore_migrated=True)
     for d in dialogs:
         currrent_entity = d.entity
@@ -190,10 +190,10 @@ async def count(event):
     result += f"`Channels:`\t**{bc}**\n"
     result += f"`Bots:`\t**{b}**"
 
-    await catevent.edit(result)
+    await dogevent.edit(result)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
@@ -228,7 +228,7 @@ async def remove_profilepic(delpfp):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="myusernames$",
     command=("myusernames", plugin_category),
     info={

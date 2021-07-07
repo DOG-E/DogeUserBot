@@ -2,7 +2,7 @@
 from geopy.geocoders import Nominatim
 from telethon.tl import types
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers import reply_id
@@ -10,7 +10,7 @@ from ..helpers import reply_id
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gps ([\s\S]*)",
     command=("gps", plugin_category),
     info={
@@ -23,8 +23,8 @@ async def gps(event):
     "Map of the given location."
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, "`finding.....`")
-    geolocator = Nominatim(user_agent="catuserbot")
+    dogevent = await edit_or_reply(event, "`finding.....`")
+    geolocator = Nominatim(user_agent="DogeUserBot")
     geoloc = geolocator.geocode(input_str)
     if geoloc:
         lon = geoloc.longitude
@@ -35,6 +35,6 @@ async def gps(event):
             caption=f"**Location : **`{input_str}`",
             reply_to=reply_to_id,
         )
-        await catevent.delete()
+        await dogevent.delete()
     else:
-        await catevent.edit("`i coudn't find it`")
+        await dogevent.edit("`i coudn't find it`")

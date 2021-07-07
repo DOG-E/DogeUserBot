@@ -6,7 +6,7 @@ import requests
 from github import Github
 from pySmartDL import SmartDL
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
@@ -21,7 +21,7 @@ plugin_category = "misc"
 GIT_TEMP_DIR = "./temp/"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="repo$",
     command=("repo", plugin_category),
     info={
@@ -35,19 +35,18 @@ async def source(e):
     "Source code link of userbot"
     await edit_or_reply(
         e,
-        "Click [here](https://github.com/Jisan09/catuserbot) to open this bot source code\
-        \nClick [here](https://github.com/Jisan09/catpack) to open supported link for heroku",
+        "Click [here](https://github.com/DOG-E/dogeuserbot) to open this bot source code",
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="github( -l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
         "header": "Shows the information about an user on GitHub of given username",
         "flags": {"-l": "repo limit : default to 5"},
         "usage": ".github [flag] [username]",
-        "examples": [".github sandy1709", ".github -l5 sandy1709"],
+        "examples": [".github teledoge", ".github -l5 teledoge"],
     },
 )
 async def _(event):
@@ -59,7 +58,7 @@ async def _(event):
         async with session.get(URL) as request:
             if request.status == 404:
                 return await edit_delete(event, "`" + username + " not found`")
-            catevent = await edit_or_reply(event, "`fetching github info ...`")
+            dogevent = await edit_or_reply(event, "`fetching github info ...`")
             result = await request.json()
             photo = result["avatar_url"]
             if result["bio"]:
@@ -103,10 +102,10 @@ async def _(event):
                 reply_to=reply_to,
             )
             os.remove(ppath)
-            await catevent.delete()
+            await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="commit$",
     command=("commit", plugin_category),
     info={

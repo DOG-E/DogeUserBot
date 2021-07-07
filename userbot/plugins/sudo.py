@@ -2,7 +2,7 @@ from datetime import datetime
 
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
@@ -34,17 +34,17 @@ def get_key(val):
     return None
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sudo (on|off)$",
     command=("sudo", plugin_category),
     info={
-        "header": "To enable or disable sudo of your Catuserbot.",
+        "header": "To enable or disable sudo of your DogeUserBot.",
         "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}help -c addscmd`",
         "usage": "{tr}sudo <on/off>",
     },
 )
 async def chat_blacklist(event):
-    "To enable or disable sudo of your CatUserbot."
+    "To enable or disable sudo of your DogeUserBot."
     input_str = event.pattern_match.group(1)
     sudousers = _sudousers_list()
     if input_str == "on":
@@ -88,7 +88,7 @@ async def chat_blacklist(event):
     await edit_delete(event, "It was turned off already")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addsudo(?:\s|$)([\s\S]*)",
     command=("addsudo", plugin_category),
     info={
@@ -128,7 +128,7 @@ async def add_sudo_user(event):
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="delsudo(?:\s|$)([\s\S]*)",
     command=("delsudo", plugin_category),
     info={
@@ -159,7 +159,7 @@ async def _(event):
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vsudo$",
     command=("vsudo", plugin_category),
     info={
@@ -176,9 +176,9 @@ async def _(event):
         sudousers = {}
     if len(sudochats) == 0:
         return await edit_delete(
-            event, "__There are no sudo users for your Catuserbot.__"
+            event, "__There are no sudo users for your DogeUserBot.__"
         )
-    result = "**The list of sudo users for your Catuserbot are :**\n\n"
+    result = "**The list of sudo users for your DogeUserBot are :**\n\n"
     for chat in sudochats:
         result += f"☞ **Name:** {mentionuser(sudousers[str(chat)]['chat_name'],sudousers[str(chat)]['chat_id'])}\n"
         result += f"**Chat Id :** `{chat}`\n"
@@ -188,7 +188,7 @@ async def _(event):
     await edit_or_reply(event, result)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addscmd(s)? ((.|\n)*)",
     command=("addscmd", plugin_category),
     info={
@@ -221,7 +221,7 @@ async def _(event):  # sourcery no-metrics
         )
     input_str = input_str.split()
     if input_str[0] == "-all":
-        catevent = await edit_or_reply(event, "__Enabling all safe cmds for sudo....__")
+        dogevent = await edit_or_reply(event, "__Enabling all safe cmds for sudo....__")
         totalcmds = CMD_INFO.keys()
         flagcmds = (
             PLG_INFO["botcontrols"]
@@ -244,44 +244,44 @@ async def _(event):  # sourcery no-metrics
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
     elif input_str[0] == "-full":
-        catevent = await edit_or_reply(
+        dogevent = await edit_or_reply(
             event, "__Enabling compelete sudo for users....__"
         )
         loadcmds = CMD_INFO.keys()
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
     elif input_str[0] == "-p":
-        catevent = event
+        dogevent = event
         input_str.remove("-p")
         loadcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += f"`{cmd}` __There is no such plugin in your CatUserbot__.\n"
+                errors += f"`{cmd}` __There is no such plugin in your DogeUserBot__.\n"
             else:
                 loadcmds += PLG_INFO[plugin]
     else:
-        catevent = event
+        dogevent = event
         loadcmds = []
         for cmd in input_str:
             if cmd not in CMD_INFO:
-                errors += f"`{cmd}` __There is no such command in your CatUserbot__.\n"
+                errors += f"`{cmd}` __There is no such command in your DogeUserBot__.\n"
             elif cmd in sudocmds:
                 errors += f"`{cmd}` __Is already enabled for sudo users__.\n"
             else:
                 loadcmds.append(cmd)
     for cmd in loadcmds:
         sqllist.add_to_list("sudo_enabled_cmds", cmd)
-    result = f"__Successfully enabled __ `{len(loadcmds)}` __ for CatUserbot sudo.__\n"
+    result = f"__Successfully enabled __ `{len(loadcmds)}` __ for DogeUserBot sudo.__\n"
     output = (
         result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
     )
     if errors != "":
         output += "\n**Errors:**\n" + errors
-    msg = await edit_or_reply(catevent, output)
+    msg = await edit_or_reply(dogevent, output)
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmscmd(s)? ((.|\n)*)?",
     command=("rmscmd", plugin_category),
     info={
@@ -314,12 +314,12 @@ async def _(event):  # sourcery no-metrics
         )
     input_str = input_str.split()
     if input_str[0] == "-all":
-        catevent = await edit_or_reply(
+        dogevent = await edit_or_reply(
             event, "__Disabling all enabled cmds for sudo....__"
         )
         flagcmds = sudocmds
     elif input_str[0] == "-flag":
-        catevent = await edit_or_reply(
+        dogevent = await edit_or_reply(
             event, "__Disabling all flagged cmds for sudo.....__"
         )
         flagcmds = (
@@ -340,20 +340,20 @@ async def _(event):  # sourcery no-metrics
             + ["greset"]
         )
     elif input_str[0] == "-p":
-        catevent = event
+        dogevent = event
         input_str.remove("-p")
         flagcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += f"`{cmd}` __There is no such plugin in your CatUserbot__.\n"
+                errors += f"`{cmd}` __There is no such plugin in your DogeUserBot__.\n"
             else:
                 flagcmds += PLG_INFO[plugin]
     else:
-        catevent = event
+        dogevent = event
         flagcmds = []
         for cmd in input_str:
             if cmd not in CMD_INFO:
-                errors += f"`{cmd}` __There is no such command in your CatUserbot__.\n"
+                errors += f"`{cmd}` __There is no such command in your DogeUserBot__.\n"
             elif cmd not in sudocmds:
                 errors += f"`{cmd}` __Is already disabled for sudo users__.\n"
             else:
@@ -363,17 +363,17 @@ async def _(event):  # sourcery no-metrics
         if sqllist.is_in_list("sudo_enabled_cmds", cmd):
             count += 1
             sqllist.rm_from_list("sudo_enabled_cmds", cmd)
-    result = f"__Successfully disabled __ `{count}` __ for CatUserbot sudo.__\n"
+    result = f"__Successfully disabled __ `{count}` __ for DogeUserBot sudo.__\n"
     output = (
         result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
     )
     if errors != "":
         output += "\n**Errors:**\n" + errors
-    msg = await edit_or_reply(catevent, output)
+    msg = await edit_or_reply(dogevent, output)
     await event.client.reload(msg)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vscmds( -d)?$",
     command=("vscmds", plugin_category),
     info={
@@ -439,4 +439,4 @@ async def _(event):  # sourcery no-metrics
     await edit_or_reply(event, finalstr, aslink=True, linktext=text)
 
 
-catub.loop.create_task(_init())
+doge.loop.create_task(_init())

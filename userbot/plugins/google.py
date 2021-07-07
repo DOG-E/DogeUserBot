@@ -11,7 +11,7 @@ from PIL import Image
 from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -60,7 +60,7 @@ async def scam(results, lim):
     return imglinks
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
@@ -74,16 +74,16 @@ async def scam(results, lim):
             "{tr}gs <query>",
         ],
         "examples": [
-            "{tr}gs catuserbot",
-            "{tr}gs -l6 catuserbot",
-            "{tr}gs -p2 catuserbot",
-            "{tr}gs -p2 -l7 catuserbot",
+            "{tr}gs DogeUserBot",
+            "{tr}gs -l6 DogeUserBot",
+            "{tr}gs -p2 DogeUserBot",
+            "{tr}gs -p2 -l7 DogeUserBot",
         ],
     },
 )
 async def gsearch(q_event):
     "Google search command."
-    catevent = await edit_or_reply(q_event, "`searching........`")
+    dogevent = await edit_or_reply(q_event, "`searching........`")
     match = q_event.pattern_match.group(1)
     page = re.findall(r"-p\d+", match)
     lim = re.findall(r"-l\d+", match)
@@ -117,7 +117,7 @@ async def gsearch(q_event):
             try:
                 gresults = await ysearch.async_search(*search_args)
             except Exception as e:
-                return await edit_delete(catevent, f"**Error:**\n`{str(e)}`", time=10)
+                return await edit_delete(dogevent, f"**Error:**\n`{str(e)}`", time=10)
     msg = ""
     for i in range(lim):
         if i > len(gresults["links"]):
@@ -130,7 +130,7 @@ async def gsearch(q_event):
         except IndexError:
             break
     await edit_or_reply(
-        catevent,
+        dogevent,
         "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg,
         link_preview=False,
         aslink=True,
@@ -143,7 +143,7 @@ async def gsearch(q_event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="grs$",
     command=("grs", plugin_category),
     info={
@@ -157,7 +157,7 @@ async def _(event):
     start = datetime.now()
     OUTPUT_STR = "Reply to an image to do Google Reverse Search"
     if event.reply_to_msg_id:
-        catevent = await edit_or_reply(event, "Pre Processing Media")
+        dogevent = await edit_or_reply(event, "Pre Processing Media")
         previous_message = await event.get_reply_message()
         previous_message_text = previous_message.message
         BASE_URL = "http://www.google.com"
@@ -185,7 +185,7 @@ async def _(event):
             request_url = SEARCH_URL.format(BASE_URL, previous_message_text)
             google_rs_response = requests.get(request_url, allow_redirects=False)
             the_location = google_rs_response.headers.get("Location")
-        await catevent.edit("Found Google Result. Pouring some soup on it!")
+        await dogevent.edit("Found Google Result. Pouring some soup on it!")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0"
         }
@@ -202,7 +202,7 @@ async def _(event):
             img_size = img_size_div.find_all("div")
         except Exception:
             return await edit_delete(
-                catevent, "`Sorry. I am unable to find similar images`"
+                dogevent, "`Sorry. I am unable to find similar images`"
             )
         end = datetime.now()
         ms = (end - start).seconds
@@ -213,11 +213,11 @@ async def _(event):
             **locals()
         )
     else:
-        catevent = event
-    await edit_or_reply(catevent, OUTPUT_STR, parse_mode="HTML", link_preview=False)
+        dogevent = event
+    await edit_or_reply(dogevent, OUTPUT_STR, parse_mode="HTML", link_preview=False)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="reverse(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
@@ -239,11 +239,11 @@ async def _(img):
         await edit_or_reply(img, "`Reply to photo or sticker nigger.`")
         return
     if photo:
-        catevent = await edit_or_reply(img, "`Processing...`")
+        dogevent = await edit_or_reply(img, "`Processing...`")
         try:
             image = Image.open(photo)
         except OSError:
-            return await catevent.edit("`Unsupported , most likely.`")
+            return await dogevent.edit("`Unsupported , most likely.`")
         name = "okgoogle.png"
         image.save(name, "PNG")
         image.close()
@@ -258,15 +258,15 @@ async def _(img):
                 "\n`Parsing source now. Maybe.`"
             )
         else:
-            return await catevent.edit("`Google told me to fuck off.`")
+            return await dogevent.edit("`Google told me to fuck off.`")
         os.remove(name)
         match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
         guess = match["best_guess"]
         imgspage = match["similar_images"]
         if guess and imgspage:
-            await catevent.edit(f"[{guess}]({fetchUrl})\n\n`Looking for this Image...`")
+            await dogevent.edit(f"[{guess}]({fetchUrl})\n\n`Looking for this Image...`")
         else:
-            return await catevent.edit("`Can't find any kind similar images.`")
+            return await dogevent.edit("`Can't find any kind similar images.`")
         lim = img.pattern_match.group(1) or 3
         images = await scam(match, lim)
         yeet = []
@@ -281,12 +281,12 @@ async def _(img):
             )
         except TypeError:
             pass
-        await catevent.edit(
+        await dogevent.edit(
             f"[{guess}]({fetchUrl})\n\n[Visually similar images]({imgspage})"
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="google(?:\s|$)([\s\S]*)",
     command=("google", plugin_category),
     info={

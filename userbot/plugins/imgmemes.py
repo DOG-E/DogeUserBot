@@ -4,7 +4,7 @@ import asyncio
 import os
 import re
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
@@ -22,188 +22,188 @@ from . import (
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fakegs(?:\s|$)([\s\S]*)",
     command=("fakegs", plugin_category),
     info={
         "header": "Fake google search meme",
         "usage": "{tr}fakegs search query ; what you mean text",
-        "examples": "{tr}fakegs Catuserbot ; One of the Popular userbot",
+        "examples": "{tr}fakegs DogeUserBot ; One of the Popular userbot",
     },
 )
-async def nekobot(cat):
+async def nekobot(dog):
     "Fake google search meme"
-    text = cat.pattern_match.group(1)
-    reply_to_id = await reply_id(cat)
+    text = dog.pattern_match.group(1)
+    reply_to_id = await reply_id(dog)
     if not text:
-        if cat.is_reply and not reply_to_id.media:
+        if dog.is_reply and not reply_to_id.media:
             text = reply_to_id.message
         else:
-            return await edit_delete(cat, "`What should i search in google.`", 5)
-    cate = await edit_or_reply(cat, "`Connecting to https://www.google.com/ ...`")
+            return await edit_delete(dog, "`What should i search in google.`", 5)
+    dogg = await edit_or_reply(dog, "`Connecting to https://www.google.com/ ...`")
     text = deEmojify(text)
     if ";" in text:
         search, result = text.split(";")
     else:
         await edit_delete(
-            cat,
+            dog,
             "__How should i create meme follow the syntax as show__ `.fakegs top text ; bottom text`",
             5,
         )
         return
-    catfile = await fakegs(search, result)
+    dogfile = await fakegs(search, result)
     await asyncio.sleep(2)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="trump(?:\s|$)([\s\S]*)",
     command=("trump", plugin_category),
     info={
         "header": "trump tweet sticker with given custom text",
         "usage": "{tr}trump <text>",
-        "examples": "{tr}trump Catuserbot is One of the Popular userbot",
+        "examples": "{tr}trump DogeUserBot is One of the Popular userbot",
     },
 )
-async def nekobot(cat):
+async def nekobot(dog):
     "trump tweet sticker with given custom text_"
-    text = cat.pattern_match.group(1)
+    text = dog.pattern_match.group(1)
     text = re.sub("&", "", text)
-    reply_to_id = await reply_id(cat)
+    reply_to_id = await reply_id(dog)
 
-    reply = await cat.get_reply_message()
+    reply = await dog.get_reply_message()
     if not text:
-        if cat.is_reply and not reply.media:
+        if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Trump : **`What should I tweet`", 5)
-    cate = await edit_or_reply(cat, "`Requesting trump to tweet...`")
+            return await edit_delete(dog, "**Trump : **`What should I tweet`", 5)
+    dogg = await edit_or_reply(dog, "`Requesting trump to tweet...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
-    catfile = await trumptweet(text)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    dogfile = await trumptweet(text)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="modi(?:\s|$)([\s\S]*)",
     command=("modi", plugin_category),
     info={
         "header": "modi tweet sticker with given custom text",
         "usage": "{tr}modi <text>",
-        "examples": "{tr}modi Catuserbot is One of the Popular userbot",
+        "examples": "{tr}modi DogeUserBot is One of the Popular userbot",
     },
 )
-async def nekobot(cat):
+async def nekobot(dog):
     "modi tweet sticker with given custom text"
-    text = cat.pattern_match.group(1)
+    text = dog.pattern_match.group(1)
     text = re.sub("&", "", text)
-    reply_to_id = await reply_id(cat)
+    reply_to_id = await reply_id(dog)
 
-    reply = await cat.get_reply_message()
+    reply = await dog.get_reply_message()
     if not text:
-        if cat.is_reply and not reply.media:
+        if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Modi : **`What should I tweet`", 5)
-    cate = await edit_or_reply(cat, "Requesting modi to tweet...")
+            return await edit_delete(dog, "**Modi : **`What should I tweet`", 5)
+    dogg = await edit_or_reply(dog, "Requesting modi to tweet...")
     text = deEmojify(text)
     await asyncio.sleep(2)
-    catfile = await moditweet(text)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    dogfile = await moditweet(text)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cmm(?:\s|$)([\s\S]*)",
     command=("cmm", plugin_category),
     info={
         "header": "Change my mind banner with given custom text",
         "usage": "{tr}cmm <text>",
-        "examples": "{tr}cmm Catuserbot is One of the Popular userbot",
+        "examples": "{tr}cmm DogeUserBot is One of the Popular userbot",
     },
 )
-async def nekobot(cat):
-    text = cat.pattern_match.group(1)
+async def nekobot(dog):
+    text = dog.pattern_match.group(1)
     text = re.sub("&", "", text)
-    reply_to_id = await reply_id(cat)
+    reply_to_id = await reply_id(dog)
 
-    reply = await cat.get_reply_message()
+    reply = await dog.get_reply_message()
     if not text:
-        if cat.is_reply and not reply.media:
+        if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "`Give text to write on banner, man`", 5)
-    cate = await edit_or_reply(cat, "`Your banner is under creation wait a sec...`")
+            return await edit_delete(dog, "`Give text to write on banner, man`", 5)
+    dogg = await edit_or_reply(dog, "`Your banner is under creation wait a sec...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
-    catfile = await changemymind(text)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    dogfile = await changemymind(text)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kanna(?:\s|$)([\s\S]*)",
     command=("kanna", plugin_category),
     info={
         "header": "kanna chan sticker with given custom text",
         "usage": "{tr}kanna text",
-        "examples": "{tr}kanna Catuserbot is One of the Popular userbot",
+        "examples": "{tr}kanna DogeUserBot is One of the Popular userbot",
     },
 )
-async def nekobot(cat):
+async def nekobot(dog):
     "kanna chan sticker with given custom text"
-    text = cat.pattern_match.group(1)
+    text = dog.pattern_match.group(1)
     text = re.sub("&", "", text)
-    reply_to_id = await reply_id(cat)
+    reply_to_id = await reply_id(dog)
 
-    reply = await cat.get_reply_message()
+    reply = await dog.get_reply_message()
     if not text:
-        if cat.is_reply and not reply.media:
+        if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Kanna : **`What should i show you`", 5)
-    cate = await edit_or_reply(cat, "`Kanna is writing your text...`")
+            return await edit_delete(dog, "**Kanna : **`What should i show you`", 5)
+    dogg = await edit_or_reply(dog, "`Kanna is writing your text...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
-    catfile = await kannagen(text)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    dogfile = await kannagen(text)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tweet(?:\s|$)([\s\S]*)",
     command=("tweet", plugin_category),
     info={
         "header": "The desired person tweet sticker with given custom text",
         "usage": "{tr}tweet <username> ; <text>",
-        "examples": "{tr}tweet iamsrk ; Catuserbot is One of the Popular userbot",
+        "examples": "{tr}tweet iamsrk ; DogeUserBot is One of the Popular userbot",
     },
 )
-async def nekobot(cat):
+async def nekobot(dog):
     "The desired person tweet sticker with given custom text"
-    text = cat.pattern_match.group(1)
+    text = dog.pattern_match.group(1)
     text = re.sub("&", "", text)
-    reply_to_id = await reply_id(cat)
+    reply_to_id = await reply_id(dog)
 
-    reply = await cat.get_reply_message()
+    reply = await dog.get_reply_message()
     if not text:
-        if cat.is_reply and not reply.media:
+        if dog.is_reply and not reply.media:
             text = reply.message
         else:
             return await edit_delete(
-                cat,
+                dog,
                 "what should I tweet? Give some text and format must be like `.tweet username ; your text` ",
                 5,
             )
@@ -211,16 +211,16 @@ async def nekobot(cat):
         username, text = text.split(";")
     else:
         await edit_delete(
-            cat,
+            dog,
             "__what should I tweet? Give some text and format must be like__ `.tweet username ; your text`",
             5,
         )
         return
-    cate = await edit_or_reply(cat, f"`Requesting {username} to tweet...`")
+    dogg = await edit_or_reply(dog, f"`Requesting {username} to tweet...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
-    catfile = await tweets(text, username)
-    await cat.client.send_file(cat.chat_id, catfile, reply_to=reply_to_id)
-    await cate.delete()
-    if os.path.exists(catfile):
-        os.remove(catfile)
+    dogfile = await tweets(text, username)
+    await dog.client.send_file(dog.chat_id, dogfile, reply_to=reply_to_id)
+    await dogg.delete()
+    if os.path.exists(dogfile):
+        os.remove(dogfile)

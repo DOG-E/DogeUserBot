@@ -18,7 +18,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -29,7 +29,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="admins(?:\s|$)([\s\S]*)",
     command=("admins", plugin_category),
     info={
@@ -39,7 +39,7 @@ plugin_category = "utils"
             "{tr}admins <username/userid>",
             "{tr}admins <in group where you need>",
         ],
-        "examples": "{tr}admins @catuserbot_support",
+        "examples": "{tr}admins @DogeSup",
     },
 )
 async def _(event):
@@ -84,7 +84,7 @@ async def _(event):
     await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bots(?:\s|$)([\s\S]*)",
     command=("bots", plugin_category),
     info={
@@ -94,7 +94,7 @@ async def _(event):
             "{tr}bots <username/userid>",
             "{tr}bots <in group where you need>",
         ],
-        "examples": "{tr}bots @catuserbot_support",
+        "examples": "{tr}bots @DogeSup",
     },
 )
 async def _(event):
@@ -126,7 +126,7 @@ async def _(event):
     await edit_or_reply(event, mentions)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="users(?:\s|$)([\s\S]*)",
     command=("users", plugin_category),
     info={
@@ -153,7 +153,7 @@ async def get_users(show):
     else:
         if not show.is_group:
             return await edit_or_reply(show, "`Are you sure this is a group?`")
-    catevent = await edit_or_reply(show, "`getting users list wait...`  ")
+    dogevent = await edit_or_reply(show, "`getting users list wait...`  ")
     try:
         if show.pattern_match.group(1):
             async for user in show.client.iter_participants(chat.id):
@@ -173,10 +173,10 @@ async def get_users(show):
                     )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await edit_or_reply(catevent, mentions)
+    await edit_or_reply(dogevent, mentions)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="chatinfo(?:\s|$)([\s\S]*)",
     command=("chatinfo", plugin_category),
     info={
@@ -186,27 +186,27 @@ async def get_users(show):
             "{tr}chatinfo <username/userid>",
             "{tr}chatinfo <in group where you need>",
         ],
-        "examples": "{tr}chatinfo @catuserbot_support",
+        "examples": "{tr}chatinfo @DogeSup",
     },
 )
 async def info(event):
     "To get group information"
-    catevent = await edit_or_reply(event, "`Analysing the chat...`")
-    chat = await get_chatinfo(event, catevent)
+    dogevent = await edit_or_reply(event, "`Analysing the chat...`")
+    chat = await get_chatinfo(event, dogevent)
     if chat is None:
         return
     caption = await fetch_info(chat, event)
     try:
-        await catevent.edit(caption, parse_mode="html")
+        await dogevent.edit(caption, parse_mode="html")
     except Exception as e:
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID, f"**Error in chatinfo : **\n`{str(e)}`"
             )
-        await catevent.edit("`An unexpected error has occurred.`")
+        await dogevent.edit("`An unexpected error has occurred.`")
 
 
-async def get_chatinfo(event, catevent):
+async def get_chatinfo(event, dogevent):
     chat = event.pattern_match.group(1)
     chat_info = None
     if chat:
@@ -227,19 +227,19 @@ async def get_chatinfo(event, catevent):
         try:
             chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await catevent.edit("`Invalid channel/group`")
+            await dogevent.edit("`Invalid channel/group`")
             return None
         except ChannelPrivateError:
-            await catevent.edit(
+            await dogevent.edit(
                 "`This is a private channel/group or I am banned from there`"
             )
             return None
         except ChannelPublicGroupNaError:
-            await catevent.edit("`Channel or supergroup doesn't exist`")
+            await dogevent.edit("`Channel or supergroup doesn't exist`")
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edit_delete(catevent, "**Error:**\n__Can't fetch the chat__")
+            await edit_delete(dogevent, "**Error:**\n__Can't fetch the chat__")
             return None
     return chat_info
 

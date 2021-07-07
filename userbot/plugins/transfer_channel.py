@@ -5,14 +5,14 @@ Available Commands:
 import telethon.password as pwd_mod
 from telethon.tl import functions
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="otransfer ([\s\S]*)",
     command=("otransfer", plugin_category),
     info={

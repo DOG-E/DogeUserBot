@@ -18,7 +18,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.functions.messages import SendMediaRequest
 from telethon.utils import get_attributes
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -33,7 +33,7 @@ from ..helpers.functions import (
     ud_frames,
     vid_to_gif,
 )
-from ..helpers.utils import _cattools, _catutils, _format, parse_pre, reply_id
+from ..helpers.utils import _dogtools, _dogutils, _format, parse_pre, reply_id
 from . import make_gif
 
 plugin_category = "misc"
@@ -49,7 +49,7 @@ PATH = os.path.join("./temp", "temp_vid.mp4")
 thumb_loc = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spin(?: |$)((-)?(s)?)$",
     command=("spin", plugin_category),
     info={
@@ -70,8 +70,8 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
     media_type(reply)
-    catevent = await edit_or_reply(event, "__Making round spin video wait a sec.....__")
-    output = await _cattools.media_to_pic(event, reply, noedits=True)
+    dogevent = await edit_or_reply(event, "__Making round spin video wait a sec.....__")
+    output = await _dogtools.media_to_pic(event, reply, noedits=True)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -93,7 +93,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     final = os.path.join(Config.TEMP_DIR, "output.gif")
     output = await vid_to_gif("Output.gif", final)
     if output is None:
-        return await edit_delete(catevent, "__Unable to make spin gif.__")
+        return await edit_delete(dogevent, "__Unable to make spin gif.__")
     media_info = MediaInfo.parse(final)
     aspect_ratio = 1
     for track in media_info.tracks:
@@ -104,7 +104,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     PATH = os.path.join(Config.TEMP_DIR, "round.gif")
     if aspect_ratio != 1:
         crop_by = width if (height > width) else height
-        await _catutils.runcmd(
+        await _dogutils.runcmd(
             f'ffmpeg -i {final} -vf "crop={crop_by}:{crop_by}" {PATH}'
         )
     else:
@@ -130,7 +130,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         force_file=False,
         thumb=await event.client.upload_file(meme_file),
     )
-    sandy = await event.client.send_file(
+    teledoge = await event.client.send_file(
         event.chat_id,
         media,
         reply_to=reply,
@@ -138,14 +138,14 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         supports_streaming=True,
     )
     if not args:
-        await _catutils.unsavegif(event, sandy)
-    await catevent.delete()
+        await _dogutils.unsavegif(event, teledoge)
+    await dogevent.delete()
     for i in [final, "Output.gif", meme_file, PATH, final]:
         if os.path.exists(i):
             os.remove(i)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="circle ?((-)?s)?$",
     command=("circle", plugin_category),
     info={
@@ -154,11 +154,11 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         "usage": "{tr}circle <reply to video/sticker/image>",
     },
 )
-async def video_catfile(event):  # sourcery no-metrics
+async def video_dogfile(event):  # sourcery no-metrics
     "To make circular video note."
     reply = await event.get_reply_message()
     args = event.pattern_match.group(1)
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not reply or not reply.media:
         return await edit_delete(event, "`Reply to supported media`")
     mediatype = media_type(reply)
@@ -170,15 +170,15 @@ async def video_catfile(event):  # sourcery no-metrics
     if mediatype not in ["Photo", "Audio", "Voice", "Gif", "Sticker", "Video"]:
         return await edit_delete(event, "```Supported Media not found...```")
     flag = True
-    catevent = await edit_or_reply(event, "`Converting to round format..........`")
-    catfile = await reply.download_media(file="./temp/")
+    dogevent = await edit_or_reply(event, "`Converting to round format..........`")
+    dogfile = await reply.download_media(file="./temp/")
     if mediatype in ["Gif", "Video", "Sticker"]:
-        if not catfile.endswith((".webp")):
-            if catfile.endswith((".tgs")):
-                hmm = await make_gif(catevent, catfile)
+        if not dogfile.endswith((".webp")):
+            if dogfile.endswith((".tgs")):
+                hmm = await make_gif(dogevent, dogfile)
                 os.rename(hmm, "./temp/circle.mp4")
-                catfile = "./temp/circle.mp4"
-            media_info = MediaInfo.parse(catfile)
+                dogfile = "./temp/circle.mp4"
+            media_info = MediaInfo.parse(dogfile)
             aspect_ratio = 1
             for track in media_info.tracks:
                 if track.track_type == "Video":
@@ -187,44 +187,44 @@ async def video_catfile(event):  # sourcery no-metrics
                     width = track.width
             if aspect_ratio != 1:
                 crop_by = width if (height > width) else height
-                await _catutils.runcmd(
-                    f'ffmpeg -i {catfile} -vf "crop={crop_by}:{crop_by}" {PATH}'
+                await _dogutils.runcmd(
+                    f'ffmpeg -i {dogfile} -vf "crop={crop_by}:{crop_by}" {PATH}'
                 )
             else:
-                copyfile(catfile, PATH)
-            if str(catfile) != str(PATH):
-                os.remove(catfile)
+                copyfile(dogfile, PATH)
+            if str(dogfile) != str(PATH):
+                os.remove(dogfile)
             try:
-                catthumb = await reply.download_media(thumb=-1)
+                dogthumb = await reply.download_media(thumb=-1)
             except Exception as e:
                 LOGS.error(f"circle - {str(e)}")
     elif mediatype in ["Voice", "Audio"]:
-        catthumb = None
+        dogthumb = None
         try:
-            catthumb = await reply.download_media(thumb=-1)
+            dogthumb = await reply.download_media(thumb=-1)
         except Exception:
-            catthumb = os.path.join("./temp", "thumb.jpg")
-            await thumb_from_audio(catfile, catthumb)
-        if catthumb is not None and not os.path.exists(catthumb):
-            catthumb = os.path.join("./temp", "thumb.jpg")
-            copyfile(thumb_loc, catthumb)
+            dogthumb = os.path.join("./temp", "thumb.jpg")
+            await thumb_from_audio(dogfile, dogthumb)
+        if dogthumb is not None and not os.path.exists(dogthumb):
+            dogthumb = os.path.join("./temp", "thumb.jpg")
+            copyfile(thumb_loc, dogthumb)
         if (
-            catthumb is not None
-            and not os.path.exists(catthumb)
+            dogthumb is not None
+            and not os.path.exists(dogthumb)
             and os.path.exists(thumb_loc)
         ):
             flag = False
-            catthumb = os.path.join("./temp", "thumb.jpg")
-            copyfile(thumb_loc, catthumb)
-        if catthumb is not None and os.path.exists(catthumb):
-            await _catutils.runcmd(
-                f"""ffmpeg -loop 1 -i {catthumb} -i {catfile} -c:v libx264 -tune stillimage -c:a aac -b:a 192k -vf \"scale=\'iw-mod (iw,2)\':\'ih-mod(ih,2)\',format=yuv420p\" -shortest -movflags +faststart {PATH}"""
+            dogthumb = os.path.join("./temp", "thumb.jpg")
+            copyfile(thumb_loc, dogthumb)
+        if dogthumb is not None and os.path.exists(dogthumb):
+            await _dogutils.runcmd(
+                f"""ffmpeg -loop 1 -i {dogthumb} -i {dogfile} -c:v libx264 -tune stillimage -c:a aac -b:a 192k -vf \"scale=\'iw-mod (iw,2)\':\'ih-mod(ih,2)\',format=yuv420p\" -shortest -movflags +faststart {PATH}"""
             )
-            os.remove(catfile)
+            os.remove(dogfile)
         else:
-            os.remove(catfile)
+            os.remove(dogfile)
             return await edit_delete(
-                catevent, "`No thumb found to make it video note`", 5
+                dogevent, "`No thumb found to make it video note`", 5
             )
     if (
         mediatype
@@ -235,7 +235,7 @@ async def video_catfile(event):  # sourcery no-metrics
             "Video",
             "Sticker",
         ]
-        and not catfile.endswith((".webp"))
+        and not dogfile.endswith((".webp"))
     ):
         if os.path.exists(PATH):
             c_time = time.time()
@@ -244,7 +244,7 @@ async def video_catfile(event):  # sourcery no-metrics
             uploaded = await event.client.fast_upload_file(
                 file=ul,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "Uploading....")
+                    progress(d, t, dogevent, c_time, "Uploading....")
                 ),
             )
             ul.close()
@@ -261,22 +261,22 @@ async def video_catfile(event):  # sourcery no-metrics
                     )
                 ],
                 force_file=False,
-                thumb=await event.client.upload_file(catthumb) if catthumb else None,
+                thumb=await event.client.upload_file(dogthumb) if dogthumb else None,
             )
-            sandy = await event.client.send_file(
+            teledoge = await event.client.send_file(
                 event.chat_id,
                 media,
-                reply_to=catid,
+                reply_to=dogid,
                 video_note=True,
                 supports_streaming=True,
             )
 
             if not args:
-                await _catutils.unsavegif(event, sandy)
+                await _dogutils.unsavegif(event, teledoge)
             os.remove(PATH)
             if flag:
-                os.remove(catthumb)
-        await catevent.delete()
+                os.remove(dogthumb)
+        await dogevent.delete()
         return
     data = reply.photo or reply.media.document
     img = io.BytesIO()
@@ -295,14 +295,14 @@ async def video_catfile(event):  # sourcery no-metrics
     img = ImageOps.fit(img, (w, h))
     img.putalpha(mask)
     im = io.BytesIO()
-    im.name = "cat.webp"
+    im.name = "dog.webp"
     img.save(im)
     im.seek(0)
-    await event.client.send_file(event.chat_id, im, reply_to=catid)
-    await catevent.delete()
+    await event.client.send_file(event.chat_id, im, reply_to=dogid)
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stoi$",
     command=("stoi", plugin_category),
     info={
@@ -319,7 +319,7 @@ async def _(event):
         return await edit_delete(
             event, "Reply to any sticker/media to convert it to image.__"
         )
-    output = await _cattools.media_to_pic(event, reply)
+    output = await _dogtools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -331,7 +331,7 @@ async def _(event):
     await output[0].delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="itos$",
     command=("itos", plugin_category),
     info={
@@ -348,7 +348,7 @@ async def _(event):
         return await edit_delete(
             event, "Reply to any image/media to convert it to sticker.__"
         )
-    output = await _cattools.media_to_pic(event, reply)
+    output = await _dogtools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -360,7 +360,7 @@ async def _(event):
     await output[0].delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ttf ([\s\S]*)",
     command=("ttf", plugin_category),
     info={
@@ -386,7 +386,7 @@ async def get(event):
         await edit_or_reply(event, "reply to text message as `.ttf <file name>`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ftt$",
     command=("ftt", plugin_category),
     info={
@@ -434,7 +434,7 @@ async def get(event):
         os.remove(file_loc)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ftoi$",
     command=("ftoi", plugin_category),
     info={
@@ -455,7 +455,7 @@ async def on_file_to_photo(event):
         return await edit_delete(event, "`For sticker to image use stoi command`")
     if image.size > 10 * 1024 * 1024:
         return  # We'd get PhotoSaveFileInvalidError otherwise
-    catt = await edit_or_reply(event, "`Converting.....`")
+    dogt = await edit_or_reply(event, "`Converting.....`")
     file = await event.client.download_media(target, file=BytesIO())
     file.seek(0)
     img = await event.client.upload_file(file)
@@ -472,10 +472,10 @@ async def on_file_to_photo(event):
         )
     except PhotoInvalidDimensionsError:
         return
-    await catt.delete()
+    await dogt.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gif(?:\s|$)([\s\S]*)",
     command=("gif", plugin_category),
     info={
@@ -510,40 +510,40 @@ async def _(event):  # sourcery no-metrics
                 quality = loc[0].strip()
             else:
                 return await edit_delete(event, "Use quality of range 0 to 721")
-    catreply = await event.get_reply_message()
-    cat_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    if not catreply or not catreply.media or not catreply.media.document:
+    dogreply = await event.get_reply_message()
+    dog_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    if not dogreply or not dogreply.media or not dogreply.media.document:
         return await edit_or_reply(event, "`Stupid!, This is not animated sticker.`")
-    if catreply.media.document.mime_type != "application/x-tgsticker":
+    if dogreply.media.document.mime_type != "application/x-tgsticker":
         return await edit_or_reply(event, "`Stupid!, This is not animated sticker.`")
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         "Converting this Sticker to GiF...\n This may takes upto few mins..",
         parse_mode=_format.parse_pre,
     )
     try:
-        cat_event = Get(cat_event)
-        await event.client(cat_event)
+        dog_event = Get(dog_event)
+        await event.client(dog_event)
     except BaseException:
         pass
     reply_to_id = await reply_id(event)
-    catfile = await event.client.download_media(catreply)
-    catgif = await make_gif(event, catfile, quality, fps)
-    sandy = await event.client.send_file(
+    dogfile = await event.client.download_media(dogreply)
+    doggif = await make_gif(event, dogfile, quality, fps)
+    teledoge = await event.client.send_file(
         event.chat_id,
-        catgif,
+        doggif,
         support_streaming=True,
         force_document=False,
         reply_to=reply_to_id,
     )
-    await _catutils.unsavegif(event, sandy)
-    await catevent.delete()
-    for files in (catgif, catfile):
+    await _dogutils.unsavegif(event, teledoge)
+    await dogevent.delete()
+    for files in (doggif, dogfile):
         if files and os.path.exists(files):
             os.remove(files)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="nfc (mp3|voice)",
     command=("nfc", plugin_category),
     info={
@@ -654,7 +654,7 @@ async def _(event):
             await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="itog(?: |$)((-)?(r|l|u|d|s|i)?)$",
     command=("itog", plugin_category),
     info={
@@ -687,8 +687,8 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         )
     args = event.pattern_match.group(1)
     args = "i" if not args else args.replace("-", "")
-    catevent = await edit_or_reply(event, "__🎞 Making Gif from the relied media...__")
-    imag = await _cattools.media_to_pic(event, reply, noedits=True)
+    dogevent = await edit_or_reply(event, "__🎞 Making Gif from the relied media...__")
+    imag = await _dogtools.media_to_pic(event, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
             imag[0], "__Unable to extract image from the replied message.__"
@@ -710,7 +710,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         elif args == "i":
             outframes = await invert_frames(image, w, h, outframes)
     except Exception as e:
-        return await edit_delete(catevent, f"**Error**\n__{str(e)}__")
+        return await edit_delete(dogevent, f"**Error**\n__{str(e)}__")
     output = io.BytesIO()
     output.name = "Output.gif"
     outframes[0].save(output, save_all=True, append_images=outframes[1:], duration=0.7)
@@ -721,21 +721,21 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     output = await vid_to_gif("Output.gif", final)
     if output is None:
         await edit_delete(
-            catevent, "__There was some error in the media. I can't format it to gif.__"
+            dogevent, "__There was some error in the media. I can't format it to gif.__"
         )
         for i in [final, "Output.gif", imag[1]]:
             if os.path.exists(i):
                 os.remove(i)
         return
-    sandy = await event.client.send_file(event.chat_id, output, reply_to=reply)
-    await _catutils.unsavegif(event, sandy)
-    await catevent.delete()
+    teledoge = await event.client.send_file(event.chat_id, output, reply_to=reply)
+    await _dogutils.unsavegif(event, teledoge)
+    await dogevent.delete()
     for i in [final, "Output.gif", imag[1]]:
         if os.path.exists(i):
             os.remove(i)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vtog ?([0-9.]+)?$",
     command=("vtog", plugin_category),
     info={
@@ -758,15 +758,15 @@ async def _(event):
             args = float(args)
         except ValueError:
             args = 2.0
-    catevent = await edit_or_reply(event, "__🎞Converting into Gif..__")
+    dogevent = await edit_or_reply(event, "__🎞Converting into Gif..__")
     inputfile = await reply.download_media()
     outputfile = os.path.join(Config.TEMP_DIR, "vidtogif.gif")
     result = await vid_to_gif(inputfile, outputfile, speed=args)
     if result is None:
         return await edit_delete(event, "__I couldn't convert it to gif.__")
-    sandy = await event.client.send_file(event.chat_id, result, reply_to=reply)
-    await _catutils.unsavegif(event, sandy)
-    await catevent.delete()
+    teledoge = await event.client.send_file(event.chat_id, result, reply_to=reply)
+    await _dogutils.unsavegif(event, teledoge)
+    await dogevent.delete()
     for i in [inputfile, outputfile]:
         if os.path.exists(i):
             os.remove(i)

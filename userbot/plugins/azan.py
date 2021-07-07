@@ -5,12 +5,12 @@ import json
 import requests
 
 from ..sql_helper.globals import gvarstatus
-from . import catub, edit_delete, edit_or_reply
+from . import doge, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="azan(?:\s|$)([\s\S]*)",
     command=("azan", plugin_category),
     info={
@@ -31,7 +31,7 @@ async def get_adzan(adzan):
             adzan, f"`Couldn't fetch any data about the city {LOKASI}`", 5
         )
     result = json.loads(request.text)
-    catresult = f"<b>Islamic prayer times </b>\
+    dogresult = f"<b>Islamic prayer times </b>\
             \n\n<b>City     : </b><i>{result['query']}</i>\
             \n<b>Country  : </b><i>{result['country']}</i>\
             \n<b>Date     : </b><i>{result['items'][0]['date_for']}</i>\
@@ -42,4 +42,4 @@ async def get_adzan(adzan):
             \n<b>Maghrib    : </b><i>{result['items'][0]['maghrib']}</i>\
             \n<b>Isha     : </b><i>{result['items'][0]['isha']}</i>\
     "
-    await edit_or_reply(adzan, catresult, "html")
+    await edit_or_reply(adzan, dogresult, "html")

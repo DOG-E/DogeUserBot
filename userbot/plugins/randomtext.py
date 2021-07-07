@@ -12,14 +12,14 @@ No Logic Pligon for @PepeBot
 import random
 from asyncio import sleep
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sing$",
     command=("sing", plugin_category),
     info={
@@ -164,7 +164,7 @@ async def _(event):
         await event.edit("Not in a mood to sing. Sorry!")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hp$",
     command=("hp", plugin_category),
     info={
@@ -259,7 +259,7 @@ async def _(event):  # sourcery no-metrics
         await event.edit("**Wingardium Leviosa**")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gott$",
     command=("gott", plugin_category),
     info={
@@ -414,7 +414,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gotm$",
     command=("gotm", plugin_category),
     info={
@@ -579,7 +579,7 @@ async def _(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bello$",
     command=("bello", plugin_category),
     info={
@@ -970,7 +970,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tip$",
     command=("tip", plugin_category),
     info={
@@ -1337,7 +1337,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="qt$",
     command=("qt", plugin_category),
     info={
@@ -1530,7 +1530,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="logic$",
     command=("logic", plugin_category),
     info={

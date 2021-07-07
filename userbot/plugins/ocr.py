@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -40,7 +40,7 @@ async def ocr_space_file(
     return r.json()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ocr(?:\s|$)([\s\S]*)",
     command=("ocr", plugin_category),
     info={
@@ -52,7 +52,7 @@ async def ocr_space_file(
 )
 async def ocr(event):
     "To read text in image."
-    catevent = await edit_or_reply(event, "`Reading...`")
+    dogevent = await edit_or_reply(event, "`Reading...`")
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
     lang_code = event.pattern_match.group(1)
@@ -63,7 +63,7 @@ async def ocr(event):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await catevent.edit("`Couldn't read it.`\n`I guess I need new glasses.`")
+        await dogevent.edit("`Couldn't read it.`\n`I guess I need new glasses.`")
     else:
-        await catevent.edit(f"`Here's what I could read from it:`\n\n{ParsedText}")
+        await dogevent.edit(f"`Here's what I could read from it:`\n\n{ParsedText}")
     os.remove(downloaded_file_name)

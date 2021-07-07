@@ -1,11 +1,11 @@
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="join$",
     command=("join", plugin_category),
     info={
@@ -21,7 +21,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="climb$",
     command=("climb", plugin_category),
     info={
@@ -36,7 +36,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="aag$",
     command=("aag", plugin_category),
     info={
@@ -49,7 +49,7 @@ async def _(event):
     await edit_or_reply(event, "`😲💨  🔥\n/|\     🔥🔥\n/ \   🔥🔥🔥`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="push$",
     command=("push", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="work$",
     command=("work", plugin_category),
     info={
@@ -80,7 +80,7 @@ async def _(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lmoon$",
     command=("lmoon", plugin_category),
     info={
@@ -96,7 +96,7 @@ async def test(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="city$",
     command=("city", plugin_category),
     info={

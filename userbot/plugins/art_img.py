@@ -10,12 +10,12 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
-from . import _cattools, catub, convert_toimage, mention, reply_id
+from . import _dogtools, doge, convert_toimage, mention, reply_id
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="iascii ?([\s\S]*)",
     command=("iascii", plugin_category),
     info={
@@ -34,9 +34,9 @@ async def bad(event):
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
-    output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
+    output_file = os.path.join("./temp", "doge.jpg")
+    output = await _dogtools.media_to_pic(event, reply_message)
+    outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
     kakashi = await edit_or_reply(event, "```Wait making ASCII...```")
     async with event.client.conversation("@asciiart_bot") as conv:
         try:
@@ -65,7 +65,7 @@ async def bad(event):
         os.remove(output_file)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="line ?([\s\S]*)",
     command=("line", plugin_category),
     info={
@@ -84,9 +84,9 @@ async def pussy(event):
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
-    output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
+    output_file = os.path.join("./temp", "doge.jpg")
+    output = await _dogtools.media_to_pic(event, reply_message)
+    outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
     kakashi = await edit_or_reply(event, "```Processing....```")
     async with event.client.conversation("@Lines50Bot") as conv:
         try:
@@ -107,7 +107,7 @@ async def pussy(event):
         os.remove(output_file)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clip ?([\s\S]*)",
     command=("clip", plugin_category),
     info={
@@ -118,19 +118,19 @@ async def pussy(event):
         ],
     },
 )
-async def cat(event):
+async def dog(event):
     "Make a media to clippy sticker"
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edit_delete(event, "```Reply to a media file...```")
-    cat = await edit_or_reply(event, "```Processing...```")
+    dog = await edit_or_reply(event, "```Processing...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
-    output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
-    await cat.delete()
+    output_file = os.path.join("./temp", "doge.jpg")
+    output = await _dogtools.media_to_pic(event, reply_message)
+    outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
+    await dog.delete()
     await clippy(event.client, output_file, event.chat_id, c_id)
     if os.path.exists(output_file):
         os.remove(output_file)

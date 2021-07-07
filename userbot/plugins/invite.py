@@ -1,13 +1,13 @@
 from telethon import functions
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="invite ([\s\S]*)",
     command=("invite", plugin_category),
     info={

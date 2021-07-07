@@ -1,11 +1,11 @@
 import asyncio
 
-from . import catub, edit_or_reply, mention
+from . import doge, edit_or_reply, mention
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kilr(?:\s|$)([\s\S]*)",
     command=("kilr", plugin_category),
     info={
@@ -36,7 +36,7 @@ async def _(event):
         await event.edit(animation_chars[i % 8])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="acarry$",
     command=("acarry", plugin_category),
     info={
@@ -48,7 +48,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.7
     animation_ttl = range(0, 5)
-    cat = await edit_or_reply(event, "**Carry :- To kese hai aplog....**")
+    dog = await edit_or_reply(event, "**Carry :- To kese hai aplog....**")
     animation_chars = [
         "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ \n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁  \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
         "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ BURE\n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁  \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
@@ -58,10 +58,10 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await cat.edit(animation_chars[i % 5])
+        await dog.edit(animation_chars[i % 5])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="uff$",
     command=("uff", plugin_category),
     info={
@@ -94,7 +94,7 @@ async def _(event):
         await event.edit(animation_chars[i % 13])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hmm$",
     command=("hmm", plugin_category),
     info={
@@ -125,7 +125,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bigoof$",
     command=("bigoof", plugin_category),
     info={
@@ -155,7 +155,7 @@ async def _(event):
         await event.edit(animation_chars[i % 7])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="eye$",
     command=("eye", plugin_category),
     info={
@@ -187,7 +187,7 @@ async def _(event):
     await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="thinking$",
     command=("thinking", plugin_category),
     info={
@@ -243,7 +243,7 @@ async def _(event):
         await event.edit(animation_chars[i % 36])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="snake$",
     command=("snake", plugin_category),
     info={
@@ -290,7 +290,7 @@ async def _(event):
         await event.edit(animation_chars[i % 27])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="human$",
     command=("human", plugin_category),
     info={
@@ -326,7 +326,7 @@ async def _(event):
         await event.edit(animation_chars[i % 16])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="virus$",
     command=("virus", plugin_category),
     info={
@@ -376,7 +376,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="music$",
     command=("music", plugin_category),
     info={
@@ -407,7 +407,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="squ$",
     command=("squ", plugin_category),
     info={

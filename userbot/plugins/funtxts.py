@@ -1,13 +1,13 @@
 import nekos
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tcat$",
     command=("tcat", plugin_category),
     info={
@@ -21,7 +21,7 @@ async def hmm(cat):
     await edit_or_reply(cat, reactcat)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="why$",
     command=("why", plugin_category),
     info={
@@ -29,13 +29,13 @@ async def hmm(cat):
         "usage": "{tr}why",
     },
 )
-async def hmm(cat):
+async def hmm(dog):
     "Some random Funny questions"
-    whycat = nekos.why()
-    await edit_or_reply(cat, whycat)
+    whydoge = nekos.why()
+    await edit_or_reply(dog, whydoge)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fact$",
     command=("fact", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def hmm(cat):
         "usage": "{tr}fact",
     },
 )
-async def hmm(cat):
+async def hmm(dog):
     "Some random facts"
-    factcat = nekos.fact()
-    await edit_or_reply(cat, factcat)
+    factdoge = nekos.fact()
+    await edit_or_reply(dog, factdoge)

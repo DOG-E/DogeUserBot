@@ -1,6 +1,6 @@
 from validators.url import url
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
@@ -35,7 +35,7 @@ oldvars = {
 }
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(set|get|del)dv(?: |$)([\s\S]*)",
     command=("dv", plugin_category),
     info={
@@ -46,7 +46,7 @@ oldvars = {
             "get": "To show the already existing var value.",
             "del": "To delete the existing value",
         },
-        "var name": "**[List of Database Vars]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
+        "var name": "**[List of Database Vars]**# TODO",
         "usage": [
             "{tr}setdv <var name> <var value>",
             "{tr}getdv <var name>",
@@ -80,7 +80,7 @@ async def bad(event):  # sourcery no-metrics
             vname = oldvars[vname]
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
-                return await edit_delete(event, f"Check @cat_alive")
+                return await edit_delete(event, f"Check @DogeAlive")
             if not vinfo:
                 return await edit_delete(
                     event, f"Give some values which you want to save for **{vname}**"
@@ -111,11 +111,11 @@ async def bad(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="custom (pmpermit|pmblock|startmsg)$",
     command=("custom", plugin_category),
     info={
-        "header": "To customize your CatUserbot.",
+        "header": "To customize your DogeUserBot.",
         "options": {
             "pmpermit": "To customize pmpermit text. ",
             "pmblock": "To customize pmpermit block message.",
@@ -141,8 +141,8 @@ async def bad(event):  # sourcery no-metrics
         "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
     },
 )
-async def custom_catuserbot(event):
-    "To customize your CatUserbot."
+async def custom_dogeuserbot(event):
+    "To customize your DogeUserBot."
     reply = await event.get_reply_message()
     text = None
     if reply:

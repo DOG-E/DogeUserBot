@@ -6,7 +6,7 @@ from telethon import Button, functions
 from telethon.events import CallbackQuery
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
@@ -120,11 +120,11 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
         )
     elif gvarstatus("pmmenu") is None:
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me. 
-You have {warns}/{totalwarns} warns until you get blocked by the CatUserbot.
+You have {warns}/{totalwarns} warns until you get blocked by the DogeUserBot.
 Choose an option from below to specify the reason of your message and wait for me to check it. __⬇️"""
     else:
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me.
-You have {warns}/{totalwarns} warns until you get blocked by the CatUserbot.
+You have {warns}/{totalwarns} warns until you get blocked by the DogeUserBot.
 Don't spam my inbox. say reason and wait until my response.__"""
     addgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
@@ -137,15 +137,15 @@ Don't spam my inbox. say reason and wait until my response.__"""
         else:
             PM_PIC = gvarstatus("PM_PIC")
             if PM_PIC:
-                CAT = [x for x in PM_PIC.split()]
-                PIC = list(CAT)
-                CAT_IMG = random.choice(PIC)
+                DOG = [x for x in PM_PIC.split()]
+                PIC = list(DOG)
+                DOG_IMG = random.choice(PIC)
             else:
-                CAT_IMG = None
-            if CAT_IMG is not None:
+                DOG_IMG = None
+            if DOG_IMG is not None:
                 msg = await event.client.send_file(
                     chat.id,
-                    CAT_IMG,
+                    DOG_IMG,
                     caption=USER_BOT_NO_WARN,
                     reply_to=reply_to_id,
                     force_document=False,
@@ -397,7 +397,7 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         return
 
 
-@catub.cat_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
+@doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def on_new_private_message(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -419,7 +419,7 @@ async def on_new_private_message(event):
     await do_pm_permit_action(event, chat)
 
 
-@catub.cat_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
+@doge.bot_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -471,7 +471,7 @@ async def you_dm_other(event):
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who messages you, not for you"
@@ -502,7 +502,7 @@ __Let's make this smooth and let me know why you are here.__
     await event.edit(text, buttons=buttons)
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
@@ -523,7 +523,7 @@ Then we can extend this conversation more but not right now.__"""
     await event.edit(text)
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
@@ -544,7 +544,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
@@ -564,7 +564,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
     await event.edit(text)
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
@@ -597,7 +597,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pmguard (on|off)$",
     command=("pmguard", plugin_category),
     info={
@@ -619,13 +619,13 @@ async def pmpermit_on(event):
     elif gvarstatus("pmpermit") is not None:
         delgvar("pmpermit")
         await edit_delete(
-            event, "__Pmpermit has been disabled for your account succesfully__"
+            event, "__Pmpermit has been disabled for your account successfully__"
         )
     else:
         await edit_delete(event, "__Pmpermit is already disabled for your account__")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pmmenu (on|off)$",
     command=("pmmenu", plugin_category),
     info={
@@ -650,7 +650,7 @@ async def pmpermit_on(event):
     elif gvarstatus("pmmenu") is not None:
         delgvar("pmmenu")
         await edit_delete(
-            event, "__Pmpermit Menu has been enabled for your account succesfully__"
+            event, "__Pmpermit Menu has been enabled for your account successfully__"
         )
     else:
         await edit_delete(
@@ -658,7 +658,7 @@ async def pmpermit_on(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(a|approve)(?:\s|$)([\s\S]*)",
     command=("approve", plugin_category),
     info={
@@ -734,7 +734,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(da|disapprove)(?:\s|$)([\s\S]*)",
     command=("disapprove", plugin_category),
     info={
@@ -785,7 +785,7 @@ async def disapprove_p_m(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="block(?:\s|$)([\s\S]*)",
     command=("block", plugin_category),
     info={
@@ -841,7 +841,7 @@ async def block_p_m(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unblock(?:\s|$)([\s\S]*)",
     command=("unblock", plugin_category),
     info={
@@ -874,7 +874,7 @@ async def unblock_pm(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listapproved$",
     command=("listapproved", plugin_category),
     info={

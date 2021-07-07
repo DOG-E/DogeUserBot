@@ -8,7 +8,7 @@ from . import (
     CMD_HELP,
     CMD_LIST,
     SUDO_LIST,
-    catub,
+    doge,
     edit_delete,
     edit_or_reply,
     hmention,
@@ -21,12 +21,12 @@ DELETE_TIMEOUT = 5
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="install$",
     command=("install", plugin_category),
     info={
         "header": "To install an external plugin.",
-        "description": "Reply to any external plugin(supported by cat) to install it in your bot.",
+        "description": "Reply to any external plugin(supported by dog) to install it in your bot.",
         "usage": "{tr}install",
     },
 )
@@ -57,7 +57,7 @@ async def install(event):
             os.remove(downloaded_file_name)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="load ([\s\S]*)",
     command=("load", plugin_category),
     info={
@@ -84,7 +84,7 @@ async def load(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="send ([\s\S]*)",
     command=("send", plugin_category),
     info={
@@ -122,7 +122,7 @@ async def send(event):
         await edit_or_reply(event, "404: File Not Found")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unload ([\s\S]*)",
     command=("unload", plugin_category),
     info={
@@ -142,7 +142,7 @@ async def unload(event):
         await edit_or_reply(event, f"Successfully unload {shortname}\n{str(e)}")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="uninstall ([\s\S]*)",
     command=("uninstall", plugin_category),
     info={

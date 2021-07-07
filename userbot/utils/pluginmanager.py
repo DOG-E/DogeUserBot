@@ -8,12 +8,12 @@ from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..core.session import catub
+from ..core.session import doge
 from ..helpers.tools import media_type
-from ..helpers.utils import _cattools, _catutils, _format, install_pip, reply_id
+from ..helpers.utils import _dogtools, _dogutils, _format, install_pip, reply_id
 from .decorators import admin_cmd, sudo_cmd
 
-LOGS = logging.getLogger("CatUserbot")
+LOGS = logging.getLogger("DogeUserBot")
 
 
 def load_module(shortname, plugin_path=None):
@@ -37,24 +37,24 @@ def load_module(shortname, plugin_path=None):
         checkplugins(path)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
-        mod.bot = catub
+        mod.bot = doge
         mod.LOGS = LOGS
         mod.Config = Config
         mod._format = _format
-        mod.tgbot = catub.tgbot
+        mod.tgbot = doge.tgbot
         mod.sudo_cmd = sudo_cmd
         mod.CMD_HELP = CMD_HELP
         mod.reply_id = reply_id
         mod.admin_cmd = admin_cmd
-        mod._catutils = _catutils
-        mod._cattools = _cattools
+        mod._dogutils = _dogutils
+        mod._dogtools = _dogtools
         mod.media_type = media_type
         mod.edit_delete = edit_delete
         mod.install_pip = install_pip
         mod.parse_pre = _format.parse_pre
         mod.edit_or_reply = edit_or_reply
         mod.logger = logging.getLogger(shortname)
-        mod.borg = catub
+        mod.borg = doge
         spec.loader.exec_module(mod)
         # for imports
         sys.modules["userbot.plugins." + shortname] = mod
@@ -71,23 +71,23 @@ def remove_plugin(shortname):
         for cmdname in cmd:
             if cmdname in LOADED_CMDS:
                 for i in LOADED_CMDS[cmdname]:
-                    catub.remove_event_handler(i)
+                    doge.remove_event_handler(i)
                 del LOADED_CMDS[cmdname]
         return True
     except Exception as e:
         LOGS.error(e)
     try:
         for i in LOAD_PLUG[shortname]:
-            catub.remove_event_handler(i)
+            doge.remove_event_handler(i)
         del LOAD_PLUG[shortname]
     except BaseException:
         pass
     try:
         name = f"userbot.plugins.{shortname}"
-        for i in reversed(range(len(catub._event_builders))):
-            ev, cb = catub._event_builders[i]
+        for i in reversed(range(len(doge._event_builders))):
+            ev, cb = doge._event_builders[i]
             if cb.__module__ == name:
-                del catub._event_builders[i]
+                del doge._event_builders[i]
     except BaseException:
         raise ValueError
 

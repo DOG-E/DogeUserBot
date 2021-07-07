@@ -7,16 +7,16 @@
 
 import os
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import _catutils, reply_id
+from ..helpers import _dogutils, reply_id
 from . import make_gif
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="collage(?:\s|$)([\s\S]*)",
     command=("collage", plugin_category),
     info={
@@ -27,9 +27,9 @@ plugin_category = "utils"
 )
 async def collage(event):
     "To create collage from still images extracted from video/gif."
-    catinput = event.pattern_match.group(1)
+    doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     event = await edit_or_reply(
         event, "```collaging this may take several minutes too..... 😁```"
     )
@@ -38,38 +38,38 @@ async def collage(event):
         return
     if not os.path.isdir("./temp/"):
         os.mkdir("./temp/")
-    catsticker = await reply.download_media(file="./temp/")
-    if not catsticker.endswith((".mp4", ".mkv", ".tgs")):
-        os.remove(catsticker)
+    dogsticker = await reply.download_media(file="./temp/")
+    if not dogsticker.endswith((".mp4", ".mkv", ".tgs")):
+        os.remove(dogsticker)
         await event.edit("`Media format is not supported...`")
         return
-    if catinput:
-        if not catinput.isdigit():
-            os.remove(catsticker)
+    if doginput:
+        if not doginput.isdigit():
+            os.remove(dogsticker)
             await event.edit("`You input is invalid, check help`")
             return
-        catinput = int(catinput)
-        if not 0 < catinput < 10:
-            os.remove(catsticker)
+        doginput = int(doginput)
+        if not 0 < doginput < 10:
+            os.remove(dogsticker)
             await event.edit(
                 "`Why too big grid you cant see images, use size of grid between 1 to 9`"
             )
             return
     else:
-        catinput = 3
-    if catsticker.endswith(".tgs"):
-        hmm = await make_gif(event, catsticker)
+        doginput = 3
+    if dogsticker.endswith(".tgs"):
+        hmm = await make_gif(event, dogsticker)
         if hmm.endswith(("@tgstogifbot")):
-            os.remove(catsticker)
+            os.remove(dogsticker)
             return await event.edit(hmm)
         collagefile = hmm
     else:
-        collagefile = catsticker
+        collagefile = dogsticker
     endfile = "./temp/collage.png"
-    catcmd = f"vcsi -g {catinput}x{catinput} '{collagefile}' -o {endfile}"
-    stdout, stderr = (await _catutils.runcmd(catcmd))[:2]
+    dogecmd = f"vcsi -g {doginput}x{doginput} '{collagefile}' -o {endfile}"
+    stdout, stderr = (await _dogutils.runcmd(dogecmd))[:2]
     if not os.path.exists(endfile):
-        for files in (catsticker, collagefile):
+        for files in (dogsticker, collagefile):
             if files and os.path.exists(files):
                 os.remove(files)
         return await edit_delete(
@@ -78,9 +78,9 @@ async def collage(event):
     await event.client.send_file(
         event.chat_id,
         endfile,
-        reply_to=catid,
+        reply_to=dogid,
     )
     await event.delete()
-    for files in (catsticker, collagefile, endfile):
+    for files in (dogsticker, collagefile, endfile):
         if files and os.path.exists(files):
             os.remove(files)

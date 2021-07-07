@@ -1,7 +1,7 @@
 # Urban Dictionary for catuserbot by @mrconfused
 from PyDictionary import PyDictionary
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -12,7 +12,7 @@ LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
     info={
@@ -44,7 +44,7 @@ async def _(event):
         LOGS.info(e)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
     info={
@@ -56,10 +56,10 @@ async def _(event):
     "To fetch meaning of the given word from dictionary."
     word = event.pattern_match.group(1)
     dictionary = PyDictionary()
-    cat = dictionary.meaning(word)
+    dog = dictionary.meaning(word)
     output = f"**Word :** __{word}__\n\n"
     try:
-        for a, b in cat.items():
+        for a, b in dog.items():
             output += f"**{a}**\n"
             for i in b:
                 output += f"☞__{i}__\n"

@@ -1,6 +1,6 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
@@ -10,7 +10,7 @@ from . import BOTLOG, BOTLOG_CHATID, get_message_link
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="\#(\S+)",
 )
 async def incom_note(event):
@@ -46,7 +46,7 @@ async def incom_note(event):
         pass
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="snips (\w*)",
     command=("snips", plugin_category),
     info={
@@ -106,7 +106,7 @@ async def add_snip(event):
     return await edit_or_reply(event, success.format(keyword, "added", keyword))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="snipl$",
     command=("snipl", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def on_snip_list(event):
     await edit_or_reply(event, message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="snipd (\S+)",
     command=("snipd", plugin_category),
     info={
@@ -146,8 +146,8 @@ async def on_snip_delete(event):
     "To delete paticular note in bot."
     name = event.pattern_match.group(1)
     name = name.lower()
-    catsnip = get_note(name)
-    if catsnip:
+    dogsnip = get_note(name)
+    if dogsnip:
         rm_note(name)
     else:
         return await edit_or_reply(

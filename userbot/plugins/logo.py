@@ -13,7 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
@@ -38,7 +38,7 @@ vars_list = {
 plugin_category = "useless"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|s)logo(?: |$)([\s\S]*)",
     command=("logo", plugin_category),
     info={
@@ -52,8 +52,8 @@ plugin_category = "useless"
             "{tr}slogo <text>",
         ],
         "examples": [
-            "{tr}logo Cat",
-            "{tr}slogo Cat",
+            "{tr}logo Dog",
+            "{tr}slogo Dog",
         ],
     },
 )
@@ -67,7 +67,7 @@ async def very(event):
     if not text:
         return await edit_delete(event, "**ಠ∀ಠ Gimmi text to make logo**")
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Processing.....`")
+    dogevent = await edit_or_reply(event, "`Processing.....`")
     LOGO_FONT_SIZE = gvarstatus("LOGO_FONT_SIZE") or 220
     LOGO_FONT_WIDTH = gvarstatus("LOGO_FONT_WIDTH") or 2
     LOGO_FONT_HEIGHT = gvarstatus("LOGO_FONT_HEIGHT") or 2
@@ -118,7 +118,7 @@ async def very(event):
             stroke_width=0,
             stroke_fill=None,
         )
-    file_name = "badcat.png"
+    file_name = "doge.png"
     img.save(file_name, "png")
     if cmd == "":
         await event.client.send_file(
@@ -128,12 +128,12 @@ async def very(event):
         )
     elif cmd == "s":
         await clippy(event.client, file_name, event.chat_id, reply_to_id)
-    await catevent.delete()
+    await dogevent.delete()
     if os.path.exists(file_name):
         os.remove(file_name)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
     info={
@@ -162,9 +162,9 @@ async def bad(event):
     bg_name = []
     lbg_list = "**Available background names are here:-**\n\n"
     for i, each in enumerate(links, start=1):
-        cat = os.path.splitext(each.text)[0]
-        bg_name.append(cat)
-        lbg_list += f"**{i}.**  `{cat}`\n"
+        dog = os.path.splitext(each.text)[0]
+        bg_name.append(dog)
+        lbg_list += f"**{i}.**  `{dog}`\n"
     if os.path.exists("./temp/bg_img.jpg"):
         os.remove("./temp/bg_img.jpg")
     if cmd == "c":
@@ -172,7 +172,7 @@ async def bad(event):
         if not input_str and event.reply_to_msg_id and reply_message.media:
             if not os.path.isdir("./temp"):
                 os.mkdir("./temp")
-            output = await _cattools.media_to_pic(event, reply_message)
+            output = await _dogtools.media_to_pic(event, reply_message)
             convert_toimage(output[1], filename="./temp/bg_img.jpg")
             return await edit_delete(
                 event, "This media is successfully set as background."
@@ -189,9 +189,9 @@ async def bad(event):
     if not input_str:
         return await edit_delete(event, lbg_list, time=60)
     if input_str not in bg_name:
-        catevent = await edit_or_reply(event, "`Give me a correct background name...`")
+        dogevent = await edit_or_reply(event, "`Give me a correct background name...`")
         await asyncio.sleep(1)
-        await edit_delete(catevent, lbg_list, time=60)
+        await edit_delete(dogevent, lbg_list, time=60)
     else:
         string = f"https://raw.githubusercontent.com/Jisan09/Files/main/backgroud/{input_str}.jpg"
         addgvar("LOGO_BACKGROUND", string)
@@ -200,7 +200,7 @@ async def bad(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
@@ -245,15 +245,15 @@ async def pussy(event):
         logo_font = []
         font_name = "**Available font names are here:-**\n\n"
         for i, each in enumerate(links, start=1):
-            cat = os.path.splitext(each.text)[0]
-            logo_font.append(cat)
-            font_name += f"**{i}.**  `{cat}`\n"
+            dog = os.path.splitext(each.text)[0]
+            logo_font.append(dog)
+            font_name += f"**{i}.**  `{dog}`\n"
         if not input_str:
             return await edit_delete(event, font_name, time=80)
         if input_str not in logo_font:
-            catevent = await edit_or_reply(event, "`Give me a correct font name...`")
+            dogevent = await edit_or_reply(event, "`Give me a correct font name...`")
             await asyncio.sleep(1)
-            await edit_delete(catevent, font_name, time=80)
+            await edit_delete(dogevent, font_name, time=80)
         else:
             if " " in input_str:
                 input_str = str(input_str).replace(" ", "%20")
@@ -280,10 +280,10 @@ async def pussy(event):
                 time=80,
             )
         if input_str not in fg_name:
-            catevent = await edit_or_reply(event, "`Give me a correct color name...`")
+            dogevent = await edit_or_reply(event, "`Give me a correct color name...`")
             await asyncio.sleep(1)
             await edit_delete(
-                catevent,
+                dogevent,
                 f"**Available color names are here:-**\n\n{fg_list}",
                 time=80,
             )
@@ -301,8 +301,8 @@ async def pussy(event):
                     event, f"**Stroke color for logo changed to :-** `{input_str}`", 10
                 )
     else:
-        cat = re.compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
-        isint = re.match(cat, input_str)
+        dog = re.compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
+        isint = re.match(dog, input_str)
         if not input_str or not isint:
             return await edit_delete(
                 event, f"**Give an integer value to set**", time=10
@@ -358,7 +358,7 @@ async def pussy(event):
                     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
     info={
@@ -380,7 +380,7 @@ async def pussy(event):
         ],
     },
 )
-async def cat(event):
+async def dog(event):
     "Manage all values of logo"
     cmd = event.pattern_match.group(1).lower()
     input_str = event.pattern_match.group(2)

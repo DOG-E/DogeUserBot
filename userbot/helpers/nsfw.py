@@ -106,18 +106,18 @@ hemtai = [
 
 
 async def importent(event):
-    cat = ["-1001199597035", "-1001459701099", "-1001436155389", "-1001321431101"]
-    if str(event.chat_id) in cat:
+    dog = []
+    if str(event.chat_id) in dog:
         await edit_or_reply(event, "**Yes I'm GAY**")
         await event.client.kick_participant(event.chat_id, "me")
         return True
     return False
 
 
-def nsfw(catagory):
-    catagory.sort(key=str.casefold)
-    horny = "**Catagory :** "
-    for i in catagory:
+def nsfw(category):
+    category.sort(key=str.casefold)
+    horny = "**Category:** "
+    for i in category:
         horny += f" `{i.lower()}` ||"
     return horny
 

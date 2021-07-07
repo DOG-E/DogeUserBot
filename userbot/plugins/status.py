@@ -3,7 +3,7 @@ import urllib
 
 from telethon.tl import functions
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, gvarstatus
@@ -14,7 +14,7 @@ plugin_category = "utils"
 OFFLINE_TAG = "[OFFLINE]"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="offline$",
     command=("offline", plugin_category),
     info={
@@ -58,7 +58,7 @@ async def pussy(event):
     await edit_delete(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="online$",
     command=("online", plugin_category),
     info={
@@ -67,7 +67,7 @@ async def pussy(event):
         "usage": "{tr}online",
     },
 )
-async def cat(event):
+async def dog(event):
     "make yourself online"
     user = await event.client.get_entity("me")
     if user.first_name.startswith(OFFLINE_TAG):

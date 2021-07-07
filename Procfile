@@ -1,1 +1,1 @@
-doger: bash startdoge
+doger: python3 doger.py

@@ -1,6 +1,6 @@
 ## Mandatory Imports
 ```python3
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
@@ -10,13 +10,13 @@ plugin_category="extra"
 ### Formation
 This below one is Sample format of making plugin
 ```python3
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category="extra"
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hibuddy(?:\s|$)([\s\S]*)",
     command=("hibuddy", plugin_category),
     info={
@@ -39,7 +39,7 @@ async def hi_buddy(event):
 For more information refer this [Docs](https://docs.telethon.dev/en/latest/)
 
 
-Arguments in cat_cmd are as follows:
+Arguments in bot_cmd are as follows:
 ```
 
 pattern="Regex for command"

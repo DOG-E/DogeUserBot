@@ -2,7 +2,7 @@ from asyncio import sleep
 
 from telethon import events
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..sql_helper import pmpermit_sql as pmpermit_sql
@@ -16,7 +16,7 @@ from . import BOTLOG_CHATID
 plugin_category = "utils"
 
 
-@catub.on(events.ChatAction)
+@doge.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics
     cws = getcurrent_welcome_settings(event.chat_id)
     if (
@@ -79,7 +79,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="savepwel(?:\s|$)([\s\S]*)",
     command=("savepwel", plugin_category),
     info={
@@ -142,7 +142,7 @@ async def save_welcome(event):
     await edit_or_reply("Error while setting welcome in this group")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clearpwel$",
     command=("clearpwel", plugin_category),
     info={
@@ -159,7 +159,7 @@ async def del_welcome(event):
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listpwel$",
     command=("listpwel", plugin_category),
     info={

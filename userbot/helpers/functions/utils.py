@@ -46,28 +46,28 @@ async def get_readable_time(seconds: int) -> str:
 # gban
 
 
-async def admin_groups(catub):
-    catgroups = []
-    async for dialog in catub.iter_dialogs():
+async def admin_groups(doge):
+    doggroups = []
+    async for dialog in doge.iter_dialogs():
         entity = dialog.entity
         if (
             isinstance(entity, Channel)
             and entity.megagroup
             and (entity.creator or entity.admin_rights)
         ):
-            catgroups.append(entity.id)
-    return catgroups
+            doggroups.append(entity.id)
+    return doggroups
 
 
 # https://github.com/pokurt/LyndaRobot/blob/7556ca0efafd357008131fa88401a8bb8057006f/lynda/modules/helper_funcs/string_handling.py#L238
 
 
-async def extract_time(cat, time_val):
+async def extract_time(dog, time_val):
     if any(time_val.endswith(unit) for unit in ("s", "m", "h", "d", "w")):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            await cat.edit("Invalid time amount specified.")
+            await dog.edit("Invalid time amount specified.")
             return None
         if unit == "s":
             bantime = int(time.time() + int(time_num) * 1)
@@ -81,12 +81,12 @@ async def extract_time(cat, time_val):
             bantime = int(time.time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             # how even...?
-            await cat.edit(
+            await dog.edit(
                 f"__Invalid time type specified. Expected s,  m , h , d or w but got:__ {time_val[-1]}"
             )
             return None
         return bantime
-    await cat.edit(
+    await dog.edit(
         f"__Invalid time type specified. Expected s,  m , h , d or w but got: __{time_val[-1]}"
     )
     return None

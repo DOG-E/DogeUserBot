@@ -5,7 +5,7 @@ from pySmartDL import SmartDL
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers.functions import get_cast, get_moviecollections, imdb, mov_titles
@@ -16,7 +16,7 @@ plugin_category = "utils"
 moviepath = os.path.join(os.getcwd(), "temp", "moviethumb.jpg")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="wiki ([\s\S]*)",
     command=("wiki", plugin_category),
     info={
@@ -64,7 +64,7 @@ async def wiki(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="imdb ([\s\S]*)",
     command=("imdb", plugin_category),
     info={
@@ -74,7 +74,7 @@ async def wiki(event):
 )
 async def imdb_query(event):  # sourcery no-metrics
     """To fetch imdb data about the given movie or series."""
-    catevent = await edit_or_reply(event, "`searching........`")
+    dogevent = await edit_or_reply(event, "`searching........`")
     reply_to = await reply_id(event)
     try:
         movie_name = event.pattern_match.group(1)
@@ -154,13 +154,13 @@ async def imdb_query(event):  # sourcery no-metrics
                 parse_mode="HTML",
             )
             os.remove(moviepath)
-            return await catevent.delete()
-        await catevent.edit(
+            return await dogevent.delete()
+        await dogevent.edit(
             resulttext,
             link_preview=False,
             parse_mode="HTML",
         )
     except IndexError:
-        await catevent.edit("Give Valid Name of the movie")
+        await dogevent.edit("Give Valid Name of the movie")
     except Exception as e:
-        await catevent.edit(f"**Error:**\n__{str(e)}__")
+        await dogevent.edit(f"**Error:**\n__{str(e)}__")

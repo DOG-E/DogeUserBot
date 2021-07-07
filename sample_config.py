@@ -161,7 +161,7 @@ class Config(object):
     UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE")
     # DON'T TOUCH THIS AT ALL
     SUDO_USERS: Set[int] = set()
-    DOGEUBLOGO = None
+    DOGELOGO = None
     BOTLOG = False
     BOTLOG_CHATID = 0
 

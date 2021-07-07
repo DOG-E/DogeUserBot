@@ -5,17 +5,17 @@ import os
 import time
 from datetime import datetime
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import _cattools, media_type, progress, reply_id
+from ..helpers import _dogtools, media_type, progress, reply_id
 
 plugin_category = "utils"
 
 
 FF_MPEG_DOWN_LOAD_MEDIA_PATH = os.path.join(
-    Config.TMP_DOWNLOAD_DIRECTORY, "catuserbot.media.ffmpeg"
+    Config.TMP_DOWNLOAD_DIRECTORY, "DogeUserBot.media.ffmpeg"
 )
 
 # https://github.com/Nekmo/telegram-upload/blob/master/telegram_upload/video.py#L26
@@ -55,7 +55,7 @@ async def cult_small_video(
     return None
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ffmpegsave$",
     command=("ffmpegsave", plugin_category),
     info={
@@ -73,7 +73,7 @@ async def ff_mpeg_trim_cmd(event):
             media = media_type(reply_message)
             if media not in ["Video", "Audio", "Voice", "Round Video", "Gif"]:
                 return await edit_delete(event, "`Only media files are supported`", 5)
-            catevent = await edit_or_reply(event, "`Saving the file...`")
+            dogevent = await edit_or_reply(event, "`Saving the file...`")
             try:
                 c_time = time.time()
                 dl = io.FileIO(FF_MPEG_DOWN_LOAD_MEDIA_PATH, "a")
@@ -81,16 +81,16 @@ async def ff_mpeg_trim_cmd(event):
                     location=reply_message.document,
                     out=dl,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
+                        progress(d, t, dogevent, c_time, "trying to download")
                     ),
                 )
                 dl.close()
             except Exception as e:
-                await catevent.edit(f"**Error:**\n`{str(e)}`")
+                await dogevent.edit(f"**Error:**\n`{str(e)}`")
             else:
                 end = datetime.now()
                 ms = (end - start).seconds
-                await catevent.edit(
+                await dogevent.edit(
                     f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}` in `{ms}` seconds."
                 )
         else:
@@ -102,7 +102,7 @@ async def ff_mpeg_trim_cmd(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vtrim(?:\s|$)([\s\S]*)",
     command=("vtrim", plugin_category),
     info={
@@ -121,7 +121,7 @@ async def ff_mpeg_trim_cmd(event):
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Triming the media......`")
+    dogevent = await edit_or_reply(event, "`Triming the media......`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -136,7 +136,7 @@ async def ff_mpeg_trim_cmd(event):
         )
         if o is None:
             return await edit_delete(
-                catevent, f"**Error : **`Can't complete the process`"
+                dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
             c_time = time.time()
@@ -149,19 +149,19 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=reply_to_id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(catevent, f"**Error : **`{e}`")
+            return await edit_delete(dogevent, f"**Error : **`{e}`")
     elif len(cmt) == 2:
         # output should be image
         cmd, start_time = cmt
-        o = await _cattools.take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
+        o = await _dogtools.take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
         if o is None:
             return await edit_delete(
-                catevent, f"**Error : **`Can't complete the process`"
+                dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
             c_time = time.time()
@@ -174,21 +174,21 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=event.message.id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(catevent, f"**Error : **`{e}`")
+            return await edit_delete(dogevent, f"**Error : **`{e}`")
     else:
-        await edit_delete(catevent, "RTFM")
+        await edit_delete(dogevent, "RTFM")
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(catevent, f"`Completed Process in {ms} seconds`", 3)
+    await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="atrim(?:\s|$)([\s\S]*)",
     command=("atrim", plugin_category),
     info={
@@ -206,7 +206,7 @@ async def ff_mpeg_trim_cmd(event):
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Triming the media...........`")
+    dogevent = await edit_or_reply(event, "`Triming the media...........`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -225,7 +225,7 @@ async def ff_mpeg_trim_cmd(event):
         )
         if o is None:
             return await edit_delete(
-                catevent, f"**Error : **`Can't complete the process`"
+                dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
             c_time = time.time()
@@ -238,21 +238,21 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=reply_to_id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(catevent, f"**Error : **`{e}`")
+            return await edit_delete(dogevent, f"**Error : **`{e}`")
     else:
-        await edit_delete(catevent, "RTFM")
+        await edit_delete(dogevent, "RTFM")
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(catevent, f"`Completed Process in {ms} seconds`", 3)
+    await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ffmpegclear$",
     command=("ffmpegclear", plugin_category),
     info={

@@ -13,7 +13,7 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers.functions import deEmojify, hide_inlinebot, waifutxt
@@ -39,7 +39,7 @@ async def get_font_file(client, channel_id, search_kw=""):
     return await client.download_media(font_file_message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sttxt(?:\s|$)([\s\S]*)",
     command=("sttxt", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def waifu(animu):
 
 
 # 12 21 28 30
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stcr ?(?:(.*?) ?; )?([\s\S]*)",
     command=("stcr", plugin_category),
     info={
@@ -106,7 +106,7 @@ async def sticklet(event):
     image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
     draw = ImageDraw.Draw(image)
     fontsize = 230
-    FONT_FILE = await get_font_file(event.client, "@catfonts", font_file_name)
+    FONT_FILE = await get_font_file(event.client, "@dogfonts", font_file_name)
     font = ImageFont.truetype(FONT_FILE, size=fontsize)
     while draw.multiline_textsize(sticktext, font=font) > (512, 512):
         fontsize -= 3
@@ -116,14 +116,14 @@ async def sticklet(event):
         ((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill=(R, G, B)
     )
     image_stream = io.BytesIO()
-    image_stream.name = "catuserbot.webp"
+    image_stream.name = "DogeUserBot.webp"
     image.save(image_stream, "WebP")
     image_stream.seek(0)
     # finally, reply the sticker
     await event.client.send_file(
         event.chat_id,
         image_stream,
-        caption="cat's Sticklet",
+        caption="dog's Sticklet",
         reply_to=reply_to_id,
     )
     # cleanup
@@ -133,7 +133,7 @@ async def sticklet(event):
         pass
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="honk(?:\s|$)([\s\S]*)",
     command=("honk", plugin_category),
     info={
@@ -159,13 +159,13 @@ async def honk(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="twt(?:\s|$)([\s\S]*)",
     command=("twt", plugin_category),
     info={
         "header": "Make a cool tweet of your account",
         "usage": "{tr}twt <text/reply to msg>",
-        "examples": "{tr}twt Catuserbot",
+        "examples": "{tr}twt DogeUserBot",
     },
 )
 async def twt(event):
@@ -185,7 +185,7 @@ async def twt(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="glax(|r)(?:\s|$)([\s\S]*)",
     command=("glax", plugin_category),
     info={

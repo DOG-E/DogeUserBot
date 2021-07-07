@@ -31,8 +31,8 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
-    _catutils,
-    catub,
+    _dogutils,
+    doge,
     edit_delete,
     logging,
 )
@@ -71,7 +71,7 @@ async def autopicloop():
     AUTOPICSTART = gvarstatus("autopic") == "true"
     if AUTOPICSTART and Config.DEFAULT_PIC is None:
         if BOTLOG:
-            return await catub.send_message(
+            return await doge.send_message(
                 BOTLOG_CHATID,
                 "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var in Heroku vars`",
             )
@@ -96,9 +96,9 @@ async def autopicloop():
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
         drawn_text.text((150, 250), current_time, font=fnt, fill=(124, 252, 0))
         img.save(autophoto_path)
-        file = await catub.upload_file(autophoto_path)
+        file = await doge.upload_file(autophoto_path)
         try:
-            await catub(functions.photos.UploadProfilePhotoRequest(file))
+            await doge(functions.photos.UploadProfilePhotoRequest(file))
             os.remove(autophoto_path)
             counter += counter
             await asyncio.sleep(Config.CHANGE_TIME)
@@ -116,16 +116,16 @@ async def custompfploop():
             return
         pic = random.choice(list(get_collection_list("CUSTOM_PFP_LINKS")))
         urllib.request.urlretrieve(pic, "donottouch.jpg")
-        file = await catub.upload_file("donottouch.jpg")
+        file = await doge.upload_file("donottouch.jpg")
         try:
             if i > 0:
-                await catub(
+                await doge(
                     functions.photos.DeletePhotosRequest(
-                        await catub.get_profile_photos("me", limit=1)
+                        await doge.get_profile_photos("me", limit=1)
                     )
                 )
             i += 1
-            await catub(functions.photos.UploadProfilePhotoRequest(file))
+            await doge(functions.photos.UploadProfilePhotoRequest(file))
             os.remove("donottouch.jpg")
             await asyncio.sleep(Config.CHANGE_TIME)
         except BaseException:
@@ -147,22 +147,22 @@ async def digitalpicloop():
         current_time = datetime.now().strftime("%H:%M")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
-        cat = str(base64.b64decode("dXNlcmJvdC9oZWxwZXJzL3N0eWxlcy9kaWdpdGFsLnR0Zg=="))[
+        dog = str(base64.b64decode("dXNlcmJvdC9oZWxwZXJzL3N0eWxlcy9kaWdpdGFsLnR0Zg=="))[
             2:36
         ]
-        fnt = ImageFont.truetype(cat, 200)
+        fnt = ImageFont.truetype(dog, 200)
         drawn_text.text((350, 100), current_time, font=fnt, fill=(124, 252, 0))
         img.save(autophoto_path)
-        file = await catub.upload_file(autophoto_path)
+        file = await doge.upload_file(autophoto_path)
         try:
             if i > 0:
-                await catub(
+                await doge(
                     functions.photos.DeletePhotosRequest(
-                        await catub.get_profile_photos("me", limit=1)
+                        await doge.get_profile_photos("me", limit=1)
                     )
                 )
             i += 1
-            await catub(functions.photos.UploadProfilePhotoRequest(file))
+            await doge(functions.photos.UploadProfilePhotoRequest(file))
             os.remove(autophoto_path)
             await asyncio.sleep(60)
         except BaseException:
@@ -174,7 +174,7 @@ async def bloom_pfploop():
     BLOOMSTART = gvarstatus("bloom") == "true"
     if BLOOMSTART and Config.DEFAULT_PIC is None:
         if BOTLOG:
-            return await catub.send_message(
+            return await doge.send_message(
                 BOTLOG_CHATID,
                 "**Error**\n`For functing of bloom you need to set DEFAULT_PIC var in Heroku vars`",
             )
@@ -204,9 +204,9 @@ async def bloom_pfploop():
         drawn_text.text((95, 250), current_time, font=fnt, fill=(FR, FG, FB))
         drawn_text.text((95, 250), "      😈", font=ofnt, fill=(FR, FG, FB))
         img.save(autophoto_path)
-        file = await catub.upload_file(autophoto_path)
+        file = await doge.upload_file(autophoto_path)
         try:
-            await catub(functions.photos.UploadProfilePhotoRequest(file))
+            await doge(functions.photos.UploadProfilePhotoRequest(file))
             os.remove(autophoto_path)
             await asyncio.sleep(Config.CHANGE_TIME)
         except BaseException:
@@ -222,7 +222,7 @@ async def autoname_loop():
         name = f"⌚️ {HM}||›  {DEFAULTUSER} ‹||📅 {DM}"
         LOGS.info(name)
         try:
-            await catub(functions.account.UpdateProfileRequest(first_name=name))
+            await doge(functions.account.UpdateProfileRequest(first_name=name))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(ex.seconds)
@@ -238,7 +238,7 @@ async def autobio_loop():
         bio = f"📅 {DMY} | {DEFAULTUSERBIO} | ⌚️ {HM}"
         LOGS.info(bio)
         try:
-            await catub(functions.account.UpdateProfileRequest(about=bio))
+            await doge(functions.account.UpdateProfileRequest(about=bio))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(ex.seconds)
@@ -273,21 +273,21 @@ async def autopfp_start():
     i = 0
     while AUTOPFP_START:
         await animeprofilepic(string_list)
-        file = await catub.upload_file("donottouch.jpg")
+        file = await doge.upload_file("donottouch.jpg")
         if i > 0:
-            await catub(
+            await doge(
                 functions.photos.DeletePhotosRequest(
-                    await catub.get_profile_photos("me", limit=1)
+                    await doge.get_profile_photos("me", limit=1)
                 )
             )
         i += 1
-        await catub(functions.photos.UploadProfilePhotoRequest(file))
-        await _catutils.runcmd("rm -rf donottouch.jpg")
+        await doge(functions.photos.UploadProfilePhotoRequest(file))
+        await _dogutils.runcmd("rm -rf donottouch.jpg")
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTOPFP_START = gvarstatus("autopfp_strings") is not None
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="batmanpfp$",
     command=("batmanpfp", plugin_category),
     info={
@@ -308,7 +308,7 @@ async def _(event):
     await autopfp_start()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="thorpfp$",
     command=("thorpfp", plugin_category),
     info={
@@ -329,7 +329,7 @@ async def _(event):
     await autopfp_start()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
@@ -375,7 +375,7 @@ async def _(event):
     await autopicloop()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="digitalpfp$",
     command=("digitalpfp", plugin_category),
     info={
@@ -399,7 +399,7 @@ async def _(event):
     await digitalpicloop()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bloom$",
     command=("bloom", plugin_category),
     info={
@@ -430,7 +430,7 @@ async def _(event):
     await bloom_pfploop()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="c(ustom)?pfp(?: |$)([\s\S]*)",
     command=("custompfp", plugin_category),
     info={
@@ -523,7 +523,7 @@ async def useless(event):  # sourcery no-metrics
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="autoname$",
     command=("autoname", plugin_category),
     info={
@@ -542,7 +542,7 @@ async def _(event):
     await autoname_loop()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="autobio$",
     command=("autobio", plugin_category),
     info={
@@ -561,7 +561,7 @@ async def _(event):
     await autobio_loop()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="end ([\s\S]*)",
     command=("end", plugin_category),
     info={
@@ -679,10 +679,10 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-catub.loop.create_task(autopfp_start())
-catub.loop.create_task(autopicloop())
-catub.loop.create_task(digitalpicloop())
-catub.loop.create_task(bloom_pfploop())
-catub.loop.create_task(autoname_loop())
-catub.loop.create_task(autobio_loop())
-catub.loop.create_task(custompfploop())
+doge.loop.create_task(autopfp_start())
+doge.loop.create_task(autopicloop())
+doge.loop.create_task(digitalpicloop())
+doge.loop.create_task(bloom_pfploop())
+doge.loop.create_task(autoname_loop())
+doge.loop.create_task(autobio_loop())
+doge.loop.create_task(custompfploop())

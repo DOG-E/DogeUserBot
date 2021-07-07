@@ -7,7 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format
@@ -41,7 +41,7 @@ UNBAN_RIGHTS = ChatBannedRights(
 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gban(?:\s|$)([\s\S]*)",
     command=("gban", plugin_category),
     info={
@@ -50,30 +50,30 @@ UNBAN_RIGHTS = ChatBannedRights(
         "usage": "{tr}gban <username/reply/userid> <reason (optional)>",
     },
 )
-async def catgban(event):  # sourcery no-metrics
+async def doggban(event):  # sourcery no-metrics
     "To ban user in every group where you are admin."
-    cate = await edit_or_reply(event, "`gbanning.......`")
+    dogg = await edit_or_reply(event, "`gbanning.......`")
     start = datetime.now()
-    user, reason = await get_user_from_event(event, cate)
+    user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
-    if user.id == catub.uid:
-        return await edit_delete(cate, "`why would I ban myself`")
+    if user.id == doge.uid:
+        return await edit_delete(dogg, "`why would I ban myself`")
     if gban_sql.is_gbanned(user.id):
-        await cate.edit(
+        await dogg.edit(
             f"`the `[user](tg://user?id={user.id})` is already in gbanned list any way checking again`"
         )
     else:
-        gban_sql.catgban(user.id, reason)
+        gban_sql.doggban(user.id, reason)
     san = await admin_groups(event.client)
     count = 0
-    sandy = len(san)
-    if sandy == 0:
-        return await edit_delete(cate, "`you are not admin of atleast one group` ")
-    await cate.edit(
+    teledoge = len(san)
+    if teledoge == 0:
+        return await edit_delete(dogg, "`you are not admin of atleast one group` ")
+    await dogg.edit(
         f"`initiating gban of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
     )
-    for i in range(sandy):
+    for i in range(teledoge):
         try:
             await event.client(EditBannedRequest(san[i], user.id, BANNED_RIGHTS))
             await asyncio.sleep(0.5)
@@ -85,14 +85,14 @@ async def catgban(event):  # sourcery no-metrics
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For banning here`",
             )
     end = datetime.now()
-    cattaken = (end - start).seconds
+    dogtaken = (end - start).seconds
     if reason:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {cattaken} seconds`!!\n**Reason :** `{reason}`"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
         )
     else:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {cattaken} seconds`!!"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {dogtaken} seconds`!!"
         )
     if BOTLOG and count != 0:
         reply = await event.get_reply_message()
@@ -105,7 +105,7 @@ async def catgban(event):  # sourcery no-metrics
                 \n**ID : **`{user.id}`\
                 \n**Reason :** `{reason}`\
                 \n__Banned in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
         else:
             await event.client.send_message(
@@ -115,7 +115,7 @@ async def catgban(event):  # sourcery no-metrics
                 \n**User : **[{user.first_name}](tg://user?id={user.id})\
                 \n**ID : **`{user.id}`\
                 \n__Banned in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
         try:
             if reply:
@@ -125,7 +125,7 @@ async def catgban(event):  # sourcery no-metrics
             pass
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ungban(?:\s|$)([\s\S]*)",
     command=("ungban", plugin_category),
     info={
@@ -134,28 +134,28 @@ async def catgban(event):  # sourcery no-metrics
         "usage": "{tr}ungban <username/reply/userid>",
     },
 )
-async def catgban(event):
+async def doggban(event):
     "To unban the person from every group where you are admin."
-    cate = await edit_or_reply(event, "`ungbanning.....`")
+    dogg = await edit_or_reply(event, "`ungbanning.....`")
     start = datetime.now()
-    user, reason = await get_user_from_event(event, cate)
+    user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
     if gban_sql.is_gbanned(user.id):
-        gban_sql.catungban(user.id)
+        gban_sql.dogungban(user.id)
     else:
         return await edit_delete(
-            cate, f"the [user](tg://user?id={user.id}) `is not in your gbanned list`"
+            dogg, f"the [user](tg://user?id={user.id}) `is not in your gbanned list`"
         )
     san = await admin_groups(event.client)
     count = 0
-    sandy = len(san)
-    if sandy == 0:
-        return await edit_delete(cate, "`you are not even admin of atleast one group `")
-    await cate.edit(
+    teledoge = len(san)
+    if teledoge == 0:
+        return await edit_delete(dogg, "`you are not even admin of atleast one group `")
+    await dogg.edit(
         f"initiating ungban of the [user](tg://user?id={user.id}) in `{len(san)}` groups"
     )
-    for i in range(sandy):
+    for i in range(teledoge):
         try:
             await event.client(EditBannedRequest(san[i], user.id, UNBAN_RIGHTS))
             await asyncio.sleep(0.5)
@@ -167,14 +167,14 @@ async def catgban(event):
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For Unbanning here`",
             )
     end = datetime.now()
-    cattaken = (end - start).seconds
+    dogtaken = (end - start).seconds
     if reason:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}`) was ungbanned in {count} groups in {cattaken} seconds`!!\n**Reason :** `{reason}`"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}`) was ungbanned in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
         )
     else:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was ungbanned in {count} groups in {cattaken} seconds`!!"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}) `was ungbanned in {count} groups in {dogtaken} seconds`!!"
         )
 
     if BOTLOG and count != 0:
@@ -187,7 +187,7 @@ async def catgban(event):
                 \n**ID : **`{user.id}`\
                 \n**Reason :** `{reason}`\
                 \n__Unbanned in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
         else:
             await event.client.send_message(
@@ -197,11 +197,11 @@ async def catgban(event):
                 \n**User : **[{user.first_name}](tg://user?id={user.id})\
                 \n**ID : **`{user.id}`\
                 \n__Unbanned in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listgban$",
     command=("listgban", plugin_category),
     info={
@@ -226,7 +226,7 @@ async def gablist(event):
     await edit_or_reply(event, GBANNED_LIST)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gmute(?:\s|$)([\s\S]*)",
     command=("gmute", plugin_category),
     info={
@@ -246,7 +246,7 @@ async def startgmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == catub.uid:
+        if user.id == doge.uid:
             return await edit_or_reply(event, "`Sorry, I can't gmute myself`")
         userid = user.id
     try:
@@ -292,7 +292,7 @@ async def startgmute(event):
             await reply.forward_to(BOTLOG_CHATID)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ungmute(?:\s|$)([\s\S]*)",
     command=("ungmute", plugin_category),
     info={
@@ -312,7 +312,7 @@ async def endgmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == catub.uid:
+        if user.id == doge.uid:
             return await edit_or_reply(event, "`Sorry, I can't gmute myself`")
         userid = user.id
     try:
@@ -354,13 +354,13 @@ async def endgmute(event):
             )
 
 
-@catub.cat_cmd(incoming=True)
+@doge.bot_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "gmute"):
         await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gkick(?:\s|$)([\s\S]*)",
     command=("gkick", plugin_category),
     info={
@@ -368,24 +368,24 @@ async def watcher(event):
         "usage": "{tr}gkick <username/reply/userid> <reason (optional)>",
     },
 )
-async def catgkick(event):  # sourcery no-metrics
+async def doggkick(event):  # sourcery no-metrics
     "kicks the person in all groups where you are admin"
-    cate = await edit_or_reply(event, "`gkicking.......`")
+    dogg = await edit_or_reply(event, "`gkicking.......`")
     start = datetime.now()
-    user, reason = await get_user_from_event(event, cate)
+    user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
-    if user.id == catub.uid:
-        return await edit_delete(cate, "`why would I kick myself`")
+    if user.id == doge.uid:
+        return await edit_delete(dogg, "`why would I kick myself`")
     san = await admin_groups(event.client)
     count = 0
-    sandy = len(san)
-    if sandy == 0:
-        return await edit_delete(cate, "`you are not admin of atleast one group` ")
-    await cate.edit(
+    teledoge = len(san)
+    if teledoge == 0:
+        return await edit_delete(dogg, "`you are not admin of atleast one group` ")
+    await dogg.edit(
         f"`initiating gkick of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
     )
-    for i in range(sandy):
+    for i in range(teledoge):
         try:
             await event.client.kick_participant(san[i], user.id)
             await asyncio.sleep(0.5)
@@ -397,14 +397,14 @@ async def catgkick(event):  # sourcery no-metrics
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For kicking there`",
             )
     end = datetime.now()
-    cattaken = (end - start).seconds
+    dogtaken = (end - start).seconds
     if reason:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {cattaken} seconds`!!\n**Reason :** `{reason}`"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
         )
     else:
-        await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {cattaken} seconds`!!"
+        await dogg.edit(
+            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {dogtaken} seconds`!!"
         )
 
     if BOTLOG and count != 0:
@@ -418,7 +418,7 @@ async def catgkick(event):  # sourcery no-metrics
                 \n**ID : **`{user.id}`\
                 \n**Reason :** `{reason}`\
                 \n__Kicked in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
         else:
             await event.client.send_message(
@@ -428,7 +428,7 @@ async def catgkick(event):  # sourcery no-metrics
                 \n**User : **[{user.first_name}](tg://user?id={user.id})\
                 \n**ID : **`{user.id}`\
                 \n__Kicked in {count} groups__\
-                \n**Time taken : **`{cattaken} seconds`",
+                \n**Time taken : **`{dogtaken} seconds`",
             )
         if reply:
             await reply.forward_to(BOTLOG_CHATID)

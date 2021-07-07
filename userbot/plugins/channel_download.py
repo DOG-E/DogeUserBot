@@ -10,12 +10,12 @@ import os
 import subprocess
 
 from ..Config import Config
-from . import catub, edit_or_reply
+from . import doge, edit_or_reply
 
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="getc(?:\s|$)([\s\S]*)",
     command=("getc", plugin_category),
     info={
@@ -23,13 +23,13 @@ plugin_category = "tools"
         "description": "pass username and no of latest messages to check to command \
              so the bot will download media files from that latest no of messages to server ",
         "usage": "{tr}getc count channel_username",
-        "examples": "{tr}getc 10 @catuserbot17",
+        "examples": "{tr}getc 10 @DogeUserBot",
     },
 )
 async def get_media(event):
-    catty = event.pattern_match.group(1)
-    limit = int(catty.split(" ")[0])
-    channel_username = str(catty.split(" ")[1])
+    dogty = event.pattern_match.group(1)
+    limit = int(dogty.split(" ")[0])
+    channel_username = str(dogty.split(" ")[1])
     tempdir = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, channel_username)
     try:
         os.makedirs(tempdir)
@@ -57,7 +57,7 @@ async def get_media(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="geta(?:\s|$)([\s\S]*)",
     command=("geta", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def get_media(event):
         "description": "pass username to command so the bot will download all media files from that latest no of messages to server ",
         "note": "there is limit of 3000 messages for this process to prevent API limits. that is will download all media files from latest 3000 messages",
         "usage": "{tr}geta channel_username",
-        "examples": "{tr}geta @catuserbot17",
+        "examples": "{tr}geta @DogeUserBot",
     },
 )
 async def get_media(event):

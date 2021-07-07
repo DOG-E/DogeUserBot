@@ -12,7 +12,7 @@ from hachoir.parser import createParser
 from telethon.tl import types
 from telethon.utils import get_attributes
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -36,7 +36,7 @@ class UPLOAD:
 UPLOAD_ = UPLOAD()
 
 
-async def catlst_of_files(path):
+async def doglst_of_files(path):
     files = []
     for dirname, dirnames, filenames in os.walk(path):
         # print path to all filenames.
@@ -70,25 +70,25 @@ def get_video_thumb(file, output=None, width=320):
 
 
 def sortthings(contents, path):
-    catsort = []
+    dogsort = []
     contents.sort()
     for file in contents:
-        catpath = os.path.join(path, file)
-        if os.path.isfile(catpath):
-            catsort.append(file)
+        dogpath = os.path.join(path, file)
+        if os.path.isfile(dogpath):
+            dogsort.append(file)
     for file in contents:
-        catpath = os.path.join(path, file)
-        if os.path.isdir(catpath):
-            catsort.append(file)
-    return catsort
+        dogpath = os.path.join(path, file)
+        if os.path.isdir(dogpath):
+            dogsort.append(file)
+    return dogsort
 
 
 async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
     return str(path.absolute()) if full else path.stem + path.suffix
 
 
-async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
-    catflag = catflag or False
+async def upload(path, event, udir_event, dogflag=None):  # sourcery no-metrics
+    dogflag = dogflag or False
     reply_to_id = await reply_id(event)
     if os.path.isdir(path):
         await event.client.send_message(
@@ -98,8 +98,8 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
         Files = os.listdir(path)
         Files = sortthings(Files, path)
         for file in Files:
-            catpath = os.path.join(path, file)
-            await upload(Path(catpath), event, udir_event)
+            dogpath = os.path.join(path, file)
+            await upload(Path(dogpath), event, udir_event)
     elif os.path.isfile(path):
         fname = os.path.basename(path)
         c_time = time.time()
@@ -120,7 +120,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
             file=uploaded,
             mime_type=mime_type,
             attributes=attributes,
-            force_file=catflag,
+            force_file=dogflag,
             thumb=await event.client.upload_file(thumb) if thumb else None,
         )
         await event.client.send_file(
@@ -133,7 +133,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
         UPLOAD_.uploaded += 1
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="upload( -f)? ([\s\S]*)",
     command=("upload", plugin_category),
     info={
@@ -162,7 +162,7 @@ async def uploadir(event):
     if os.path.isdir(path):
         await edit_or_reply(udir_event, f"`Gathering file details in directory {path}`")
         UPLOAD_.uploaded = 0
-        await upload(path, event, udir_event, catflag=flag)
+        await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
         await edit_delete(
@@ -172,7 +172,7 @@ async def uploadir(event):
     else:
         await edit_or_reply(udir_event, f"`Uploading file .....`")
         UPLOAD_.uploaded = 0
-        await upload(path, event, udir_event, catflag=flag)
+        await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
         await edit_delete(

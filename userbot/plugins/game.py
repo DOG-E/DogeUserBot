@@ -1,17 +1,18 @@
 import asyncio
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
 
 plugin_category = "fun"
 
-game_code = ["ttt", "ttf", "cf", "rps", "rpsls", "rr", "c", "pc"]
-button = ["0", "1", "2", "3", "4", "5", "6", "7"]
+game_code = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+button = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
 game_name = [
     "Tic-Tac-Toe",
     "Tic-Tac-Four",
+    "Elephant XO",
     "Connect Four",
     "Rock-Paper-Scissors",
     "Rock-Paper-Scissors-Lizard-Spock",
@@ -19,27 +20,28 @@ game_name = [
     "Checkers",
     "Pool Checkers",
 ]
-game_list = "1.`ttt` :- Tic-Tac-Toe\n2.`ttf` :- Tic-Tac-Four\n3.`cf` :- Connect Four\n4.`rps` :- Rock-Paper-Scissors\n5.`rpsls` :- Rock-Paper-Scissors-Lizard-Spock\n6.`rr` :- Russian Roulette\n7.`c` :- Checkers\n8.`pc` :- Pool Checkers"
+game_list = "`1` :- Tic-Tac-Toe\n`2` :- Tic-Tac-Four\n`3` :- Elephant XO\n`4` :- Connect Four\n`5` :- Rock-Paper-Scissors\n`6` :- Rock-Paper-Scissors-Lizard-Spock\n`7` :- Russian Roulette\n`8` :- Checkers\n`9` :- Pool Checkers"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="game(?:\s|$)([\s\S]*)",
     command=("game", plugin_category),
     info={
         "header": "Play inline games",
         "description": "Start an inline game by inlinegamebot",
         "Game code & Name": {
-            "ttt": "Tic-Tac-Toe",
-            "ttf": "Tic-Tac-Four",
-            "cf": "Connect Four",
-            "rps": "Rock-Paper-Scissors",
-            "rpsls": "Rock-Paper-Scissors-Lizard-Spock",
-            "rr": "Russian Roulette",
-            "c": "Checkers",
-            "pc": "Pool Checkers",
+            "1": "Tic-Tac-Toe",
+            "2": "Tic-Tac-Four",
+            "3": "Elephant XO",
+            "4": "Connect Four",
+            "5": "Rock-Paper-Scissors",
+            "6": "Rock-Paper-Scissors-Lizard-Spock",
+            "7": "Russian Roulette",
+            "8": "Checkers",
+            "9": "Pool Checkers",
         },
         "usage": "{tr}game <game code>",
-        "examples": "{tr}game ttt ",
+        "examples": "{tr}game 3 ",
     },
 )
 async def igame(event):
@@ -54,10 +56,10 @@ async def igame(event):
         )
         return
     if input_str not in game_code:
-        catevent = await edit_or_reply(event, "`Give me a correct game code...`")
+        dogevent = await edit_or_reply(event, "`Give me a correct game code...`")
         await asyncio.sleep(1)
         await edit_delete(
-            catevent, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60
+            dogevent, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60
         )
     else:
         game = data[input_str]

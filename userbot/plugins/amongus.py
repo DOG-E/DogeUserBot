@@ -9,22 +9,22 @@ from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.utils import get_user_from_event, reply_id
-from . import ALIVE_NAME
+from ..helpers.utils import get_user_from_event, reply_id, _format
+from . import ALIVE_NAME, mention
 
 plugin_category = "extra"
 
 
 async def amongus_gen(text: str, clr: int) -> str:
-    url = "https://github.com/sandy1709/CatUserbot-Resources/raw/master/Resources/Amongus/"
+    url = "https://github.com/DOG-E/Source/raw/DOGE/Material/AmongUs/"
     font = ImageFont.truetype(
         BytesIO(
             get(
-                "https://github.com/sandy1709/CatUserbot-Resources/raw/master/Resources/fonts/bold.ttf"
+                "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/bold.ttf"
             ).content
         ),
         60,
@@ -53,10 +53,10 @@ async def amongus_gen(text: str, clr: int) -> str:
 
 async def get_imposter_img(text: str) -> str:
     background = get(
-        f"https://github.com/sandy1709/CatUserbot-Resources/raw/master/Resources/imposter/impostor{randint(1,22)}.png"
+        f"https://github.com/DOG-E/Source/raw/DOGE/Material/Impostor/{randint(1,22)}.png"
     ).content
     font = get(
-        "https://github.com/sandy1709/CatUserbot-Resources/raw/master/Resources/fonts/roboto_regular.ttf"
+        "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf"
     ).content
     font = BytesIO(font)
     font = ImageFont.truetype(font, 30)
@@ -76,7 +76,7 @@ async def get_imposter_img(text: str) -> str:
     return webp_file
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="amongus(?:\s|$)([\s\S]*)",
     command=("amongus", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def sayliecmd(event):
     await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="imposter(?:\s|$)([\s\S]*)",
     command=("imposter", plugin_category),
     info={
@@ -169,7 +169,7 @@ async def procces_img(event):
     await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="imp(|n) ([\s\S]*)",
     command=("imp", plugin_category),
     info={
@@ -223,46 +223,46 @@ async def _(event):
     stcr4 = await event.client.send_file(
         event.chat_id, "CAADAQADLwADnjOcH-wxu-ehy6NRAg"
     )
-    catevent = await event.reply(f"{name} is ejected.......")
+    dogevent = await event.reply(f"{name} is ejected.......")
     await asyncio.sleep(2)
-    await catevent.edit("ඞㅤㅤㅤㅤ ㅤㅤㅤㅤ")
+    await dogevent.edit("ඞㅤㅤㅤㅤ ㅤㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤඞㅤㅤㅤㅤ ㅤㅤㅤ")
+    await dogevent.edit("ㅤඞㅤㅤㅤㅤ ㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤ ඞㅤㅤㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤ ඞㅤㅤㅤㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤ ඞㅤㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤ ඞㅤㅤㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤ ඞㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤ ඞㅤㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤㅤ ඞㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤ ඞㅤㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤ ඞㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤ ඞㅤㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤ ඞㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤ ඞㅤ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ඞ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ඞ")
     await asyncio.sleep(0.5)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ㅤ")
     await asyncio.sleep(0.2)
     await stcr4.delete()
     if cmd == "":
-        await catevent.edit(
+        await dogevent.edit(
             f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
         await asyncio.sleep(4)
-        await catevent.delete()
+        await dogevent.delete()
         await event.client.send_file(event.chat_id, "CAADAQADLQADnjOcH39IqwyR6Q_0Ag")
     elif cmd == "n":
-        await catevent.edit(
+        await dogevent.edit(
             f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was not an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
         await asyncio.sleep(4)
-        await catevent.delete()
+        await dogevent.delete()
         await event.client.send_file(event.chat_id, "CAADAQADQAADnjOcH-WOkB8DEctJAg")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="timp(|n) ([\s\S]*)",
     command=("timp", plugin_category),
     info={
@@ -276,33 +276,33 @@ async def _(event):
     "Find imposter with text animation."
     name = event.pattern_match.group(2)
     cmd = event.pattern_match.group(1).lower()
-    catevent = await edit_or_reply(event, f"{name} is ejected.......")
+    dogevent = await edit_or_reply(event, f"{name} is ejected.......")
     await asyncio.sleep(2)
-    await catevent.edit("ඞㅤㅤㅤㅤ ㅤㅤㅤㅤ")
+    await dogevent.edit("ඞㅤㅤㅤㅤ ㅤㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤඞㅤㅤㅤㅤ ㅤㅤㅤ")
+    await dogevent.edit("ㅤඞㅤㅤㅤㅤ ㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤ ඞㅤㅤㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤ ඞㅤㅤㅤㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤ ඞㅤㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤ ඞㅤㅤㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤ ඞㅤㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤ ඞㅤㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤㅤ ඞㅤㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤ ඞㅤㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤ ඞㅤㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤ ඞㅤㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤ ඞㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤ ඞㅤ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ඞ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ඞ")
     await asyncio.sleep(0.8)
-    await catevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ㅤ")
+    await dogevent.edit("ㅤㅤㅤㅤㅤㅤㅤㅤ ㅤ")
     await asyncio.sleep(0.2)
     if cmd == "":
-        await catevent.edit(
+        await dogevent.edit(
             f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
     elif cmd == "n":
-        await catevent.edit(
+        await dogevent.edit(
             f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was not an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )

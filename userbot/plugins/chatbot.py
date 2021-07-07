@@ -2,7 +2,7 @@ import random
 
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import get_user_from_event, rs_client
@@ -30,7 +30,7 @@ tired_response = [
 ]
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addai$",
     command=("addai", plugin_category),
     info={
@@ -44,8 +44,8 @@ async def add_chatbot(event):
         return await edit_or_reply(
             event, "`Reply to a User's message to activate ai on `"
         )
-    catevent = await edit_or_reply(event, "`Adding ai to user...`")
-    user, rank = await get_user_from_event(event, catevent, nogroup=True)
+    dogevent = await edit_or_reply(event, "`Adding ai to user...`")
+    user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
         return
     reply_msg = await event.get_reply_message()
@@ -64,12 +64,12 @@ async def add_chatbot(event):
     try:
         addai(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{str(e)}`")
+        await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
     else:
-        await edit_or_reply(catevent, "Hi")
+        await edit_or_reply(dogevent, "Hi")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmai$",
     command=("rmai", plugin_category),
     info={
@@ -90,14 +90,14 @@ async def remove_chatbot(event):
         try:
             remove_ai(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{str(e)}`")
+            await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
         else:
             await edit_or_reply(event, "Ai has been stopped for the user")
     else:
         await edit_or_reply(event, "The user is not activated with ai")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="delai( -a)?",
     command=("delai", plugin_category),
     info={
@@ -139,7 +139,7 @@ async def delete_chatbot(event):
             await edit_or_reply(event, "Deleted ai for all enabled users in this chat")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listai( -a)?$",
     command=("listai", plugin_category),
     info={
@@ -201,7 +201,7 @@ async def list_chatbot(event):  # sourcery no-metrics
     await edit_or_reply(event, output_str)
 
 
-@catub.cat_cmd(incoming=True, edited=False)
+@doge.bot_cmd(incoming=True, edited=False)
 async def ai_reply(event):
     if is_added(event.chat_id, event.sender_id) and (event.message.text):
         AI_LANG = gvarstatus("AI_LANG") or "en"
@@ -210,7 +210,7 @@ async def ai_reply(event):
             response = await rs_client.get_ai_response(
                 message=event.message.text,
                 server="primary",
-                master="CatUserbot",
+                master="DogeUserBot",
                 bot=master_name,
                 uid=event.client.uid,
                 language=AI_LANG,

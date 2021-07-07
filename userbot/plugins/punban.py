@@ -12,8 +12,8 @@ from urlextract import URLExtract
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import age_verification
-from ..helpers.utils import _catutils, reply_id
-from . import catub, useless
+from ..helpers.utils import _dogutils, reply_id
+from . import doge, useless
 
 API = useless.API
 horny = useless.nsfw(useless.pawn)
@@ -21,7 +21,7 @@ horny = useless.nsfw(useless.pawn)
 plugin_category = "useless"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="porn(?:\s|$)([\s\S]*)",
     command=("porn", plugin_category),
     info={
@@ -59,7 +59,7 @@ async def very(event):
         except KeyError:
             return await edit_delete(
                 event,
-                "**(ノಠ益ಠ)ノ  Tou sure this a vaid catagory/subreddit ??**",
+                "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**",
                 time=20,
             )
         if "https://i.imgur.com" in media_url and media_url.endswith(".gifv"):
@@ -80,7 +80,7 @@ async def very(event):
         else:
             pass
         try:
-            sandy = await event.client.send_file(
+            teledoge = await event.client.send_file(
                 event.chat_id,
                 media_url,
                 caption=f"<b><a href = {postlink}>{title}</a></b>",
@@ -88,7 +88,7 @@ async def very(event):
                 parse_mode="html",
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _catutils.unsavegif(event, sandy)
+                await _dogutils.unsavegif(event, teledoge)
             await event.delete()
             break
         except WebpageCurlFailedError:
@@ -103,11 +103,11 @@ async def very(event):
             if max_try == 5:
                 await edit_delete(
                     event,
-                    "**ಥ‿ಥ   Sorry i could'nt found, try with difference catagory**",
+                    "**ಥ‿ಥ   Sorry i could'nt found, try with difference category**",
                 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bulkporn(?:\s|$)([\s\S]*)",
     command=("bulkporn", plugin_category),
     info={
@@ -156,7 +156,7 @@ async def bad(event):
             media_url.append(x["url"])
     except KeyError:
         return await edit_delete(
-            event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid catagory/subreddit ??**", time=20
+            event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**", time=20
         )
     i = 0
     for m, p, t in zip(media_url, postlink, title):
@@ -178,7 +178,7 @@ async def bad(event):
         else:
             media_url = m
         try:
-            sandy = await event.client.send_file(
+            teledoge = await event.client.send_file(
                 event.chat_id,
                 media_url,
                 caption=f"<b><a href = {p}>{t}</a></b>",
@@ -186,10 +186,10 @@ async def bad(event):
                 parse_mode="html",
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _catutils.unsavegif(event, sandy)
+                await _dogutils.unsavegif(event, teledoge)
             await edit_or_reply(
                 event,
-                f"**Bluk Download Started.\n\nCatagory :  `{sub_r}`\nFile Downloaded :  {i+1}/{count}**",
+                f"**Bluk Download Started.\n\nCategory :  `{sub_r}`\nFile Downloaded :  {i+1}/{count}**",
             )
             await asyncio.sleep(2)
         except WebpageCurlFailedError:
@@ -201,7 +201,7 @@ async def bad(event):
             await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rsearch(?:\s|$)([\s\S]*)",
     command=("rsearch", plugin_category),
     info={
@@ -247,7 +247,7 @@ async def pussy(event):
             media_url.append(x["url"])
     except KeyError:
         return await edit_delete(
-            event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid catagory/subreddit ??**", time=20
+            event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**", time=20
         )
     i = 1
     pwnlist = f"<b>{count} results for {sub_r} :</b>\n\n"
@@ -274,7 +274,7 @@ async def pussy(event):
     await edit_or_reply(event, pwnlist, parse_mode="html")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="xsearch(?:\s|$)([\s\S]*)",
     command=("xsearch", plugin_category),
     info={
@@ -291,7 +291,7 @@ async def pussy(event):
         ],
     },
 )
-async def cat(event):
+async def dog(event):
     """Send a list of xvideos posts"""
     reply_to = await reply_id(event)
     intxt = event.pattern_match.group(1)
@@ -348,7 +348,7 @@ async def cat(event):
     await edit_or_reply(event, string, parse_mode="html")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="linkdl(?: |$)([\s\S]*)",
     command=("linkdl", plugin_category),
     info={
@@ -418,11 +418,11 @@ async def wants_ur_noods(event):
         else:
             media_url = m
         try:
-            sandy = await event.client.send_file(
+            teledoge = await event.client.send_file(
                 event.chat_id, media_url, reply_to=reply_to
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _catutils.unsavegif(event, sandy)
+                await _dogutils.unsavegif(event, teledoge)
             if os.path.exists(media_url):
                 os.remove(media_url)
             await edit_or_reply(

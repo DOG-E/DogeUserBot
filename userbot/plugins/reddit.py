@@ -7,12 +7,12 @@
 
 import requests
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_delete
 from ..helpers.functions import age_verification
-from ..helpers.utils import _catutils, reply_id
+from ..helpers.utils import _dogutils, reply_id
 from . import BOTLOG, BOTLOG_CHATID
 
 LOGS = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ API = "https://meme-api.herokuapp.com/gimme"
 plugin_category = "misc"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
@@ -73,8 +73,8 @@ async def reddit_fetch(event):
 
         await event.delete()
         captionx += f"Source: [r/{subreddit}]({postlink})"
-        sandy = await event.client.send_file(
+        teledoge = await event.client.send_file(
             event.chat_id, media_url, caption=captionx, reply_to=reply_to
         )
         if media_url.endswith(".gif"):
-            await _catutils.unsavegif(event, sandy)
+            await _dogutils.unsavegif(event, teledoge)

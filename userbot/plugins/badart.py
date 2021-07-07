@@ -7,7 +7,7 @@ Plugin for CatUserbot
 import asyncio
 
 from ..core.managers import edit_or_reply
-from . import catub, mention
+from . import doge, mention
 
 plugin_category = "fun"
 
@@ -63,7 +63,7 @@ GAMBAR_TITIT = """
 # =======================================================
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="muth$",
     command=("muth", plugin_category),
     info={
@@ -93,7 +93,7 @@ async def kakashi(bsdk):
         await bsdk.edit(animation_chars[i % 10])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ohnoo$",
     command=("ohnoo", plugin_category),
     info={
@@ -124,7 +124,7 @@ async def kakashi(bsdk):
         await bsdk.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lovestory$",
     command=("lovestory", plugin_category),
     info={
@@ -159,7 +159,7 @@ async def kakashi(event):
         await event.edit(animation_chars[i % 14])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ohhyaah$",
     command=("ohhyaah", plugin_category),
     info={
@@ -191,7 +191,7 @@ async def kakashi(baby):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="foff$",
     command=("foff", plugin_category),
     info={
@@ -220,7 +220,7 @@ async def kakashi(fooku):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mf$",
     command=("mf", plugin_category),
     info={
@@ -233,7 +233,7 @@ async def kakashi(mf):
     await edit_or_reply(mf, C)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sporn$",
     command=("sporn", plugin_category),
     info={
@@ -272,7 +272,7 @@ async def kakashi(pornhub):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spika$",
     command=("spika", plugin_category),
     info={
@@ -305,7 +305,7 @@ async def kakashi(pikachu):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sxx$",
     command=("sxx", plugin_category),
     info={
@@ -358,7 +358,7 @@ async def kakashi(saxy):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sdick ([\s\S]*)",
     command=("sdick", plugin_category),
     info={
@@ -392,7 +392,7 @@ async def kakashi(dicksay):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern=r"^\.(?:penis|dick)\s?(.)?",
     command=("penis|dick", plugin_category),
     info={

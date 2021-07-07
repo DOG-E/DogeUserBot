@@ -1,11 +1,11 @@
 import asyncio
 
-from . import catub, edit_or_reply
+from . import doge, edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unoob$",
     command=("unoob", plugin_category),
     info={
@@ -34,7 +34,7 @@ async def _(event):
         await asyncio.sleep(animation_interval)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="menoob$",
     command=("menoob", plugin_category),
     info={
@@ -63,7 +63,7 @@ async def _(event):
         await asyncio.sleep(animation_interval)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="upro$",
     command=("upro", plugin_category),
     info={
@@ -91,7 +91,7 @@ async def _(event):
         await asyncio.sleep(animation_interval)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mepro$",
     command=("mepro", plugin_category),
     info={
@@ -119,7 +119,7 @@ async def _(event):
         await asyncio.sleep(animation_interval)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="quickheal$",
     command=("quickheal", plugin_category),
     info={
@@ -150,7 +150,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sqh$",
     command=("sqh", plugin_category),
     info={
@@ -181,7 +181,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vquickheal$",
     command=("vquickheal", plugin_category),
     info={
@@ -212,7 +212,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="macoc$",
     command=("macoc", plugin_category),
     info={
@@ -243,7 +243,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="windows$",
     command=("windows", plugin_category),
     info={
@@ -274,7 +274,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="linux$",
     command=("linux", plugin_category),
     info={
@@ -305,7 +305,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stock$",
     command=("stock", plugin_category),
     info={
@@ -336,7 +336,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="os$",
     command=("os", plugin_category),
     info={
@@ -356,7 +356,7 @@ async def _(event):
         "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n☑️ `.windows`\n☑️ `.linux`\n☑️ `.stock`",
         "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n☑️ `.linux`\n☑️ `.stock`",
         "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n✅ `.linux`\n☑️ `.stock`",
-        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n✅ `.linux`\n✅ `.stock`\n\nDeveloped By: @catuserbot17",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n✅ `.linux`\n✅ `.stock`\n\nDeveloped By: @DogeUserBot",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)

@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.utils import get_extension
 from urlextract import URLExtract
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.events import MessageEdited
@@ -38,7 +38,7 @@ def get_key(val):
             return key
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pcode(?:\s|$)([\s\S]*)",
     command=("pcode", plugin_category),
     info={
@@ -53,7 +53,7 @@ async def paste_img(event):
     "To paste text to image."
     reply_to = await reply_id(event)
     d_file_name = None
-    catevent = await edit_or_reply(event, "`Pasting the text on image`")
+    dogevent = await edit_or_reply(event, "`Pasting the text on image`")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     ext = re.findall(r"-f", input_str)
@@ -77,7 +77,7 @@ async def paste_img(event):
             text_to_print = reply.raw_text
         else:
             return await edit_delete(
-                catevent,
+                dogevent,
                 "`Either reply to text/code file or reply to text message or give text along with command`",
             )
     pygments.highlight(
@@ -93,15 +93,15 @@ async def paste_img(event):
             force_document=bool(extension),
             reply_to=reply_to,
         )
-        await catevent.delete()
+        await dogevent.delete()
         os.remove("out.png")
         if d_file_name is not None:
             os.remove(d_file_name)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{str(e)}`", time=10)
+        await edit_delete(dogevent, f"**Error:**\n`{str(e)}`", time=10)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
     command=("paste", plugin_category),
     info={
@@ -124,7 +124,7 @@ async def paste_img(event):
 )
 async def paste_bin(event):
     "To paste text to a paste bin."
-    catevent = await edit_or_reply(event, "`pasting text to paste bin....`")
+    dogevent = await edit_or_reply(event, "`pasting text to paste bin....`")
     input_str = event.pattern_match.group(3)
     reply = await event.get_reply_message()
     ext = re.findall(r"-\w+", input_str)
@@ -153,7 +153,7 @@ async def paste_bin(event):
             text_to_print = reply.raw_text
         else:
             return await edit_delete(
-                catevent,
+                dogevent,
                 "`Either reply to text/code file or reply to text message or give text along with command`",
             )
     if extension and extension.startswith("."):
@@ -162,7 +162,7 @@ async def paste_bin(event):
         response = await pastetext(text_to_print, pastetype, extension)
         if "error" in response:
             return await edit_delete(
-                catevent,
+                dogevent,
                 f"**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
             )
         result = ""
@@ -171,12 +171,12 @@ async def paste_bin(event):
         result += f"<b>Pasted to: <a href={response['url']}>{response['bin']}</a></b>"
         if response["raw"] != "":
             result += f"\n<b>Raw link: <a href={response['raw']}>Raw</a></b>"
-        await catevent.edit(result, link_preview=False, parse_mode="html")
+        await dogevent.edit(result, link_preview=False, parse_mode="html")
     except Exception as e:
-        await edit_delete(catevent, f"**Error while pasting text:**\n`{str(e)}`")
+        await edit_delete(dogevent, f"**Error while pasting text:**\n`{str(e)}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     command=("neko", plugin_category),
     info={
         "header": "To paste text to a neko bin.",
@@ -193,7 +193,7 @@ async def _(event):
     # just to show in help menu as seperate
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="g(et)?paste(?:\s|$)([\s\S]*)",
     command=("getpaste", plugin_category),
     info={
@@ -220,7 +220,7 @@ async def get_dogbin_content(event):
                 break
     if not url:
         return await edit_delete(event, "__I can't find any pastebin link.__")
-    catevent = await edit_or_reply(event, "`Getting Contents of pastebin.....`")
+    dogevent = await edit_or_reply(event, "`Getting Contents of pastebin.....`")
     rawurl = None
     if "raw" in url:
         rawurl = url
@@ -238,22 +238,22 @@ async def get_dogbin_content(event):
     try:
         resp.raise_for_status()
     except requests.exceptions.HTTPError as HTTPErr:
-        return await catevent.edit(
+        return await dogevent.edit(
             f"**Request returned an unsuccessful status code.**\n\n__{str(HTTPErr)}__"
         )
     except requests.exceptions.Timeout as TimeoutErr:
-        return await catevent.edit(f"**Request timed out.**__{str(TimeoutErr)}__")
+        return await dogevent.edit(f"**Request timed out.**__{str(TimeoutErr)}__")
     except requests.exceptions.TooManyRedirects as RedirectsErr:
-        return await catevent.edit(
+        return await dogevent.edit(
             (
                 f"**Request exceeded the configured number of maximum redirections.**__{str(RedirectsErr)}__"
             )
         )
     reply_text = f"**Fetched dogbin URL content successfully!**\n\n**Content:** \n```{resp.text}```"
-    await edit_or_reply(catevent, reply_text)
+    await edit_or_reply(dogevent, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="paster(?:\s|$)([\s\S]*)",
     command=("paster", plugin_category),
     info={
@@ -263,7 +263,7 @@ async def get_dogbin_content(event):
 )
 async def _(event):
     "Create a instant view or a paste it in telegraph file."
-    catevent = await edit_or_reply(event, "`pasting text to paste bin....`")
+    dogevent = await edit_or_reply(event, "`pasting text to paste bin....`")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     pastetype = "d"
@@ -281,21 +281,21 @@ async def _(event):
             text_to_print = reply.raw_text
         else:
             return await edit_delete(
-                catevent,
+                dogevent,
                 "`Either reply to text/code file or reply to text message or give text along with command`",
             )
     try:
         response = await pastetext(text_to_print, pastetype, extension="txt")
         if "error" in response:
             return await edit_delete(
-                catevent,
+                dogevent,
                 f"**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
             )
     except Exception as e:
-        return await edit_delete(catevent, f"**Error while pasting text:**\n`{str(e)}`")
+        return await edit_delete(dogevent, f"**Error while pasting text:**\n`{str(e)}`")
     url = response["url"]
     chat = "@CorsaBot"
-    await catevent.edit("`Making instant view...`")
+    await dogevent.edit("`Making instant view...`")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -304,7 +304,7 @@ async def _(event):
             await event.client.send_message(chat, url)
             response = await response
         except YouBlockedUserError:
-            return await catevent.edit("```Please unblock me (@CorsaBot) and try```")
+            return await dogevent.edit("```Please unblock me (@CorsaBot) and try```")
         result = ""
         if response:
             await event.client.send_read_acknowledge(conv.chat_id)
@@ -313,4 +313,4 @@ async def _(event):
                 result = f"The instant preview is [here]({urls[0]})"
         if result == "":
             result = f"I can't make it as instant view"
-        await catevent.edit(result, link_preview=True)
+        await dogevent.edit(result, link_preview=True)

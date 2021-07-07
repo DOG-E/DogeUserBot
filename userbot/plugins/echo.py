@@ -3,7 +3,7 @@ created by @sandy1709
 Idea by @BlazingRobonix
 """
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.echo_sql import (
@@ -20,7 +20,7 @@ from . import get_user_from_event
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addecho$",
     command=("addecho", plugin_category),
     info={
@@ -35,8 +35,8 @@ async def echo(event):
         return await edit_or_reply(
             event, "`Reply to a User's message to echo his messages`"
         )
-    catevent = await edit_or_reply(event, "`Adding Echo to user...`")
-    user, rank = await get_user_from_event(event, catevent, nogroup=True)
+    dogevent = await edit_or_reply(event, "`Adding Echo to user...`")
+    user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
         return
     reply_msg = await event.get_reply_message()
@@ -55,12 +55,12 @@ async def echo(event):
     try:
         addecho(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{str(e)}`")
+        await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
     else:
-        await edit_or_reply(catevent, "Hi")
+        await edit_or_reply(dogevent, "Hi")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmecho$",
     command=("rmecho", plugin_category),
     info={
@@ -82,14 +82,14 @@ async def echo(event):
         try:
             remove_echo(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{str(e)}`")
+            await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
         else:
             await edit_or_reply(event, "Echo has been stopped for the user")
     else:
         await edit_or_reply(event, "The user is not activated with echo")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="delecho( -a)?",
     command=("delecho", plugin_category),
     info={
@@ -135,7 +135,7 @@ async def echo(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listecho( -a)?$",
     command=("listecho", plugin_category),
     info={
@@ -199,7 +199,7 @@ async def echo(event):  # sourcery no-metrics
     await edit_or_reply(event, output_str)
 
 
-@catub.cat_cmd(incoming=True, edited=False)
+@doge.bot_cmd(incoming=True, edited=False)
 async def samereply(event):
     if is_echo(event.chat_id, event.sender_id) and (
         event.message.text or event.message.sticker

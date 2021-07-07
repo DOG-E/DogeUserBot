@@ -9,10 +9,10 @@ from datetime import datetime
 import psutil
 from telethon import __version__
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
-from ..helpers.utils import _catutils
+from ..helpers.utils import _dogutils
 
 plugin_category = "tools"
 
@@ -25,7 +25,7 @@ def get_size(inputbytes, suffix="B"):
         inputbytes /= factor
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spc$",
     command=("spc", plugin_category),
     info={
@@ -81,7 +81,7 @@ async def psu(event):
     await event.edit(help_string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cpu$",
     command=("cpu", plugin_category),
     info={
@@ -92,13 +92,13 @@ async def psu(event):
 async def cpu(event):
     "shows cpu information"
     cmd = "cat /proc/cpuinfo | grep 'model name'"
-    o = (await _catutils.runcmd(cmd))[0]
+    o = (await _dogutils.runcmd(cmd))[0]
     await edit_or_reply(
-        event, f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
+        event, f"**[Dog's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sysd$",
     command=("sysd", plugin_category),
     info={
@@ -108,11 +108,11 @@ async def cpu(event):
 )
 async def sysdetails(sysd):
     "Shows system information using neofetch"
-    catevent = await edit_or_reply(sysd, "`Fectching system information.`")
+    dogevent = await edit_or_reply(sysd, "`Fectching system information.`")
     cmd = "git clone https://github.com/dylanaraps/neofetch.git"
-    await _catutils.runcmd(cmd)
+    await _dogutils.runcmd(cmd)
     neo = "neofetch/neofetch --off --color_blocks off --bold off --cpu_temp C \
                     --cpu_speed on --cpu_cores physical --kernel_shorthand off --stdout"
-    a, b, c, d = await _catutils.runcmd(neo)
+    a, b, c, d = await _dogutils.runcmd(neo)
     result = str(a) + str(b)
-    await edit_or_reply(catevent, "**Neofetch Result:** `" + result + "`")
+    await edit_or_reply(dogevent, "**Neofetch Result:** `" + result + "`")

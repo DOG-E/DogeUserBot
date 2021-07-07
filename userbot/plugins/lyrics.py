@@ -4,7 +4,7 @@ import os
 import lyricsgenius
 from tswift import Song
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
@@ -13,7 +13,7 @@ plugin_category = "extra"
 GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lyrics ?([\s\S]*)",
     command=("lyrics", plugin_category),
     info={
@@ -30,14 +30,14 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 )
 async def _(event):
     "Song lyrics searcher"
-    catevent = await edit_or_reply(event, "`wi8..! I am searching your lyrics....`")
+    dogevent = await edit_or_reply(event, "`wi8..! I am searching your lyrics....`")
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
     elif reply.text:
         query = reply.message
     else:
-        return await catevent.edit("`What I am Supposed to find `")
+        return await dogevent.edit("`What I am Supposed to find `")
     song = ""
     song = Song.find_song(query)
     if song:
@@ -47,10 +47,10 @@ async def _(event):
             reply = "Couldn't find any lyrics for that song! try with artist name along with song if still doesnt work try `.glyrics`"
     else:
         reply = "lyrics not found! try with artist name along with song if still doesnt work try `.glyrics`"
-    await edit_or_reply(catevent, reply)
+    await edit_or_reply(dogevent, reply)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="glyrics ?([\s\S]*)",
     command=("glyrics", plugin_category),
     info={
@@ -88,7 +88,7 @@ async def lyrics(lyric):
         return await edit_or_reply(lyric, f"Error:\n`{e}`")
     if len(args) < 1:
         return await edit_or_reply(lyric, "`Please provide artist and song names`")
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         lyric, f"`Searching lyrics for {artist} - {song}...`"
     )
     try:
@@ -96,6 +96,6 @@ async def lyrics(lyric):
     except TypeError:
         songs = None
     if songs is None:
-        return await catevent.edit(f"Song **{artist} - {song}** not found!")
+        return await dogevent.edit(f"Song **{artist} - {song}** not found!")
     reply = f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```"
-    await edit_or_reply(catevent, reply)
+    await edit_or_reply(dogevent, reply)

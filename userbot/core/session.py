@@ -4,7 +4,7 @@ from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
 from ..Config import Config
-from .client import CatUserBotClient
+from .client import DogeUserBotClient
 
 __version__ = "2.10.6"
 
@@ -13,10 +13,10 @@ loop = None
 if Config.STRING_SESSION:
     session = StringSession(str(Config.STRING_SESSION))
 else:
-    session = "catuserbot"
+    session = "DogeUserBot"
 
 try:
-    catub = CatUserBotClient(
+    doge = DogeUserBotClient(
         session=session,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
@@ -31,8 +31,8 @@ except Exception as e:
     sys.exit()
 
 
-catub.tgbot = tgbot = CatUserBotClient(
-    session="CatTgbot",
+doge.tgbot = tgbot = DogeUserBotClient(
+    session="DogeTgBot",
     api_id=Config.APP_ID,
     api_hash=Config.API_HASH,
     loop=loop,

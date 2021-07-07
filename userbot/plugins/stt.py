@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -13,7 +13,7 @@ from ..helpers import media_type
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stt$",
     command=("stt", plugin_category),
     info={
@@ -39,9 +39,9 @@ async def _(event):
             event,
             "`Reply to a voice message or Audio, to get the relevant transcript.`",
         )
-    catevent = await edit_or_reply(event, "`Downloading to my local, for analysis  🙇`")
+    dogevent = await edit_or_reply(event, "`Downloading to my local, for analysis  🙇`")
     required_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
-    await catevent.edit("`Starting analysis, using IBM WatSon Speech To Text`")
+    await dogevent.edit("`Starting analysis, using IBM WatSon Speech To Text`")
     headers = {
         "Content-Type": reply.media.document.mime_type,
     }
@@ -54,7 +54,7 @@ async def _(event):
     )
     r = response.json()
     if "results" not in r:
-        return await catevent.edit(r["error"])
+        return await dogevent.edit(r["error"])
     # process the json to appropriate string format
     results = r["results"]
     transcript_response = ""
@@ -73,6 +73,6 @@ async def _(event):
         string_to_show = "**Language : **`{}`\n**Transcript : **`{}`\n**Time Taken : **`{} seconds`\n**Confidence : **`{}`".format(
             lan, transcript_response, ms, transcript_confidence
         )
-    await catevent.edit(string_to_show)
+    await dogevent.edit(string_to_show)
     # now, remove the temporary file
     os.remove(required_file_name)

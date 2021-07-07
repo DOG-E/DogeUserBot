@@ -1,13 +1,13 @@
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from userbot import catub
+from userbot import doge
 
 from ..helpers.utils import get_user_from_event, reply_id
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(tagall|all)(?:\s|$)([\s\S]*)",
     command=("tagall", plugin_category),
     info={
@@ -30,7 +30,7 @@ async def _(event):
     await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="report$",
     command=("report", plugin_category),
     info={
@@ -52,7 +52,7 @@ async def _(event):
     await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="men ([\s\S]*)",
     command=("mention", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def _(event):
             "{tr}men username/userid text",
             "text (username/mention)[custom text] text",
         ],
-        "examples": ["{tr}men @mrconfused hi", "Hi @mrconfused[How are you?]"],
+        "examples": ["{tr}men @teledoge hi", "Hi @teledoge[How are you?]"],
     },
 )
 async def _(event):

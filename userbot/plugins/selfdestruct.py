@@ -1,13 +1,13 @@
 from asyncio import sleep
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sdm (\d*) ([\s\S]*)",
     command=("sdm", plugin_category),
     info={
@@ -19,16 +19,16 @@ LOGS = logging.getLogger(__name__)
 )
 async def selfdestruct(destroy):
     "To self destruct the sent message"
-    cat = ("".join(destroy.text.split(maxsplit=1)[1:])).split(" ", 1)
-    message = cat[1]
-    ttl = int(cat[0])
+    dog = ("".join(destroy.text.split(maxsplit=1)[1:])).split(" ", 1)
+    message = dog[1]
+    ttl = int(dog[0])
     await destroy.delete()
     smsg = await destroy.client.send_message(destroy.chat_id, message)
     await sleep(ttl)
     await smsg.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="selfdm (\d*) ([\s\S]*)",
     command=("selfdm", plugin_category),
     info={
@@ -40,9 +40,9 @@ async def selfdestruct(destroy):
 )
 async def selfdestruct(destroy):
     "To self destruct the sent message"
-    cat = ("".join(destroy.text.split(maxsplit=1)[1:])).split(" ", 1)
-    message = cat[1]
-    ttl = int(cat[0])
+    dog = ("".join(destroy.text.split(maxsplit=1)[1:])).split(" ", 1)
+    message = dog[1]
+    ttl = int(dog[0])
     text = (
         message + f"\n\n`This message shall be self-destructed in {str(ttl)} seconds`"
     )

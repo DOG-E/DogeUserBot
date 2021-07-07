@@ -5,16 +5,16 @@ import os
 
 from telegraph import exceptions, upload_file
 
-from userbot import catub
+from userbot import doge
 
-from ..core.managers import edit_or_reply
-from ..helpers.utils import _cattools, reply_id
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.utils import _dogtools, reply_id
 from . import convert_toimage, deEmojify, phcomment, threats, trap, trash
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="trash$",
     command=("trash", plugin_category),
     info={
@@ -22,13 +22,13 @@ plugin_category = "fun"
         "usage": "{tr}trash",
     },
 )
-async def catbot(event):
+async def dogbot(event):
     "image meme creator."
     replied = await event.get_reply_message()
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not replied:
         return await edit_or_reply(event, "reply to a supported media file")
-    output = await _cattools.media_to_pic(event, replied)
+    output = await _dogtools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -47,14 +47,14 @@ async def catbot(event):
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
         return await output[0].edit(f"**Error: **\n`{str(exc)}`")
-    cat = f"https://telegra.ph{response[0]}"
-    cat = await trash(cat)
+    dog = f"https://telegra.ph{response[0]}"
+    dog = await trash(dog)
     os.remove(download_location)
     await output[0].delete()
-    await event.client.send_file(event.chat_id, cat, reply_to=catid)
+    await event.client.send_file(event.chat_id, dog, reply_to=dogid)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="threats$",
     command=("threats", plugin_category),
     info={
@@ -62,13 +62,13 @@ async def catbot(event):
         "usage": "{tr}threats",
     },
 )
-async def catbot(event):
+async def dogbot(event):
     "image meme creator."
     replied = await event.get_reply_message()
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not replied:
         return await edit_or_reply(event, "reply to a supported media file")
-    output = await _cattools.media_to_pic(event, replied)
+    output = await _dogtools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -86,14 +86,14 @@ async def catbot(event):
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
         return await output[0].edit(f"**Error: **\n`{str(exc)}`")
-    cat = f"https://telegra.ph{response[0]}"
-    cat = await threats(cat)
+    dog = f"https://telegra.ph{response[0]}"
+    dog = await threats(dog)
     await output[0].delete()
     os.remove(download_location)
-    await event.client.send_file(event.chat_id, cat, reply_to=catid)
+    await event.client.send_file(event.chat_id, dog, reply_to=dogid)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="trap(?:\s|$)([\s\S]*)",
     command=("trap", plugin_category),
     info={
@@ -102,7 +102,7 @@ async def catbot(event):
         "usage": "{tr}trap (name of the person to trap) ; (trapper name)",
     },
 )
-async def catbot(event):
+async def dogbot(event):
     "image meme creator."
     input_str = event.pattern_match.group(1)
     input_str = deEmojify(input_str)
@@ -114,10 +114,10 @@ async def catbot(event):
             "**Syntax :** reply to image or sticker with `.trap (name of the person to trap);(trapper name)`",
         )
     replied = await event.get_reply_message()
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not replied:
         return await edit_or_reply(event, "reply to a supported media file")
-    output = await _cattools.media_to_pic(event, replied)
+    output = await _dogtools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -135,14 +135,14 @@ async def catbot(event):
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
         return await output[0].edit(f"**Error: **\n`{str(exc)}`")
-    cat = f"https://telegra.ph{response[0]}"
-    cat = await trap(text1, text2, cat)
+    dog = f"https://telegra.ph{response[0]}"
+    dog = await trap(text1, text2, dog)
     await output[0].delete()
     os.remove(download_location)
-    await event.client.send_file(event.chat_id, cat, reply_to=catid)
+    await event.client.send_file(event.chat_id, dog, reply_to=dogid)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="phub(?:\s|$)([\s\S]*)",
     command=("phub", plugin_category),
     info={
@@ -151,7 +151,7 @@ async def catbot(event):
         "usage": "{tr}phub (username);(text in comment)",
     },
 )
-async def catbot(event):
+async def dogbot(event):
     "image meme creator."
     input_str = event.pattern_match.group(1)
     input_str = deEmojify(input_str)
@@ -163,10 +163,10 @@ async def catbot(event):
             "**Syntax :** reply to image or sticker with `.phub (username);(text in comment)`",
         )
     replied = await event.get_reply_message()
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not replied:
         return await edit_or_reply(event, "reply to a supported media file")
-    output = await _cattools.media_to_pic(event, replied)
+    output = await _dogtools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
@@ -185,8 +185,8 @@ async def catbot(event):
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
         return await output[0].edit(f"**Error: **\n`{str(exc)}`")
-    cat = f"https://telegra.ph{response[0]}"
-    cat = await phcomment(cat, text, username)
+    dog = f"https://telegra.ph{response[0]}"
+    dog = await phcomment(dog, text, username)
     await output[0].delete()
     os.remove(download_location)
-    await event.client.send_file(event.chat_id, cat, reply_to=catid)
+    await event.client.send_file(event.chat_id, dog, reply_to=dogid)

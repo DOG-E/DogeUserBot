@@ -21,7 +21,7 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from telethon import events
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
@@ -42,7 +42,7 @@ from . import (
 LOGS = logging.getLogger(__name__)
 plugin_category = "misc"
 
-# Catuserbot Google Drive managers  ported from Projectbish and added extra things by @mrconfused
+# Google Drive managers ported from Projectbish and added extra things by @mrconfused
 
 
 # =========================================================== #
@@ -116,7 +116,7 @@ async def create_app(gdrive):
     """Create google drive service app"""
     hmm = gdrive.client.uid
     creds = helper.get_credentials(str(hmm))
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if creds is not None:
         """Repack credential objects from strings"""
         creds = pickle.loads(base64.b64decode(creds.encode()))
@@ -132,8 +132,8 @@ async def create_app(gdrive):
             await gdrive.edit("`Credentials is empty, please generate it...`")
             return False
     try:
-        cat = Get(cat)
-        await gdrive.client(cat)
+        dog = Get(dog)
+        await gdrive.client(dog)
     except BaseException:
         pass
     return build("drive", "v3", credentials=creds, cache_discovery=False)
@@ -174,11 +174,11 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
         try:
             from .torrentutils import aria2, check_metadata
 
-            cattorrent = True
+            dogtorrent = True
         except Exception:
-            cattorrent = False
+            dogtorrent = False
         full_path = os.path.join(os.getcwd(), TMP_DOWNLOAD_DIRECTORY)
-        if cattorrent:
+        if dogtorrent:
             LOGS.info("torrentutils exists")
             if os.path.isfile(uri) and uri.endswith(".torrent"):
                 downloads = aria2.add_torrent(
@@ -193,7 +193,7 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
             LOGS.info("No torrentutils")
             await edit_or_reply(
                 gdrive,
-                "`To use torrent files or download files from link install torrentutils from` @catplugins",
+                "`To use torrent files or download files from link install torrentutils from` @DogePlugin",
             )
             return "install torrentutils"
         from .torrentutils import aria2, check_metadata
@@ -609,7 +609,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
         pass
     body = {
         "name": file_name,
-        "description": "Uploaded from Telegram using Catuserbot.",
+        "description": "Uploaded from Telegram using DogeUserBot.",
         "mimeType": mimeType,
         "parents": [dir_id] if dir_id is not None else [GDRIVE_.parent_Id],
     }
@@ -915,7 +915,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gauth$",
     command=("gauth", plugin_category),
     info={
@@ -996,7 +996,7 @@ async def generate_credentials(gdrive):
     return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="greset",
     command=("greset", plugin_category),
     info={
@@ -1016,7 +1016,7 @@ async def reset_credentials(gdrive):
     return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="glist(?: |$)(-l \d+)?(?: |$)?([\s\S]*)?(?: |$)",
     command=("glist", plugin_category),
     info={
@@ -1036,12 +1036,12 @@ async def reset_credentials(gdrive):
         ],
     },
 )
-async def catlists(gdrive):
+async def doglists(gdrive):
     "To get list of files and folers"
     await lists(gdrive)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gdf (mkdir|rm|info) ([\s\S]*)",
     command=("gdf", plugin_category),
     info={
@@ -1213,7 +1213,7 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
     await gdrive.edit(reply)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gabort$",
     command=("gabort", plugin_category),
     info={
@@ -1238,7 +1238,7 @@ async def cancel_process(gdrive):
     await gdrive.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ugd(?:\s|$)([\s\S]*)",
     command=("ugd", plugin_category),
     info={
@@ -1422,7 +1422,7 @@ async def google_drive(gdrive):  # sourcery no-metrics
     return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gclear$",
     command=("gclear", plugin_category),
     info={
@@ -1457,7 +1457,7 @@ async def set_upload_folder(gdrive):
             return None
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gset(?:\s|$)([\s\S]*)",
     command=("gset", plugin_category),
     info={
@@ -1500,7 +1500,7 @@ async def set_upload_folder(gdrive):
     return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gdown ?(-u)? ([\s\S]*)",
     command=("gdown", plugin_category),
     info={
@@ -1523,16 +1523,16 @@ async def g_download(event):
     thumb = None
     cmd = event.pattern_match.group(1)
     drive_link = event.pattern_match.group(2)
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event, "`Downloading Requested File from G-Drive...`"
     )
-    file_name, catprocess = await gdrive_download(event, catevent, service, drive_link)
-    if catprocess is not None:
-        return await edit_delete(catevent, file_name)
+    file_name, dogprocess = await gdrive_download(event, dogevent, service, drive_link)
+    if dogprocess is not None:
+        return await edit_delete(dogevent, file_name)
     if os.path.exists(thumb_image_path):
         thumb = thumb_image_path
     if not cmd:
-        await catevent.edit("**File Downloaded.\nLocation : **`" + str(file_name) + "`")
+        await dogevent.edit("**File Downloaded.\nLocation : **`" + str(file_name) + "`")
     else:
         c_time = time.time()
         await event.client.send_file(
@@ -1543,18 +1543,18 @@ async def g_download(event):
             force_document=False,
             supports_streaming=True,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, catevent, c_time, "Uploading...", file_name)
+                progress(d, t, dogevent, c_time, "Uploading...", file_name)
             ),
         )
         os.remove(file_name)
         await edit_delete(
-            catevent,
+            dogevent,
             "**File Downloaded and uploaded.\nName : **`" + str(file_name) + "`",
             5,
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gshare ([\s\S]*)",
     command=("gshare", plugin_category),
     info={
@@ -1569,6 +1569,6 @@ async def gshare(event):
     if service is False:
         return None
     input_str = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, "`Creating sharable link...`")
+    dogevent = await edit_or_reply(event, "`Creating sharable link...`")
     await asyncio.sleep(2)
-    await share(service, catevent, input_str)
+    await share(service, dogevent, input_str)

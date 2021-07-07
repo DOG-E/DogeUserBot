@@ -1,12 +1,12 @@
 # corona virus stats for catuserbot
 from covid import Covid
 
-from . import catub, covidindia, edit_delete, edit_or_reply
+from . import doge, covidindia, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="covid(?:\s|$)([\s\S]*)",
     command=("covid", plugin_category),
     info={
@@ -20,7 +20,7 @@ async def corona(event):
     "To get latest information about covid-19."
     input_str = event.pattern_match.group(1)
     country = (input_str).title() if input_str else "World"
-    catevent = await edit_or_reply(event, "`Collecting data...`")
+    dogevent = await edit_or_reply(event, "`Collecting data...`")
     covid = Covid(source="worldometers")
     try:
         country_data = covid.get_status_by_country_name(country)
@@ -38,28 +38,28 @@ async def corona(event):
         data += f"\n💉 Total tests    : <code>{country_data['total_tests']}</code>"
         data += f"\n🥺 New Cases   : <code>{country_data['new_cases']}</code>"
         data += f"\n😟 New Deaths : <code>{country_data['new_deaths']}</code>"
-        await catevent.edit(
+        await dogevent.edit(
             "<b>Corona Virus Info of {}:\n{}</b>".format(country, data),
             parse_mode="html",
         )
     else:
         data = await covidindia(country)
         if data:
-            cat1 = int(data["new_positive"]) - int(data["positive"])
-            cat2 = int(data["new_death"]) - int(data["death"])
-            cat3 = int(data["new_cured"]) - int(data["cured"])
+            dog1 = int(data["new_positive"]) - int(data["positive"])
+            dog2 = int(data["new_death"]) - int(data["death"])
+            dog3 = int(data["new_cured"]) - int(data["cured"])
             result = f"<b>Corona virus info of {data['state_name']}\
                 \n\n⚠️ Confirmed   : <code>{data['new_positive']}</code>\
                 \n😔 Active           : <code>{data['new_active']}</code>\
                 \n⚰️ Deaths         : <code>{data['new_death']}</code>\
                 \n😊 Recovered   : <code>{data['new_cured']}</code>\
-                \n🥺 New Cases   : <code>{cat1}</code>\
-                \n😟 New Deaths : <code>{cat2}</code>\
-                \n😃 New cured  : <code>{cat3}</code> </b>"
-            await catevent.edit(result, parse_mode="html")
+                \n🥺 New Cases   : <code>{dog1}</code>\
+                \n😟 New Deaths : <code>{dog2}</code>\
+                \n😃 New cured  : <code>{dog3}</code> </b>"
+            await dogevent.edit(result, parse_mode="html")
         else:
             await edit_delete(
-                catevent,
+                dogevent,
                 "`Corona Virus Info of {} is not avaiable or unable to fetch`".format(
                     country
                 ),

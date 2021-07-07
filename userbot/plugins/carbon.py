@@ -7,14 +7,14 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from ..Config import Config
-from . import catub, deEmojify, edit_or_reply
+from . import doge, deEmojify, edit_or_reply
 
 plugin_category = "utils"
 
 CARBONLANG = "auto"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="carbon(?:\s|$)([\s\S]*)",
     command=("carbon", plugin_category),
     info={
@@ -37,7 +37,7 @@ async def carbon_api(event):
         pcode = str(textx.message)
     pcode = deEmojify(pcode)
     code = quote_plus(pcode)
-    cat = await edit_or_reply(event, "`Carbonizing...\n25%`")
+    dog = await edit_or_reply(event, "`Carbonizing...\n25%`")
     url = CARBON.format(code=code, lang=CARBONLANG)
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -52,7 +52,7 @@ async def carbon_api(event):
         executable_path=Config.CHROME_DRIVER, options=chrome_options
     )
     driver.get(url)
-    await cat.edit("`Be Patient...\n50%`")
+    await dog.edit("`Be Patient...\n50%`")
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
         "POST",
@@ -65,12 +65,12 @@ async def carbon_api(event):
     driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
 
-    await cat.edit("`Processing..\n75%`")
+    await dog.edit("`Processing..\n75%`")
 
     await asyncio.sleep(2)
-    await cat.edit("`Done Dana Done...\n100%`")
+    await dog.edit("`Done Dana Done...\n100%`")
     file = "./carbon.png"
-    await cat.edit("`Uploading..`")
+    await dog.edit("`Uploading..`")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -81,10 +81,10 @@ async def carbon_api(event):
     os.remove("./carbon.png")
     driver.quit()
 
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="krb(?:\s|$)([\s\S]*)",
     command=("krb", plugin_category),
     info={
@@ -98,7 +98,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    cat = await edit_or_reply(event, "`Processing....`")
+    dog = await edit_or_reply(event, "`Processing....`")
     CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -116,7 +116,7 @@ async def carbon_api(event):
     skeme = skeme.strip()
     pcode = deEmojify(pcode)
     code = quote_plus(pcode)
-    await cat.edit("`Meking Carbon...`\n`25%`")
+    await dog.edit("`Meking Carbon...`\n`25%`")
     url = CARBON.format(code=code, lang=CARBONLANG)
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -131,7 +131,7 @@ async def carbon_api(event):
         executable_path=Config.CHROME_DRIVER, options=chrome_options
     )
     driver.get(url)
-    await cat.edit("`Be Patient...\n50%`")
+    await dog.edit("`Be Patient...\n50%`")
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
         "POST",
@@ -158,15 +158,15 @@ async def carbon_api(event):
     driver.find_element_by_id("export-menu").click()
     driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
     driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
-    await cat.edit("`Processing..\n75%`")
+    await dog.edit("`Processing..\n75%`")
 
     await asyncio.sleep(2.5)
     color_name = driver.find_element_by_xpath(
         "/html/body/div[1]/main/div[3]/div[2]/div[1]/div[1]/div/span[2]/input"
     ).get_attribute("value")
-    await cat.edit("`Done Dana Done...\n100%`")
+    await dog.edit("`Done Dana Done...\n100%`")
     file = "./carbon.png"
-    await cat.edit("`Uploading..`")
+    await dog.edit("`Uploading..`")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -176,10 +176,10 @@ async def carbon_api(event):
     )
     os.remove("./carbon.png")
     driver.quit()
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kar1(?:\s|$)([\s\S]*)",
     command=("kar1", plugin_category),
     info={
@@ -192,7 +192,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    cat = await edit_or_reply(event, "🔲🔲🔲🔲🔲")
+    dog = await edit_or_reply(event, "🔲🔲🔲🔲🔲")
     CARBON = "https://carbon.now.sh/?bg=rgba(249%2C237%2C212%2C0)&t=synthwave-84&wt=none&l=application%2Fjson&ds=true&dsyoff=20px&dsblur=0px&wc=true&wa=true&pv=56px&ph=0px&ln=false&fl=1&fm=IBM%20Plex%20Mono&fs=14.5px&lh=153%25&si=false&es=4x&wm=false&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -211,7 +211,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    await cat.edit("🔳🔳🔲🔲🔲")
+    await dog.edit("🔳🔳🔲🔲🔲")
 
     driver = webdriver.Chrome(
         executable_path=Config.CHROME_DRIVER, options=chrome_options
@@ -230,11 +230,11 @@ async def carbon_api(event):
 
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     await asyncio.sleep(1)
-    await cat.edit("🔳🔳🔳🔲🔲")
+    await dog.edit("🔳🔳🔳🔲🔲")
     await asyncio.sleep(1)
-    await cat.edit("🔳🔳🔳🔳🔳")
+    await dog.edit("🔳🔳🔳🔳🔳")
     file = "./carbon.png"
-    await cat.edit("☣️Karbon1 Completed, Uploading Karbon☣️")
+    await dog.edit("☣️Karbon1 Completed, Uploading Karbon☣️")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -243,10 +243,10 @@ async def carbon_api(event):
     )
     os.remove("./carbon.png")
 
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kar2(?:\s|$)([\s\S]*)",
     command=("kar2", plugin_category),
     info={
@@ -259,7 +259,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    cat = await edit_or_reply(event, "📛📛📛📛📛")
+    dog = await edit_or_reply(event, "📛📛📛📛📛")
     CARBON = "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -278,7 +278,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    await cat.edit("🔘🔘📛📛📛")
+    await dog.edit("🔘🔘📛📛📛")
     driver = webdriver.Chrome(
         executable_path=Config.CHROME_DRIVER, options=chrome_options
     )
@@ -295,11 +295,11 @@ async def carbon_api(event):
     driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     await asyncio.sleep(1)
-    await cat.edit("🔘🔘🔘📛📛")
+    await dog.edit("🔘🔘🔘📛📛")
     await asyncio.sleep(1)
-    await cat.edit("🔘🔘🔘🔘🔘")
+    await dog.edit("🔘🔘🔘🔘🔘")
     file = "./carbon.png"
-    await cat.edit("☣️Karbon2 Completed, Uploading Karbon☣️")
+    await dog.edit("☣️Karbon2 Completed, Uploading Karbon☣️")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -310,10 +310,10 @@ async def carbon_api(event):
 
     os.remove("./carbon.png")
 
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kar3(?:\s|$)([\s\S]*)",
     command=("kar3", plugin_category),
     info={
@@ -326,7 +326,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    cat = await edit_or_reply(event, "🎛🎛🎛🎛🎛")
+    dog = await edit_or_reply(event, "🎛🎛🎛🎛🎛")
     CARBON = "https://carbon.now.sh/?bg=rgba(74%2C144%2C226%2C1)&t=material&wt=none&l=auto&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Fira%20Code&fs=14px&lh=152%25&si=false&es=2x&wm=false&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -345,7 +345,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    await cat.edit("🔵🔵🎛🎛🎛")
+    await dog.edit("🔵🔵🎛🎛🎛")
 
     driver = webdriver.Chrome(
         executable_path=Config.CHROME_DRIVER, options=chrome_options
@@ -364,11 +364,11 @@ async def carbon_api(event):
 
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     await asyncio.sleep(1)
-    await cat.edit("🔵🔵🔵🎛🎛")
+    await dog.edit("🔵🔵🔵🎛🎛")
     await asyncio.sleep(1)
-    await cat.edit("🔵🔵🔵🔵🔵")
+    await dog.edit("🔵🔵🔵🔵🔵")
     file = "./carbon.png"
-    await cat.edit("☣️Karbon3 Completed, Uploading Karbon⬆️")
+    await dog.edit("☣️Karbon3 Completed, Uploading Karbon⬆️")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -377,10 +377,10 @@ async def carbon_api(event):
         reply_to=event.message.reply_to_msg_id,
     )
     os.remove("./carbon.png")
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kar4(?:\s|$)([\s\S]*)",
     command=("kar4", plugin_category),
     info={
@@ -393,7 +393,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    cat = await edit_or_reply(event, "🌚🌚🌚🌚🌚")
+    dog = await edit_or_reply(event, "🌚🌚🌚🌚🌚")
     CARBON = "https://carbon.now.sh/?bg=rgba(29%2C40%2C104%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -412,7 +412,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    await cat.edit("🌝🌝🌚🌚🌚")
+    await dog.edit("🌝🌝🌚🌚🌚")
     driver = webdriver.Chrome(
         executable_path=Config.CHROME_DRIVER, options=chrome_options
     )
@@ -429,11 +429,11 @@ async def carbon_api(event):
     driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     await asyncio.sleep(1)
-    await cat.edit("🌝🌝🌝🌚🌚")
+    await dog.edit("🌝🌝🌝🌚🌚")
     await asyncio.sleep(1)
-    await cat.edit("🌝🌝🌝🌝🌝")
+    await dog.edit("🌝🌝🌝🌝🌝")
     file = "./carbon.png"
-    await cat.edit("✅Karbon4 Completed, Uploading Karbon✅")
+    await dog.edit("✅Karbon4 Completed, Uploading Karbon✅")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -442,10 +442,10 @@ async def carbon_api(event):
         reply_to=event.message.reply_to_msg_id,
     )
     os.remove("./carbon.png")
-    await cat.delete()
+    await dog.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kargb(?:\s|$)([\s\S]*)",
     command=("kargb", plugin_category),
     info={
@@ -494,7 +494,7 @@ async def carbon_api(event):
     ]
     CUNTHE = random.randint(0, len(THEME) - 1)
     The = THEME[CUNTHE]
-    cat = await edit_or_reply(event, "⬜⬜⬜⬜⬜")
+    dog = await edit_or_reply(event, "⬜⬜⬜⬜⬜")
     CARBON = "https://carbon.now.sh/?bg=rgba({R}%2C{G}%2C{B}%2C1)&t={T}&wt=none&l=auto&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Fira%20Code&fs=14px&lh=152%25&si=false&es=2x&wm=false&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -513,7 +513,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    await cat.edit("⬛⬛⬜⬜⬜")
+    await dog.edit("⬛⬛⬜⬜⬜")
     driver = webdriver.Chrome(
         executable_path=Config.CHROME_DRIVER, options=chrome_options
     )
@@ -530,11 +530,11 @@ async def carbon_api(event):
     driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
     await asyncio.sleep(1)
-    await cat.edit("⬛⬛⬛⬜⬜")
+    await dog.edit("⬛⬛⬛⬜⬜")
     await asyncio.sleep(1)
-    await cat.edit("⬛⬛⬛⬛⬛")
+    await dog.edit("⬛⬛⬛⬛⬛")
     file = "./carbon.png"
-    await cat.edit("✅RGB Karbon Completed, Uploading Karbon✅")
+    await dog.edit("✅RGB Karbon Completed, Uploading Karbon✅")
     await event.client.send_file(
         event.chat_id,
         file,
@@ -543,4 +543,4 @@ async def carbon_api(event):
         reply_to=event.message.reply_to_msg_id,
     )
     os.remove("./carbon.png")
-    await cat.delete()
+    await dog.delete()

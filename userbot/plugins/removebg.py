@@ -3,7 +3,7 @@ import os
 
 import requests
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -45,7 +45,7 @@ def ReTrieveURL(input_url):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(rmbg|srmbg)(?:\s|$)([\s\S]*)",
     command=("rmbg", plugin_category),
     info={
@@ -75,20 +75,20 @@ async def remove_background(event):
     message_id = await reply_id(event)
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
-        catevent = await edit_or_reply(event, "`Analysing this Image/Sticker...`")
+        dogevent = await edit_or_reply(event, "`Analysing this Image/Sticker...`")
         file_name = os.path.join(Config.TEMP_DIR, "rmbg.png")
         try:
             await event.client.download_media(reply_message, file_name)
         except Exception as e:
-            await edit_delete(catevent, f"`{str(e)}`", 5)
+            await edit_delete(dogevent, f"`{str(e)}`", 5)
             return
         else:
-            await catevent.edit("`Removing Background of this media`")
+            await dogevent.edit("`Removing Background of this media`")
             file_name = convert_toimage(file_name)
             response = ReTrieveFile(file_name)
             os.remove(file_name)
     elif input_str:
-        catevent = await edit_or_reply(event, "`Removing Background of this media`")
+        dogevent = await edit_or_reply(event, "`Removing Background of this media`")
         response = ReTrieveURL(input_str)
     else:
         await edit_delete(
@@ -103,7 +103,7 @@ async def remove_background(event):
         with open("backgroundless.png", "wb") as removed_bg_file:
             removed_bg_file.write(response.content)
     else:
-        await edit_delete(catevent, f"`{response.content.decode('UTF-8')}`", 5)
+        await edit_delete(dogevent, f"`{response.content.decode('UTF-8')}`", 5)
         return
     if cmd == "srmbg":
         file = convert_tosticker(remove_bg_image, filename="backgroundless.webp")
@@ -120,4 +120,4 @@ async def remove_background(event):
             force_document=True,
             reply_to=message_id,
         )
-    await catevent.delete()
+    await dogevent.delete()

@@ -2,12 +2,12 @@ import os
 import urllib
 
 from ..helpers.functions import clippy, convert_tosticker, higlighted_text
-from . import catub, deEmojify, edit_delete, reply_id
+from . import doge, deEmojify, edit_delete, reply_id
 
 plugin_category = "useless"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|b)quby(?:\s|$)([\s\S]*)",
     command=("quby", plugin_category),
     info={
@@ -63,9 +63,9 @@ async def quby(event):
         position=position,
     )
     if cmd == "b":
-        cat = convert_tosticker(file_name)
+        dog = convert_tosticker(file_name)
         await event.client.send_file(
-            event.chat_id, cat, reply_to=reply_to_id, force_document=False
+            event.chat_id, dog, reply_to=reply_to_id, force_document=False
         )
     else:
         await clippy(event.client, file_name, event.chat_id, reply_to_id)
@@ -75,7 +75,7 @@ async def quby(event):
             os.remove(files)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|b)blob(?:\s|$)([\s\S]*)",
     command=("blob", plugin_category),
     info={
@@ -132,9 +132,9 @@ async def knife(event):
         direction="upwards",
     )
     if cmd == "b":
-        cat = convert_tosticker(file_name)
+        dog = convert_tosticker(file_name)
         await event.client.send_file(
-            event.chat_id, cat, reply_to=reply_to_id, force_document=False
+            event.chat_id, dog, reply_to=reply_to_id, force_document=False
         )
     else:
         await clippy(event.client, file_name, event.chat_id, reply_to_id)
@@ -144,7 +144,7 @@ async def knife(event):
             os.remove(files)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|h)doge(?:\s|$)([\s\S]*)",
     command=("doge", plugin_category),
     info={
@@ -199,9 +199,9 @@ async def doge(event):
         foreground=fg,
         transparency=alpha,
     )
-    cat = convert_tosticker(file_name)
+    dog = convert_tosticker(file_name)
     await event.client.send_file(
-        event.chat_id, cat, reply_to=reply_to_id, force_document=False
+        event.chat_id, dog, reply_to=reply_to_id, force_document=False
     )
     await event.delete()
     for files in (temp_name, file_name):

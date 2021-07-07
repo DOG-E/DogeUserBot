@@ -8,7 +8,7 @@ from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
@@ -29,7 +29,7 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
     command=("telegraph", plugin_category),
     info={
@@ -50,7 +50,7 @@ def resize_image(image):
 )  # sourcery no-metrics
 async def _(event):
     "To get telegraph link."
-    catevent = await edit_or_reply(event, "`processing........`")
+    dogevent = await edit_or_reply(event, "`processing........`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -58,7 +58,7 @@ async def _(event):
         )
     optional_title = event.pattern_match.group(5)
     if not event.reply_to_msg_id:
-        return await catevent.edit(
+        return await dogevent.edit(
             "`Reply to a message to get a permanent telegra.ph link.`",
         )
 
@@ -69,19 +69,19 @@ async def _(event):
         downloaded_file_name = await event.client.download_media(
             r_message, Config.TEMP_DIR
         )
-        await catevent.edit(f"`Downloaded to {downloaded_file_name}`")
+        await dogevent.edit(f"`Downloaded to {downloaded_file_name}`")
         if downloaded_file_name.endswith((".webp")):
             resize_image(downloaded_file_name)
         try:
             media_urls = upload_file(downloaded_file_name)
         except exceptions.TelegraphException as exc:
-            await catevent.edit(f"**Error : **\n`{str(exc)}`")
+            await dogevent.edit(f"**Error : **\n`{str(exc)}`")
             os.remove(downloaded_file_name)
         else:
             end = datetime.now()
             ms = (end - start).seconds
             os.remove(downloaded_file_name)
-            await catevent.edit(
+            await dogevent.edit(
                 f"**➥ Uploaded to :-**[telegraph](https://telegra.ph{media_urls[0]})\
                  \n**➥ Uploaded in {ms} seconds.**\
                  \n**➥ Uploaded by :-** {mention}",
@@ -118,9 +118,9 @@ async def _(event):
             response = telegraph.create_page(title_of_page, html_content=page_content)
         end = datetime.now()
         ms = (end - start).seconds
-        cat = f"https://telegra.ph/{response['path']}"
-        await catevent.edit(
-            f"**➥ Uploaded to :-** [telegraph]({cat})\
+        dog = f"https://telegra.ph/{response['path']}"
+        await dogevent.edit(
+            f"**➥ Uploaded to :-** [telegraph]({dog})\
                  \n**➥ Uploaded in {ms} seconds.**\
                  \n**➥ Uploaded by :-** {mention}",
             link_preview=True,

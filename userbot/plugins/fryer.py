@@ -6,7 +6,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeFilename
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers import reply_id
@@ -73,7 +73,7 @@ async def check_media(reply_message):
     return data
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="frybot",
     command=("frybot", plugin_category),
     info={
@@ -126,7 +126,7 @@ async def _(event):
         await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="deepfry(?: |$)([1-9])?",
     command=("deepfry", plugin_category),
     info={

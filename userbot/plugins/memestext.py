@@ -1,14 +1,14 @@
 import random
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
-from . import catmemes
+from . import dogmemes
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="congo$",
     command=("congo", plugin_category),
     info={
@@ -18,11 +18,11 @@ plugin_category = "fun"
 )
 async def _(e):
     "Congratulate the people."
-    txt = random.choice(catmemes.CONGOREACTS)
+    txt = random.choice(dogmemes.CONGOREACTS)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="shg$",
     command=("shg", plugin_category),
     info={
@@ -32,11 +32,11 @@ async def _(e):
 )
 async def shrugger(e):
     "Shrug at it !!"
-    txt = random.choice(catmemes.SHGS)
+    txt = random.choice(dogmemes.SHGS)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="runs$",
     command=("runs", plugin_category),
     info={
@@ -46,11 +46,11 @@ async def shrugger(e):
 )
 async def runner_lol(e):
     "Run, run, RUNNN!"
-    txt = random.choice(catmemes.RUNSREACTS)
+    txt = random.choice(dogmemes.RUNSREACTS)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="noob$",
     command=("noob", plugin_category),
     info={
@@ -60,11 +60,11 @@ async def runner_lol(e):
 )
 async def metoo(e):
     "Whadya want to know? Are you a NOOB?"
-    txt = random.choice(catmemes.NOOBSTR)
+    txt = random.choice(dogmemes.NOOBSTR)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="insult$",
     command=("insult", plugin_category),
     info={
@@ -74,11 +74,11 @@ async def metoo(e):
 )
 async def insult(e):
     "insult someone."
-    txt = random.choice(catmemes.INSULT_STRINGS)
+    txt = random.choice(dogmemes.INSULT_STRINGS)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="love$",
     command=("love", plugin_category),
     info={
@@ -88,11 +88,11 @@ async def insult(e):
 )
 async def suru(chutiyappa):
     "Chutiyappa suru"
-    txt = random.choice(catmemes.LOVESTR)
+    txt = random.choice(dogmemes.LOVESTR)
     await edit_or_reply(chutiyappa, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dhoka$",
     command=("dhoka", plugin_category),
     info={
@@ -102,11 +102,11 @@ async def suru(chutiyappa):
 )
 async def katgya(chutiya):
     "Dhokha kha gya"
-    txt = random.choice(catmemes.DHOKA)
+    txt = random.choice(dogmemes.DHOKA)
     await edit_or_reply(chutiya, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hey$",
     command=("hey", plugin_category),
     info={
@@ -116,11 +116,11 @@ async def katgya(chutiya):
 )
 async def hoi(e):
     "start a conversation with people."
-    txt = random.choice(catmemes.HELLOSTR)
+    txt = random.choice(dogmemes.HELLOSTR)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pro$",
     command=("pro", plugin_category),
     info={
@@ -130,11 +130,11 @@ async def hoi(e):
 )
 async def proo(e):
     "If you think you're pro, try this."
-    txt = random.choice(catmemes.PRO_STRINGS)
+    txt = random.choice(dogmemes.PRO_STRINGS)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="react ?([\s\S]*)",
     command=("react", plugin_category),
     info={
@@ -145,7 +145,7 @@ async def proo(e):
             "wave",
             "wtf",
             "love",
-            "confused",
+            "teledoge",
             "dead",
             "sad",
             "dog",
@@ -157,30 +157,30 @@ async def _(e):
     "Make your userbot react."
     input_str = e.pattern_match.group(1)
     if input_str in "happy":
-        emoticons = catmemes.FACEREACTS[0]
+        emoticons = dogmemes.FACEREACTS[0]
     elif input_str in "think":
-        emoticons = catmemes.FACEREACTS[1]
+        emoticons = dogmemes.FACEREACTS[1]
     elif input_str in "wave":
-        emoticons = catmemes.FACEREACTS[2]
+        emoticons = dogmemes.FACEREACTS[2]
     elif input_str in "wtf":
-        emoticons = catmemes.FACEREACTS[3]
+        emoticons = dogmemes.FACEREACTS[3]
     elif input_str in "love":
-        emoticons = catmemes.FACEREACTS[4]
-    elif input_str in "confused":
-        emoticons = catmemes.FACEREACTS[5]
+        emoticons = dogmemes.FACEREACTS[4]
+    elif input_str in "teledoge":
+        emoticons = dogmemes.FACEREACTS[5]
     elif input_str in "dead":
-        emoticons = catmemes.FACEREACTS[6]
+        emoticons = dogmemes.FACEREACTS[6]
     elif input_str in "sad":
-        emoticons = catmemes.FACEREACTS[7]
+        emoticons = dogmemes.FACEREACTS[7]
     elif input_str in "dog":
-        emoticons = catmemes.FACEREACTS[8]
+        emoticons = dogmemes.FACEREACTS[8]
     else:
-        emoticons = catmemes.FACEREACTS[9]
+        emoticons = dogmemes.FACEREACTS[9]
     txt = random.choice(emoticons)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="10iq$",
     command=("10iq", plugin_category),
     info={
@@ -193,7 +193,7 @@ async def iqless(e):
     await edit_or_reply(e, "♿")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fp$",
     command=("fp", plugin_category),
     info={
@@ -206,7 +206,7 @@ async def facepalm(e):
     await edit_or_reply(e, "🤦‍♂")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bt$",
     command=("bt", plugin_category),
     info={
@@ -224,7 +224,7 @@ async def bluetext(e):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="session$",
     command=("session", plugin_category),
     info={

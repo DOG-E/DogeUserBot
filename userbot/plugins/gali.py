@@ -7,12 +7,12 @@ import asyncio
 import random
 
 from ..core.managers import edit_or_reply
-from . import catmemes, catub
+from . import dogmemes, doge
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="abuse$",
     command=("abuse", plugin_category),
     info={
@@ -22,11 +22,11 @@ plugin_category = "extra"
 )
 async def abusing(abused):
     "random abuse string"
-    reply_text = random.choice(catmemes.ABUSE_STRINGS)
+    reply_text = random.choice(dogmemes.ABUSE_STRINGS)
     await edit_or_reply(abused, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="abusehard$",
     command=("abusehard", plugin_category),
     info={
@@ -36,11 +36,11 @@ async def abusing(abused):
 )
 async def fuckedd(abusehard):
     "random gali string"
-    reply_text = random.choice(catmemes.ABUSEHARD_STRING)
+    reply_text = random.choice(dogmemes.ABUSEHARD_STRING)
     await edit_or_reply(abusehard, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rendi$",
     command=("rendi", plugin_category),
     info={
@@ -50,11 +50,11 @@ async def fuckedd(abusehard):
 )
 async def metoo(e):
     "random gali string"
-    txt = random.choice(catmemes.RENDISTR)
+    txt = random.choice(dogmemes.RENDISTR)
     await edit_or_reply(e, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fuck$",
     command=("fuck", plugin_category),
     info={
@@ -64,11 +64,11 @@ async def metoo(e):
 )
 async def chutiya(fuks):
     "random gali string"
-    reply_text = random.choice(catmemes.CHU_STRINGS)
+    reply_text = random.choice(dogmemes.CHU_STRINGS)
     await edit_or_reply(fuks, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="thanos$",
     command=("thanos", plugin_category),
     info={
@@ -78,11 +78,11 @@ async def chutiya(fuks):
 )
 async def thanos(thanos):
     "random gali string"
-    reply_text = random.choice(catmemes.THANOS_STRINGS)
+    reply_text = random.choice(dogmemes.THANOS_STRINGS)
     await edit_or_reply(thanos, reply_text)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gf$",
     command=("gf", plugin_category),
     info={
@@ -123,7 +123,7 @@ async def kakashi(event):
         await kakashi.edit(animation_chars[i % 21])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fk ([\s\S]*)",
     command=("fk", plugin_category),
     info={
@@ -155,7 +155,7 @@ async def kakashi(event):
         await kakashi.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="chod$",
     command=("chod", plugin_category),
     info={
@@ -186,7 +186,7 @@ async def kakashi(event):
         await kakashi.edit(animation_chars[i % 11])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rape$",
     command=("rape", plugin_category),
     info={
@@ -236,7 +236,7 @@ async def kakashi(event):
         await kakashi.edit(animation_chars[i % 30])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kis$",
     command=("kis", plugin_category),
     info={
@@ -246,16 +246,16 @@ async def kakashi(event):
 )
 async def _(event):
     "fun animation"
-    catevent = await edit_or_reply(event, "`kiss`")
+    dogevent = await edit_or_reply(event, "`kiss`")
     animation_interval = 0.2
     animation_ttl = range(100)
     animation_chars = ["🤵       👰", "🤵     👰", "🤵  👰", "🤵💋👰"]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await catevent.edit(animation_chars[i % 4])
+        await dogevent.edit(animation_chars[i % 4])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fuk$",
     command=("fuk", plugin_category),
     info={
@@ -265,16 +265,16 @@ async def _(event):
 )
 async def _(event):
     "fun animation"
-    catevent = await edit_or_reply(event, "`fuking....`")
+    dogevent = await edit_or_reply(event, "`fuking....`")
     animation_interval = 0.2
     animation_ttl = range(100)
     animation_chars = ["👉       ✊️", "👉     ✊️", "👉  ✊️", "👉✊️💦"]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await catevent.edit(animation_chars[i % 4])
+        await dogevent.edit(animation_chars[i % 4])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sex$",
     command=("sex", plugin_category),
     info={
@@ -284,16 +284,16 @@ async def _(event):
 )
 async def _(event):
     "fun animation"
-    catevent = await edit_or_reply(event, "`sex`")
+    dogevent = await edit_or_reply(event, "`sex`")
     animation_interval = 0.2
     animation_ttl = range(100)
     animation_chars = ["🤵       👰", "🤵     👰", "🤵  👰", "🤵👼👰"]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await catevent.edit(animation_chars[i % 4])
+        await dogevent.edit(animation_chars[i % 4])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="nikal$",
     command=("nikal", plugin_category),
     info={
@@ -319,7 +319,7 @@ async def kakashi(event):
         await kakashi.edit(animation_chars[i % 6])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gaali$",
     command=("gaali", plugin_category),
     info={
@@ -327,7 +327,7 @@ async def kakashi(event):
         "usage": "{tr}gaali",
     },
 )
-async def cat(event):
+async def dog(event):
     "random gali string"
     await edit_or_reply(
         event,
@@ -335,7 +335,7 @@ async def cat(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gali$",
     command=("gali", plugin_category),
     info={
@@ -343,7 +343,7 @@ async def cat(event):
         "usage": "{tr}gali",
     },
 )
-async def cat(event):
+async def dog(event):
     "random gali string"
     await edit_or_reply(
         event,
@@ -351,7 +351,7 @@ async def cat(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="egali$",
     command=("egali", plugin_category),
     info={
@@ -359,7 +359,7 @@ async def cat(event):
         "usage": "{tr}egali",
     },
 )
-async def cat(event):
+async def dog(event):
     "random gali string"
     await edit_or_reply(
         event,

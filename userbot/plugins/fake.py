@@ -5,7 +5,7 @@ from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import get_user_from_event
@@ -14,7 +14,7 @@ from . import ALIVE_NAME
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="scam(?:\s|$)([\s\S]*)",
     command=("scam", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def _(event):
         return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="prankpromote(?:\s|$)([\s\S]*)",
     command=("prankpromote", plugin_category),
     info={
@@ -95,8 +95,8 @@ async def _(event):
 async def _(event):
     "To promote a person without admin rights"
     new_rights = ChatAdminRights(post_messages=True)
-    catevent = await edit_or_reply(event, "`Promoting...`")
-    user, rank = await get_user_from_event(event, catevent)
+    dogevent = await edit_or_reply(event, "`Promoting...`")
+    user, rank = await get_user_from_event(event, dogevent)
     if not rank:
         rank = "Admin"
     if not user:
@@ -104,13 +104,13 @@ async def _(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await catevent.edit(NO_PERM)
+        return await dogevent.edit(NO_PERM)
     except Exception as e:
-        return await edit_delete(catevent, f"__{str(e)}__", time=10)
-    await catevent.edit("`Promoted Successfully! Now gib Party`")
+        return await edit_delete(dogevent, f"__{str(e)}__", time=10)
+    await dogevent.edit("`Promoted Successfully! Now gib Party`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="padmin$",
     command=("padmin", plugin_category),
     info={

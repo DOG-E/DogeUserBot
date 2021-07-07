@@ -1,6 +1,6 @@
 from telethon.utils import pack_bot_file_id
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..core.managers import edit_delete, edit_or_reply
@@ -10,7 +10,7 @@ plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={

@@ -1,9 +1,9 @@
 import random
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
-from . import catmemes
+from . import dogmemes
 
 plugin_category = "extra"
 
@@ -64,7 +64,7 @@ X = (
 # =========================================================================================
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="baby$",
     command=("baby", plugin_category),
     info={
@@ -77,7 +77,7 @@ async def baby(event):
     await edit_or_reply(event, S)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hbd(?:\s|$)([\s\S]*)",
     command=("hbd", plugin_category),
     info={
@@ -97,7 +97,7 @@ async def hbd(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="thanks$",
     command=("thanks", plugin_category),
     info={
@@ -110,7 +110,7 @@ async def gn(event):
     await edit_or_reply(event, X)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gm$",
     command=("gm", plugin_category),
     info={
@@ -120,11 +120,11 @@ async def gn(event):
 )
 async def morning(morning):
     "Good morning random strings."
-    txt = random.choice(catmemes.GDMORNING)
+    txt = random.choice(dogmemes.GDMORNING)
     await edit_or_reply(morning, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gnoon$",
     command=("gnoon", plugin_category),
     info={
@@ -134,11 +134,11 @@ async def morning(morning):
 )
 async def noon(noon):
     "Good afternoon random strings."
-    txt = random.choice(catmemes.GDNOON)
+    txt = random.choice(dogmemes.GDNOON)
     await edit_or_reply(noon, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gn$",
     command=("gn", plugin_category),
     info={
@@ -148,11 +148,11 @@ async def noon(noon):
 )
 async def night(night):
     "Good night random strings."
-    txt = random.choice(catmemes.GDNIGHT)
+    txt = random.choice(dogmemes.GDNIGHT)
     await edit_or_reply(night, txt)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gmg$",
     command=("gmg", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def gm(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gmg2$",
     command=("gmg2", plugin_category),
     info={
@@ -184,7 +184,7 @@ async def gm(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gmg3$",
     command=("gmg3", plugin_category),
     info={
@@ -197,7 +197,7 @@ async def gm(event):
     await edit_or_reply(event, W)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gnt$",
     command=("gnt", plugin_category),
     info={
@@ -213,7 +213,7 @@ async def gn(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gnt2$",
     command=("gnt2", plugin_category),
     info={
@@ -229,7 +229,7 @@ async def gn(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gnt3$",
     command=("gnt3", plugin_category),
     info={
@@ -245,7 +245,7 @@ async def gn(event):
 # @PhycoNinja13b 's Part begin from here
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hi(?:\s|$)([\s\S]*)",
     command=("hi", plugin_category),
     info={
@@ -259,16 +259,16 @@ async def gn(event):
 async def hi(event):
     "Hi text art."
     giveVar = event.text
-    cat = giveVar[4:5]
-    if not cat:
-        cat = "🌺"
+    dog = giveVar[4:5]
+    if not dog:
+        dog = "🌺"
     await edit_or_reply(
         event,
-        f"{cat}✨✨{cat}✨{cat}{cat}{cat}\n{cat}✨✨{cat}✨✨{cat}✨\n{cat}{cat}{cat}{cat}✨✨{cat}✨\n{cat}✨✨{cat}✨✨{cat}✨\n{cat}✨✨{cat}✨{cat}{cat}{cat}\n☁☁☁☁☁☁☁☁",
+        f"{dog}✨✨{dog}✨{dog}{dog}{dog}\n{dog}✨✨{dog}✨✨{dog}✨\n{dog}{dog}{dog}{dog}✨✨{dog}✨\n{dog}✨✨{dog}✨✨{dog}✨\n{dog}✨✨{dog}✨{dog}{dog}{dog}\n☁☁☁☁☁☁☁☁",
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cheer$",
     command=("cheer", plugin_category),
     info={
@@ -284,7 +284,7 @@ async def cheer(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="getwell$",
     command=("getwell", plugin_category),
     info={
@@ -299,7 +299,7 @@ async def getwell(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="luck$",
     command=("luck", plugin_category),
     info={
@@ -314,7 +314,7 @@ async def luck(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sprinkle$",
     command=("sprinkle", plugin_category),
     info={

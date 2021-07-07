@@ -1,6 +1,6 @@
 import random
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from . import fonts
@@ -8,7 +8,7 @@ from . import fonts
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fmusical(?:\s|$)([\s\S]*)",
     command=("fmusical", plugin_category),
     info={
@@ -17,7 +17,7 @@ plugin_category = "extra"
             "{tr}fmusical <text>",
             "{tr}fmusical reply this command to text message",
         ],
-        "examples": "{tr}fmusical catuserbot",
+        "examples": "{tr}fmusical DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -39,7 +39,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ancient(?:\s|$)([\s\S]*)",
     command=("ancient", plugin_category),
     info={
@@ -48,7 +48,7 @@ async def stylish_generator(event):
             "{tr}ancient <text>",
             "{tr}ancient reply this command to text message",
         ],
-        "examples": "{tr}ancient catuserbot",
+        "examples": "{tr}ancient DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -70,13 +70,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vapor(?:\s|$)([\s\S]*)",
     command=("vapor", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}vapor <text>", "{tr}vapor reply this command to text message"],
-        "examples": "{tr}vapor catuserbot",
+        "examples": "{tr}vapor DogeUserBot",
     },
 )
 async def vapor(event):
@@ -103,7 +103,7 @@ async def vapor(event):
     await edit_or_reply(event, "".join(reply_text))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="smallcaps(?:\s|$)([\s\S]*)",
     command=("smallcaps", plugin_category),
     info={
@@ -112,7 +112,7 @@ async def vapor(event):
             "{tr}smallcaps <text>",
             "{tr}smallcaps reply this command to text message",
         ],
-        "examples": "{tr}smallcaps catuserbot",
+        "examples": "{tr}smallcaps DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -134,7 +134,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="blackbf(?:\s|$)([\s\S]*)",
     command=("blackbf", plugin_category),
     info={
@@ -143,7 +143,7 @@ async def stylish_generator(event):
             "{tr}blackbf <text>",
             "{tr}blackbf reply this command to text message",
         ],
-        "examples": "{tr}blackbf catuserbot",
+        "examples": "{tr}blackbf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -165,7 +165,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bubbles(?:\s|$)([\s\S]*)",
     command=("bubbles", plugin_category),
     info={
@@ -174,7 +174,7 @@ async def stylish_generator(event):
             "{tr}bubbles <text>",
             "{tr}bubbles reply this command to text message",
         ],
-        "examples": "{tr}bubbles catuserbot",
+        "examples": "{tr}bubbles DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -196,13 +196,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tanf(?:\s|$)([\s\S]*)",
     command=("tanf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}tanf <text>", "{tr}tanf reply this command to text message"],
-        "examples": "{tr}tanf catuserbot",
+        "examples": "{tr}tanf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -224,13 +224,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="boxf(?:\s|$)([\s\S]*)",
     command=("boxf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}boxf <text>", "{tr}boxf reply this command to text message"],
-        "examples": "{tr}boxf catuserbot",
+        "examples": "{tr}boxf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -252,7 +252,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="smothtext(?:\s|$)([\s\S]*)",
     command=("smothtext", plugin_category),
     info={
@@ -261,7 +261,7 @@ async def stylish_generator(event):
             "{tr}smothtext <text>",
             "{tr}smothtext reply this command to text message",
         ],
-        "examples": "{tr}smothtext catuserbot",
+        "examples": "{tr}smothtext DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -283,13 +283,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="egyptf(?:\s|$)([\s\S]*)",
     command=("egyptf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}egyptf <text>", "{tr}egyptf reply this command to text message"],
-        "examples": "{tr}egyptf catuserbot",
+        "examples": "{tr}egyptf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -311,13 +311,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="maref(?:\s|$)([\s\S]*)",
     command=("maref", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}maref <text>", "{tr}maref reply this command to text message"],
-        "examples": "{tr}maref catuserbot",
+        "examples": "{tr}maref DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -339,13 +339,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="handcf(?:\s|$)([\s\S]*)",
     command=("handcf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}handcf <text>", "{tr}handcf reply this command to text message"],
-        "examples": "{tr}handcf catuserbot",
+        "examples": "{tr}handcf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -367,7 +367,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="doublef(?:\s|$)([\s\S]*)",
     command=("doublef", plugin_category),
     info={
@@ -376,7 +376,7 @@ async def stylish_generator(event):
             "{tr}doublef <text>",
             "{tr}doublef reply this command to text message",
         ],
-        "examples": "{tr}doublef catuserbot",
+        "examples": "{tr}doublef DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -398,13 +398,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="mock(?:\s|$)([\s\S]*)",
     command=("mock", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
-        "examples": "{tr}mock catuserbot",
+        "examples": "{tr}mock DogeUserBot",
     },
 )
 async def spongemocktext(mock):
@@ -430,13 +430,13 @@ async def spongemocktext(mock):
     await edit_or_reply(mock, "".join(reply_text))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ghostf(?:\s|$)([\s\S]*)",
     command=("ghostf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}ghostf <text>", "{tr}ghostf reply this command to text message"],
-        "examples": "{tr}ghostf catuserbot",
+        "examples": "{tr}ghostf DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -458,13 +458,13 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="handsf(?:\s|$)([\s\S]*)",
     command=("handsf", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
         "usage": ["{tr}handsf <text>", "{tr}handsf reply this command to text message"],
-        "examples": "{tr}handsf catuserbot",
+        "examples": "{tr}handsf DogeUserBot",
     },
 )
 async def stylish_generator(event):

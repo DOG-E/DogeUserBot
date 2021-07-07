@@ -1,7 +1,7 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 import re
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..sql_helper.filter_sql import (
@@ -15,7 +15,7 @@ from . import BOTLOG, BOTLOG_CHATID
 plugin_category = "utils"
 
 
-@catub.cat_cmd(incoming=True)
+@doge.bot_cmd(incoming=True)
 async def filter_incoming_handler(handler):  # sourcery no-metrics
     if handler.sender_id == handler.client.uid:
         return
@@ -85,7 +85,7 @@ async def filter_incoming_handler(handler):  # sourcery no-metrics
                 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="filter ([\s\S]*)",
     command=("filter", plugin_category),
     info={
@@ -150,7 +150,7 @@ async def add_new_filter(new_handler):
     await edit_or_reply(new_handler, f"Error while setting filter for {keyword}")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="filters$",
     command=("filters", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def on_snip_list(event):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
@@ -192,7 +192,7 @@ async def remove_a_filter(r_handler):
         await r_handler.edit("Filter `{} `was deleted successfully".format(filt))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmfilters$",
     command=("rmfilters", plugin_category),
     info={

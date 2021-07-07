@@ -4,8 +4,8 @@ from sqlalchemy_json import MutableJson, NestedMutableJson
 from . import BASE, SESSION
 
 
-class Cat_GlobalCollection_Json(BASE):
-    __tablename__ = "cat_globalcollectionjson"
+class Dog_GlobalCollection_Json(BASE):
+    __tablename__ = "dog_globalcollectionjson"
     keywoard = Column(UnicodeText, primary_key=True)
     json = Column(MutableJson)
     njson = Column(NestedMutableJson)
@@ -16,12 +16,12 @@ class Cat_GlobalCollection_Json(BASE):
         self.njson = njson
 
 
-Cat_GlobalCollection_Json.__table__.create(checkfirst=True)
+Dog_GlobalCollection_Json.__table__.create(checkfirst=True)
 
 
 def get_collection(keywoard):
     try:
-        return SESSION.query(Cat_GlobalCollection_Json).get(keywoard)
+        return SESSION.query(Dog_GlobalCollection_Json).get(keywoard)
     finally:
         SESSION.close()
 
@@ -29,7 +29,7 @@ def get_collection(keywoard):
 def add_collection(keywoard, json, njson):
     to_check = get_collection(keywoard)
     if not to_check:
-        keyword_items = Cat_GlobalCollection_Json(keywoard, json, njson)
+        keyword_items = Dog_GlobalCollection_Json(keywoard, json, njson)
         SESSION.add(keyword_items)
         SESSION.commit()
         return True
@@ -40,7 +40,7 @@ def del_collection(keywoard):
     to_check = get_collection(keywoard)
     if not to_check:
         return False
-    keyword_items = SESSION.query(Cat_GlobalCollection_Json).get(keywoard)
+    keyword_items = SESSION.query(Dog_GlobalCollection_Json).get(keywoard)
     SESSION.delete(keyword_items)
     SESSION.commit()
     return True
@@ -48,6 +48,6 @@ def del_collection(keywoard):
 
 def get_collections():
     try:
-        return SESSION.query(Cat_GlobalCollection_Json).all()
+        return SESSION.query(Dog_GlobalCollection_Json).all()
     finally:
         SESSION.close()

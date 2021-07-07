@@ -1,6 +1,6 @@
 from telethon.tl import functions
 
-from .. import catub
+from .. import doge
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..utils.tools import create_supergroup
@@ -8,7 +8,7 @@ from ..utils.tools import create_supergroup
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="create (b|g|c) ([\s\S]*)",
     command=("create", plugin_category),
     info={
@@ -20,7 +20,7 @@ plugin_category = "tools"
             "c": "to create a private channel",
         },
         "usage": "{tr}create (b|g|c) <name of group/channel>",
-        "examples": "{tr}create b catuserbot",
+        "examples": "{tr}create b DogeUserBot",
     },
 )
 async def _(event):
@@ -28,9 +28,9 @@ async def _(event):
     type_of_group = event.pattern_match.group(1)
     group_name = event.pattern_match.group(2)
     if type_of_group == "c":
-        descript = "This is a Test Channel created using catuserbot"
+        descript = "This is a Test Channel created using DogeUserBot"
     else:
-        descript = "This is a Test Group created using catuserbot"
+        descript = "This is a Test Group created using DogeUserBot"
     if type_of_group == "g":
         try:
             result = await event.client(

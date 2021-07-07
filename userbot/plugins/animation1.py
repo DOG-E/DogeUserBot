@@ -1,12 +1,12 @@
 import asyncio
 from collections import deque
 
-from . import catub, edit_or_reply, mention
+from . import doge, edit_or_reply, mention
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="stupid$",
     command=("stupid", plugin_category),
     info={
@@ -40,7 +40,7 @@ async def _(event):
         await event.edit(animation_chars[i % 14])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="bombs$",
     command=("bombs", plugin_category),
     info={
@@ -73,7 +73,7 @@ async def _(event):
     await asyncio.sleep(2)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="call$",
     command=("call", plugin_category),
     info={
@@ -97,7 +97,7 @@ async def _(event):
         "`Me: Hello Sir, Please Ban This Telegram Account.`",
         "`Pavel Durov : May I Know Who is This?`",
         f"`Me: Yo Brah, I Am` {mention} ",
-        "`Pavel Durov : OMG!!! Long time no see, Wassup cat...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
+        "`Pavel Durov : OMG!!! Long time no see, Wassup dog...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
         "`Me: Thanks, See You Later Brah.`",
         "`Pavel Durov : Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.`",
         "`Me: Is There Any Issue/Emergency???`",
@@ -111,7 +111,7 @@ async def _(event):
         await event.edit(animation_chars[i % 18])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kill$",
     command=("kill", plugin_category),
     info={
@@ -143,7 +143,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kell$",
     command=("kell", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="wtf$",
     command=("wtf", plugin_category),
     info={
@@ -200,7 +200,7 @@ async def _(event):
         await event.edit(animation_chars[i % 5], link_preview=True)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ding$",
     command=("ding", plugin_category),
     info={
@@ -230,7 +230,7 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hypno$",
     command=("hypno", plugin_category),
     info={
@@ -265,7 +265,7 @@ async def _(event):
         await event.edit(animation_chars[i % 15])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="candy$",
     command=("candy", plugin_category),
     info={
@@ -283,7 +283,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gangasta$",
     command=("gangasta", plugin_category),
     info={
@@ -311,7 +311,7 @@ async def _(event):
     await event.edit("EVERyBOdy iZ GangSTur UNtIL I ArRivE 🔥🔥🔥")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="charging$",
     command=("charging", plugin_category),
     info={

@@ -2,7 +2,7 @@ import asyncio
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import get_user_from_event, sanga_seperator
@@ -11,7 +11,7 @@ from ..helpers.utils import _format
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sg(u)?(?:\s|$)([\s\S]*)",
     command=("sg", plugin_category),
     info={
@@ -40,12 +40,12 @@ async def _(event):  # sourcery no-metrics
         return
     uid = user.id
     chat = "@SangMataInfo_bot"
-    catevent = await edit_or_reply(event, "`Processing...`")
+    dogevent = await edit_or_reply(event, "`Processing...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"/search_id {uid}")
         except YouBlockedUserError:
-            await edit_delete(catevent, "`unblock @Sangmatainfo_bot and then try`")
+            await edit_delete(dogevent, "`unblock @Sangmatainfo_bot and then try`")
         responses = []
         while True:
             try:
@@ -55,16 +55,16 @@ async def _(event):  # sourcery no-metrics
             responses.append(response.text)
         await event.client.send_read_acknowledge(conv.chat_id)
     if not responses:
-        await edit_delete(catevent, "`bot can't fetch results`")
+        await edit_delete(dogevent, "`bot can't fetch results`")
     if "No records found" in responses:
-        await edit_delete(catevent, "`The user doesn't have any record`")
+        await edit_delete(dogevent, "`The user doesn't have any record`")
     names, usernames = await sanga_seperator(responses)
     cmd = event.pattern_match.group(1)
-    sandy = None
+    teledoge = None
     check = usernames if cmd == "u" else names
     for i in check:
-        if sandy:
+        if teledoge:
             await event.reply(i, parse_mode=_format.parse_pre)
         else:
-            sandy = True
-            await catevent.edit(i, parse_mode=_format.parse_pre)
+            teledoge = True
+            await dogevent.edit(i, parse_mode=_format.parse_pre)

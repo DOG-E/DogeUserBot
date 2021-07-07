@@ -11,7 +11,7 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
-    catub,
+    doge,
     edit_delete,
     get_user_from_event,
 )
@@ -25,7 +25,7 @@ DEFAULTUSERBIO = (
 )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clone(?:\s|$)([\s\S]*)",
     command=("clone", plugin_category),
     info={
@@ -62,11 +62,11 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#CLONED\nSuccesfully cloned [{first_name}](tg://user?id={user_id })",
+            f"#CLONED\nSuccessfully cloned [{first_name}](tg://user?id={user_id })",
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="revert$",
     command=("revert", plugin_category),
     info={
@@ -91,5 +91,5 @@ async def _(event):
     await edit_delete(event, "successfully reverted to your account back")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, f"#REVERT\nSuccesfully reverted back to your profile"
+            BOTLOG_CHATID, f"#REVERT\nSuccessfully reverted back to your profile"
         )

@@ -2,13 +2,13 @@
 # ported to telethon by @mrconfused (@sandy1709)
 import os
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers import humanbytes, post_to_telegraph
-from ..helpers.utils import _catutils, _format
+from ..helpers.utils import _dogutils, _format
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -52,7 +52,7 @@ async def file_data(reply):
     return hmm
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="minfo$",
     command=("minfo", plugin_category),
     info={
@@ -71,13 +71,13 @@ async def mediainfo(event):
     if not reply.media:
         await edit_or_reply(event, "reply to media to get info")
         return
-    catevent = await edit_or_reply(event, "`Gathering ...`")
+    dogevent = await edit_or_reply(event, "`Gathering ...`")
     X_MEDIA = reply.file.mime_type
     if (not X_MEDIA) or (X_MEDIA.startswith(("text"))):
-        return await catevent.edit("Reply To a supported Media Format")
+        return await dogevent.edit("Reply To a supported Media Format")
     hmm = await file_data(reply)
     file_path = await reply.download_media(Config.TEMP_DIR)
-    out, err, ret, pid = await _catutils.runcmd(f"mediainfo '{file_path}'")
+    out, err, ret, pid = await _dogutils.runcmd(f"mediainfo '{file_path}'")
     if not out:
         out = "Not Supported"
     body_text = f"""
@@ -90,7 +90,7 @@ async def mediainfo(event):
 {out} 
 </code>"""
     link = await post_to_telegraph(f"{X_MEDIA}", body_text)
-    await catevent.edit(
+    await dogevent.edit(
         f"ℹ️  <b>MEDIA INFO:  <a href ='{link}' > {X_MEDIA}</a></b>",
         parse_mode="HTML",
         link_preview=True,

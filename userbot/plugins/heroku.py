@@ -13,7 +13,7 @@ import heroku3
 import requests
 import urllib3
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -29,7 +29,7 @@ HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(set|get|del) var ([\s\S]*)",
     command=("var", plugin_category),
     info={
@@ -62,15 +62,15 @@ async def variable(var):  # sourcery no-metrics
     exe = var.pattern_match.group(1)
     heroku_var = app.config()
     if exe == "get":
-        cat = await edit_or_reply(var, "`Getting information...`")
+        dog = await edit_or_reply(var, "`Getting information...`")
         await asyncio.sleep(1.0)
         try:
             variable = var.pattern_match.group(2).split()[0]
             if variable in heroku_var:
-                return await cat.edit(
+                return await dog.edit(
                     "**ConfigVars**:" f"\n\n`{variable}` = `{heroku_var[variable]}`\n"
                 )
-            await cat.edit(
+            await dog.edit(
                 "**ConfigVars**:" f"\n\n__Error:\n-> __`{variable}`__ don't exists__"
             )
         except IndexError:
@@ -80,7 +80,7 @@ async def variable(var):  # sourcery no-metrics
             with open("configs.json", "r") as fp:
                 result = fp.read()
                 await edit_or_reply(
-                    cat,
+                    dog,
                     "`[HEROKU]` ConfigVars:\n\n"
                     "================================"
                     f"\n```{result}```\n"
@@ -89,36 +89,36 @@ async def variable(var):  # sourcery no-metrics
             os.remove("configs.json")
     elif exe == "set":
         variable = "".join(var.text.split(maxsplit=2)[2:])
-        cat = await edit_or_reply(var, "`Setting information...`")
+        dog = await edit_or_reply(var, "`Setting information...`")
         if not variable:
-            return await cat.edit("`.set var <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         value = "".join(variable.split(maxsplit=1)[1:])
         variable = "".join(variable.split(maxsplit=1)[0])
         if not value:
-            return await cat.edit("`.set var <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         await asyncio.sleep(1.5)
         if variable in heroku_var:
-            await cat.edit(f"`{variable}` **successfully changed to  ->  **`{value}`")
+            await dog.edit(f"`{variable}` **successfully changed to  ->  **`{value}`")
         else:
-            await cat.edit(
+            await dog.edit(
                 f"`{variable}`**  successfully added with value`  ->  **{value}`"
             )
         heroku_var[variable] = value
     elif exe == "del":
-        cat = await edit_or_reply(var, "`Getting information to deleting variable...`")
+        dog = await edit_or_reply(var, "`Getting information to deleting variable...`")
         try:
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
-            return await cat.edit("`Please specify ConfigVars you want to delete`")
+            return await dog.edit("`Please specify ConfigVars you want to delete`")
         await asyncio.sleep(1.5)
         if variable not in heroku_var:
-            return await cat.edit(f"`{variable}`**  does not exist**")
+            return await dog.edit(f"`{variable}`**  does not exist**")
 
-        await cat.edit(f"`{variable}`  **successfully deleted**")
+        await dog.edit(f"`{variable}`  **successfully deleted**")
         del heroku_var[variable]
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="usage$",
     command=("usage", plugin_category),
     info={
@@ -188,7 +188,7 @@ async def dyno_usage(dyno):
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(herokulogs|logs)$",
     command=("logs", plugin_category),
     info={

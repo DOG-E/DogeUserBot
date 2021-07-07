@@ -6,38 +6,38 @@ from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
-from ..helpers.utils import _catutils
+from ..helpers.utils import _dogutils
 from ..sql_helper.globals import addgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
 
 plugin_category = "extra"
 
 
-async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=False):
+async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=False):
     # sourcery no-metrics
-    counter = int(cat[0])
-    if len(cat) == 2:
-        spam_message = str(cat[1])
+    counter = int(dog[0])
+    if len(dog) == 2:
+        spam_message = str(dog[1])
         for _ in range(counter):
             if gvarstatus("spamwork") is None:
                 return
             if event.reply_to_msg_id:
-                await sandy.reply(spam_message)
+                await teledoge.reply(spam_message)
             else:
                 await event.client.send_message(event.chat_id, spam_message)
             await asyncio.sleep(sleeptimet)
-    elif event.reply_to_msg_id and sandy.media:
+    elif event.reply_to_msg_id and teledoge.media:
         for _ in range(counter):
             if gvarstatus("spamwork") is None:
                 return
-            sandy = await event.client.send_file(
-                event.chat_id, sandy, caption=sandy.text
+            teledoge = await event.client.send_file(
+                event.chat_id, teledoge, caption=teledoge.text
             )
-            await _catutils.unsavegif(event, sandy)
+            await _dogutils.unsavegif(event, teledoge)
             await asyncio.sleep(sleeptimem)
         if BOTLOG:
             if DelaySpam is not True:
@@ -66,11 +66,11 @@ async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=Fal
                     + f"Delay spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) with {counter} times with below message with delay {sleeptimet} seconds",
                 )
 
-            sandy = await event.client.send_file(BOTLOG_CHATID, sandy)
-            await _catutils.unsavegif(event, sandy)
+            teledoge = await event.client.send_file(BOTLOG_CHATID, teledoge)
+            await _dogutils.unsavegif(event, teledoge)
         return
-    elif event.reply_to_msg_id and sandy.text:
-        spam_message = sandy.text
+    elif event.reply_to_msg_id and teledoge.text:
+        spam_message = teledoge.text
         for _ in range(counter):
             if gvarstatus("spamwork") is None:
                 return
@@ -111,7 +111,7 @@ async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=Fal
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spam ([\s\S]*)",
     command=("spam", plugin_category),
     info={
@@ -123,10 +123,10 @@ async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=Fal
 )
 async def spammer(event):
     "Floods the text in the chat !!"
-    sandy = await event.get_reply_message()
-    cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
+    teledoge = await event.get_reply_message()
+    dog = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
     try:
-        counter = int(cat[0])
+        counter = int(dog[0])
     except Exception:
         return await edit_delete(
             event, "__Use proper syntax to spam. Foe syntax refer help menu.__"
@@ -139,10 +139,10 @@ async def spammer(event):
         sleeptimem = 0.3
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, sandy, cat, sleeptimem, sleeptimet)
+    await spam_function(event, teledoge, dog, sleeptimem, sleeptimet)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="spspam$",
     command=("spspam", plugin_category),
     info={
@@ -161,7 +161,7 @@ async def stickerpack_spam(event):
     hmm = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     try:
         stickerset_attr = reply.document.attributes[1]
-        catevent = await edit_or_reply(
+        dogevent = await edit_or_reply(
             event, "`Fetching details of the sticker pack, please wait..`"
         )
     except BaseException:
@@ -178,7 +178,7 @@ async def stickerpack_spam(event):
         )
     except Exception:
         return await edit_delete(
-            catevent,
+            dogevent,
             "`I guess this sticker is not part of any pack so i cant kang this sticker pack try kang for this sticker`",
         )
     try:
@@ -215,14 +215,14 @@ async def stickerpack_spam(event):
         await event.client.send_file(BOTLOG_CHATID, reqd_sticker_set.documents[0])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cspam ([\s\S]*)",
     command=("cspam", plugin_category),
     info={
         "header": "Spam the text letter by letter",
         "description": "Spam the chat with every letter in given text as new message.",
         "usage": "{tr}cspam <text>",
-        "examples": "{tr}cspam Catuserbot",
+        "examples": "{tr}cspam DogeUserBot",
     },
 )
 async def tmeme(event):
@@ -250,14 +250,14 @@ async def tmeme(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="wspam ([\s\S]*)",
     command=("wspam", plugin_category),
     info={
         "header": "Spam the text word by word.",
         "description": "Spams the chat with every word in given text asnew message.",
         "usage": "{tr}wspam <text>",
-        "examples": "{tr}wspam I am using catuserbot",
+        "examples": "{tr}wspam I am using DogeUserBot",
     },
 )
 async def tmeme(event):
@@ -285,7 +285,7 @@ async def tmeme(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(delayspam|dspam) ([\s\S]*)",
     command=("delayspam", plugin_category),
     info={
@@ -308,7 +308,7 @@ async def spammer(event):
         return await edit_delete(
             event, "__Use proper syntax to spam. Foe syntax refer help menu.__"
         )
-    cat = input_str[1:]
+    dog = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, reply, cat, sleeptimem, sleeptimet, DelaySpam=True)
+    await spam_function(event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True)

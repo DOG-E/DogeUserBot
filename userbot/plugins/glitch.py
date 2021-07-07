@@ -8,15 +8,15 @@ import os
 from glitch_this import ImageGlitcher
 from PIL import Image
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete
-from ..helpers.utils import _cattools, _catutils, reply_id
+from ..helpers.utils import _dogtools, _dogutils, reply_id
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="glitch(s)?(?: |$)([1-8])?",
     command=("glitch", plugin_category),
     info={
@@ -33,15 +33,15 @@ plugin_category = "fun"
 async def glitch(event):
     "Glitches the given Image."
     cmd = event.pattern_match.group(1)
-    catinput = event.pattern_match.group(2)
+    doginput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    catid = await reply_id(event)
+    dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    catinput = int(catinput) if catinput else 2
-    glitch_file = await _cattools.media_to_pic(event, reply)
+    doginput = int(doginput) if doginput else 2
+    glitch_file = await _dogtools.media_to_pic(event, reply)
     if glitch_file[1] is None:
         return await edit_delete(
             glitch_file[0], "__Unable to extract image from the replied message.__"
@@ -50,12 +50,12 @@ async def glitch(event):
     img = Image.open(glitch_file[1])
     if cmd:
         glitched = os.path.join("./temp", "glitched.webp")
-        glitch_img = glitcher.glitch_image(img, catinput, color_offset=True)
+        glitch_img = glitcher.glitch_image(img, doginput, color_offset=True)
         glitch_img.save(glitched)
-        await event.client.send_file(event.chat_id, glitched, reply_to=catid)
+        await event.client.send_file(event.chat_id, glitched, reply_to=dogid)
     else:
         glitched = os.path.join("./temp", "glitched.gif")
-        glitch_img = glitcher.glitch_image(img, catinput, color_offset=True, gif=True)
+        glitch_img = glitcher.glitch_image(img, doginput, color_offset=True, gif=True)
         DURATION = 200
         LOOP = 0
         glitch_img[0].save(
@@ -66,8 +66,8 @@ async def glitch(event):
             duration=DURATION,
             loop=LOOP,
         )
-        sandy = await event.client.send_file(event.chat_id, glitched, reply_to=catid)
-        await _catutils.unsavegif(event, sandy)
+        teledoge = await event.client.send_file(event.chat_id, glitched, reply_to=dogid)
+        await _dogutils.unsavegif(event, teledoge)
     await glitch_file[0].delete()
     for files in (glitch_file[1], glitched):
         if files and os.path.exists(files):

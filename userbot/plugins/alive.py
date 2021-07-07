@@ -14,15 +14,15 @@ from telethon.events import CallbackQuery
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
+from ..helpers.functions import dogalive, check_data_base_heal_th, get_readable_time
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
-from . import StartTime, catub, catversion, mention
+from . import StartTime, doge, dogeversion, mention
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="alive$",
     command=("alive", plugin_category),
     info={
@@ -44,22 +44,22 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "✧✧"
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "✮ MY BOT IS RUNNING SUCCESSFULLY ✮"
-    cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
-    caption = cat_caption.format(
+    doge_caption = gvarstatus("ALIVE_TEMPLATE") or temp
+    caption = doge_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
         EMOJI=EMOJI,
         mention=mention,
         uptime=uptime,
         Televar=version.__version__,
-        catver=catversion,
+        dogever=dogeversion,
         pyver=python_version(),
         dbhealth=check_sgnirts,
         ping=ms,
     )
-    CAT_IMG = gvarstatus("ALIVE_PIC")
-    if CAT_IMG:
-        CAT = [x for x in CAT_IMG.split()]
-        PIC = random.choice(CAT)
+    DOG_IMG = gvarstatus("ALIVE_PIC")
+    if DOG_IMG:
+        DOG = [x for x in DOG_IMG.split()]
+        PIC = random.choice(DOG)
         try:
             await event.client.send_file(
                 event.chat_id, PIC, caption=caption, reply_to=reply_to_id
@@ -78,12 +78,12 @@ temp = "**{ALIVE_TEXT}**\n\n\
 **{EMOJI} Master : {mention}**\n\
 **{EMOJI} Uptime :** `{uptime}`\n\
 **{EMOJI} Telethon version :** `{Televar}`\n\
-**{EMOJI} Catuserbot Version :** `{catver}`\n\
+**{EMOJI} DogeUserBot Version :** `{dogever}`\n\
 **{EMOJI} Python Version :** `{pyver}`\n\
 **{EMOJI} Database :** `{dbhealth}`\n"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ialive$",
     command=("ialive", plugin_category),
     info={
@@ -98,17 +98,17 @@ async def amireallyalive(event):
     "A kind of showing bot details by your inline bot"
     reply_to_id = await reply_id(event)
     EMOJI = gvarstatus("ALIVE_EMOJI") or "✧✧"
-    cat_caption = f"**Catuserbot is Up and Running**\n"
-    cat_caption += f"**{EMOJI} Telethon version :** `{version.__version__}\n`"
-    cat_caption += f"**{EMOJI} Catuserbot Version :** `{catversion}`\n"
-    cat_caption += f"**{EMOJI} Python Version :** `{python_version()}\n`"
-    cat_caption += f"**{EMOJI} Master:** {mention}\n"
-    results = await event.client.inline_query(Config.TG_BOT_USERNAME, cat_caption)
+    doge_caption = f"**DogeUserBot is Up and Running**\n"
+    doge_caption += f"**{EMOJI} Telethon version :** `{version.__version__}\n`"
+    doge_caption += f"**{EMOJI} DogeUserBot Version :** `{dogeversion}`\n"
+    doge_caption += f"**{EMOJI} Python Version :** `{python_version()}\n`"
+    doge_caption += f"**{EMOJI} Master:** {mention}\n"
+    results = await event.client.inline_query(Config.TG_BOT_USERNAME, doge_caption)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
+@doge.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
 async def on_plug_in_callback_query_handler(event):
-    statstext = await catalive(StartTime)
+    statstext = await dogalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)

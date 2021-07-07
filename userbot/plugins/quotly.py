@@ -16,11 +16,11 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.utils import get_display_name
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import convert_tosticker, media_type, process
-from ..helpers.utils import _cattools, reply_id
+from ..helpers.utils import _dogtools, reply_id
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
@@ -31,7 +31,7 @@ def get_warp_length(width):
     return int((20.0 / 1024.0) * (width + 0.0))
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
     info={
@@ -41,7 +41,7 @@ def get_warp_length(width):
             "-s": "To output file as sticker",
         },
         "usage": "{tr}qpic <flag> <input/reply to text msg>",
-        "examples": ["{tr}qpic CatUserbot.", "{tr}qpic -b CatUserbot."],
+        "examples": ["{tr}qpic DogeUserBot.", "{tr}qpic -b DogeUserBot."],
     },
 )
 async def q_pic(event):  # sourcery no-metrics
@@ -62,7 +62,7 @@ async def q_pic(event):  # sourcery no-metrics
         return await edit_delete(
             event, "__Provide input along with cmd or reply to text message.__"
         )
-    catevent = await edit_or_reply(event, "__Making Quote pic....__")
+    dogevent = await edit_or_reply(event, "__Making Quote pic....__")
     mediatype = media_type(reply)
     if (
         (not reply)
@@ -76,7 +76,7 @@ async def q_pic(event):  # sourcery no-metrics
         user = reply.sender_id if reply else event.client.uid
         pfp = await event.client.download_profile_photo(user)
     else:
-        imag = await _cattools.media_to_pic(event, reply, noedits=True)
+        imag = await _dogtools.media_to_pic(event, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
                 imag[0], "__Unable to extract image from the replied message.__"
@@ -126,20 +126,20 @@ async def q_pic(event):  # sourcery no-metrics
         )
     output = io.BytesIO()
     if sticker:
-        output.name = "CatUserbot.Webp"
+        output.name = "DogeUserBot.Webp"
         img.save(output, "webp")
     else:
-        output.name = "CatUserbot.png"
+        output.name = "DogeUserBot.png"
         img.save(output, "PNG")
     output.seek(0)
     await event.client.send_file(event.chat_id, output, reply_to=reply_to)
-    await catevent.delete()
+    await dogevent.delete()
     for i in [pfp]:
         if os.path.lexists(i):
             os.remove(i)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="q(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
     info={
@@ -147,35 +147,35 @@ async def q_pic(event):  # sourcery no-metrics
         "usage": "{tr}q",
     },
 )
-async def stickerchat(catquotes):
+async def stickerchat(dogquotes):
     "Makes your message as sticker quote"
-    reply = await catquotes.get_reply_message()
+    reply = await dogquotes.get_reply_message()
     if not reply:
         return await edit_or_reply(
-            catquotes, "`I cant quote the message . reply to a message`"
+            dogquotes, "`I cant quote the message . reply to a message`"
         )
     fetchmsg = reply.message
     repliedreply = None
     if reply.media and reply.media.document.mime_type in ("mp4"):
-        return await edit_or_reply(catquotes, "`this format is not supported now`")
-    catevent = await edit_or_reply(catquotes, "`Making quote...`")
+        return await edit_or_reply(dogquotes, "`this format is not supported now`")
+    dogevent = await edit_or_reply(dogquotes, "`Making quote...`")
     user = (
-        await catquotes.client.get_entity(reply.forward.sender)
+        await dogquotes.client.get_entity(reply.forward.sender)
         if reply.fwd_from
         else reply.sender
     )
-    res, catmsg = await process(fetchmsg, user, catquotes.client, reply, repliedreply)
+    res, dogmsg = await process(fetchmsg, user, dogquotes.client, reply, repliedreply)
     if not res:
         return
     outfi = os.path.join("./temp", "sticker.png")
-    catmsg.save(outfi)
+    dogmsg.save(outfi)
     endfi = convert_tosticker(outfi)
-    await catquotes.client.send_file(catquotes.chat_id, endfi, reply_to=reply)
-    await catevent.delete()
+    await dogquotes.client.send_file(dogquotes.chat_id, endfi, reply_to=reply)
+    await dogevent.delete()
     os.remove(endfi)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rq(?:\s|$)([\s\S]*)",
     command=("rq", plugin_category),
     info={
@@ -183,35 +183,35 @@ async def stickerchat(catquotes):
         "usage": "{tr}rq",
     },
 )
-async def stickerchat(catquotes):
+async def stickerchat(dogquotes):
     "To make sticker message."
-    reply = await catquotes.get_reply_message()
+    reply = await dogquotes.get_reply_message()
     if not reply:
         return await edit_or_reply(
-            catquotes, "`I cant quote the message . reply to a message`"
+            dogquotes, "`I cant quote the message . reply to a message`"
         )
     fetchmsg = reply.message
     repliedreply = await reply.get_reply_message()
     if reply.media and reply.media.document.mime_type in ("mp4"):
-        return await edit_or_reply(catquotes, "`this format is not supported now`")
-    catevent = await edit_or_reply(catquotes, "`Making quote...`")
+        return await edit_or_reply(dogquotes, "`this format is not supported now`")
+    dogevent = await edit_or_reply(dogquotes, "`Making quote...`")
     user = (
-        await catquotes.client.get_entity(reply.forward.sender)
+        await dogquotes.client.get_entity(reply.forward.sender)
         if reply.fwd_from
         else reply.sender
     )
-    res, catmsg = await process(fetchmsg, user, catquotes.client, reply, repliedreply)
+    res, dogmsg = await process(fetchmsg, user, dogquotes.client, reply, repliedreply)
     if not res:
         return
     outfi = os.path.join("./temp", "sticker.png")
-    catmsg.save(outfi)
+    dogmsg.save(outfi)
     endfi = convert_tosticker(outfi)
-    await catquotes.client.send_file(catquotes.chat_id, endfi, reply_to=reply)
-    await catevent.delete()
+    await dogquotes.client.send_file(dogquotes.chat_id, endfi, reply_to=reply)
+    await dogevent.delete()
     os.remove(endfi)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="qbot(?:\s|$)([\s\S]*)",
     command=("qbot", plugin_category),
     info={
@@ -248,7 +248,7 @@ async def _(event):
             event, "`Either reply to message or give input to function properly`"
         )
     chat = "@QuotLyBot"
-    catevent = await edit_or_reply(event, "```Making a Quote```")
+    dogevent = await edit_or_reply(event, "```Making a Quote```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -260,13 +260,13 @@ async def _(event):
                 await event.client.send_message(conv.chat_id, message)
             else:
                 return await edit_delete(
-                    catevent, "`I guess you have used a invalid syntax`"
+                    dogevent, "`I guess you have used a invalid syntax`"
                 )
             response = await response
         except YouBlockedUserError:
-            return await catevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")
+            return await dogevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")
         await event.client.send_read_acknowledge(conv.chat_id)
-        await catevent.delete()
+        await dogevent.delete()
         await event.client.send_message(
             event.chat_id, response.message, reply_to=reply_to
         )

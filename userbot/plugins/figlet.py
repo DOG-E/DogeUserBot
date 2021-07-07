@@ -1,7 +1,7 @@
 import pyfiglet
 
 from ..helpers.utils import _format
-from . import _format, catub, deEmojify, edit_delete, edit_or_reply
+from . import _format, doge, deEmojify, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
@@ -24,7 +24,7 @@ CMD_FIG = {
 }
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="figlet(?:\s|$)([\s\S]*)",
     command=("figlet", plugin_category),
     info={

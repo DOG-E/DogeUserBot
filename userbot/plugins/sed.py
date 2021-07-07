@@ -5,7 +5,7 @@ import regex
 from telethon import events
 from telethon.tl import functions, types
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 
@@ -67,21 +67,21 @@ def doit(chat_id, match, original):
 
 async def group_has_sedbot(group):
     if isinstance(group, types.InputPeerChannel):
-        full = await catub(functions.channels.GetFullChannelRequest(group))
+        full = await doge(functions.channels.GetFullChannelRequest(group))
     elif isinstance(group, types.InputPeerChat):
-        full = await catub(functions.messages.GetFullChatRequest(group.chat_id))
+        full = await doge(functions.messages.GetFullChatRequest(group.chat_id))
     else:
         return False
 
     return any(KNOWN_RE_BOTS.match(x.username or "") for x in full.users)
 
 
-@catub.on(events.NewMessage)
+@doge.on(events.NewMessage)
 async def on_message(event):
     last_msgs[event.chat_id].appendleft(event.message)
 
 
-@catub.on(events.MessageEdited)
+@doge.on(events.MessageEdited)
 async def on_edit(event):
     for m in last_msgs[event.chat_id]:
         if m.id == event.id:
@@ -89,7 +89,7 @@ async def on_edit(event):
             break
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
     command=("sed", plugin_category),
     info={

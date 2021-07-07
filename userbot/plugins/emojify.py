@@ -3,7 +3,7 @@ Created by @Jisan7509
 modified by  @mrconfused
 Userbot plugin for CatUserbot
 """
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 from ..helpers import fonts as emojify
@@ -11,13 +11,13 @@ from ..helpers import fonts as emojify
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="emoji(?:\s|$)([\s\S]*)",
     command=("emoji", plugin_category),
     info={
         "header": "Converts your text to big emoji text, with some default emojis.\n use @ symbol for line space",
         "usage": "{tr}emoji <text>",
-        "examples": ["{tr}emoji catuserbot"],
+        "examples": ["{tr}emoji DogeUserBot"],
     },
 )
 async def itachi(event):
@@ -42,13 +42,13 @@ async def itachi(event):
     await edit_or_reply(event, result)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cmoji(?:\s|$)([\s\S]*)",
     command=("cmoji", plugin_category),
     info={
         "header": "Converts your text to big emoji text, with your custom emoji.\n use @ symbol for line space.",
         "usage": "{tr}cmoji <emoji> <text>",
-        "examples": ["{tr}cmoji 😺 catuserbot"],
+        "examples": ["{tr}cmoji 🐶 DogeUserBot"],
     },
 )
 async def itachi(event):

@@ -175,7 +175,7 @@ width='185'/>
 <p
 align="center">
 <a
-href="https://heroku.com/deploy?template=https://github.com/dog-e/dogeuserbot">
+href="https://heroku.com/deploy?template=https://github.com/DOGE-E/DogeUserBot">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 </a>

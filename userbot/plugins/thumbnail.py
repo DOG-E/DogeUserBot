@@ -4,11 +4,11 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.utils import _cattools
+from ..helpers.utils import _dogtools
 from . import CMD_HELP
 
 plugin_category = "utils"
@@ -20,7 +20,7 @@ plugin_category = "utils"
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="savethumb$",
     command=("savethumb", plugin_category),
     info={
@@ -30,9 +30,9 @@ thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 )
 async def _(event):
     "To save replied image as temporary thumb."
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await edit_or_reply(event, "`Processing ...`")
     if not event.reply_to_msg_id:
-        return await catevent.edit("`Reply to a photo to save custom thumbnail`")
+        return await dogevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(
         await event.get_reply_message(), Config.TMP_DOWNLOAD_DIRECTORY
     )
@@ -40,19 +40,19 @@ async def _(event):
         metadata = extractMetadata(createParser(downloaded_file_name))
         if metadata and metadata.has("duration"):
             duration = metadata.get("duration").seconds
-        downloaded_file_name = await _cattools.take_screen_shot(
+        downloaded_file_name = await _dogtools.take_screen_shot(
             downloaded_file_name, duration
         )
     # https://stackoverflow.com/a/21669827/4723940
     Image.open(downloaded_file_name).convert("RGB").save(thumb_image_path, "JPEG")
     # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
     os.remove(downloaded_file_name)
-    await catevent.edit(
+    await dogevent.edit(
         "Custom video/file thumbnail saved. This image will be used in the upload, till `.clearthumb`."
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clearthumb$",
     command=("clearthumb", plugin_category),
     info={
@@ -69,7 +69,7 @@ async def _(event):
     await edit_or_reply(event, "✅ Custom thumbnail cleared successfully.")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="getthumb$",
     command=("getthumb", plugin_category),
     info={

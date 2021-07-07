@@ -16,7 +16,7 @@ from telethon.tl.types import (
     InputMessagesFilterVoice,
 )
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
@@ -42,7 +42,7 @@ purgetype = {
 }
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="del(\s*| \d+)$",
     command=("del", plugin_category),
     info={
@@ -89,7 +89,7 @@ async def delete_it(event):
         await event.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="purgefrom$",
     command=("purgefrom", plugin_category),
     info={
@@ -112,7 +112,7 @@ async def purge_from(event):
         await edit_delete(event, "`Reply to a message to let me know what to delete.`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="purgeto$",
     command=("purgeto", plugin_category),
     info={
@@ -165,7 +165,7 @@ async def purge_to(event):
         await edit_delete(event, f"**Error**\n`{str(e)}`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="purgeme",
     command=("purgeme", plugin_category),
     info={
@@ -200,7 +200,7 @@ async def purgeme(event):
 
 
 # TODO: only sticker messages.
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="purge(?:\s|$)([\s\S]*)",
     command=("purge", plugin_category),
     info={
@@ -452,7 +452,7 @@ async def fastpurger(event):  # sourcery no-metrics
     await hi.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="upurge( -a)?(?:\s|$)([\s\S]*)",
     command=("upurge", plugin_category),
     info={

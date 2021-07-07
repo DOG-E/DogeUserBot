@@ -3,7 +3,7 @@ from asyncio import sleep
 
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from .. import catub
+from .. import doge
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format, get_user_from_event
@@ -15,7 +15,7 @@ plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
@@ -25,10 +25,10 @@ LOGS = logging.getLogger(__name__)
             "{tr}msgto <username/userid/chatid/chatusername> reply to message",
             "{tr}msgto <username/userid/chatid/chatusername> <text>",
         ],
-        "examples": "{tr}msgto @catuserbotot just a testmessage",
+        "examples": "{tr}msgto @SohbetDoge just a testmessage",
     },
 )
-async def catbroadcast_add(event):
+async def dogbroadcast_add(event):
     "To message to person or to a chat."
     user, reason = await get_user_from_event(event)
     reply = await event.get_reply_message()
@@ -58,7 +58,7 @@ async def catbroadcast_add(event):
     await edit_delete(event, "__Successfully sent the message.__")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
@@ -67,16 +67,16 @@ async def catbroadcast_add(event):
         "examples": "{tr}addto test",
     },
 )
-async def catbroadcast_add(event):
+async def dogbroadcast_add(event):
     "To add the chat to the mentioned category"
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "In which category should i add this chat",
             parse_mode=_format.parse_pre,
         )
-    keyword = catinput_str.lower()
+    keyword = doginput_str.lower()
     check = sql.is_in_broadcastlist(keyword, event.chat_id)
     if check:
         return await edit_delete(
@@ -106,7 +106,7 @@ async def catbroadcast_add(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
@@ -115,16 +115,16 @@ async def catbroadcast_add(event):
         "examples": "{tr}list test",
     },
 )
-async def catbroadcast_list(event):
+async def dogbroadcast_list(event):
     "To list the all chats in the mentioned category."
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "Which category Chats should i list ?\nCheck .listall",
             parse_mode=_format.parse_pre,
         )
-    keyword = catinput_str.lower()
+    keyword = doginput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     if no_of_chats == 0:
         return await edit_delete(
@@ -133,7 +133,7 @@ async def catbroadcast_list(event):
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event, f"Fetching info of the category {keyword}", parse_mode=_format.parse_pre
     )
     resultlist = f"**The category '{keyword}' have '{no_of_chats}' chats and these are listed below :**\n\n"
@@ -152,10 +152,10 @@ async def catbroadcast_list(event):
             errorlist += f" 👉 __This id {int(chat)} in database probably you may left the chat/channel or may be invalid id.\
                             \nRemove this id from the database by using this command__ `.frmfrom {keyword} {int(chat)}` \n\n"
     finaloutput = resultlist + errorlist
-    await edit_or_reply(catevent, finaloutput)
+    await edit_or_reply(dogevent, finaloutput)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listall$",
     command=("listall", plugin_category),
     info={
@@ -163,7 +163,7 @@ async def catbroadcast_list(event):
         "usage": "{tr}listall",
     },
 )
-async def catbroadcast_list(event):
+async def dogbroadcast_list(event):
     "To list all the category names."
     if sql.num_broadcastlist_chats() == 0:
         return await edit_delete(
@@ -178,7 +178,7 @@ async def catbroadcast_list(event):
     await edit_or_reply(event, resultext)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
@@ -187,26 +187,26 @@ async def catbroadcast_list(event):
         "examples": "{tr}sendto test",
     },
 )
-async def catbroadcast_send(event):
+async def dogbroadcast_send(event):
     "To send the message to all chats in the mentioned category."
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "To which category should i send this message",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await edit_delete(
             event,
             "what should i send to to this category ?",
             parse_mode=_format.parse_pre,
         )
-    keyword = catinput_str.lower()
+    keyword = doginput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
+    group_ = Get(dog)
     if no_of_chats == 0:
         return await edit_delete(
             event,
@@ -214,7 +214,7 @@ async def catbroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
@@ -234,7 +234,7 @@ async def catbroadcast_send(event):
             LOGS.info(str(e))
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
-    await catevent.edit(resultext)
+    await dogevent.edit(resultext)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -243,7 +243,7 @@ async def catbroadcast_send(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
@@ -252,26 +252,26 @@ async def catbroadcast_send(event):
         "examples": "{tr}fwdto test",
     },
 )
-async def catbroadcast_send(event):
+async def dogbroadcast_send(event):
     "To forward the message to all chats in the mentioned category."
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "To which category should i send this message",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await edit_delete(
             event,
             "what should i send to to this category ?",
             parse_mode=_format.parse_pre,
         )
-    keyword = catinput_str.lower()
+    keyword = doginput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
+    group_ = Get(dog)
     if no_of_chats == 0:
         return await edit_delete(
             event,
@@ -279,7 +279,7 @@ async def catbroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
@@ -299,7 +299,7 @@ async def catbroadcast_send(event):
             LOGS.info(str(e))
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
-    await catevent.edit(resultext)
+    await dogevent.edit(resultext)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -308,7 +308,7 @@ async def catbroadcast_send(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
@@ -317,16 +317,16 @@ async def catbroadcast_send(event):
         "examples": "{tr}rmfrom test",
     },
 )
-async def catbroadcast_remove(event):
+async def dogbroadcast_remove(event):
     "To remove the chat from the mentioned category"
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "From which category should i remove this chat",
             parse_mode=_format.parse_pre,
         )
-    keyword = catinput_str.lower()
+    keyword = doginput_str.lower()
     check = sql.is_in_broadcastlist(keyword, event.chat_id)
     if not check:
         return await edit_delete(
@@ -356,7 +356,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
@@ -366,16 +366,16 @@ async def catbroadcast_remove(event):
         "examples": "{tr}frmfrom test -100123456",
     },
 )
-async def catbroadcast_remove(event):
+async def dogbroadcast_remove(event):
     "To force remove the given chat from a category."
-    catinput_str = event.pattern_match.group(1)
-    if not catinput_str:
+    doginput_str = event.pattern_match.group(1)
+    if not doginput_str:
         return await edit_delete(
             event,
             "From which category should i remove this chat",
             parse_mode=_format.parse_pre,
         )
-    args = catinput_str.split(" ")
+    args = doginput_str.split(" ")
     if len(args) != 2:
         return await edit_delete(
             event,
@@ -425,7 +425,7 @@ async def catbroadcast_remove(event):
             )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
@@ -434,21 +434,21 @@ async def catbroadcast_remove(event):
         "examples": "{tr}delc test",
     },
 )
-async def catbroadcast_delete(event):
+async def dogbroadcast_delete(event):
     "To delete a category completely."
-    catinput_str = event.pattern_match.group(1)
-    check1 = sql.num_broadcastlist_chat(catinput_str)
+    doginput_str = event.pattern_match.group(1)
+    check1 = sql.num_broadcastlist_chat(doginput_str)
     if check1 < 1:
         return await edit_delete(
             event,
-            f"Are you sure that there is category {catinput_str}",
+            f"Are you sure that there is category {doginput_str}",
             parse_mode=_format.parse_pre,
         )
     try:
-        sql.del_keyword_broadcastlist(catinput_str)
+        sql.del_keyword_broadcastlist(doginput_str)
         await edit_or_reply(
             event,
-            f"Successfully deleted the category {catinput_str}",
+            f"Successfully deleted the category {doginput_str}",
             parse_mode=_format.parse_pre,
         )
     except Exception as e:

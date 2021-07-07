@@ -1,11 +1,11 @@
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "Extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="upper(?: |$)([\s\S]*)",
     command=("upper", plugin_category),
     info={
@@ -28,7 +28,7 @@ async def some(event):
     await edit_or_reply(event, mystring)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lower(?: |$)([\s\S]*)",
     command=("lower", plugin_category),
     info={
@@ -51,7 +51,7 @@ async def good(event):
     await edit_or_reply(event, mystring)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="title(?: |$)([\s\S]*)",
     command=("title", plugin_category),
     info={
@@ -74,7 +74,7 @@ async def stuff(event):
     await edit_or_reply(event, mystring)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="(|r)camel(?: |$)([\s\S]*)",
     command=("camel", plugin_category),
     info={
@@ -101,12 +101,12 @@ async def here(event):
             event, "**ಠ∀ಠ  Reply to valid text or give text as input...you moron!!**"
         )
     if cmd == "r":
-        bad = list(intxt.lower())[::2]
-        cat = list(intxt.upper())[1::2]
+        shib = list(intxt.lower())[::2]
+        dog = list(intxt.upper())[1::2]
     else:
-        bad = list(intxt.upper())[::2]
-        cat = list(intxt.lower())[1::2]
+        shib = list(intxt.upper())[::2]
+        dog = list(intxt.lower())[1::2]
     mystring = ""
-    for i, j in zip(bad, cat):
+    for i, j in zip(shib, dog):
         mystring += f"{i}{j}"
     await edit_or_reply(event, mystring)

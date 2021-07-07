@@ -1,7 +1,7 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 from telethon import events
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 from ..core.managers import edit_delete, edit_or_reply
@@ -18,7 +18,7 @@ plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 
 
-@catub.on(events.ChatAction)
+@doge.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics
     cws = get_current_welcome_settings(event.chat_id)
     if (
@@ -83,7 +83,7 @@ async def _(event):  # sourcery no-metrics
         update_previous_welcome(event.chat_id, current_message.id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
@@ -145,7 +145,7 @@ async def save_welcome(event):
     await edit_or_reply("Error while setting welcome in this group")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
@@ -162,7 +162,7 @@ async def del_welcome(event):
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="listwelcome$",
     command=("listwelcome", plugin_category),
     info={
@@ -190,7 +190,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={

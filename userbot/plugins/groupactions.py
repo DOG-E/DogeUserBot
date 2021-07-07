@@ -20,7 +20,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -45,13 +45,13 @@ BANNED_RIGHTS = ChatBannedRights(
 
 async def ban_user(chat_id, i, rights):
     try:
-        await catub(functions.channels.EditBannedRequest(chat_id, i, rights))
+        await doge(functions.channels.EditBannedRequest(chat_id, i, rights))
         return True, None
     except Exception as exc:
         return False, str(exc)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kickme$",
     command=("kickme", plugin_category),
     info={
@@ -68,7 +68,7 @@ async def kickme(leave):
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="kickall$",
     command=("kickall", plugin_category),
     info={
@@ -90,7 +90,7 @@ async def _(event):
         return await edit_or_reply(
             event, "`It seems like you dont have ban users permission in this group.`"
         )
-    catevent = await edit_or_reply(event, "`Kicking...`")
+    dogevent = await edit_or_reply(event, "`Kicking...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -107,12 +107,12 @@ async def _(event):
         except Exception as e:
             LOGS.info(str(e))
             await sleep(0.5)
-    await catevent.edit(
+    await dogevent.edit(
         f"`Sucessfully i have completed kickall process with {success} members kicked out of {total} members`"
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="banall$",
     command=("banall", plugin_category),
     info={
@@ -134,7 +134,7 @@ async def _(event):
         return await edit_or_reply(
             event, "`It seems like you dont have ban users permission in this group.`"
         )
-    catevent = await edit_or_reply(event, "`banning...`")
+    dogevent = await edit_or_reply(event, "`banning...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -153,12 +153,12 @@ async def _(event):
         except Exception as e:
             LOGS.info(str(e))
             await sleep(0.5)
-    await catevent.edit(
+    await dogevent.edit(
         f"`Sucessfully i have completed banall process with {success} members banned out of {total} members`"
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="unbanall$",
     command=("unbanall", plugin_category),
     info={
@@ -172,7 +172,7 @@ async def _(event):
 )
 async def _(event):
     "To unban all banned users from group."
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event, "__Unbanning all banned accounts in this group.__"
     )
     succ = 0
@@ -190,12 +190,12 @@ async def _(event):
             )
         except FloodWaitError as e:
             LOGS.warn(f"A flood wait of {e.seconds} occurred.")
-            await catevent.edit(
+            await dogevent.edit(
                 f"__A wait of {readable_time(e.seconds)} needed again to continue the process.__"
             )
             await sleep(e.seconds + 5)
         except Exception as ex:
-            await catevent.edit(str(ex))
+            await dogevent.edit(str(ex))
         else:
             succ += 1
             if flag:
@@ -204,16 +204,16 @@ async def _(event):
                 await sleep(1)
             try:
                 if succ % 10 == 0:
-                    await catevent.edit(
+                    await dogevent.edit(
                         f"__Unbanning all banned accounts...,\n{succ} accounts are unbanned untill now.__"
                     )
             except MessageNotModifiedError:
                 pass
-    await catevent.edit(f"**Unbanned :**__{succ}/{total} in the chat {chat.title}__")
+    await dogevent.edit(f"**Unbanned :**__{succ}/{total} in the chat {chat.title}__")
 
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="zombies ?([\s\S]*)",
     command=("zombies", plugin_category),
     info={
@@ -278,7 +278,7 @@ async def rm_deletedacc(show):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ikuck ?([\s\S]*)",
     command=("ikuck", plugin_category),
     info={

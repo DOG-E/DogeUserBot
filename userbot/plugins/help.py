@@ -1,6 +1,6 @@
 from telethon import functions
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
@@ -98,12 +98,12 @@ async def plugininfo(input_str, event, flag):
 
 
 async def grpinfo():
-    outstr = "**Plugins in Catuserbot are:**\n\n"
+    outstr = "**Plugins in DogeUserBot are:**\n\n"
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <plugin name>`\n\n"
     category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra", "useless"]
-    for cat in category:
-        plugins = GRP_INFO[cat]
-        outstr += f"**{hemojis[cat]} {cat.title()} **({len(plugins)})\n"
+    for dog in category:
+        plugins = GRP_INFO[dog]
+        outstr += f"**{hemojis[dog]} {dog.title()} **({len(plugins)})\n"
         for plugin in plugins:
             outstr += f"`{plugin}`  "
         outstr += "\n\n"
@@ -111,11 +111,11 @@ async def grpinfo():
 
 
 async def cmdlist():
-    outstr = "**Total list of Commands in your Catuserbot are :**\n\n"
+    outstr = "**Total list of Commands in your DogeUserBot are :**\n\n"
     category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra"]
-    for cat in category:
-        plugins = GRP_INFO[cat]
-        outstr += f"**{hemojis[cat]} {cat.title()} ** - {len(plugins)}\n\n"
+    for dog in category:
+        plugins = GRP_INFO[dog]
+        outstr += f"**{hemojis[dog]} {dog.title()} ** - {len(plugins)}\n\n"
         for plugin in plugins:
             cmds = PLG_INFO[plugin]
             outstr += f"• **{plugin.title()} has {len(cmds)} commands**\n"
@@ -126,11 +126,11 @@ async def cmdlist():
     return outstr
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="help ?(-c|-p|-t)? ?([\s\S]*)?",
     command=("help", plugin_category),
     info={
-        "header": "To get guide for catuserbot.",
+        "header": "To get guide for DogeUserBot.",
         "description": "To get information or guide for the command or plugin",
         "note": "if command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide",
         "flags": {
@@ -146,7 +146,7 @@ async def cmdlist():
     },
 )
 async def _(event):
-    "To get guide for catuserbot."
+    "To get guide for DogeUserBot."
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
@@ -169,7 +169,7 @@ async def _(event):
     await edit_or_reply(event, outstr)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cmds(?:\s|$)([\s\S]*)",
     command=("cmds", plugin_category),
     info={
@@ -198,11 +198,11 @@ async def _(event):
             outstr += f"  - `{cmdprefix}{cmd}`\n"
         outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
     await edit_or_reply(
-        event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
+        event, outstr, aslink=True, linktext="Total Commands of DogeUserBot are :"
     )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="s ([\s\S]*)",
     command=("s", plugin_category),
     info={
@@ -219,11 +219,11 @@ async def _(event):
         out = f"**I found {len(found)} command(s) for: **`{cmd}`\n\n{out_str}"
         out += f"\n\n__For more info check {cmdprefix}help -c <command>__"
     else:
-        out = f"I can't find any such command `{cmd}` in CatUserbot"
+        out = f"I can't find any such command `{cmd}` in DogeUserBot"
     await edit_or_reply(event, out)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dc$",
     command=("dc", plugin_category),
     info={

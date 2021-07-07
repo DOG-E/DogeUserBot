@@ -19,7 +19,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import add_surrogate, del_surrogate
 
-from userbot import catub
+from userbot import doge
 from userbot.core.logger import logging
 
 LOGS = logging.getLogger(__name__)
@@ -157,7 +157,7 @@ def parse(message, old_entities=None):
         LOGS.info(str(e))
 
 
-@catub.cat_cmd(outgoing=True)
+@doge.bot_cmd(outgoing=True)
 async def reparse(event):
     old_entities = event.message.entities or []
     parser = partial(parse, old_entities=old_entities)
@@ -179,7 +179,7 @@ async def reparse(event):
         raise events.StopPropagation
 
 
-@catub.cat_cmd(outgoing=True)
+@doge.bot_cmd(outgoing=True)
 async def mention(event):
     newstr = event.text
     if event.entities:

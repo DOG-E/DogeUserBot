@@ -5,17 +5,17 @@ from io import BytesIO
 
 from PIL import Image, ImageFilter, ImageOps
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import media_type
 from ..helpers.functions import dotify
-from ..helpers.utils import _cattools
+from ..helpers.utils import _dogtools
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="imirror(s)? ?(-)?(l|r|u|b)?$",
     command=("imirror", plugin_category),
     info={
@@ -43,16 +43,16 @@ async def imirror(event):  # sourcery no-metrics
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
         return await edit_delete(event, "__Reply to photo or sticker to make mirror.__")
-    catevent = await event.edit("__Reflecting the image....__")
+    dogevent = await event.edit("__Reflecting the image....__")
     args = event.pattern_match.group(1)
     if args:
-        filename = "catuserbot.webp"
+        filename = "DogeUserBot.webp"
         f_format = "webp"
     else:
-        filename = "catuserbot.jpg"
+        filename = "DogeUserBot.jpg"
         f_format = "jpeg"
     try:
-        imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
+        imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
                 imag[0], "__Unable to extract image from the replied message.__"
@@ -60,7 +60,7 @@ async def imirror(event):  # sourcery no-metrics
         image = Image.open(imag[1])
     except Exception as e:
         return await edit_delete(
-            catevent, f"**Error in identifying image:**\n__{str(e)}__"
+            dogevent, f"**Error in identifying image:**\n__{str(e)}__"
         )
     flag = event.pattern_match.group(3) or "r"
     w, h = image.size
@@ -103,10 +103,10 @@ async def imirror(event):  # sourcery no-metrics
     image.save(img, f_format)
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
-    await catevent.delete()
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="irotate(?: |$)(\d+)$",
     command=("irotate", plugin_category),
     info={
@@ -130,8 +130,8 @@ async def irotate(event):
             "__Reply to photo or sticker to rotate it with given angle. Animated sticker is not supported__",
         )
     args = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, "__Rotating the replied media...__")
-    imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
+    dogevent = await edit_or_reply(event, "__Rotating the replied media...__")
+    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
             imag[0], "__Unable to extract image from the replied message.__"
@@ -143,14 +143,14 @@ async def irotate(event):
         return await edit_delete(event, "**Error**\n" + str(e))
     await event.delete()
     img = io.BytesIO()
-    img.name = "CatUserbot.png"
+    img.name = "DogeUserBot.png"
     image.save(img, "PNG")
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
-    await catevent.delete()
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="iresize(?:\s|$)([\s\S]*)$",
     command=("iresize", plugin_category),
     info={
@@ -174,8 +174,8 @@ async def iresize(event):
             "__Reply to photo or sticker to resize it. Animated sticker is not supported__",
         )
     args = (event.pattern_match.group(1)).split()
-    catevent = await edit_or_reply(event, "__Resizeing the replied media...__")
-    imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
+    dogevent = await edit_or_reply(event, "__Resizeing the replied media...__")
+    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
             imag[0], "__Unable to extract image from the replied message.__"
@@ -187,30 +187,30 @@ async def iresize(event):
         try:
             nw, nh = int(args[0]), int(args[0])
         except ValueError:
-            return await edit_delete(catevent, f"**Error:**\n__Invalid dimension.__")
+            return await edit_delete(dogevent, f"**Error:**\n__Invalid dimension.__")
     else:
         try:
             nw = int(args[0])
         except ValueError:
-            return await edit_delete(catevent, f"**Error:**\n__Invalid width.__")
+            return await edit_delete(dogevent, f"**Error:**\n__Invalid width.__")
         try:
             nh = int(args[1])
         except ValueError:
-            return await edit_delete(catevent, f"**Error:**\n__Invalid height.__")
+            return await edit_delete(dogevent, f"**Error:**\n__Invalid height.__")
     try:
         image = image.resize((nw, nh))
     except Exception as e:
-        return await edit_delete(catevent, f"**Error:** __While resizing.\n{str(e)}__")
+        return await edit_delete(dogevent, f"**Error:** __While resizing.\n{str(e)}__")
     await event.delete()
     img = io.BytesIO()
-    img.name = "CatUserbot.png"
+    img.name = "DogeUserBot.png"
     image.save(img, "PNG")
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
-    await catevent.delete()
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="square$",
     command=("square", plugin_category),
     info={
@@ -224,9 +224,9 @@ async def square_cmd(event):
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo"]:
         return await edit_delete(event, "__Reply to photo to make it square image.__")
-    catevent = await event.edit("__Adding borders to make it square....__")
+    dogevent = await event.edit("__Adding borders to make it square....__")
     try:
-        imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
+        imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
                 imag[0], "__Unable to extract image from the replied message.__"
@@ -234,7 +234,7 @@ async def square_cmd(event):
         img = Image.open(imag[1])
     except Exception as e:
         return await edit_delete(
-            catevent, f"**Error in identifying image:**\n__{str(e)}__"
+            dogevent, f"**Error in identifying image:**\n__{str(e)}__"
         )
     w, h = img.size
     if w == h:
@@ -249,10 +249,10 @@ async def square_cmd(event):
     bg.save(img)
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
-    await catevent.delete()
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dotify(?: |$)(\d+)?$",
     command=("dotify", plugin_category),
     info={
@@ -281,15 +281,15 @@ async def pic_gifcmd(event):
             pix = int(args) if int(args) > 0 else 100
     else:
         pix = 100
-    catevent = await edit_or_reply(event, "__🎞Dotifying image...__")
-    imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
+    dogevent = await edit_or_reply(event, "__🎞Dotifying image...__")
+    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
             imag[0], "__Unable to extract image from the replied message.__"
         )
     result = await dotify(imag[1], pix, True)
     await event.client.send_file(event.chat_id, result, reply_to=reply)
-    await catevent.delete()
+    await dogevent.delete()
     for i in [imag[1]]:
         if os.path.exists(i):
             os.remove(i)

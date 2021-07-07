@@ -10,13 +10,13 @@ from . import *
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
         "header": "To Execute terminal commands in a subprocess.",
         "usage": "{tr}exec <command>",
-        "examples": "{tr}exec cat stringsetup.py",
+        "examples": "{tr}exec dog stringsetup.py",
     },
 )
 async def _(event):
@@ -24,21 +24,21 @@ async def _(event):
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
         return await edit_delete(event, "`What should i execute?..`")
-    catevent = await edit_or_reply(event, "`Executing.....`")
+    dogevent = await edit_or_reply(event, "`Executing.....`")
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-    catuser = await event.client.get_me()
-    curruser = catuser.username or "catuserbot"
+    doguser = await event.client.get_me()
+    curruser = doguser.username or "DogeUserBot"
     uid = os.geteuid()
     if uid == 0:
         cresult = f"```{curruser}:~#``` ```{cmd}```\n```{result}```"
     else:
         cresult = f"```{curruser}:~$``` ```{cmd}```\n```{result}```"
     await edit_or_reply(
-        catevent,
+        dogevent,
         text=cresult,
         aslink=True,
         linktext=f"**•  Exec : **\n```{cmd}``` \n\n**•  Result : **\n",
@@ -50,13 +50,13 @@ async def _(event):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
         "header": "To Execute python script/statements in a subprocess.",
         "usage": "{tr}eval <command>",
-        "examples": "{tr}eval print('catuserbot')",
+        "examples": "{tr}eval print('DogeUserBot')",
     },
 )
 async def _(event):
@@ -69,7 +69,7 @@ async def _(event):
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    catevent = await edit_or_reply(event, "`Running ...`")
+    dogevent = await edit_or_reply(event, "`Running ...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -96,7 +96,7 @@ async def _(event):
         f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
     )
     await edit_or_reply(
-        catevent,
+        dogevent,
         text=final_output,
         aslink=True,
         linktext=f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n",

@@ -1,12 +1,12 @@
 import asyncio
 from collections import deque
 
-from . import catub, edit_or_reply
+from . import doge, edit_or_reply
 
 plugin_category = "fun"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="think$",
     command=("think", plugin_category),
     info={
@@ -24,7 +24,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lmao$",
     command=("lmao", plugin_category),
     info={
@@ -42,7 +42,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="nothappy$",
     command=("nothappy", plugin_category),
     info={
@@ -60,7 +60,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="clock$",
     command=("clock", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="muah$",
     command=("muah", plugin_category),
     info={
@@ -96,7 +96,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="heart$",
     command=("heart", plugin_category),
     info={
@@ -114,7 +114,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="gym$",
     command=("gym", plugin_category),
     info={
@@ -132,7 +132,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="earth$",
     command=("earth", plugin_category),
     info={
@@ -150,7 +150,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="moon$",
     command=("moon", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="smoon$",
     command=("smoon", plugin_category),
     info={
@@ -197,7 +197,7 @@ async def _(event):
         await event.edit(animation_chars[i % 8])
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tmoon$",
     command=("tmoon", plugin_category),
     info={

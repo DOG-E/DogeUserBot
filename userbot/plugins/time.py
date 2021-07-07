@@ -6,7 +6,7 @@ from pytz import country_names as c_n
 from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -44,7 +44,7 @@ async def get_tz(con):
         return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ctime(?:\s|$)([\s\S]*)(?<![0-9])(?: |$)([0-9]+)?",
     command=("ctime", plugin_category),
     info={
@@ -111,7 +111,7 @@ async def time_func(tdata):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="time(?:\s|$)([\s\S]*)",
     command=("time", plugin_category),
     info={

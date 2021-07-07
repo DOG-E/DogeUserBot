@@ -1,14 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "utils"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="filext(?:\s|$)([\s\S]*)",
     command=("filext", plugin_category),
     info={

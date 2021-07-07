@@ -2,7 +2,7 @@ from asyncio import sleep
 
 from googletrans import LANGUAGES, Translator
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, gvarstatus
@@ -23,7 +23,7 @@ async def getTranslate(text, **kwargs):
     return result
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="tl ([\s\S]*)",
     command=("tl", plugin_category),
     info={
@@ -33,7 +33,7 @@ async def getTranslate(text, **kwargs):
             "{tr}tl <language code> ; <text>",
             "{tr}tl <language codes>",
         ],
-        "examples": "{tr}tl te ; Catuserbot is one of the popular bot",
+        "examples": "{tr}tl te ; DogeUserBot is one of the popular bot",
     },
 )
 async def _(event):
@@ -62,7 +62,7 @@ async def _(event):
         await edit_delete(event, f"**Error:**\n`{str(exc)}`", time=5)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="trt(?: |$)([\s\S]*)",
     command=("trt", plugin_category),
     info={
@@ -103,7 +103,7 @@ async def translateme(trans):
         )
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="lang (ai|trt) ([\s\S]*)",
     command=("lang", plugin_category),
     info={

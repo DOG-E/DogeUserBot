@@ -8,7 +8,7 @@ import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from userbot import HEROKU_APP, UPSTREAM_REPO_URL, catub
+from userbot import HEROKU_APP, UPSTREAM_REPO_URL, doge
 
 from ..Config import Config
 from ..core.logger import logging
@@ -106,10 +106,10 @@ async def update(event, repo, ups_rem, ac_br):
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
-    sandy = await event.edit(
+    teledoge = await event.edit(
         "`Successfully Updated!\n" "Bot is restarting... Wait for a minute!`"
     )
-    await event.client.reload(sandy)
+    await event.client.reload(teledoge)
 
 
 async def deploy(event, repo, ups_rem, ac_br, txt):
@@ -134,7 +134,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             f"{txt}\n" "`Invalid Heroku credentials for deploying userbot dyno.`"
         )
         return repo.__del__()
-    sandy = await event.edit(
+    teledoge = await event.edit(
         "`Userbot dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
     )
     try:
@@ -145,7 +145,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [sandy.chat_id, sandy.id])
+        add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
         LOGS.error(e)
     ups_rem.fetch(ac_br)
@@ -165,7 +165,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
-        return await edit_Delete(
+        return await edit_delete(
             event, "`Build failed!\n" "Cancelled or there were some errors...`"
         )
     try:
@@ -183,7 +183,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         pass
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="update(| now)?$",
     command=("update", plugin_category),
     info={
@@ -255,7 +255,7 @@ async def upstream(event):
     # Special case for deploy
     if changelog == "" and not force_update:
         await event.edit(
-            "\n`CATUSERBOT is`  **up-to-date**  `with`  "
+            "\n`DogeUserBot is`  **up-to-date**  `with`  "
             f"**{UPSTREAM_REPO_BRANCH}**\n"
         )
         return repo.__del__()
@@ -263,7 +263,7 @@ async def upstream(event):
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            f"do `{cmdhd}update deploy` to update the catuserbot"
+            f"do `{cmdhd}update deploy` to update the DogeUserBot"
         )
 
     if force_update:
@@ -271,17 +271,17 @@ async def upstream(event):
             "`Force-Syncing to latest stable userbot code, please wait...`"
         )
     if conf == "now":
-        await event.edit("`Updating userbot, please wait....`")
+        await event.edit("`Updating userbot, please wait...`")
         await update(event, repo, ups_rem, ac_br)
     return
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="update deploy$",
 )
 async def upstream(event):
-    event = await edit_or_reply(event, "`Pulling the catpack repo wait a sec ....`")
-    off_repo = "https://github.com/Mr-confused/catpack"
+    event = await edit_or_reply(event, "`Pulling repo wait a sec...`")
+    off_repo = "https://github.com/DOG-E/Source/tree/SETUP"
     os.chdir("/app")
     try:
         txt = "`Oops.. Updater cannot continue due to "
@@ -311,28 +311,20 @@ async def upstream(event):
     await deploy(event, repo, ups_rem, ac_br, txt)
 
 
-@catub.cat_cmd(
-    pattern="goodcat$",
-    command=("goodcat", plugin_category),
-    info={
-        "header": "To update to goodcat( For vEg peeps).",
-        "usage": "{tr}goodcat",
-    },
-)
+@doge.bot_cmd(pattern="SHIBA$")
 async def variable(var):
-    "To update to goocat."
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
             var,
-            "Set the required var in heroku to function this normally `HEROKU_API_KEY`.",
+            "Set the required var in Heroku to function this normally `HEROKU_API_KEY`.",
         )
     if Config.HEROKU_APP_NAME is not None:
         app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
         return await edit_delete(
             var,
-            "Set the required var in heroku to function this normally `HEROKU_APP_NAME`.",
+            "Set the required var in Heroku to function this normally `HEROKU_APP_NAME`.",
         )
     heroku_var = app.config()
-    await edit_or_reply(var, f"`Changing badcat to goodcat wait for 2-3 minutes.`")
-    heroku_var["UPSTREAM_REPO"] = "https://github.com/sandy1709/catuserbot"
+    await edit_or_reply(var, f"`Changing Doge to Shiba wait for 2-3 minutes.`")
+    heroku_var["UPSTREAM_REPO"] = "https://github.com/TeleDoge/DogeUserBot"

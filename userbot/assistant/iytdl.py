@@ -18,7 +18,7 @@ from telethon.events import CallbackQuery
 from telethon.utils import get_attributes
 from wget import download
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core import check_owner, pool
@@ -44,7 +44,7 @@ PATH = "./userbot/cache/ytsearch.json"
 plugin_category = "bot"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="iytdl(?:\s|$)([\s\S]*)",
     command=("iytdl", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def iytdl_inline(event):
         input_url = (reply.text).strip()
     if not input_url:
         return await edit_delete(event, "Give input or reply to a valid youtube URL")
-    catevent = await edit_or_reply(event, f"🔎 Searching Youtube for: `'{input_url}'`")
+    dogevent = await edit_or_reply(event, f"🔎 Searching Youtube for: `'{input_url}'`")
     flag = True
     cout = 0
     results = None
@@ -81,13 +81,13 @@ async def iytdl_inline(event):
         if cout > 5:
             flag = False
     if results:
-        await catevent.delete()
+        await dogevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await catevent.edit("`Sorry!. Can't find any results`")
+        await dogevent.edit("`Sorry!. Can't find any results`")
 
 
-@catub.tgbot.on(
+@doge.tgbot.on(
     CallbackQuery(
         data=re.compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?")
     )
@@ -182,7 +182,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     )
 
 
-@catub.tgbot.on(
+@doge.tgbot.on(
     CallbackQuery(data=re.compile(b"^ytdl_(listall|back|next|detail)_([a-z0-9]+)_(.*)"))
 )
 @check_owner

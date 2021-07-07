@@ -4,14 +4,14 @@
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="firmware ([\s\S]*)",
     command=("firmware", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def _(event):
     "To get lastest Firmware."
     link = event.pattern_match.group(1)
     firmware = f"firmware"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -35,13 +35,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vendor ([\s\S]*)",
     command=("vendor", plugin_category),
     info={
@@ -55,7 +55,7 @@ async def _(event):
     "To get lastest Vendor."
     link = event.pattern_match.group(1)
     vendor = f"vendor"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -65,13 +65,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="xspecs ([\s\S]*)",
     command=("xspecs", plugin_category),
     info={
@@ -85,7 +85,7 @@ async def _(event):
     "To get quick spec information about device"
     link = event.pattern_match.group(1)
     specs = f"specs"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -95,13 +95,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="fastboot ([\s\S]*)",
     command=("fastboot", plugin_category),
     info={
@@ -115,7 +115,7 @@ async def _(event):
     "To get latest fastboot MIUI."
     link = event.pattern_match.group(1)
     fboot = f"fastboot"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -125,13 +125,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="recovery ([\s\S]*)",
     command=("recovery", plugin_category),
     info={
@@ -145,7 +145,7 @@ async def _(event):
     "To get latest recovery MIUI."
     link = event.pattern_match.group(1)
     recovery = f"recovery"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -155,13 +155,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pb ([\s\S]*)",
     command=("pb", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def _(event):
     "To get latest PBRP."
     link = event.pattern_match.group(1)
     pitch = f"pb"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -185,13 +185,13 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="of ([\s\S]*)",
     command=("of", plugin_category),
     info={
@@ -205,7 +205,7 @@ async def _(event):
     "To get latest ORangeFox Recover."
     link = event.pattern_match.group(1)
     ofox = f"of"
-    catevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await edit_or_reply(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -215,7 +215,7 @@ async def _(event):
             respond = await response
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit("```Unblock @XiaomiGeeksBot plox```")
+            return await dogevent.edit("```Unblock @XiaomiGeeksBot plox```")
         else:
-            await catevent.delete()
+            await dogevent.delete()
             await event.client.forward_messages(event.chat_id, respond.message)

@@ -5,7 +5,7 @@ import time
 from subprocess import PIPE
 from subprocess import run as runapp
 
-from userbot import catub
+from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -15,13 +15,13 @@ from . import media_type, progress
 plugin_category = "tools"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hash ([\s\S]*)",
     command=("hash", plugin_category),
     info={
         "header": "Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
         "usage": "{tr}hash <text>",
-        "examples": "{tr}hash catuserbot",
+        "examples": "{tr}hash DogeUserBot",
     },
 )
 async def gethash(hash_q):
@@ -52,7 +52,7 @@ async def gethash(hash_q):
     await edit_or_reply(hash_q, ans)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="hbase (en|de) ([\s\S]*)",
     command=("hbase", plugin_category),
     info={
@@ -62,13 +62,13 @@ async def gethash(hash_q):
             "de": "use this to decode the given text.",
         },
         "usage": ["{tr}hbase en <text to encode>", "{tr}hbase de <encoded text>"],
-        "examples": ["{tr}hbase en Catuserbot", "{tr}hbase de Q2F0dXNlcmJvdA=="],
+        "examples": ["{tr}hbase en DogeUserBot", "{tr}hbase de Q2F0dXNlcmJvdA=="],
     },
 )
 async def endecrypt(event):
     "To encode or decode the string using base64"
     string = "".join(event.text.split(maxsplit=2)[2:])
-    catevent = event
+    dogevent = event
     if event.pattern_match.group(1) == "en":
         if string:
             result = base64.b64encode(bytes(string, "utf-8")).decode("utf-8")
@@ -82,21 +82,21 @@ async def endecrypt(event):
                 result = base64.b64encode(bytes(reply.text, "utf-8")).decode("utf-8")
                 result = f"**Shhh! It's Encoded : **\n`{result}`"
             else:
-                catevent = await edit_or_reply(event, "`Encoding ...`")
+                dogevent = await edit_or_reply(event, "`Encoding ...`")
                 c_time = time.time()
                 downloaded_file_name = await event.client.download_media(
                     reply,
                     Config.TMP_DOWNLOAD_DIRECTORY,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
+                        progress(d, t, dogevent, c_time, "trying to download")
                     ),
                 )
-                catevent = await edit_or_reply(event, "`Encoding ...`")
+                dogevent = await edit_or_reply(event, "`Encoding ...`")
                 with open(downloaded_file_name, "rb") as image_file:
                     result = base64.b64encode(image_file.read()).decode("utf-8")
                 os.remove(downloaded_file_name)
         await edit_or_reply(
-            catevent, result, file_name="encodedfile.txt", caption="It's Encoded"
+            dogevent, result, file_name="encodedfile.txt", caption="It's Encoded"
         )
     else:
         try:

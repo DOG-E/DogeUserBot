@@ -10,7 +10,7 @@ import urllib
 
 import requests
 
-from userbot import catub
+from userbot import doge
 
 from ..helpers.functions import age_verification
 from . import edit_delete, edit_or_reply, reply_id, useless
@@ -18,7 +18,7 @@ from . import edit_delete, edit_or_reply, reply_id, useless
 plugin_category = "useless"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="ani(mu|nsfw) ?([\s\S]*)",
     command=("ani", plugin_category),
     info={
@@ -80,7 +80,7 @@ async def danbooru(event):
     await edit_delete(event, f"**Failed to fetch media for query:** __{search_query}__")
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="boobs(?:\s|$)([\s\S]*)",
     command=("boobs", plugin_category),
     info={
@@ -105,7 +105,7 @@ async def boobs(e):
     await a.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="butts(?:\s|$)([\s\S]*)",
     command=("butts", plugin_category),
     info={

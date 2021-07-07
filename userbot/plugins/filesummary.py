@@ -3,7 +3,7 @@ import time
 
 from prettytable import PrettyTable
 
-from userbot import catub
+from userbot import doge
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
@@ -29,14 +29,14 @@ def weird_division(n, d):
     return n / d if d else 0
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="chatfs(?:\s|$)([\s\S]*)",
     command=("chatfs", plugin_category),
     info={
         "header": "Shows you the complete media/file summary of the that group.",
         "description": "As of now limited to last 10000 in the group u used",
         "usage": "{tr}chatfs <Username/id>",
-        "examples": "{tr}chatfs @catuserbot_support",
+        "examples": "{tr}chatfs @DogeSup",
     },
 )
 async def _(event):  # sourcery no-metrics
@@ -67,7 +67,7 @@ async def _(event):  # sourcery no-metrics
             link = chatdata.title
     else:
         link = f"<a href='tg://user?id={chatdata.id}'>{chatdata.first_name}</a>"
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         f"<code>Counting files and file size of </code><b>{link}</b>\n<code>This may take some time also depends on number of group messages</code>",
         parse_mode="HTML",
@@ -128,10 +128,10 @@ async def _(event):  # sourcery no-metrics
     result += f"<code>{str(x)}</code>\n"
     result += f"{largest}"
     result += line + totalstring + line + runtimestring + line
-    await catevent.edit(result, parse_mode="HTML", link_preview=False)
+    await dogevent.edit(result, parse_mode="HTML", link_preview=False)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="userfs(?:\s|$)([\s\S]*)",
     command=("userfs", plugin_category),
     info={
@@ -188,7 +188,7 @@ async def _(event):  # sourcery no-metrics
             link = chatdata.title
     else:
         link = f"<a href='tg://user?id={chatdata.id}'>{chatdata.first_name}</a>"
-    catevent = await edit_or_reply(
+    dogevent = await edit_or_reply(
         event,
         f"<code>Counting files and file size by </code>{_format.htmlmentionuser(userdata.first_name,userdata.id)}<code> in Group </code><b>{link}</b>\n<code>This may take some time also depends on number of user messages</code>",
         parse_mode="HTML",
@@ -252,4 +252,4 @@ async def _(event):  # sourcery no-metrics
     result += f"<code>{str(x)}</code>\n"
     result += f"{largest}"
     result += line + totalstring + line + runtimestring + line
-    await catevent.edit(result, parse_mode="HTML", link_preview=False)
+    await dogevent.edit(result, parse_mode="HTML", link_preview=False)

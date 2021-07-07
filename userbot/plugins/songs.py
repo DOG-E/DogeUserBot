@@ -1,6 +1,6 @@
 # by  @sandy1709 ( https://t.me/mrconfused  )
 
-# songs finder for catuserbot
+# songs finder for DogeUserBot
 import asyncio
 import base64
 import io
@@ -13,12 +13,12 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
 
-from userbot import catub
+from userbot import doge
 
 from ..core.logger import logging
 from ..helpers.functions import name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
-from ..helpers.utils import _catutils, reply_id
+from ..helpers.utils import _dogutils, reply_id
 from . import edit_delete, edit_or_reply, hmention
 
 plugin_category = "utils"
@@ -36,7 +36,7 @@ SONGBOT_BLOCKED_STRING = "<code>Please unblock @songdl_bot and try again</code>"
 # =========================================================== #
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="song(320)?(?:\s|$)([\s\S]*)",
     command=("song", plugin_category),
     info={
@@ -60,11 +60,11 @@ async def _(event):
             query = reply.message
     else:
         return await edit_or_reply(event, "`What I am Supposed to find `")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    catevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dogevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
-        return await catevent.edit(
+        return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
     cmd = event.pattern_match.group(1)
@@ -73,44 +73,44 @@ async def _(event):
     # thumb_cmd = thumb_dl.format(video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
     try:
-        cat = Get(cat)
-        await event.client(cat)
+        dog = Get(dog)
+        await event.client(dog)
     except BaseException:
         pass
-    stderr = (await _catutils.runcmd(song_cmd))[1]
+    stderr = (await _dogutils.runcmd(song_cmd))[1]
     if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        return await dogevent.edit(f"**Error :** `{stderr}`")
+    dogname, stderr = (await _dogutils.runcmd(name_cmd))[:2]
     if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error :** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
-    catname = os.path.splitext(catname)[0]
+    dogname = os.path.splitext(dogname)[0]
     # if stderr:
-    #    return await catevent.edit(f"**Error :** `{stderr}`")
-    song_file = Path(f"{catname}.mp3")
+    #    return await dogevent.edit(f"**Error :** `{stderr}`")
+    song_file = Path(f"{dogname}.mp3")
     if not os.path.exists(song_file):
-        return await catevent.edit(
+        return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
-    await catevent.edit("`yeah..! i found something wi8..🥰`")
-    catthumb = Path(f"{catname}.jpg")
-    if not os.path.exists(catthumb):
-        catthumb = Path(f"{catname}.webp")
-    elif not os.path.exists(catthumb):
-        catthumb = None
+    await dogevent.edit("`yeah..! i found something wi8..🥰`")
+    dogthumb = Path(f"{dogname}.jpg")
+    if not os.path.exists(dogthumb):
+        dogthumb = Path(f"{dogname}.webp")
+    elif not os.path.exists(dogthumb):
+        dogthumb = None
 
     await event.client.send_file(
         event.chat_id,
         song_file,
         force_document=False,
         caption=f"<b><i>➥ Song :- {query}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-        thumb=catthumb,
+        thumb=dogthumb,
         supports_streaming=True,
         parse_mode="html",
         reply_to=reply_to_id,
     )
-    await catevent.delete()
-    for files in (catthumb, song_file):
+    await dogevent.delete()
+    for files in (dogthumb, song_file):
         if files and os.path.exists(files):
             os.remove(files)
 
@@ -124,7 +124,7 @@ async def delete_messages(event, chat, from_message):
     await event.client.send_read_acknowledge(chat)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="vsong(?:\s|$)([\s\S]*)",
     command=("vsong", plugin_category),
     info={
@@ -145,61 +145,61 @@ async def _(event):
             query = reply.messag
     else:
         return await edit_or_reply(event, "`What I am Supposed to find`")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    catevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
+    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dogevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
-        return await catevent.edit(
+        return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
     # thumb_cmd = thumb_dl.format(video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
     video_cmd = video_dl.format(video_link=video_link)
-    stderr = (await _catutils.runcmd(video_cmd))[1]
+    stderr = (await _dogutils.runcmd(video_cmd))[1]
     if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        return await dogevent.edit(f"**Error :** `{stderr}`")
+    dogname, stderr = (await _dogutils.runcmd(name_cmd))[:2]
     if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error :** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
     try:
-        cat = Get(cat)
-        await event.client(cat)
+        dog = Get(dog)
+        await event.client(dog)
     except BaseException:
         pass
     # if stderr:
-    #    return await catevent.edit(f"**Error :** `{stderr}`")
-    catname = os.path.splitext(catname)[0]
-    vsong_file = Path(f"{catname}.mp4")
+    #    return await dogevent.edit(f"**Error :** `{stderr}`")
+    dogname = os.path.splitext(dogname)[0]
+    vsong_file = Path(f"{dogname}.mp4")
     if not os.path.exists(vsong_file):
-        vsong_file = Path(f"{catname}.mkv")
+        vsong_file = Path(f"{dogname}.mkv")
     elif not os.path.exists(vsong_file):
-        return await catevent.edit(
+        return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
-    await catevent.edit("`yeah..! i found something wi8..🥰`")
-    catthumb = Path(f"{catname}.jpg")
-    if not os.path.exists(catthumb):
-        catthumb = Path(f"{catname}.webp")
-    elif not os.path.exists(catthumb):
-        catthumb = None
+    await dogevent.edit("`yeah..! i found something wi8..🥰`")
+    dogthumb = Path(f"{dogname}.jpg")
+    if not os.path.exists(dogthumb):
+        dogthumb = Path(f"{dogname}.webp")
+    elif not os.path.exists(dogthumb):
+        dogthumb = None
     await event.client.send_file(
         event.chat_id,
         vsong_file,
         force_document=False,
         caption=f"<b><i>➥ Song :- {query}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-        thumb=catthumb,
+        thumb=dogthumb,
         supports_streaming=True,
         parse_mode="html",
         reply_to=reply_to_id,
     )
-    await catevent.delete()
-    for files in (catthumb, vsong_file):
+    await dogevent.delete()
+    for files in (dogthumb, vsong_file):
         if files and os.path.exists(files):
             os.remove(files)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="shazam$",
     command=("shazam", plugin_category),
     info={
@@ -216,7 +216,7 @@ async def shazamcmd(event):
         return await edit_delete(
             event, "__Reply to Voice clip or Audio clip to reverse search that song.__"
         )
-    catevent = await edit_or_reply(event, "__Downloading the audio clip...__")
+    dogevent = await edit_or_reply(event, "__Downloading the audio clip...__")
     try:
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
@@ -234,17 +234,17 @@ async def shazamcmd(event):
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
-            catevent, f"**Error while reverse searching song:**\n__{str(e)}__"
+            dogevent, f"**Error while reverse searching song:**\n__{str(e)}__"
         )
     image = track["images"]["background"]
     song = track["share"]["subject"]
     await event.client.send_file(
         event.chat_id, image, caption=f"**Song:** `{song}`", reply_to=reply
     )
-    await catevent.delete()
+    await dogevent.delete()
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="song2(?:\s|$)([\s\S]*)",
     command=("song2", plugin_category),
     info={
@@ -259,7 +259,7 @@ async def _(event):
     song = event.pattern_match.group(1)
     chat = "@songdl_bot"
     reply_id_ = await reply_id(event)
-    catevent = await edit_or_reply(event, SONG_SEARCH_STRING, parse_mode="html")
+    dogevent = await edit_or_reply(event, SONG_SEARCH_STRING, parse_mode="html")
     async with event.client.conversation(chat) as conv:
         try:
             purgeflag = await conv.send_message("/start")
@@ -275,16 +275,16 @@ async def _(event):
             ):
                 await delete_messages(event, chat, purgeflag)
                 return await edit_delete(
-                    catevent, SONG_NOT_FOUND, parse_mode="html", time=5
+                    dogevent, SONG_NOT_FOUND, parse_mode="html", time=5
                 )
-            await catevent.edit(SONG_SENDING_STRING, parse_mode="html")
+            await dogevent.edit(SONG_SENDING_STRING, parse_mode="html")
             await baka[0].click(0)
             await conv.get_response()
             await conv.get_response()
             music = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit(SONGBOT_BLOCKED_STRING, parse_mode="html")
+            return await dogevent.edit(SONGBOT_BLOCKED_STRING, parse_mode="html")
         await event.client.send_file(
             event.chat_id,
             music,
@@ -292,12 +292,12 @@ async def _(event):
             parse_mode="html",
             reply_to=reply_id_,
         )
-        await catevent.delete()
+        await dogevent.delete()
         await delete_messages(event, chat, purgeflag)
 
 
 # reverse search by  @Lal_bakthan
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="szm$",
     command=("szm", plugin_category),
     info={
@@ -312,7 +312,7 @@ async def _(event):
         return await edit_delete(event, "```Reply to an audio message.```")
     reply_message = await event.get_reply_message()
     chat = "@auddbot"
-    catevent = await edit_or_reply(event, "```Identifying the song```")
+    dogevent = await edit_or_reply(event, "```Identifying the song```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("/start")
@@ -320,15 +320,15 @@ async def _(event):
             await conv.send_message(reply_message)
             check = await conv.get_response()
             if not check.text.startswith("Audio received"):
-                return await catevent.edit(
+                return await dogevent.edit(
                     "An error while identifying the song. Try to use a 5-10s long audio message."
                 )
-            await catevent.edit("Wait just a sec...")
+            await dogevent.edit("Wait just a sec...")
             result = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await catevent.edit("```Please unblock (@auddbot) and try again```")
+            await dogevent.edit("```Please unblock (@auddbot) and try again```")
             return
     namem = f"**Song Name : **`{result.text.splitlines()[0]}`\
         \n\n**Details : **__{result.text.splitlines()[2]}__"
-    await catevent.edit(namem)
+    await dogevent.edit(namem)

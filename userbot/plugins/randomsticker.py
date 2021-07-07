@@ -8,7 +8,7 @@ import requests
 from PIL import Image
 from telethon import functions, types, utils
 
-from userbot import catub
+from userbot import doge
 
 from ..helpers import reply_id
 
@@ -18,7 +18,7 @@ BASE_URL = "https://headp.at/pats/{}"
 PAT_IMAGE = "pat.webp"
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="cat$",
     command=("cat", plugin_category),
     info={
@@ -44,7 +44,7 @@ async def _(event):
 # credit to @r4v4n4
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="dab$",
     command=("dab", plugin_category),
     info={
@@ -86,7 +86,7 @@ async def _(event):
     await event.respond(file=random.choice(docs), reply_to=reply_to_id)
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="brain$",
     command=("brain", plugin_category),
     info={
@@ -118,7 +118,7 @@ async def handler(event):
 # By:- git: jaskaranSM tg: @Zero_cool7870
 
 
-@catub.cat_cmd(
+@doge.bot_cmd(
     pattern="pat$",
     command=("pat", plugin_category),
     info={
