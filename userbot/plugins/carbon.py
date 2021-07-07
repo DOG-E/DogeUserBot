@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from ..Config import Config
-from . import doge, deEmojify, edit_or_reply
+from . import deEmojify, doge, edit_or_reply
 
 plugin_category = "utils"
 

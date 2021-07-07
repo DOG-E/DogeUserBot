@@ -63,45 +63,19 @@ async def currency(event):
         try:
             try:
                 from bin import currency
+
                 symbols = currency
-                symbols = json.loads(
-                    re.sub(
-                        ", *\n *}",
-                        "}",
-                        symbols.decode(
-                            "utf-8"
-                        )
-                    )
-                )
+                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
             except:
                 symbols = f"bin/currency.py"
-                symbols = json.loads(
-                    re.sub(
-                        ", *\n *}",
-                        "}",
-                        symbols.decode(
-                            "utf-8"
-                        )
-                    )
-                )
+                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
         except:
             try:
                 symbolx = f"bin/currency.py"
                 symbols = os.popen(symbolx).read()
-                symbols = json.loads(
-                    re.sub(
-                        ", *\n *}",
-                        "}",
-                        symbols.decode(
-                            "utf-8"
-                        )
-                    )
-                )
+                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
             except:
-                return await edit_delete(
-                    event,
-                    "**Error!**"
-                )
+                return await edit_delete(event, "**Error!**")
         try:
             result = aresponse[f"{fromcurrency}_{tocurrency}"]
         except KeyError:

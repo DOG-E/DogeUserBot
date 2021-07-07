@@ -13,7 +13,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.utils import get_user_from_event, reply_id, _format
+from ..helpers.utils import _format, get_user_from_event, reply_id
 from . import ALIVE_NAME, mention
 
 plugin_category = "extra"

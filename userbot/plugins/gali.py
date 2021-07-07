@@ -7,7 +7,7 @@ import asyncio
 import random
 
 from ..core.managers import edit_or_reply
-from . import dogmemes, doge
+from . import doge, dogmemes
 
 plugin_category = "extra"
 
