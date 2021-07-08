@@ -515,7 +515,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 Button.url("Source code", "https://github.com/DOG-E/dogeuserbot"),
                 Button.url(
                     "Deploy",
-                    "https://heroku.com/deploy?template=https://github.com/DOGE-E/DogeUserBot",
+                    "https://heroku.com/deploy?template=https://github.com/DOG-E/DogeUserBot",
                 ),
             )
         ]

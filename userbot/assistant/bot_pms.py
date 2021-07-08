@@ -112,7 +112,7 @@ async def bot_start(event):
                 Button.url("Repo", "https://github.com/DOG-E/DogeUserBot"),
                 Button.url(
                     "Deploy",
-                    "https://heroku.com/deploy?template=https://github.com/DOGE-E/DogeUserBot",
+                    "https://heroku.com/deploy?template=https://github.com/DOG-E/DogeUserBot",
                 ),
             )
         ]
