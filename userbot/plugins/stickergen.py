@@ -2,7 +2,7 @@ import os
 import urllib
 
 from ..helpers.functions import clippy, convert_tosticker, higlighted_text
-from . import doge, deEmojify, edit_delete, reply_id
+from . import deEmojify, doge, edit_delete, reply_id
 
 plugin_category = "useless"
 

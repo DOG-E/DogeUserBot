@@ -10,7 +10,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
-from . import _dogtools, doge, convert_toimage, mention, reply_id
+from . import _dogtools, convert_toimage, doge, mention, reply_id
 
 plugin_category = "extra"
 

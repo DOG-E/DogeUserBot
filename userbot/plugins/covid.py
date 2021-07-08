@@ -1,7 +1,7 @@
 # corona virus stats for catuserbot
 from covid import Covid
 
-from . import doge, covidindia, edit_delete, edit_or_reply
+from . import covidindia, doge, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
