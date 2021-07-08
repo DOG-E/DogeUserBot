@@ -7,7 +7,7 @@ from .core.logger import logging
 from .core.session import doge
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
-__version__ = "3.0.3"
+__version__ = "0.1"
 __license__ = "GNU Affero General Public License v3.0"
 __author__ = "DogeUserBot <https://github.com/DOG-E/dogeuserbot>"
 __copyright__ = "DogeUserBot Copyright (C) 2020 - 2021  " + __author__
@@ -18,7 +18,7 @@ LOGS = logging.getLogger("DogeUserBot")
 bot = doge
 
 StartTime = time.time()
-dogeversion = "3.0.3"
+dogeversion = "0.1"
 
 if Config.UPSTREAM_REPO == "shiba":
     UPSTREAM_REPO_URL = "https://github.com/TeleDoge/DogeUserBot"
