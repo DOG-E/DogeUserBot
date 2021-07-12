@@ -32,9 +32,7 @@ plugin_category = "fun"
 async def echo(event):
     "To echo the user messages"
     if event.reply_to_msg_id is None:
-        return await eor(
-            event, "`Reply to a User's message to echo his messages`"
-        )
+        return await eor(event, "`Reply to a User's message to echo his messages`")
     dogevent = await eor(event, "`Adding Echo to user...`")
     user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
@@ -72,9 +70,7 @@ async def echo(event):
 async def echo(event):
     "To stop echoing the user messages"
     if event.reply_to_msg_id is None:
-        return await eor(
-            event, "Reply to a User's message to echo his messages"
-        )
+        return await eor(event, "Reply to a User's message to echo his messages")
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
     chat_id = event.chat_id
@@ -116,9 +112,7 @@ async def echo(event):
         except Exception as e:
             await edl(event, f"**Error:**\n`{str(e)}`", 10)
         else:
-            await eor(
-                event, "Deleted echo for all enabled users in all chats."
-            )
+            await eor(event, "Deleted echo for all enabled users in all chats.")
     else:
         lecho = get_echos(event.chat_id)
         if len(lecho) == 0:
@@ -130,9 +124,7 @@ async def echo(event):
         except Exception as e:
             await edl(event, f"**Error:**\n`{str(e)}`", 10)
         else:
-            await eor(
-                event, "Deleted echo for all enabled users in this chat"
-            )
+            await eor(event, "Deleted echo for all enabled users in this chat")
 
 
 @doge.bot_cmd(
@@ -180,9 +172,7 @@ async def echo(event):  # sourcery no-metrics
     else:
         lsts = get_echos(event.chat_id)
         if len(lsts) <= 0:
-            return await eor(
-                event, "There are no echo enabled users in this chat"
-            )
+            return await eor(event, "There are no echo enabled users in this chat")
 
         for echos in lsts:
             if echos.user_username:

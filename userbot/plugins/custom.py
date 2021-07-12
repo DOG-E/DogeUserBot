@@ -1,9 +1,9 @@
 from validators.url import url
 
 from userbot import doge
-from ..core.logger import logging
 
 from ..Config import Config
+from ..core.logger import logging
 from ..core.managers import edl, eor
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
@@ -95,9 +95,7 @@ async def dvdvdv(event):  # sourcery no-metrics
             )
         if cmd == "get":
             var_data = gvarstatus(vname)
-            await edl(
-                event, f"📑 Value of **{vname}** is  `{var_data}`", time=20
-            )
+            await edl(event, f"📑 Value of **{vname}** is  `{var_data}`", time=20)
         elif cmd == "del":
             delgvar(vname)
             await edl(

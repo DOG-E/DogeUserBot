@@ -1,7 +1,9 @@
 # torrent module for catuserbot
 from asyncio import sleep
-from ..core.logger import logging
+
 from userbot import doge
+
+from ..core.logger import logging
 from ..core.managers import edl, eor
 from . import aria2, check_metadata, check_progress_for_dl, subprocess_run
 
@@ -102,9 +104,9 @@ async def remove_all(event):
         await sleep(5)
     if not removed:  # If API returns False Try to Remove Through System Call.
         subprocess_run("aria2p remove-all")
-    await eor(event,"`Clearing on-going downloads... `")
+    await eor(event, "`Clearing on-going downloads... `")
     await sleep(2.5)
-    await eor(event,"`Successfully cleared all downloads.`")
+    await eor(event, "`Successfully cleared all downloads.`")
 
 
 @doge.bot_cmd(

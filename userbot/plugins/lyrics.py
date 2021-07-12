@@ -88,9 +88,7 @@ async def lyrics(lyric):
         return await eor(lyric, f"Error:\n`{e}`")
     if len(args) < 1:
         return await eor(lyric, "`Please provide artist and song names`")
-    dogevent = await eor(
-        lyric, f"`Searching lyrics for {artist} - {song}...`"
-    )
+    dogevent = await eor(lyric, f"`Searching lyrics for {artist} - {song}...`")
     try:
         songs = genius.search_song(song, artist)
     except TypeError:

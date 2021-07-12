@@ -34,9 +34,7 @@ async def img_sampler(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await eor(
-            event, "Reply to a message or pass a query to search!"
-        )
+        return await eor(event, "Reply to a message or pass a query to search!")
     dog = await eor(event, "`Processing...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))

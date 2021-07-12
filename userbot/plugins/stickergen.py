@@ -33,9 +33,7 @@ async def quby(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edl(
-            event, "__What is quby supposed to say? Give some text.__"
-        )
+        return await edl(event, "__What is quby supposed to say? Give some text.__")
     await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -101,9 +99,7 @@ async def knife(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edl(
-            event, "__What is knife supposed to say? Give some text.__"
-        )
+        return await edl(event, "__What is knife supposed to say? Give some text.__")
     await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -170,9 +166,7 @@ async def doge(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edl(
-            event, "__What is doge supposed to say? Give some text.__"
-        )
+        return await edl(event, "__What is doge supposed to say? Give some text.__")
     await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")

@@ -59,9 +59,7 @@ async def _(event):
     try:
         pfile = await event.client.upload_file(profile_pic)
     except Exception as e:
-        return await edl(
-            event, f"**Failed to clone due to error:**\n__{str(e)}__"
-        )
+        return await edl(event, f"**Failed to clone due to error:**\n__{str(e)}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
     await edl(event, "**LET US BE AS ONE**")
     if BOTLOG:

@@ -176,9 +176,7 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
-            await edl(
-                event, "`Logging of messages from this chat has been stopped`", 5
-            )
+            await edl(event, "`Logging of messages from this chat has been stopped`", 5)
 
 
 @doge.bot_cmd(

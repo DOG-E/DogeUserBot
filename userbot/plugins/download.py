@@ -204,9 +204,7 @@ async def _(event):  # sourcery no-metrics
             "Reply to media file to download it to bot server",
             parse_mode=_format.parse_pre,
         )
-    mone = await eor(
-        event, "Downloading the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await eor(event, "Downloading the file ...", parse_mode=_format.parse_pre)
     start = datetime.now()
     for attr in getattr(reply.document, "attributes", []):
         if isinstance(attr, types.DocumentAttributeFilename):

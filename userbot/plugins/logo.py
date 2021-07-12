@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import clippy, convert_toimage, doge, _dogetools, edl, eor, reply_id
+from . import _dogetools, clippy, convert_toimage, doge, edl, eor, reply_id
 
 # ======================================================================================================================================================================================
 
@@ -170,17 +170,13 @@ async def bad(event):
                 os.mkdir("./temp")
             output = await _dogetools.media_to_pic(event, reply_message)
             convert_toimage(output[1], filename="./temp/bg_img.jpg")
-            return await edl(
-                event, "This media is successfully set as background."
-            )
+            return await edl(event, "This media is successfully set as background.")
         if not input_str.startswith("https://t"):
             return await edl(
                 event, "Give a valid Telegraph picture link, Or reply to a media."
             )
         addgvar("LOGO_BACKGROUND", input_str)
-        return await edl(
-            event, f"**Background for logo changed to :-** `{input_str}`"
-        )
+        return await edl(event, f"**Background for logo changed to :-** `{input_str}`")
     if not input_str:
         return await edl(event, lbg_list, time=60)
     if input_str not in bg_name:
@@ -260,9 +256,7 @@ async def pussy(event):
                     "temp/logo.ttf",
                 )
             addgvar("LOGO_FONT", string)
-            await edl(
-                event, f"**Font for logo changed to :-** `{input_str}`", time=10
-            )
+            await edl(event, f"**Font for logo changed to :-** `{input_str}`", time=10)
     elif cmd in ["c", "sc"]:
         fg_name = []
         for name, code in PIL.ImageColor.colormap.items():
@@ -298,16 +292,12 @@ async def pussy(event):
         dog = re.compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
         isint = re.match(dog, input_str)
         if not input_str or not isint:
-            return await edl(
-                event, f"**Give an integer value to set**", time=10
-            )
+            return await edl(event, f"**Give an integer value to set**", time=10)
         if cmd == "s":
             input_str = int(input_str)
             if input_str > 0 and input_str <= 1000:
                 addgvar("LOGO_FONT_SIZE", input_str)
-                await edl(
-                    event, f"**Font size is changed to :-** `{input_str}`"
-                )
+                await edl(event, f"**Font size is changed to :-** `{input_str}`")
             else:
                 await edl(
                     event,
@@ -317,9 +307,7 @@ async def pussy(event):
             input_str = float(input_str)
             if input_str > 0 and input_str <= 100:
                 addgvar("LOGO_FONT_WIDTH", input_str)
-                await edl(
-                    event, f"**Font width is changed to :-** `{input_str}`"
-                )
+                await edl(event, f"**Font width is changed to :-** `{input_str}`")
             else:
                 await edl(
                     event,
@@ -329,9 +317,7 @@ async def pussy(event):
             input_str = float(input_str)
             if input_str > 0 and input_str <= 100:
                 addgvar("LOGO_FONT_HEIGHT", input_str)
-                await edl(
-                    event, f"**Font hight is changed to :-** `{input_str}`"
-                )
+                await edl(event, f"**Font hight is changed to :-** `{input_str}`")
             else:
                 await edl(
                     event,

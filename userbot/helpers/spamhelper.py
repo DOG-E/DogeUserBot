@@ -2,9 +2,8 @@ import asyncio
 
 from telethon.utils import get_display_name
 
-from . import _dogeutils
 from .. import *
-
+from . import _dogeutils
 
 months = {
     "Jan": "January",
@@ -18,7 +17,7 @@ months = {
     "Sep": "September",
     "Oct": "October",
     "Nov": "November",
-    "Dec": "December"
+    "Dec": "December",
 }
 
 

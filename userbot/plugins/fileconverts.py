@@ -223,9 +223,7 @@ async def video_dogfile(event):  # sourcery no-metrics
             os.remove(dogfile)
         else:
             os.remove(dogfile)
-            return await edl(
-                dogevent, "`No thumb found to make it video note`", 5
-            )
+            return await edl(dogevent, "`No thumb found to make it video note`", 5)
     if (
         mediatype
         in [
@@ -316,9 +314,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if not reply:
-        return await edl(
-            event, "Reply to any sticker/media to convert it to image.__"
-        )
+        return await edl(event, "Reply to any sticker/media to convert it to image.__")
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
         return await edl(
@@ -345,9 +341,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if not reply:
-        return await edl(
-            event, "Reply to any image/media to convert it to sticker.__"
-        )
+        return await edl(event, "Reply to any image/media to convert it to sticker.__")
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
         return await edl(

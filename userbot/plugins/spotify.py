@@ -6,17 +6,17 @@
 from asyncio import sleep
 from json import loads
 from json.decoder import JSONDecodeError
-from os import (environ, path, remove)
+from os import environ, path, remove
 from sys import setrecursionlimit
 
 import spotify_token as st
-from requests import (get, post)
+from requests import get, post
+from telegraph import Telegraph
 from telethon import events
 from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.contacts import UnblockRequest
-from telegraph import Telegraph
 
 from . import *
 
@@ -63,12 +63,12 @@ async def update_spotify_info():  # sourcery no-metrics
         try:
             SPOTIFY_.RUNNING = True
             spftoken = environ.get("spftoken", None)
-            hed = {'Authorization': 'Bearer ' + spftoken}
-            url = 'https://api.spotify.com/v1/me/player/currently-playing'
+            hed = {"Authorization": "Bearer " + spftoken}
+            url = "https://api.spotify.com/v1/me/player/currently-playing"
             response = get(url, headers=hed)
             data = loads(response.content)
-            artist = data['item']['album']['artists'][0]['name']
-            song = data['item']['name']
+            artist = data["item"]["album"]["artists"][0]["name"]
+            song = data["item"]["name"]
             SPOTIFY_.OLDEXCEPT = False
             oldsong = environ.get("oldsong", None)
             if song != oldsong and artist != oldartist:
@@ -126,11 +126,11 @@ async def dirtyfix():
 
 
 def msToStr(time):
-    seconds = round((time/1000)%60)
-    minutes = int((time/(1000*60))%60)
-    text = str(minutes)+":"
+    seconds = round((time / 1000) % 60)
+    minutes = int((time / (1000 * 60)) % 60)
+    text = str(minutes) + ":"
     if seconds < 10:
-        text += "0"+str(seconds)
+        text += "0" + str(seconds)
     else:
         text += str(seconds)
     return text
@@ -141,64 +141,74 @@ def generatePlayerStr(now, time):
     arr = []
     for _ in range(0, 18):
         arr.append(string)
-    index = int((now*18)/time)
+    index = int((now * 18) / time)
     if index >= len(arr):
-        index = len(arr)-1
-    arr[index] = '⚪'
-    return ("".join(arr))
+        index = len(arr) - 1
+    arr[index] = "⚪"
+    return "".join(arr)
 
 
 def get_spotify_info(TIME=5):
     try:
         spftoken = environ.get("spftoken", None)
-        hed = {'Authorization': 'Bearer ' + spftoken}
-        url = 'https://api.spotify.com/v1/me/player/currently-playing'
+        hed = {"Authorization": "Bearer " + spftoken}
+        url = "https://api.spotify.com/v1/me/player/currently-playing"
         response = get(url, headers=hed)
         data = loads(response.content)
-        item = data['item']
-        artistsStr = "" 
+        item = data["item"]
+        artistsStr = ""
         artists = []
-        if len(item['artists']) > 0:
-            for i in item['artists']:
-                artists.append(str(i['name']))
+        if len(item["artists"]) > 0:
+            for i in item["artists"]:
+                artists.append(str(i["name"]))
             artistsStr = ", ".join(artists)
-            artistsStr = "\n__"+artistsStr+"__"
+            artistsStr = "\n__" + artistsStr + "__"
         song = f"**{item['name']}**"
         songinfo = song + artistsStr
-        name = item['name'] + " - "+(", ".join(artists))
+        name = item["name"] + " - " + (", ".join(artists))
         image = "🔄"
         try:
-            url = item['external_urls']['spotify']
+            url = item["external_urls"]["spotify"]
             url = f"[Open on Spotify]({url})"
         except Exception:
-            url = "Spotify now playing"  
-        nowtime = int(data['progress_ms'])
-        totaltime = int(item['duration_ms'])
-        if len(item['album']['images']) > 0:
+            url = "Spotify now playing"
+        nowtime = int(data["progress_ms"])
+        totaltime = int(item["duration_ms"])
+        if len(item["album"]["images"]) > 0:
             telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
             if path.exists("@DogeUserBot-Spotify.jpg"):
-                remove("@DogeUserBot-Spotify.jpg")          
+                remove("@DogeUserBot-Spotify.jpg")
             try:
-                r = get(str(item['album']['images'][0]['url']))
-                with open("@DogeUserBot-Spotify.jpg", 'wb') as f:
+                r = get(str(item["album"]["images"][0]["url"]))
+                with open("@DogeUserBot-Spotify.jpg", "wb") as f:
                     f.write(r.content)
-                with open('@DogeUserBot-Spotify.jpg', 'rb') as f:
-                    req = post('https://telegra.ph/upload', 
-                    files={'Hey': ('Hey', f, 'image/jpeg')}  # image/gif, image/jpeg, image/jpg, image/png, video/mp4
+                with open("@DogeUserBot-Spotify.jpg", "rb") as f:
+                    req = post(
+                        "https://telegra.ph/upload",
+                        files={
+                            "Hey": ("Hey", f, "image/jpeg")
+                        },  # image/gif, image/jpeg, image/jpg, image/png, video/mp4
                     ).json()
-                    image = "[🔄](https://telegra.ph"+req[0]['src']+")"
+                    image = "[🔄](https://telegra.ph" + req[0]["src"] + ")"
             except Exception:
                 pass
         if path.exists("@DogeUserBot-Spotify.jpg"):
-            remove("@DogeUserBot-Spotify.jpg") 
+            remove("@DogeUserBot-Spotify.jpg")
         art = []
         message = ""
         Stop = False
-        for _ in range(0, TIME):       
+        for _ in range(0, TIME):
             nowstr = msToStr(nowtime)
             totalstr = msToStr(totaltime)
             progress = generatePlayerStr(nowtime, totaltime)
-            mp = progress+"\n\n◄◄⠀▐▐ ⠀►►⠀⠀⠀ "+nowstr+" / "+totalstr + f"⠀⠀⠀{image}🔀\n\n{url}"
+            mp = (
+                progress
+                + "\n\n◄◄⠀▐▐ ⠀►►⠀⠀⠀ "
+                + nowstr
+                + " / "
+                + totalstr
+                + f"⠀⠀⠀{image}🔀\n\n{url}"
+            )
             if message == "":
                 message = mp
             appendstr = songinfo + "\n\n" + mp
@@ -211,7 +221,7 @@ def get_spotify_info(TIME=5):
             elif Stop is True or nowstr == totalstr:
                 break
         arr = [message, name, art]
-        return arr       
+        return arr
     except KeyError:
         print(2)
         return "Error! Could not fetch the song playing on Spotify!"
@@ -275,13 +285,16 @@ async def getmp3(event):
     try:
         await get_spotify_token()
     except Exception:
-        return await edl(dogevent, "__You haven't set the api value. Set Api var __`SPOTIFY_USERNAME` __and__ `SPOTIFY_PASSWORD` __in Heroku get value.")
+        return await edl(
+            dogevent,
+            "__You haven't set the api value. Set Api var __`SPOTIFY_USERNAME` __and__ `SPOTIFY_PASSWORD` __in Heroku get value.",
+        )
     info = get_spotify_info()
     if isinstance(info, list) is False:
         await eor(dogevent, info)
     else:
-        msg = info[0]      
-        songinfo = info[1]         
+        msg = info[0]
+        songinfo = info[1]
         msgs = info[2]
         chat = "@DeezerMusicBot"
         try:
@@ -291,13 +304,17 @@ async def getmp3(event):
                 except YouBlockedUserError:
                     doge(UnblockRequest(chat))
                     await conv.send_message(songinfo)
-                
-                musics = await conv.wait_event(events.NewMessage(incoming=True,from_users=chat))
+
+                musics = await conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=chat)
+                )
                 await event.client.send_read_acknowledge(conv.chat_id)
-                
+
                 if musics.audio:
                     await event.client.send_read_acknowledge(conv.chat_id)
-                    await event.client.send_message(event.chat_id, msg, file=musics.message)
+                    await event.client.send_message(
+                        event.chat_id, msg, file=musics.message
+                    )
                     await dogevent.delete()
                 elif musics.buttons[0][0].text == "No results":
                     for item in enumerate(msgs):
@@ -306,11 +323,15 @@ async def getmp3(event):
                     return
                 else:
                     await musics.click(0)
-                    songgg = await conv.wait_event(events.NewMessage(incoming=True,from_users=chat))
+                    songgg = await conv.wait_event(
+                        events.NewMessage(incoming=True, from_users=chat)
+                    )
                     await event.client.send_read_acknowledge(conv.chat_id)
-                    await event.client.send_message(event.chat_id, msg, file=songgg.message)
+                    await event.client.send_message(
+                        event.chat_id, msg, file=songgg.message
+                    )
                     await dogevent.delete()
-                
+
         except Exception as e:
             print(e)
             for item in enumerate(msgs):

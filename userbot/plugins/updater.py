@@ -207,9 +207,7 @@ async def upstream(event):
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await eor(
-            event, "`Set the required vars first to update the bot`"
-        )
+        return await eor(event, "`Set the required vars first to update the bot`")
     try:
         txt = "`Oops.. Updater cannot continue due to "
         txt += "some problems occured`\n\n**LOGTRACE:**\n"

@@ -12,7 +12,7 @@ from .utils import runcmd
 LOGS = logging.getLogger(__name__)
 
 
-async def media_to_pic(event, reply, noedits=False): # sourcery no-metrics
+async def media_to_pic(event, reply, noedits=False):  # sourcery no-metrics
     mediatype = media_type(reply)
     if mediatype not in [
         "Photo",
@@ -26,9 +26,7 @@ async def media_to_pic(event, reply, noedits=False): # sourcery no-metrics
     ]:
         return event, None
     if not noedits:
-        dogevent = await eor(
-            event, f"`Transfiguration Time! Converting to ....`"
-        )
+        dogevent = await eor(event, f"`Transfiguration Time! Converting to ....`")
     else:
         dogevent = event
     dogmedia = None

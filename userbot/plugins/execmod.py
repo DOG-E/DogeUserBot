@@ -1,6 +1,6 @@
 from userbot import doge
 
-from ..core.managers import edl, eor
+from ..core.managers import eor
 from ..helpers.utils import _dogeutils, yaml_format
 
 plugin_category = "tools"
@@ -75,6 +75,4 @@ async def _(event):
             result = reply.date
     else:
         result = event.date
-    await eor(
-        event, f"**This message was posted on :** `{yaml_format(result)}`"
-    )
+    await eor(event, f"**This message was posted on :** `{yaml_format(result)}`")

@@ -48,16 +48,10 @@ async def wiki(event):
                 f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
                 for lineno, i in enumerate(error, start=1)
             )
-            return await eor(
-                event, f"**Disambiguated page found.**\n\n{result}"
-            )
+            return await eor(event, f"**Disambiguated page found.**\n\n{result}")
         except PageError:
-            return await edl(
-                event, f"**Sorry i Can't find any results for **`{match}`"
-            )
-    await eor(
-        event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__"
-    )
+            return await edl(event, f"**Sorry i Can't find any results for **`{match}`")
+    await eor(event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully"

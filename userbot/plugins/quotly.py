@@ -151,9 +151,7 @@ async def stickerchat(dogquotes):
     "Makes your message as sticker quote"
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await eor(
-            dogquotes, "`I cant quote the message . reply to a message`"
-        )
+        return await eor(dogquotes, "`I cant quote the message . reply to a message`")
     fetchmsg = reply.message
     repliedreply = None
     mediatype = media_type(reply)
@@ -188,9 +186,7 @@ async def stickerchat(dogquotes):
     "To make sticker message."
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await eor(
-            dogquotes, "`I cant quote the message . reply to a message`"
-        )
+        return await eor(dogquotes, "`I cant quote the message . reply to a message`")
     fetchmsg = reply.message
     repliedreply = await reply.get_reply_message()
     mediatype = media_type(reply)
@@ -261,9 +257,7 @@ async def _(event):
             elif message != "":
                 await event.client.send_message(conv.chat_id, message)
             else:
-                return await edl(
-                    dogevent, "`I guess you have used a invalid syntax`"
-                )
+                return await edl(dogevent, "`I guess you have used a invalid syntax`")
             response = await response
         except YouBlockedUserError:
             return await dogevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")

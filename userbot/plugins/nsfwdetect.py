@@ -30,15 +30,11 @@ async def detect(event):
         )
     reply = await event.get_reply_message()
     if not reply:
-        return await edl(
-            event, "`Reply to any image or non animated sticker !`", 5
-        )
+        return await edl(event, "`Reply to any image or non animated sticker !`", 5)
     dogevent = await eor(event, "`Downloading the file to check...`")
     media = await event.client.download_media(reply)
     if not media.endswith(("png", "jpg", "webp")):
-        return await edl(
-            event, "`Reply to any image or non animated sticker !`", 5
-        )
+        return await edl(event, "`Reply to any image or non animated sticker !`", 5)
     dogevent = await eor(event, "`Detecting NSFW limit...`")
     r = requests.post(
         "https://api.deepai.org/api/nsfw-detector",

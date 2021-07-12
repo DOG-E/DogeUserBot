@@ -90,9 +90,7 @@ async def _(event):
         bool(sql.rm_from_blacklist(event.chat_id, trigger.lower()))
         for trigger in to_unblacklist
     )
-    await eor(
-        event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist"
-    )
+    await eor(event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
 
 
 @doge.bot_cmd(

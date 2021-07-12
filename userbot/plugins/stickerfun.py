@@ -13,7 +13,16 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from . import doge, edl, eor, reply_id, deEmojify, hide_inlinebot, hide_inlinebot_point, waifutxt
+from . import (
+    deEmojify,
+    doge,
+    edl,
+    eor,
+    hide_inlinebot,
+    hide_inlinebot_point,
+    reply_id,
+    waifutxt,
+)
 
 plugin_category = "fun"
 
@@ -147,9 +156,7 @@ async def honk(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edl(
-                event, "__What is honk supposed to say? Give some text.__"
-            )
+            return await edl(event, "__What is honk supposed to say? Give some text.__")
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot_point(event.client, bot_name, text, event.chat_id, reply_to_id)
@@ -173,9 +180,7 @@ async def twt(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edl(
-                event, "__What am I supposed to Tweet? Give some text.__"
-            )
+            return await edl(event, "__What am I supposed to Tweet? Give some text.__")
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
@@ -210,9 +215,7 @@ async def glax(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edl(
-                event, "What is glax supposed to scream? Give text.."
-            )
+            return await edl(event, "What is glax supposed to scream? Give text..")
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(
@@ -238,9 +241,7 @@ async def twt(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edl(
-                event, "__What am I supposed to search? Give some text.__"
-            )
+            return await edl(event, "__What am I supposed to search? Give some text.__")
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)

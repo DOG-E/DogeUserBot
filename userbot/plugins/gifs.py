@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from . import doge, edl, eor, _dogeutils, reply_id
+from . import _dogeutils, doge, edl, eor, reply_id
 
 plugin_category = "useless"
 

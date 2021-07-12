@@ -38,9 +38,7 @@ async def _(event):
     if response_api:
         await eor(event, f"DNS records of {input_str} are \n{response_api}")
     else:
-        await eor(
-            event, f"__I can't seem to find `{input_str}` on the internet__"
-        )
+        await eor(event, f"__I can't seem to find `{input_str}` on the internet__")
 
 
 @doge.bot_cmd(

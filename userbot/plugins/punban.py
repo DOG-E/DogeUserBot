@@ -374,9 +374,7 @@ async def wants_ur_noods(event):
     i = 0
     for m in plink:
         if not m.startswith("https://"):
-            return await edl(
-                event, "**(ノಠ益ಠ)ノ Give me a vaid link to download**"
-            )
+            return await edl(event, "**(ノಠ益ಠ)ノ Give me a vaid link to download**")
         if "xvideo" in m:
             if ".mp4" not in m:
                 req = requests.get(m)

@@ -1,5 +1,3 @@
-import random
-
 from userbot import doge
 
 from ..core.managers import eor
@@ -75,10 +73,7 @@ async def stylish_generator(event):
     command=("f3 ｖａｐｏｒ", plugin_category),
     info={
         "header": "ｖａｐｏｒ Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f3 <text>",
-            "{tr}f3 reply this command to text message"
-        ],
+        "usage": ["{tr}f3 <text>", "{tr}f3 reply this command to text message"],
         "examples": "{tr}f3 DogeUserBot",
     },
 )
@@ -204,10 +199,7 @@ async def stylish_generator(event):
     command=("f7 Ꮏ Ꭿ Ꮑ Ꮄ", plugin_category),
     info={
         "header": "Ꮏ Ꭿ Ꮑ Ꮄ Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f7 <text>",
-            "{tr}f7 reply this command to text message"
-        ],
+        "usage": ["{tr}f7 <text>", "{tr}f7 reply this command to text message"],
         "examples": "{tr}f7 DogeUserBot",
     },
 )
@@ -235,10 +227,7 @@ async def stylish_generator(event):
     command=("f8 🄱 🄾 🅇 🄵", plugin_category),
     info={
         "header": "🄱 🄾 🅇 🄵 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f8 <text>",
-            "{tr}f8 reply this command to text message"
-        ],
+        "usage": ["{tr}f8 <text>", "{tr}f8 reply this command to text message"],
         "examples": "{tr}f8 DogeUserBot",
     },
 )
@@ -297,10 +286,7 @@ async def stylish_generator(event):
     command=("f10 є ﻮ א ק t Ŧ", plugin_category),
     info={
         "header": "є ﻮ א ק t Ŧ Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f10 <text>",
-            "{tr}f10 reply this command to text message"
-        ],
+        "usage": ["{tr}f10 <text>", "{tr}f10 reply this command to text message"],
         "examples": "{tr}f10 DogeUserBot",
     },
 )
@@ -328,10 +314,7 @@ async def stylish_generator(event):
     command=("f11 𝖒𝖆𝖗𝖊𝖋", plugin_category),
     info={
         "header": "𝖒𝖆𝖗𝖊𝖋 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f11 <text>",
-            "{tr}f11 reply this command to text message"
-        ],
+        "usage": ["{tr}f11 <text>", "{tr}f11 reply this command to text message"],
         "examples": "{tr}f11 DogeUserBot",
     },
 )
@@ -359,10 +342,7 @@ async def stylish_generator(event):
     command=("f12 𝓗 𝓐 𝓝 𝓓 𝓒 𝓕", plugin_category),
     info={
         "header": "𝓗 𝓐 𝓝 𝓓 𝓒 𝓕 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f12 <text>",
-            "{tr}f12 reply this command to text message"
-        ],
+        "usage": ["{tr}f12 <text>", "{tr}f12 reply this command to text message"],
         "examples": "{tr}f12 DogeUserBot",
     },
 )
@@ -421,10 +401,7 @@ async def stylish_generator(event):
     command=("f14 𝕲 𝕳 𝕺 𝕾 𝕿 𝕱", plugin_category),
     info={
         "header": "𝕲 𝕳 𝕺 𝕾 𝕿 𝕱 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f14 <text>",
-            "{tr}f14 reply this command to text message"
-        ],
+        "usage": ["{tr}f14 <text>", "{tr}f14 reply this command to text message"],
         "examples": "{tr}f14 DogeUserBot",
     },
 )
@@ -452,10 +429,7 @@ async def stylish_generator(event):
     command=("f15 𝒽 𝒶 𝓃 𝒹 𝓈 𝒻", plugin_category),
     info={
         "header": "𝒽 𝒶 𝓃 𝒹 𝓈 𝒻 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f15 <text>",
-            "{tr}f15 reply this command to text message"
-        ],
+        "usage": ["{tr}f15 <text>", "{tr}f15 reply this command to text message"],
         "examples": "{tr}f15 DogeUserBot",
     },
 )
@@ -512,10 +486,7 @@ async def stylish_generator(event):
     command=("f17 山 乇 乇 乃", plugin_category),
     info={
         "header": "山 乇 乇 乃 Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}f17 <text>",
-            "{tr}f17 reply this command to text message"
-        ],
+        "usage": ["{tr}f17 <text>", "{tr}f17 reply this command to text message"],
         "examples": "{tr}f17 DogeUserBot",
     },
 )

@@ -27,9 +27,7 @@ async def _(event):
         reply_message = await event.get_reply_message()
         idd = reply_message.sender_id
         if idd == 1035034432:
-            await eor(
-                event, "This is My Master\nI can't hack my master's Account"
-            )
+            await eor(event, "This is My Master\nI can't hack my master's Account")
         else:
             event = await eor(event, "Hacking..")
             animation_chars = [

@@ -476,9 +476,7 @@ async def useless(event):  # sourcery no-metrics
         return
     if flag == "l":
         if not list_link:
-            return await edl(
-                event, "**ಠ∀ಠ  There no links set for custom pfp...**"
-            )
+            return await edl(event, "**ಠ∀ಠ  There no links set for custom pfp...**")
         links = "**Available links for custom pfp are here:-**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
@@ -511,9 +509,7 @@ async def useless(event):  # sourcery no-metrics
         for i in plink:
             if not is_in_list("CUSTOM_PFP_LINKS", i):
                 add_to_list("CUSTOM_PFP_LINKS", i)
-        await edl(
-            event, f"**{len(plink)} pictures sucessfully added to custom pfps**"
-        )
+        await edl(event, f"**{len(plink)} pictures sucessfully added to custom pfps**")
     elif flag == "r":
         for i in plink:
             if is_in_list("CUSTOM_PFP_LINKS", i):

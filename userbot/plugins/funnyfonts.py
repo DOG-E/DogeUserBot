@@ -14,10 +14,7 @@ plugin_category = "fun"
     command=("mock", plugin_category),
     info={
         "header": "Font style command.(Changes font style of the given text)",
-        "usage": [
-            "{tr}mock <text>",
-            "{tr}mock reply this command to text message"
-        ],
+        "usage": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
         "examples": "{tr}mock DogeUserBot",
     },
 )
@@ -49,10 +46,7 @@ async def spongemocktext(mock):
     command=("str", plugin_category),
     info={
         "header": "stretches the given text",
-        "usage": [
-            "{tr}str <text>",
-            "{tr}str reply this command to text message"
-        ],
+        "usage": ["{tr}str <text>", "{tr}str reply this command to text message"],
         "examples": "{tr}str DogeUserBot",
     },
 )
@@ -70,7 +64,9 @@ async def stretch(stret):
         return
 
     count = random.randint(3, 10)
-    reply_text = re.sub(r"([aeıioöuüAEIİOÖUÜａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
+    reply_text = re.sub(
+        r"([aeıioöuüAEIİOÖUÜａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message
+    )
     await eor(stret, reply_text)
 
 
@@ -79,10 +75,7 @@ async def stretch(stret):
     command=("zal", plugin_category),
     info={
         "header": "chages given text into some funny way",
-        "usage": [
-            "{tr}zal <text>",
-            "{tr}zal reply this command to text message"
-        ],
+        "usage": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
         "examples": "{tr}zal DogeUserBot",
     },
 )
@@ -126,10 +119,7 @@ async def zal(zgfy):
     command=("cp", plugin_category),
     info={
         "header": "chages given text into some funny way",
-        "usage": [
-            "{tr}cp <text>",
-            "{tr}cp reply this command to text message"
-        ],
+        "usage": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
         "examples": "{tr}cp DogeUserBot",
     },
 )
