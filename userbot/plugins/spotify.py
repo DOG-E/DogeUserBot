@@ -237,7 +237,7 @@ def get_spotify_info(TIME=5):
 
 
 @doge.bot_cmd(
-    pattern="(spo(ify)?bio) (on|off)",
+    pattern="(spo(tify)?bio) (on|off)",
     command=("spotify", plugin_category),
     info={
         "header": "To enable or disable the Spotify current playing to bio.",

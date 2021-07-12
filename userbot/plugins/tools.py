@@ -52,7 +52,7 @@ async def currency(event):
     if len(values) == 3:
         value, fromcurrency, tocurrency = values
     else:
-        return await edl(event, "__Use proper syntax. check__ `.help -c cur`")
+        return await edl(event, "__Use proper syntax. check__ `.help .c cur`")
     fromcurrency = fromcurrency.upper()
     tocurrency = tocurrency.upper()
     try:

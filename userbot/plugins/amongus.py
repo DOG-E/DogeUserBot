@@ -40,11 +40,11 @@ plugin_category = "extra"
         },
         "usage": [
             "{tr}amongus <text/reply>",
-            "{tr}amongus -c<colur number> <text/reply>",
+            "{tr}amongus .c<colur number> <text/reply>",
         ],
         "examples": [
             "{tr}amongus gather around",
-            "{tr}amongus -c3 gather around",
+            "{tr}amongus .c3 gather around",
         ],
     },
 )
@@ -54,11 +54,11 @@ async def sayliecmd(event):
     reply = await event.get_reply_message()
     if not text and reply:
         text = reply.raw_text
-    clr = re.findall(r"-c\d+", text)
+    clr = re.findall(r".c\d+", text)
     try:
         clr = clr[0]
-        clr = clr.replace("-c", "")
-        text = text.replace("-c" + clr, "")
+        clr = clr.replace(".c", "")
+        text = text.replace(".c" + clr, "")
         clr = int(clr)
         if clr > 12 or clr < 1:
             clr = randint(1, 12)

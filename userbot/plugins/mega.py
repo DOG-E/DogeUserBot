@@ -67,7 +67,7 @@ async def subprocess_run(megadl, cmd):
     command=("mega", plugin_category),
     info={
         "header": "Downloads mega files from it links.",
-        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .help -c upload. Folder is not supported currently and only mega file links are supported.",
+        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .help .c upload. Folder is not supported currently and only mega file links are supported.",
         "usage": "{tr}mega <mega.nz link>",
     },
 )

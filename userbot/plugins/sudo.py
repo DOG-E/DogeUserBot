@@ -39,7 +39,7 @@ def get_key(val):
     command=("sudo", plugin_category),
     info={
         "header": "To enable or disable sudo of your DogeUserBot.",
-        "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}help -c addscmd`",
+        "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}help .c addscmd`",
         "usage": "{tr}sudo <on/off>",
     },
 )

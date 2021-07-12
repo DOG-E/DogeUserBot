@@ -91,7 +91,7 @@ async def plugininfo(input_str, event, flag):
         except IndexError:
             outstr += f"**➥ Info :** `None`\n\n"
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <command name>`\
-        \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`."
+        \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help .c <command name>`."
     return outstr
 
 
@@ -120,12 +120,12 @@ async def cmdlist():
             for cmd in cmds:
                 outstr += f"  - `{cmdprefix}{cmd}`\n"
             outstr += "\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
+    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help .c <command name>`"
     return outstr
 
 
 @doge.bot_cmd(
-    pattern="(help|h)?(c|p|t)? ?([\s\S]*)?",
+    pattern="help ?(.c|.p|.t)? ?([\s\S]*)?",
     command=("help", plugin_category),
     info={
         "header": "To get guide for DogeUserBot.",
@@ -137,11 +137,11 @@ async def cmdlist():
             "t": "To get all plugins in text format.",
         },
         "usage": [
-            "{tr}help or {tr}h (plugin/command name)",
-            "{tr}helpc or {tr}hc (command name)",
-            "{tr}helpt or {tr}ht",
+            "{tr}help (plugin/command name)",
+            "{tr}help .c (command name)",
+            "{tr}help .t",
         ],
-        "examples": ["{tr}help help", "{tr}helpc help"],
+        "examples": ["{tr}help help", "{tr}help .c help"],
     },
 )
 async def _(event):
@@ -149,7 +149,7 @@ async def _(event):
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
-    if flag and flag == "c" and input_str:
+    if flag and flag == ".c" and input_str:
         outstr = await cmdinfo(input_str, event)
         if outstr is None:
             return
@@ -157,7 +157,7 @@ async def _(event):
         outstr = await plugininfo(input_str, event, flag)
         if outstr is None:
             return
-    elif flag == "t":
+    elif flag == ".t":
         outstr = await grpinfo()
     else:
         results = await event.client.inline_query(Config.TG_BOT_USERNAME, "help")
@@ -194,7 +194,7 @@ async def _(event):
         outstr = f"**✘ {input_str.title()} has {len(cmds)} commands**\n"
         for cmd in cmds:
             outstr += f"  - `{cmdprefix}{cmd}`\n"
-        outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
+        outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help .c <command name>`"
     await eor(
         event, outstr, aslink=True, linktext="Total Commands of DogeUserBot are :"
     )
@@ -215,7 +215,7 @@ async def _(event):
     if found:
         out_str = "".join(f"`{i}`    " for i in found)
         out = f"**I found {len(found)} command(s) for: **`{cmd}`\n\n{out_str}"
-        out += f"\n\n__For more info check {cmdprefix}help -c <command>__"
+        out += f"\n\n__For more info check {cmdprefix}help .c <command>__"
     else:
         out = f"I can't find any such command `{cmd}` in DogeUserBot"
     await eor(event, out)

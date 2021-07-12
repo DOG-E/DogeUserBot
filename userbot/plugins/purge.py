@@ -329,7 +329,7 @@ async def fastpurger(event):  # sourcery no-metrics
             else:
                 error += f"\n• `{ty}` __is Invalid flag.__"
         elif input_str:
-            error += f"\n• `.purge {input_str}` __is invalid syntax try again by reading__ `.help -c purge`"
+            error += f"\n• `.purge {input_str}` __is invalid syntax try again by reading__ `.help .c purge`"
         elif p_type is not None:
             for ty in p_type:
                 if ty in purgetype:
@@ -433,7 +433,7 @@ async def fastpurger(event):  # sourcery no-metrics
         if msgs:
             await event.client.delete_messages(chat, msgs)
     else:
-        error += "\n•  __Nothing is specified Recheck the help__ (`.help -c purge`)"
+        error += "\n•  __Nothing is specified Recheck the help__ (`.help .c purge`)"
     if msgs:
         await event.client.delete_messages(chat, msgs)
     if count > 0:
@@ -526,7 +526,7 @@ async def fast_purger(event):  # sourcery no-metrics
                     await event.client.delete_messages(chat, msgs)
                     msgs = []
         elif input_str:
-            error += f"\n• `.upurge {input_str}` __is invalid syntax try again by reading__ `.help -c purge`"
+            error += f"\n• `.upurge {input_str}` __is invalid syntax try again by reading__ `.help .c purge`"
         else:
             async for msg in event.client.iter_messages(
                 chat,
