@@ -1,6 +1,6 @@
 {
-  "name": "Telegram Doge UserBot",
-  "description": "Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
+  "name": "🐶 Telegram Doge UserBot 🐾",
+  "description": "🐶 Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
   "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
   "keywords": [
       "powerful",
@@ -43,26 +43,23 @@
     },
     "HEROKU_API_KEY": {
       "description": "Required for updating the bot and other stuff get it from https://dashboard.heroku.com/account Please don't steal!",
-      "value": "",
-      "required": true
+      "value": ""
     },
     "HEROKU_APP_NAME": {
       "description": "Add the Heroku app name you specified above here. It helps to keep Doge up to date.",
-      "value": "",
-      "required": true
+      "value": ""
     },
     "UPSTREAM_REPO": {
       "description": "Required for installation and updates. Recommend don't change it.",
-      "value": "https://github.com/DOG-E/DogeUserBot",
-      "required": true
+      "value": "doge"
     },
     "TZ": {
       "description": "Required for correct time on autopic/get time. Write your time zone location closest to your current location in English. Know your timezone from http://www.timezoneconverter.com/cgi-bin/findzone.tzc",
       "value": "Europe/Istanbul",
-      "required": true
+      "required": false
     },
     "COMMAND_HAND_LER": {
-      "description": "(Optional) Set this one with only one the symbol to use it before your command to run like . , ! ' `",
+      "description": "Set this one with only one the symbol to use it before your command to run like . , ! ' ` /",
       "value": ".",
       "required": false
     },
@@ -72,9 +69,9 @@
       "required": false
     }
   },
-  "addons": [{
+  "addons": {
     "plan": "heroku-postgresql"
-  }],
+  },
   "formation": {
     "doger": {
         "quantity": 1,
@@ -82,17 +79,17 @@
     }
   },
   "buildpacks": [{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-ffmpeg-latest"
   },{
-    "url":"https://github.com/heroku/heroku-buildpack-google-chrome"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-google-chrome"
   },{
-    "url":"https://github.com/heroku/heroku-buildpack-chromedriver"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-chromedriver"
   },{
-    "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-p7zip"
   },{
-    "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+    "url": "https://github.com/TeleDoge/aria2-heroku"
   },{
-    "url": "https://github.com/chrismytton/heroku-buildpack-jq"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-jq"
   },{
     "url": "heroku/python"
   }]

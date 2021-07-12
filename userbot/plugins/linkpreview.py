@@ -3,7 +3,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "utils"
 
@@ -20,13 +20,13 @@ async def _(event):
     "To get link preview"
     reply_message = await event.get_reply_message()
     if not reply_message:
-        await edit_or_reply(event, "```Reply to a Link.```")
+        await eor(event, "```Reply to a Link.```")
         return
     if not reply_message.text:
-        await edit_or_reply(event, "```Reply to a Link```")
+        await eor(event, "```Reply to a Link```")
         return
     chat = "@chotamreaderbot"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(

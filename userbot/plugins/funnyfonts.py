@@ -3,10 +3,45 @@ import re
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import fonts
 
 plugin_category = "fun"
+
+
+@doge.bot_cmd(
+    pattern="mock(?:\s|$)([\s\S]*)",
+    command=("mock", plugin_category),
+    info={
+        "header": "Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}mock <text>",
+            "{tr}mock reply this command to text message"
+        ],
+        "examples": "{tr}mock DogeUserBot",
+    },
+)
+async def spongemocktext(mock):
+    "Changes font style of the given text"
+    reply_text = []
+    textx = await mock.get_reply_message()
+    message = mock.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await eor(mock, "`gIvE sOMEtHInG tO MoCk!`")
+        return
+
+    for charac in message:
+        if charac.isalpha() and random.randint(0, 1):
+            to_app = charac.upper() if charac.islower() else charac.lower()
+            reply_text.append(to_app)
+        else:
+            reply_text.append(charac)
+
+    await eor(mock, "".join(reply_text))
 
 
 @doge.bot_cmd(
@@ -14,7 +49,10 @@ plugin_category = "fun"
     command=("str", plugin_category),
     info={
         "header": "stretches the given text",
-        "usage": ["{tr}str <text>", "{tr}str reply this command to text message"],
+        "usage": [
+            "{tr}str <text>",
+            "{tr}str reply this command to text message"
+        ],
         "examples": "{tr}str DogeUserBot",
     },
 )
@@ -28,12 +66,12 @@ async def stretch(stret):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(stret, "`GiiiiiiiB sooooooomeeeeeee teeeeeeext!`")
+        await eor(stret, "`GiiiiiiiB sooooooomeeeeeee teeeeeeext!`")
         return
 
     count = random.randint(3, 10)
-    reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
-    await edit_or_reply(stret, reply_text)
+    reply_text = re.sub(r"([aeıioöuüAEIİOÖUÜａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
+    await eor(stret, reply_text)
 
 
 @doge.bot_cmd(
@@ -41,7 +79,10 @@ async def stretch(stret):
     command=("zal", plugin_category),
     info={
         "header": "chages given text into some funny way",
-        "usage": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
+        "usage": [
+            "{tr}zal <text>",
+            "{tr}zal reply this command to text message"
+        ],
         "examples": "{tr}zal DogeUserBot",
     },
 )
@@ -55,7 +96,7 @@ async def zal(zgfy):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(
+        await eor(
             zgfy, "`gͫ ̆ i̛ ̺ v͇̆ ȅͅ   a̢ͦ   s̴̪ c̸̢ ä̸ rͩͣ y͖͞   t̨͚ é̠ x̢͖  t͔͛`"
         )
         return
@@ -77,7 +118,7 @@ async def zal(zgfy):
 
         reply_text.append(charac)
 
-    await edit_or_reply(zgfy, "".join(reply_text))
+    await eor(zgfy, "".join(reply_text))
 
 
 @doge.bot_cmd(
@@ -85,7 +126,10 @@ async def zal(zgfy):
     command=("cp", plugin_category),
     info={
         "header": "chages given text into some funny way",
-        "usage": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
+        "usage": [
+            "{tr}cp <text>",
+            "{tr}cp reply this command to text message"
+        ],
         "examples": "{tr}cp DogeUserBot",
     },
 )
@@ -99,11 +143,11 @@ async def copypasta(cp_e):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
+        await eor(cp_e, "`😂🤡IvE👐sOmE👅tExT👅fOr✌️Me👌tO👐MAkE👀iT💞fUnNy!💦`")
         return
 
     reply_text = random.choice(fonts.EMOJIS)
-    # choose a random character in the message to be substituted with 🅱️
+    # choose a random character in the message to be substituted with 🤡
     b_char = random.choice(message).lower()
     for owo in message:
         if owo == " ":
@@ -112,37 +156,11 @@ async def copypasta(cp_e):
             reply_text += owo
             reply_text += random.choice(fonts.EMOJIS)
         elif owo.lower() == b_char:
-            reply_text += "🅱️"
+            reply_text += "🤡"
         else:
             reply_text += owo.upper() if bool(random.getrandbits(1)) else owo.lower()
     reply_text += random.choice(fonts.EMOJIS)
-    await edit_or_reply(cp_e, reply_text)
-
-
-@doge.bot_cmd(
-    pattern="weeb(?:\s|$)([\s\S]*)",
-    command=("weeb", plugin_category),
-    info={
-        "header": "chages given text into some funny way",
-        "usage": ["{tr}weeb <text>", "{tr}weeb reply this command to text message"],
-        "examples": "{tr}weeb DogeUserBot",
-    },
-)
-async def weebify(event):
-    "chages given text into some funny way"
-    args = event.pattern_match.group(1)
-    if not args:
-        get = await event.get_reply_message()
-        args = get.text
-    if not args:
-        await edit_or_reply(event, "`What I am Supposed to Weebify `")
-        return
-    string = "  ".join(args).lower()
-    for normiecharacter in string:
-        if normiecharacter in fonts.normiefont:
-            weebycharacter = fonts.weebyfont[fonts.normiefont.index(normiecharacter)]
-            string = string.replace(normiecharacter, weebycharacter)
-    await edit_or_reply(event, string)
+    await eor(cp_e, reply_text)
 
 
 @doge.bot_cmd(
@@ -164,7 +182,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
     string = "  ".join(args).lower()
     for upsidecharacter in string:
@@ -173,7 +191,7 @@ async def stylish_generator(event):
                 fonts.upsidefont.index(upsidecharacter)
             ]
             string = string.replace(upsidecharacter, downsidecharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
@@ -195,7 +213,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -204,35 +222,4 @@ async def stylish_generator(event):
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, subscriptcharacter)
-    await edit_or_reply(event, string)
-
-
-@doge.bot_cmd(
-    pattern="superscript(?:\s|$)([\s\S]*)",
-    command=("superscript", plugin_category),
-    info={
-        "header": "chages given text into superscript",
-        "usage": [
-            "{tr}superscript <text>",
-            "{tr}superscript reply this command to text message",
-        ],
-        "examples": "{tr}superscript DogeUserBot",
-    },
-)
-async def stylish_generator(event):
-    "chages given text into superscript"
-    args = event.pattern_match.group(1)
-    if not args:
-        get = await event.get_reply_message()
-        args = get.text
-    if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
-        return
-    string = "  ".join(args).lower()
-    for normaltextcharacter in string:
-        if normaltextcharacter in fonts.normaltext:
-            superscriptcharacter = fonts.superscriptfont[
-                fonts.normaltext.index(normaltextcharacter)
-            ]
-            string = string.replace(normaltextcharacter, superscriptcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)

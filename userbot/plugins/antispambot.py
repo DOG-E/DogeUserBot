@@ -10,7 +10,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from ..Config import Config
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, doge, edit_or_reply, logging, spamwatch
+from . import BOTLOG, BOTLOG_CHATID, doge, eor, logging, spamwatch
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
@@ -114,7 +114,7 @@ if Config.ANTISPAMBOT_BAN:
 )
 async def caschecker(event):
     "Searches for cas(combot antispam service) banned users in group and shows you the list"
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         "`checking any cas(combot antispam service) banned users here, this may take several minutes too......`",
     )
@@ -163,7 +163,7 @@ async def caschecker(event):
 async def caschecker(event):
     "Searches for spamwatch federation banned users in group and shows you the list"
     text = ""
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         "`checking any spamwatch banned users here, this may take several minutes too......`",
     )

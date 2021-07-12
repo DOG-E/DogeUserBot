@@ -7,7 +7,7 @@ You remove this, you gay.
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from . import doge, reply_id
 
 plugin_category = "fun"
@@ -45,9 +45,9 @@ async def dog(event):
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
-        return await edit_delete(event, "`Give me some text to process...`")
+        return await edl(event, "`Give me some text to process...`")
     msg = f"/sf {input_text}"
-    dog = await edit_or_reply(event, "```Fox is on your way...```")
+    dog = await eor(event, "```Fox is on your way...```")
     await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
@@ -65,9 +65,9 @@ async def dog(event):
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
-        return await edit_delete(event, "`Give me some text to process...`")
+        return await edl(event, "`Give me some text to process...`")
     msg = f"/ttm {input_text}"
-    dog = await edit_or_reply(event, "```Wait making your hardcore meme...```")
+    dog = await eor(event, "```Wait making your hardcore meme...```")
     await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
@@ -85,9 +85,9 @@ async def dog(event):
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
-        return await edit_delete(event, "`Give me some text to process...`")
+        return await edl(event, "`Give me some text to process...`")
     msg = f"/bbn {input_text}"
-    dog = await edit_or_reply(event, "```You can't sleep...```")
+    dog = await eor(event, "```You can't sleep...```")
     await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
@@ -105,9 +105,9 @@ async def dog(event):
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
-        return await edit_delete(event, "`Give me some text to process...`")
+        return await edl(event, "`Give me some text to process...`")
     msg = f"/sp {input_text}"
-    dog = await edit_or_reply(event, "```Yaah wait for spongebob...```")
+    dog = await eor(event, "```Yaah wait for spongebob...```")
     await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)
 
 
@@ -125,7 +125,7 @@ async def dog(event):
     reply_to_id = await reply_id(event)
     input_text = event.pattern_match.group(1)
     if not input_text:
-        return await edit_delete(event, "`Give me some text to process...`")
+        return await edl(event, "`Give me some text to process...`")
     msg = f"/love {input_text}"
-    dog = await edit_or_reply(event, "```Wait for your son......```")
+    dog = await eor(event, "```Wait for your son......```")
     await mememaker(event.client, msg, dog, event.chat_id, reply_to_id)

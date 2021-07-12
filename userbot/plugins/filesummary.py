@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.tools import media_type
 from ..helpers.utils import _format
 from . import humanbytes
@@ -57,7 +57,7 @@ async def _(event):  # sourcery no-metrics
     try:
         chatdata = await event.client.get_entity(entity)
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             event, f"<b>Error : </b><code>{str(e)}</code>", time=5, parse_mode="HTML"
         )
     if type(chatdata).__name__ == "Channel":
@@ -67,7 +67,7 @@ async def _(event):  # sourcery no-metrics
             link = chatdata.title
     else:
         link = f"<a href='tg://user?id={chatdata.id}'>{chatdata.first_name}</a>"
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         f"<code>Counting files and file size of </code><b>{link}</b>\n<code>This may take some time also depends on number of group messages</code>",
         parse_mode="HTML",
@@ -172,13 +172,13 @@ async def _(event):  # sourcery no-metrics
     try:
         chatdata = await event.client.get_entity(entity)
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             event, f"<b>Error : </b><code>{str(e)}</code>", 5, parse_mode="HTML"
         )
     try:
         userdata = await event.client.get_entity(userentity)
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             event, f"<b>Error : </b><code>{str(e)}</code>", time=5, parse_mode="HTML"
         )
     if type(chatdata).__name__ == "Channel":
@@ -188,7 +188,7 @@ async def _(event):  # sourcery no-metrics
             link = chatdata.title
     else:
         link = f"<a href='tg://user?id={chatdata.id}'>{chatdata.first_name}</a>"
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         f"<code>Counting files and file size by </code>{_format.htmlmentionuser(userdata.first_name,userdata.id)}<code> in Group </code><b>{link}</b>\n<code>This may take some time also depends on number of user messages</code>",
         parse_mode="HTML",

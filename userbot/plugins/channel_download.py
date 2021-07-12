@@ -10,7 +10,7 @@ import os
 import subprocess
 
 from ..Config import Config
-from . import doge, edit_or_reply
+from . import doge, eor
 
 plugin_category = "tools"
 
@@ -35,7 +35,7 @@ async def get_media(event):
         os.makedirs(tempdir)
     except BaseException:
         pass
-    event = await edit_or_reply(event, "`Downloading Media From this Channel.`")
+    event = await eor(event, "`Downloading Media From this Channel.`")
     msgs = await event.client.get_messages(channel_username, limit=int(limit))
     i = 0
     for msg in msgs:
@@ -75,7 +75,7 @@ async def get_media(event):
         os.makedirs(tempdir)
     except BaseException:
         pass
-    event = await edit_or_reply(event, "`Downloading All Media From this Channel.`")
+    event = await eor(event, "`Downloading All Media From this Channel.`")
     msgs = await event.client.get_messages(channel_username, limit=3000)
     i = 0
     for msg in msgs:

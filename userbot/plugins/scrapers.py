@@ -7,7 +7,7 @@ from wikipedia.exceptions import DisambiguationError, PageError
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.functions import get_cast, get_moviecollections, imdb, mov_titles
 from ..helpers.utils import reply_id
 from . import BOTLOG, BOTLOG_CHATID
@@ -36,7 +36,7 @@ async def wiki(event):
             f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
             for lineno, i in enumerate(error, start=1)
         )
-        return await edit_or_reply(event, f"**Disambiguated page found.**\n\n{result}")
+        return await eor(event, f"**Disambiguated page found.**\n\n{result}")
     except PageError:
         pass
     if not result:
@@ -48,14 +48,14 @@ async def wiki(event):
                 f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
                 for lineno, i in enumerate(error, start=1)
             )
-            return await edit_or_reply(
+            return await eor(
                 event, f"**Disambiguated page found.**\n\n{result}"
             )
         except PageError:
-            return await edit_or_delete(
+            return await edl(
                 event, f"**Sorry i Can't find any results for **`{match}`"
             )
-    await edit_or_reply(
+    await eor(
         event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__"
     )
     if BOTLOG:
@@ -74,7 +74,7 @@ async def wiki(event):
 )
 async def imdb_query(event):  # sourcery no-metrics
     """To fetch imdb data about the given movie or series."""
-    dogevent = await edit_or_reply(event, "`searching........`")
+    dogevent = await eor(event, "`searching........`")
     reply_to = await reply_id(event)
     try:
         movie_name = event.pattern_match.group(1)

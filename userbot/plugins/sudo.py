@@ -8,7 +8,7 @@ from userbot.core.logger import logging
 from ..Config import Config
 from ..core import CMD_INFO, PLG_INFO
 from ..core.data import _sudousers_list, sudo_enabled_cmds
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import get_user_from_event, mentionuser
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
@@ -49,24 +49,23 @@ async def chat_blacklist(event):
     sudousers = _sudousers_list()
     if input_str == "on":
         if gvarstatus("sudoenable") is not None:
-            return await edit_delete(event, "__Sudo is already enabled.__")
+            return await edl(event, "__Sudo is already enabled.__")
         addgvar("sudoenable", "true")
         text = "__Enabled sudo successfully.__\n"
         if len(sudousers) != 0:
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
             )
-            msg = await edit_or_reply(
+            msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        else:
-            text += "**You haven't added anyone to your sudo yet.**"
-            return await edit_or_reply(
-                event,
-                text,
-            )
+        text += "**You haven't added anyone to your sudo yet.**"
+        return await eor(
+            event,
+            text,
+        )
     if gvarstatus("sudoenable") is not None:
         delgvar("sudoenable")
         text = "__Disabled sudo successfully.__"
@@ -74,18 +73,17 @@ async def chat_blacklist(event):
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
             )
-            msg = await edit_or_reply(
+            msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        else:
-            text += "**You haven't added any chat to blacklist yet.**"
-            return await edit_or_reply(
-                event,
-                text,
-            )
-    await edit_delete(event, "It was turned off already")
+        text += "**You haven't added any chat to blacklist yet.**"
+        return await eor(
+            event,
+            text,
+        )
+    await edl(event, "It was turned off already")
 
 
 @doge.bot_cmd(
@@ -102,9 +100,9 @@ async def add_sudo_user(event):
     if replied_user is None:
         return
     if replied_user.id == event.client.uid:
-        return await edit_delete(event, "__You can't add yourself to sudo.__.")
+        return await edl(event, "__You can't add yourself to sudo.__.")
     if replied_user.id in _sudousers_list():
-        return await edit_delete(
+        return await edl(
             event,
             f"{mentionuser(get_display_name(replied_user),replied_user.id)} __is already in your sudo list.__",
         )
@@ -124,7 +122,7 @@ async def add_sudo_user(event):
     sql.add_collection("sudousers_list", sudousers, {})
     output = f"{mentionuser(userdata['chat_name'],userdata['chat_id'])} __is Added to your sudo users.__\n"
     output += "**Bot is reloading to apply the changes. Please wait for a minute**"
-    msg = await edit_or_reply(event, output)
+    msg = await eor(event, output)
     await event.client.reload(msg)
 
 
@@ -146,7 +144,7 @@ async def _(event):
     except AttributeError:
         sudousers = {}
     if str(replied_user.id) not in sudousers:
-        return await edit_delete(
+        return await edl(
             event,
             f"{mentionuser(get_display_name(replied_user),replied_user.id)} __is not in your sudo__.",
         )
@@ -155,7 +153,7 @@ async def _(event):
     sql.add_collection("sudousers_list", sudousers, {})
     output = f"{mentionuser(get_display_name(replied_user),replied_user.id)} __is removed from your sudo users.__\n"
     output += "**Bot is reloading to apply the changes. Please wait for a minute**"
-    msg = await edit_or_reply(event, output)
+    msg = await eor(event, output)
     await event.client.reload(msg)
 
 
@@ -175,7 +173,7 @@ async def _(event):
     except AttributeError:
         sudousers = {}
     if len(sudochats) == 0:
-        return await edit_delete(
+        return await edl(
             event, "__There are no sudo users for your DogeUserBot.__"
         )
     result = "**The list of sudo users for your DogeUserBot are :**\n\n"
@@ -185,11 +183,11 @@ async def _(event):
         username = f"@{sudousers[str(chat)]['chat_username']}" or "__None__"
         result += f"**Username :** {username}\n"
         result += f"Added on {sudousers[str(chat)]['date']}\n\n"
-    await edit_or_reply(event, result)
+    await eor(event, result)
 
 
 @doge.bot_cmd(
-    pattern="addscmd(s)? ((.|\n)*)",
+    pattern="addscmd(s)?(?:\s|$)([\s\S]*)",
     command=("addscmd", plugin_category),
     info={
         "header": "To enable cmds for sudo users.",
@@ -216,12 +214,12 @@ async def _(event):  # sourcery no-metrics
     errors = ""
     sudocmds = sudo_enabled_cmds()
     if not input_str:
-        return await edit_or_reply(
+        return await eor(
             event, "__Which command should i enable for sudo users . __"
         )
     input_str = input_str.split()
     if input_str[0] == "-all":
-        dogevent = await edit_or_reply(event, "__Enabling all safe cmds for sudo....__")
+        dogevent = await eor(event, "__Enabling all safe cmds for sudo....__")
         totalcmds = CMD_INFO.keys()
         flagcmds = (
             PLG_INFO["botcontrols"]
@@ -244,7 +242,7 @@ async def _(event):  # sourcery no-metrics
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
     elif input_str[0] == "-full":
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, "__Enabling compelete sudo for users....__"
         )
         loadcmds = CMD_INFO.keys()
@@ -256,7 +254,7 @@ async def _(event):  # sourcery no-metrics
         loadcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += f"`{cmd}` __There is no such plugin in your DogeUserBot__.\n"
+                errors += f"`{plugin}` __There is no such plugin in your DogeUserBot__.\n"
             else:
                 loadcmds += PLG_INFO[plugin]
     else:
@@ -277,12 +275,12 @@ async def _(event):  # sourcery no-metrics
     )
     if errors != "":
         output += "\n**Errors:**\n" + errors
-    msg = await edit_or_reply(dogevent, output)
+    msg = await eor(dogevent, output)
     await event.client.reload(msg)
 
 
 @doge.bot_cmd(
-    pattern="rmscmd(s)? ((.|\n)*)?",
+    pattern="rmscmd(s)?(?:\s|$)([\s\S]*)?",
     command=("rmscmd", plugin_category),
     info={
         "header": "To disable given cmds for sudo.",
@@ -309,17 +307,17 @@ async def _(event):  # sourcery no-metrics
     errors = ""
     sudocmds = sudo_enabled_cmds()
     if not input_str:
-        return await edit_or_reply(
+        return await eor(
             event, "__Which command should I disable for sudo users . __"
         )
     input_str = input_str.split()
     if input_str[0] == "-all":
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, "__Disabling all enabled cmds for sudo....__"
         )
         flagcmds = sudocmds
     elif input_str[0] == "-flag":
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, "__Disabling all flagged cmds for sudo.....__"
         )
         flagcmds = (
@@ -345,7 +343,7 @@ async def _(event):  # sourcery no-metrics
         flagcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += f"`{cmd}` __There is no such plugin in your DogeUserBot__.\n"
+                errors += f"`{plugin}` __There is no such plugin in your DogeUserBot__.\n"
             else:
                 flagcmds += PLG_INFO[plugin]
     else:
@@ -369,7 +367,7 @@ async def _(event):  # sourcery no-metrics
     )
     if errors != "":
         output += "\n**Errors:**\n" + errors
-    msg = await edit_or_reply(dogevent, output)
+    msg = await eor(dogevent, output)
     await event.client.reload(msg)
 
 
@@ -421,7 +419,7 @@ async def _(event):  # sourcery no-metrics
             error += "__You have enabled every cmd as sudo for sudo users.__"
         count = len(cmdlist)
     if error != "":
-        return await edit_delete(event, error, 10)
+        return await edl(event, error, 10)
     pkeys = clist.keys()
     n_pkeys = [i for i in pkeys if i is not None]
     pkeys = sorted(n_pkeys)
@@ -436,7 +434,7 @@ async def _(event):  # sourcery no-metrics
         + f"\n\n**SUDO TRIGGER: **`{Config.SUDO_COMMAND_HAND_LER}`\n**Commands:** {count}\n\n"
         + output
     )
-    await edit_or_reply(event, finalstr, aslink=True, linktext=text)
+    await eor(event, finalstr, aslink=True, linktext=text)
 
 
 doge.loop.create_task(_init())

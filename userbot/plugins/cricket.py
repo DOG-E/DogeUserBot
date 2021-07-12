@@ -5,7 +5,7 @@ plugin for Cat_Userbot
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import doge, edit_or_reply, reply_id
+from . import doge, eor, reply_id
 
 plugin_category = "extra"
 
@@ -22,7 +22,7 @@ async def _(event):
     "To see the score of an ongoing match."
     chat = "@cricbuzz_bot"
     reply_to_id = await reply_id(event)
-    dogevent = await edit_or_reply(event, "```Gathering info...```")
+    dogevent = await eor(event, "```Gathering info...```")
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
@@ -60,7 +60,7 @@ async def _(event):
     details = event.pattern_match.group(1)
     chat = "@cricbuzz_bot"
     reply_to_id = await reply_id(event)
-    dogevent = await edit_or_reply(event, "```Gathering info...```")
+    dogevent = await eor(event, "```Gathering info...```")
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")

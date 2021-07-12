@@ -1,6 +1,4 @@
-from userbot import doge
-
-from ..core.managers import edit_delete, edit_or_reply
+from . import doge, edl, eor, parse_pre
 
 plugin_category = "Extra"
 
@@ -21,11 +19,11 @@ async def some(event):
     if not intxt and reply:
         intxt = reply.text
     if not intxt:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid text or give text as input...you moron!!**"
         )
     mystring = intxt.upper()
-    await edit_or_reply(event, mystring)
+    await eor(event, mystring)
 
 
 @doge.bot_cmd(
@@ -44,11 +42,11 @@ async def good(event):
     if not intxt and reply:
         intxt = reply.text
     if not intxt:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid text or give text as input...you moron!!**"
         )
     mystring = intxt.lower()
-    await edit_or_reply(event, mystring)
+    await eor(event, mystring)
 
 
 @doge.bot_cmd(
@@ -56,7 +54,7 @@ async def good(event):
     command=("title", plugin_category),
     info={
         "header": "Text operation change to title text",
-        "usage": "{tr}title<input text /reply to text>",
+        "usage": "{tr}title <input text /reply to text>",
         "examples": "{tr}title Reply to valid text or give valid text as input",
     },
 )
@@ -67,11 +65,11 @@ async def stuff(event):
     if not intxt and reply:
         intxt = reply.text
     if not intxt:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid text or give text as input...you moron!!**"
         )
     mystring = intxt.title()
-    await edit_or_reply(event, mystring)
+    await eor(event, mystring)
 
 
 @doge.bot_cmd(
@@ -97,7 +95,7 @@ async def here(event):
     if not intxt and reply:
         intxt = reply.text
     if not intxt:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid text or give text as input...you moron!!**"
         )
     if cmd == "r":
@@ -106,7 +104,23 @@ async def here(event):
     else:
         shib = list(intxt.upper())[::2]
         dog = list(intxt.lower())[1::2]
-    mystring = ""
-    for i, j in zip(shib, dog):
-        mystring += f"{i}{j}"
-    await edit_or_reply(event, mystring)
+    mystring = "".join(f"{i}{j}" for i, j in zip(shib, dog))
+    await eor(event, mystring)
+
+
+@doge.bot_cmd(
+    pattern="noformat$",
+    command=("noformat", plugin_category),
+    info={
+        "header": "To get replied message without markdown formating.",
+        "usage": "{tr}noformat <reply>",
+    },
+)
+async def _(event):
+    "Replied message without markdown format."
+    reply = await event.get_reply_message()
+    if not reply or not reply.text:
+        return await edl(
+            event, "__Reply to text message to get text without markdown formating.__"
+        )
+    await eor(event, reply.text, parse_mode=parse_pre)

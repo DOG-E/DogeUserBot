@@ -2,7 +2,7 @@ import os
 import urllib
 
 from ..helpers.functions import clippy, convert_tosticker, higlighted_text
-from . import deEmojify, doge, edit_delete, reply_id
+from . import deEmojify, doge, edl, reply_id
 
 plugin_category = "useless"
 
@@ -33,10 +33,10 @@ async def quby(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
+        return await edl(
             event, "__What is quby supposed to say? Give some text.__"
         )
-    await edit_delete(event, "`Wait, processing.....`")
+    await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     temp_name = "./temp/quby_temp.png"
@@ -101,10 +101,10 @@ async def knife(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
+        return await edl(
             event, "__What is knife supposed to say? Give some text.__"
         )
-    await edit_delete(event, "`Wait, processing.....`")
+    await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     temp_name = "./temp/knife_temp.png"
@@ -170,10 +170,10 @@ async def doge(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
+        return await edl(
             event, "__What is doge supposed to say? Give some text.__"
         )
-    await edit_delete(event, "`Wait, processing.....`")
+    await edl(event, "`Wait, processing.....`")
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     temp_name = "./temp/doge_temp.jpg"

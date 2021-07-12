@@ -615,10 +615,12 @@ kakashitext = [
     "a",
     "b",
     "c",
+    "ç",
     "d",
     "e",
     "f",
     "g",
+    "ğ",
     "h",
     "i",
     "j",
@@ -627,12 +629,14 @@ kakashitext = [
     "m",
     "n",
     "o",
+    "ö",
     "p",
     "q",
     "r",
     "s",
     "t",
     "u",
+    "ü",
     "v",
     "w",
     "x",
@@ -653,81 +657,998 @@ kakashitext = [
 
 
 kakashiemoji = [
-    "⁭\n                    💖\n                  💖💖\n               💖💖💖\n            💖💖 💖💖\n          💖💖    💖💖\n        💖💖       💖💖\n      💖💖💖💖💖💖\n     💖💖💖💖💖💖💖\n   💖💖                 💖💖\n  💖💖                    💖💖\n💖💖                       💖💖\n",
-    "⁭\n💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗💗\n💗💗                     💗💗\n💗💗                     💗💗\n💗💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗💗\n💗💗                     💗💗\n💗💗                     💗💗\n💗💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗\n",
-    "⁭\n          💛💛💛💛💛💛\n     💛💛💛💛💛💛💛💛\n   💛💛                      💛💛\n 💛💛\n💛💛\n💛💛\n 💛💛\n   💛💛                      💛💛\n     💛💛💛💛💛💛💛💛\n         💛💛💛💛💛💛\n",
-    "⁭\n💙💙💙💙💙💙💙\n💙💙💙💙💙💙💙💙\n💙💙                      💙💙\n💙💙                         💙💙\n💙💙                         💙💙\n💙💙                         💙💙\n💙💙                         💙💙\n💙💙                      💙💙\n💙💙💙💙💙💙💙💙\n💙💙💙💙💙💙💙\n",
-    "⁭\n💟💟💟💟💟💟💟💟\n💟💟💟💟💟💟💟💟\n💟💟\n💟💟\n💟💟💟💟💟💟\n💟💟💟💟💟💟\n💟💟\n💟💟\n💟💟💟💟💟💟💟💟\n💟💟💟💟💟💟💟💟\n",
-    "⁭\n💚💚💚💚💚💚💚💚\n💚💚💚💚💚💚💚💚\n💚💚\n💚💚\n💚💚💚💚💚💚\n💚💚💚💚💚💚\n💚💚\n💚💚\n💚💚\n💚💚\n",
-    "⁭\n          💜💜💜💜💜💜\n     💜💜💜💜💜💜💜💜\n   💜💜                     💜💜\n 💜💜\n💜💜                💜💜💜💜\n💜💜                💜💜💜💜\n 💜💜                        💜💜\n   💜💜                      💜💜\n     💜💜💜💜💜💜💜💜\n          💜💜💜💜💜💜\n",
-    "⁭\n💖💖                        💖💖\n💖💖                        💖💖\n💖💖                        💖💖\n💖💖                        💖💖\n💖💖💖💖💖💖💖💖💖\n💖💖💖💖💖💖💖💖💖\n💖💖                        💖💖\n💖💖                        💖💖\n💖💖                        💖💖\n💖💖                        💖💖\n",
-    "⁭\n💗💗💗💗💗💗\n💗💗💗💗💗💗\n          💗💗\n          💗💗\n          💗💗\n          💗💗\n          💗💗\n          💗💗\n💗💗💗💗💗💗\n💗💗💗💗💗💗\n",
-    "⁭\n         💛💛💛💛💛💛\n         💛💛💛💛💛💛\n                  💛💛\n                  💛💛\n                  💛💛\n                  💛💛\n💛💛          💛💛\n  💛💛       💛💛\n   💛💛💛💛💛\n      💛💛💛💛\n",
-    "⁭\n💙💙                  💙💙\n💙💙             💙💙\n💙💙        💙💙\n💙💙   💙💙\n💙💙💙💙\n💙💙 💙💙\n💙💙     💙💙\n💙💙         💙💙\n💙💙              💙💙\n💙💙                   💙💙\n",
-    "⁭\n💟💟\n💟💟\n💟💟\n💟💟\n💟💟\n💟💟\n💟💟\n💟💟\n💟💟💟💟💟💟💟💟\n💟💟💟💟💟💟💟💟\n",
-    "⁭\n💚💚                              💚💚\n💚💚💚                      💚💚💚\n💚💚💚💚            💚💚💚💚\n💚💚    💚💚    💚💚    💚💚\n💚💚        💚💚💚        💚💚\n💚💚             💚             💚💚\n💚💚                              💚💚\n💚💚                              💚💚\n💚💚                              💚💚\n💚💚                              💚💚\n",
-    "⁭\n💜💜                           💜💜\n💜💜💜                       💜💜\n💜💜💜💜                 💜💜\n💜💜  💜💜               💜💜\n💜💜     💜💜            💜💜\n💜💜         💜💜        💜💜\n💜💜             💜💜    💜💜\n💜💜                 💜💜💜💜\n💜💜                     💜💜💜\n💜💜                          💜💜\n",
-    "⁭\n           💖💖💖💖💖\n     💖💖💖💖💖💖💖\n   💖💖                   💖💖\n 💖💖                       💖💖\n💖💖                         💖💖\n💖💖                         💖💖\n 💖💖                       💖💖\n   💖💖                   💖💖\n      💖💖💖💖💖💖💖\n            💖💖💖💖💖\n",
-    "⁭\n💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗💗\n💗💗                     💗💗\n💗💗                     💗💗\n💗💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗\n💗💗\n💗💗\n💗💗\n💗💗\n",
-    "⁭\n           💛💛💛💛💛\n      💛💛💛💛💛💛💛\n   💛💛                    💛💛\n 💛💛                        💛💛\n💛💛                           💛💛\n💛💛              💛💛     💛💛\n 💛💛               💛💛 💛💛\n   💛💛                   💛💛\n      💛💛💛💛💛💛💛💛\n           💛💛💛💛💛   💛💛\n",
-    "⁭\n💙💙💙💙💙💙💙\n💙💙💙💙💙💙💙💙\n💙💙                     💙💙\n💙💙                     💙💙\n💙💙💙💙💙💙💙💙\n💙💙💙💙💙💙💙\n💙💙    💙💙\n💙💙         💙💙\n💙💙              💙💙\n💙💙                  💙💙\n",
-    "⁭\n       💟💟💟💟💟\n  💟💟💟💟💟💟💟\n  💟💟                 💟💟\n💟💟\n  💟💟💟💟💟💟\n      💟💟💟💟💟💟\n                            💟💟\n💟💟                 💟💟\n  💟💟💟💟💟💟💟\n       💟💟💟💟💟\n",
-    "⁭\n💚💚💚💚💚💚💚💚\n💚💚💚💚💚💚💚💚\n               💚💚\n               💚💚\n               💚💚\n               💚💚\n               💚💚\n               💚💚\n               💚💚\n",
-    "⁭\n💜💜                      💜💜\n💜💜                      💜💜\n💜💜                      💜💜\n💜💜                      💜💜\n💜💜                      💜💜\n💜💜                      💜💜\n💜💜                      💜💜\n  💜💜                  💜💜\n      💜💜💜💜💜💜\n            💜💜💜💜\n",
-    "⁭\n💖💖                              💖💖\n  💖💖                          💖💖\n    💖💖                      💖💖\n      💖💖                  💖💖\n         💖💖              💖💖\n           💖💖         💖💖\n             💖💖     💖💖\n               💖💖 💖💖\n                  💖💖💖\n                       💖\n",
-    "⁭\n💗💗                               💗💗\n💗💗                               💗💗\n💗💗                               💗💗\n💗💗                               💗💗\n💗💗              💗            💗💗\n 💗💗           💗💗          💗💗\n 💗💗        💗💗💗       💗💗\n  💗💗   💗💗  💗💗   💗💗\n   💗💗💗💗      💗💗💗💗\n    💗💗💗             💗💗💗\n",
-    "⁭\n💛💛                    💛💛\n   💛💛              💛💛\n      💛💛        💛💛\n         💛💛  💛💛\n            💛💛💛\n            💛💛💛\n         💛💛 💛💛\n      💛💛       💛💛\n   💛💛             💛💛\n💛💛                   💛💛\n",
-    "⁭\n💙💙                    💙💙\n   💙💙              💙💙\n      💙💙        💙💙\n         💙💙  💙💙\n            💙💙💙\n              💙💙\n              💙💙\n              💙💙\n              💙💙\n              💙💙\n",
-    "⁭\n 💟💟💟💟💟💟💟\n 💟💟💟💟💟💟💟\n                       💟💟\n                   💟💟\n               💟💟\n           💟💟\n       💟💟\n   💟💟\n💟💟💟💟💟💟💟\n💟💟💟💟💟💟💟\n",
-    "⁭\n\n⁭\n\n⁭\n\n",
-    "⁭\n       💗💗💗💗\n   💗💗💗💗💗💗\n💗💗               💗💗\n💗💗               💗💗\n💗💗               💗💗\n💗💗               💗💗\n💗💗               💗💗\n💗💗               💗💗\n   💗💗💗💗💗💗\n        💗💗💗💗\n",
-    "⁭\n          💙💙\n     💙💙💙\n💙💙 💙💙\n          💙💙\n          💙💙\n          💙💙\n          💙💙\n          💙💙\n     💙💙💙💙\n     💙💙💙💙\n",
-    "⁭\n    💟💟💟💟💟\n  💟💟💟💟💟💟\n💟💟          💟💟\n                💟💟\n             💟💟\n          💟💟\n       💟💟\n    💟💟\n  💟💟💟💟💟💟\n  💟💟💟💟💟💟\n",
-    "⁭\n     💛💛💛💛\n  💛💛💛💛💛\n💛💛         💛💛\n                   💛💛\n            💛💛💛\n            💛💛💛\n                   💛💛\n💛💛         💛💛\n  💛💛💛💛💛\n     💛💛💛💛\n",
-    "⁭\n                         💖💖\n                    💖💖💖\n              💖💖 💖💖\n          💖💖     💖💖\n     💖💖          💖💖\n💖💖               💖💖\n💖💖💖💖💖💖💖💖💖\n💖💖💖💖💖💖💖💖💖\n                         💖💖\n                         💖💖\n",
-    "⁭\n💚💚💚💚💚💚\n💚💚💚💚💚💚\n💚💚\n 💚💚💚💚💚\n   💚💚💚💚💚\n                    💚💚\n                    💚💚\n💚💚          💚💚\n  💚💚💚💚💚\n     💚💚💚💚\n",
-    "⁭\n        💜💜💜💜\n    💜💜💜💜💜\n💜💜\n💜💜\n💜💜💜💜💜💜\n💜💜💜💜💜💜💜\n💜💜               💜💜\n💜💜               💜💜\n    💜💜💜💜💜💜\n        💜💜💜💜\n",
-    "⁭\n💗💗💗💗💗💗💗\n💗💗💗💗💗💗💗\n                      💗💗\n                     💗💗\n                   💗💗\n                 💗💗\n               💗💗\n             💗💗\n           💗💗\n         💗💗\n",
-    "⁭\n        💙💙💙💙\n   💙💙💙💙💙💙\n💙💙               💙💙\n💙💙               💙💙\n   💙💙💙💙💙💙\n   💙💙💙💙💙💙\n💙💙               💙💙\n💙💙               💙💙\n   💙💙💙💙💙💙\n        💙💙💙💙\n",
-    "⁭\n        💟💟💟💟\n   💟💟💟💟💟💟\n💟💟               💟💟\n💟💟               💟💟\n 💟💟💟💟💟💟💟\n      💟💟💟💟💟💟\n                         💟💟\n                        💟💟\n  💟💟💟💟💟💟\n       💟💟💟💟\n",
+    "⁭\
+    \n                    💖\
+    \n                  💖💖\
+    \n               💖💖💖\
+    \n            💖💖 💖💖\
+    \n          💖💖    💖💖\
+    \n        💖💖       💖💖\
+    \n      💖💖💖💖💖💖\
+    \n     💖💖💖💖💖💖💖\
+    \n   💖💖                 💖💖\
+    \n  💖💖                    💖💖\
+    \n💖💖                       💖💖\
+    \n",
+    "⁭\
+    \n💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗\
+    \n",
+    "⁭\
+    \n          💛💛💛💛💛💛\
+    \n     💛💛💛💛💛💛💛💛\
+    \n   💛💛                      💛💛\
+    \n 💛💛\
+    \n💛💛\
+    \n💛💛\
+    \n 💛💛\
+    \n   💛💛                      💛💛\
+    \n     💛💛💛💛💛💛💛💛\
+    \n         💛💛💛💛💛💛\
+    \n",
+    "⁭\
+    \n          💝💝💝💝💝💝\
+    \n     💝💝💝💝💝💝💝💝\
+    \n   💝💝                      💝💝\
+    \n 💝💝\
+    \n💝💝\
+    \n💝💝\
+    \n 💝💝\
+    \n   💝💝                      💝💝\
+    \n     💝💝💝💝💝💝💝💝\
+    \n         💝💝💝💝💝💝\
+    \n\
+    \nㅤ               💝💝\
+    \n",
+    "⁭\
+    \n💙💙💙💙💙💙💙\
+    \n💙💙💙💙💙💙💙💙\
+    \n💙💙                      💙💙\
+    \n💙💙                         💙💙\
+    \n💙💙                         💙💙\
+    \n💙💙                         💙💙\
+    \n💙💙                         💙💙\
+    \n💙💙                      💙💙\
+    \n💙💙💙💙💙💙💙💙\
+    \n💙💙💙💙💙💙💙\
+    \n",
+    "⁭\
+    \n💟💟💟💟💟💟💟💟\
+    \n💟💟💟💟💟💟💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟💟💟💟💟\
+    \n💟💟💟💟💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟💟💟💟💟💟💟\
+    \n💟💟💟💟💟💟💟💟\
+    \n",
+    "⁭\
+    \n💚💚💚💚💚💚💚💚\
+    \n💚💚💚💚💚💚💚💚\
+    \n💚💚\
+    \n💚💚\
+    \n💚💚💚💚💚💚\
+    \n💚💚💚💚💚💚\
+    \n💚💚\
+    \n💚💚\
+    \n💚💚\
+    \n💚💚\
+    \n",
+    "⁭\
+    \n          💜💜💜💜💜💜\
+    \n     💜💜💜💜💜💜💜💜\
+    \n   💜💜                     💜💜\
+    \n 💜💜\
+    \n💜💜                💜💜💜💜\
+    \n💜💜                💜💜💜💜\
+    \n 💜💜                        💜💜\
+    \n   💜💜                      💜💜\
+    \n     💜💜💜💜💜💜💜💜\
+    \n          💜💜💜💜💜💜\
+    \n",
+    "\
+    \nㅤ      🧡🧡🧡🧡🧡🧡\
+    \n\
+    \n          🧡🧡🧡🧡🧡🧡\
+    \n     🧡🧡🧡🧡🧡🧡🧡🧡\
+    \n   🧡🧡                     🧡🧡\
+    \n 🧡🧡\
+    \n🧡🧡                🧡🧡🧡🧡\
+    \n🧡🧡                🧡🧡🧡🧡\
+    \n 🧡🧡                        🧡🧡\
+    \n   🧡🧡                      🧡🧡\
+    \n     🧡🧡🧡🧡🧡🧡🧡🧡\
+    \n          🧡🧡🧡🧡🧡🧡\
+    \n",
+    "⁭\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖💖💖💖💖💖💖💖\
+    \n💖💖💖💖💖💖💖💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n💖💖                        💖💖\
+    \n",
+    "⁭\
+    \n💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗\
+    \n          💗💗\
+    \n          💗💗\
+    \n          💗💗\
+    \n          💗💗\
+    \n          💗💗\
+    \n          💗💗\
+    \n💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗\
+    \n",
+    "⁭\
+    \n         💛💛💛💛💛💛\
+    \n         💛💛💛💛💛💛\
+    \n                  💛💛\
+    \n                  💛💛\
+    \n                  💛💛\
+    \n                  💛💛\
+    \n💛💛          💛💛\
+    \n  💛💛       💛💛\
+    \n   💛💛💛💛💛\
+    \n      💛💛💛💛\
+    \n",
+    "⁭\
+    \n💙💙                  💙💙\
+    \n💙💙             💙💙\
+    \n💙💙        💙💙\
+    \n💙💙   💙💙\
+    \n💙💙💙💙\
+    \n💙💙 💙💙\
+    \n💙💙     💙💙\
+    \n💙💙         💙💙\
+    \n💙💙              💙💙\
+    \n💙💙                   💙💙\
+    \n",
+    "⁭\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟\
+    \n💟💟💟💟💟💟💟💟\
+    \n💟💟💟💟💟💟💟💟\
+    \n",
+    "⁭\
+    \n💚💚                                    💚💚\
+    \n💚💚💚                         💚💚💚\
+    \n💚💚💚💚               💚💚💚💚\
+    \n💚💚    💚💚       💚💚    💚💚\
+    \n💚💚          💚💚💚          💚💚\
+    \n💚💚               💚                💚💚\
+    \n💚💚                                     💚💚\
+    \n💚💚                                     💚💚\
+    \n💚💚                                     💚💚\
+    \n💚💚                                      💚💚\
+    \n",
+    "⁭\
+    \n💜💜                           💜💜\
+    \n💜💜💜                      💜💜\
+    \n💜💜💜💜                 💜💜\
+    \n💜💜  💜💜               💜💜\
+    \n💜💜     💜💜            💜💜\
+    \n💜💜         💜💜        💜💜\
+    \n💜💜             💜💜    💜💜\
+    \n💜💜                 💜💜💜💜\
+    \n💜💜                       💜💜💜\
+    \n💜💜                             💜💜\
+    \n",
+    "⁭\
+    \n           💖💖💖💖💖\
+    \n     💖💖💖💖💖💖💖\
+    \n   💖💖                   💖💖\
+    \n 💖💖                       💖💖\
+    \n💖💖                         💖💖\
+    \n💖💖                         💖💖\
+    \n 💖💖                       💖💖\
+    \n   💖💖                   💖💖\
+    \n      💖💖💖💖💖💖💖\
+    \n            💖💖💖💖💖\
+    \n",
+    "\
+    \n⁭ㅤ       ❤️❤️     ❤️❤️\
+    \n\
+    \n           ❤️❤️❤️❤️❤️\
+    \n     ❤️❤️❤️❤️❤️❤️❤️\
+    \n   ❤️❤️                   ❤️❤️\
+    \n ❤️❤️                       ❤️❤️\
+    \n❤️❤️                         ❤️❤️\
+    \n❤️❤️                         ❤️❤️\
+    \n ❤️❤️                       ❤️❤️\
+    \n   ❤️❤️                   ❤️❤️\
+    \n      ❤️❤️❤️❤️❤️❤️❤️\
+    \n            ❤️❤️❤️❤️❤️\
+    \n",
+    "⁭\
+    \n💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗                     💗💗\
+    \n💗💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗\
+    \n💗💗\
+    \n💗💗\
+    \n💗💗\
+    \n💗💗\
+    \n",
+    "⁭\
+    \n           💛💛💛💛💛\
+    \n      💛💛💛💛💛💛💛\
+    \n   💛💛                    💛💛\
+    \n 💛💛                        💛💛\
+    \n💛💛                           💛💛\
+    \n💛💛              💛💛     💛💛\
+    \n 💛💛               💛💛 💛💛\
+    \n   💛💛                   💛💛\
+    \n      💛💛💛💛💛💛💛💛\
+    \n           💛💛💛💛💛   💛💛\
+    \n",
+    "⁭\
+    \n💙💙💙💙💙💙💙\
+    \n💙💙💙💙💙💙💙💙\
+    \n💙💙                     💙💙\
+    \n💙💙                     💙💙\
+    \n💙💙💙💙💙💙💙💙\
+    \n💙💙💙💙💙💙💙\
+    \n💙💙    💙💙\
+    \n💙💙         💙💙\
+    \n💙💙              💙💙\
+    \n💙💙                  💙💙\
+    \n",
+    "⁭\
+    \n       💟💟💟💟💟\
+    \n  💟💟💟💟💟💟💟\
+    \n  💟💟                 💟💟\
+    \n💟💟\
+    \n  💟💟💟💟💟💟\
+    \n      💟💟💟💟💟💟\
+    \n                            💟💟\
+    \n💟💟                 💟💟\
+    \n  💟💟💟💟💟💟💟\
+    \n       💟💟💟💟💟\
+    \n",
+    "⁭\
+    \n💚💚💚💚💚💚💚💚\
+    \n💚💚💚💚💚💚💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n               💚💚\
+    \n",
+    "⁭\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n💜💜                      💜💜\
+    \n  💜💜                  💜💜\
+    \n      💜💜💜💜💜💜\
+    \n            💜💜💜💜\
+    \n",
+    "\
+    \n⁭❤️❤️                      ❤️❤️\
+    \n\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n❤️❤️                      ❤️❤️\
+    \n  ❤️❤️                  ❤️❤️\
+    \n      ❤️❤️❤️❤️❤️❤️\
+    \n            ❤️❤️❤️❤️\
+    \n",
+    "⁭\
+    \n💖💖                              💖💖\
+    \n  💖💖                          💖💖\
+    \n    💖💖                      💖💖\
+    \n      💖💖                  💖💖\
+    \n         💖💖              💖💖\
+    \n           💖💖         💖💖\
+    \n             💖💖     💖💖\
+    \n               💖💖 💖💖\
+    \n                  💖💖💖\
+    \n                       💖\
+    \n",
+    "⁭\
+    \n💗💗                               💗💗\
+    \n💗💗                               💗💗\
+    \n💗💗                               💗💗\
+    \n💗💗                               💗💗\
+    \n💗💗              💗            💗💗\
+    \n 💗💗           💗💗          💗💗\
+    \n 💗💗        💗💗💗       💗💗\
+    \n  💗💗   💗💗  💗💗   💗💗\
+    \n   💗💗💗💗      💗💗💗💗\
+    \n    💗💗💗             💗💗💗\
+    \n",
+    "⁭\
+    \n💛💛                    💛💛\
+    \n   💛💛              💛💛\
+    \n      💛💛        💛💛\
+    \n         💛💛  💛💛\
+    \n            💛💛💛\
+    \n            💛💛💛\
+    \n         💛💛 💛💛\
+    \n      💛💛       💛💛\
+    \n   💛💛             💛💛\
+    \n💛💛                   💛💛\
+    \n",
+    "⁭\
+    \n💙💙                    💙💙\
+    \n   💙💙              💙💙\
+    \n      💙💙        💙💙\
+    \n         💙💙  💙💙\
+    \n            💙💙💙\
+    \n              💙💙\
+    \n              💙💙\
+    \n              💙💙\
+    \n              💙💙\
+    \n              💙💙\
+    \n",
+    "⁭\
+    \n 💟💟💟💟💟💟💟\
+    \n 💟💟💟💟💟💟💟\
+    \n                       💟💟\
+    \n                   💟💟\
+    \n               💟💟\
+    \n           💟💟\
+    \n       💟💟\
+    \n   💟💟\
+    \n💟💟💟💟💟💟💟\
+    \n💟💟💟💟💟💟💟\
+    \n",
+    "⁭\
+    \n\
+    \n⁭\
+    \n\
+    \n⁭\
+    \n\
+    \n",
+    "⁭\
+    \n       💗💗💗💗\
+    \n   💗💗💗💗💗💗\
+    \n💗💗               💗💗\
+    \n💗💗               💗💗\
+    \n💗💗               💗💗\
+    \n💗💗               💗💗\
+    \n💗💗               💗💗\
+    \n💗💗               💗💗\
+    \n   💗💗💗💗💗💗\
+    \n        💗💗💗💗\
+    \n",
+    "\
+    \n               💙💙\
+    \n         💙💙💙\
+    \n     💙    💙💙\
+    \n💙         💙💙\
+    \n                💙💙\
+    \n                💙💙\
+    \n                💙💙\
+    \n                💙💙\
+    \n      💙💙💙💙💙\
+    \n      💙💙💙💙💙\
+    \n",
+    "⁭\
+    \n    💟💟💟💟💟\
+    \n  💟💟💟💟💟💟\
+    \n💟💟          💟💟\
+    \n                💟💟\
+    \n             💟💟\
+    \n          💟💟\
+    \n       💟💟\
+    \n    💟💟\
+    \n  💟💟💟💟💟💟\
+    \n  💟💟💟💟💟💟\
+    \n",
+    "⁭\
+    \n     💛💛💛💛\
+    \n  💛💛💛💛💛\
+    \n💛💛         💛💛\
+    \n                   💛💛\
+    \n            💛💛💛\
+    \n            💛💛💛\
+    \n                   💛💛\
+    \n💛💛         💛💛\
+    \n  💛💛💛💛💛\
+    \n     💛💛💛💛\
+    \n",
+    "⁭\
+    \n                         💖💖\
+    \n                    💖💖💖\
+    \n              💖💖 💖💖\
+    \n          💖💖     💖💖\
+    \n     💖💖          💖💖\
+    \n💖💖               💖💖\
+    \n💖💖💖💖💖💖💖💖💖\
+    \n💖💖💖💖💖💖💖💖💖\
+    \n                         💖💖\
+    \n                         💖💖\
+    \n",
+    "⁭\
+    \n💚💚💚💚💚💚\
+    \n💚💚💚💚💚💚\
+    \n💚💚\
+    \n 💚💚💚💚💚\
+    \n   💚💚💚💚💚\
+    \n                    💚💚\
+    \n                    💚💚\
+    \n💚💚          💚💚\
+    \n  💚💚💚💚💚\
+    \n     💚💚💚💚\
+    \n",
+    "⁭\
+    \n        💜💜💜💜\
+    \n    💜💜💜💜💜\
+    \n💜💜\
+    \n💜💜\
+    \n💜💜💜💜💜💜\
+    \n💜💜💜💜💜💜💜\
+    \n💜💜               💜💜\
+    \n💜💜               💜💜\
+    \n    💜💜💜💜💜💜\
+    \n        💜💜💜💜\
+    \n",
+    "⁭\
+    \n💗💗💗💗💗💗💗\
+    \n💗💗💗💗💗💗💗\
+    \n                      💗💗\
+    \n                     💗💗\
+    \n                   💗💗\
+    \n                 💗💗\
+    \n               💗💗\
+    \n             💗💗\
+    \n           💗💗\
+    \n         💗💗\
+    \n",
+    "⁭\
+    \n        💙💙💙💙\
+    \n   💙💙💙💙💙💙\
+    \n💙💙               💙💙\
+    \n💙💙               💙💙\
+    \n   💙💙💙💙💙💙\
+    \n   💙💙💙💙💙💙\
+    \n💙💙               💙💙\
+    \n💙💙               💙💙\
+    \n   💙💙💙💙💙💙\
+    \n        💙💙💙💙\
+    \n",
+    "⁭\
+    \n        💟💟💟💟\
+    \n   💟💟💟💟💟💟\
+    \n💟💟               💟💟\
+    \n💟💟               💟💟\
+    \n 💟💟💟💟💟💟💟\
+    \n      💟💟💟💟💟💟\
+    \n                         💟💟\
+    \n                        💟💟\
+    \n  💟💟💟💟💟💟\
+    \n       💟💟💟💟\
+    \n",
 ]
 
+
 itachiemoji = [
-    "⁭\n                    {cj}\n                  {cj}{cj}\n               {cj}{cj}{cj}\n            {cj}{cj} {cj}{cj}\n          {cj}{cj}    {cj}{cj}\n        {cj}{cj}       {cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}                 {cj}{cj}\n  {cj}{cj}                    {cj}{cj}\n{cj}{cj}                       {cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n          {cj}{cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}                      {cj}{cj}\n {cj}{cj}\n{cj}{cj}\n{cj}{cj}\n {cj}{cj}\n   {cj}{cj}                      {cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n         {cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n",
-    "⁭\n          {cj}{cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}                     {cj}{cj}\n {cj}{cj}\n{cj}{cj}                {cj}{cj}{cj}{cj}\n{cj}{cj}                {cj}{cj}{cj}{cj}\n {cj}{cj}                        {cj}{cj}\n   {cj}{cj}                      {cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n          {cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n{cj}{cj}                        {cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n         {cj}{cj}{cj}{cj}{cj}{cj}\n         {cj}{cj}{cj}{cj}{cj}{cj}\n                  {cj}{cj}\n                  {cj}{cj}\n                  {cj}{cj}\n                  {cj}{cj}\n{cj}{cj}          {cj}{cj}\n  {cj}{cj}       {cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}\n      {cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}                  {cj}{cj}\n{cj}{cj}             {cj}{cj}\n{cj}{cj}        {cj}{cj}\n{cj}{cj}   {cj}{cj}\n{cj}{cj}{cj}{cj}\n{cj}{cj} {cj}{cj}\n{cj}{cj}     {cj}{cj}\n{cj}{cj}         {cj}{cj}\n{cj}{cj}              {cj}{cj}\n{cj}{cj}                   {cj}{cj}\n",
-    "⁭\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}                              {cj}{cj}\n{cj}{cj}{cj}                      {cj}{cj}{cj}\n{cj}{cj}{cj}{cj}            {cj}{cj}{cj}{cj}\n{cj}{cj}    {cj}{cj}    {cj}{cj}    {cj}{cj}\n{cj}{cj}        {cj}{cj}{cj}        {cj}{cj}\n{cj}{cj}             {cj}             {cj}{cj}\n{cj}{cj}                              {cj}{cj}\n{cj}{cj}                              {cj}{cj}\n{cj}{cj}                              {cj}{cj}\n{cj}{cj}                              {cj}{cj}\n",
-    "⁭\n{cj}{cj}                           {cj}{cj}\n{cj}{cj}{cj}                       {cj}{cj}\n{cj}{cj}{cj}{cj}                 {cj}{cj}\n{cj}{cj}  {cj}{cj}               {cj}{cj}\n{cj}{cj}     {cj}{cj}            {cj}{cj}\n{cj}{cj}         {cj}{cj}        {cj}{cj}\n{cj}{cj}             {cj}{cj}    {cj}{cj}\n{cj}{cj}                 {cj}{cj}{cj}{cj}\n{cj}{cj}                     {cj}{cj}{cj}\n{cj}{cj}                          {cj}{cj}\n",
-    "⁭\n           {cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}                   {cj}{cj}\n {cj}{cj}                       {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n{cj}{cj}                         {cj}{cj}\n {cj}{cj}                       {cj}{cj}\n   {cj}{cj}                   {cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n            {cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n",
-    "⁭\n           {cj}{cj}{cj}{cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}                    {cj}{cj}\n {cj}{cj}                        {cj}{cj}\n{cj}{cj}                           {cj}{cj}\n{cj}{cj}              {cj}{cj}     {cj}{cj}\n {cj}{cj}               {cj}{cj} {cj}{cj}\n   {cj}{cj}                   {cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n           {cj}{cj}{cj}{cj}{cj}   {cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}                     {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}    {cj}{cj}\n{cj}{cj}         {cj}{cj}\n{cj}{cj}              {cj}{cj}\n{cj}{cj}                  {cj}{cj}\n",
-    "⁭\n       {cj}{cj}{cj}{cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n  {cj}{cj}                 {cj}{cj}\n{cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}\n                            {cj}{cj}\n{cj}{cj}                 {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n       {cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n               {cj}{cj}\n",
-    "⁭\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n{cj}{cj}                      {cj}{cj}\n  {cj}{cj}                  {cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}\n            {cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}                              {cj}{cj}\n  {cj}{cj}                          {cj}{cj}\n    {cj}{cj}                      {cj}{cj}\n      {cj}{cj}                  {cj}{cj}\n         {cj}{cj}              {cj}{cj}\n           {cj}{cj}         {cj}{cj}\n             {cj}{cj}     {cj}{cj}\n               {cj}{cj} {cj}{cj}\n                  {cj}{cj}{cj}\n                       {cj}\n",
-    "⁭\n{cj}{cj}                               {cj}{cj}\n{cj}{cj}                               {cj}{cj}\n{cj}{cj}                               {cj}{cj}\n{cj}{cj}                               {cj}{cj}\n{cj}{cj}              {cj}            {cj}{cj}\n {cj}{cj}           {cj}{cj}          {cj}{cj}\n {cj}{cj}        {cj}{cj}{cj}       {cj}{cj}\n  {cj}{cj}   {cj}{cj}  {cj}{cj}   {cj}{cj}\n   {cj}{cj}{cj}{cj}      {cj}{cj}{cj}{cj}\n    {cj}{cj}{cj}             {cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}                    {cj}{cj}\n   {cj}{cj}              {cj}{cj}\n      {cj}{cj}        {cj}{cj}\n         {cj}{cj}  {cj}{cj}\n            {cj}{cj}{cj}\n            {cj}{cj}{cj}\n         {cj}{cj} {cj}{cj}\n      {cj}{cj}       {cj}{cj}\n   {cj}{cj}             {cj}{cj}\n{cj}{cj}                   {cj}{cj}\n",
-    "⁭\n{cj}{cj}                    {cj}{cj}\n   {cj}{cj}              {cj}{cj}\n      {cj}{cj}        {cj}{cj}\n         {cj}{cj}  {cj}{cj}\n            {cj}{cj}{cj}\n              {cj}{cj}\n              {cj}{cj}\n              {cj}{cj}\n              {cj}{cj}\n              {cj}{cj}\n",
-    "⁭\n {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n                       {cj}{cj}\n                   {cj}{cj}\n               {cj}{cj}\n           {cj}{cj}\n       {cj}{cj}\n   {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n\n⁭\n\n⁭\n\n",
-    "⁭\n       {cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n        {cj}{cj}{cj}{cj}\n",
-    "⁭\n          {cj}{cj}\n     {cj}{cj}{cj}\n{cj}{cj} {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n          {cj}{cj}\n     {cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}\n",
-    "⁭\n    {cj}{cj}{cj}{cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}          {cj}{cj}\n                {cj}{cj}\n             {cj}{cj}\n          {cj}{cj}\n       {cj}{cj}\n    {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n",
-    "⁭\n     {cj}{cj}{cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}\n{cj}{cj}         {cj}{cj}\n                   {cj}{cj}\n            {cj}{cj}{cj}\n            {cj}{cj}{cj}\n                   {cj}{cj}\n{cj}{cj}         {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}\n",
-    "⁭\n                         {cj}{cj}\n                    {cj}{cj}{cj}\n              {cj}{cj} {cj}{cj}\n          {cj}{cj}     {cj}{cj}\n     {cj}{cj}          {cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n                         {cj}{cj}\n                         {cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n {cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}\n                    {cj}{cj}\n                    {cj}{cj}\n{cj}{cj}          {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}\n     {cj}{cj}{cj}{cj}\n",
-    "⁭\n        {cj}{cj}{cj}{cj}\n    {cj}{cj}{cj}{cj}{cj}\n{cj}{cj}\n{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n    {cj}{cj}{cj}{cj}{cj}{cj}\n        {cj}{cj}{cj}{cj}\n",
-    "⁭\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}{cj}{cj}{cj}{cj}{cj}\n                      {cj}{cj}\n                     {cj}{cj}\n                   {cj}{cj}\n                 {cj}{cj}\n               {cj}{cj}\n             {cj}{cj}\n           {cj}{cj}\n         {cj}{cj}\n",
-    "⁭\n        {cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n        {cj}{cj}{cj}{cj}\n",
-    "⁭\n        {cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}\n                         {cj}{cj}\n                        {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n       {cj}{cj}{cj}{cj}\n",
+    "⁭\
+    \n                    {e}\
+    \n                  {e}{e}\
+    \n               {e}{e}{e}\
+    \n            {e}{e} {e}{e}\
+    \n          {e}{e}    {e}{e}\
+    \n        {e}{e}       {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                 {e}{e}\
+    \n  {e}{e}                    {e}{e}\
+    \n{e}{e}                       {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n {e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n {e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n         {e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n {e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n {e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n         {e}{e}{e}{e}{e}{e}\
+    \n\
+    \nㅤ                 {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n",
+    "⁭\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                     {e}{e}\
+    \n {e}{e}\
+    \n{e}{e}                {e}{e}{e}{e}\
+    \n{e}{e}                {e}{e}{e}{e}\
+    \n {e}{e}                        {e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n",
+    "\
+    \nㅤ      {e}{e}{e}{e}{e}{e}\
+    \n\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                     {e}{e}\
+    \n {e}{e}\
+    \n{e}{e}                {e}{e}{e}{e}\
+    \n{e}{e}                {e}{e}{e}{e}\
+    \n {e}{e}                        {e}{e}\
+    \n   {e}{e}                      {e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n          {e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n{e}{e}                        {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n          {e}{e}\
+    \n          {e}{e}\
+    \n          {e}{e}\
+    \n          {e}{e}\
+    \n          {e}{e}\
+    \n          {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n         {e}{e}{e}{e}{e}{e}\
+    \n         {e}{e}{e}{e}{e}{e}\
+    \n                   {e}{e}\
+    \n                   {e}{e}\
+    \n                   {e}{e}\
+    \n                   {e}{e}\
+    \n{e}{e}           {e}{e}\
+    \n  {e}{e}        {e}{e}\
+    \n   {e}{e}{e}{e}{e}\
+    \n      {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                  {e}{e}\
+    \n{e}{e}             {e}{e}\
+    \n{e}{e}        {e}{e}\
+    \n{e}{e}   {e}{e}\
+    \n{e}{e}{e}{e}\
+    \n{e}{e} {e}{e}\
+    \n{e}{e}     {e}{e}\
+    \n{e}{e}         {e}{e}\
+    \n{e}{e}              {e}{e}\
+    \n{e}{e}                   {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                                {e}{e}\
+    \n{e}{e}{e}                      {e}{e}{e}\
+    \n{e}{e}{e}{e}            {e}{e}{e}{e}\
+    \n{e}{e}    {e}{e}    {e}{e}    {e}{e}\
+    \n{e}{e}        {e}{e}{e}         {e}{e}\
+    \n{e}{e}             {e}              {e}{e}\
+    \n{e}{e}                                {e}{e}\
+    \n{e}{e}                                {e}{e}\
+    \n{e}{e}                                {e}{e}\
+    \n{e}{e}                                {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                           {e}{e}\
+    \n{e}{e}{e}                      {e}{e}\
+    \n{e}{e}{e}{e}                 {e}{e}\
+    \n{e}{e}  {e}{e}               {e}{e}\
+    \n{e}{e}     {e}{e}            {e}{e}\
+    \n{e}{e}         {e}{e}        {e}{e}\
+    \n{e}{e}             {e}{e}    {e}{e}\
+    \n{e}{e}                 {e}{e}{e}{e}\
+    \n{e}{e}                     {e}{e}{e}\
+    \n{e}{e}                           {e}{e}\
+    \n",
+    "⁭\
+    \n           {e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                   {e}{e}\
+    \n {e}{e}                       {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n {e}{e}                       {e}{e}\
+    \n   {e}{e}                   {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}{e}\
+    \n            {e}{e}{e}{e}{e}\
+    \n",
+    "\
+    \nㅤ       {e}{e}      {e}{e}\
+    \n\
+    \n           {e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                   {e}{e}\
+    \n {e}{e}                       {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n{e}{e}                         {e}{e}\
+    \n {e}{e}                       {e}{e}\
+    \n   {e}{e}                   {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}{e}\
+    \n            {e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n",
+    "⁭\
+    \n           {e}{e}{e}{e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}                    {e}{e}\
+    \n {e}{e}                        {e}{e}\
+    \n{e}{e}                           {e}{e}\
+    \n{e}{e}              {e}{e}     {e}{e}\
+    \n {e}{e}               {e}{e} {e}{e}\
+    \n   {e}{e}                   {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}{e}{e}\
+    \n           {e}{e}{e}{e}{e}   {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}                     {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}    {e}{e}\
+    \n{e}{e}         {e}{e}\
+    \n{e}{e}              {e}{e}\
+    \n{e}{e}                  {e}{e}\
+    \n",
+    "⁭\
+    \n       {e}{e}{e}{e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}{e}\
+    \n  {e}{e}                 {e}{e}\
+    \n{e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}\
+    \n                            {e}{e}\
+    \n{e}{e}                 {e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}{e}\
+    \n       {e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n               {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n  {e}{e}                  {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}\
+    \n            {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                      {e}{e}\
+    \n\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n{e}{e}                      {e}{e}\
+    \n  {e}{e}                  {e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}\
+    \n            {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                              {e}{e}\
+    \n  {e}{e}                          {e}{e}\
+    \n    {e}{e}                      {e}{e}\
+    \n      {e}{e}                  {e}{e}\
+    \n         {e}{e}              {e}{e}\
+    \n           {e}{e}         {e}{e}\
+    \n             {e}{e}     {e}{e}\
+    \n               {e}{e} {e}{e}\
+    \n                  {e}{e}{e}\
+    \n                       {e}\
+    \n",
+    "⁭\
+    \n{e}{e}                               {e}{e}\
+    \n{e}{e}                               {e}{e}\
+    \n{e}{e}                               {e}{e}\
+    \n{e}{e}                               {e}{e}\
+    \n{e}{e}             {e}             {e}{e}\
+    \n{e}{e}          {e}{e}           {e}{e}\
+    \n{e}{e}       {e}{e}{e}         {e}{e}\
+    \n{e}{e}    {e}{e}  {e}{e}     {e}{e}\
+    \n {e}{e}{e}{e}        {e}{e}{e}{e}\
+    \n    {e}{e}{e}              {e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                    {e}{e}\
+    \n   {e}{e}              {e}{e}\
+    \n      {e}{e}        {e}{e}\
+    \n         {e}{e}  {e}{e}\
+    \n            {e}{e}{e}\
+    \n            {e}{e}{e}\
+    \n         {e}{e} {e}{e}\
+    \n      {e}{e}       {e}{e}\
+    \n   {e}{e}             {e}{e}\
+    \n{e}{e}                   {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}                    {e}{e}\
+    \n   {e}{e}              {e}{e}\
+    \n      {e}{e}        {e}{e}\
+    \n         {e}{e}  {e}{e}\
+    \n            {e}{e}{e}\
+    \n              {e}{e}\
+    \n              {e}{e}\
+    \n              {e}{e}\
+    \n              {e}{e}\
+    \n              {e}{e}\
+    \n",
+    "⁭\
+    \n {e}{e}{e}{e}{e}{e}{e}\
+    \n {e}{e}{e}{e}{e}{e}{e}\
+    \n                       {e}{e}\
+    \n                   {e}{e}\
+    \n               {e}{e}\
+    \n           {e}{e}\
+    \n       {e}{e}\
+    \n   {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n\
+    \n⁭\
+    \n\
+    \n⁭\
+    \n\
+    \n",
+    "⁭\
+    \n       {e}{e}{e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n        {e}{e}{e}{e}\
+    \n",
+    "\
+    \n               {e}{e}\
+    \n         {e}{e}{e}\
+    \n     {e}    {e}{e}\
+    \n{e}         {e}{e}\
+    \n                {e}{e}\
+    \n                {e}{e}\
+    \n                {e}{e}\
+    \n                {e}{e}\
+    \n      {e}{e}{e}{e}{e}\
+    \n      {e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n    {e}{e}{e}{e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}\
+    \n{e}{e}          {e}{e}\
+    \n                {e}{e}\
+    \n             {e}{e}\
+    \n          {e}{e}\
+    \n       {e}{e}\
+    \n    {e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n     {e}{e}{e}{e}\
+    \n  {e}{e}{e}{e}{e}\
+    \n{e}{e}         {e}{e}\
+    \n                   {e}{e}\
+    \n            {e}{e}{e}\
+    \n            {e}{e}{e}\
+    \n                   {e}{e}\
+    \n{e}{e}         {e}{e}\
+    \n  {e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n                         {e}{e}\
+    \n                    {e}{e}{e}\
+    \n              {e}{e} {e}{e}\
+    \n          {e}{e}     {e}{e}\
+    \n     {e}{e}          {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}{e}{e}\
+    \n                         {e}{e}\
+    \n                         {e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n {e}{e}{e}{e}{e}\
+    \n   {e}{e}{e}{e}{e}\
+    \n                    {e}{e}\
+    \n                    {e}{e}\
+    \n{e}{e}          {e}{e}\
+    \n  {e}{e}{e}{e}{e}\
+    \n     {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n        {e}{e}{e}{e}\
+    \n    {e}{e}{e}{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n    {e}{e}{e}{e}{e}{e}\
+    \n        {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n{e}{e}{e}{e}{e}{e}{e}\
+    \n                      {e}{e}\
+    \n                     {e}{e}\
+    \n                   {e}{e}\
+    \n                 {e}{e}\
+    \n               {e}{e}\
+    \n             {e}{e}\
+    \n           {e}{e}\
+    \n         {e}{e}\
+    \n",
+    "⁭\
+    \n        {e}{e}{e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n        {e}{e}{e}{e}\
+    \n",
+    "⁭\
+    \n        {e}{e}{e}{e}\
+    \n   {e}{e}{e}{e}{e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n{e}{e}               {e}{e}\
+    \n {e}{e}{e}{e}{e}{e}{e}\
+    \n      {e}{e}{e}{e}{e}{e}\
+    \n                         {e}{e}\
+    \n                        {e}{e}\
+    \n  {e}{e}{e}{e}{e}{e}\
+    \n       {e}{e}{e}{e}\
+    \n",
 ]

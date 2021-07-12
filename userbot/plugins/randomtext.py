@@ -14,7 +14,7 @@ from asyncio import sleep
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "extra"
 
@@ -29,7 +29,7 @@ plugin_category = "extra"
 )
 async def _(event):
     "To get random lyrics of a song."
-    event = await edit_or_reply(event, "Singing...")
+    event = await eor(event, "Singing...")
     await sleep(2)
     x = random.randrange(1, 33)
     if x == 1:
@@ -174,7 +174,7 @@ async def _(event):
 )
 async def _(event):  # sourcery no-metrics
     "To get random harry potter spells."
-    event = await edit_or_reply(event, "`.....`")
+    event = await eor(event, "`.....`")
     await sleep(2)
     x = random.randrange(1, 40)
     if x == 1:
@@ -269,7 +269,7 @@ async def _(event):  # sourcery no-metrics
 )
 async def _(event):  # sourcery no-metrics
     "To get random game of thrones thoughts.."
-    event = await edit_or_reply(event, "Typing...")
+    event = await eor(event, "Typing...")
     await sleep(2)
     x = random.randrange(1, 40)
     if x == 1:
@@ -424,7 +424,7 @@ async def _(event):  # sourcery no-metrics
 )
 async def _(event):
     "To get random game of thrones memes."
-    event = await edit_or_reply(event, "Thinking... 🤔")
+    event = await eor(event, "Thinking... 🤔")
     await sleep(2)
     x = random.randrange(1, 30)
     if x == 1:
@@ -589,7 +589,7 @@ async def _(event):
 )
 async def _(event):  # sourcery no-metrics
     "To get random sentences to start conversation."
-    event = await edit_or_reply(event, "Typing....")
+    event = await eor(event, "Typing....")
     await sleep(2)
     x = random.randrange(1, 101)
     if x == 1:
@@ -980,7 +980,7 @@ async def _(event):  # sourcery no-metrics
 )
 async def _(event):  # sourcery no-metrics
     "To get random life tips."
-    await edit_or_reply(event, "Well, let me give you a life-pro tip... 😉")
+    await eor(event, "Well, let me give you a life-pro tip... 😉")
     await sleep(2)
     x = random.randrange(1, 87)
     if x == 1:
@@ -1347,7 +1347,7 @@ async def _(event):  # sourcery no-metrics
 )
 async def _(event):  # sourcery no-metrics
     "To ask random questions."
-    event = await edit_or_reply(event, "selecting question...")
+    event = await eor(event, "selecting question...")
     await sleep(2)
     x = random.randrange(1, 60)
     if x == 1:
@@ -1541,7 +1541,7 @@ async def _(event):  # sourcery no-metrics
 async def _(event):  # sourcery no-metrics
     "To get random logical sentences."
     x = random.randrange(1, 104)
-    event = await edit_or_reply(event, "`Wait me getting a logic for you`")
+    event = await eor(event, "`Wait me getting a logic for you`")
     await sleep(2)
     if x == 1:
         await event.edit(

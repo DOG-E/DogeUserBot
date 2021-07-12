@@ -18,8 +18,8 @@ from userbot import doge
 from ..core.logger import logging
 from ..helpers.functions import name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
-from ..helpers.utils import _dogutils, reply_id
-from . import edit_delete, edit_or_reply, hmention
+from ..helpers.utils import _dogeutils, reply_id
+from . import edl, eor, hmention
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -59,9 +59,9 @@ async def _(event):
         if reply.message:
             query = reply.message
     else:
-        return await edit_or_reply(event, "`What I am Supposed to find `")
+        return await eor(event, "`What I am Supposed to find `")
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    dogevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
+    dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
         return await dogevent.edit(
@@ -77,10 +77,10 @@ async def _(event):
         await event.client(dog)
     except BaseException:
         pass
-    stderr = (await _dogutils.runcmd(song_cmd))[1]
+    stderr = (await _dogeutils.runcmd(song_cmd))[1]
     if stderr:
         return await dogevent.edit(f"**Error :** `{stderr}`")
-    dogname, stderr = (await _dogutils.runcmd(name_cmd))[:2]
+    dogname, stderr = (await _dogeutils.runcmd(name_cmd))[:2]
     if stderr:
         return await dogevent.edit(f"**Error :** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
@@ -144,9 +144,9 @@ async def _(event):
         if reply.message:
             query = reply.messag
     else:
-        return await edit_or_reply(event, "`What I am Supposed to find`")
+        return await eor(event, "`What I am Supposed to find`")
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    dogevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
+    dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
         return await dogevent.edit(
@@ -155,10 +155,10 @@ async def _(event):
     # thumb_cmd = thumb_dl.format(video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
     video_cmd = video_dl.format(video_link=video_link)
-    stderr = (await _dogutils.runcmd(video_cmd))[1]
+    stderr = (await _dogeutils.runcmd(video_cmd))[1]
     if stderr:
         return await dogevent.edit(f"**Error :** `{stderr}`")
-    dogname, stderr = (await _dogutils.runcmd(name_cmd))[:2]
+    dogname, stderr = (await _dogeutils.runcmd(name_cmd))[:2]
     if stderr:
         return await dogevent.edit(f"**Error :** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
@@ -213,10 +213,10 @@ async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
-        return await edit_delete(
+        return await edl(
             event, "__Reply to Voice clip or Audio clip to reverse search that song.__"
         )
-    dogevent = await edit_or_reply(event, "__Downloading the audio clip...__")
+    dogevent = await eor(event, "__Downloading the audio clip...__")
     try:
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
@@ -233,7 +233,7 @@ async def shazamcmd(event):
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
-        return await edit_delete(
+        return await edl(
             dogevent, f"**Error while reverse searching song:**\n__{str(e)}__"
         )
     image = track["images"]["background"]
@@ -259,7 +259,7 @@ async def _(event):
     song = event.pattern_match.group(1)
     chat = "@songdl_bot"
     reply_id_ = await reply_id(event)
-    dogevent = await edit_or_reply(event, SONG_SEARCH_STRING, parse_mode="html")
+    dogevent = await eor(event, SONG_SEARCH_STRING, parse_mode="html")
     async with event.client.conversation(chat) as conv:
         try:
             purgeflag = await conv.send_message("/start")
@@ -274,7 +274,7 @@ async def _(event):
                 ("I don't like to say this but I failed to find any such song.")
             ):
                 await delete_messages(event, chat, purgeflag)
-                return await edit_delete(
+                return await edl(
                     dogevent, SONG_NOT_FOUND, parse_mode="html", time=5
                 )
             await dogevent.edit(SONG_SENDING_STRING, parse_mode="html")
@@ -309,10 +309,10 @@ async def _(event):
 async def _(event):
     "To reverse search music by bot."
     if not event.reply_to_msg_id:
-        return await edit_delete(event, "```Reply to an audio message.```")
+        return await edl(event, "```Reply to an audio message.```")
     reply_message = await event.get_reply_message()
     chat = "@auddbot"
-    dogevent = await edit_or_reply(event, "```Identifying the song```")
+    dogevent = await eor(event, "```Identifying the song```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("/start")

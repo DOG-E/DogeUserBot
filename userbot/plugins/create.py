@@ -2,7 +2,7 @@ from telethon.tl import functions
 
 from .. import doge
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..utils.tools import create_supergroup
 
 plugin_category = "tools"
@@ -47,11 +47,11 @@ async def _(event):
                     peer=created_chat_id,
                 )
             )
-            await edit_or_reply(
+            await eor(
                 event, f"Group `{group_name}` created successfully. Join {result.link}"
             )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n{str(e)}")
+            await edl(event, f"**Error:**\n{str(e)}")
     elif type_of_group == "c":
         try:
             r = await event.client(
@@ -67,22 +67,22 @@ async def _(event):
                     peer=created_chat_id,
                 )
             )
-            await edit_or_reply(
+            await eor(
                 event,
                 f"Channel `{group_name}` created successfully. Join {result.link}",
             )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n{str(e)}")
+            await edl(event, f"**Error:**\n{str(e)}")
     elif type_of_group == "b":
         answer = await create_supergroup(
             group_name, event.client, Config.TG_BOT_USERNAME, descript
         )
         if answer[0] != "error":
-            await edit_or_reply(
+            await eor(
                 event,
                 f"Mega group `{group_name}` created successfully. Join {answer[0].link}",
             )
         else:
-            await edit_delete(event, f"**Error:**\n{str(answer[1])}")
+            await edl(event, f"**Error:**\n{str(answer[1])}")
     else:
-        await edit_delete(event, "Read `.help create` to know how to use me")
+        await edl(event, "Read `.help create` to know how to use me")

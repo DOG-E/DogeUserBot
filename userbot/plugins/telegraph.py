@@ -12,7 +12,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import BOTLOG, BOTLOG_CHATID, mention
 
 LOGS = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ def resize_image(image):
 )  # sourcery no-metrics
 async def _(event):
     "To get telegraph link."
-    dogevent = await edit_or_reply(event, "`processing........`")
+    dogevent = await eor(event, "`Processing...`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,

@@ -1,79 +1,12 @@
 import asyncio
-import os
 import re
-from io import BytesIO
 from random import choice, randint
-from textwrap import wrap
 
-from PIL import Image, ImageDraw, ImageFont
-from requests import get
 from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..Config import Config
-from ..core.managers import edit_or_reply
-from ..helpers.utils import _format, get_user_from_event, reply_id
-from . import ALIVE_NAME, mention
+from . import ALIVE_NAME, doge, mention, amongus_gen, get_impostor_img, eor, reply_id, get_user_from_event, _format
 
 plugin_category = "extra"
-
-
-async def amongus_gen(text: str, clr: int) -> str:
-    url = "https://github.com/DOG-E/Source/raw/DOGE/Material/AmongUs/"
-    font = ImageFont.truetype(
-        BytesIO(
-            get(
-                "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/bold.ttf"
-            ).content
-        ),
-        60,
-    )
-    imposter = Image.open(BytesIO(get(f"{url}{clr}.png").content))
-    text_ = "\n".join("\n".join(wrap(part, 30)) for part in text.split("\n"))
-    w, h = ImageDraw.Draw(Image.new("RGB", (1, 1))).multiline_textsize(
-        text_, font, stroke_width=2
-    )
-    text = Image.new("RGBA", (w + 30, h + 30))
-    ImageDraw.Draw(text).multiline_text(
-        (15, 15), text_, "#FFF", font, stroke_width=2, stroke_fill="#000"
-    )
-    w = imposter.width + text.width + 10
-    h = max(imposter.height, text.height)
-    image = Image.new("RGBA", (w, h))
-    image.paste(imposter, (0, h - imposter.height), imposter)
-    image.paste(text, (w - text.width, 0), text)
-    image.thumbnail((512, 512))
-    output = BytesIO()
-    output.name = "imposter.webp"
-    webp_file = os.path.join(Config.TEMP_DIR, output.name)
-    image.save(webp_file, "WebP")
-    return webp_file
-
-
-async def get_imposter_img(text: str) -> str:
-    background = get(
-        f"https://github.com/DOG-E/Source/raw/DOGE/Material/Impostor/{randint(1,22)}.png"
-    ).content
-    font = get(
-        "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf"
-    ).content
-    font = BytesIO(font)
-    font = ImageFont.truetype(font, 30)
-    image = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(image)
-    w, h = draw.multiline_textsize(text=text, font=font)
-    image = Image.open(BytesIO(background))
-    x, y = image.size
-    draw = ImageDraw.Draw(image)
-    draw.multiline_text(
-        ((x - w) // 2, (y - h) // 2), text=text, font=font, fill="white", align="center"
-    )
-    output = BytesIO()
-    output.name = "impostor.png"
-    webp_file = os.path.join(Config.TEMP_DIR, output.name)
-    image.save(webp_file, "png")
-    return webp_file
 
 
 @doge.bot_cmd(
@@ -123,27 +56,27 @@ async def sayliecmd(event):
         clr = randint(1, 12)
     if not text:
         if not reply:
-            return await edit_or_reply(event, f"{mention} Was a traitor!")
+            return await eor(event, f"{mention} Was a traitor!")
         if not reply.text:
-            return await edit_or_reply(
+            return await eor(
                 event,
                 f"{_format.mentionuser(get_display_name(reply.sender) ,reply.sender.id)} Was a traitor!",
             )
-    imposter_file = await amongus_gen(text, clr)
+    impostor_file = await amongus_gen(text, clr)
     await event.delete()
-    await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
+    await event.client.send_file(event.chat_id, impostor_file, reply_to=reply_to)
 
 
 @doge.bot_cmd(
-    pattern="imposter(?:\s|$)([\s\S]*)",
-    command=("imposter", plugin_category),
+    pattern="impostor(?:\s|$)([\s\S]*)",
+    command=("impostor", plugin_category),
     info={
-        "header": "Fun images for imposter ",
-        "usage": "{tr}imposter <username/userid/reply>",
+        "header": "Fun images for impostor ",
+        "usage": "{tr}impostor <username/userid/reply>",
     },
 )
 async def procces_img(event):
-    "Fun images for imposter"
+    "Fun images for impostor"
     remain = randint(1, 2)
     imps = ["wasn`t the impostor", "was the impostor"]
     text2 = f"\n{remain} impostor(s) remain."
@@ -153,38 +86,38 @@ async def procces_img(event):
     args = event.pattern_match.group(1)
     if not user:
         try:
-            if not args and not reply:
-                user = await event.client.get_me()
-            else:
+            if args or reply:
                 user = await event.client.get_entity(args or reply.sender_id)
+            else:
+                user = await event.client.get_me()
             text = f"{get_display_name(user)} {choice(imps)}."
             text += text2
-        except:
+        except Exception:
             text = args
     else:
         text = f"{get_display_name(user)} {choice(imps)}."
         text += text2
-    imposter_file = await get_imposter_img(text)
+    impostor_file = await get_impostor_img(text)
     await event.delete()
-    await event.client.send_file(event.chat_id, imposter_file, reply_to=reply_to)
+    await event.client.send_file(event.chat_id, impostor_file, reply_to=reply_to)
 
 
 @doge.bot_cmd(
     pattern="imp(|n) ([\s\S]*)",
     command=("imp", plugin_category),
     info={
-        "header": "Find imposter with stickers animation.",
-        "description": "Imp for imposter impn for not imposter",
+        "header": "Find impostor with stickers animation.",
+        "description": "Imp for impostor impn for not impostor",
         "usage": ["{tr}imp <name>", "{tr}impn <name>"],
         "examples": ["{tr}imp blabla", "{tr}impn blabla"],
     },
 )
 async def _(event):
-    "Find imposter with stickers animation."
+    "Find impostor with stickers animation."
     USERNAME = f"tg://user?id={event.client.uid}"
     name = event.pattern_match.group(2)
     cmd = event.pattern_match.group(1).lower()
-    text1 = await edit_or_reply(event, "Uhmm... Something is wrong here!!")
+    text1 = await eor(event, "Uhmm... Something is wrong here!!")
     await asyncio.sleep(2)
     await text1.delete()
     stcr1 = await event.client.send_file(
@@ -200,7 +133,7 @@ async def _(event):
         event.chat_id, "CAADAQADRgADnjOcH9odHIXtfgmvAg"
     )
     text3 = await event.reply(
-        f"**[{ALIVE_NAME}]({USERNAME}) :** We have to eject the imposter or will lose "
+        f"**[{ALIVE_NAME}]({USERNAME}) :** We have to eject the impostor or will lose "
     )
     await asyncio.sleep(3)
     await stcr2.delete()
@@ -248,14 +181,14 @@ async def _(event):
     await stcr4.delete()
     if cmd == "":
         await dogevent.edit(
-            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
+            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was an impostor.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
         await asyncio.sleep(4)
         await dogevent.delete()
         await event.client.send_file(event.chat_id, "CAADAQADLQADnjOcH39IqwyR6Q_0Ag")
     elif cmd == "n":
         await dogevent.edit(
-            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was not an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
+            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ{name} was not an impostor.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
         await asyncio.sleep(4)
         await dogevent.delete()
@@ -266,17 +199,17 @@ async def _(event):
     pattern="timp(|n) ([\s\S]*)",
     command=("timp", plugin_category),
     info={
-        "header": "Find imposter with text animation.",
-        "description": "timp for imposter timpn for not imposter",
+        "header": "Find impostor with text animation.",
+        "description": "timp for impostor timpn for not impostor",
         "usage": ["{tr}timp <name>", "{tr}timpn <name>"],
         "examples": ["{tr}timp blabla", "{tr}timpn blabla"],
     },
 )
 async def _(event):
-    "Find imposter with text animation."
+    "Find impostor with text animation."
     name = event.pattern_match.group(2)
     cmd = event.pattern_match.group(1).lower()
-    dogevent = await edit_or_reply(event, f"{name} is ejected.......")
+    dogevent = await eor(event, f"{name} is ejected.......")
     await asyncio.sleep(2)
     await dogevent.edit("ඞㅤㅤㅤㅤ ㅤㅤㅤㅤ")
     await asyncio.sleep(0.8)
@@ -300,9 +233,9 @@ async def _(event):
     await asyncio.sleep(0.2)
     if cmd == "":
         await dogevent.edit(
-            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
+            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was an impostor.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         0 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )
     elif cmd == "n":
         await dogevent.edit(
-            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was not an Imposter.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
+            f". 　　　。　　　　•　 　ﾟ　　。 　　.\n .　　　 　　.　　　　　。　　 。　. 　\n\n  . 　　 。   　     ඞ         。 . 　　 • 　　　　•\n\n  ﾟ {name} was not an impostor.      。　. 　 　       。　.                                        。　. \n                                   　.          。　  　. \n　'         1 Impostor remains    　 。　.  　　.                。　.        。 　     .          。 　            .               .         .    ,      。\n　　ﾟ　　　.　　.    ,　 　。　 　. 　 .     。"
         )

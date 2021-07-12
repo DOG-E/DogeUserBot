@@ -7,7 +7,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.tools import media_type
 from ..helpers.utils import _format
 from . import BOTLOG, BOTLOG_CHATID
@@ -205,11 +205,11 @@ async def _(event):
             AFK_.afk_time = datetime.now()
         AFK_.USERAFK_ON = f"on: {AFK_.reason}"
         if AFK_.reason:
-            await edit_delete(
+            await edl(
                 event, f"`I shall be Going afk! because ~` {AFK_.reason}", 5
             )
         else:
-            await edit_delete(event, f"`I shall be Going afk! `", 5)
+            await edl(event, f"`I shall be Going afk! `", 5)
         if BOTLOG:
             if AFK_.reason:
                 await event.client.send_message(
@@ -243,11 +243,11 @@ async def _(event):
     reply = await event.get_reply_message()
     media_t = media_type(reply)
     if media_t == "Sticker" or not media_t:
-        return await edit_or_reply(
+        return await eor(
             event, "`You haven't replied to any media to activate media afk`"
         )
     if not BOTLOG:
-        return await edit_or_reply(
+        return await eor(
             event, "`To use media afk you need to set PRIVATE_GROUP_BOT_API_ID config`"
         )
     AFK_.USERAFK_ON = {}
@@ -269,11 +269,11 @@ async def _(event):
             AFK_.afk_time = datetime.now()
         AFK_.USERAFK_ON = f"on: {AFK_.reason}"
         if AFK_.reason:
-            await edit_delete(
+            await edl(
                 event, f"`I shall be Going afk! because ~` {AFK_.reason}", 5
             )
         else:
-            await edit_delete(event, f"`I shall be Going afk! `", 5)
+            await edl(event, f"`I shall be Going afk! `", 5)
         AFK_.media_afk = await reply.forward_to(BOTLOG_CHATID)
         if AFK_.reason:
             await event.client.send_message(

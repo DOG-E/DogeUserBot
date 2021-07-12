@@ -2,7 +2,7 @@ from telethon import functions
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "utils"
 
@@ -30,7 +30,7 @@ async def _(event):
                     )
                 )
             except Exception as e:
-                return await edit_delete(event, f"`{str(e)}`", 5)
+                return await edl(event, f"`{str(e)}`", 5)
     else:
         # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
         for user_id in to_add_users.split(" "):
@@ -41,6 +41,6 @@ async def _(event):
                     )
                 )
             except Exception as e:
-                return await edit_delete(event, f"`{str(e)}`", 5)
+                return await edl(event, f"`{str(e)}`", 5)
 
-    await edit_or_reply(event, f"`{to_add_users} is/are Invited Successfully`")
+    await eor(event, f"`{to_add_users} is/are Invited Successfully`")

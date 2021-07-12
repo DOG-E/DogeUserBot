@@ -13,7 +13,7 @@ from telethon.errors.rpcerrorlist import (
 from telethon.events import CallbackQuery
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers.functions import check_data_base_heal_th, dogalive, get_readable_time
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
@@ -36,7 +36,7 @@ plugin_category = "utils"
 async def amireallyalive(event):
     "A kind of showing bot details"
     start = datetime.now()
-    await edit_or_reply(event, "Checking...")
+    await eor(event, "Checking...")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     reply_to_id = await reply_id(event)
@@ -66,12 +66,12 @@ async def amireallyalive(event):
             )
             await event.delete()
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
-            return await edit_or_reply(
+            return await eor(
                 event,
                 f"**Media Value Error!!**\n__Change the link by __`.setdv`\n\n**__Can't get media from this link :-**__ `{PIC}`",
             )
     else:
-        await edit_or_reply(event, caption)
+        await eor(event, caption)
 
 
 temp = "**{ALIVE_TEXT}**\n\n\
@@ -98,7 +98,8 @@ async def amireallyalive(event):
     "A kind of showing bot details by your inline bot"
     reply_to_id = await reply_id(event)
     EMOJI = gvarstatus("ALIVE_EMOJI") or "✧✧"
-    doge_caption = f"**DogeUserBot is Up and Running**\n"
+    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**Dogeuserbot is Up and Running**"
+    doge_caption = f"{ALIVE_TEXT}\n"
     doge_caption += f"**{EMOJI} Telethon version :** `{version.__version__}\n`"
     doge_caption += f"**{EMOJI} DogeUserBot Version :** `{dogeversion}`\n"
     doge_caption += f"**{EMOJI} Python Version :** `{python_version()}\n`"

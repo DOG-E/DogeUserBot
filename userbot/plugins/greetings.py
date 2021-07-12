@@ -2,8 +2,8 @@ import random
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
-from . import dogmemes
+from ..core.managers import eor
+from . import dogememes
 
 plugin_category = "extra"
 
@@ -74,7 +74,7 @@ X = (
 )
 async def baby(event):
     "Hi Baby art."
-    await edit_or_reply(event, S)
+    await eor(event, S)
 
 
 @doge.bot_cmd(
@@ -91,7 +91,7 @@ async def hbd(event):
     text = f"**♥️{inpt}♥️**"
     if not inpt:
         text = ""
-    await edit_or_reply(
+    await eor(
         event,
         f"▃▃▃▃▃▃▃▃▃▃▃\n┊ ┊ ┊ ┊ ┊ ┊\n┊ ┊ ┊ ┊ ˚✩ ⋆｡˚ ✩\n┊ ┊ ┊ ✫\n┊ ┊ ✧🎂🍰🍫🍭\n┊ ┊ ✯\n┊ . ˚ ˚✩\n........♥️♥️..........♥️♥️\n.....♥️........♥️..♥️........♥️\n...♥️.............♥️............♥️\n......♥️.....Happy.......♥️__\n...........♥️..............♥️__\n................♥️.....♥️__\n......................♥️__\n...............♥️......♥️__\n..........♥️...............♥️__\n.......♥️..Birthday....♥️\n.....♥️..........♥️..........♥️__\n.....♥️.......♥️_♥️.......♥️__\n.........♥️♥️........♥️♥️.....\n.............................................\n..... (¯`v´¯)♥️\n.......•.¸.•´STAY BLESSED\n....¸.•´      LOVE&FUN\n... (   YOU DESERVE\n☻/ THEM A LOT\n/▌✿🌷✿\n/ \     \|/\n▃▃▃▃▃▃▃▃▃▃▃\n\n{text}",
     )
@@ -107,7 +107,7 @@ async def hbd(event):
 )
 async def gn(event):
     "Thanks art."
-    await edit_or_reply(event, X)
+    await eor(event, X)
 
 
 @doge.bot_cmd(
@@ -120,8 +120,8 @@ async def gn(event):
 )
 async def morning(morning):
     "Good morning random strings."
-    txt = random.choice(dogmemes.GDMORNING)
-    await edit_or_reply(morning, txt)
+    txt = random.choice(dogememes.GDMORNING)
+    await eor(morning, txt)
 
 
 @doge.bot_cmd(
@@ -134,8 +134,8 @@ async def morning(morning):
 )
 async def noon(noon):
     "Good afternoon random strings."
-    txt = random.choice(dogmemes.GDNOON)
-    await edit_or_reply(noon, txt)
+    txt = random.choice(dogememes.GDNOON)
+    await eor(noon, txt)
 
 
 @doge.bot_cmd(
@@ -148,8 +148,8 @@ async def noon(noon):
 )
 async def night(night):
     "Good night random strings."
-    txt = random.choice(dogmemes.GDNIGHT)
-    await edit_or_reply(night, txt)
+    txt = random.choice(dogememes.GDNIGHT)
+    await eor(night, txt)
 
 
 @doge.bot_cmd(
@@ -162,7 +162,7 @@ async def night(night):
 )
 async def gm(event):
     "Good morning art."
-    await edit_or_reply(
+    await eor(
         event,
         "｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･\n╱╱╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╭╮\n╭━┳━┳━┳╯┃╭━━┳━┳┳┳━┳╋╋━┳┳━╮\n┃╋┃╋┃╋┃╋┃┃┃┃┃╋┃╭┫┃┃┃┃┃┃┃╋┃\n┣╮┣━┻━┻━╯╰┻┻┻━┻╯╰┻━┻┻┻━╋╮┃\n╰━╯╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━╯\n｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･",
     )
@@ -178,7 +178,7 @@ async def gm(event):
 )
 async def gm(event):
     "Good morning art."
-    await edit_or_reply(
+    await eor(
         event,
         "♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n╔══╗────╔╗──────────╔╗\n║╔═╬═╦═╦╝║╔══╦═╦╦╦═╦╬╬═╦╦═╗\n║╚╗║╬║╬║╬║║║║║╬║╔╣║║║║║║║╬║\n╚══╩═╩═╩═╝╚╩╩╩═╩╝╚╩═╩╩╩═╬╗║\n────────────────────────╚═╝\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛･",
     )
@@ -194,7 +194,7 @@ async def gm(event):
 )
 async def gm(event):
     "Good morning art."
-    await edit_or_reply(event, W)
+    await eor(event, W)
 
 
 @doge.bot_cmd(
@@ -207,7 +207,7 @@ async def gm(event):
 )
 async def gn(event):
     "Good night art."
-    await edit_or_reply(
+    await eor(
         event,
         "｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･\n╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮\n╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮\n┃╋┃╋┃╋┃╋┃┃┃┃┃┃╋┃┃┃╭┫\n┣╮┣━┻━┻━╯╰┻━┻╋╮┣┻┻━╯\n╰━╯╱╱╱╱╱╱╱╱╱╱╰━╯\n｡♥｡･ﾟ♡ﾟ･｡♥° ♥｡･ﾟ♡ﾟ･",
     )
@@ -223,7 +223,7 @@ async def gn(event):
 )
 async def gn(event):
     "Good night art."
-    await edit_or_reply(
+    await eor(
         event,
         "♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n╔══╗────╔╗╔═╦╦╗─╔╗╔╗\n║╔═╬═╦═╦╝║║║║╠╬═╣╚╣╚╗\n║╚╗║╬║╬║╬║║║║║║╬║║║╔╣\n╚══╩═╩═╩═╝╚╩═╩╬╗╠╩╩═╝\n──────────────╚═╝\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛･",
     )
@@ -239,7 +239,7 @@ async def gn(event):
 )
 async def gn(event):
     "Good night art."
-    await edit_or_reply(event, U)
+    await eor(event, U)
 
 
 # @PhycoNinja13b 's Part begin from here
@@ -262,7 +262,7 @@ async def hi(event):
     dog = giveVar[4:5]
     if not dog:
         dog = "🌺"
-    await edit_or_reply(
+    await eor(
         event,
         f"{dog}✨✨{dog}✨{dog}{dog}{dog}\n{dog}✨✨{dog}✨✨{dog}✨\n{dog}{dog}{dog}{dog}✨✨{dog}✨\n{dog}✨✨{dog}✨✨{dog}✨\n{dog}✨✨{dog}✨{dog}{dog}{dog}\n☁☁☁☁☁☁☁☁",
     )
@@ -278,7 +278,7 @@ async def hi(event):
 )
 async def cheer(event):
     "cheer text art."
-    await edit_or_reply(
+    await eor(
         event,
         "💐💐😉😊💐💐\n☕ Cheer Up  🍵\n🍂 ✨ )) ✨  🍂\n🍂┃ (( * ┣┓ 🍂\n🍂┃*💗 ┣┛ 🍂 \n🍂┗━━┛  🍂🎂 For YOU  🍰\n💐💐😌😚💐💐",
     )
@@ -294,7 +294,7 @@ async def cheer(event):
 )
 async def getwell(event):
     "Get Well art."
-    await edit_or_reply(
+    await eor(
         event, "🌹🌹🌹🌹🌹🌹🌹🌹 \n🌹😷😢😓😷😢💨🌹\n🌹💝💉🍵💊💐💝🌹\n🌹 GetBetter Soon! 🌹\n🌹🌹🌹🌹🌹🌹🌹🌹"
     )
 
@@ -309,7 +309,7 @@ async def getwell(event):
 )
 async def luck(event):
     "Luck art."
-    await edit_or_reply(
+    await eor(
         event, "💚~🍀🍀🍀🍀🍀\n🍀╔╗╔╗╔╗╦╗✨🍀\n🍀║╦║║║║║║👍🍀\n🍀╚╝╚╝╚╝╩╝。 🍀\n🍀・・ⓁⓊⒸⓀ🍀\n🍀🍀🍀 to you💚"
     )
 
@@ -324,7 +324,7 @@ async def luck(event):
 )
 async def sprinkle(event):
     "Sprinkle text art."
-    await edit_or_reply(
+    await eor(
         event,
         "✨.•*¨*.¸.•*¨*.¸¸.•*¨*• ƸӜƷ\n🌸🌺🌸🌺🌸🌺🌸🌺\n Sprinkled with love❤\n🌷🌻🌷🌻🌷🌻🌷🌻\n ¨*.¸.•*¨*. ¸.•*¨*.¸¸.•*¨`*•.✨\n🌹🍀🌹🍀🌹🍀🌹🍀",
     )

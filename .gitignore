@@ -35,7 +35,6 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -104,3 +103,24 @@ config.py
 
 # mypy
 .mypy_cache/
+
+# Operating system-related files
+# File properties cache/storage on macOS
+*.DS_Store
+
+# Thumbnail cache on Windows
+Thumbs.db
+
+# profiling data
+.prof
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide

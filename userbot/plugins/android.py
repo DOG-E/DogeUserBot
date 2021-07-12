@@ -4,9 +4,7 @@ import re
 from bs4 import BeautifulSoup
 from requests import get
 
-from userbot import doge
-
-from ..core.managers import edit_delete, edit_or_reply
+from . import doge, edl, eor
 
 plugin_category = "extra"
 
@@ -34,7 +32,7 @@ async def kakashi(event):
             f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
             f'[Changelog]({data["magisk"]["note"]})\n'
         )
-    await edit_or_reply(event, releases)
+    await eor(event, releases)
 
 
 @doge.bot_cmd(
@@ -54,7 +52,7 @@ async def device_info(event):
         if textx:
             codename = textx.text
         else:
-            return await edit_delete(event, "`Usage: .device <codename> / <model>`")
+            return await edl(event, "`Usage: .device <codename> / <model>`")
     data = json.loads(
         get(
             "https://raw.githubusercontent.com/androidtrackers/"
@@ -72,7 +70,7 @@ async def device_info(event):
             )
     else:
         reply = f"`Couldn't find info about {codename}!`\n"
-    await edit_or_reply(event, reply)
+    await eor(event, reply)
 
 
 @doge.bot_cmd(
@@ -95,7 +93,7 @@ async def codename_info(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edit_delete(event, "`Usage: .codename <brand> <device>`")
+        return await edl(event, "`Usage: .codename <brand> <device>`")
 
     data = json.loads(
         get(
@@ -105,6 +103,8 @@ async def codename_info(event):
     )
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
+    if not devices:
+        return await eor(event, f"__I couldn't find {brand}.__")
     results = [
         i
         for i in devices
@@ -122,7 +122,7 @@ async def codename_info(event):
             )
     else:
         reply = f"`Couldn't find {device} codename!`\n"
-    await edit_or_reply(event, reply)
+    await eor(event, reply)
 
 
 @doge.bot_cmd(
@@ -145,7 +145,7 @@ async def devices_specifications(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edit_delete(event, "`Usage: .specs <brand> <device>`")
+        return await edl(event, "`Usage: .specs <brand> <device>`")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -159,7 +159,7 @@ async def devices_specifications(event):
             i["href"] for i in all_brands if brand == i.text.strip().lower()
         ][0]
     except IndexError:
-        return await edit_delete(event, f"`{brand} is unknown brand!`")
+        return await edl(event, f"`{brand} is unknown brand!`")
     devices = BeautifulSoup(get(brand_page_url).content, "lxml").findAll(
         "div", {"class": "model-listing-container-80"}
     )
@@ -171,7 +171,7 @@ async def devices_specifications(event):
             if device in i.text.strip().lower()
         ]
     except IndexError:
-        return await edit_delete(event, f"`can't find {device}!`")
+        return await edl(event, f"`can't find {device}!`")
     if len(device_page_url) > 2:
         device_page_url = device_page_url[:2]
     reply = ""
@@ -189,7 +189,7 @@ async def devices_specifications(event):
                 .strip()
             )
             reply += f"**{title}**: {data}\n"
-    await edit_or_reply(event, reply)
+    await eor(event, reply)
 
 
 @doge.bot_cmd(
@@ -210,11 +210,11 @@ async def twrp(event):
     elif textx:
         device = textx.text.split(" ")[0]
     else:
-        return await edit_delete(event, "`Usage: .twrp <codename>`")
+        return await edl(event, "`Usage: .twrp <codename>`")
     url = get(f"https://dl.twrp.me/{device}/")
     if url.status_code == 404:
         reply = f"`Couldn't find twrp downloads for {device}!`\n"
-        return await edit_delete(event, reply)
+        return await edl(event, reply)
     page = BeautifulSoup(url.content, "lxml")
     download = page.find("table").find("tr").find("a")
     dl_link = f"https://dl.twrp.me{download['href']}"
@@ -226,4 +226,4 @@ async def twrp(event):
         f"[{dl_file}]({dl_link}) - __{size}__\n"
         f"**Updated:** __{date}__\n"
     )
-    await edit_or_reply(event, reply)
+    await eor(event, reply)

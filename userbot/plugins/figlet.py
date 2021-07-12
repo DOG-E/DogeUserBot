@@ -1,7 +1,7 @@
 import pyfiglet
 
 from ..helpers.utils import _format
-from . import _format, deEmojify, doge, edit_delete, edit_or_reply
+from . import _format, deEmojify, doge, edl, eor
 
 plugin_category = "extra"
 
@@ -59,7 +59,7 @@ async def figlet(event):
         cmd = None
         text = input_str
     else:
-        await edit_or_reply(event, "`Give some text to change it`")
+        await eor(event, "`Give some text to change it`")
         return
     style = cmd
     text = text.strip()
@@ -67,10 +67,10 @@ async def figlet(event):
         try:
             font = CMD_FIG[style.strip()]
         except KeyError:
-            return await edit_delete(
+            return await edl(
                 event, "**Invalid style selected**, __Check__ `.info figlet`."
             )
         result = pyfiglet.figlet_format(deEmojify(text), font=font)
     else:
         result = pyfiglet.figlet_format(deEmojify(text))
-    await edit_or_reply(event, result, parse_mode=_format.parse_pre)
+    await eor(event, result, parse_mode=_format.parse_pre)

@@ -15,7 +15,7 @@ from telethon.utils import get_attributes
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import progress
 from ..helpers.utils import reply_id
 
@@ -154,27 +154,27 @@ async def uploadir(event):
     flag = event.pattern_match.group(1)
     flag = bool(flag)
     if not os.path.exists(path):
-        return await edit_or_reply(
+        return await eor(
             event,
             f"`there is no such directory/file with the name {path} to upload`",
         )
-    udir_event = await edit_or_reply(event, "Uploading....")
+    udir_event = await eor(event, "Uploading....")
     if os.path.isdir(path):
-        await edit_or_reply(udir_event, f"`Gathering file details in directory {path}`")
+        await eor(udir_event, f"`Gathering file details in directory {path}`")
         UPLOAD_.uploaded = 0
         await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
-        await edit_delete(
+        await edl(
             udir_event,
             f"`Uploaded {UPLOAD_.uploaded} files successfully in {ms} seconds. `",
         )
     else:
-        await edit_or_reply(udir_event, f"`Uploading file .....`")
+        await eor(udir_event, f"`Uploading file .....`")
         UPLOAD_.uploaded = 0
         await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
-        await edit_delete(
+        await edl(
             udir_event, f"`Uploaded file {str(path)} successfully in {ms} seconds. `"
         )

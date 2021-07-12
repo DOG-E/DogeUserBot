@@ -8,8 +8,8 @@ from pathlib import Path
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _dogutils, _format
+from ..core.managers import edl, eor
+from ..helpers.utils import _dogeutils, _format
 from . import humanbytes
 
 plugin_category = "utils"
@@ -30,7 +30,7 @@ async def lst(event):  # sourcery no-metrics
     dog = "".join(event.text.split(maxsplit=1)[1:])
     path = dog or os.getcwd()
     if not os.path.exists(path):
-        await edit_or_reply(
+        await eor(
             event,
             f"there is no such directory or file with the name `{dog}` check again",
         )
@@ -102,7 +102,7 @@ async def lst(event):  # sourcery no-metrics
             )
             await event.delete()
     else:
-        await edit_or_reply(event, msg)
+        await eor(event, msg)
 
 
 @doge.bot_cmd(
@@ -120,21 +120,21 @@ async def lst(event):
     if dog:
         path = Path(dog)
     else:
-        await edit_or_reply(event, "what should i delete")
+        await eor(event, "what should i delete")
         return
     if not os.path.exists(path):
-        await edit_or_reply(
+        await eor(
             event,
             f"there is no such directory or file with the name `{dog}` check again",
         )
         return
     dogecmd = f"rm -rf {path}"
     if os.path.isdir(path):
-        await _dogutils.runcmd(dogecmd)
-        await edit_or_reply(event, f"Successfully removed `{path}` directory")
+        await _dogeutils.runcmd(dogecmd)
+        await eor(event, f"Successfully removed `{path}` directory")
     else:
-        await _dogutils.runcmd(dogecmd)
-        await edit_or_reply(event, f"Successfully removed `{path}` file")
+        await _dogeutils.runcmd(dogecmd)
+        await eor(event, f"Successfully removed `{path}` file")
 
 
 @doge.bot_cmd(
@@ -151,27 +151,27 @@ async def _(event):
     pwd = os.getcwd()
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event,
             "What should i create ?",
             parse_mode=_format.parse_pre,
         )
     original = os.path.join(pwd, input_str.strip())
     if os.path.exists(original):
-        await edit_delete(
+        await edl(
             event,
             f"Already a directory named {original} exists",
         )
         return
-    mone = await edit_or_reply(
+    mone = await eor(
         event, "creating the directory ...", parse_mode=_format.parse_pre
     )
     await asyncio.sleep(2)
     try:
-        await _dogutils.runcmd(f"mkdir {original}")
+        await _dogeutils.runcmd(f"mkdir {original}")
         await mone.edit(f"Successfully created the directory `{original}`")
     except Exception as e:
-        await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
+        await edl(mone, str(e), parse_mode=_format.parse_pre)
 
 
 @doge.bot_cmd(
@@ -188,14 +188,14 @@ async def _(event):
     pwd = os.getcwd()
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event,
             "What and where should i move the file/folder.",
             parse_mode=_format.parse_pre,
         )
     loc = input_str.split(";")
     if len(loc) != 2:
-        return await edit_delete(
+        return await edl(
             event,
             "use proper syntax .cpto from ; to destination",
             parse_mode=_format.parse_pre,
@@ -204,20 +204,20 @@ async def _(event):
     location = os.path.join(pwd, loc[1].strip())
 
     if not os.path.exists(original):
-        await edit_delete(
+        await edl(
             event,
             f"there is no such directory or file with the name `{dog}` check again",
         )
         return
-    mone = await edit_or_reply(
+    mone = await eor(
         event, "copying the file ...", parse_mode=_format.parse_pre
     )
     await asyncio.sleep(2)
     try:
-        await _dogutils.runcmd(f"cp -r {original} {location}")
+        await _dogeutils.runcmd(f"cp -r {original} {location}")
         await mone.edit(f"Successfully copied the `{original}` to `{location}`")
     except Exception as e:
-        await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
+        await edl(mone, str(e), parse_mode=_format.parse_pre)
 
 
 @doge.bot_cmd(
@@ -234,14 +234,14 @@ async def _(event):
     pwd = os.getcwd()
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event,
             "What and where should i move the file/folder.",
             parse_mode=_format.parse_pre,
         )
     loc = input_str.split(";")
     if len(loc) != 2:
-        return await edit_delete(
+        return await edl(
             event,
             "use proper syntax .mvto from ; to destination",
             parse_mode=_format.parse_pre,
@@ -250,11 +250,11 @@ async def _(event):
     location = os.path.join(pwd, loc[1].strip())
 
     if not os.path.exists(original):
-        return await edit_delete(
+        return await edl(
             event,
             f"there is no such directory or file with the name `{original}` check again",
         )
-    mone = await edit_or_reply(
+    mone = await eor(
         event, "Moving the file ...", parse_mode=_format.parse_pre
     )
     await asyncio.sleep(2)
@@ -262,4 +262,4 @@ async def _(event):
         shutil.move(original, location)
         await mone.edit(f"Successfully moved the `{original}` to `{location}`")
     except Exception as e:
-        await edit_delete(mone, str(e), parse_mode=_format.parse_pre)
+        await edl(mone, str(e), parse_mode=_format.parse_pre)

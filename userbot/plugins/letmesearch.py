@@ -4,7 +4,7 @@ import requests
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "utils"
 
@@ -24,7 +24,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -33,7 +33,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -53,7 +53,7 @@ async def _(event):
         )
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -62,7 +62,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -82,7 +82,7 @@ async def _(event):
         )
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -91,7 +91,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -109,7 +109,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -118,7 +118,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -138,7 +138,7 @@ async def _(event):
         )
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -147,7 +147,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -165,7 +165,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -174,7 +174,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -192,7 +192,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -201,7 +201,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -219,7 +219,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -228,7 +228,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -246,7 +246,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -255,7 +255,7 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
@@ -273,7 +273,7 @@ async def _(event):
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
-    event = await edit_or_reply(event, "`Searching.....`")
+    event = await eor(event, "`Searching.....`")
     await sleep(2)
     if response_api:
         await event.edit(
@@ -282,4 +282,4 @@ async def _(event):
             )
         )
     else:
-        await edit_delete(event, "`Something went wrong. Please try again later.`", 5)
+        await edl(event, "`Something went wrong. Please try again later.`", 5)

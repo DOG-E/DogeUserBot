@@ -11,7 +11,7 @@ from humanize import naturalsize
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "misc"
@@ -45,8 +45,8 @@ async def direct_link_generator(event):
         if textx:
             message = textx.text
         else:
-            return await edit_delete(event, "`Usage: .direct <url>`")
-    dogevent = await edit_or_reply(event, "`Processing...`")
+            return await edl(event, "`Usage: .direct <url>`")
+    dogevent = await eor(event, "`Processing...`")
     reply = ""
     links = re.findall(r"\bhttps?://.*\.\S+", message)
     if not links:

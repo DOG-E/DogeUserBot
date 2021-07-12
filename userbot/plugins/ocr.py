@@ -5,7 +5,8 @@ import requests
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import edl, eor
+from ..helpers import media_type
 
 plugin_category = "utils"
 
@@ -52,13 +53,15 @@ async def ocr_space_file(
 )
 async def ocr(event):
     "To read text in image."
-    dogevent = await edit_or_reply(event, "`Reading...`")
+    reply = await event.get_reply_message()
+    mediatype = media_type(reply)
+    if mediatype is None or mediatype not in ["Photo", "Document"]:
+        return await edl(event, "__Reply to image to read text on it__")
+    dogevent = await eor(event, "`Reading...`")
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
     lang_code = event.pattern_match.group(1)
-    downloaded_file_name = await event.client.download_media(
-        await event.get_reply_message(), Config.TEMP_DIR
-    )
+    downloaded_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
     test_file = await ocr_space_file(filename=downloaded_file_name, language=lang_code)
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]

@@ -5,7 +5,7 @@ Idea by @BlazingRobonix
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.echo_sql import (
     addecho,
     get_all_echos,
@@ -32,10 +32,10 @@ plugin_category = "fun"
 async def echo(event):
     "To echo the user messages"
     if event.reply_to_msg_id is None:
-        return await edit_or_reply(
+        return await eor(
             event, "`Reply to a User's message to echo his messages`"
         )
-    dogevent = await edit_or_reply(event, "`Adding Echo to user...`")
+    dogevent = await eor(event, "`Adding Echo to user...`")
     user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
         return
@@ -51,13 +51,13 @@ async def echo(event):
     user_name = user.first_name
     user_username = user.username
     if is_echo(chat_id, user_id):
-        return await edit_or_reply(event, "The user is already enabled with echo ")
+        return await eor(event, "The user is already enabled with echo ")
     try:
         addecho(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
+        await edl(dogevent, f"**Error:**\n`{str(e)}`")
     else:
-        await edit_or_reply(dogevent, "Hi")
+        await eor(dogevent, "Hi")
 
 
 @doge.bot_cmd(
@@ -72,7 +72,7 @@ async def echo(event):
 async def echo(event):
     "To stop echoing the user messages"
     if event.reply_to_msg_id is None:
-        return await edit_or_reply(
+        return await eor(
             event, "Reply to a User's message to echo his messages"
         )
     reply_msg = await event.get_reply_message()
@@ -82,11 +82,11 @@ async def echo(event):
         try:
             remove_echo(chat_id, user_id)
         except Exception as e:
-            await edit_delete(dogevent, f"**Error:**\n`{str(e)}`")
+            await edl(event, f"**Error:**\n`{str(e)}`")
         else:
-            await edit_or_reply(event, "Echo has been stopped for the user")
+            await eor(event, "Echo has been stopped for the user")
     else:
-        await edit_or_reply(event, "The user is not activated with echo")
+        await eor(event, "The user is not activated with echo")
 
 
 @doge.bot_cmd(
@@ -108,29 +108,29 @@ async def echo(event):
     if input_str:
         lecho = get_all_echos()
         if len(lecho) == 0:
-            return await edit_delete(
+            return await edl(
                 event, "You havent enabled echo atleast for one user in any chat."
             )
         try:
             remove_all_echos()
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{str(e)}`", 10)
         else:
-            await edit_or_reply(
+            await eor(
                 event, "Deleted echo for all enabled users in all chats."
             )
     else:
         lecho = get_echos(event.chat_id)
         if len(lecho) == 0:
-            return await edit_delete(
+            return await edl(
                 event, "You havent enabled echo atleast for one user in this chat."
             )
         try:
             remove_echos(event.chat_id)
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{str(e)}`", 10)
         else:
-            await edit_or_reply(
+            await eor(
                 event, "Deleted echo for all enabled users in this chat"
             )
 
@@ -157,23 +157,22 @@ async def echo(event):  # sourcery no-metrics
     if input_str:
         lsts = get_all_echos()
         group_chats = ""
-        if len(lsts) > 0:
-            for echos in lsts:
-                if echos.chat_type == "Personal":
-                    if echos.user_username:
-                        private_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
-                    else:
-                        private_chats += (
-                            f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
-                        )
+        if len(lsts) <= 0:
+            return await eor(event, "There are no echo enabled users")
+        for echos in lsts:
+            if echos.chat_type == "Personal":
+                if echos.user_username:
+                    private_chats += (
+                        f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
+                    )
                 else:
-                    if echos.user_username:
-                        group_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
-                    else:
-                        group_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
-
-        else:
-            return await edit_or_reply(event, "There are no echo enabled users")
+                    private_chats += (
+                        f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
+                    )
+            elif echos.user_username:
+                group_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
+            else:
+                group_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
         if private_chats != "":
             output_str += "**Private Chats**\n" + private_chats + "\n\n"
         if group_chats != "":
@@ -181,7 +180,7 @@ async def echo(event):  # sourcery no-metrics
     else:
         lsts = get_echos(event.chat_id)
         if len(lsts) <= 0:
-            return await edit_or_reply(
+            return await eor(
                 event, "There are no echo enabled users in this chat"
             )
 
@@ -196,7 +195,7 @@ async def echo(event):  # sourcery no-metrics
                 )
         output_str = f"**Echo enabled users in this chat are:**\n" + private_chats
 
-    await edit_or_reply(event, output_str)
+    await eor(event, output_str)
 
 
 @doge.bot_cmd(incoming=True, edited=False)

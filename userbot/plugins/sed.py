@@ -103,7 +103,7 @@ async def on_edit(event):
 async def on_regex(event):
     "To replace words in sentences"
     if not event.is_private and await group_has_sedbot(await event.get_input_chat()):
-        await edit_delete(event, "This group has a sed bot. Ignoring this message!")
+        await edl(event, "This group has a sed bot. Ignoring this message!")
         return
     m, s = doit(event.chat_id, event.pattern_match, await event.get_reply_message())
     if m is not None:
@@ -113,5 +113,5 @@ async def on_regex(event):
         )
         last_msgs[event.chat_id].appendleft(out)
     elif s is not None:
-        await edit_or_reply(event, s)
+        await eor(event, s)
     raise events.StopPropagation

@@ -4,7 +4,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import get_user_from_event, sanga_seperator
 from ..helpers.utils import _format
 
@@ -31,7 +31,7 @@ async def _(event):  # sourcery no-metrics
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply_message = await event.get_reply_message()
     if not input_str and not reply_message:
-        await edit_delete(
+        await edl(
             event,
             "`reply to  user's text message to get name/username history or give userid/username`",
         )
@@ -40,12 +40,12 @@ async def _(event):  # sourcery no-metrics
         return
     uid = user.id
     chat = "@SangMataInfo_bot"
-    dogevent = await edit_or_reply(event, "`Processing...`")
+    dogevent = await eor(event, "`Processing...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"/search_id {uid}")
         except YouBlockedUserError:
-            await edit_delete(dogevent, "`unblock @Sangmatainfo_bot and then try`")
+            await edl(dogevent, "`unblock @Sangmatainfo_bot and then try`")
         responses = []
         while True:
             try:
@@ -55,9 +55,9 @@ async def _(event):  # sourcery no-metrics
             responses.append(response.text)
         await event.client.send_read_acknowledge(conv.chat_id)
     if not responses:
-        await edit_delete(dogevent, "`bot can't fetch results`")
+        await edl(dogevent, "`bot can't fetch results`")
     if "No records found" in responses:
-        await edit_delete(dogevent, "`The user doesn't have any record`")
+        await edl(dogevent, "`The user doesn't have any record`")
     names, usernames = await sanga_seperator(responses)
     cmd = event.pattern_match.group(1)
     teledoge = None

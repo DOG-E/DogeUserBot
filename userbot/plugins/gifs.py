@@ -9,9 +9,7 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _dogutils, reply_id
-from . import doge
+from . import doge, edl, eor, _dogeutils, reply_id
 
 plugin_category = "useless"
 
@@ -33,24 +31,20 @@ async def some(event):
     inpt = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not inpt:
-        await edit_delete(event, "`Give an input to search...`")
+        await edl(event, "`Give an input to search...`")
     count = 1
     if ";" in inpt:
         inpt, count = inpt.split(";")
     if int(count) < 0 and int(count) > 20:
-        await edit_delete(event, "`Give value in range 1-20`")
-    dogevent = await edit_or_reply(event, "`Sending gif....`")
+        await edl(event, "`Give value in range 1-20`")
+    dogevent = await eor(event, "`Sending gif....`")
     res = requests.get("https://giphy.com/")
     res = res.text.split("GIPHY_FE_WEB_API_KEY =")[1].split("\n")[0]
     api_key = res[2:-1]
-    list_id = []
     r = requests.get(
         f"https://api.giphy.com/v1/gifs/search?q={inpt}&api_key={api_key}&limit=50"
     ).json()
-    i = 0
-    while i < len(r["data"]):
-        list_id.append(r["data"][i]["id"])
-        i += 1
+    list_id = [r["data"][i]["id"] for i in range(len(r["data"]))]
     rlist = random.sample(list_id, int(count))
     for items in rlist:
         nood = await event.client.send_file(
@@ -58,7 +52,7 @@ async def some(event):
             f"https://media.giphy.com/media/{items}/giphy.gif",
             reply_to=reply_to_id,
         )
-        await _dogutils.unsavegif(event, nood)
+        await _dogeutils.unsavegif(event, nood)
     await dogevent.delete()
 
 
@@ -79,7 +73,7 @@ async def some(event):
     reply_to_id = await reply_id(event)
     count = 1 if not inpt else int(inpt)
     if count < 0 and count > 20:
-        await edit_delete(event, "`Give value in range 1-20`")
+        await edl(event, "`Give value in range 1-20`")
     res = base64.b64decode(
         "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
     ).decode("utf-8")
@@ -103,11 +97,10 @@ async def some(event):
                 ),
             )
         )
-    dogevent = await edit_or_reply(event, "`Wait babe...`😘")
+    dogevent = await eor(event, "`Wait babe...`😘")
     maxmsg = await event.client.get_messages(chat)
     start = random.randint(31, maxmsg.total)
-    if start > maxmsg.total - 40:
-        start = maxmsg.total - 40
+    start = min(start, maxmsg.total - 40)
     end = start + 41
     kiss = []
     async for x in event.client.iter_messages(
@@ -122,5 +115,5 @@ async def some(event):
     kisss = random.sample(kiss, count)
     for i in kisss:
         nood = await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
-        await _dogutils.unsavegif(event, nood)
+        await _dogeutils.unsavegif(event, nood)
     await dogevent.delete()

@@ -1,5 +1,6 @@
 from . import fonts
-from . import memeshelper as dogmemes
+from . import memeshelper as dogememes
+from . import spamhelper
 from .aiohttp_helper import AioHttp
 from .utils import *
 
@@ -14,7 +15,7 @@ while flag:
         from .progress import *
         from .qhelper import process
         from .tools import *
-        from .utils import _dogtools, _dogutils, _format
+        from .utils import _dogetools, _dogeutils, _format
 
         break
     except ModuleNotFoundError as e:

@@ -11,7 +11,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
@@ -42,9 +42,9 @@ async def _(event):
     bio = event.pattern_match.group(1)
     try:
         await event.client(functions.account.UpdateProfileRequest(about=bio))
-        await edit_delete(event, "`Successfully changed my profile bio`")
+        await edl(event, "`Successfully changed my profile bio`")
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
+        await eor(event, f"**Error:**\n`{str(e)}`")
 
 
 @doge.bot_cmd(
@@ -61,16 +61,16 @@ async def _(event):
     first_name = names
     last_name = ""
     if ";" in names:
-        first_name, last_name = names.split("|", 1)
+        first_name, last_name = names.split(";", 1)
     try:
         await event.client(
             functions.account.UpdateProfileRequest(
                 first_name=first_name, last_name=last_name
             )
         )
-        await edit_delete(event, "`My name was changed successfully`")
+        await edl(event, "`My name was changed successfully`")
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
+        await eor(event, f"**Error:**\n`{str(e)}`")
 
 
 @doge.bot_cmd(
@@ -84,7 +84,7 @@ async def _(event):
 async def _(event):
     "To set profile pic for this account."
     reply_message = await event.get_reply_message()
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event, "`Downloading Profile Picture to my local ...`"
     )
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
@@ -120,7 +120,7 @@ async def _(event):
             except Exception as e:
                 await dogevent.edit(f"**Error:**\n`{str(e)}`")
             else:
-                await edit_or_reply(
+                await eor(
                     dogevent, "`My profile picture was successfully changed`"
                 )
     try:
@@ -142,11 +142,11 @@ async def update_username(username):
     newusername = username.pattern_match.group(1)
     try:
         await username.client(UpdateUsernameRequest(newusername))
-        await edit_delete(username, USERNAME_SUCCESS)
+        await edl(username, USERNAME_SUCCESS)
     except UsernameOccupiedError:
-        await edit_or_reply(username, USERNAME_TAKEN)
+        await eor(username, USERNAME_TAKEN)
     except Exception as e:
-        await edit_or_reply(username, f"**Error:**\n`{str(e)}`")
+        await eor(username, f"**Error:**\n`{str(e)}`")
 
 
 @doge.bot_cmd(
@@ -165,7 +165,7 @@ async def count(event):
     bc = 0
     b = 0
     result = ""
-    dogevent = await edit_or_reply(event, "`Processing..`")
+    dogevent = await eor(event, "`Processing..`")
     dialogs = await event.client.get_dialogs(limit=None, ignore_migrated=True)
     for d in dialogs:
         currrent_entity = d.entity
@@ -223,7 +223,7 @@ async def remove_profilepic(delpfp):
         for sep in pfplist.photos
     ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await edit_delete(
+    await edl(
         delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
     )
 
@@ -244,4 +244,4 @@ async def _(event):
         f" - {channel_obj.title} @{channel_obj.username} \n"
         for channel_obj in result.chats
     )
-    await edit_or_reply(event, output_str)
+    await eor(event, output_str)

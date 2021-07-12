@@ -4,7 +4,7 @@ from telethon.utils import get_display_name
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..sql_helper import blacklist_sql as sql
 from ..utils import is_admin
 from . import BOTLOG_CHATID
@@ -58,7 +58,7 @@ async def _(event):
 
     for trigger in to_blacklist:
         sql.add_to_blacklist(event.chat_id, trigger.lower())
-    await edit_or_reply(
+    await eor(
         event,
         "Added {} triggers to the blacklist in the current chat".format(
             len(to_blacklist)
@@ -90,7 +90,7 @@ async def _(event):
         bool(sql.rm_from_blacklist(event.chat_id, trigger.lower()))
         for trigger in to_unblacklist
     )
-    await edit_or_reply(
+    await eor(
         event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist"
     )
 
@@ -115,4 +115,4 @@ async def _(event):
             OUT_STR += f"👉 {trigger} \n"
     else:
         OUT_STR = "No Blacklists found. Start saving using `.addblacklist`"
-    await edit_or_reply(event, OUT_STR)
+    await eor(event, OUT_STR)

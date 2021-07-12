@@ -10,9 +10,9 @@ import requests
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_delete
+from ..core.managers import edl
 from ..helpers.functions import age_verification
-from ..helpers.utils import _dogutils, reply_id
+from ..helpers.utils import _dogeutils, reply_id
 from . import BOTLOG, BOTLOG_CHATID
 
 LOGS = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ async def reddit_fetch(event):
         cn = requests.get(subreddit_api)
         r = cn.json()
     except ValueError:
-        return await edit_delete(event, "Value error!.")
+        return await edl(event, "Value error!.")
     if "code" in r:
         if BOTLOG:
             code = r["code"]
@@ -47,10 +47,10 @@ async def reddit_fetch(event):
             await event.client.send_message(
                 BOTLOG_CHATID, f"**Error Code: {code}**\n`{code_message}`"
             )
-            await edit_delete(event, f"**Error Code: {code}**\n`{code_message}`")
+            await edl(event, f"**Error Code: {code}**\n`{code_message}`")
     else:
         if "url" not in r:
-            return await edit_delete(
+            return await edl(
                 event,
                 "Coudn't Find a post with Image, Please Try Again",
             )
@@ -77,4 +77,4 @@ async def reddit_fetch(event):
             event.chat_id, media_url, caption=captionx, reply_to=reply_to
         )
         if media_url.endswith(".gif"):
-            await _dogutils.unsavegif(event, teledoge)
+            await _dogeutils.unsavegif(event, teledoge)

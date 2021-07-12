@@ -7,7 +7,7 @@ from telethon.tl.types import ChatAdminRights
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import get_user_from_event
 from . import ALIVE_NAME
 
@@ -67,7 +67,7 @@ async def _(event):
         scam_action = str(args[0]).lower()
         scam_time = int(args[1])
     else:
-        await edit_delete(event, "`Invalid Syntax !!`")
+        await edl(event, "`Invalid Syntax !!`")
         return
     try:
         if scam_time > 0:
@@ -95,7 +95,7 @@ async def _(event):
 async def _(event):
     "To promote a person without admin rights"
     new_rights = ChatAdminRights(post_messages=True)
-    dogevent = await edit_or_reply(event, "`Promoting...`")
+    dogevent = await eor(event, "`Promoting...`")
     user, rank = await get_user_from_event(event, dogevent)
     if not rank:
         rank = "Admin"
@@ -106,7 +106,7 @@ async def _(event):
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
     except Exception as e:
-        return await edit_delete(dogevent, f"__{str(e)}__", time=10)
+        return await edl(dogevent, f"__{str(e)}__", time=10)
     await dogevent.edit("`Promoted Successfully! Now gib Party`")
 
 
@@ -124,7 +124,7 @@ async def _(event):
     "Fun animation for faking user promotion."
     animation_interval = 1
     animation_ttl = range(20)
-    event = await edit_or_reply(event, "`promoting.......`")
+    event = await eor(event, "`promoting.......`")
     animation_chars = [
         "**Promoting User As Admin...**",
         "**Enabling All Permissions To User...**",

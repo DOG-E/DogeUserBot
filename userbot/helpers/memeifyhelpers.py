@@ -9,7 +9,7 @@ from wand.color import Color
 from wand.drawing import Drawing
 from wand.image import Image as dogimage
 
-from .utils import _dogutils
+from .utils import _dogeutils
 
 MARGINS = [50, 150, 250, 350, 450]
 
@@ -129,6 +129,6 @@ async def silently_send_message(conv, text):
 
 
 async def thumb_from_audio(audio_path, output):
-    await _dogutils.runcmd(
+    await _dogeutils.runcmd(
         f"ffmpeg -i {audio_path} -filter:v scale=500:500 -an {output}"
     )

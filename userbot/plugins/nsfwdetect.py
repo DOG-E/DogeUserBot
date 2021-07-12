@@ -8,7 +8,7 @@ import requests
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "utils"
 
@@ -25,21 +25,21 @@ plugin_category = "utils"
 async def detect(event):
     "To detect the nudity in reply image."
     if Config.DEEP_AI is None:
-        return await edit_delete(
+        return await edl(
             event, "Add VAR `DEEP_AI` get Api Key from https://deepai.org/", 5
         )
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
+        return await edl(
             event, "`Reply to any image or non animated sticker !`", 5
         )
-    dogevent = await edit_or_reply(event, "`Downloading the file to check...`")
+    dogevent = await eor(event, "`Downloading the file to check...`")
     media = await event.client.download_media(reply)
     if not media.endswith(("png", "jpg", "webp")):
-        return await edit_delete(
+        return await edl(
             event, "`Reply to any image or non animated sticker !`", 5
         )
-    dogevent = await edit_or_reply(event, "`Detecting NSFW limit...`")
+    dogevent = await eor(event, "`Detecting NSFW limit...`")
     r = requests.post(
         "https://api.deepai.org/api/nsfw-detector",
         files={
@@ -49,7 +49,7 @@ async def detect(event):
     )
     os.remove(media)
     if "status" in r.json():
-        return await edit_delete(dogevent, r.json()["status"])
+        return await edl(dogevent, r.json()["status"])
     r_json = r.json()["output"]
     pic_id = r.json()["id"]
     percentage = r_json["nsfw_score"] * 100
@@ -61,7 +61,7 @@ async def detect(event):
             name = parts["name"]
             confidence = int(float(parts["confidence"]) * 100)
             result += f"<b>• {name}:</b>\n   <code>{confidence} %</code>\n"
-    await edit_or_reply(
+    await eor(
         dogevent,
         result,
         link_preview=False,

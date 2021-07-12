@@ -3,7 +3,7 @@ from validators.url import url
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "utils"
 
@@ -24,7 +24,7 @@ async def _(event):
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "`Either reply to link or give link as input to get data`", 5
         )
     check = url(input_str)
@@ -32,13 +32,13 @@ async def _(event):
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edl(event, "`the given link is not supported`", 5)
     sample_url = f"https://da.gd/dns/{input_str}"
     response_api = requests.get(sample_url).text
     if response_api:
-        await edit_or_reply(event, f"DNS records of {input_str} are \n{response_api}")
+        await eor(event, f"DNS records of {input_str} are \n{response_api}")
     else:
-        await edit_or_reply(
+        await eor(
             event, f"__I can't seem to find `{input_str}` on the internet__"
         )
 
@@ -59,7 +59,7 @@ async def _(event):
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "`Either reply to link or give link as input to get data`", 5
         )
     check = url(input_str)
@@ -67,17 +67,17 @@ async def _(event):
         dogstr = f"http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edl(event, "`the given link is not supported`", 5)
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     sample_url = f"https://da.gd/s?url={input_str}"
     response_api = requests.get(sample_url).text
     if response_api:
-        await edit_or_reply(
+        await eor(
             event, f"Generated {response_api} for {input_str}.", link_preview=False
         )
     else:
-        await edit_or_reply(event, "`Something is wrong, please try again later.`")
+        await eor(event, "`Something is wrong, please try again later.`")
 
 
 @doge.bot_cmd(
@@ -96,7 +96,7 @@ async def _(event):
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "`Either reply to link or give link as input to get data`", 5
         )
     check = url(input_str)
@@ -104,18 +104,18 @@ async def _(event):
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edl(event, "`the given link is not supported`", 5)
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
-        await edit_or_reply(
+        await eor(
             event,
             f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}",
             link_preview=False,
         )
     else:
-        await edit_or_reply(
+        await eor(
             event,
             "Input URL {} returned status_code {}".format(input_str, r.status_code),
         )
@@ -138,7 +138,7 @@ async def _(event):
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "`Either reply to link or give link as input to get data`", 5
         )
     check = url(input_str)
@@ -146,5 +146,5 @@ async def _(event):
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
-    await edit_or_reply(event, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input_str + ")")
+        return await edl(event, "`the given link is not supported`", 5)
+    await eor(event, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input_str + ")")

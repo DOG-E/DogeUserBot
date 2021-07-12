@@ -6,7 +6,7 @@ Plugin for CatUserbot
 
 import asyncio
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import doge, mention
 
 plugin_category = "fun"
@@ -75,7 +75,7 @@ async def kakashi(bsdk):
     "Bad stuff"
     animation_interval = 0.3
     animation_ttl = range(100)
-    bsdk = await edit_or_reply(bsdk, f"**Ahhhhhhhh......**💦💦...")
+    bsdk = await eor(bsdk, f"**Ahhhhhhhh......**💦💦...")
     animation_chars = [
         "8✊️===D",
         "8=✊️==D",
@@ -105,7 +105,7 @@ async def kakashi(bsdk):
     "Bad stuff"
     animation_interval = 1
     animation_ttl = range(11)
-    bsdk = await edit_or_reply(bsdk, f"**Ohhh nooooo **💦💦...")
+    bsdk = await eor(bsdk, f"**Ohhh nooooo **💦💦...")
     animation_chars = [
         "**Ohhh Baby..**😈",
         "__**Ohh Yeaah..**__\n\n 😈\n  |\  \n  |  \   \n 8=👊-D\n  |   \         \n 👟 👟       😲",
@@ -136,7 +136,7 @@ async def kakashi(event):
     "Bad stuff"
     animation_interval = 3
     animation_ttl = range(14)
-    event = await edit_or_reply(event, "Starting asf")
+    event = await eor(event, "Starting asf")
     animation_chars = [
         "1 ❤️ love story",
         "  😐             😕 \n/👕\         <👗\ \n 👖               /|",
@@ -169,7 +169,7 @@ async def kakashi(event):
 )
 async def kakashi(baby):
     "Bad stuff"
-    await edit_or_reply(
+    await eor(
         baby,
         "**💪💪Ohhh Yeeah Baby**...\n\n"
         "／ イ  ..........(((ヽ   \n"
@@ -201,7 +201,7 @@ async def kakashi(baby):
 )
 async def kakashi(fooku):
     "Bad stuff"
-    await edit_or_reply(
+    await eor(
         fooku,
         ".                       /¯ )\n"
         "                      /¯  /\n"
@@ -230,7 +230,7 @@ async def kakashi(fooku):
 )
 async def kakashi(mf):
     "Bad stuff"
-    await edit_or_reply(mf, C)
+    await eor(mf, C)
 
 
 @doge.bot_cmd(
@@ -243,7 +243,7 @@ async def kakashi(mf):
 )
 async def kakashi(pornhub):
     "Bad stuff"
-    await edit_or_reply(
+    await eor(
         pornhub,
         "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -282,7 +282,7 @@ async def kakashi(pornhub):
 )
 async def kakashi(pikachu):
     "Bad stuff"
-    await edit_or_reply(
+    await eor(
         pikachu,
         "⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶\n"
         "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿\n"
@@ -315,7 +315,7 @@ async def kakashi(pikachu):
 )
 async def kakashi(saxy):
     "Bad stuff"
-    await edit_or_reply(
+    await eor(
         saxy,
         "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
         "⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀\n"
@@ -369,7 +369,7 @@ async def kakashi(saxy):
 async def kakashi(dicksay):
     "Bad stuff"
     text = dicksay.pattern_match.group(1)
-    await edit_or_reply(
+    await eor(
         dicksay,
         f"**{mention} ➥ {text} .\n**"
         "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"

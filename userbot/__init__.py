@@ -21,9 +21,9 @@ StartTime = time.time()
 dogeversion = "0.1"
 
 if Config.UPSTREAM_REPO == "shiba":
-    UPSTREAM_REPO_URL = "https://github.com/TeleDoge/DogeUserBot"
+    UPSTREAM_REPO_URL = "https://github.com/TeleDoge/DogeUserBot.git"
 elif Config.UPSTREAM_REPO == "doge":
-    UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot"
+    UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot.git"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
@@ -71,7 +71,7 @@ ISAFK = False
 AFKREASON = None
 CMD_LIST = {}
 SUDO_LIST = {}
-# for later purposes
+# For later purposes
 INT_PLUG = ""
 LOAD_PLUG = {}
 

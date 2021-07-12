@@ -4,7 +4,7 @@ from telethon.tl import types
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers import reply_id
 
 plugin_category = "extra"
@@ -23,7 +23,7 @@ async def gps(event):
     "Map of the given location."
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
-    dogevent = await edit_or_reply(event, "`finding.....`")
+    dogevent = await eor(event, "`finding.....`")
     geolocator = Nominatim(user_agent="DogeUserBot")
     geoloc = geolocator.geocode(input_str)
     if geoloc:

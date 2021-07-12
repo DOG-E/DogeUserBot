@@ -4,9 +4,8 @@ from pathlib import Path
 from telethon.tl.types import InputMessagesFilterDocument
 
 from ..Config import Config
-from ..helpers.utils import install_pip
 from ..utils import load_module
-from . import BOTLOG, BOTLOG_CHATID, doge
+from . import BOTLOG, BOTLOG_CHATID, doge, install_pip
 
 plugin_category = "tools"
 

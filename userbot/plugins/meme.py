@@ -2,7 +2,7 @@ import asyncio
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "fun"
 
@@ -17,7 +17,7 @@ plugin_category = "fun"
 )
 async def kek(keks):
     "Animation command"
-    keks = await edit_or_reply(keks, ":\\")
+    keks = await eor(keks, ":\\")
     uio = ["/", "\\"]
     for i in range(15):
         await asyncio.sleep(0.5)
@@ -35,7 +35,7 @@ async def kek(keks):
 )
 async def lol(lel):
     "Animation command"
-    lel = await edit_or_reply(lel, "-__-")
+    lel = await eor(lel, "-__-")
     okay = "-__-"
     for _ in range(15):
         await asyncio.sleep(0.5)
@@ -53,7 +53,7 @@ async def lol(lel):
 )
 async def fun(e):
     "Animation command"
-    e = await edit_or_reply(e, ";__;")
+    e = await eor(e, ";__;")
     t = ";__;"
     for _ in range(15):
         await asyncio.sleep(0.5)
@@ -72,7 +72,7 @@ async def fun(e):
 async def Oof(e):
     "Animation command."
     t = "Oof"
-    dogevent = await edit_or_reply(e, t)
+    dogevent = await eor(e, t)
     for _ in range(15):
         await asyncio.sleep(0.5)
         t = t[:-1] + "of"
@@ -93,7 +93,7 @@ async def typewriter(typew):
     sleep_time = 0.2
     typing_symbol = "|"
     old_text = ""
-    typew = await edit_or_reply(typew, typing_symbol)
+    typew = await eor(typew, typing_symbol)
     await asyncio.sleep(sleep_time)
     for character in message:
         old_text = old_text + "" + character
@@ -119,7 +119,7 @@ async def _(event):
     message = dog[1]
     count = int(dog[0])
     repsmessage = (f"{message} ") * count
-    await edit_or_reply(event, repsmessage)
+    await eor(event, repsmessage)
 
 
 @doge.bot_cmd(
@@ -140,7 +140,7 @@ async def meme(event):
     memeVar = memeVar[6:]
     if not memeVar:
         memeVar = "✈️"
-    event = await edit_or_reply(event, "-------------" + memeVar)
+    event = await eor(event, "-------------" + memeVar)
     await asyncio.sleep(sleepValue)
     await event.edit("------------" + memeVar + "-")
     await asyncio.sleep(sleepValue)
@@ -217,7 +217,7 @@ async def give(event):
     lp = giveVar[6:]
     if not lp:
         lp = " 🍭"
-    event = await edit_or_reply(event, lp + "        ")
+    event = await eor(event, lp + "        ")
     await asyncio.sleep(sleepValue)
     await event.edit(lp + lp + "       ")
     await asyncio.sleep(sleepValue)
@@ -265,7 +265,7 @@ async def give(event):
 async def _(event):
     "Shouts Admin Animation command."
     animation_ttl = range(13)
-    event = await edit_or_reply(event, "sadmin")
+    event = await eor(event, "sadmin")
     animation_chars = [
         "@aaaaaaaaaaaaadddddddddddddmmmmmmmmmmmmmiiiiiiiiiiiiinnnnnnnnnnnnn",
         "@aaaaaaaaaaaaddddddddddddmmmmmmmmmmmmiiiiiiiiiiiinnnnnnnnnnnn",

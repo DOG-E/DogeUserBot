@@ -5,7 +5,7 @@ from time import sleep
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
@@ -31,7 +31,7 @@ async def _(event):
     "Restarts the bot !!"
     if BOTLOG:
         await event.client.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot Restarted")
-    teledoge = await edit_or_reply(
+    teledoge = await eor(
         event,
         "Restarted. `.ping` me or `.help` to check if I am online, actually it takes 1-2 min for restarting",
     )
@@ -68,7 +68,7 @@ async def _(event):
     "Shutdowns the bot"
     if BOTLOG:
         await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n" "Bot shut down")
-    await edit_or_reply(event, "`Turning off bot now ...Manually turn me on later`")
+    await eor(event, "`Turning off bot now ...Manually turn me on later`")
     if HEROKU_APP is not None:
         HEROKU_APP.process_formation()["worker"].scale(0)
     else:
@@ -87,14 +87,14 @@ async def _(event):
 async def _(event):
     "To sleep the userbot"
     if " " not in event.pattern_match.group(1):
-        return await edit_or_reply(event, "Syntax: `.sleep time`")
+        return await eor(event, "Syntax: `.sleep time`")
     counter = int(event.pattern_match.group(1))
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
             "You put the bot to sleep for " + str(counter) + " seconds",
         )
-    event = await edit_or_reply(event, f"`ok, let me sleep for {counter} seconds`")
+    event = await eor(event, f"`ok, let me sleep for {counter} seconds`")
     sleep(counter)
     await event.edit("`OK, I'm awake now.`")
 
@@ -115,10 +115,10 @@ async def set_pmlog(event):
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         if gvarstatus("restartupdate") is None:
-            return await edit_delete(event, "__Notify was already disabled__")
+            return await edl(event, "__Notify was already disabled__")
         delgvar("restartupdate")
-        return await edit_or_reply(event, "__Notify was disabled successfully.__")
+        return await eor(event, "__Notify was disabled successfully.__")
     if gvarstatus("restartupdate") is None:
         addgvar("restartupdate", "turn-oned")
-        return await edit_or_reply(event, "__Notify was enabled successfully.__")
-    await edit_delete(event, "__Notify was already enabled.__")
+        return await eor(event, "__Notify was enabled successfully.__")
+    await edl(event, "__Notify was already enabled.__")

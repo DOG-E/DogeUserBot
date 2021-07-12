@@ -20,7 +20,7 @@ from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
 from .fasttelethon import download_file, upload_file
 from .logger import logging
-from .managers import edit_delete
+from .managers import edl
 from .pluginManager import get_message_link, restart_script
 
 LOGS = logging.getLogger(__name__)
@@ -93,10 +93,10 @@ class DogeUserBotClient(TelegramClient):
         def decorator(func):  # sourcery no-metrics
             async def wrapper(check):
                 if groups_only and not check.is_group:
-                    await edit_delete(check, "`I don't think this is a group.`", 10)
+                    await edl(check, "`I don't think this is a group.`", 10)
                     return
                 if private_only and not check.is_private:
-                    await edit_delete(
+                    await edl(
                         check, "`I don't think this is a personal Chat.`", 10
                     )
                     return

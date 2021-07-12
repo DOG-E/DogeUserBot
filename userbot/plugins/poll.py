@@ -6,7 +6,7 @@ from telethon.tl.types import InputMediaPoll, Poll
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import Build_Poll, reply_id
 
 plugin_category = "extra"
@@ -42,13 +42,13 @@ async def pollcreator(dogpoll):
             )
             await dogpoll.delete()
         except PollOptionInvalidError:
-            await edit_or_reply(
+            await eor(
                 dogpoll, "`A poll option used invalid data (the data may be too long).`"
             )
         except ForbiddenError:
-            await edit_or_reply(dogpoll, "`This chat has forbidden the polls`")
+            await eor(dogpoll, "`This chat has forbidden the polls`")
         except Exception as e:
-            await edit_or_reply(dogpoll, str(e))
+            await eor(dogpoll, str(e))
     else:
         doginput = string.split(";")
         if len(doginput) > 2 and len(doginput) < 12:
@@ -67,16 +67,16 @@ async def pollcreator(dogpoll):
                 )
                 await dogpoll.delete()
             except PollOptionInvalidError:
-                await edit_or_reply(
+                await eor(
                     dogpoll,
                     "`A poll option used invalid data (the data may be too long).`",
                 )
             except ForbiddenError:
-                await edit_or_reply(dogpoll, "`This chat has forbidden the polls`")
+                await eor(dogpoll, "`This chat has forbidden the polls`")
             except Exception as e:
-                await edit_or_reply(dogpoll, str(e))
+                await eor(dogpoll, str(e))
         else:
-            await edit_or_reply(
+            await eor(
                 dogpoll,
                 "Make sure that you used Correct syntax `.poll question ; option1 ; option2`",
             )

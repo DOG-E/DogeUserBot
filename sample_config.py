@@ -55,11 +55,11 @@ class Config(object):
         or 0
     )
 
-    # CUSTOM VARS FOR USERBOT
+    # CUSTOM VARS
     # Set this will channel ID of your custom plugins
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL") or 0)
     # Set this value with your required name for Telegraph plugin
-    TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "DogeUserBot")
+    TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "@DogeUserBot")
     # For custom thumb image set this with your required thumb Telegraph link
     THUMB_IMAGE = os.environ.get(
         "THUMB_IMAGE", "https://telegra.ph/file/6086da8c041f5de3227ed.jpg"
@@ -92,7 +92,7 @@ class Config(object):
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
 
-    # API VARS FOR USERBOT
+    # API VARS
     # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screenshot
     SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
     # Get your own APPID from https://api.openweathermap.org/data/2.5/weather
@@ -101,7 +101,7 @@ class Config(object):
     # https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
     IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
     IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
-    # Get free api from https://dashboard.ipdata.co/sign-up.html
+    # Get free API from https://dashboard.ipdata.co/sign-up.html
     IPDATA_API = os.environ.get("IPDATA_API", None)
     # Get a Free API Key from OCR.Space
     OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
@@ -121,13 +121,16 @@ class Config(object):
     TG_2STEP_VERIFICATION_CODE = os.environ.get("TG_2STEP_VERIFICATION_CODE", None)
     # JustWatch Country for watch plugin
     WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "IN")
-    # Last.fm plugin for info: # TODO
+    # Last.fm plugin vars for info: # TODO
     BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
     LASTFM_API = os.environ.get("LASTFM_API", None)
     LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
     LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
     LASTFM_PASSWORD_PLAIN = os.environ.get("LASTFM_PASSWORD", None)
-    # SpamWatch API you can get it from get api from https://t.me/SpamWatchBot?start=token
+    # Spotify plugin vars for info: # TODO
+    SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME", None)
+    SPOTIFY_PASSWORD = os.environ.get("SPOTIFY_PASSWORD", None)
+    # SpamWatch API you can get it from get API from https://t.me/SpamWatchBot?start=token
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     # Can get from https://coffeehouse.intellivoid.net/
     RANDOM_STUFF_API_KEY = os.environ.get("RANDOM_STUFF_API_KEY", None)

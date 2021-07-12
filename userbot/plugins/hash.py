@@ -8,9 +8,9 @@ from subprocess import run as runapp
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
+from ..helpers import progress
 from ..helpers.tools import media_type
-from . import media_type, progress
 
 plugin_category = "tools"
 
@@ -49,7 +49,7 @@ async def gethash(hash_q):
             \n**SHA512 : **`\
             \n`{sha512[:-1]}`\
          "
-    await edit_or_reply(hash_q, ans)
+    await eor(hash_q, ans)
 
 
 @doge.bot_cmd(
@@ -76,13 +76,13 @@ async def endecrypt(event):
         else:
             reply = await event.get_reply_message()
             if not reply:
-                return await edit_delete(event, "`What should i encode`")
+                return await edl(event, "`What should i encode`")
             mediatype = media_type(reply)
             if mediatype is None:
                 result = base64.b64encode(bytes(reply.text, "utf-8")).decode("utf-8")
                 result = f"**Shhh! It's Encoded : **\n`{result}`"
             else:
-                dogevent = await edit_or_reply(event, "`Encoding ...`")
+                dogevent = await eor(event, "`Encoding ...`")
                 c_time = time.time()
                 downloaded_file_name = await event.client.download_media(
                     reply,
@@ -91,11 +91,11 @@ async def endecrypt(event):
                         progress(d, t, dogevent, c_time, "trying to download")
                     ),
                 )
-                dogevent = await edit_or_reply(event, "`Encoding ...`")
+                dogevent = await eor(event, "`Encoding ...`")
                 with open(downloaded_file_name, "rb") as image_file:
                     result = base64.b64encode(image_file.read()).decode("utf-8")
                 os.remove(downloaded_file_name)
-        await edit_or_reply(
+        await eor(
             dogevent, result, file_name="encodedfile.txt", caption="It's Encoded"
         )
     else:
@@ -105,6 +105,6 @@ async def endecrypt(event):
                     bytes(event.pattern_match.group(2), "utf-8"), validate=True
                 )
             )[2:]
-            await edit_or_reply(event, "**Decoded text :**\n`" + lething[:-1] + "`")
+            await eor(event, "**Decoded text :**\n`" + lething[:-1] + "`")
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n__{str(e)}__")
+            await edl(event, f"**Error:**\n__{str(e)}__")

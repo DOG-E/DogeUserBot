@@ -7,7 +7,7 @@ from .data import _sudousers_list
 
 # https://t.me/c/1220993104/623253
 # https://docs.telethon.dev/en/latest/misc/changelog.html#breaking-changes
-async def edit_or_reply(
+async def eor(
     event,
     text,
     parse_mode=None,
@@ -63,7 +63,7 @@ async def edit_or_reply(
     os.remove(file_name)
 
 
-async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None):
+async def edl(event, text, time=None, parse_mode=None, link_preview=None):
     sudo_users = _sudousers_list()
     parse_mode = parse_mode or "md"
     link_preview = link_preview or False

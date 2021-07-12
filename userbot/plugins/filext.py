@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "utils"
 
@@ -27,12 +27,12 @@ async def _(event):
         raw_html = response_api.content
         soup = BeautifulSoup(raw_html, "html.parser")
         ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        await edit_or_reply(
+        await eor(
             event,
             f"**File Extension**: `{input_str}`\n**Description**: `{ext_details}`",
         )
     else:
-        await edit_or_reply(
+        await eor(
             event,
             f"https://www.fileext.com/ responded with {status_code} for query: {input_str}",
         )

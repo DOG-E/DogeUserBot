@@ -8,9 +8,9 @@ import os
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.functions import clippy
-from . import _dogtools, convert_toimage, doge, mention, reply_id
+from . import _dogetools, convert_toimage, doge, mention, reply_id
 
 plugin_category = "extra"
 
@@ -30,14 +30,14 @@ async def bad(event):
     "Make a media to ascii art"
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
-        return await edit_delete(event, "```Reply to a media file...```")
+        return await edl(event, "```Reply to a media file...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     output_file = os.path.join("./temp", "doge.jpg")
-    output = await _dogtools.media_to_pic(event, reply_message)
+    output = await _dogetools.media_to_pic(event, reply_message)
     outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
-    kakashi = await edit_or_reply(event, "```Wait making ASCII...```")
+    kakashi = await eor(event, "```Wait making ASCII...```")
     async with event.client.conversation("@asciiart_bot") as conv:
         try:
             msg = await conv.send_file(output_file)
@@ -80,14 +80,14 @@ async def pussy(event):
     "Make a media to line image"
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
-        return await edit_delete(event, "```Reply to a media file...```")
+        return await edl(event, "```Reply to a media file...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     output_file = os.path.join("./temp", "doge.jpg")
-    output = await _dogtools.media_to_pic(event, reply_message)
+    output = await _dogetools.media_to_pic(event, reply_message)
     outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
-    kakashi = await edit_or_reply(event, "```Processing....```")
+    kakashi = await eor(event, "```Processing....```")
     async with event.client.conversation("@Lines50Bot") as conv:
         try:
             msg = await conv.send_file(output_file)
@@ -122,13 +122,13 @@ async def dog(event):
     "Make a media to clippy sticker"
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
-        return await edit_delete(event, "```Reply to a media file...```")
-    dog = await edit_or_reply(event, "```Processing...```")
+        return await edl(event, "```Reply to a media file...```")
+    dog = await eor(event, "```Processing...```")
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     output_file = os.path.join("./temp", "doge.jpg")
-    output = await _dogtools.media_to_pic(event, reply_message)
+    output = await _dogetools.media_to_pic(event, reply_message)
     outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
     await dog.delete()
     await clippy(event.client, output_file, event.chat_id, c_id)

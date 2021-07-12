@@ -5,11 +5,7 @@ import os
 
 from telegraph import exceptions, upload_file
 
-from userbot import doge
-
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _dogtools, reply_id
-from . import convert_toimage, deEmojify, phcomment, threats, trap, trash
+from . import doge, convert_toimage, deEmojify, phcomment, threats, trap, trash, edl, eor, _dogetools, reply_id
 
 plugin_category = "fun"
 
@@ -27,10 +23,10 @@ async def dogbot(event):
     replied = await event.get_reply_message()
     dogid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
-    output = await _dogtools.media_to_pic(event, replied)
+        return await eor(event, "reply to a supported media file")
+    output = await _dogetools.media_to_pic(event, replied)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     download_location = convert_toimage(output[1])
@@ -67,10 +63,10 @@ async def dogbot(event):
     replied = await event.get_reply_message()
     dogid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
-    output = await _dogtools.media_to_pic(event, replied)
+        return await eor(event, "reply to a supported media file")
+    output = await _dogetools.media_to_pic(event, replied)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     download_location = convert_toimage(output[1])
@@ -109,17 +105,17 @@ async def dogbot(event):
     if ";" in input_str:
         text1, text2 = input_str.split(";")
     else:
-        return await edit_or_reply(
+        return await eor(
             event,
             "**Syntax :** reply to image or sticker with `.trap (name of the person to trap);(trapper name)`",
         )
     replied = await event.get_reply_message()
     dogid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
-    output = await _dogtools.media_to_pic(event, replied)
+        return await eor(event, "reply to a supported media file")
+    output = await _dogetools.media_to_pic(event, replied)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     download_location = convert_toimage(output[1])
@@ -158,17 +154,17 @@ async def dogbot(event):
     if ";" in input_str:
         username, text = input_str.split(";")
     else:
-        return await edit_or_reply(
+        return await eor(
             event,
             "**Syntax :** reply to image or sticker with `.phub (username);(text in comment)`",
         )
     replied = await event.get_reply_message()
     dogid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
-    output = await _dogtools.media_to_pic(event, replied)
+        return await eor(event, "reply to a supported media file")
+    output = await _dogetools.media_to_pic(event, replied)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     download_location = convert_toimage(output[1])

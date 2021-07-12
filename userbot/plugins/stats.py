@@ -7,7 +7,7 @@ from telethon.tl.types import Channel, Chat, User
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "utils"
 
@@ -57,7 +57,7 @@ def user_full_name(user):
 )
 async def stats(event):  # sourcery no-metrics
     "To get statistics of your telegram account."
-    dog = await edit_or_reply(event, STAT_INDICATION)
+    dog = await eor(event, STAT_INDICATION)
     start_time = time.time()
     private_chats = 0
     bots = 0
@@ -123,7 +123,7 @@ async def stats(event):  # sourcery no-metrics
 )
 async def stats(event):  # sourcery no-metrics
     dogecmd = event.pattern_match.group(1)
-    dogevent = await edit_or_reply(event, STAT_INDICATION)
+    dogevent = await eor(event, STAT_INDICATION)
     start_time = time.time()
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
@@ -162,7 +162,7 @@ async def stats(event):  # sourcery no-metrics
     try:
         await dogevent.edit(output)
     except Exception:
-        await edit_or_reply(
+        await eor(
             dogevent,
             output,
             caption=caption,
@@ -174,7 +174,7 @@ async def stats(event):  # sourcery no-metrics
 )
 async def stats(event):  # sourcery no-metrics
     dogecmd = event.pattern_match.group(1)
-    dogevent = await edit_or_reply(event, STAT_INDICATION)
+    dogevent = await eor(event, STAT_INDICATION)
     start_time = time.time()
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
@@ -221,7 +221,7 @@ async def stats(event):  # sourcery no-metrics
     try:
         await dogevent.edit(output)
     except Exception:
-        await edit_or_reply(
+        await eor(
             dogevent,
             output,
             caption=caption,
@@ -241,7 +241,7 @@ async def _(event):
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply_message = await event.get_reply_message()
     if not input_str and not reply_message:
-        return await edit_delete(
+        return await edl(
             event,
             "`reply to  user's text message to get name/username history or give userid/username`",
         )
@@ -252,19 +252,19 @@ async def _(event):
             try:
                 u = await event.client.get_entity(input_str)
             except ValueError:
-                await edit_delete(
+                await edl(
                     event, "`Give userid or username to find name history`"
                 )
             uid = u.id
     else:
         uid = reply_message.sender_id
     chat = "@tgscanrobot"
-    dogevent = await edit_or_reply(event, "`Processing...`")
+    dogevent = await eor(event, "`Processing...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message(f"{uid}")
         except Exception:
-            await edit_delete(dogevent, "`unblock `@tgscanrobot` and then try`")
+            await edl(dogevent, "`unblock `@tgscanrobot` and then try`")
         response = await conv.get_response()
         await event.client.send_read_acknowledge(conv.chat_id)
         await dogevent.edit(response.text)

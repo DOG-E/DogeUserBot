@@ -4,7 +4,7 @@ from telethon import events, functions, hints, types
 from telethon.tl.types import InputPeerChannel, InputPeerChat, InputPeerUser
 
 from ..Config import Config
-from .managers import edit_or_reply
+from .managers import eor
 
 
 @events.common.name_inner_event
@@ -56,7 +56,7 @@ class NewMessage(events.NewMessage):
             if not is_creator and not is_admin:
                 text = "`I need admin rights to be able to use this command!`"
 
-                event._client.loop.create_task(edit_or_reply(event, text))
+                event._client.loop.create_task(eor(event, text))
                 return
         return event
 

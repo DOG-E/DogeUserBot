@@ -15,7 +15,7 @@ from validators.url import url
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import reply_id
 
 plugin_category = "utils"
@@ -33,10 +33,10 @@ plugin_category = "utils"
 async def _(event):
     "To Take a screenshot of a website."
     if Config.CHROME_BIN is None:
-        return await edit_or_reply(
+        return await eor(
             event, "Need to install Google Chrome. Module Stopping."
         )
-    dogevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await eor(event, "`Processing ...`")
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -107,11 +107,11 @@ async def _(event):
     start = datetime.now()
     message_id = await reply_id(event)
     if Config.SCREEN_SHOT_LAYER_ACCESS_KEY is None:
-        return await edit_or_reply(
+        return await eor(
             event,
             "`Need to get an API key from https://screenshotlayer.com/product and need to set it SCREEN_SHOT_LAYER_ACCESS_KEY !`",
         )
-    dogevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await eor(event, "`Processing ...`")
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
     input_str = event.pattern_match.group(1)
     inputstr = input_str

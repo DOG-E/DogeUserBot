@@ -1,10 +1,10 @@
 from validators.url import url
 
 from userbot import doge
-from userbot.core.logger import logging
+from ..core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
 plugin_category = "utils"
@@ -60,13 +60,13 @@ oldvars = {
         ],
     },
 )
-async def bad(event):  # sourcery no-metrics
+async def dvdvdv(event):  # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
     if not vname:
-        return await edit_delete(
+        return await edl(
             event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
     vinfo = None
@@ -80,33 +80,33 @@ async def bad(event):  # sourcery no-metrics
             vname = oldvars[vname]
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
-                return await edit_delete(event, f"Check @DogeAlive")
+                return await edl(event, f"Check @DogeAlive")
             if not vinfo:
-                return await edit_delete(
+                return await edl(
                     event, f"Give some values which you want to save for **{vname}**"
                 )
             check = vinfo.split(" ")
             for i in check:
                 if "PIC" in vname and not url(i):
-                    return await edit_delete(event, "**Give me a correct link...**")
+                    return await edl(event, "**Give me a correct link...**")
             addgvar(vname, vinfo)
-            await edit_delete(
+            await edl(
                 event, f"📑 Value of **{vname}** is changed to :- `{vinfo}`", time=20
             )
         if cmd == "get":
             var_data = gvarstatus(vname)
-            await edit_delete(
+            await edl(
                 event, f"📑 Value of **{vname}** is  `{var_data}`", time=20
             )
         elif cmd == "del":
             delgvar(vname)
-            await edit_delete(
+            await edl(
                 event,
                 f"📑 Value of **{vname}** is now deleted & set to default.",
                 time=20,
             )
     else:
-        await edit_delete(
+        await edl(
             event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
 
@@ -147,8 +147,8 @@ async def custom_dogeuserbot(event):
     text = None
     if reply:
         text = reply.text
-    if not reply and text:
-        return await edit_delete(event, "__Reply to custom text or url__")
+    if text is None:
+        return await edl(event, "__Reply to custom text or url__")
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
         addgvar("pmpermit_txt", text)
@@ -156,4 +156,4 @@ async def custom_dogeuserbot(event):
         addgvar("pmblock", text)
     if input_str == "startmsg":
         addgvar("START_TEXT", text)
-    await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
+    await eor(event, f"__Your custom {input_str} has been updated__")

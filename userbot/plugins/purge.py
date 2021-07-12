@@ -18,7 +18,7 @@ from telethon.tl.types import (
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from . import BOTLOG, BOTLOG_CHATID
 
@@ -74,7 +74,7 @@ async def delete_it(event):
                     )
         elif input_str:
             if not input_str.startswith("var"):
-                await edit_or_reply(event, "`Well the time you mentioned is invalid.`")
+                await eor(event, "`Well the time you mentioned is invalid.`")
         else:
             try:
                 await msg_src.delete()
@@ -84,7 +84,7 @@ async def delete_it(event):
                         BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`"
                     )
             except rpcbaseerrors.BadRequestError:
-                await edit_or_reply(event, "`Well, I can't delete a message`")
+                await eor(event, "`Well, I can't delete a message`")
     elif not input_str:
         await event.delete()
 
@@ -104,12 +104,12 @@ async def purge_from(event):
     if reply:
         reply_message = await reply_id(event)
         purgelist[event.chat_id] = reply_message
-        await edit_delete(
+        await edl(
             event,
             "`This Message marked for deletion. Reply to another message with purgeto to delete all messages in between.`",
         )
     else:
-        await edit_delete(event, "`Reply to a message to let me know what to delete.`")
+        await edl(event, "`Reply to a message to let me know what to delete.`")
 
 
 @doge.bot_cmd(
@@ -128,12 +128,12 @@ async def purge_to(event):
     try:
         from_message = purgelist[event.chat_id]
     except KeyError:
-        return await edit_delete(
+        return await edl(
             event,
             "`First mark the messsage with purgefrom and then mark purgeto .So, I can delete in between Messages`",
         )
     if not reply or not from_message:
-        return await edit_delete(
+        return await edl(
             event,
             "`First mark the messsage with purgefrom and then mark purgeto .So, I can delete in between Messages`",
         )
@@ -152,7 +152,7 @@ async def purge_to(event):
                 msgs = []
         if msgs:
             await event.client.delete_messages(chat, msgs)
-        await edit_delete(
+        await edl(
             event,
             "`Fast purge complete!\nPurged " + str(count) + " messages.`",
         )
@@ -162,7 +162,7 @@ async def purge_to(event):
                 "#PURGE \n`Purge of " + str(count) + " messages done successfully.`",
             )
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**Error**\n`{str(e)}`")
 
 
 @doge.bot_cmd(
@@ -497,7 +497,7 @@ async def fast_purger(event):  # sourcery no-metrics
     await event.delete()
     reply = await event.get_reply_message()
     if not reply or reply.sender_id is None:
-        return await edit_delete(
+        return await edl(
             event, "**Error**\n__This cmd Works only if you reply to user message.__"
         )
     if not flag:

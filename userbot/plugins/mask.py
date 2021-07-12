@@ -9,7 +9,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import awooify, baguette, convert_toimage, iphonex, lolice
 
 plugin_category = "extra"
@@ -27,10 +27,10 @@ async def _(dogbot):
     "Hazmat suit maker"
     reply_message = await dogbot.get_reply_message()
     if not reply_message.media or not reply_message:
-        return await edit_or_reply(dogbot, "```reply to media message```")
+        return await eor(dogbot, "```reply to media message```")
     chat = "@hazmat_suit_bot"
     if reply_message.sender.bot:
-        return await edit_or_reply(dogbot, "```Reply to actual users message.```")
+        return await eor(dogbot, "```Reply to actual users message.```")
     event = await dogbot.edit("```Processing```")
     async with dogbot.client.conversation(chat) as conv:
         try:
@@ -60,18 +60,18 @@ async def _(dogbot):
         "usage": "{tr}awooify",
     },
 )
-async def dogbot(dogmemes):
+async def dogbot(dogememes):
     "replied Image will be face of other image"
-    replied = await dogmemes.get_reply_message()
+    replied = await dogememes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
+        return await eor(dogememes, "reply to a supported media file")
     if replied.media:
-        dogevent = await edit_or_reply(dogmemes, "passing to telegraph...")
+        dogevent = await eor(dogememes, "passing to telegraph...")
     else:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
-    download_location = await dogmemes.client.download_media(
+        return await eor(dogememes, "reply to a supported media file")
+    download_location = await dogememes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
     if download_location.endswith((".webp")):
@@ -96,7 +96,7 @@ async def dogbot(dogmemes):
     dog = f"https://telegra.ph{response[0]}"
     dog = await awooify(dog)
     await dogevent.delete()
-    await dogmemes.client.send_file(dogmemes.chat_id, dog, reply_to=replied)
+    await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
 @doge.bot_cmd(
@@ -107,18 +107,18 @@ async def dogbot(dogmemes):
         "usage": "{tr}lolice",
     },
 )
-async def dogbot(dogmemes):
+async def dogbot(dogememes):
     "replied Image will be face of other image"
-    replied = await dogmemes.get_reply_message()
+    replied = await dogememes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
+        return await eor(dogememes, "reply to a supported media file")
     if replied.media:
-        dogevent = await edit_or_reply(dogmemes, "passing to telegraph...")
+        dogevent = await eor(dogememes, "passing to telegraph...")
     else:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
-    download_location = await dogmemes.client.download_media(
+        return await eor(dogememes, "reply to a supported media file")
+    download_location = await dogememes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
     if download_location.endswith((".webp")):
@@ -143,7 +143,7 @@ async def dogbot(dogmemes):
     dog = f"https://telegra.ph{response[0]}"
     dog = await lolice(dog)
     await dogevent.delete()
-    await dogmemes.client.send_file(dogmemes.chat_id, dog, reply_to=replied)
+    await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
 @doge.bot_cmd(
@@ -154,18 +154,18 @@ async def dogbot(dogmemes):
         "usage": "{tr}bun",
     },
 )
-async def dogbot(dogmemes):
+async def dogbot(dogememes):
     "replied Image will be face of other image"
-    replied = await dogmemes.get_reply_message()
+    replied = await dogememes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
+        return await eor(dogememes, "reply to a supported media file")
     if replied.media:
-        dogevent = await edit_or_reply(dogmemes, "passing to telegraph...")
+        dogevent = await eor(dogememes, "passing to telegraph...")
     else:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
-    download_location = await dogmemes.client.download_media(
+        return await eor(dogememes, "reply to a supported media file")
+    download_location = await dogememes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
     if download_location.endswith((".webp")):
@@ -190,7 +190,7 @@ async def dogbot(dogmemes):
     dog = f"https://telegra.ph{response[0]}"
     dog = await baguette(dog)
     await dogevent.delete()
-    await dogmemes.client.send_file(dogmemes.chat_id, dog, reply_to=replied)
+    await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)
 
 
 @doge.bot_cmd(
@@ -201,18 +201,18 @@ async def dogbot(dogmemes):
         "usage": "{tr}iphx",
     },
 )
-async def dogbot(dogmemes):
+async def dogbot(dogememes):
     "replied image as iphone x wallpaper."
-    replied = await dogmemes.get_reply_message()
+    replied = await dogememes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
+        return await eor(dogememes, "reply to a supported media file")
     if replied.media:
-        dogevent = await edit_or_reply(dogmemes, "passing to telegraph...")
+        dogevent = await eor(dogememes, "passing to telegraph...")
     else:
-        return await edit_or_reply(dogmemes, "reply to a supported media file")
-    download_location = await dogmemes.client.download_media(
+        return await eor(dogememes, "reply to a supported media file")
+    download_location = await dogememes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
     if download_location.endswith((".webp")):
@@ -237,4 +237,4 @@ async def dogbot(dogmemes):
     dog = f"https://telegra.ph{response[0]}"
     dog = await iphonex(dog)
     await dogevent.delete()
-    await dogmemes.client.send_file(dogmemes.chat_id, dog, reply_to=replied)
+    await dogememes.client.send_file(dogememes.chat_id, dog, reply_to=replied)

@@ -9,7 +9,7 @@ from telethon.utils import get_display_name
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import _format
 from ..sql_helper import gban_sql_helper as gban_sql
 from ..sql_helper.mute_sql import is_muted, mute, unmute
@@ -52,13 +52,13 @@ UNBAN_RIGHTS = ChatBannedRights(
 )
 async def doggban(event):  # sourcery no-metrics
     "To ban user in every group where you are admin."
-    dogg = await edit_or_reply(event, "`gbanning.......`")
+    dogg = await eor(event, "`gbanning.......`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
     if user.id == doge.uid:
-        return await edit_delete(dogg, "`why would I ban myself`")
+        return await edl(dogg, "`why would I ban myself`")
     if gban_sql.is_gbanned(user.id):
         await dogg.edit(
             f"`the `[user](tg://user?id={user.id})` is already in gbanned list any way checking again`"
@@ -69,7 +69,7 @@ async def doggban(event):  # sourcery no-metrics
     count = 0
     teledoge = len(san)
     if teledoge == 0:
-        return await edit_delete(dogg, "`you are not admin of atleast one group` ")
+        return await edl(dogg, "`you are not admin of atleast one group` ")
     await dogg.edit(
         f"`initiating gban of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
     )
@@ -136,7 +136,7 @@ async def doggban(event):  # sourcery no-metrics
 )
 async def doggban(event):
     "To unban the person from every group where you are admin."
-    dogg = await edit_or_reply(event, "`ungbanning.....`")
+    dogg = await eor(event, "`ungbanning.....`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, dogg)
     if not user:
@@ -144,14 +144,14 @@ async def doggban(event):
     if gban_sql.is_gbanned(user.id):
         gban_sql.dogungban(user.id)
     else:
-        return await edit_delete(
+        return await edl(
             dogg, f"the [user](tg://user?id={user.id}) `is not in your gbanned list`"
         )
     san = await admin_groups(event.client)
     count = 0
     teledoge = len(san)
     if teledoge == 0:
-        return await edit_delete(dogg, "`you are not even admin of atleast one group `")
+        return await edl(dogg, "`you are not even admin of atleast one group `")
     await dogg.edit(
         f"initiating ungban of the [user](tg://user?id={user.id}) in `{len(san)}` groups"
     )
@@ -223,7 +223,7 @@ async def gablist(event):
                 )
     else:
         GBANNED_LIST = "no Gbanned Users (yet)"
-    await edit_or_reply(event, GBANNED_LIST)
+    await eor(event, GBANNED_LIST)
 
 
 @doge.bot_cmd(
@@ -247,29 +247,29 @@ async def startgmute(event):
         if not user:
             return
         if user.id == doge.uid:
-            return await edit_or_reply(event, "`Sorry, I can't gmute myself`")
+            return await eor(event, "`Sorry, I can't gmute myself`")
         userid = user.id
     try:
         user = (await event.client(GetFullUserRequest(userid))).user
     except Exception:
-        return await edit_or_reply(event, "`Sorry. I am unable to fetch the user`")
+        return await eor(event, "`Sorry. I am unable to fetch the user`")
     if is_muted(userid, "gmute"):
-        return await edit_or_reply(
+        return await eor(
             event,
             f"{_format.mentionuser(user.first_name ,user.id)} ` is already gmuted`",
         )
     try:
         mute(userid, "gmute")
     except Exception as e:
-        await edit_or_reply(event, f"**Error**\n`{str(e)}`")
+        await eor(event, f"**Error**\n`{str(e)}`")
     else:
         if reason:
-            await edit_or_reply(
+            await eor(
                 event,
                 f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully gmuted`\n**Reason :** `{reason}`",
             )
         else:
-            await edit_or_reply(
+            await eor(
                 event,
                 f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully gmuted`",
             )
@@ -313,28 +313,28 @@ async def endgmute(event):
         if not user:
             return
         if user.id == doge.uid:
-            return await edit_or_reply(event, "`Sorry, I can't gmute myself`")
+            return await eor(event, "`Sorry, I can't gmute myself`")
         userid = user.id
     try:
         user = (await event.client(GetFullUserRequest(userid))).user
     except Exception:
-        return await edit_or_reply(event, "`Sorry. I am unable to fetch the user`")
+        return await eor(event, "`Sorry. I am unable to fetch the user`")
     if not is_muted(userid, "gmute"):
-        return await edit_or_reply(
+        return await eor(
             event, f"{_format.mentionuser(user.first_name ,user.id)} `is not gmuted`"
         )
     try:
         unmute(userid, "gmute")
     except Exception as e:
-        await edit_or_reply(event, f"**Error**\n`{str(e)}`")
+        await eor(event, f"**Error**\n`{str(e)}`")
     else:
         if reason:
-            await edit_or_reply(
+            await eor(
                 event,
                 f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully ungmuted`\n**Reason :** `{reason}`",
             )
         else:
-            await edit_or_reply(
+            await eor(
                 event,
                 f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully ungmuted`",
             )
@@ -370,18 +370,18 @@ async def watcher(event):
 )
 async def doggkick(event):  # sourcery no-metrics
     "kicks the person in all groups where you are admin"
-    dogg = await edit_or_reply(event, "`gkicking.......`")
+    dogg = await eor(event, "`gkicking.......`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
     if user.id == doge.uid:
-        return await edit_delete(dogg, "`why would I kick myself`")
+        return await edl(dogg, "`why would I kick myself`")
     san = await admin_groups(event.client)
     count = 0
     teledoge = len(san)
     if teledoge == 0:
-        return await edit_delete(dogg, "`you are not admin of atleast one group` ")
+        return await edl(dogg, "`you are not admin of atleast one group` ")
     await dogg.edit(
         f"`initiating gkick of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
     )

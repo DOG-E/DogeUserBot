@@ -10,7 +10,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from . import reply_id
 
@@ -33,7 +33,7 @@ GIT_TEMP_DIR = "./temp/"
 )
 async def source(e):
     "Source code link of userbot"
-    await edit_or_reply(
+    await eor(
         e,
         "Click [here](https://github.com/DOG-E/dogeuserbot) to open this bot source code",
     )
@@ -57,8 +57,8 @@ async def _(event):
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                return await edit_delete(event, "`" + username + " not found`")
-            dogevent = await edit_or_reply(event, "`fetching github info ...`")
+                return await edl(event, "`" + username + " not found`")
+            dogevent = await eor(event, "`fetching github info ...`")
             result = await request.json()
             photo = result["avatar_url"]
             if result["bio"]:
@@ -119,14 +119,14 @@ async def _(event):
 async def download(event):
     "To commit the replied plugin to github."
     if Config.GITHUB_ACCESS_TOKEN is None:
-        return await edit_delete(
+        return await edl(
             event, "`Please ADD Proper Access Token from github.com`", 5
         )
     if Config.GIT_REPO_NAME is None:
-        return await edit_delete(
+        return await edl(
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5
         )
-    mone = await edit_or_reply(event, "`Processing ...`")
+    mone = await eor(event, "`Processing ...`")
     if not os.path.isdir(GIT_TEMP_DIR):
         os.makedirs(GIT_TEMP_DIR)
     start = datetime.now()

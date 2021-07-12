@@ -5,7 +5,7 @@ from telethon.tl.types import ChatBannedRights
 
 from ..sql_helper import antiflood_sql as sql
 from ..utils import is_admin
-from . import doge, edit_or_reply
+from . import doge, eor
 
 plugin_category = "admin"
 CHAT_FLOOD = sql.__load_flood_settings()
@@ -73,7 +73,7 @@ because he reached the defined flood limit.""",
 async def _(event):
     "To setup antiflood in a group to prevent spam"
     input_str = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "`updating flood settings!`")
+    event = await eor(event, "`updating flood settings!`")
     await asyncio.sleep(2)
     try:
         sql.set_flood(event.chat_id, input_str)

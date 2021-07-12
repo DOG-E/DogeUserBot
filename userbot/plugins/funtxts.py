@@ -2,7 +2,7 @@ import nekos
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "fun"
 
@@ -18,7 +18,7 @@ plugin_category = "fun"
 async def hmm(cat):
     "Some random cat facial text art"
     reactcat = nekos.textcat()
-    await edit_or_reply(cat, reactcat)
+    await eor(cat, reactcat)
 
 
 @doge.bot_cmd(
@@ -32,7 +32,7 @@ async def hmm(cat):
 async def hmm(dog):
     "Some random Funny questions"
     whydoge = nekos.why()
-    await edit_or_reply(dog, whydoge)
+    await eor(dog, whydoge)
 
 
 @doge.bot_cmd(
@@ -46,4 +46,4 @@ async def hmm(dog):
 async def hmm(dog):
     "Some random facts"
     factdoge = nekos.fact()
-    await edit_or_reply(dog, factdoge)
+    await eor(dog, factdoge)

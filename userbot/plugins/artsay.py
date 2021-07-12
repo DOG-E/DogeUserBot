@@ -3,7 +3,7 @@ Created by  Md Jisan.  tg @Jisan7509
 Plugin for CatUserbot
 """
 
-from . import doge, edit_or_reply, mention
+from . import doge, eor, mention
 
 plugin_category = "fun"
 
@@ -19,7 +19,7 @@ plugin_category = "fun"
 async def _(event):
     "art command"
     name = event.pattern_match.group(1)
-    await edit_or_reply(
+    await eor(
         event,
         f"**Carry ➥ {name} .**\n\n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂ \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ \n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁  \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
     )
@@ -38,7 +38,7 @@ async def _(event):
     name = event.pattern_match.group(1)
     if not name:
         name = "dead"
-    await edit_or_reply(
+    await eor(
         event,
         f"{mention} --- {name}          \n　　　　　|"
         "\n　　　　　| \n"
@@ -70,7 +70,7 @@ async def _(event):
     name = event.pattern_match.group(1)
     if not name:
         name = "die"
-    await edit_or_reply(
+    await eor(
         event,
         f"__**Commando **__{mention}          \n\n"
         "_/﹋\_\n"
@@ -125,7 +125,7 @@ async def kakashi(think):
         "⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁\n"
         "⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟\n"
     )
-    await edit_or_reply(think, A)
+    await eor(think, A)
 
 
 @doge.bot_cmd(
@@ -157,7 +157,7 @@ async def kakashi(frogsay):
         "⠄⣿⠁⠄⠐⠛⠛⠛⠉⠉⠉⠉⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿\n"
         "⠄⠻⣦⣀⣀⣀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋\n"
     )
-    await edit_or_reply(frogsay, C)
+    await eor(frogsay, C)
 
 
 @doge.bot_cmd(
@@ -190,7 +190,7 @@ async def kakashi(putinsay):
         "⠄⠄⠄⠄⠄⠄⠄⢿⣿⣾⣷⡄⠄⢾⣿⣿⣿⡄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⠄⠄⠄⠸⣿⣿⣿⠃⠄⠈⢿⣿⣿⠄⠄⠄⠄⠄⠄⠄\n"
     )
-    await edit_or_reply(putinsay, D)
+    await eor(putinsay, D)
 
 
 @doge.bot_cmd(
@@ -222,7 +222,7 @@ async def kakashi(deadfrog):
         "⠄⠄⠄⠄⠄⠄⠄⠁⠙⠒⠙⠯⠍⠙⢉⣡⣶⣿⣿⣿⣿⣿⣿⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
     )
-    await edit_or_reply(deadfrog, E)
+    await eor(deadfrog, E)
 
 
 @doge.bot_cmd(
@@ -254,7 +254,7 @@ async def kakashi(trumpsay):
         "⠄⠄⠄⠄⠄⠄⠄⠄⠹⣿⣿⡇⠄⠄⠸⣿⡄⠄⠈⠁⠄⠄⠄⣿\n"
         "⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⡇⠄⠄⠄⢹⣧⠄⠄⠄⠄⠄⠄⠘\n"
     )
-    await edit_or_reply(trumpsay, J)
+    await eor(trumpsay, J)
 
 
 @doge.bot_cmd(
@@ -287,7 +287,7 @@ async def kakashi(ckmkb):
         "⠄⠄⠄⠄⠄⣿⣿⠃⣦⣄⣿⣿⣿⠇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
         "⠄⠄⠄⠄⢸⣿⠗⢈⡶⣷⣿⣿⡏⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄\n"
     )
-    await edit_or_reply(ckmkb, K)
+    await eor(ckmkb, K)
 
 
 @doge.bot_cmd(
@@ -300,4 +300,4 @@ async def kakashi(ckmkb):
 )
 async def kakashi(shit):
     "art command"
-    await edit_or_reply(shit, G)
+    await eor(shit, G)

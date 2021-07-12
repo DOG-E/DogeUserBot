@@ -5,7 +5,7 @@ from telethon.tl import functions
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.globals import addgvar, gvarstatus
 
 plugin_category = "utils"
@@ -27,8 +27,8 @@ async def pussy(event):
     "make yourself offline"
     user = await event.client.get_entity("me")
     if user.first_name.startswith(OFFLINE_TAG):
-        return await edit_delete(event, "**Already in Offline Mode.**")
-    await edit_or_reply(event, "**Changing Profile to Offline...**")
+        return await edl(event, "**Already in Offline Mode.**")
+    await eor(event, "**Changing Profile to Offline...**")
     photo = "./temp/donottouch.jpg"
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -40,9 +40,9 @@ async def pussy(event):
         try:
             await event.client(functions.photos.UploadProfilePhotoRequest(file))
         except Exception as e:  # pylint:disable=C0103,W0703
-            await edit_or_reply(event, str(e))
+            await eor(event, str(e))
         else:
-            await edit_or_reply(event, "**Changed profile to OffLine.**")
+            await eor(event, "**Changed profile to OffLine.**")
     os.remove(photo)
     first_name = user.first_name
     addgvar("my_first_name", first_name)
@@ -55,7 +55,7 @@ async def pussy(event):
             last_name=first_name, first_name=tag_name
         )
     )
-    await edit_delete(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
+    await edl(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
 
 
 @doge.bot_cmd(
@@ -71,9 +71,9 @@ async def dog(event):
     "make yourself online"
     user = await event.client.get_entity("me")
     if user.first_name.startswith(OFFLINE_TAG):
-        await edit_or_reply(event, "**Changing Profile to Online...**")
+        await eor(event, "**Changing Profile to Online...**")
     else:
-        await edit_delete(event, "**Already Online.**")
+        await edl(event, "**Already Online.**")
         return
     try:
         await event.client(
@@ -82,9 +82,9 @@ async def dog(event):
             )
         )
     except Exception as e:  # pylint:disable=C0103,W0703
-        await edit_or_reply(event, str(e))
+        await eor(event, str(e))
     else:
-        await edit_or_reply(event, "**Changed profile to Online.**")
+        await eor(event, "**Changed profile to Online.**")
     first_name = gvarstatus("my_first_name")
     last_name = gvarstatus("my_last_name") or ""
     await event.client(
@@ -92,4 +92,4 @@ async def dog(event):
             last_name=last_name, first_name=first_name
         )
     )
-    await edit_delete(event, f"**`{first_name} {last_name}`\nI am Online !**")
+    await edl(event, f"**`{first_name} {last_name}`\nI am Online !**")

@@ -13,11 +13,7 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from userbot import doge
-
-from ..core.managers import edit_or_reply
-from ..helpers.functions import deEmojify, hide_inlinebot, waifutxt
-from ..helpers.utils import reply_id
+from . import doge, edl, eor, reply_id, deEmojify, hide_inlinebot, hide_inlinebot_point, waifutxt
 
 plugin_category = "fun"
 
@@ -40,12 +36,12 @@ async def get_font_file(client, channel_id, search_kw=""):
 
 
 @doge.bot_cmd(
-    pattern="sttxt(?:\s|$)([\s\S]*)",
-    command=("sttxt", plugin_category),
+    pattern="waifu(?:\s|$)([\s\S]*)",
+    command=("waifu", plugin_category),
     info={
         "header": "Anime that makes your writing fun.",
-        "usage": "{tr}sttxt <text>",
-        "examples": "{tr}sttxt hello",
+        "usage": "{tr}waifu <text>",
+        "examples": "{tr}waifu hello",
     },
 )
 async def waifu(animu):
@@ -56,7 +52,7 @@ async def waifu(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            return await edit_or_reply(
+            return await eor(
                 animu, "`You haven't written any article, Waifu is going away.`"
             )
     text = deEmojify(text)
@@ -94,7 +90,7 @@ async def sticklet(event):
         if event.reply_to_msg_id:
             sticktext = reply_message.message
         else:
-            return await edit_or_reply(event, "need something, hmm")
+            return await eor(event, "need something, hmm")
     # delete the userbot command,
     # i don't know why this is required
     await event.delete()
@@ -123,7 +119,7 @@ async def sticklet(event):
     await event.client.send_file(
         event.chat_id,
         image_stream,
-        caption="dog's Sticklet",
+        caption="🐶 DogeUserBot 🐾",
         reply_to=reply_to_id,
     )
     # cleanup
@@ -151,12 +147,12 @@ async def honk(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
+            return await edl(
                 event, "__What is honk supposed to say? Give some text.__"
             )
     text = deEmojify(text)
     await event.delete()
-    await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
+    await hide_inlinebot_point(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
 @doge.bot_cmd(
@@ -177,7 +173,7 @@ async def twt(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
+            return await edl(
                 event, "__What am I supposed to Tweet? Give some text.__"
             )
     text = deEmojify(text)
@@ -214,7 +210,7 @@ async def glax(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
+            return await edl(
                 event, "What is glax supposed to scream? Give text.."
             )
     text = deEmojify(text)
@@ -222,3 +218,29 @@ async def glax(event):
     await hide_inlinebot(
         event.client, bot_name, text, event.chat_id, reply_to_id, c_lick=c_lick
     )
+
+
+@doge.bot_cmd(
+    pattern="gogle(?:\s|$)([\s\S]*)",
+    command=("gogle", plugin_category),
+    info={
+        "header": "Search in google animation",
+        "usage": "{tr}gogle <text/reply to msg>",
+        "examples": "{tr}gogle DogeUserBot",
+    },
+)
+async def twt(event):
+    "Search in google animation."
+    text = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    bot_name = "@GooglaxBot"
+    if not text:
+        if event.is_reply:
+            text = (await event.get_reply_message()).message
+        else:
+            return await edl(
+                event, "__What am I supposed to search? Give some text.__"
+            )
+    text = deEmojify(text)
+    await event.delete()
+    await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)

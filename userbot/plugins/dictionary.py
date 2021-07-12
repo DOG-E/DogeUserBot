@@ -4,7 +4,7 @@ from PyDictionary import PyDictionary
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import AioHttp
 from ..helpers.utils import _format
 
@@ -35,9 +35,9 @@ async def _(event):
             _format.replacetext(definition),
             _format.replacetext(example),
         )
-        await edit_or_reply(event, result)
+        await eor(event, result)
     except Exception as e:
-        await edit_delete(
+        await edl(
             event,
             text="`The Urban Dictionary API could not be reached`",
         )
@@ -63,6 +63,6 @@ async def _(event):
             output += f"**{a}**\n"
             for i in b:
                 output += f"☞__{i}__\n"
-        await edit_or_reply(event, output)
+        await eor(event, output)
     except Exception:
-        await edit_or_reply(event, f"Couldn't fetch meaning of {word}")
+        await eor(event, f"Couldn't fetch meaning of {word}")

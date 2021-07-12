@@ -1,7 +1,7 @@
 import asyncio
 from collections import deque
 
-from . import doge, edit_or_reply, mention
+from . import doge, edl, eor, mention
 
 plugin_category = "fun"
 
@@ -18,7 +18,7 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(14)
-    event = await edit_or_reply(event, "`Throw your brain in dustbin`")
+    event = await eor(event, "`Throw your brain in dustbin`")
     animation_chars = [
         "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠         <(^_^ <)🗑",
         "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠       <(^_^ <)  🗑",
@@ -50,7 +50,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "bombs")
+    event = await eor(event, "bombs")
     await event.edit("▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n")
     await asyncio.sleep(0.5)
     await event.edit("💣💣💣💣 \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n")
@@ -85,7 +85,7 @@ async def _(event):
     "animation command"
     animation_interval = 3
     animation_ttl = range(18)
-    event = await edit_or_reply(event, "Calling Pavel Durov (ceo of telegram)......")
+    event = await eor(event, "Calling Pavel Durov (ceo of telegram)......")
     animation_chars = [
         "`Connecting To Telegram Headquarters...`",
         "`Call Connected.`",
@@ -123,7 +123,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.7
     animation_ttl = range(12)
-    event = await edit_or_reply(event, "ready to die dude.....")
+    event = await eor(event, "ready to die dude.....")
     animation_chars = [
         "Ｆｉｉｉｉｉｒｅ",
         "(　･ิω･ิ)︻デ═一-->",
@@ -155,7 +155,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.7
     animation_ttl = range(12)
-    event = await edit_or_reply(event, "ready to die dude.....")
+    event = await eor(event, "ready to die dude.....")
     animation_chars = [
         "Ｆｉｉｉｉｉｒｅ",
         "(　･ิω･ิ)︻デ═一-->",
@@ -187,7 +187,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.8
     animation_ttl = range(5)
-    event = await edit_or_reply(event, "wtf")
+    event = await eor(event, "wtf")
     animation_chars = [
         "What",
         "What The",
@@ -211,7 +211,7 @@ async def _(event):
 async def _(event):
     "animation command"
     animation_interval = 0.3
-    animation_ttl = range(30)
+    animation_ttl = range(24)
     animation_chars = [
         "🔴⬛⬛⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜",
         "⬜⬜⬛⬜⬜\n⬜⬛⬜⬜⬜\n🔴⬜⬜⬜⬜",
@@ -223,11 +223,11 @@ async def _(event):
         "⬜⬜⬛⬜⬜\n⬜⬛⬜⬜⬜\n🔴⬜⬜⬜⬜",
         "🔴⬛⬛⬜⬜\n⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜",
     ]
-    event = await edit_or_reply(event, "ding..dong..ding..dong ...")
-    await asyncio.sleep(4)
+    event = await eor(event, "ding..dong..ding..dong ...")
+    await asyncio.sleep(2)
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 10])
+        await event.edit(animation_chars[i % 8])
 
 
 @doge.bot_cmd(
@@ -242,7 +242,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.3
     animation_ttl = range(15)
-    event = await edit_or_reply(event, "hypno....")
+    event = await eor(event, "hypno....")
     animation_chars = [
         "⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜",
         "⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬛⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜",
@@ -275,7 +275,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "candy")
+    event = await eor(event, "candy")
     deq = deque(list("🍦🍧🍩🍪🎂🍰🧁🍫🍬🍭"))
     for _ in range(100):
         await asyncio.sleep(0.4)
@@ -293,7 +293,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "gangasta")
+    event = await eor(event, "gangasta")
     await event.edit("EVERyBOdy")
     await asyncio.sleep(0.3)
     await event.edit("iZ")
@@ -321,7 +321,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "charging")
+    event = await eor(event, "charging")
     txt = "`Tesla Wireless Charging (beta) Started...\
             \nDevice Detected: Nokia 1100\nBattery Percentage:` "
     k = 10
@@ -335,3 +335,1703 @@ async def _(event):
         \nnBattery Percentage:` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ",
         link_preview=True,
     )
+
+
+@doge.bot_cmd(
+    pattern="think$",
+    command=("think", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}think",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "think")
+    deq = deque(list("🤔🧐🤔🧐🤔🧐"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="lmao$",
+    command=("lmao", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}lmao",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "lmao")
+    deq = deque(list("😂🤣😂🤣😂🤣"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="nothappy$",
+    command=("nothappy", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}nothappy",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "nathappy")
+    deq = deque(list("😁☹️😁☹️😁☹️😁"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="clock$",
+    command=("clock", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}clock",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "clock")
+    deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="muah$",
+    command=("muah", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}muah",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "muah")
+    deq = deque(list("😗😙😚😚😘"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="heart$",
+    command=("heart", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}heart",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "heart")
+    deq = deque(list("❤️🧡💛💚💙💜🖤"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="gym$",
+    command=("gym", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}gym",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "gym")
+    deq = deque(list("🏃‍🏋‍🤸‍🏃‍🏋‍🤸‍🏃‍🏋‍🤸‍"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="earth$",
+    command=("earth", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}earth",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "earth")
+    deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="moon$",
+    command=("moon", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}moon",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "moon")
+    deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
+    for _ in range(48):
+        await asyncio.sleep(0.2)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="smoon$",
+    command=("smoon", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}smoon",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "smoon")
+    animation_interval = 0.2
+    animation_ttl = range(101)
+    await event.edit("smoon..")
+    animation_chars = [
+        "🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗",
+        "🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘",
+        "🌑🌑🌑🌑🌑\n🌕🌕🌕🌕🌕\n🌑🌑🌑🌑🌑\n🌕🌕🌕🌕🌕\n🌑🌑🌑🌑🌑",
+        "🌒🌒🌒🌒🌒\n🌖🌖🌖🌖🌖\n🌒🌒🌒🌒🌒\n🌖🌖🌖🌖🌖\n🌒🌒🌒🌒🌒",
+        "🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓",
+        "🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔",
+        "🌕🌕🌕🌕🌕\n🌑🌑🌑🌑🌑\n🌕🌕🌕🌕🌕\n🌑🌑🌑🌑🌑\n🌕🌕🌕🌕🌕",
+        "🌖🌖🌖🌖🌖\n🌒🌒🌒🌒🌒\n🌖🌖🌖🌖🌖\n🌒🌒🌒🌒🌒\n🌖🌖🌖🌖🌖",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 8])
+
+
+@doge.bot_cmd(
+    pattern="tmoon$",
+    command=("tmoon", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}tmoon",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "tmoon")
+    animation_interval = 0.2
+    animation_ttl = range(96)
+    await event.edit("tmoon..")
+    animation_chars = [
+        "🌗",
+        "🌘",
+        "🌑",
+        "🌒",
+        "🌓",
+        "🌔",
+        "🌕",
+        "🌖",
+        "🌗",
+        "🌘",
+        "🌑",
+        "🌒",
+        "🌓",
+        "🌔",
+        "🌕",
+        "🌖",
+        "🌗",
+        "🌘",
+        "🌑",
+        "🌒",
+        "🌓",
+        "🌔",
+        "🌕",
+        "🌖",
+        "🌗",
+        "🌘",
+        "🌑",
+        "🌒",
+        "🌓",
+        "🌔",
+        "🌕",
+        "🌖",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 32])
+
+
+@doge.bot_cmd(
+    pattern="star$",
+    command=("star", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}star",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "`stars.....`")
+    deq = deque(list("🦋✨🦋✨🦋✨🦋✨"))
+    for _ in range(48):
+        await asyncio.sleep(0.3)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="boxs$",
+    command=("boxs", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}boxs",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "`boxs...`")
+    deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
+    for _ in range(999):
+        await asyncio.sleep(0.3)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="rain$",
+    command=("rain", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}rain",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "`Raining.......`")
+    deq = deque(list("🌬☁️🌩🌨🌧🌦🌥⛅🌤"))
+    for _ in range(48):
+        await asyncio.sleep(0.3)
+        await event.edit("".join(deq))
+        deq.rotate(1)
+
+
+@doge.bot_cmd(
+    pattern="deploy$",
+    command=("deploy", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}deploy",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 3
+    animation_ttl = range(12)
+    event = await eor(event, "`Deploying...`")
+    animation_chars = [
+        "**Heroku Connecting To Latest Github Build **",
+        f"**Build started by user** {mention}",
+        f"**Deploy** `535a74f0` **by user** {mention}",
+        "**Restarting Heroku Server...**",
+        "**State changed from up to starting**",
+        "**Stopping all processes with SIGTERM**",
+        "**Process exited with** `status 143`",
+        "**Starting process with command** `python3 -m userbot`",
+        "**State changed from starting to up**",
+        "__INFO:Userbot:Logged in as 557667062__",
+        "__INFO:Userbot:Successfully loaded all plugins__",
+        "**Build Succeeded**",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 12])
+
+
+@doge.bot_cmd(
+    pattern="dump(?:\s|$)([\s\S]*)",
+    command=("dump", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}dump <any three emoji's(optional)>",
+        "examples": ["{tr}dump", "{tr}dump 🍰🍎🐓"],
+    },
+)
+async def _(event):
+    "Animation Command"
+    try:
+        obj = event.pattern_match.group(1)
+        if len(obj) != 3:
+            return await edl(event, "`Input length must be 3 or empty`")
+        inp = " ".join(obj)
+    except IndexError:
+        inp = "🥞 🎂 🍫"
+    event = await eor(event, "`droping....`")
+    u, t, g, o, s, n = inp.split(), "🗑", "<(^_^ <)", "(> ^_^)>", "⠀ ", "\n"
+    h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
+    for something in reversed(
+        [
+            y
+            for y in (
+                [
+                    "".join(x)
+                    for x in (
+                        f + (s, g, s + s * f.count(""), t),
+                        f + (g, s * 2 + s * f.count(""), t),
+                        f[:i] + (o, f[i], s * 2 + s * f.count(""), t),
+                        f[:i] + (s + s * f.count(""), o, f[i], s, t),
+                        f[:i] + (s * 2 + s * f.count(""), o, f[i], t),
+                        f[:i] + (s * 3 + s * f.count(""), o, t),
+                        f[:i] + (s * 3 + s * f.count(""), g, t),
+                    )
+                ]
+                for i, f in enumerate(reversed(h))
+            )
+        ]
+    ):
+        for something_else in something:
+            await asyncio.sleep(0.3)
+            await event.edit(something_else)
+
+
+@doge.bot_cmd(
+    pattern="fleaveme$",
+    command=("fleaveme", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}fleaveme",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(10)
+    animation_chars = [
+        "⬛⬛⬛\n⬛⬛⬛\n⬛⬛⬛",
+        "⬛⬛⬛\n⬛🔄⬛\n⬛⬛⬛",
+        "⬛⬆️⬛\n⬛🔄⬛\n⬛⬛⬛",
+        "⬛⬆️↗️\n⬛🔄⬛\n⬛⬛⬛",
+        "⬛⬆️↗️\n⬛🔄➡️\n⬛⬛⬛",
+        "⬛⬆️↗️\n⬛🔄➡️\n⬛⬛↘️",
+        "⬛⬆️↗️\n⬛🔄➡️\n⬛⬇️↘️",
+        "⬛⬆️↗️\n⬛🔄➡️\n↙️⬇️↘️",
+        "⬛⬆️↗️\n⬅️🔄➡️\n↙️⬇️↘️",
+        "↖️⬆️↗️\n⬅️🔄➡️\n↙️⬇️↘️",
+    ]
+    event = await eor(event, "fleaveme....")
+    await asyncio.sleep(2)
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 10])
+
+
+@doge.bot_cmd(
+    pattern="loveu$",
+    command=("loveu", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}loveu",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(70)
+    event = await eor(event, "loveu")
+    animation_chars = [
+        "😀",
+        "👩‍🎨",
+        "😁",
+        "😂",
+        "🤣",
+        "😃",
+        "😄",
+        "😅",
+        "😊",
+        "☺",
+        "🙂",
+        "🤔",
+        "🤨",
+        "😐",
+        "😑",
+        "😶",
+        "😣",
+        "😥",
+        "😮",
+        "🤐",
+        "😯",
+        "😴",
+        "😔",
+        "😕",
+        "☹",
+        "🙁",
+        "😖",
+        "😞",
+        "😟",
+        "😢",
+        "😭",
+        "🤯",
+        "💔",
+        "❤",
+        "I Love You❤",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 35])
+
+
+@doge.bot_cmd(
+    pattern="plane$",
+    command=("plane", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}plane",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(event, "Wait for plane...")
+    await event.edit("✈-------------")
+    await event.edit("-✈------------")
+    await event.edit("--✈-----------")
+    await event.edit("---✈----------")
+    await event.edit("----✈---------")
+    await event.edit("-----✈--------")
+    await event.edit("------✈-------")
+    await event.edit("-------✈------")
+    await event.edit("--------✈-----")
+    await event.edit("---------✈----")
+    await event.edit("----------✈---")
+    await event.edit("-----------✈--")
+    await event.edit("------------✈-")
+    await event.edit("-------------✈")
+    await asyncio.sleep(3)
+
+
+@doge.bot_cmd(
+    pattern="police$",
+    command=("police", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}police",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(12)
+    event = await eor(event, "Police")
+    animation_chars = [
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
+        "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
+        f"{mention} **Police iz Here**",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 12])
+
+
+@doge.bot_cmd(
+    pattern="jio$",
+    command=("jio", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}jio",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(19)
+    event = await eor(event, "jio network boosting...")
+    animation_chars = [
+        "`Connecting To JIO NETWORK ....`",
+        "`█ ▇ ▆ ▅ ▄ ▂ ▁`",
+        "`▒ ▇ ▆ ▅ ▄ ▂ ▁`",
+        "`▒ ▒ ▆ ▅ ▄ ▂ ▁`",
+        "`▒ ▒ ▒ ▅ ▄ ▂ ▁`",
+        "`▒ ▒ ▒ ▒ ▄ ▂ ▁`",
+        "`▒ ▒ ▒ ▒ ▒ ▂ ▁`",
+        "`▒ ▒ ▒ ▒ ▒ ▒ ▁`",
+        "`▒ ▒ ▒ ▒ ▒ ▒ ▒`",
+        "*Optimising JIO NETWORK...*",
+        "`▒ ▒ ▒ ▒ ▒ ▒ ▒`",
+        "`▁ ▒ ▒ ▒ ▒ ▒ ▒`",
+        "`▁ ▂ ▒ ▒ ▒ ▒ ▒`",
+        "`▁ ▂ ▄ ▒ ▒ ▒ ▒`",
+        "`▁ ▂ ▄ ▅ ▒ ▒ ▒`",
+        "`▁ ▂ ▄ ▅ ▆ ▒ ▒`",
+        "`▁ ▂ ▄ ▅ ▆ ▇ ▒`",
+        "`▁ ▂ ▄ ▅ ▆ ▇ █`",
+        "**JIO NETWORK Boosted....**",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 19])
+
+
+@doge.bot_cmd(
+    pattern="solarsystem$",
+    command=("solarsystem", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}solarsystem",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.1
+    animation_ttl = range(80)
+    event = await eor(event, "solarsystem")
+    animation_chars = [
+        "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
+        "`◼️◼️◼️◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️◼️◼️◼️`",
+        "`◼️🌕◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️☀◼️`",
+        "`◼️◼️◼️🌕◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️☀◼️◼️◼️`",
+        "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️🌕\n◼️◼️🌎◼️◼️\n☀◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
+        "`◼️◼️◼️◼️◼️\n☀◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️🌕\n◼️◼️◼️◼️◼️`",
+        "`◼️☀◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️🌕◼️`",
+        "`◼️◼️◼️☀◼️\n◼️◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️◼️\n◼️🌕◼️◼️◼️`",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 8])
+
+
+@doge.bot_cmd(
+    pattern="kilr(?:\s|$)([\s\S]*)",
+    command=("kilr", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}kilr <text>",
+    },
+)
+async def _(event):
+    "animation command"
+    name = event.pattern_match.group(1)
+    if not name:
+        name = "die"
+    animation_interval = 0.7
+    animation_ttl = range(8)
+    event = await eor(event, f"**Ready Commando **__{mention}....")
+    animation_chars = [
+        "Ｆｉｉｉｉｉｒｅ",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - \n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n  <,︻╦╤─ ҉ - -\n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - - -\n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n<,︻╦╤─ ҉ - -\n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - \n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n  <,︻╦╤─ ҉ - -\n _/﹋\_\n",
+        f"__**Commando **__{mention}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - - - {name}\n _/﹋\_\n",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 8])
+
+
+@doge.bot_cmd(
+    pattern="acarry$",
+    command=("acarry", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}acarry",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.7
+    animation_ttl = range(5)
+    dog = await eor(event, "**Carry :- To kese hai aplog....**")
+    animation_chars = [
+        "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ \n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁  \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
+        "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ BURE\n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁  \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
+        "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ BURE\n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁ HAIN \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉  \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
+        "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ BURE\n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁ HAIN \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉ HUM \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
+        "**Carry :**          \n                     ⣤⣶⣶⣶⣦⣤⣄⡀\n⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀\n⠀⠀⠀⢀⣾⣿⣿⣿⠿⠿⠟⠻⠿⢿⣿⣿⣿⡆\n⠀⠀⠀⢰⣿⣿⡿⠂⠀⠀⠀⠀⠀⠀ ⠈⠉⢻⡇ \n⠀⠀⠀⠈⠿⣿⣇⣠⠤⠤⠤⢤⣀⣤⠤⠤⣺⡏ \n⠀⠀⠀⠀⠐⢉⣯⠹⣀⣀⣢⡸⠉⢏⡄⣀⣯⠁ \n⠀⠀⠀⠀⠡⠀⢹⣆⠀⠀⠀⣀⡀⡰⠀⢠⠖⠂BHAUT \n⠀⠀⠀⠀⠀⠈⠙⣿⣿⠀⠠⠚⢋⡁⠀⡜ BURE\n⠀⠀⠀⠀⠀⠀⢸⠈⠙⠦⣤⣀⣤⣤⡼⠁ HAIN \n⠀⠀⠀ ⠀⢀⡌⠀⠀⠀⠀ ⠉⢏⡉ HUM LOG \n⠀⠀⠀⣀⣴⣿⣷⣶⣤⣤⣤⣴⣾⣷⣶⣦⡀ \n⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄ \n⠚⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await dog.edit(animation_chars[i % 5])
+
+
+@doge.bot_cmd(
+    pattern="uff$",
+    command=("uff", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}uff",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.7
+    animation_ttl = range(13)
+    event = await eor(event, "Areeeh...")
+    animation_chars = [
+        "U",
+        "Uf",
+        "Uff",
+        "Ufffff",
+        "Uffffff",
+        "Ufffffff",
+        "Uffffffff",
+        "Ufffffffff",
+        "Uffffffffff",
+        "Ufffffffffff",
+        "Uffffffffffff",
+        "Ufffffffffffff",
+        "Uffffffffffffff",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 13])
+
+
+@doge.bot_cmd(
+    pattern="hmm$",
+    command=("hmm", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}hmm",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.7
+    animation_ttl = range(11)
+    event = await eor(event, "Hm")
+    animation_chars = [
+        "Hmm",
+        "Hmmm",
+        "Hmmmm",
+        "Hmmmmm",
+        "Hmmmmmm",
+        "Hmmmmmmm",
+        "Hmmmmmmmm",
+        "Hmmmmmmmmm",
+        "Hmmmmmmmmmm",
+        "Hmmmmmmmmmmm",
+        "Hmmmmmmmmmmmm",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="bigoof$",
+    command=("bigoof", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}bigoof",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.2
+    animation_ttl = range(7)
+    event = await eor(
+        event,
+        "┏━━━┓╋╋╋╋┏━━━┓ \n┃┏━┓┃╋╋╋╋┃┏━┓┃ \n┃┃╋┃┣┓┏┓┏┫┃╋┃┃ \n┃┃╋┃┃┗┛┗┛┃┃╋┃┃ \n┃┗━┛┣┓┏┓┏┫┗━┛┃ \n┗━━━┛┗┛┗┛┗━━━┛",
+    )
+    animation_chars = [
+        "╭━━━╮╱╱╱╭━╮ \n┃╭━╮┃╱╱╱┃╭╯ \n┃┃╱┃┣━━┳╯╰╮ \n┃┃╱┃┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃┃┃ \n╰━━━┻━━╯╰╯ ",
+        "╭━━━╮╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃┃┃ \n ╰━━━┻━━┻━━╯╰╯",
+        "╭━━━╮╱╱╱╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃╰╯┃┃┃ \n╰━━━┻━━┻━━┻━━╯╰╯",
+        "╭━━━╮╱╱╱╱╱╱╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃╰╯┃╰╯┃┃┃ \n╰━━━┻━━┻━━┻━━┻━━╯╰╯",
+        "╭━━━╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳━━┳━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┃╭╮┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃╰╯┃╰╯┃╰╯┃┃┃ \n╰━━━┻━━┻━━┻━━┻━━┻━━╯╰╯",
+        "╭━━━╮╱╱╱╱╱╱╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃╰╯┃╰╯┃┃┃ \n╰━━━┻━━┻━━┻━━┻━━╯╰╯",
+        "╭━━━╮╱╱╱╱╱╱╱╱╱╭━╮ \n┃╭━╮┃╱╱╱╱╱╱╱╱╱┃╭╯ \n┃┃╱┃┣━━┳━━┳━━┳╯╰╮ \n┃┃╱┃┃╭╮┃╭╮┃╭╮┣╮╭╯ \n┃╰━╯┃╰╯┃╰╯┃╰╯┃┃┃ \n╰━━━┻━━┻━━┻━━╯╰╯",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 7])
+
+
+@doge.bot_cmd(
+    pattern="eye$",
+    command=("eye", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}eye",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 3
+    animation_ttl = range(10)
+    event = await eor(event, "👁👁")
+    animation_chars = [
+        "👁👁\n  👄  =====> Hey, How are you?",
+        "👁👁\n  👅  =====> Everything okay?",
+        "👁👁\n  💋  =====> Why are you staring at this?",
+        "👁👁\n  👄  =====> You idiot",
+        "👁👁\n  👅  =====> Go away",
+        "👁👁\n  💋  =====> Stop laughing",
+        "👁👁\n  👄  =====> It's not funny",
+        "👁👁\n  👅  =====> I guess ur still looking",
+        "👁👁\n  💋  =====> Ok man 😑",
+        "👁👁\n  👄  =====> I go away then",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 10])
+    await asyncio.sleep(animation_interval)
+    await event.delete()
+
+
+@doge.bot_cmd(
+    pattern="thinking$",
+    command=("thinking", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}thinking",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.05
+    animation_ttl = range(288)
+    event = await eor(event, "thinking..")
+    animation_chars = [
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING... 🤔",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 36])
+
+
+@doge.bot_cmd(
+    pattern="snake$",
+    command=("snake", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}snake",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(27)
+    event = await eor(event, "snake..")
+    animation_chars = [
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️◻️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "‎◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◼️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◼️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◼️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◼️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◻️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◻️◻️\n◻️◼️◼️◻️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◻️◻️\n◻️◼️◻️◻️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◼️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️\n◻️◻️◻️◻️◻️",
+        "◻️◻️◻️◻️◻️\n◻️◼️◻️◼️◻️\n◻️◻️◻️◻️◻️\n◻️◼️◼️◼️◻️\n◻️◻️◻️◻️◻️",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 27])
+
+
+@doge.bot_cmd(
+    pattern="human$",
+    command=("human", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}human",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(16)
+    event = await eor(event, "human...")
+    animation_chars = [
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛🚗\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛🚗⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛🚗⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛🚗⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛🚗⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛🚗⬛⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n🚗⬛⬛⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜😊⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛😊⬛⬛⬛\n⬛⬜⬜⬜⬜⬜⬛\n⬛⬛⬛⬜⬛⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛😊⬛⬛⬛\n⬛⬜⬜⬜⬜⬜⬛\n⬛⬛⬛⬜⬛⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬛⬜⬛\n⬛⬛⬜⬛⬛⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛😊⬛⬛⬛\n⬛⬜⬜⬜⬜⬜⬛\n⬛⬛⬛⬜⬛⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬜⬛⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬜⬛😊⬛⬜⬛\n⬛⬛⬜⬜⬜⬛⬛\n⬛⬛⬛⬜⬛⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬜⬛⬛⬛⬜⬛\n⬛⬛⬛⬛⬛⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛😊⬛⬛⬛\n⬛⬛⬜⬜⬜⬛⬛\n⬛⬜⬛⬜⬛⬜⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n⬛⬛⬜⬛⬜⬛⬛\n🔲🔲🔲🔲🔲🔲🔲",
+        "⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬛⬛⬛⬛⬛⬛⬛\n⬜⬜⬜😊⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n🔲🔲🔲🔲🔲🔲🔲",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 16])
+
+
+@doge.bot_cmd(
+    pattern="virus$",
+    command=("virus", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}virus",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(30)
+    event = await eor(event, "Injecting virus....")
+    animation_chars = [
+        "🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️◼️🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "‎◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️\n◼️🔴🔵🌕♓♎⛎◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️🔴🔵🌕♓♎⛎🔴🔵🌕♓♎⛎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️🔴🔵🌕♓♎⛎◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
+        "◼️◼️◼️◼️\n◼️◼️◼️◼️\n◼️◼️◼️◼️\n◼️◼️◼️◼️",
+        "◼️◼️◼️\n◼️◼️◼️\n◼️◼️◼️",
+        "◼️◼️\n◼️◼️",
+        "◼️",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 30])
+
+
+@doge.bot_cmd(
+    pattern="music$",
+    command=("music", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}music",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1.5
+    animation_ttl = range(11)
+    event = await eor(event, "starting player...")
+    animation_chars = [
+        "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:00** ▱▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `▶️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:01** ▰▱▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay  Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:02** ▰▰▱▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤⬤ 81% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:03** ▰▰▰▱▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:04** ▰▰▰▰▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:05** ▰▰▰▰▱▱▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:06** ▰▰▰▰▰▰▱▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:07** ▰▰▰▰▰▰▰▱▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:08** ▰▰▰▰▰▰▰▰▱▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:09** ▰▰▰▰▰▰▰▰▰▱ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏸️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+        "⬤⬤◯ 80% ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`✖️`\n\n⠀⠀⠀⠀⠀[cee jay Music Player](tg://user?id=916234223)\n\n⠀⠀⠀⠀**Now Playing:shape of u**\n\n**00:10** ▰▰▰▰▰▰▰▰▰▰ **00:10**\n\n⠀⠀⠀⠀⠀`🔂` `⏮️` `⏪️` `⏺️` `⏩️` `⏭️`\n\n**⠀Next Song:** __Alan Walker - Alone.__\n\n⠀⠀⠀⠀**⠀Device: Nokia 1100**",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="squ$",
+    command=("squ", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}squ",
+    },
+)
+async def _(event):
+    "animation command"
+    event = await eor(
+        event, "╔═══════════════════╗ \n  \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n \t░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ \t░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit("╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝")
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+    await asyncio.sleep(1)
+    await event.edit(
+        "╔═══════════════════╗ \n ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ ░ \n╚═══════════════════╝"
+    )
+
+
+@doge.bot_cmd(
+    pattern="loading$",
+    command=("loading", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}loading",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(20)
+    event = await eor(event, "▯")
+    animation_chars = ["▮", "▯", "▬", "▭", "‎"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 4])
+
+
+@doge.bot_cmd(
+    pattern="asquare$",
+    command=("asquare", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}asquare",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(20)
+    event = await eor(event, "◨")
+    animation_chars = ["◧", "◨", "◧", "◨", "‎"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 4])
+
+
+@doge.bot_cmd(
+    pattern="up$",
+    command=("up", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}up",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(20)
+    event = await eor(event, "╻")
+    animation_chars = ["╹", "╻", "╹", "╻", "‎"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 4])
+
+
+@doge.bot_cmd(
+    pattern="round$",
+    command=("round", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}round",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(20)
+    event = await eor(event, "Round...")
+    animation_chars = ["⚫", "⬤", "●", "∘", "‎"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 4])
+
+
+@doge.bot_cmd(
+    pattern="hart$",
+    command=("hart", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}hart",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(20)
+    event = await eor(event, "❤️")
+    animation_chars = ["🖤", "❤️", "🖤", "❤️", "‎"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 4])
+
+
+@doge.bot_cmd(
+    pattern="anim$",
+    command=("anim", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}anim",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(20)
+    event = await eor(event, "😢")
+    animation_chars = [
+        "😁",
+        "😧",
+        "😡",
+        "😢",
+        "‎**Repo of DogeUserBot**",
+        "😁",
+        "😧",
+        "😡",
+        "😢",
+        "__**[Good to see you guys....]**__(github.com/DOG-E/DogeUserBot)",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 10])
+
+
+@doge.bot_cmd(
+    pattern="fnl$",
+    command=("fnl", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}fnl",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 2
+    animation_ttl = range(6)
+    event = await eor(event, "Hey There....")
+    animation_chars = ["😁🏿", "😁🏾", "😁🏽", "😁🏼", "‎😁", "**Good to see you friend....**"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 6])
+
+
+@doge.bot_cmd(
+    pattern="monkey$",
+    command=("monkey", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}monkey",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 2
+    animation_ttl = range(12)
+    event = await eor(event, "Hey There....")
+    animation_chars = ["🐵", "🙉", "🙈", "🙊", "🖕‎🐵🖕", "**Good to see you friend....**"]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 6])
+
+
+@doge.bot_cmd(
+    pattern="herber$",
+    command=("herber", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}herber",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 2
+    animation_ttl = range(10)
+    event = await eor(event, "Power On......")
+    animation_chars = [
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 10%\n\n    ●○○○○○○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 5.9%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 8.13GB\n    **🔹used:** 33.77GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 158.98GB\n    **🔹recv:** 146.27GB\n    **🔹sent_packets:** 84518799\n    **🔹recv_packets:** 159720314\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 30%\n\n    ●●●○○○○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 20.4%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 7.18GB\n    **🔹used:** 28.26GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●●●●\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 146.27GB\n    **🔹recv:** 124.33GB\n    **🔹sent_packets:** 54635686\n    **🔹recv_packets:** 143565654\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 60%\n\n    ●●●●●●○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 60.9%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 6.52GB\n    **🔹used:** 35.78GB\n    **🔹total:** 60.0GB\n    \n    ●●●○○○○○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 124.33GB\n    **🔹recv:** 162.48GB\n    **🔹sent_packets:** 25655655\n    **🔹recv_packets:** 165289456\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 100%\n\n    ●●●●●●●●●●\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 100.0%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 9.81GB\n    **🔹used:** 30.11GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●●●●\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 162.48GB\n    **🔹recv:** 175.75GB\n    **🔹sent_packets:** 56565435\n    **🔹recv_packets:** 135345655\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 70%\n\n    ●●●●●●●○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 80.4%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 5.76GB\n    **🔹used:** 29.35GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 175.75GB\n    **🔹recv:** 118.55GB\n    **🔹sent_packets:** 36547698\n    **🔹recv_packets:** 185466554\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 60%\n\n    ●●●●●●○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 62.9%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 8.23GB\n    **🔹used:** 33.32GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●○○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 118.55GB\n    **🔹recv:** 168.65GB\n    **🔹sent_packets:** 24786554\n    **🔹recv_packets:** 156745865\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 30%\n\n    ●●●○○○○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 30.6%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 9.75GB\n    **🔹used:** 36.54GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●●●●\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 168.65GB\n    **🔹recv:** 128.35GB\n    **🔹sent_packets:** 56565435\n    **🔹recv_packets:** 1475823589\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 10%\n\n    ●○○○○○○○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 10.2%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 10.20GB\n    **🔹used:** 25.40GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●○○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 128.35GB\n    **🔹recv:** 108.31GB\n    **🔹sent_packets:** 54635686\n    **🔹recv_packets:** 157865426\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 100%\n\n    ●●●●●●●●●●\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 100.0%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 5.25GB\n    **🔹used:** 31.14GB\n    **🔹total:** 60.0GB\n    \n    ●●●●●●●●●●\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 108.31GB\n    **🔹recv:** 167.17GB\n    **🔹sent_packets:** 84518799\n    **🔹recv_packets:** 124575356\n\n\n**===================**\n",
+        "**===================**\n      **Server Details**  \n**===================**\n\n\n**=>>>   CPU   <<<=**\n\n    **🔹current_freq:** 2500.09MHz\n    **🔹total_usage:** 70%\n\n    ●●●●●●●○○○\n\n    **🔹cpu core**\n\n        **🔹core_usage:** 76.2%\n        **🔹current_freq:** 2500.09MHz\n        |██████████▉  |\n       \n**=>>>   RAM   <<<=**\n\n    **🔹free:** 8.01GB\n    **🔹used:** 33.27GB\n    **🔹total:** 60.0GB\n    \n    ●●●○○○○○○○\n\n\n**=>>>   DISK   <<<=**\n\n   **🔹free:** 224.12GB\n    **🔹used:** 131.84GB\n    **🔹total:** 375.02GB\n    **🔹usage:** 37.0%\n\n    |████▍        |\n\n\n**=>>>   NETWORK   <<<=**\n\n    **🔹sent:** 167.17GB\n    **🔹recv:** 158.98GB\n    **🔹sent_packets:** 36547698\n    **🔹recv_packets:** 165455856\n\n\n**===================**\n",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 10])
+
+
+@doge.bot_cmd(
+    pattern="hand$",
+    command=("hand", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}hand",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(13)
+    event = await eor(event, "🖐️")
+    animation_chars = [
+        "👈",
+        "👉",
+        "☝️",
+        "👆",
+        "🖕",
+        "👇",
+        "✌️",
+        "🤞",
+        "🖖",
+        "🤘",
+        "🤙",
+        "🖐️",
+        "👌",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 13])
+
+
+@doge.bot_cmd(
+    pattern="gsg$",
+    command=("gsg", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}gsg",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(12)
+    event = await eor(event, "ContDown....")
+    animation_chars = [
+        "🔟",
+        "9️⃣",
+        "8️⃣",
+        "7️⃣",
+        "6️⃣",
+        "5️⃣",
+        "4️⃣",
+        "3️⃣",
+        "2️⃣",
+        "1️⃣",
+        "0️⃣",
+        "🆘",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 12])
+
+
+@doge.bot_cmd(
+    pattern="theart$",
+    command=("theart", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}theart",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.3
+    animation_ttl = range(54)
+    event = await eor(event, "🖤")
+    animation_chars = [
+        "❤️",
+        "🧡",
+        "💛",
+        "💚",
+        "💙",
+        "💜",
+        "🖤",
+        "💘",
+        "💝",
+        "❤️",
+        "🧡",
+        "💛",
+        "💚",
+        "💙",
+        "💜",
+        "🖤",
+        "💘",
+        "💝",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 18])
+
+
+@doge.bot_cmd(
+    pattern="unoob$",
+    command=("unoob", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}unoob",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(9)
+    event = await eor(event, "unnoob")
+    animation_chars = [
+        "EvErYbOdY",
+        "iZ",
+        "BiGGeSt",
+        "NoOoB",
+        "uNtiL",
+        "YoU",
+        "aRriVe",
+        "😈",
+        "EvErYbOdY iZ BiGGeSt NoOoB uNtiL YoU aRriVe 😈",
+    ]
+    for i in animation_ttl:
+        await event.edit(animation_chars[i % 9])
+        await asyncio.sleep(animation_interval)
+
+
+@doge.bot_cmd(
+    pattern="menoob$",
+    command=("menoob", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}menoob",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(9)
+    event = await eor(event, "menoob")
+    animation_chars = [
+        "EvErYbOdY",
+        "iZ",
+        "BiGGeSt",
+        "NoOoB",
+        "uNtiL",
+        "i",
+        "aRriVe",
+        "😈",
+        "EvErYbOdY iZ BiGGeSt NoOoB uNtiL i aRriVe 😈",
+    ]
+    for i in animation_ttl:
+        await event.edit(animation_chars[i % 9])
+        await asyncio.sleep(animation_interval)
+
+
+@doge.bot_cmd(
+    pattern="upro$",
+    command=("upro", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}upro",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(8)
+    event = await eor(event, "upro")
+    animation_chars = [
+        "EvErYbOdY",
+        "iZ",
+        "PeRu",
+        "uNtiL",
+        "YoU",
+        "aRriVe",
+        "😈",
+        "EvErYbOdY iZ PeRu uNtiL YoU aRriVe 😈",
+    ]
+    for i in animation_ttl:
+        await event.edit(animation_chars[i % 8])
+        await asyncio.sleep(animation_interval)
+
+
+@doge.bot_cmd(
+    pattern="mepro$",
+    command=("mepro", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}mepro",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 1
+    animation_ttl = range(8)
+    event = await eor(event, "mepro")
+    animation_chars = [
+        "EvErYbOdY",
+        "iZ",
+        "PeRu",
+        "uNtiL",
+        "i",
+        "aRriVe",
+        "😈",
+        "EvErYbOdY iZ PeRu uNtiL i aRriVe 😈",
+    ]
+    for i in animation_ttl:
+        await event.edit(animation_chars[i % 8])
+        await asyncio.sleep(animation_interval)
+
+
+@doge.bot_cmd(
+    pattern="quickheal$",
+    command=("quickheal", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}quickheal",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 5
+    animation_ttl = range(11)
+    event = await eor(event, "quickheal")
+    animation_chars = [
+        "`Downloading File..`",
+        "`File Downloaded....`",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult: No Virus Found...`",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="sqh$",
+    command=("sqh", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}sqh",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.1
+    animation_ttl = range(11)
+    event = await eor(event, "sqh")
+    animation_chars = [
+        "`Downloading File..`",
+        "`File Downloaded....`",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult: No Virus Found...`",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="vquickheal$",
+    command=("vquickheal", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}vquickheal",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 5
+    animation_ttl = range(11)
+    event = await eor(event, "vquickheal")
+    animation_chars = [
+        "`Downloading File..`",
+        "`File Downloaded....`",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
+        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult:⚠️Virus Found⚠️\nMore Info: Torzan, Spyware, Adware`",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="macoc$",
+    command=("macoc", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}macoc",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(11)
+    event = await eor(event, "macos")
+    animation_chars = [
+        "`Connecting To Hackintosh...`",
+        "`Initiating Hackintosh Login.`",
+        "`Loading Hackintosh... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 3%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 9%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 23%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 39%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 69%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Hackintosh... 89%\n█████████████████████▒▒▒▒ `",
+        "`Loading Hackintosh... 100%\n█████████████████████████ `",
+        "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Hackintosh`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="windows$",
+    command=("windows", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}windows",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(11)
+    event = await eor(event, "windows")
+    animation_chars = [
+        "`Connecting To Windows 10...`",
+        "`Initiating Windows 10 Login.`",
+        "`Loading Windows 10... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 3%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 9%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 23%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 39%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 69%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Windows 10... 89%\n█████████████████████▒▒▒▒ `",
+        "`Loading Windows 10... 100%\n█████████████████████████ `",
+        "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Windows 10`\n\n**My PC Specs:**\n\n **CPU:** __3.4GHz ryzen 9 5950x (16-core,32 threads 64MB cache, up to 4.9GHz)__\n\n**Graphics:** __Nvidia GeForce RTX 3090 OC (24GB GDDR6X)__\n\n**RAM:** __64GB DDR4 (4000MHz)__\n\n**Screen:** __17.3-inch, UHD (3840 x 2160) 144Hz Hdr G-Sync__\n\n**Storage:** __512GB nvme gen 4 SSD, 5 TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.1, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), 2 HDMI2.0, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="linux$",
+    command=("linux", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}linux",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(11)
+    event = await eor(event, "linux")
+    animation_chars = [
+        "`Connecting To Linux...`",
+        "`Initiating Linux Login.`",
+        "`Loading Linux... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 3%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 9%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 23%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 39%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 69%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Linux... 89%\n█████████████████████▒▒▒▒ `",
+        "`Loading Linux... 100%\n█████████████████████████ `",
+        "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Linux`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="stock$",
+    command=("stock", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}stock",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.5
+    animation_ttl = range(11)
+    event = await eor(event, "stock")
+    animation_chars = [
+        "`Connecting To Symbian OS...`",
+        "`Initiating Symbian OS Login.`",
+        "`Loading Symbian OS... 0%\n█████████████████████████ `",
+        "`Loading Symbian OS... 3%\n█████████████████████▒▒▒▒ `",
+        "`Loading Symbian OS... 9%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Symbian OS... 23%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Symbian OS... 39%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Symbian OS... 69%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Symbian OS... 89%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading Symbian OS... 100%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Symbian OS`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 11])
+
+
+@doge.bot_cmd(
+    pattern="os$",
+    command=("os", plugin_category),
+    info={
+        "header": "Fun animation try yourself to know more",
+        "usage": "{tr}os",
+    },
+)
+async def _(event):
+    "animation command"
+    animation_interval = 0.1
+    animation_ttl = range(7)
+    event = await eor(event, "os")
+    animation_chars = [
+        "`Scanning OS...`",
+        "`Scanning OS......`",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n☑️ `.macos`\n☑️ `.windows`\n☑️ `.linux`\n☑️ `.stock`",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n☑️ `.windows`\n☑️ `.linux`\n☑️ `.stock`",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n☑️ `.linux`\n☑️ `.stock`",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n✅ `.linux`\n☑️ `.stock`",
+        "__Current Loaded OS: Symbian OS__\n\n**To Boot Other OS, Use The Following Trigger:**\n✅ `.macos`\n✅ `.windows`\n✅ `.linux`\n✅ `.stock`\n\nDeveloped By: @DogeUserBot",
+    ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 7])

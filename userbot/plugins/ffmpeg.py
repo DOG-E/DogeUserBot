@@ -8,8 +8,8 @@ from datetime import datetime
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import _dogtools, media_type, progress, reply_id
+from ..core.managers import edl, eor
+from ..helpers import _dogetools, media_type, progress, reply_id
 
 plugin_category = "utils"
 
@@ -72,8 +72,8 @@ async def ff_mpeg_trim_cmd(event):
             start = datetime.now()
             media = media_type(reply_message)
             if media not in ["Video", "Audio", "Voice", "Round Video", "Gif"]:
-                return await edit_delete(event, "`Only media files are supported`", 5)
-            dogevent = await edit_or_reply(event, "`Saving the file...`")
+                return await edl(event, "`Only media files are supported`", 5)
+            dogevent = await eor(event, "`Saving the file...`")
             try:
                 c_time = time.time()
                 dl = io.FileIO(FF_MPEG_DOWN_LOAD_MEDIA_PATH, "a")
@@ -94,9 +94,9 @@ async def ff_mpeg_trim_cmd(event):
                     f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}` in `{ms}` seconds."
                 )
         else:
-            await edit_delete(event, "`Reply to a any media file`")
+            await edl(event, "`Reply to a any media file`")
     else:
-        await edit_delete(
+        await edl(
             event,
             f"A media file already exists in path. Please remove the media and try again!\n`.ffmpegclear`",
         )
@@ -116,12 +116,12 @@ async def ff_mpeg_trim_cmd(event):
 async def ff_mpeg_trim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as video if it is video"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
-        return await edit_delete(
+        return await edl(
             event,
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    dogevent = await edit_or_reply(event, "`Triming the media......`")
+    dogevent = await eor(event, "`Triming the media......`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -135,7 +135,7 @@ async def ff_mpeg_trim_cmd(event):
             end_time,
         )
         if o is None:
-            return await edit_delete(
+            return await edl(
                 dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
@@ -154,13 +154,13 @@ async def ff_mpeg_trim_cmd(event):
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(dogevent, f"**Error : **`{e}`")
+            return await edl(dogevent, f"**Error : **`{e}`")
     elif len(cmt) == 2:
         # output should be image
         cmd, start_time = cmt
-        o = await _dogtools.take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
+        o = await _dogetools.take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
         if o is None:
-            return await edit_delete(
+            return await edl(
                 dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
@@ -179,13 +179,13 @@ async def ff_mpeg_trim_cmd(event):
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(dogevent, f"**Error : **`{e}`")
+            return await edl(dogevent, f"**Error : **`{e}`")
     else:
-        await edit_delete(dogevent, "RTFM")
+        await edl(dogevent, "RTFM")
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
+    await edl(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
 @doge.bot_cmd(
@@ -201,12 +201,12 @@ async def ff_mpeg_trim_cmd(event):
 async def ff_mpeg_trim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as audio"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
-        return await edit_delete(
+        return await edl(
             event,
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    dogevent = await edit_or_reply(event, "`Triming the media...........`")
+    dogevent = await eor(event, "`Triming the media...........`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -224,7 +224,7 @@ async def ff_mpeg_trim_cmd(event):
             out_put_file_name,
         )
         if o is None:
-            return await edit_delete(
+            return await edl(
                 dogevent, f"**Error : **`Can't complete the process`"
             )
         try:
@@ -243,13 +243,13 @@ async def ff_mpeg_trim_cmd(event):
             )
             os.remove(o)
         except Exception as e:
-            return await edit_delete(dogevent, f"**Error : **`{e}`")
+            return await edl(dogevent, f"**Error : **`{e}`")
     else:
-        await edit_delete(dogevent, "RTFM")
+        await edl(dogevent, "RTFM")
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(dogevent, f"`Completed Process in {ms} seconds`", 3)
+    await edl(dogevent, f"`Completed Process in {ms} seconds`", 3)
 
 
 @doge.bot_cmd(
@@ -264,10 +264,10 @@ async def ff_mpeg_trim_cmd(event):
 async def ff_mpeg_trim_cmd(event):
     "Deletes the saved media so you can save new one"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
-        await edit_delete(event, "`There is no media saved in bot for triming`")
+        await edl(event, "`There is no media saved in bot for triming`")
     else:
         os.remove(FF_MPEG_DOWN_LOAD_MEDIA_PATH)
-        await edit_delete(
+        await edl(
             event,
             "`The media saved in bot for triming is deleted now . you can save now new one `",
         )

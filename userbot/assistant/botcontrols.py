@@ -7,7 +7,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import reply_id, time_formatter
 from ..helpers.utils import _format
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
@@ -126,11 +126,11 @@ async def ban_starters(event):
     "To get list of users who started bot."
     ulist = get_all_starters()
     if len(ulist) == 0:
-        return await edit_delete(event, "`No one started your bot yet.`")
+        return await edl(event, "`No one started your bot yet.`")
     msg = "**The list of users who started your bot are :\n\n**"
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name , user.user_id)}\n**ID:** `{user.user_id}`\n**UserName:** @{user.username}\n**Date: **__{user.date}__\n\n"
-    await edit_or_reply(event, msg)
+    await eor(event, msg)
 
 
 @doge.shiba_cmd(
@@ -208,11 +208,11 @@ async def ban_starters(event):
     "To get list of users who are banned in bot."
     ulist = get_all_bl_users()
     if len(ulist) == 0:
-        return await edit_delete(event, "`No one is banned in your bot yet.`")
+        return await edl(event, "`No one is banned in your bot yet.`")
     msg = "**The list of users who are banned in your bot are :\n\n**"
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name , user.chat_id)}\n**ID:** `{user.chat_id}`\n**UserName:** @{user.username}\n**Date: **__{user.date}__\n**Reason:** __{user.reason}__\n\n"
-    await edit_or_reply(event, msg)
+    await eor(event, msg)
 
 
 @doge.bot_cmd(
@@ -232,11 +232,11 @@ async def ban_antiflood(event):
     input_str = event.pattern_match.group(1)
     if input_str == "on":
         if gvarstatus("bot_antif") is not None:
-            return await edit_delete(event, "`Bot Antiflood was already enabled.`")
+            return await edl(event, "`Bot Antiflood was already enabled.`")
         addgvar("bot_antif", True)
-        await edit_delete(event, "`Bot Antiflood Enabled.`")
+        await edl(event, "`Bot Antiflood Enabled.`")
     elif input_str == "off":
         if gvarstatus("bot_antif") is None:
-            return await edit_delete(event, "`Bot Antiflood was already disabled.`")
+            return await edl(event, "`Bot Antiflood was already disabled.`")
         delgvar("bot_antif")
-        await edit_delete(event, "`Bot Antiflood Disabled.`")
+        await edl(event, "`Bot Antiflood Disabled.`")

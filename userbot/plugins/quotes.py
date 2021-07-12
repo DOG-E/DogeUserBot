@@ -4,8 +4,8 @@ import random
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import dogmemes
+from ..core.managers import edl, eor
+from ..helpers import dogememes
 from ..helpers.functions import random_quote, search_quotes
 from ..helpers.utils import parse_pre
 
@@ -29,8 +29,8 @@ async def quote_search(event):
     try:
         response = await search_quotes(input_str) if input_str else await random_quote()
     except Exception:
-        return await edit_delete(event, "`Sorry Zero results found`", 5)
-    await edit_or_reply(event, response, parse_mode=parse_pre)
+        return await edl(event, "`Sorry Zero results found`", 5)
+    await eor(event, response, parse_mode=parse_pre)
 
 
 @doge.bot_cmd(
@@ -43,5 +43,5 @@ async def quote_search(event):
 )
 async def _(event):
     "Shows random programming quotes"
-    txt = random.choice(dogmemes.PROGQUOTES)
-    await edit_or_reply(event, txt)
+    txt = random.choice(dogememes.PROGQUOTES)
+    await eor(event, txt)

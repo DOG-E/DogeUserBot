@@ -6,7 +6,7 @@ from tswift import Song
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "extra"
 
@@ -30,7 +30,7 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 )
 async def _(event):
     "Song lyrics searcher"
-    dogevent = await edit_or_reply(event, "`wi8..! I am searching your lyrics....`")
+    dogevent = await eor(event, "`wi8..! I am searching your lyrics....`")
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
@@ -47,7 +47,7 @@ async def _(event):
             reply = "Couldn't find any lyrics for that song! try with artist name along with song if still doesnt work try `.glyrics`"
     else:
         reply = "lyrics not found! try with artist name along with song if still doesnt work try `.glyrics`"
-    await edit_or_reply(dogevent, reply)
+    await eor(dogevent, reply)
 
 
 @doge.bot_cmd(
@@ -65,17 +65,17 @@ async def lyrics(lyric):
     if lyric.pattern_match.group(1):
         query = lyric.pattern_match.group(1)
     else:
-        return await edit_or_reply(
+        return await eor(
             lyric,
             "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Nicki Minaj - Super Bass`",
         )
     if r"-" not in query:
-        return await edit_or_reply(
+        return await eor(
             lyric,
             "Error: please use '-' as divider for <artist> and <song> \neg: `.glyrics Nicki Minaj - Super Bass`",
         )
     if GENIUS is None:
-        return await edit_or_reply(
+        return await eor(
             lyric,
             "`Provide genius access token to config.py or Heroku Var first kthxbye!`",
         )
@@ -85,10 +85,10 @@ async def lyrics(lyric):
         artist = args[0].strip(" ")
         song = args[1].strip(" ")
     except Exception as e:
-        return await edit_or_reply(lyric, f"Error:\n`{e}`")
+        return await eor(lyric, f"Error:\n`{e}`")
     if len(args) < 1:
-        return await edit_or_reply(lyric, "`Please provide artist and song names`")
-    dogevent = await edit_or_reply(
+        return await eor(lyric, "`Please provide artist and song names`")
+    dogevent = await eor(
         lyric, f"`Searching lyrics for {artist} - {song}...`"
     )
     try:
@@ -98,4 +98,4 @@ async def lyrics(lyric):
     if songs is None:
         return await dogevent.edit(f"Song **{artist} - {song}** not found!")
     reply = f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```"
-    await edit_or_reply(dogevent, reply)
+    await eor(dogevent, reply)

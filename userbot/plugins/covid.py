@@ -1,7 +1,7 @@
 # corona virus stats for catuserbot
 from covid import Covid
 
-from . import covidindia, doge, edit_delete, edit_or_reply
+from . import covidindia, doge, edl, eor
 
 plugin_category = "extra"
 
@@ -20,7 +20,7 @@ async def corona(event):
     "To get latest information about covid-19."
     input_str = event.pattern_match.group(1)
     country = (input_str).title() if input_str else "World"
-    dogevent = await edit_or_reply(event, "`Collecting data...`")
+    dogevent = await eor(event, "`Collecting data...`")
     covid = Covid(source="worldometers")
     try:
         country_data = covid.get_status_by_country_name(country)
@@ -58,7 +58,7 @@ async def corona(event):
                 \n😃 New cured  : <code>{dog3}</code> </b>"
             await dogevent.edit(result, parse_mode="html")
         else:
-            await edit_delete(
+            await edl(
                 dogevent,
                 "`Corona Virus Info of {} is not avaiable or unable to fetch`".format(
                     country

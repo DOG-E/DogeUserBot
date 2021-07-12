@@ -6,7 +6,7 @@ import re
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from . import (
     changemymind,
@@ -39,13 +39,13 @@ async def nekobot(dog):
         if dog.is_reply and not reply_to_id.media:
             text = reply_to_id.message
         else:
-            return await edit_delete(dog, "`What should i search in google.`", 5)
-    dogg = await edit_or_reply(dog, "`Connecting to https://www.google.com/ ...`")
+            return await edl(dog, "`What should i search in google.`", 5)
+    dogg = await eor(dog, "`Connecting to https://www.google.com/ ...`")
     text = deEmojify(text)
     if ";" in text:
         search, result = text.split(";")
     else:
-        await edit_delete(
+        await edl(
             dog,
             "__How should i create meme follow the syntax as show__ `.fakegs top text ; bottom text`",
             5,
@@ -79,8 +79,8 @@ async def nekobot(dog):
         if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(dog, "**Trump : **`What should I tweet`", 5)
-    dogg = await edit_or_reply(dog, "`Requesting trump to tweet...`")
+            return await edl(dog, "**Trump : **`What should I tweet`", 5)
+    dogg = await eor(dog, "`Requesting trump to tweet...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
     dogfile = await trumptweet(text)
@@ -110,8 +110,8 @@ async def nekobot(dog):
         if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(dog, "**Modi : **`What should I tweet`", 5)
-    dogg = await edit_or_reply(dog, "Requesting modi to tweet...")
+            return await edl(dog, "**Modi : **`What should I tweet`", 5)
+    dogg = await eor(dog, "Requesting modi to tweet...")
     text = deEmojify(text)
     await asyncio.sleep(2)
     dogfile = await moditweet(text)
@@ -140,8 +140,8 @@ async def nekobot(dog):
         if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(dog, "`Give text to write on banner, man`", 5)
-    dogg = await edit_or_reply(dog, "`Your banner is under creation wait a sec...`")
+            return await edl(dog, "`Give text to write on banner, man`", 5)
+    dogg = await eor(dog, "`Your banner is under creation wait a sec...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
     dogfile = await changemymind(text)
@@ -171,8 +171,8 @@ async def nekobot(dog):
         if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(dog, "**Kanna : **`What should i show you`", 5)
-    dogg = await edit_or_reply(dog, "`Kanna is writing your text...`")
+            return await edl(dog, "**Kanna : **`What should i show you`", 5)
+    dogg = await eor(dog, "`Kanna is writing your text...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
     dogfile = await kannagen(text)
@@ -202,7 +202,7 @@ async def nekobot(dog):
         if dog.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(
+            return await edl(
                 dog,
                 "what should I tweet? Give some text and format must be like `.tweet username ; your text` ",
                 5,
@@ -210,13 +210,13 @@ async def nekobot(dog):
     if ";" in text:
         username, text = text.split(";")
     else:
-        await edit_delete(
+        await edl(
             dog,
             "__what should I tweet? Give some text and format must be like__ `.tweet username ; your text`",
             5,
         )
         return
-    dogg = await edit_or_reply(dog, f"`Requesting {username} to tweet...`")
+    dogg = await eor(dog, f"`Requesting {username} to tweet...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
     dogfile = await tweets(text, username)

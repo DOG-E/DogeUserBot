@@ -13,9 +13,9 @@ from telethon.tl.types import ChannelParticipantsAdmins, MessageEntityMentionNam
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import dogmemes
-from ..helpers.utils import _dogutils
+from ..core.managers import edl, eor
+from ..helpers import dogememes
+from ..helpers.utils import _dogeutils, parse_pre
 from . import BOTLOG, BOTLOG_CHATID, mention
 
 plugin_category = "fun"
@@ -124,10 +124,10 @@ async def univsaye(cowmsg):
     if arg == "cow":
         arg = "default"
     if arg not in cow.COWACTERS:
-        return await edit_delete(cowmsg, "check help menu to know the correct options.")
+        return await edl(cowmsg, "check help menu to know the correct options.")
     cheese = cow.get_cow(arg)
     cheese = cheese()
-    await edit_or_reply(cowmsg, f"`{cheese.milk(text).replace('`', '´')}`")
+    await eor(cowmsg, f"`{cheese.milk(text).replace('`', '´')}`")
 
 
 @doge.bot_cmd(
@@ -149,30 +149,30 @@ async def _(event):
         input_str = input_str.lower()
     if r % 2 == 1:
         if input_str == "heads":
-            await edit_or_reply(
+            await eor(
                 event, "The coin landed on: **Heads**. \n You were correct."
             )
         elif input_str == "tails":
-            await edit_or_reply(
+            await eor(
                 event,
                 "The coin landed on: **Heads**. \n You weren't correct, try again ...",
             )
         else:
-            await edit_or_reply(event, "The coin landed on: **Heads**.")
+            await eor(event, "The coin landed on: **Heads**.")
     elif r % 2 == 0:
         if input_str == "tails":
-            await edit_or_reply(
+            await eor(
                 event, "The coin landed on: **Tails**. \n You were correct."
             )
         elif input_str == "heads":
-            await edit_or_reply(
+            await eor(
                 event,
                 "The coin landed on: **Tails**. \n You weren't correct, try again ...",
             )
         else:
-            await edit_or_reply(event, "The coin landed on: **Tails**.")
+            await eor(event, "The coin landed on: **Tails**.")
     else:
-        await edit_or_reply(event, r"¯\_(ツ)_/¯")
+        await eor(event, r"¯\_(ツ)_/¯")
 
 
 @doge.bot_cmd(
@@ -188,11 +188,11 @@ async def who(event):
     replied_user = await get_user(event)
     if replied_user is None:
         return
-    caption = await dogmemes.slap(replied_user, event, mention)
+    caption = await dogememes.slap(replied_user, event, mention)
     try:
-        await edit_or_reply(event, caption)
+        await eor(event, caption)
     except BaseException:
-        await edit_or_reply(
+        await eor(
             event, "`Can't slap this person, need to fetch some sticks and stones !!`"
         )
 
@@ -222,11 +222,11 @@ async def decide(event):
     teledoge = await event.client.send_message(
         event.chat_id, str(r["answer"]).upper(), reply_to=message_id, file=r["image"]
     )
-    await _dogutils.unsavegif(event, teledoge)
+    await _dogeutils.unsavegif(event, teledoge)
 
 
 @doge.bot_cmd(
-    pattern="shout",
+    pattern="shout(?:\s|$)([\s\S]*)",
     command=("shout", plugin_category),
     info={
         "header": "shouts the text in a fun way",
@@ -237,18 +237,23 @@ async def decide(event):
 )
 async def shout(args):
     "shouts the text in a fun way"
-    msg = "```"
-    messagestr = args.text
-    messagestr = messagestr[7:]
-    text = " ".join(messagestr)
-    result = [" ".join(text)]
-    for pos, symbol in enumerate(text[1:]):
-        result.append(symbol + " " + "  " * pos + symbol)
-    result = list("\n".join(result))
-    result[0] = text[0]
-    result = "".join(result)
-    msg = "\n" + result
-    await edit_or_reply(args, "`" + msg + "`")
+    input_str = args.pattern_match.group(1)
+    if not input_str:
+        return await edl(args, "__What should i shout?__")
+    words = input_str.split()
+    msg = ""
+    for messagestr in words:
+        text = " ".join(messagestr)
+        result = [" ".join(text)]
+        for pos, symbol in enumerate(text[1:]):
+            result.append(symbol + " " + "  " * pos + symbol)
+        result = list("\n".join(result))
+        result[0] = text[0]
+        result = "".join(result)
+        msg += "\n" + result
+        if len(words) > 1:
+            msg += "\n\n----------\n"
+    await eor(args, msg, parse_mode=parse_pre)
 
 
 @doge.bot_cmd(
@@ -270,15 +275,15 @@ async def faces(owo):
     elif textx:
         message = textx.text
     else:
-        return await edit_or_reply(owo, "` UwU no text given! `")
+        return await eor(owo, "` UwU no text given! `")
     reply_text = re.sub(r"(r|l)", "w", message)
     reply_text = re.sub(r"(R|L)", "W", reply_text)
     reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
     reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
-    reply_text = re.sub(r"\!+", " " + random.choice(dogmemes.UWUS), reply_text)
+    reply_text = re.sub(r"\!+", " " + random.choice(dogememes.UWUS), reply_text)
     reply_text = reply_text.replace("ove", "uv")
-    reply_text += " " + random.choice(dogmemes.UWUS)
-    await edit_or_reply(owo, reply_text)
+    reply_text += " " + random.choice(dogememes.UWUS)
+    await eor(owo, reply_text)
 
 
 @doge.bot_cmd(
@@ -299,11 +304,11 @@ async def claptext(event):
     elif textx.message:
         query = textx.message
     else:
-        return await edit_or_reply(event, "`Hah, I don't clap pointlessly!`")
+        return await eor(event, "`Hah, I don't clap pointlessly!`")
     reply_text = "👏 "
     reply_text += query.replace(" ", " 👏 ")
     reply_text += " 👏"
-    await edit_or_reply(event, reply_text)
+    await eor(event, reply_text)
 
 
 @doge.bot_cmd(
@@ -324,14 +329,14 @@ async def smrk(smk):
     elif textx.message:
         message = textx.message
     else:
-        await edit_or_reply(smk, "ツ")
+        await eor(smk, "ツ")
         return
     if message == "dele":
-        await edit_or_reply(smk, message + "te the hell" + "ツ")
+        await eor(smk, message + "te the hell" + "ツ")
     else:
         smirk = " ツ"
         reply_text = message + smirk
-        await edit_or_reply(smk, reply_text)
+        await eor(smk, reply_text)
 
 
 @doge.bot_cmd(
@@ -361,7 +366,7 @@ async def payf(event):
         paytext * 2,
         paytext * 2,
     )
-    await edit_or_reply(event, pay)
+    await eor(event, pay)
 
 
 @doge.bot_cmd(
@@ -382,13 +387,12 @@ async def wish_check(event):
     if wishtxt:
         reslt = f"**Your wish **__{wishtxt}__ **has been cast.** ✨\
               \n\n__Chance of success :__ **{chance}%**"
-    else:
-        if event.is_reply:
-            reslt = f"**Your wish has been cast. **✨\
+    elif event.is_reply:
+        reslt = f"**Your wish has been cast. **✨\
                   \n\n__Chance of success :__ **{chance}%**"
-        else:
-            reslt = f"What's your Wish? Should I consider you as Idiot by default ? 😜"
-    await edit_or_reply(event, reslt)
+    else:
+        reslt = f"What's your Wish? Should I consider you as Idiot by default ? 😜"
+    await eor(event, reslt)
 
 
 @doge.bot_cmd(
@@ -408,17 +412,17 @@ async def _(event):
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "`either reply to text message or give input to search`", 5
         )
     sample_url = f"https://da.gd/s?url=https://lmgtfy.com/?q={input_str.replace(' ', '+')}%26iie=1"
     response_api = requests.get(sample_url).text
     if response_api:
-        await edit_or_reply(
+        await eor(
             event, f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` "
         )
     else:
-        return await edit_delete(
+        return await edl(
             event, "`something is wrong. please try again later.`", 5
         )
     if BOTLOG:
@@ -441,7 +445,7 @@ async def gbun(event):
     gbunVar = event.text
     gbunVar = gbunVar[6:]
     mentions = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\n`"
-    dogevent = await edit_or_reply(event, "**Summoning out le Gungnir ❗️⚜️☠️**")
+    dogevent = await eor(event, "**Summoning out le Gungnir ❗️⚜️☠️**")
     await asyncio.sleep(3.5)
     chat = await event.get_input_chat()
     async for _ in event.client.iter_participants(

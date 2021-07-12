@@ -2,7 +2,7 @@
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from ..sql_helper.snip_sql import add_note, get_note, get_notes, rm_note
 from . import BOTLOG, BOTLOG_CHATID, get_message_link
@@ -58,7 +58,7 @@ async def incom_note(event):
 async def add_snip(event):
     "To save notes to bot."
     if not BOTLOG:
-        return await edit_delete(
+        return await edl(
             event, "`To save snip or notes you need to set PRIVATE_GROUP_BOT_API_ID`"
         )
     keyword = event.pattern_match.group(1)
@@ -78,7 +78,7 @@ async def add_snip(event):
         )
         msg_id = msg_o.id
     elif msg:
-        return await edit_delete(
+        return await edl(
             event,
             "`What should i save for your snip either do reply or give snip text along with keyword`",
         )
@@ -94,16 +94,16 @@ async def add_snip(event):
             msg_id = msg_o.id
             string = None
         else:
-            return await edit_delete(event, "`what should i save for your snip`")
+            return await edl(event, "`what should i save for your snip`")
     success = "Note {} is successfully {}. Use` #{} `to get it"
     if add_note(keyword, string, msg_id) is False:
         rm_note(keyword)
         if add_note(keyword, string, msg_id) is False:
-            return await edit_or_reply(
+            return await eor(
                 event, f"Error in saving the given snip {keyword}"
             )
-        return await edit_or_reply(event, success.format(keyword, "updated", keyword))
-    return await edit_or_reply(event, success.format(keyword, "added", keyword))
+        return await eor(event, success.format(keyword, "updated", keyword))
+    return await eor(event, success.format(keyword, "added", keyword))
 
 
 @doge.bot_cmd(
@@ -119,7 +119,7 @@ async def on_snip_list(event):
     message = "You havent saved any notes/snip"
     notes = get_notes()
     if not BOTLOG:
-        return await edit_delete(
+        return await edl(
             event, "`For saving snip you must set PRIVATE_GROUP_BOT_API_ID`"
         )
     for note in notes:
@@ -131,7 +131,7 @@ async def on_snip_list(event):
             message += f"  [preview]({msglink})\n"
         else:
             message += "  No preview\n"
-    await edit_or_reply(event, message)
+    await eor(event, message)
 
 
 @doge.bot_cmd(
@@ -150,7 +150,7 @@ async def on_snip_delete(event):
     if dogsnip:
         rm_note(name)
     else:
-        return await edit_or_reply(
+        return await eor(
             event, f"Are you sure that #{name} is saved as snip?"
         )
-    await edit_or_reply(event, f"`snip #{name} deleted successfully`")
+    await eor(event, f"`snip #{name} deleted successfully`")

@@ -1,6 +1,7 @@
 import os
 import zipfile
-from random import choice
+from io import BytesIO
+from random import choice, randint
 from textwrap import wrap
 from uuid import uuid4
 
@@ -128,12 +129,12 @@ def higlighted_text(
     for i, items in enumerate(list_text):
         x, y = (font.getsize(list_text[i])[0] + 50, int(th * 2 - (th / 2)))
         # align masks on the image....left,right & center
-        if align == "right":
-            width_align = "(mask_size-x)"
-        if align == "left":
-            width_align = "0"
         if align == "center":
             width_align = "((mask_size-x)/2)"
+        elif align == "left":
+            width_align = "0"
+        elif align == "right":
+            width_align = "(mask_size-x)"
         clr = ImageColor.getcolor(background, "RGBA")
         if transparency == 0:
             mask_img = Image.new(
@@ -230,6 +231,14 @@ async def covidindia(state):
 
 
 async def hide_inlinebot(borg, bot_name, text, chat_id, reply_to_id, c_lick=0):
+    sticcers = await borg.inline_query(bot_name, f"{text}")
+    dog = await sticcers[c_lick].click("me", hide_via=True)
+    if dog:
+        await borg.send_file(int(chat_id), dog, reply_to=reply_to_id)
+        await dog.delete()
+
+
+async def hide_inlinebot_point(borg, bot_name, text, chat_id, reply_to_id, c_lick=0):
     sticcers = await borg.inline_query(bot_name, f"{text}.")
     dog = await sticcers[c_lick].click("me", hide_via=True)
     if dog:
@@ -245,30 +254,62 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
         2,
         3,
         4,
+        5,
+        6,
+        7,
+        8,
         9,
+        10,
+        11,
+        12,
+        13,
+        14,
         15,
+        16,
+        17,
+        18,
+        19,
         20,
+        21,
         22,
+        23,
+        24,
+        25,
+        26,
         27,
+        28,
         29,
+        30,
+        31,
         32,
         33,
         34,
+        35,
+        36,
         37,
         38,
+        39,
+        40,
         41,
         42,
+        43,
         44,
         45,
+        46,
         47,
         48,
+        49,
+        50,
         51,
         52,
         53,
+        54,
         55,
         56,
         57,
         58,
+        59,
+        60,
         61,
         62,
         63,
@@ -278,3 +319,79 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
     if dog:
         await bot.send_file(int(chat_id), dog, reply_to=reply_to_id)
         await dog.delete()
+
+
+# Thanks to Seden UserBot ~ https://github.com/TeamDerUntergang/Telegram-SedenUserBot/blob/ff20e7d1f0c5a20899d12e3cc93523670eabe747/sedenbot/modules/memes.py#L790
+async def amongus_gen(text: str, clr: int) -> str:
+    url = "https://github.com/DOG-E/Source/raw/DOGE/Material/AmongUs/"
+    font = ImageFont.truetype(
+        BytesIO(
+            requests.get(
+                "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/bold.ttf"
+            ).content
+        ),
+        60,
+    )
+    impostor = Image.open(BytesIO(requests.get(f"{url}{clr}.png").content))
+    text_ = "\n".join("\n".join(wrap(part, 30)) for part in text.split("\n"))
+    w, h = ImageDraw.Draw(Image.new("RGB", (1, 1))).multiline_textsize(
+        text_, font, stroke_width=2
+    )
+    text = Image.new("RGBA", (w + 30, h + 30))
+    ImageDraw.Draw(text).multiline_text(
+        (15, 15), text_, "#FFF", font, stroke_width=2, stroke_fill="#000"
+    )
+    w = impostor.width + text.width + 10
+    h = max(impostor.height, text.height)
+    image = Image.new("RGBA", (w, h))
+    image.paste(impostor, (0, h - impostor.height), impostor)
+    image.paste(text, (w - text.width, 0), text)
+    image.thumbnail((512, 512))
+    output = BytesIO()
+    output.name = "impostor.webp"
+    webp_file = os.path.join(Config.TEMP_DIR, output.name)
+    image.save(webp_file, "WebP")
+    return webp_file
+
+
+async def get_impostor_img(text: str) -> str:
+    background = requests.get(
+        f"https://github.com/DOG-E/Source/raw/DOGE/Material/Impostor/{randint(1,22)}.png"
+    ).content
+    font = requests.get(
+        "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf"
+    ).content
+    font = BytesIO(font)
+    font = ImageFont.truetype(font, 30)
+    image = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    w, h = draw.multiline_textsize(text=text, font=font)
+    image = Image.open(BytesIO(background))
+    x, y = image.size
+    draw = ImageDraw.Draw(image)
+    draw.multiline_text(
+        ((x - w) // 2, (y - h) // 2), text=text, font=font, fill="white", align="center"
+    )
+    output = BytesIO()
+    output.name = "impostor.png"
+    webp_file = os.path.join(Config.TEMP_DIR, output.name)
+    image.save(webp_file, "png")
+    return webp_file
+
+
+async def wall_download(piclink, query):
+    try:
+        if not os.path.isdir("./temp"):
+            os.mkdir("./temp")
+        picpath = f"./temp/{query.title().replace(' ', '')}.jpg"
+        if os.path.exists(picpath):
+            i = 1
+            while os.path.exists(picpath) and i < 11:
+                picpath = f"./temp/{query.title().replace(' ', '')}-{i}.jpg"
+                i += 1
+        with open(picpath, "wb") as f:
+            f.write(requests.get(piclink).content)
+        return picpath
+    except Exception as e:
+        LOGS.info(str(e))
+        return None

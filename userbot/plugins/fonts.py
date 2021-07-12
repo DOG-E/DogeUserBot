@@ -2,22 +2,22 @@ import random
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import fonts
 
 plugin_category = "extra"
 
 
 @doge.bot_cmd(
-    pattern="fmusical(?:\s|$)([\s\S]*)",
-    command=("fmusical", plugin_category),
+    pattern="[Ff]1(?:\s|$)([\s\S]*)",
+    command=("f1 ៣ ⩏ ន ɨ ¢ ♬ ɭ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "៣ ⩏ ន ɨ ¢ ♬ ɭ Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}fmusical <text>",
-            "{tr}fmusical reply this command to text message",
+            "{tr}f1 <text>",
+            "{tr}f1 reply this command to text message",
         ],
-        "examples": "{tr}fmusical DogeUserBot",
+        "examples": "{tr}f1 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -27,28 +27,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normalfontcharacter in string:
         if normalfontcharacter in fonts.normalfont:
             musicalcharacter = fonts.musicalfont[
                 fonts.normalfont.index(normalfontcharacter)
             ]
             string = string.replace(normalfontcharacter, musicalcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="ancient(?:\s|$)([\s\S]*)",
-    command=("ancient", plugin_category),
+    pattern="[Ff]2(?:\s|$)([\s\S]*)",
+    command=("f2 ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄ Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}ancient <text>",
-            "{tr}ancient reply this command to text message",
+            "{tr}f2 <text>",
+            "{tr}f2 reply this command to text message",
         ],
-        "examples": "{tr}ancient DogeUserBot",
+        "examples": "{tr}f2 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -58,25 +58,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normalfontcharacter in string:
         if normalfontcharacter in fonts.normalfont:
             ancientcharacter = fonts.ancientfont[
                 fonts.normalfont.index(normalfontcharacter)
             ]
             string = string.replace(normalfontcharacter, ancientcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="vapor(?:\s|$)([\s\S]*)",
-    command=("vapor", plugin_category),
+    pattern="[Ff]3(?:\s|$)([\s\S]*)",
+    command=("f3 ｖａｐｏｒ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}vapor <text>", "{tr}vapor reply this command to text message"],
-        "examples": "{tr}vapor DogeUserBot",
+        "header": "ｖａｐｏｒ Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f3 <text>",
+            "{tr}f3 reply this command to text message"
+        ],
+        "examples": "{tr}f3 DogeUserBot",
     },
 )
 async def vapor(event):
@@ -89,7 +92,7 @@ async def vapor(event):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(event, "`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await eor(event, "`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
         return
 
     for charac in message:
@@ -100,19 +103,19 @@ async def vapor(event):
         else:
             reply_text.append(charac)
 
-    await edit_or_reply(event, "".join(reply_text))
+    await eor(event, "".join(reply_text))
 
 
 @doge.bot_cmd(
-    pattern="smallcaps(?:\s|$)([\s\S]*)",
-    command=("smallcaps", plugin_category),
+    pattern="[Ff]4(?:\s|$)([\s\S]*)",
+    command=("f4 sᴍᴀʟʟᴄᴀᴘs", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "sᴍᴀʟʟᴄᴀᴘs Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}smallcaps <text>",
-            "{tr}smallcaps reply this command to text message",
+            "{tr}f4 <text>",
+            "{tr}f4 reply this command to text message",
         ],
-        "examples": "{tr}smallcaps DogeUserBot",
+        "examples": "{tr}f4 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -122,28 +125,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = "".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             smallcapscharacter = fonts.smallcapsfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, smallcapscharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="blackbf(?:\s|$)([\s\S]*)",
-    command=("blackbf", plugin_category),
+    pattern="[Ff]5(?:\s|$)([\s\S]*)",
+    command=("f5 🅑 🅛 🅐 🅒 🅚 🅑 🅕", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "🅑 🅛 🅐 🅒 🅚 🅑 🅕 Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}blackbf <text>",
-            "{tr}blackbf reply this command to text message",
+            "{tr}f5 <text>",
+            "{tr}f5 reply this command to text message",
         ],
-        "examples": "{tr}blackbf DogeUserBot",
+        "examples": "{tr}f5 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -153,28 +156,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             bubblesblackcharacter = fonts.bubblesblackfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, bubblesblackcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="bubbles(?:\s|$)([\s\S]*)",
-    command=("bubbles", plugin_category),
+    pattern="[Ff]6(?:\s|$)([\s\S]*)",
+    command=("f6 Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}bubbles <text>",
-            "{tr}bubbles reply this command to text message",
+            "{tr}f6 <text>",
+            "{tr}f6 reply this command to text message",
         ],
-        "examples": "{tr}bubbles DogeUserBot",
+        "examples": "{tr}f6 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -184,25 +187,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             bubblescharacter = fonts.bubblesfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, bubblescharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="tanf(?:\s|$)([\s\S]*)",
-    command=("tanf", plugin_category),
+    pattern="[Ff]7(?:\s|$)([\s\S]*)",
+    command=("f7 Ꮏ Ꭿ Ꮑ Ꮄ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}tanf <text>", "{tr}tanf reply this command to text message"],
-        "examples": "{tr}tanf DogeUserBot",
+        "header": "Ꮏ Ꭿ Ꮑ Ꮄ Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f7 <text>",
+            "{tr}f7 reply this command to text message"
+        ],
+        "examples": "{tr}f7 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -212,25 +218,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             tantextcharacter = fonts.tantextfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, tantextcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="boxf(?:\s|$)([\s\S]*)",
-    command=("boxf", plugin_category),
+    pattern="[Ff]8(?:\s|$)([\s\S]*)",
+    command=("f8 🄱 🄾 🅇 🄵", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}boxf <text>", "{tr}boxf reply this command to text message"],
-        "examples": "{tr}boxf DogeUserBot",
+        "header": "🄱 🄾 🅇 🄵 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f8 <text>",
+            "{tr}f8 reply this command to text message"
+        ],
+        "examples": "{tr}f8 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -240,28 +249,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             littleboxtextcharacter = fonts.littleboxtextfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, littleboxtextcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="smothtext(?:\s|$)([\s\S]*)",
-    command=("smothtext", plugin_category),
+    pattern="[Ff]9(?:\s|$)([\s\S]*)",
+    command=("f9 ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}smothtext <text>",
-            "{tr}smothtext reply this command to text message",
+            "{tr}f9 <text>",
+            "{tr}f9 reply this command to text message",
         ],
-        "examples": "{tr}smothtext DogeUserBot",
+        "examples": "{tr}f9 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -271,25 +280,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             smothtextcharacter = fonts.smothtextfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, smothtextcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="egyptf(?:\s|$)([\s\S]*)",
-    command=("egyptf", plugin_category),
+    pattern="[Ff]10(?:\s|$)([\s\S]*)",
+    command=("f10 є ﻮ א ק t Ŧ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}egyptf <text>", "{tr}egyptf reply this command to text message"],
-        "examples": "{tr}egyptf DogeUserBot",
+        "header": "є ﻮ א ק t Ŧ Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f10 <text>",
+            "{tr}f10 reply this command to text message"
+        ],
+        "examples": "{tr}f10 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -299,25 +311,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             egyptfontcharacter = fonts.egyptfontfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, egyptfontcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="maref(?:\s|$)([\s\S]*)",
-    command=("maref", plugin_category),
+    pattern="[Ff]11(?:\s|$)([\s\S]*)",
+    command=("f11 𝖒𝖆𝖗𝖊𝖋", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}maref <text>", "{tr}maref reply this command to text message"],
-        "examples": "{tr}maref DogeUserBot",
+        "header": "𝖒𝖆𝖗𝖊𝖋 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f11 <text>",
+            "{tr}f11 reply this command to text message"
+        ],
+        "examples": "{tr}f11 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -327,25 +342,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = "".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             nightmarecharacter = fonts.nightmarefont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, nightmarecharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="handcf(?:\s|$)([\s\S]*)",
-    command=("handcf", plugin_category),
+    pattern="[Ff]12(?:\s|$)([\s\S]*)",
+    command=("f12 𝓗 𝓐 𝓝 𝓓 𝓒 𝓕", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}handcf <text>", "{tr}handcf reply this command to text message"],
-        "examples": "{tr}handcf DogeUserBot",
+        "header": "𝓗 𝓐 𝓝 𝓓 𝓒 𝓕 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f12 <text>",
+            "{tr}f12 reply this command to text message"
+        ],
+        "examples": "{tr}f12 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -355,28 +373,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             hwcapitalcharacter = fonts.hwcapitalfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, hwcapitalcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="doublef(?:\s|$)([\s\S]*)",
-    command=("doublef", plugin_category),
+    pattern="[Ff]13(?:\s|$)([\s\S]*)",
+    command=("f13 ⅅ Ꮎ U ℬ ℒ ℰ ℱ", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "ⅅ Ꮎ U ℬ ℒ ℰ ℱ Font style command.(Changes font style of the given text)",
         "usage": [
-            "{tr}doublef <text>",
-            "{tr}doublef reply this command to text message",
+            "{tr}f13 <text>",
+            "{tr}f13 reply this command to text message",
         ],
-        "examples": "{tr}doublef DogeUserBot",
+        "examples": "{tr}f13 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -386,57 +404,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             doubletextcharacter = fonts.doubletextfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, doubletextcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="mock(?:\s|$)([\s\S]*)",
-    command=("mock", plugin_category),
+    pattern="[Ff]14(?:\s|$)([\s\S]*)",
+    command=("f14 𝕲 𝕳 𝕺 𝕾 𝕿 𝕱", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
-        "examples": "{tr}mock DogeUserBot",
-    },
-)
-async def spongemocktext(mock):
-    "Changes font style of the given text"
-    reply_text = []
-    textx = await mock.get_reply_message()
-    message = mock.pattern_match.group(1)
-    if message:
-        pass
-    elif textx:
-        message = textx.text
-    else:
-        await edit_or_reply(mock, "`gIvE sOMEtHInG tO MoCk!`")
-        return
-
-    for charac in message:
-        if charac.isalpha() and random.randint(0, 1):
-            to_app = charac.upper() if charac.islower() else charac.lower()
-            reply_text.append(to_app)
-        else:
-            reply_text.append(charac)
-
-    await edit_or_reply(mock, "".join(reply_text))
-
-
-@doge.bot_cmd(
-    pattern="ghostf(?:\s|$)([\s\S]*)",
-    command=("ghostf", plugin_category),
-    info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}ghostf <text>", "{tr}ghostf reply this command to text message"],
-        "examples": "{tr}ghostf DogeUserBot",
+        "header": "𝕲 𝕳 𝕺 𝕾 𝕿 𝕱 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f14 <text>",
+            "{tr}f14 reply this command to text message"
+        ],
+        "examples": "{tr}f14 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -446,25 +435,28 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             ghostfontcharacter = fonts.ghostfontfont[
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, ghostfontcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
 
 
 @doge.bot_cmd(
-    pattern="handsf(?:\s|$)([\s\S]*)",
-    command=("handsf", plugin_category),
+    pattern="[Ff]15(?:\s|$)([\s\S]*)",
+    command=("f15 𝒽 𝒶 𝓃 𝒹 𝓈 𝒻", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}handsf <text>", "{tr}handsf reply this command to text message"],
-        "examples": "{tr}handsf DogeUserBot",
+        "header": "𝒽 𝒶 𝓃 𝒹 𝓈 𝒻 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f15 <text>",
+            "{tr}f15 reply this command to text message"
+        ],
+        "examples": "{tr}f15 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -474,11 +466,71 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await eor(event, "What I am Supposed to change give text")
         return
-    string = "  ".join(args).lower()
+    string = " ".join(args).lower()
     for normaltextcharacter in string:
         if normaltextcharacter in fonts.normaltext:
             hwslcharacter = fonts.hwslfont[fonts.normaltext.index(normaltextcharacter)]
             string = string.replace(normaltextcharacter, hwslcharacter)
-    await edit_or_reply(event, string)
+    await eor(event, string)
+
+
+@doge.bot_cmd(
+    pattern="[Ff]16(?:\s|$)([\s\S]*)",
+    command=("f16 ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ", plugin_category),
+    info={
+        "header": "ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f16 <text>",
+            "{tr}f16 reply this command to text message",
+        ],
+        "examples": "{tr}f16 DogeUserBot",
+    },
+)
+async def stylish_generator(event):
+    "chages given text into superscript"
+    args = event.pattern_match.group(1)
+    if not args:
+        get = await event.get_reply_message()
+        args = get.text
+    if not args:
+        await eor(event, "What I am Supposed to change give text")
+        return
+    string = " ".join(args).lower()
+    for normaltextcharacter in string:
+        if normaltextcharacter in fonts.normaltext:
+            superscriptcharacter = fonts.superscriptfont[
+                fonts.normaltext.index(normaltextcharacter)
+            ]
+            string = string.replace(normaltextcharacter, superscriptcharacter)
+    await eor(event, string)
+
+
+@doge.bot_cmd(
+    pattern="[Ff]17(?:\s|$)([\s\S]*)",
+    command=("f17 山 乇 乇 乃", plugin_category),
+    info={
+        "header": "山 乇 乇 乃 Font style command.(Changes font style of the given text)",
+        "usage": [
+            "{tr}f17 <text>",
+            "{tr}f17 reply this command to text message"
+        ],
+        "examples": "{tr}f17 DogeUserBot",
+    },
+)
+async def weebify(event):
+    "chages given text into some funny way"
+    args = event.pattern_match.group(1)
+    if not args:
+        get = await event.get_reply_message()
+        args = get.text
+    if not args:
+        await eor(event, "`What I am Supposed to Weebify `")
+        return
+    string = " ".join(args).lower()
+    for normiecharacter in string:
+        if normiecharacter in fonts.normiefont:
+            weebycharacter = fonts.weebyfont[fonts.normiefont.index(normiecharacter)]
+            string = string.replace(normiecharacter, weebycharacter)
+    await eor(event, string)

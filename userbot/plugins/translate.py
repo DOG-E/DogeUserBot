@@ -4,7 +4,7 @@ from googletrans import LANGUAGES, Translator
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.globals import addgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, deEmojify
 
@@ -46,7 +46,7 @@ async def _(event):
     elif ";" in input_str:
         lan, text = input_str.split(";")
     else:
-        return await edit_delete(
+        return await edl(
             event, "`.tl LanguageCode` as reply to a message", time=5
         )
     text = deEmojify(text.strip())
@@ -57,9 +57,9 @@ async def _(event):
         after_tr_text = translated.text
         output_str = f"**TRANSLATED from {LANGUAGES[translated.src].title()} to {LANGUAGES[lan].title()}**\
                 \n`{after_tr_text}`"
-        await edit_or_reply(event, output_str)
+        await eor(event, output_str)
     except Exception as exc:
-        await edit_delete(event, f"**Error:**\n`{str(exc)}`", time=5)
+        await edl(event, f"**Error:**\n`{str(exc)}`", time=5)
 
 
 @doge.bot_cmd(
@@ -83,19 +83,19 @@ async def translateme(trans):
     elif textx:
         message = textx.text
     else:
-        return await edit_or_reply(
+        return await eor(
             trans, "`Give a text or reply to a message to translate!`"
         )
     TRT_LANG = gvarstatus("TRT_LANG") or "en"
     try:
         reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
     except ValueError:
-        return await edit_delete(trans, "`Invalid destination language.`", time=5)
+        return await edl(trans, "`Invalid destination language.`", time=5)
     source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
     transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
     reply_text = f"**From {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}) :**\n`{reply_text.text}`"
 
-    await edit_or_reply(trans, reply_text)
+    await eor(trans, reply_text)
     if BOTLOG:
         await trans.client.send_message(
             BOTLOG_CHATID,
@@ -125,19 +125,19 @@ async def lang(value):
     arg = value.pattern_match.group(2).lower()
     input_str = value.pattern_match.group(1)
     if arg not in LANGUAGES:
-        return await edit_or_reply(
+        return await eor(
             value,
             f"`Invalid Language code !!`\n`Available language codes for TRT`:\n\n`{LANGUAGES}`",
         )
     LANG = LANGUAGES[arg]
     if input_str == "trt":
         addgvar("TRT_LANG", arg)
-        await edit_or_reply(
+        await eor(
             value, f"`Language for Translator changed to {LANG.title()}.`"
         )
     else:
         addgvar("AI_LANG", arg)
-        await edit_or_reply(
+        await eor(
             value, f"`Language for chatbot is changed to {LANG.title()}.`"
         )
     LANG = LANGUAGES[arg]

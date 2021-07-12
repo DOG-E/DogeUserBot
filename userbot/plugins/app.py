@@ -7,7 +7,7 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, doge, edit_or_reply
+from . import ALIVE_NAME, doge, eor
 
 plugin_category = "utils"
 
@@ -24,7 +24,7 @@ plugin_category = "utils"
 async def app_search(event):
     "To search any app in playstore."
     app_name = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "`Searching!..`")
+    event = await eor(event, "`Searching!..`")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)

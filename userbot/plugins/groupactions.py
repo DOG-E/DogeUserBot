@@ -23,7 +23,7 @@ from telethon.tl.types import (
 from userbot import doge
 
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import readable_time
 from . import BOTLOG, BOTLOG_CHATID
 
@@ -87,10 +87,10 @@ async def _(event):
         functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
     )
     if not result.participant.admin_rights.ban_users:
-        return await edit_or_reply(
+        return await eor(
             event, "`It seems like you dont have ban users permission in this group.`"
         )
-    dogevent = await edit_or_reply(event, "`Kicking...`")
+    dogevent = await eor(event, "`Kicking...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -131,10 +131,10 @@ async def _(event):
         functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
     )
     if not result:
-        return await edit_or_reply(
+        return await eor(
             event, "`It seems like you dont have ban users permission in this group.`"
         )
-    dogevent = await edit_or_reply(event, "`banning...`")
+    dogevent = await eor(event, "`banning...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -172,7 +172,7 @@ async def _(event):
 )
 async def _(event):
     "To unban all banned users from group."
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event, "__Unbanning all banned accounts in this group.__"
     )
     succ = 0
@@ -229,7 +229,7 @@ async def rm_deletedacc(show):
     del_u = 0
     del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
     if con != "clean":
-        event = await edit_or_reply(
+        event = await eor(
             show, "`Searching for ghost/deleted/zombie accounts...`"
         )
         async for user in show.client.iter_participants(show.chat_id):
@@ -245,9 +245,9 @@ async def rm_deletedacc(show):
     admin = chat.admin_rights
     creator = chat.creator
     if not admin and not creator:
-        await edit_delete(show, "`I am not an admin here!`", 5)
+        await edl(show, "`I am not an admin here!`", 5)
         return
-    event = await edit_or_reply(
+    event = await eor(
         show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
     )
     del_u = 0
@@ -259,7 +259,7 @@ async def rm_deletedacc(show):
                 await sleep(0.5)
                 del_u += 1
             except ChatAdminRequiredError:
-                await edit_delete(event, "`I don't have ban rights in this group`", 5)
+                await edl(event, "`I don't have ban rights in this group`", 5)
                 return
             except UserAdminInvalidError:
                 del_a += 1
@@ -268,7 +268,7 @@ async def rm_deletedacc(show):
     if del_a > 0:
         del_status = f"Cleaned **{del_u}** deleted account(s) \
         \n**{del_a}** deleted admin accounts are not removed"
-    await edit_delete(event, del_status, 5)
+    await edl(event, del_status, 5)
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID,
@@ -296,7 +296,7 @@ async def _(event):  # sourcery no-metrics
     if input_str:
         chat = await event.get_chat()
         if not chat.admin_rights and not chat.creator:
-            await edit_or_reply(event, "`You aren't an admin here!`")
+            await eor(event, "`You aren't an admin here!`")
             return False
     p = 0
     b = 0
@@ -310,7 +310,7 @@ async def _(event):  # sourcery no-metrics
     o = 0
     q = 0
     r = 0
-    et = await edit_or_reply(event, "Searching Participant Lists.")
+    et = await eor(event, "Searching Participant Lists.")
     async for i in event.client.iter_participants(event.chat_id):
         p += 1
         #

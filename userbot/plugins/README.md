@@ -1,18 +1,18 @@
 ## Mandatory Imports
-```python3
+```python
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category="extra"
 ```
 
 ### Formation
 This below one is Sample format of making plugin
-```python3
+```python
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category="extra"
 
@@ -30,17 +30,17 @@ async def hi_buddy(event):
     "Just to say hi to other user."
     input_str= event.pattern_match.group(1)
     if not input_str:
-        await edit_delete(event,"No input is found. Use proper syntax.")
+        await edl(event,"No input is found. Use proper syntax.")
         return
     outputtext= f"+-+-+-+-+-+\n|h|e|l|l|o|\n+-+-+-+-+-+\n{input_str}"
-    await edit_or_reply(event,outputtext)
+    await eor(event,outputtext)
 ```
 
 For more information refer this [Docs](https://docs.telethon.dev/en/latest/)
 
 
 Arguments in bot_cmd are as follows:
-```
+```python
 
 pattern="Regex for command"
 command=("Just command name", plugin_category) use plugin_category name from predefined names (admin,bot,utils,tools,extra,fun,misc)

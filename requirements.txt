@@ -1,6 +1,7 @@
 aiofiles
 aiohttp
 apscheduler
+aria2p
 cairosvg
 cloudscraper
 colour
@@ -24,6 +25,7 @@ git+https://github.com/TeleDoge/heroku3.py
 html-telegraph-poster
 humanize
 IMDbPY
+instaloader
 jikanpy
 justwatch
 lottie
@@ -56,6 +58,7 @@ selenium
 ShazamAPI
 spamwatch
 speedtest-cli
+spotify_token
 sqlalchemy-json
 sqlalchemy==1.3.24
 telegraph
@@ -68,6 +71,6 @@ validators
 vcsi
 wand
 wget
-git+https://github.com/goldsmith/Wikipedia
+git+https://github.com/TeleDoge/Wikipedia
 youtube-search-python
 youtube_dl

@@ -11,9 +11,9 @@ from fake_useragent import UserAgent
 from PIL import Image
 from simplejson.errors import JSONDecodeError
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.functions import age_verification
-from ..helpers.utils import _dogutils, reply_id
+from ..helpers.utils import _dogeutils, reply_id
 from . import doge, useless
 
 plugin_category = "useless"
@@ -38,14 +38,14 @@ async def _(event):
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
     if choose not in useless.hemtai:
-        return await edit_delete(
+        return await edl(
             event,
             f"**Wrong category!! Choose from here:**\n\n{useless.nsfw(useless.hemtai)}",
             60,
         )
     if await age_verification(event, reply_to):
         return
-    dogevent = await edit_or_reply(event, "`Processing Nekos...`")
+    dogevent = await eor(event, "`Processing Nekos...`")
     flag = await useless.importent(event)
     if flag:
         return
@@ -53,7 +53,7 @@ async def _(event):
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
-    await _dogutils.unsavegif(event, nohorny)
+    await _dogeutils.unsavegif(event, nohorny)
     await dogevent.delete()
 
 
@@ -77,11 +77,11 @@ async def dva(event):
         ).json()
         url = nsfw.get("url")
     except JSONDecodeError:
-        return await edit_delete(
+        return await edl(
             event, "`uuuf.. seems like api down, try again later.`"
         )
     if not url:
-        return await edit_delete(event, "`uuuf.. No URL found from the API`")
+        return await edl(event, "`uuuf.. No URL found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
 
@@ -133,7 +133,7 @@ async def lewdn(event):
     nsfw = requests.get("https://nekos.life/api/lewd/neko").json()
     url = nsfw.get("neko")
     if not url:
-        return await edit_delete(event, "`Uff.. No NEKO found from the API`")
+        return await edl(event, "`Uff.. No NEKO found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
 

@@ -12,7 +12,7 @@ from userbot import HEROKU_APP, UPSTREAM_REPO_URL, doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
@@ -165,7 +165,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
-        return await edit_delete(
+        return await edl(
             event, "`Build failed!\n" "Cancelled or there were some errors...`"
         )
     try:
@@ -203,11 +203,11 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
 async def upstream(event):
     "To check if the bot is up to date and update if specified"
     conf = event.pattern_match.group(1).strip()
-    event = await edit_or_reply(event, "`Checking for updates, please wait....`")
+    event = await eor(event, "`Checking for updates, please wait....`")
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await edit_or_reply(
+        return await eor(
             event, "`Set the required vars first to update the bot`"
         )
     try:
@@ -280,7 +280,7 @@ async def upstream(event):
     pattern="update deploy$",
 )
 async def upstream(event):
-    event = await edit_or_reply(event, "`Pulling repo wait a sec...`")
+    event = await eor(event, "`Pulling repo wait a sec...`")
     off_repo = "https://github.com/DOG-E/Source/tree/SETUP"
     os.chdir("/app")
     try:
@@ -314,17 +314,17 @@ async def upstream(event):
 @doge.bot_cmd(pattern="SHIBA$")
 async def variable(var):
     if Config.HEROKU_API_KEY is None:
-        return await edit_delete(
+        return await edl(
             var,
             "Set the required var in Heroku to function this normally `HEROKU_API_KEY`.",
         )
     if Config.HEROKU_APP_NAME is not None:
         app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
-        return await edit_delete(
+        return await edl(
             var,
             "Set the required var in Heroku to function this normally `HEROKU_APP_NAME`.",
         )
     heroku_var = app.config()
-    await edit_or_reply(var, f"`Changing Doge to Shiba wait for 2-3 minutes.`")
+    await eor(var, f"`Changing Doge to Shiba wait for 2-3 minutes.`")
     heroku_var["UPSTREAM_REPO"] = "https://github.com/TeleDoge/DogeUserBot"

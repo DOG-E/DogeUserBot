@@ -36,7 +36,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import humanbytes, time_formatter
 
 LOGS = logging.getLogger(__name__)
@@ -73,7 +73,7 @@ async def subprocess_run(megadl, cmd):
 )
 async def mega_downloader(megadl):  # sourcery no-metrics
     "To download mega files from mega.nz links."
-    dogevent = await edit_or_reply(megadl, "`Collecting information...`")
+    dogevent = await eor(megadl, "`Collecting information...`")
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
     msg_link = await megadl.get_reply_message()
@@ -147,8 +147,8 @@ async def mega_downloader(megadl):  # sourcery no-metrics
                 f"{progress_str}\n"
                 f"`{humanbytes(downloaded)}` of `{humanbytes(total_length)}`"
                 f" @ `{speed}`\n"
-                f"**➥ETA -> **`{time_formatter(estimated_total_time)}`\n"
                 f"**➥ Duration -> **`{time_formatter(round(diff))}`"
+                f"**➥ETA -> **`{time_formatter(estimated_total_time)}`\n"
             )
             if round(diff % 15.00) == 0 and (
                 display_message != current_message or total_length == downloaded

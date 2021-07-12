@@ -6,7 +6,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "extra"
 
@@ -42,14 +42,14 @@ async def all_groups_id(dog):
 async def _(event):
     "To get view counter for the message"
     if Config.PRIVATE_CHANNEL_BOT_API_ID == 0:
-        return await edit_or_reply(
+        return await eor(
             event,
             "Please set the required environment variable `PRIVATE_CHANNEL_BOT_API_ID` for this plugin to work",
         )
     try:
         e = await event.client.get_entity(Config.PRIVATE_CHANNEL_BOT_API_ID)
     except Exception as e:
-        await edit_or_reply(event, str(e))
+        await eor(event, str(e))
     else:
         re_message = await event.get_reply_message()
         # https://t.me/telethonofftopic/78166

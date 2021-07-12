@@ -2,7 +2,7 @@ import asyncio
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 
 plugin_category = "fun"
@@ -51,20 +51,20 @@ async def igame(event):
     data = dict(zip(game_code, button))
     name = dict(zip(game_code, game_name))
     if not input_str:
-        await edit_delete(
+        await edl(
             event, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60
         )
         return
     if input_str not in game_code:
-        dogevent = await edit_or_reply(event, "`Give me a correct game code...`")
+        dogevent = await eor(event, "`Give me a correct game code...`")
         await asyncio.sleep(1)
-        await edit_delete(
+        await edl(
             dogevent, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60
         )
     else:
         game = data[input_str]
         gname = name[input_str]
-        await edit_or_reply(
+        await eor(
             event, f"**Game code `{input_str}` is selected for game:-** __{gname}__"
         )
         await asyncio.sleep(1)

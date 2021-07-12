@@ -10,7 +10,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import _format, get_user_from_event, reply_id
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
@@ -611,18 +611,18 @@ async def pmpermit_on(event):
     if input_str == "on":
         if gvarstatus("pmpermit") is None:
             addgvar("pmpermit", "true")
-            await edit_delete(
+            await edl(
                 event, "__Pmpermit has been enabled for your account successfully.__"
             )
         else:
-            await edit_delete(event, "__Pmpermit is already enabled for your account__")
+            await edl(event, "__Pmpermit is already enabled for your account__")
     elif gvarstatus("pmpermit") is not None:
         delgvar("pmpermit")
-        await edit_delete(
+        await edl(
             event, "__Pmpermit has been disabled for your account successfully__"
         )
     else:
-        await edit_delete(event, "__Pmpermit is already disabled for your account__")
+        await edl(event, "__Pmpermit is already disabled for your account__")
 
 
 @doge.bot_cmd(
@@ -639,21 +639,21 @@ async def pmpermit_on(event):
     if input_str == "off":
         if gvarstatus("pmmenu") is None:
             addgvar("pmmenu", "false")
-            await edit_delete(
+            await edl(
                 event,
                 "__Pmpermit Menu has been disabled for your account successfully.__",
             )
         else:
-            await edit_delete(
+            await edl(
                 event, "__Pmpermit Menu is already disabled for your account__"
             )
     elif gvarstatus("pmmenu") is not None:
         delgvar("pmmenu")
-        await edit_delete(
+        await edl(
             event, "__Pmpermit Menu has been enabled for your account successfully__"
         )
     else:
-        await edit_delete(
+        await edl(
             event, "__Pmpermit Menu is already enabled for your account__"
         )
 
@@ -672,7 +672,7 @@ async def pmpermit_on(event):
 async def approve_p_m(event):  # sourcery no-metrics
     "To approve user to pm"
     if gvarstatus("pmpermit") is None:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
@@ -707,7 +707,7 @@ async def approve_p_m(event):  # sourcery no-metrics
             sqllist.rm_from_list("pmenquire", chat.id)
         if str(chat.id) in sqllist.get_collection_list("pmoptions"):
             sqllist.rm_from_list("pmoptions", chat.id)
-        await edit_delete(
+        await edl(
             event,
             f"__Approved to pm__ [{user.first_name}](tg://user?id={user.id})\n**Reason :** __{reason}__",
         )
@@ -728,7 +728,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         sql.add_collection("pmwarns", PM_WARNS, {})
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     else:
-        await edit_delete(
+        await edl(
             event,
             f"[{user.first_name}](tg://user?id={user.id}) __is already in approved list__",
         )
@@ -751,7 +751,7 @@ async def approve_p_m(event):  # sourcery no-metrics
 async def disapprove_p_m(event):
     "To disapprove user to direct message you."
     if gvarstatus("pmpermit") is None:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
@@ -767,19 +767,19 @@ async def disapprove_p_m(event):
                 return
     if reason == "all":
         pmpermit_sql.disapprove_all()
-        return await edit_delete(
+        return await edl(
             event, "__Ok! I have disapproved everyone successfully.__"
         )
     if not reason:
         reason = "Not Mentioned."
     if pmpermit_sql.is_approved(user.id):
         pmpermit_sql.disapprove(user.id)
-        await edit_or_reply(
+        await eor(
             event,
             f"[{user.first_name}](tg://user?id={user.id}) __is disapproved to personal message me.__\n**Reason:**__ {reason}__",
         )
     else:
-        await edit_delete(
+        await edl(
             event,
             f"[{user.first_name}](tg://user?id={user.id}) __is not yet approved__",
         )
@@ -799,7 +799,7 @@ async def disapprove_p_m(event):
 async def block_p_m(event):
     "To block user to direct message you."
     if gvarstatus("pmpermit") is None:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
@@ -835,7 +835,7 @@ async def block_p_m(event):
     sql.add_collection("pmwarns", PM_WARNS, {})
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     await event.client(functions.contacts.BlockRequest(user.id))
-    await edit_delete(
+    await edl(
         event,
         f"[{user.first_name}](tg://user?id={user.id}) __is blocked, he can no longer personal message you.__\n**Reason:** __{reason}__",
     )
@@ -855,7 +855,7 @@ async def block_p_m(event):
 async def unblock_pm(event):
     "To unblock a user."
     if gvarstatus("pmpermit") is None:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
@@ -887,7 +887,7 @@ async def unblock_pm(event):
 async def approve_p_m(event):
     "To see list of approved users."
     if gvarstatus("pmpermit") is None:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __to work this plugin__",
         )
@@ -898,7 +898,7 @@ async def approve_p_m(event):
             APPROVED_PMs += f"• 👤 {_format.mentionuser(user.first_name , user.user_id)}\n**ID:** `{user.user_id}`\n**UserName:** @{user.username}\n**Date: **__{user.date}__\n**Reason: **__{user.reason}__\n\n"
     else:
         APPROVED_PMs = "`You haven't approved anyone yet`"
-    await edit_or_reply(
+    await eor(
         event,
         APPROVED_PMs,
         file_name="approvedpms.txt",

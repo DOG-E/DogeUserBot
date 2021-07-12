@@ -12,7 +12,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import asciiart, dog_meeme, dog_meme, media_type
 from ..helpers.functions import (
     add_frame,
@@ -25,7 +25,7 @@ from ..helpers.functions import (
     mirror_file,
     solarize,
 )
-from ..helpers.utils import _dogtools, reply_id
+from ..helpers.utils import _dogetools, reply_id
 from ..sql_helper.globals import addgvar, gvarstatus
 
 plugin_category = "fun"
@@ -67,9 +67,9 @@ async def maccmd(event):  # sourcery no-metrics
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to frame it.__")
+        return await edl(event, "__Reply to photo or sticker to frame it.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to frame it. Animated sticker is not supported__",
         )
@@ -77,14 +77,14 @@ async def maccmd(event):  # sourcery no-metrics
     args = event.pattern_match.group(1)
     force = bool(args)
     try:
-        imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+        imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
         if imag[1] is None:
-            return await edit_delete(
+            return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
         image = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             dogevent, f"**Error in identifying image:**\n__{str(e)}__"
         )
     wid, hgt = image.size
@@ -156,11 +156,11 @@ async def memes(event):
     doginput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     dogid = await reply_id(event)
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not doginput:
-        return await edit_delete(
+        return await edl(
             event, "`what should i write on that u idiot give text to memify`"
         )
     if ";" in doginput:
@@ -170,9 +170,9 @@ async def memes(event):
         bottom = ""
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     try:
@@ -217,13 +217,13 @@ async def lang(event):
         await event.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
         return
     if input_str not in font_list:
-        dogevent = await edit_or_reply(event, "`Give me a correct font name...`")
+        dogevent = await eor(event, "`Give me a correct font name...`")
         await asyncio.sleep(1)
         await dogevent.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
     else:
         arg = f"userbot/helpers/styles/{input_str}"
         addgvar("CNG_FONTS", arg)
-        await edit_or_reply(event, f"**Fonts for Memify changed to :-** `{input_str}`")
+        await eor(event, f"**Fonts for Memify changed to :-** `{input_str}`")
 
 
 @doge.bot_cmd(
@@ -243,15 +243,15 @@ async def memes(event):
     doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -292,16 +292,16 @@ async def memes(event):
 async def memes(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await edit_or_reply(event, "`Reply to supported Media...`")
+        await eor(event, "`Reply to supported Media...`")
         return
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp/"):
         os.mkdir("./temp/")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -339,15 +339,15 @@ async def memes(event):
     "Sun burn of image."
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -385,15 +385,15 @@ async def memes(event):
     "shows you the reflection of the media file"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -431,15 +431,15 @@ async def memes(event):
     "shows you the upside down image of the given media file"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -477,15 +477,15 @@ async def memes(event):
     "makes your media file to black and white"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -525,15 +525,15 @@ async def memes(event):
     doginput = 50 if not doginput else int(doginput)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -587,18 +587,18 @@ async def memes(event):
     try:
         colr = int(colr)
     except Exception as e:
-        return await edit_delete(event, f"**Error**\n`{e}`")
+        return await edl(event, f"**Error**\n`{e}`")
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     teledoge = None
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])

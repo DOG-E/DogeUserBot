@@ -2,7 +2,7 @@ import io
 import sys
 import traceback
 
-from . import doge, edit_or_reply
+from . import doge, eor
 
 plugin_category = "utils"
 
@@ -19,7 +19,7 @@ plugin_category = "utils"
 async def calculator(event):
     "To solve basic mathematics equations."
     cmd = event.text.split(" ", maxsplit=1)[1]
-    event = await edit_or_reply(event, "Calculating ...")
+    event = await eor(event, "Calculating ...")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()

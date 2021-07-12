@@ -5,7 +5,7 @@ from telethon.tl.types import MessageEntityMentionName
 
 from ...Config import Config
 from ...core.logger import logging
-from ...core.managers import edit_delete
+from ...core.managers import edl
 
 LOGS = logging.getLogger(__name__)
 
@@ -46,8 +46,8 @@ async def get_user_from_event(
             if isinstance(user, int) or user.startswith("@"):
                 user_obj = await event.client.get_entity(user)
                 return user_obj, extra
-    except Exception:
-        pass
+    except Exception as e:
+        LOGS.error(str(e))
     try:
         if nogroup is False:
             if secondgroup:
@@ -61,20 +61,20 @@ async def get_user_from_event(
             previous_message = await event.get_reply_message()
             if previous_message.from_id is None:
                 if not noedits:
-                    await edit_delete(dogevent, "`Well that's an anonymous admin !`")
+                    await edl(dogevent, "`Well that's an anonymous admin !`")
                 return None, None
             user_obj = await event.client.get_entity(previous_message.sender_id)
             return user_obj, extra
-        elif not args:
+        if not args:
             if not noedits:
-                await edit_delete(
+                await edl(
                     dogevent, "`Pass the user's username, id or reply!`", 5
                 )
             return None, None
     except Exception as e:
         LOGS.error(str(e))
     if not noedits:
-        await edit_delete(dogevent, "__Couldn't fetch user to proceed further.__")
+        await edl(dogevent, "__Couldn't fetch user to proceed further.__")
     return None, None
 
 

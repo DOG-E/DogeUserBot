@@ -1,4 +1,4 @@
-from . import ALIVE_NAME, doge, edit_or_reply
+from . import ALIVE_NAME, doge, eor
 
 plugin_category = "fun"
 
@@ -14,7 +14,7 @@ plugin_category = "fun"
 async def _(event):
     "fun art command"
     name = event.pattern_match.group(1)
-    await edit_or_reply(
+    await eor(
         event,
         f"{ALIVE_NAME} --- {name}          \n　　　　　|"
         "\n　　　　　| \n"
@@ -44,7 +44,7 @@ async def _(event):
 async def _(event):
     "fun art command"
     name = event.pattern_match.group(1)
-    await edit_or_reply(
+    await eor(
         event,
         f"__**Commando **__{ALIVE_NAME}          \n\n"
         "_/﹋\_\n"
@@ -341,7 +341,7 @@ R = (
 )
 async def bluedevilmonster(monster):
     "fun art command"
-    await edit_or_reply(monster, A)
+    await eor(monster, A)
 
 
 @doge.bot_cmd(
@@ -354,7 +354,7 @@ async def bluedevilmonster(monster):
 )
 async def bluedevilpig(pig):
     "fun art command"
-    await edit_or_reply(pig, B)
+    await eor(pig, B)
 
 
 @doge.bot_cmd(
@@ -367,7 +367,7 @@ async def bluedevilpig(pig):
 )
 async def bluedevilgun(gun):
     "fun art command"
-    await edit_or_reply(gun, D)
+    await eor(gun, D)
 
 
 @doge.bot_cmd(
@@ -380,7 +380,7 @@ async def bluedevilgun(gun):
 )
 async def bluedevildog(dog):
     "fun art command"
-    await edit_or_reply(dog, E)
+    await eor(dog, E)
 
 
 @doge.bot_cmd(
@@ -393,7 +393,7 @@ async def bluedevildog(dog):
 )
 async def bluedevilhello(hello):
     "fun art command"
-    await edit_or_reply(hello, F)
+    await eor(hello, F)
 
 
 @doge.bot_cmd(
@@ -406,7 +406,7 @@ async def bluedevilhello(hello):
 )
 async def bluedevilhmf(hmf):
     "fun art command"
-    await edit_or_reply(hmf, G)
+    await eor(hmf, G)
 
 
 @doge.bot_cmd(
@@ -419,7 +419,7 @@ async def bluedevilhmf(hmf):
 )
 async def bluedevilcouple(couple):
     "fun art command"
-    await edit_or_reply(couple, H)
+    await eor(couple, H)
 
 
 @doge.bot_cmd(
@@ -432,7 +432,7 @@ async def bluedevilcouple(couple):
 )
 async def bluedevilsupreme(supreme):
     "fun art command"
-    await edit_or_reply(supreme, I)
+    await eor(supreme, I)
 
 
 @doge.bot_cmd(
@@ -445,7 +445,7 @@ async def bluedevilsupreme(supreme):
 )
 async def bluedevilindia(india):
     "fun art command"
-    await edit_or_reply(india, J)
+    await eor(india, J)
 
 
 @doge.bot_cmd(
@@ -458,7 +458,7 @@ async def bluedevilindia(india):
 )
 async def bluedevilwelcome(welcome):
     "fun art command"
-    await edit_or_reply(welcome, K)
+    await eor(welcome, K)
 
 
 @doge.bot_cmd(
@@ -471,7 +471,7 @@ async def bluedevilwelcome(welcome):
 )
 async def bluedevilsnake(snake):
     "fun art command"
-    await edit_or_reply(snake, L)
+    await eor(snake, L)
 
 
 @doge.bot_cmd(
@@ -484,7 +484,7 @@ async def bluedevilsnake(snake):
 )
 async def bluedevilbye(bye):
     "fun art command"
-    await edit_or_reply(bye, O)
+    await eor(bye, O)
 
 
 @doge.bot_cmd(
@@ -497,7 +497,7 @@ async def bluedevilbye(bye):
 )
 async def bluedevilshitos(shitos):
     "fun art command"
-    await edit_or_reply(shitos, P)
+    await eor(shitos, P)
 
 
 @doge.bot_cmd(
@@ -510,4 +510,4 @@ async def bluedevilshitos(shitos):
 )
 async def bluedevildislike(dislike):
     "fun art command"
-    await edit_or_reply(dislike, R)
+    await eor(dislike, R)

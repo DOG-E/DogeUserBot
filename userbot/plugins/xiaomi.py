@@ -6,7 +6,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "extra"
 
@@ -25,7 +25,7 @@ async def _(event):
     "To get lastest Firmware."
     link = event.pattern_match.group(1)
     firmware = f"firmware"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -55,7 +55,7 @@ async def _(event):
     "To get lastest Vendor."
     link = event.pattern_match.group(1)
     vendor = f"vendor"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -85,7 +85,7 @@ async def _(event):
     "To get quick spec information about device"
     link = event.pattern_match.group(1)
     specs = f"specs"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -115,7 +115,7 @@ async def _(event):
     "To get latest fastboot MIUI."
     link = event.pattern_match.group(1)
     fboot = f"fastboot"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -145,7 +145,7 @@ async def _(event):
     "To get latest recovery MIUI."
     link = event.pattern_match.group(1)
     recovery = f"recovery"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -175,7 +175,7 @@ async def _(event):
     "To get latest PBRP."
     link = event.pattern_match.group(1)
     pitch = f"pb"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(
@@ -205,7 +205,7 @@ async def _(event):
     "To get latest ORangeFox Recover."
     link = event.pattern_match.group(1)
     ofox = f"of"
-    dogevent = await edit_or_reply(event, "```Processing```")
+    dogevent = await eor(event, "```Processing```")
     async with event.client.conversation("@XiaomiGeeksBot") as conv:
         try:
             response = conv.wait_event(

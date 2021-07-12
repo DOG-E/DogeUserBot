@@ -10,7 +10,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ link_regex = re.compile(
 )
 async def labstack(event):
     "to upload media to labstack"
-    editor = await edit_or_reply(event, "Processing...")
+    editor = await eor(event, "Processing...")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if input_str:
@@ -110,7 +110,7 @@ async def labstack(event):
 )
 async def _(event):
     "To upload media to some online media sharing platforms"
-    editor = await edit_or_reply(event, "processing ...")
+    editor = await eor(event, "processing ...")
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
     dogecheck = None

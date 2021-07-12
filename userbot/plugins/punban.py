@@ -10,9 +10,9 @@ from pySmartDL import SmartDL
 from telethon.errors.rpcerrorlist import WebpageCurlFailedError
 from urlextract import URLExtract
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.functions import age_verification
-from ..helpers.utils import _dogutils, reply_id
+from ..helpers.utils import _dogeutils, reply_id
 from . import doge, useless
 
 API = useless.API
@@ -38,7 +38,7 @@ async def very(event):
     """Random porn post"""
     reply_to = await reply_id(event)
     sub_r = event.pattern_match.group(1)
-    await edit_or_reply(event, "**Just hold a sec u horny kid...**")
+    await eor(event, "**Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
     flag = await useless.importent(event)
@@ -51,13 +51,13 @@ async def very(event):
             cn = requests.get(subreddit_api)
             r = cn.json()
         except ValueError:
-            return await edit_delete(event, "Value error!.")
+            return await edl(event, "Value error!.")
         try:
             postlink = r["postLink"]
             title = r["title"]
             media_url = r["url"]
         except KeyError:
-            return await edit_delete(
+            return await edl(
                 event,
                 "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**",
                 time=20,
@@ -77,8 +77,6 @@ async def very(event):
                     media_url = links[0]
             except IndexError:
                 pass
-        else:
-            pass
         try:
             teledoge = await event.client.send_file(
                 event.chat_id,
@@ -88,20 +86,20 @@ async def very(event):
                 parse_mode="html",
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _dogutils.unsavegif(event, teledoge)
+                await _dogeutils.unsavegif(event, teledoge)
             await event.delete()
             break
         except WebpageCurlFailedError:
-            await edit_or_reply(event, f"**Value error!!..Link is :** {media_url}")
+            await eor(event, f"**Value error!!..Link is :** {media_url}")
             await asyncio.sleep(3)
-            await edit_or_reply(
+            await eor(
                 event,
                 f"**Just hold your candel and Sit tight....\n\nAuto retry limit = {max_try+1}/5**",
             )
             await asyncio.sleep(1)
             max_try += 1
             if max_try == 5:
-                await edit_delete(
+                await edl(
                     event,
                     "**ಥ‿ಥ   Sorry i could'nt found, try with difference category**",
                 )
@@ -131,8 +129,8 @@ async def bad(event):
         sub_r = "60fpsporn"
     count = int(count)
     if count > 30:
-        return await edit_delete(event, "**Value error!.. Count value 1 to 30**")
-    await edit_or_reply(event, "**Just hold a sec u horny kid...**")
+        return await edl(event, "**Value error!.. Count value 1 to 30**")
+    await eor(event, "**Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
     flag = await useless.importent(event)
@@ -143,7 +141,7 @@ async def bad(event):
         cn = requests.get(subreddit_api)
         r = cn.json()
     except ValueError:
-        return await edit_delete(event, "Value error!.")
+        return await edl(event, "Value error!.")
     title = []
     postlink = []
     media_url = []
@@ -155,7 +153,7 @@ async def bad(event):
         for x in r["memes"]:
             media_url.append(x["url"])
     except KeyError:
-        return await edit_delete(
+        return await edl(
             event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**", time=20
         )
     i = 0
@@ -186,8 +184,8 @@ async def bad(event):
                 parse_mode="html",
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _dogutils.unsavegif(event, teledoge)
-            await edit_or_reply(
+                await _dogeutils.unsavegif(event, teledoge)
+            await eor(
                 event,
                 f"**Bluk Download Started.\n\nCategory :  `{sub_r}`\nFile Downloaded :  {i+1}/{count}**",
             )
@@ -225,14 +223,14 @@ async def pussy(event):
         sub_r = "60fpsporn"
     count = int(count)
     if count > 30:
-        return await edit_delete(event, "**Value error!.. Count value 1 to 30**")
-    await edit_or_reply(event, "**Just hold a sec u horny kid...**")
+        return await edl(event, "**Value error!.. Count value 1 to 30**")
+    await eor(event, "**Just hold a sec u horny kid...**")
     subreddit_api = f"{API}/{sub_r}/{count}"
     try:
         cn = requests.get(subreddit_api)
         r = cn.json()
     except ValueError:
-        return await edit_delete(event, "Value error!.")
+        return await edl(event, "Value error!.")
     if await age_verification(event, reply_to):
         return
     flag = await useless.importent(event)
@@ -246,12 +244,11 @@ async def pussy(event):
         for x in r["memes"]:
             media_url.append(x["url"])
     except KeyError:
-        return await edit_delete(
+        return await edl(
             event, "**(ノಠ益ಠ)ノ  Tou sure this a vaid category/subreddit ??**", time=20
         )
-    i = 1
     pwnlist = f"<b>{count} results for {sub_r} :</b>\n\n"
-    for m, t in zip(media_url, title):
+    for i, (m, t) in enumerate(zip(media_url, title), start=1):
         if "https://i.imgur.com" in m and m.endswith(".gifv"):
             media_url = m.replace(".gifv", ".mp4")
         elif "https://redgifs.com/watch" in m:
@@ -270,8 +267,7 @@ async def pussy(event):
         else:
             media_url = m
         pwnlist += f"<b><i>{i}. <a href = {media_url}>{t}</a></b>\n"
-        i += 1
-    await edit_or_reply(event, pwnlist, parse_mode="html")
+    await eor(event, pwnlist, parse_mode="html")
 
 
 @doge.bot_cmd(
@@ -315,10 +311,10 @@ async def dog(event):
     soup = BeautifulSoup(page.text, "lxml")
     col = soup.findAll("div", {"class": "thumb"})
     if not col:
-        return await edit_delete(
+        return await edl(
             event, "`No links found for that query , try differnt search...`", 60
         )
-    await edit_or_reply(event, "**Just hold a min you horny kid...**")
+    await eor(event, "**Just hold a min you horny kid...**")
     listlink = []
     listname = []
     for i in col:
@@ -328,14 +324,13 @@ async def dog(event):
         listlink.append(links)
         name = tmplink.split("/")[2]
         listname.append(name)
-    await edit_or_reply(
+    await eor(
         event,
         f"**{len(listlink)} results found for {xtext} :\nSending {xcount} results out of them.**",
     )
     string = f"<b>Showing {xcount}/{len(listlink)} results for {xtext}.</b>\n\n"
     mylink = listlink[: int(xcount)] if xcount else listlink
-    count = 1
-    for l, n in zip(mylink, listname):
+    for count, (l, n) in enumerate(zip(mylink, listname), start=1):
         req = requests.get(l)
         soup = BeautifulSoup(req.text, "lxml")
         soups = soup.find("div", {"id": "video-player-bg"})
@@ -344,8 +339,7 @@ async def dog(event):
         string += (
             f"<b><i>{count}. <a href = {link}>{n.replace('_',' ').title()}</a></b>\n"
         )
-        count += 1
-    await edit_or_reply(event, string, parse_mode="html")
+    await eor(event, string, parse_mode="html")
 
 
 @doge.bot_cmd(
@@ -365,13 +359,13 @@ async def wants_ur_noods(event):
     if not intxt and reply:
         intxt = reply.text
     if not intxt:
-        return await edit_delete(
+        return await edl(
             event,
             "**ಠ∀ಠ  Reply to valid link or give valid link url as input...you moron!!**",
         )
     extractor = URLExtract()
     plink = extractor.find_urls(intxt)
-    await edit_or_reply(event, "** Just hold a sec u horny kid...**")
+    await eor(event, "** Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
     flag = await useless.importent(event)
@@ -380,7 +374,7 @@ async def wants_ur_noods(event):
     i = 0
     for m in plink:
         if not m.startswith("https://"):
-            return await edit_delete(
+            return await edl(
                 event, "**(ノಠ益ಠ)ノ Give me a vaid link to download**"
             )
         if "xvideo" in m:
@@ -390,7 +384,7 @@ async def wants_ur_noods(event):
                 soups = soup.find("div", {"id": "video-player-bg"})
                 for a in soups.find_all("a", href=True):
                     m = a["href"]
-            await edit_or_reply(
+            await eor(
                 event,
                 f"**Just hold your candel & sit tight, It will take some time...**",
             )
@@ -422,10 +416,10 @@ async def wants_ur_noods(event):
                 event.chat_id, media_url, reply_to=reply_to
             )
             if media_url.endswith((".mp4", ".gif")):
-                await _dogutils.unsavegif(event, teledoge)
+                await _dogeutils.unsavegif(event, teledoge)
             if os.path.exists(media_url):
                 os.remove(media_url)
-            await edit_or_reply(
+            await eor(
                 event, f"**Download Started.\n\nFile Downloaded :  {i+1}/{len(plink)}**"
             )
             await asyncio.sleep(2)

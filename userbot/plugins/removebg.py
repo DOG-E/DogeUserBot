@@ -6,7 +6,7 @@ import requests
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from . import convert_toimage, convert_tosticker
 
@@ -65,7 +65,7 @@ def ReTrieveURL(input_url):
 async def remove_background(event):
     "To remove background of a image."
     if Config.REM_BG_API_KEY is None:
-        return await edit_delete(
+        return await edl(
             event,
             "`You have to set REM_BG_API_KEY in Config vars with API token from remove.bg to use this plugin .`",
             10,
@@ -75,12 +75,12 @@ async def remove_background(event):
     message_id = await reply_id(event)
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
-        dogevent = await edit_or_reply(event, "`Analysing this Image/Sticker...`")
+        dogevent = await eor(event, "`Analysing this Image/Sticker...`")
         file_name = os.path.join(Config.TEMP_DIR, "rmbg.png")
         try:
             await event.client.download_media(reply_message, file_name)
         except Exception as e:
-            await edit_delete(dogevent, f"`{str(e)}`", 5)
+            await edl(dogevent, f"`{str(e)}`", 5)
             return
         else:
             await dogevent.edit("`Removing Background of this media`")
@@ -88,10 +88,10 @@ async def remove_background(event):
             response = ReTrieveFile(file_name)
             os.remove(file_name)
     elif input_str:
-        dogevent = await edit_or_reply(event, "`Removing Background of this media`")
+        dogevent = await eor(event, "`Removing Background of this media`")
         response = ReTrieveURL(input_str)
     else:
-        await edit_delete(
+        await edl(
             event,
             "`Reply to any image or sticker with rmbg/srmbg to get background less png file or webp format or provide image link along with command`",
             5,
@@ -103,7 +103,7 @@ async def remove_background(event):
         with open("backgroundless.png", "wb") as removed_bg_file:
             removed_bg_file.write(response.content)
     else:
-        await edit_delete(dogevent, f"`{response.content.decode('UTF-8')}`", 5)
+        await edl(dogevent, f"`{response.content.decode('UTF-8')}`", 5)
         return
     if cmd == "srmbg":
         file = convert_tosticker(remove_bg_image, filename="backgroundless.webp")

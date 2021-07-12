@@ -9,8 +9,8 @@ import os
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import _dogutils, reply_id
+from ..core.managers import edl, eor
+from ..helpers import _dogeutils, reply_id
 from . import make_gif
 
 plugin_category = "utils"
@@ -30,7 +30,7 @@ async def collage(event):
     doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     dogid = await reply_id(event)
-    event = await edit_or_reply(
+    event = await eor(
         event, "```collaging this may take several minutes too..... 😁```"
     )
     if not (reply and (reply.media)):
@@ -67,12 +67,12 @@ async def collage(event):
         collagefile = dogsticker
     endfile = "./temp/collage.png"
     dogecmd = f"vcsi -g {doginput}x{doginput} '{collagefile}' -o {endfile}"
-    stdout, stderr = (await _dogutils.runcmd(dogecmd))[:2]
+    stdout, stderr = (await _dogeutils.runcmd(dogecmd))[:2]
     if not os.path.exists(endfile):
         for files in (dogsticker, collagefile):
             if files and os.path.exists(files):
                 os.remove(files)
-        return await edit_delete(
+        return await edl(
             event, f"`media is not supported or try with smaller grid size`", 5
         )
     await event.client.send_file(

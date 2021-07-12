@@ -1,7 +1,8 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
-# you may not use this file except in compliance with the License.from asyncio import sleep
+# you may not use this file except in compliance with the License.
+#
 from asyncio import sleep
 from os import environ
 from re import sub
@@ -20,13 +21,12 @@ from ..Config import Config
 from ..core.logger import logging
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
-from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO
+from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
 
 
-BIO_PREFIX = Config.BIO_PREFIX
 LASTFM_API = Config.LASTFM_API
 LASTFM_SECRET = Config.LASTFM_SECRET
 LASTFM_USERNAME = Config.LASTFM_USERNAME

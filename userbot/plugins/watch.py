@@ -12,7 +12,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
@@ -100,7 +100,7 @@ def get_provider(url):
 async def _(event):
     "To search online streaming sites for that movie."
     query = event.pattern_match.group(1)
-    et = await edit_or_reply(event, "`Finding Sites...`")
+    et = await eor(event, "`Finding Sites...`")
     try:
         streams = get_stream_data(query)
     except Exception as e:

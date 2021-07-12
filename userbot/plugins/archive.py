@@ -12,7 +12,7 @@ from telethon import types
 from telethon.utils import get_extension
 
 from ..Config import Config
-from . import doge, edit_delete, edit_or_reply, progress
+from . import doge, edl, eor, progress
 
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 plugin_category = "misc"
@@ -43,16 +43,16 @@ async def zip_file(event):
     "To create zip file"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(event, "`Provide file path to zip`")
+        return await edl(event, "`Provide file path to zip`")
     start = datetime.now()
     if not os.path.exists(Path(input_str)):
-        return await edit_or_reply(
+        return await eor(
             event,
             f"There is no such directory or file with the name `{input_str}` check again",
         )
     if os.path.isfile(Path(input_str)):
-        return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Zipping in progress....`")
+        return await edl(event, "`File compressing is not implemented yet`")
+    mone = await eor(event, "`Zipping in progress....`")
     filePaths = zipdir(input_str)
     filepath = os.path.join(
         Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
@@ -84,15 +84,15 @@ async def tar_file(event):
     "To create tar file"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(event, "`Provide file path to compress`")
+        return await edl(event, "`Provide file path to compress`")
     if not os.path.exists(Path(input_str)):
-        return await edit_or_reply(
+        return await eor(
             event,
             f"There is no such directory or file with the name `{input_str}` check again",
         )
     if os.path.isfile(Path(input_str)):
-        return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Tar creation in progress....`")
+        return await edl(event, "`File compressing is not implemented yet`")
+    mone = await eor(event, "`Tar creation in progress....`")
     start = datetime.now()
     filePaths = zipdir(input_str)
     filepath = os.path.join(
@@ -129,10 +129,10 @@ async def zip_file(event):  # sourcery no-metrics
         if os.path.exists(path):
             start = datetime.now()
             if not zipfile.is_zipfile(path):
-                return await edit_delete(
+                return await edl(
                     event, f"`The Given path {str(path)} is not zip file to unpack`"
                 )
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await eor(event, "`Unpacking....`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 os.path.splitext(os.path.basename(path))[0],
@@ -145,17 +145,17 @@ async def zip_file(event):  # sourcery no-metrics
                 f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
             )
         else:
-            await edit_delete(event, f"I can't find that path `{input_str}`", 10)
+            await edl(event, f"I can't find that path `{input_str}`", 10)
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
         ext = get_extension(reply.document)
         if ext != ".zip":
-            return await edit_delete(
+            return await edl(
                 event,
                 "`The replied file is not a zip file recheck the replied message`",
             )
-        mone = await edit_or_reply(event, "`Unpacking....`")
+        mone = await eor(event, "`Unpacking....`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
                 filename = attr.file_name
@@ -172,7 +172,7 @@ async def zip_file(event):  # sourcery no-metrics
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{str(e)}__")
+            return await edl(mone, f"**Error:**\n__{str(e)}__")
         await mone.edit("`Download finished Unpacking now`")
         destination = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY,
@@ -187,7 +187,7 @@ async def zip_file(event):  # sourcery no-metrics
         )
         os.remove(filename)
     else:
-        await edit_delete(
+        await edl(
             mone,
             "`Either reply to the zipfile or provide path of zip file along with command`",
         )
@@ -212,10 +212,10 @@ async def untar_file(event):  # sourcery no-metrics
         if os.path.exists(path):
             start = datetime.now()
             if not is_tarfile(path):
-                return await edit_delete(
+                return await edl(
                     event, f"`The Given path {str(path)} is not tar file to unpack`"
                 )
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await eor(event, "`Unpacking....`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0]
             )
@@ -232,11 +232,11 @@ async def untar_file(event):  # sourcery no-metrics
                 \nUnpacked the input path `{input_str}` and stored to `{destination}`"
             )
         else:
-            await edit_delete(event, f"I can't find that path `{input_str}`", 10)
+            await edl(event, f"I can't find that path `{input_str}`", 10)
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
-        mone = await edit_or_reply(event, "`Unpacking....`")
+        mone = await eor(event, "`Unpacking....`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
                 filename = attr.file_name
@@ -253,9 +253,9 @@ async def untar_file(event):  # sourcery no-metrics
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{str(e)}__")
+            return await edl(mone, f"**Error:**\n__{str(e)}__")
         if not is_tarfile(filename):
-            return await edit_delete(
+            return await edl(
                 mone, "`The replied file is not tar file to unpack it recheck it`"
             )
         await mone.edit("`Download finished Unpacking now`")
@@ -277,7 +277,7 @@ async def untar_file(event):  # sourcery no-metrics
         )
         os.remove(filename)
     else:
-        await edit_delete(
+        await edl(
             mone,
             "`Either reply to the tarfile or provide path of tarfile along with command`",
         )

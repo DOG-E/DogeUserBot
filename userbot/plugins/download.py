@@ -13,7 +13,7 @@ from telethon.utils import get_extension
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import humanbytes, progress
 from ..helpers.utils import _format
 
@@ -44,7 +44,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
 )
 async def _(event):  # sourcery no-metrics
     "To download the replied telegram file"
-    mone = await edit_or_reply(event, "`Downloading....`")
+    mone = await eor(event, "`Downloading....`")
     input_str = event.pattern_match.group(3)
     name = NAME
     path = None
@@ -132,15 +132,15 @@ async def _(event):  # sourcery no-metrics
         downloader = SmartDL(url, str(downloaded_file_name), progress_bar=False)
         downloader.start(blocking=False)
         c_time = time.time()
-        count = 0
+        delay = 0
         oldmsg = ""
         while not downloader.isFinished():
             total_length = downloader.filesize or None
             downloaded = downloader.get_dl_size()
             now = time.time()
-            now - c_time
+            delay = now - c_time
             percentage = downloader.get_progress() * 100
-            downloader.get_speed()
+            dspeed = downloader.get_speed()
             progress_str = "`{0}{1} {2}`%".format(
                 "".join("▰" for i in range(math.floor(percentage / 5))),
                 "".join("▱" for i in range(20 - math.floor(percentage / 5))),
@@ -151,13 +151,12 @@ async def _(event):  # sourcery no-metrics
                                 \n\n**URL : **`{url}`\
                                 \n**File Name :** `{file_name}`\
                                 \n{progress_str}\
-                                \n`{humanbytes(downloaded)} of {humanbytes(total_length)}`\
+                                \n`{humanbytes(downloaded)} of {humanbytes(total_length)} @ {humanbytes(dspeed)}`\
                                 \n**ETA : **`{estimated_total_time}`"
-            count += 1
-            if oldmsg != current_message:
-                if count >= 0.5:
-                    count = 0
-                    await mone.edit(current_message)
+            if oldmsg != current_message and delay > 5:
+                await mone.edit(current_message)
+                delay = 0
+                c_time = time.time()
                 oldmsg = current_message
             await asyncio.sleep(1)
         end = datetime.now()
@@ -189,7 +188,7 @@ async def _(event):  # sourcery no-metrics
     pwd = os.getcwd()
     input_str = event.pattern_match.group(3)
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event,
             "Where should i save this file. mention folder name",
             parse_mode=_format.parse_pre,
@@ -200,12 +199,12 @@ async def _(event):  # sourcery no-metrics
         os.makedirs(location)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
+        return await edl(
             event,
             "Reply to media file to download it to bot server",
             parse_mode=_format.parse_pre,
         )
-    mone = await edit_or_reply(
+    mone = await eor(
         event, "Downloading the file ...", parse_mode=_format.parse_pre
     )
     start = datetime.now()

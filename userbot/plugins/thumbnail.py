@@ -7,8 +7,8 @@ from PIL import Image
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
-from ..helpers.utils import _dogtools
+from ..core.managers import eor
+from ..helpers.utils import _dogetools
 from . import CMD_HELP
 
 plugin_category = "utils"
@@ -30,7 +30,7 @@ thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 )
 async def _(event):
     "To save replied image as temporary thumb."
-    dogevent = await edit_or_reply(event, "`Processing ...`")
+    dogevent = await eor(event, "`Processing ...`")
     if not event.reply_to_msg_id:
         return await dogevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(
@@ -40,7 +40,7 @@ async def _(event):
         metadata = extractMetadata(createParser(downloaded_file_name))
         if metadata and metadata.has("duration"):
             duration = metadata.get("duration").seconds
-        downloaded_file_name = await _dogtools.take_screen_shot(
+        downloaded_file_name = await _dogetools.take_screen_shot(
             downloaded_file_name, duration
         )
     # https://stackoverflow.com/a/21669827/4723940
@@ -65,8 +65,8 @@ async def _(event):
     if os.path.exists(thumb_image_path):
         os.remove(thumb_image_path)
     else:
-        await edit_or_reply(event, "`No thumbnail is set to clear`")
-    await edit_or_reply(event, "✅ Custom thumbnail cleared successfully.")
+        await eor(event, "`No thumbnail is set to clear`")
+    await eor(event, "✅ Custom thumbnail cleared successfully.")
 
 
 @doge.bot_cmd(
@@ -84,7 +84,7 @@ async def _(event):
         try:
             a = await r.download_media(thumb=-1)
         except Exception as e:
-            return await edit_or_reply(event, str(e))
+            return await eor(event, str(e))
         try:
             await event.client.send_file(
                 event.chat_id,
@@ -96,7 +96,7 @@ async def _(event):
             os.remove(a)
             await event.delete()
         except Exception as e:
-            await edit_or_reply(event, str(e))
+            await eor(event, str(e))
     elif os.path.exists(thumb_image_path):
         caption_str = "Currently Saved Thumbnail"
         await event.client.send_file(
@@ -107,9 +107,9 @@ async def _(event):
             allow_cache=False,
             reply_to=event.message.id,
         )
-        await edit_or_reply(event, caption_str)
+        await eor(event, caption_str)
     else:
-        await edit_or_reply(event, "Reply `.gethumbnail` as a reply to a media")
+        await eor(event, "Reply `.gethumbnail` as a reply to a media")
 
 
 CMD_HELP.update(

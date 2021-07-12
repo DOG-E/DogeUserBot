@@ -12,7 +12,7 @@ from . import (
     BOTLOG_CHATID,
     DEFAULT_BIO,
     doge,
-    edit_delete,
+    edl,
     get_user_from_event,
 )
 
@@ -56,9 +56,14 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
-    pfile = await event.client.upload_file(profile_pic)
+    try:
+        pfile = await event.client.upload_file(profile_pic)
+    except Exception as e:
+        return await edl(
+            event, f"**Failed to clone due to error:**\n__{str(e)}__"
+        )
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**LET US BE AS ONE**")
+    await edl(event, "**LET US BE AS ONE**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -88,7 +93,7 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(about=bio))
     await event.client(functions.account.UpdateProfileRequest(first_name=name))
     await event.client(functions.account.UpdateProfileRequest(last_name=blank))
-    await edit_delete(event, "successfully reverted to your account back")
+    await edl(event, "successfully reverted to your account back")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID, f"#REVERT\nSuccessfully reverted back to your profile"

@@ -6,7 +6,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..core.data import blacklist_chats_list
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
@@ -32,24 +32,23 @@ async def chat_blacklist(event):
     blkchats = blacklist_chats_list()
     if input_str == "on":
         if gvarstatus("blacklist_chats") is not None:
-            return await edit_delete(event, "__Already it was turned on.__")
+            return await edl(event, "__Already it was turned on.__")
         addgvar("blacklist_chats", "true")
         text = "__From now on, your DogeUserBot doesn't work in the chats stored in database.__"
         if len(blkchats) != 0:
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
             )
-            msg = await edit_or_reply(
+            msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        else:
-            text += "**You haven't added any chat to blacklist.**"
-            return await edit_or_reply(
-                event,
-                text,
-            )
+        text += "**You haven't added any chat to blacklist.**"
+        return await eor(
+            event,
+            text,
+        )
     if gvarstatus("blacklist_chats") is not None:
         delgvar("blacklist_chats")
         text = "__Your DogeUserBot is as free as a bird.It works in Every Chat .__"
@@ -57,22 +56,21 @@ async def chat_blacklist(event):
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
             )
-            msg = await edit_or_reply(
+            msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        else:
-            text += "**You haven't added any chat to blacklist.**"
-            return await edit_or_reply(
-                event,
-                text,
-            )
-    await edit_delete(event, "It was turned off already")
+        text += "**You haven't added any chat to blacklist.**"
+        return await eor(
+            event,
+            text,
+        )
+    await edl(event, "It was turned off already")
 
 
 @doge.bot_cmd(
-    pattern="addblkchat(s)? ?((.|\n)*)?",
+    pattern="addblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
         "header": "To add chats to blacklist.",
@@ -146,12 +144,12 @@ async def add_blacklist_chat(event):
         output += f"**Error:**\n{errors}\n"
     if result != "":
         output += "**Bot is reloading to apply the changes. Please wait for a minute**"
-    msg = await edit_or_reply(event, output)
+    msg = await eor(event, output)
     await event.client.reload(msg)
 
 
 @doge.bot_cmd(
-    pattern="rmblkchat(s)? ?((.|\n)*)?",
+    pattern="rmblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
         "header": "To remove chats to blacklist.",
@@ -210,7 +208,7 @@ async def add_blacklist_chat(event):
         output += f"**Error:**\n{errors}\n"
     if result != "":
         output += "**Bot is reloading to apply the changes. Please wait for a minute**"
-    msg = await edit_or_reply(event, output)
+    msg = await eor(event, output)
     await event.client.reload(msg)
 
 
@@ -233,7 +231,7 @@ async def add_blacklist_chat(event):
     except AttributeError:
         blacklistchats = {}
     if len(blkchats) == 0:
-        return await edit_delete(
+        return await edl(
             event, "__There are no blacklisted chats in your bot.__"
         )
     result = "**The list of blacklisted chats are :**\n\n"
@@ -243,4 +241,4 @@ async def add_blacklist_chat(event):
         username = blacklistchats[str(chat)]["chat_username"] or "__Private group__"
         result += f"**Username :** {username}\n"
         result += f"Added on {blacklistchats[str(chat)]['date']}\n\n"
-    await edit_or_reply(event, result)
+    await eor(event, result)

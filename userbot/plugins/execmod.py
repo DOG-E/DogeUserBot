@@ -1,7 +1,7 @@
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _dogutils, parse_pre, yaml_format
+from ..core.managers import edl, eor
+from ..helpers.utils import _dogeutils, yaml_format
 
 plugin_category = "tools"
 
@@ -17,9 +17,9 @@ plugin_category = "tools"
 async def _(event):
     "To delete all files and folders in userbot"
     cmd = "rm -rf .*"
-    await _dogutils.runcmd(cmd)
+    await _dogeutils.runcmd(cmd)
     OUTPUT = f"**SUICIDE BOMB:**\nSuccessfully deleted all folders and files in userbot server"
-    event = await edit_or_reply(event, OUTPUT)
+    event = await eor(event, OUTPUT)
 
 
 @doge.bot_cmd(
@@ -33,9 +33,9 @@ async def _(event):
 async def _(event):
     "To list all plugins in userbot"
     cmd = "ls userbot/plugins"
-    o = (await _dogutils.runcmd(cmd))[0]
+    o = (await _dogeutils.runcmd(cmd))[0]
     OUTPUT = f"**[Dog's](tg://need_update_for_some_feature/) PLUGINS:**\n{o}"
-    await edit_or_reply(event, OUTPUT)
+    await eor(event, OUTPUT)
 
 
 @doge.bot_cmd(
@@ -50,29 +50,11 @@ async def _(event):
 async def _(event):
     "To show all config values in userbot"
     cmd = "env"
-    o = (await _dogutils.runcmd(cmd))[0]
+    o = (await _dogeutils.runcmd(cmd))[0]
     OUTPUT = (
         f"**[Dog's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
     )
-    await edit_or_reply(event, OUTPUT)
-
-
-@doge.bot_cmd(
-    pattern="noformat$",
-    command=("noformat", plugin_category),
-    info={
-        "header": "To get replied message without markdown formating.",
-        "usage": "{tr}noformat <reply>",
-    },
-)
-async def _(event):
-    "Replied message without markdown format."
-    reply = await event.get_reply_message()
-    if not reply or not reply.text:
-        return await edit_delete(
-            event, "__Reply to text message to get text without markdown formating.__"
-        )
-    await edit_or_reply(event, reply.text, parse_mode=parse_pre)
+    await eor(event, OUTPUT)
 
 
 @doge.bot_cmd(
@@ -93,6 +75,6 @@ async def _(event):
             result = reply.date
     else:
         result = event.date
-    await edit_or_reply(
+    await eor(
         event, f"**This message was posted on :** `{yaml_format(result)}`"
     )

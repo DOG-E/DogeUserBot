@@ -4,7 +4,7 @@ from telethon import events
 from userbot import doge
 from userbot.core.logger import logging
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..sql_helper.welcome_sql import (
     add_welcome_setting,
@@ -129,7 +129,7 @@ async def save_welcome(event):
             )
             msg_id = msg_o.id
         else:
-            return await edit_or_reply(
+            return await eor(
                 event,
                 "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set.`",
             )
@@ -138,11 +138,11 @@ async def save_welcome(event):
         string = rep_msg.text
     success = "`Welcome note {} for this chat.`"
     if add_welcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("saved"))
+        return await eor(event, success.format("saved"))
     rm_welcome_setting(event.chat_id)
     if add_welcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("updated"))
-    await edit_or_reply("Error while setting welcome in this group")
+        return await eor(event, success.format("updated"))
+    await eor("Error while setting welcome in this group")
 
 
 @doge.bot_cmd(
@@ -157,9 +157,9 @@ async def save_welcome(event):
 async def del_welcome(event):
     "To turn off welcome message"
     if rm_welcome_setting(event.chat_id) is True:
-        await edit_or_reply(event, "`Welcome note deleted for this chat.`")
+        await eor(event, "`Welcome note deleted for this chat.`")
     else:
-        await edit_or_reply(event, "`Do I have a welcome note here ?`")
+        await eor(event, "`Do I have a welcome note here ?`")
 
 
 @doge.bot_cmd(
@@ -174,17 +174,17 @@ async def show_welcome(event):
     "To show current welcome message in group"
     cws = get_current_welcome_settings(event.chat_id)
     if not cws:
-        return await edit_or_reply(event, "`No welcome message saved here.`")
+        return await eor(event, "`No welcome message saved here.`")
     if cws.f_mesg_id:
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )
-        await edit_or_reply(
+        await eor(
             event, "`I am currently welcoming new users with this welcome note.`"
         )
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
-        await edit_or_reply(
+        await eor(
             event, "`I am currently welcoming new users with this welcome note.`"
         )
         await event.reply(cws.reply)
@@ -204,15 +204,15 @@ async def del_welcome(event):
     input_str = event.pattern_match.group(1)
     if input_str == "on":
         if gvarstatus("clean_welcome") is None:
-            return await edit_delete(event, "__Already it was turned on.__")
+            return await edl(event, "__Already it was turned on.__")
         delgvar("clean_welcome")
-        return await edit_delete(
+        return await edl(
             event,
             "__From now on previous welcome message will be deleted and new welcome message will be sent.__",
         )
     if gvarstatus("clean_welcome") is None:
         addgvar("clean_welcome", "false")
-        return await edit_delete(
+        return await edl(
             event, "__From now on previous welcome message will not be deleted .__"
         )
-    await edit_delete(event, "It was turned off already")
+    await edl(event, "It was turned off already")

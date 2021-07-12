@@ -5,14 +5,14 @@ from moviepy.editor import VideoFileClip
 from PIL import Image
 
 from ...core.logger import logging
-from ...core.managers import edit_or_reply
+from ...core.managers import eor
 from ..tools import media_type
 from .utils import runcmd
 
 LOGS = logging.getLogger(__name__)
 
 
-async def media_to_pic(event, reply, noedits=False):
+async def media_to_pic(event, reply, noedits=False): # sourcery no-metrics
     mediatype = media_type(reply)
     if mediatype not in [
         "Photo",
@@ -26,7 +26,7 @@ async def media_to_pic(event, reply, noedits=False):
     ]:
         return event, None
     if not noedits:
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, f"`Transfiguration Time! Converting to ....`"
         )
     else:
@@ -58,7 +58,7 @@ async def media_to_pic(event, reply, noedits=False):
             clip = VideoFileClip(media)
             try:
                 clip = clip.save_frame(dogfile, 0.1)
-            except:
+            except Exception:
                 clip = clip.save_frame(dogfile, 0)
     elif mediatype == "Document":
         mimetype = reply.document.mime_type

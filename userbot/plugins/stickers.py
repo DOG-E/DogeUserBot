@@ -26,10 +26,10 @@ from telethon.tl.types import (
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.functions import crop_and_divide
 from ..helpers.tools import media_type
-from ..helpers.utils import _dogtools
+from ..helpers.utils import _dogetools
 from ..sql_helper.globals import gvarstatus
 
 plugin_category = "fun"
@@ -264,11 +264,11 @@ async def kang(args):  # sourcery no-metrics
     userid = user.id
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
-            dogevent = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
             photo = await args.client.download_media(message.photo, photo)
         elif "image" in message.media.document.mime_type.split("/"):
-            dogevent = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
             photo = io.BytesIO()
             await args.client.download_file(message.media.document, photo)
             if (
@@ -278,7 +278,7 @@ async def kang(args):  # sourcery no-metrics
                 emoji = message.media.document.attributes[1].alt
                 emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
-            dogevent = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
             await args.client.download_file(
                 message.media.document, "AnimatedSticker.tgs"
             )
@@ -291,10 +291,10 @@ async def kang(args):  # sourcery no-metrics
             is_anim = True
             photo = 1
         else:
-            await edit_delete(args, "`Unsupported File!`")
+            await edl(args, "`Unsupported File!`")
             return
     else:
-        await edit_delete(args, "`I can't kang that...`")
+        await edl(args, "`I can't kang that...`")
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
@@ -348,7 +348,7 @@ async def kang(args):  # sourcery no-metrics
                     emoji,
                     cmd,
                 )
-            await edit_delete(
+            await edl(
                 dogevent,
                 f"`Sticker kanged successfully!\
                     \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
@@ -371,7 +371,7 @@ async def kang(args):  # sourcery no-metrics
                     is_anim,
                 )
             if otherpack:
-                await edit_delete(
+                await edl(
                     dogevent,
                     f"`Sticker kanged to a Different Pack !\
                     \nAnd Newly created pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
@@ -379,7 +379,7 @@ async def kang(args):  # sourcery no-metrics
                     time=10,
                 )
             else:
-                await edit_delete(
+                await edl(
                     dogevent,
                     f"`Sticker kanged successfully!\
                     \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
@@ -415,16 +415,16 @@ async def pack_kang(event):  # sourcery no-metrics
     reply = await event.get_reply_message()
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
-        return await edit_delete(
+        return await edl(
             event, "`reply to any sticker to send all stickers in that pack`"
         )
     try:
         stickerset_attr = reply.document.attributes[1]
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, "`Fetching details of the sticker pack, please wait..`"
         )
     except BaseException:
-        return await edit_delete(
+        return await edl(
             event, "`This is not a sticker. Reply to a sticker.`", 5
         )
     try:
@@ -437,7 +437,7 @@ async def pack_kang(event):  # sourcery no-metrics
             )
         )
     except Exception:
-        return await edit_delete(
+        return await edl(
             dogevent,
             "`I guess this sticker is not part of any pack. So, i cant kang this sticker pack try kang for this sticker`",
         )
@@ -455,7 +455,7 @@ async def pack_kang(event):  # sourcery no-metrics
     pack = None
     for message in reqd_sticker_set.documents:
         if "image" in message.mime_type.split("/"):
-            await edit_or_reply(
+            await eor(
                 dogevent,
                 f"`This sticker pack is kanging now . Status of kang process : {kangst}/{noofst}`",
             )
@@ -467,7 +467,7 @@ async def pack_kang(event):  # sourcery no-metrics
             ):
                 emoji = message.attributes[1].alt
         elif "tgsticker" in message.mime_type:
-            await edit_or_reply(
+            await eor(
                 dogevent,
                 f"`This sticker pack is kanging now . Status of kang process : {kangst}/{noofst}`",
             )
@@ -479,7 +479,7 @@ async def pack_kang(event):  # sourcery no-metrics
             is_anim = True
             photo = 1
         else:
-            await edit_delete(dogevent, "`Unsupported File!`")
+            await edl(dogevent, "`Unsupported File!`")
             return
         if photo:
             splat = ("".join(event.text.split(maxsplit=1)[1:])).split()
@@ -489,7 +489,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 if len(splat) == 1:
                     pack = splat[0]
                 elif len(splat) > 1:
-                    return await edit_delete(
+                    return await edl(
                         dogevent,
                         "`Sorry the given name cant be used for pack or there is no pack with that name`",
                     )
@@ -581,18 +581,18 @@ async def pic2packcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to make pack.__")
+        return await edl(event, "__Reply to photo or sticker to make pack.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/x-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to make pack. Animated sticker is not supported__",
         )
     args = event.pattern_match.group(1)
     if not args:
-        return await edit_delete(
+        return await edl(
             event, "__What's your packname ?. pass along with cmd.__"
         )
-    dogevent = await edit_or_reply(event, "__🔪Cropping and adjusting the image...__")
+    dogevent = await eor(event, "__🔪Cropping and adjusting the image...__")
     try:
         emoji = (re.findall(r"-e[\U00010000-\U0010ffff]+", args))[0]
         args = args.replace(emoji, "")
@@ -604,9 +604,9 @@ async def pic2packcmd(event):
         random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
         for _ in range(16)
     )
-    image = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+    image = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if image[1] is None:
-        return await edit_delete(
+        return await edl(
             image[0], "__Unable to extract image from the replied message.__"
         )
     image = Image.open(image[1])
@@ -654,10 +654,11 @@ async def pic2packcmd(event):
             )
             await event.client.send_read_acknowledge(conv.chat_id)
             for packname in ending.raw_text.split():
+                stick_pack_name = packname
                 if packname.startswith("https://t.me/"):
                     break
             await dogevent.edit(
-                f"__Successfully created the pack for the replied media : __[{args}]({packname})"
+                f"__Successfully created the pack for the replied media : __[{args}]({stick_pack_name})"
             )
 
         except YouBlockedUserError:
@@ -678,21 +679,21 @@ async def pic2packcmd(event):
 async def get_pack_info(event):
     "To get information about a sticker pick."
     if not event.is_reply:
-        return await edit_delete(
+        return await edl(
             event, "`I can't fetch info from nothing, can I ?!`", 5
         )
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await edit_delete(
+        return await edl(
             event, "`Reply to a sticker to get the pack details`", 5
         )
     try:
         stickerset_attr = rep_msg.document.attributes[1]
-        dogevent = await edit_or_reply(
+        dogevent = await eor(
             event, "`Fetching details of the sticker pack, please wait..`"
         )
     except BaseException:
-        return await edit_delete(
+        return await edl(
             event, "`This is not a sticker. Reply to a sticker.`", 5
         )
     if not isinstance(stickerset_attr, DocumentAttributeSticker):
@@ -733,14 +734,14 @@ async def cb_sticker(event):
     "To get list of sticker packs with given name."
     split = event.pattern_match.group(1)
     if not split:
-        return await edit_delete(event, "`Provide some name to search for pack.`", 5)
-    dogevent = await edit_or_reply(event, "`Searching sticker packs....`")
+        return await edl(event, "`Provide some name to search for pack.`", 5)
+    dogevent = await eor(event, "`Searching sticker packs....`")
     scraper = cloudscraper.create_scraper()
     text = scraper.get(combot_stickers_url + split).text
     soup = bs(text, "lxml")
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
-        return await edit_delete(dogevent, "`No results found :(.`", 5)
+        return await edl(dogevent, "`No results found :(.`", 5)
     reply = f"**Sticker packs found for {split} are :**"
     for pack in results:
         if pack.button:

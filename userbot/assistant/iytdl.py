@@ -23,7 +23,7 @@ from userbot import doge
 from ..Config import Config
 from ..core import check_owner, pool
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import post_to_telegraph, progress, reply_id
 from ..helpers.functions.utube import (
     _mp3Dl,
@@ -64,8 +64,8 @@ async def iytdl_inline(event):
     elif reply and reply.text:
         input_url = (reply.text).strip()
     if not input_url:
-        return await edit_delete(event, "Give input or reply to a valid youtube URL")
-    dogevent = await edit_or_reply(event, f"🔎 Searching Youtube for: `'{input_url}'`")
+        return await edl(event, "Give input or reply to a valid youtube URL")
+    dogevent = await eor(event, f"🔎 Searching Youtube for: `'{input_url}'`")
     flag = True
     cout = 0
     results = None
@@ -141,7 +141,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
         else:
             _fpath = _path
     if not _fpath:
-        await edit_delete(upload_msg, "nothing found !")
+        await edl(upload_msg, "nothing found !")
         return
     if not thumb_pic and downtype == "v":
         thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))

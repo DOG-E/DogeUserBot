@@ -22,10 +22,10 @@ from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from telethon import events
 
 from userbot import doge
-from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.logger import logging
+from ..core.managers import edl, eor
 from ..helpers import CancelProcess, humanbytes, progress, time_formatter
 from ..helpers.utils import _format
 from ..sql_helper import google_drive_sql as helper
@@ -172,7 +172,7 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
         required_file_name = ""
     if uri:
         try:
-            from .torrentutils import aria2, check_metadata
+            from . import aria2, check_metadata
 
             dogtorrent = True
         except Exception:
@@ -191,12 +191,12 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
                 )
         else:
             LOGS.info("No torrentutils")
-            await edit_or_reply(
+            await eor(
                 gdrive,
                 "`To use torrent files or download files from link install torrentutils from` @DogePlugin",
             )
             return "install torrentutils"
-        from .torrentutils import aria2, check_metadata
+        from . import aria2, check_metadata
 
         gid = downloads.gid
         filename = await check_progress_for_dl(gdrive, gid, previous=None)
@@ -697,7 +697,7 @@ async def share(service, event, url):
     try:
         result = await get_output(service, file_id)
     except Exception as e:
-        await edit_delete(event, f"str({e})", parse_mode=_format.parse_pre)
+        await edl(event, f"str({e})", parse_mode=_format.parse_pre)
         return
     await event.edit(f"**Shareable Links**\n\n{result}")
 
@@ -755,7 +755,7 @@ async def check_progress_for_dl(event, gid, previous):  # sourcery no-metrics
     complete = None
     global filenames
     GDRIVE_.is_cancelled = False
-    from .torrentutils import aria2
+    from . import aria2
 
     while not complete:
         file = aria2.get_download(gid)
@@ -819,7 +819,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     if checker is not None:
         page_size = int(gdrive.pattern_match.group(1).strip("-l "))
         if page_size > 1000:
-            await edit_or_reply(
+            await eor(
                 gdrive,
                 "**GDRIVE - LIST**\n\n"
                 "**Status : **`BAD`\n"
@@ -829,25 +829,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     else:
         page_size = 25  # default page_size is 25
     checker = gdrive.pattern_match.group(2)
-    if checker != "":
-        if checker.startswith("-p"):
-            parents = checker.split(None, 2)[1]
-            parents = parents.split("/")[-1]
-            try:
-                name = checker.split(None, 2)[2]
-            except IndexError:
-                query = f"'{parents}' in parents and (name contains '*')"
-            else:
-                query = f"'{parents}' in parents and (name contains '{name}')"
-        else:
-            if re.search("-p ([\s\S]*)", checker):
-                parents = re.search("-p ([\s\S]*)", checker).group(1)
-                name = checker.split("-p")[0].strip()
-                query = f"'{parents}' in parents and (name contains '{name}')"
-            else:
-                name = checker
-                query = f"name contains '{name}'"
-    else:
+    if checker == "":
         try:
             if GDRIVE_.parent_Id is not None:
                 query = f"'{GDRIVE_.parent_Id}' in parents and (name contains '*')"
@@ -856,6 +838,22 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
                 query = f"'{G_DRIVE_FOLDER_ID}' in parents and (name contains '*')"
             else:
                 query = ""
+    elif checker.startswith("-p"):
+        parents = checker.split(None, 2)[1]
+        parents = parents.split("/")[-1]
+        try:
+            name = checker.split(None, 2)[2]
+        except IndexError:
+            query = f"'{parents}' in parents and (name contains '*')"
+        else:
+            query = f"'{parents}' in parents and (name contains '{name}')"
+    elif re.search("-p ([\s\S]*)", checker):
+        parents = re.search("-p ([\s\S]*)", checker).group(1)
+        name = checker.split("-p")[0].strip()
+        query = f"'{parents}' in parents and (name contains '{name}')"
+    else:
+        name = checker
+        query = f"name contains '{name}'"
     service = await create_app(gdrive)
     if service is False:
         return False
@@ -881,7 +879,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
                 .execute()
             )
         except HttpError as e:
-            await edit_or_reply(
+            await eor(
                 gdrive,
                 "**[GDRIVE - LIST]**\n\n"
                 "**Status : **`BAD`\n"
@@ -910,7 +908,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     del result
     if query == "":
         query = "Not specified"
-    await edit_or_reply(
+    await eor(
         gdrive, "**Google Drive Query**:\n" f"`{query}`\n\n**Results**\n\n{message}"
     )
 
@@ -927,14 +925,14 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
 async def generate_credentials(gdrive):
     """Only generate once for long run"""
     if not BOTLOG:
-        await edit_delete(
+        await edl(
             gdrive,
             "for authencation you need to set PRIVATE_GROUP_BOT_API_ID in heroku",
             time=10,
         )
     hmm = gdrive.client.uid
     if helper.get_credentials(str(hmm)) is not None:
-        await edit_or_reply(gdrive, "`You already authorized token...`")
+        await eor(gdrive, "`You already authorized token...`")
         await asyncio.sleep(1.5)
         await gdrive.delete()
         return False
@@ -943,7 +941,7 @@ async def generate_credentials(gdrive):
         try:
             configs = json.loads(G_DRIVE_DATA)
         except json.JSONDecodeError:
-            await edit_or_reply(
+            await eor(
                 gdrive,
                 "**AUTHENTICATE - ERROR**\n\n"
                 "**Status : **`BAD`\n"
@@ -953,7 +951,7 @@ async def generate_credentials(gdrive):
     else:
         """Only for old user"""
         if G_DRIVE_CLIENT_ID is None and G_DRIVE_CLIENT_SECRET is None:
-            await edit_or_reply(
+            await eor(
                 gdrive,
                 "**AUTHENTICATE - ERROR**\n\n"
                 "**Status : **`BAD`\n"
@@ -968,7 +966,7 @@ async def generate_credentials(gdrive):
                 "token_uri": GOOGLE_TOKEN_URI,
             }
         }
-    gdrive = await edit_or_reply(gdrive, "`Creating credentials...`")
+    gdrive = await eor(gdrive, "`Creating credentials...`")
     flow = InstalledAppFlow.from_client_config(
         configs, SCOPES, redirect_uri=REDIRECT_URI
     )
@@ -1008,7 +1006,7 @@ async def generate_credentials(gdrive):
 async def reset_credentials(gdrive):
     """Reset credentials or change account"""
     hmm = gdrive.client.uid
-    gdrive = await edit_or_reply(gdrive, "`Resetting information...`")
+    gdrive = await eor(gdrive, "`Resetting information...`")
     helper.clear_credentials(str(hmm))
     await gdrive.edit("`Done...`")
     await asyncio.sleep(1)
@@ -1067,7 +1065,7 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
     """Split name if contains spaces by using ;"""
     f_name = gdrive.pattern_match.group(2).split(";")
     exe = gdrive.pattern_match.group(1)
-    gdrive = await edit_or_reply(gdrive, "`Sending information...`")
+    gdrive = await eor(gdrive, "`Sending information...`")
     reply = ""
     for name_or_id in f_name:
         """in case given name has a space beetween ;"""
@@ -1223,9 +1221,9 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
 )
 async def cancel_process(gdrive):
     "Abort process for download and upload."
-    gdrive = await edit_or_reply(gdrive, "`Cancelling...`")
+    gdrive = await eor(gdrive, "`Cancelling...`")
     try:
-        from .torrentutils import aria2
+        from . import aria2
 
         downloads = aria2.get_downloads()
         if len(downloads) != 0:
@@ -1256,9 +1254,9 @@ async def google_drive(gdrive):  # sourcery no-metrics
     file_path = None
     uri = None
     if not value and not gdrive.reply_to_msg_id:
-        return await edit_or_reply(gdrive, "`What should i Do You idiot`")
+        return await eor(gdrive, "`What should i Do You idiot`")
     elif value and gdrive.reply_to_msg_id:
-        await edit_or_reply(
+        await eor(
             gdrive,
             "**[UNKNOWN - ERROR]**\n\n"
             "**Status : **`failed`\n"
@@ -1269,7 +1267,7 @@ async def google_drive(gdrive):  # sourcery no-metrics
     event = gdrive
     if service is False:
         return None
-    gdrive = await edit_or_reply(gdrive, "`Uploading...`")
+    gdrive = await eor(gdrive, "`Uploading...`")
     if os.path.isfile(value):
         file_path = value
         if file_path.endswith(".torrent"):
@@ -1433,28 +1431,27 @@ async def google_drive(gdrive):  # sourcery no-metrics
 )
 async def set_upload_folder(gdrive):
     """to clear the temperary upload parent id."""
-    gdrive = await edit_or_reply(gdrive, "`Sending information...`")
+    gdrive = await eor(gdrive, "`Sending information...`")
     if G_DRIVE_FOLDER_ID is not None:
         GDRIVE_.parent_Id = G_DRIVE_FOLDER_ID
         await gdrive.edit(
             "**[FOLDER - SET]**\n\n" "**Status : **`OK- using G_DRIVE_FOLDER_ID now.`"
         )
         return None
+    try:
+        GDRIVE_.parent_id = ""
+    except NameError:
+        await gdrive.edit(
+            "**[FOLDER - SET]**\n\n" "**Status : **`BAD - No parent_Id is set.`"
+        )
+        return False
     else:
-        try:
-            GDRIVE_.parent_id = ""
-        except NameError:
-            await gdrive.edit(
-                "**[FOLDER - SET]**\n\n" "**Status : **`BAD - No parent_Id is set.`"
-            )
-            return False
-        else:
-            await gdrive.edit(
-                "**[FOLDER - SET]**\n\n"
-                "**Status : **`OK`"
-                " - `G_DRIVE_FOLDER_ID empty, will use root.`"
-            )
-            return None
+        await gdrive.edit(
+            "**[FOLDER - SET]**\n\n"
+            "**Status : **`OK`"
+            " - `G_DRIVE_FOLDER_ID empty, will use root.`"
+        )
+        return None
 
 
 @doge.bot_cmd(
@@ -1469,7 +1466,7 @@ async def set_upload_folder(gdrive):
 async def set_upload_folder(gdrive):
     """Set parents dir for upload/check/makedir/remve"""
     event = gdrive
-    gdrive = await edit_or_reply(gdrive, "`Sending information...`")
+    gdrive = await eor(gdrive, "`Sending information...`")
     inp = event.pattern_match.group(1)
     if not inp:
         await gdrive.edit(">`.gset <folderURL/folderID>`")
@@ -1487,17 +1484,15 @@ async def set_upload_folder(gdrive):
                 "**[PARENT - FOLDER]**\n\n" "**Status : **`OK - Successfully changed.`"
             )
             return None
-        else:
-            await gdrive.edit(
-                "**[PARENT - FOLDER]**\n\n" "**Status : WARNING** -` forcing use...`"
-            )
-            GDRIVE_.parent_Id = inp
+        await gdrive.edit(
+            "**[PARENT - FOLDER]**\n\n" "**Status : WARNING** -` forcing use...`"
+        )
+        GDRIVE_.parent_Id = inp
     else:
         GDRIVE_.parent_Id, _ = await get_file_id(ext_id)
         await gdrive.edit(
             "**[PARENT - FOLDER]**\n\n" "**Status : **`OK - Successfully changed.`"
         )
-    return
 
 
 @doge.bot_cmd(
@@ -1523,12 +1518,12 @@ async def g_download(event):
     thumb = None
     cmd = event.pattern_match.group(1)
     drive_link = event.pattern_match.group(2)
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event, "`Downloading Requested File from G-Drive...`"
     )
     file_name, dogprocess = await gdrive_download(event, dogevent, service, drive_link)
     if dogprocess is not None:
-        return await edit_delete(dogevent, file_name)
+        return await edl(dogevent, file_name)
     if os.path.exists(thumb_image_path):
         thumb = thumb_image_path
     if not cmd:
@@ -1547,7 +1542,7 @@ async def g_download(event):
             ),
         )
         os.remove(file_name)
-        await edit_delete(
+        await edl(
             dogevent,
             "**File Downloaded and uploaded.\nName : **`" + str(file_name) + "`",
             5,
@@ -1569,6 +1564,6 @@ async def gshare(event):
     if service is False:
         return None
     input_str = event.pattern_match.group(1)
-    dogevent = await edit_or_reply(event, "`Creating sharable link...`")
+    dogevent = await eor(event, "`Creating sharable link...`")
     await asyncio.sleep(2)
     await share(service, dogevent, input_str)

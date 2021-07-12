@@ -17,9 +17,9 @@ from userbot import doge
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import AioHttp
-from ..helpers.utils import _dogutils, _format, reply_id
+from ..helpers.utils import _dogeutils, _format, reply_id
 
 plugin_category = "tools"
 
@@ -41,7 +41,7 @@ LOGS = logging.getLogger(__name__)
 async def currency(event):
     """To convert one currency value to other."""
     if Config.CURRENCY_API is None:
-        return await edit_delete(
+        return await edl(
             event,
             "__You haven't set the api value. Set Api var __`CURRENCY_API` __in heroku get value from https://free.currencyconverterapi.com__.",
             link_preview=False,
@@ -52,7 +52,7 @@ async def currency(event):
     if len(values) == 3:
         value, fromcurrency, tocurrency = values
     else:
-        return await edit_delete(event, "__Use proper syntax. check__ `.help -c cur`")
+        return await edl(event, "__Use proper syntax. check__ `.help -c cur`")
     fromcurrency = fromcurrency.upper()
     tocurrency = tocurrency.upper()
     try:
@@ -60,38 +60,26 @@ async def currency(event):
         aresponse = await AioHttp().get_json(
             f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}"
         )
-        try:
-            try:
-                from bin import currency
-
-                symbols = currency
-                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
-            except:
-                symbols = f"bin/currency.py"
-                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
-        except:
-            try:
-                symbolx = f"bin/currency.py"
-                symbols = os.popen(symbolx).read()
-                symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
-            except:
-                return await edit_delete(event, "**Error!**")
+        symbols = await AioHttp().get_raw(
+            f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Core/currency.py"
+        )
+        symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
         try:
             result = aresponse[f"{fromcurrency}_{tocurrency}"]
         except KeyError:
-            return await edit_delete(
+            return await edl(
                 event,
                 "__You have used wrong currency codes or Api can't fetch details or try by restarting bot it will work if everything is fine.__",
                 time=10,
             )
         output = float(value) * float(result)
         output = round(output, 4)
-        await edit_or_reply(
+        await eor(
             event,
             f"The Currency value of **{symbols[fromcurrency]}{value} {fromcurrency}** in **{tocurrency}** is **{symbols[tocurrency]}{output}**",
         )
     except Exception:
-        await edit_or_reply(
+        await eor(
             event,
             f"__It seems you are using different currency value. which doesn't exist on earth.__",
         )
@@ -109,12 +97,12 @@ async def currency(event):
 async def _(event):
     input_str = event.pattern_match.group(1)
     if not event.reply_to_msg_id:
-        return await edit_or_reply(event, "```Reply to any user message.```")
+        return await eor(event, "```Reply to any user message.```")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        return await edit_or_reply(event, "```reply to a media message```")
+        return await eor(event, "```reply to a media message```")
     chat = "@VS_Robot"
-    dogevent = await edit_or_reply(event, " `Sliding my tip, of fingers over it`")
+    dogevent = await eor(event, " `Sliding my tip, of fingers over it`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("/start")
@@ -134,7 +122,7 @@ async def _(event):
                 "`You blocked `@VS_Robot` Unblock it and give a try`"
             )
         if not input_str:
-            return await edit_or_reply(dogevent, response4.text)
+            return await eor(dogevent, response4.text)
         await dogevent.delete()
         await event.client.send_file(
             event.chat_id, response3.media, reply_to=(await reply_id(event))
@@ -152,23 +140,23 @@ async def _(event):
 )
 async def parseqr(event):
     "To decode qrcode or barcode"
-    dogevent = await edit_or_reply(event, "`Decoding....`")
+    dogevent = await eor(event, "`Decoding....`")
     reply = await event.get_reply_message()
     downloaded_file_name = await reply.download_media()
     # parse the Official ZXing webpage to decode the QRCode
     command_to_exec = f"curl -s -F f=@{downloaded_file_name} https://zxing.org/w/decode"
-    t_response, e_response = (await _dogutils.runcmd(command_to_exec))[:2]
+    t_response, e_response = (await _dogeutils.runcmd(command_to_exec))[:2]
     if os.path.exists(downloaded_file_name):
         os.remove(downloaded_file_name)
     soup = BeautifulSoup(t_response, "html.parser")
     try:
         qr_contents = soup.find_all("pre")[0].text
-        await edit_or_reply(dogevent, f"**The decoded message is :**\n`{qr_contents}`")
+        await eor(dogevent, f"**The decoded message is :**\n`{qr_contents}`")
     except IndexError:
         result = soup.text
-        await edit_or_reply(dogevent, f"**Failed to Decode:**\n`{result}`")
+        await eor(dogevent, f"**Failed to Decode:**\n`{result}`")
     except Exception as e:
-        await edit_or_reply(dogevent, f"**Error:**\n`{str(e)}`")
+        await eor(dogevent, f"**Error:**\n`{str(e)}`")
 
 
 @doge.bot_cmd(
@@ -182,7 +170,7 @@ async def parseqr(event):
 )
 async def _(event):
     "to make barcode of given content."
-    dogevent = await edit_or_reply(event, "...")
+    dogevent = await eor(event, "...")
     start = datetime.now()
     input_str = event.pattern_match.group(1)
     message = "SYNTAX: `.barcode <long text to include>`"
@@ -220,7 +208,7 @@ async def _(event):
         return await dogevent.edit(str(e))
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(dogevent, "Created BarCode in {} seconds".format(ms))
+    await edl(dogevent, "Created BarCode in {} seconds".format(ms))
 
 
 @doge.bot_cmd(
@@ -281,15 +269,15 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(";")
     if len(input_sgra) != 2:
-        return await edit_delete(event, "**Syntax : **`.cal year ; month `", 5)
+        return await edl(event, "**Syntax : **`.cal year ; month `", 5)
 
     yyyy = input_sgra[0]
     mm = input_sgra[1]
     try:
         output_result = calendar.month(int(yyyy.strip()), int(mm.strip()))
-        await edit_or_reply(event, f"```{output_result}```")
+        await eor(event, f"```{output_result}```")
     except Exception as e:
-        await edit_delete(event, f"**Error:**\n`{str(e)}`", 5)
+        await edl(event, f"**Error:**\n`{str(e)}`", 5)
 
 
 @doge.bot_cmd(
@@ -309,11 +297,11 @@ async def spy(event):
     "To see details of an ip."
     inpt = event.pattern_match.group(1)
     if not inpt:
-        return await edit_delete(event, "**Give an ip address to lookup...**", 20)
+        return await edl(event, "**Give an ip address to lookup...**", 20)
     check = "" if inpt == "mine" else inpt
     API = Config.IPDATA_API
     if API is None:
-        return await edit_delete(
+        return await edl(
             event,
             "**Get an API key from [Ipdata](https://dashboard.ipdata.co/sign-up.html) & set that in heroku var `IPDATA_API`**",
             80,
@@ -321,9 +309,9 @@ async def spy(event):
     url = requests.get(f"https://api.ipdata.co/{check}?api-key={API}")
     r = url.json()
     try:
-        return await edit_delete(event, f"**{r['message']}**", 60)
+        return await edl(event, f"**{r['message']}**", 60)
     except KeyError:
-        await edit_or_reply(event, "🔍 **Searching...**")
+        await eor(event, "🔍 **Searching...**")
     ip = r["ip"]
     city = r["city"]
     postal = r["postal"]
@@ -375,7 +363,7 @@ async def spy(event):
     <b>• Time :</b> <code>{current_time[11:16]}</code>\n\
     <b>• Date :</b> <code>{current_time[:10]}</code>\n\
     <b>• Time Offset :</b> <code>{current_time[-6:]}</code>"
-    await edit_or_reply(event, string, parse_mode="html")
+    await eor(event, string, parse_mode="html")
 
 
 @doge.bot_cmd(
@@ -393,12 +381,12 @@ async def _(event):
     url = "https://ifsc.razorpay.com/{}".format(input_str)
     r = requests.get(url)
     if r.status_code != 200:
-        return await edit_or_reply(event, "`{}`: {}".format(input_str, r.text))
+        return await eor(event, "`{}`: {}".format(input_str, r.text))
 
     b = r.json()
     a = json.dumps(b, sort_keys=True, indent=4)
     # https://stackoverflow.com/a/9105132/4723940
-    await edit_or_reply(event, str(a))
+    await eor(event, str(a))
 
 
 @doge.bot_cmd(
@@ -415,7 +403,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     message_id = await reply_id(event)
     if not input_str.startswith("#"):
-        return await edit_or_reply(
+        return await eor(
             event, "**Syntax : **`.color <color_code>` example : `.color #ff0000`"
         )
     try:
@@ -447,7 +435,7 @@ async def _(event):
 )
 async def _(event):
     "Searches for the query for the relevant XKCD comic."
-    dogevent = await edit_or_reply(event, "`processiong...........`")
+    dogevent = await eor(event, "`processiong...........`")
     input_str = event.pattern_match.group(1)
     xkcd_id = None
     if input_str:

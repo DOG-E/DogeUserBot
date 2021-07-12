@@ -11,8 +11,8 @@ from telethon import __version__
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
-from ..helpers.utils import _dogutils
+from ..core.managers import eor
+from ..helpers.utils import _dogeutils
 
 plugin_category = "tools"
 
@@ -92,8 +92,8 @@ async def psu(event):
 async def cpu(event):
     "shows cpu information"
     cmd = "cat /proc/cpuinfo | grep 'model name'"
-    o = (await _dogutils.runcmd(cmd))[0]
-    await edit_or_reply(
+    o = (await _dogeutils.runcmd(cmd))[0]
+    await eor(
         event, f"**[Dog's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
     )
 
@@ -108,11 +108,11 @@ async def cpu(event):
 )
 async def sysdetails(sysd):
     "Shows system information using neofetch"
-    dogevent = await edit_or_reply(sysd, "`Fectching system information.`")
+    dogevent = await eor(sysd, "`Fectching system information.`")
     cmd = "git clone https://github.com/dylanaraps/neofetch.git"
-    await _dogutils.runcmd(cmd)
+    await _dogeutils.runcmd(cmd)
     neo = "neofetch/neofetch --off --color_blocks off --bold off --cpu_temp C \
                     --cpu_speed on --cpu_cores physical --kernel_shorthand off --stdout"
-    a, b, c, d = await _dogutils.runcmd(neo)
+    a, b, c, d = await _dogeutils.runcmd(neo)
     result = str(a) + str(b)
-    await edit_or_reply(dogevent, "**Neofetch Result:** `" + result + "`")
+    await eor(dogevent, "**Neofetch Result:** `" + result + "`")

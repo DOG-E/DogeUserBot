@@ -1,4 +1,4 @@
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 
 pawn = [
     "nsfw",
@@ -108,7 +108,7 @@ hemtai = [
 async def importent(event):
     dog = []
     if str(event.chat_id) in dog:
-        await edit_or_reply(event, "**Yes I'm GAY**")
+        await eor(event, "**Yes I'm GAY**")
         await event.client.kick_participant(event.chat_id, "me")
         return True
     return False

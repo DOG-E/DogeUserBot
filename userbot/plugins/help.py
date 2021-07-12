@@ -4,7 +4,7 @@ from userbot import doge
 
 from ..Config import Config
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 
 cmdprefix = Config.COMMAND_HAND_LER
@@ -46,17 +46,17 @@ async def cmdinfo(input_str, event, plugin=False):
         about = CMD_INFO[input_str]
     except KeyError:
         if plugin:
-            await edit_delete(
+            await edl(
                 event,
                 f"**There is no plugin or command as **`{input_str}`** in your bot.**",
             )
             return None
-        await edit_delete(
+        await edl(
             event, f"**There is no command as **`{input_str}`** in your bot.**"
         )
         return None
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**Error**\n`{str(e)}`")
         return None
     outstr = f"**Command :** `{cmdprefix}{input_str}`\n"
     plugin = get_key(input_str)
@@ -76,7 +76,7 @@ async def plugininfo(input_str, event, flag):
         outstr = await cmdinfo(input_str, event, plugin=True)
         return outstr
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**Error**\n`{str(e)}`")
         return None
     if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
@@ -127,7 +127,7 @@ async def cmdlist():
 
 
 @doge.bot_cmd(
-    pattern="help ?(-c|-p|-t)? ?([\s\S]*)?",
+    pattern="(help|h)?(c|p|t)? ?([\s\S]*)?",
     command=("help", plugin_category),
     info={
         "header": "To get guide for DogeUserBot.",
@@ -139,10 +139,11 @@ async def cmdlist():
             "t": "To get all plugins in text format.",
         },
         "usage": [
-            "{tr}help (plugin/command name)",
-            "{tr}help -c (command name)",
+            "{tr}help or {tr}h (plugin/command name)",
+            "{tr}helpc or {tr}hc (command name)",
+            "{tr}helpt or {tr}ht"
         ],
-        "examples": ["{tr}help help", "{tr}help -c help"],
+        "examples": ["{tr}help help", "{tr}helpc help"],
     },
 )
 async def _(event):
@@ -150,7 +151,7 @@ async def _(event):
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
-    if flag and flag == "-c" and input_str:
+    if flag and flag == "c" and input_str:
         outstr = await cmdinfo(input_str, event)
         if outstr is None:
             return
@@ -158,15 +159,14 @@ async def _(event):
         outstr = await plugininfo(input_str, event, flag)
         if outstr is None:
             return
+    elif flag == "t":
+        outstr = await grpinfo()
     else:
-        if flag == "-t":
-            outstr = await grpinfo()
-        else:
-            results = await event.client.inline_query(Config.TG_BOT_USERNAME, "help")
-            await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
-            await event.delete()
-            return
-    await edit_or_reply(event, outstr)
+        results = await event.client.inline_query(Config.TG_BOT_USERNAME, "help")
+        await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
+        await event.delete()
+        return
+    await eor(event, outstr)
 
 
 @doge.bot_cmd(
@@ -190,14 +190,14 @@ async def _(event):
         try:
             cmds = PLG_INFO[input_str]
         except KeyError:
-            return await edit_delete(event, "__Invalid plugin name recheck it.__")
+            return await edl(event, "__Invalid plugin name recheck it.__")
         except Exception as e:
-            return await edit_delete(event, f"**Error**\n`{str(e)}`")
+            return await edl(event, f"**Error**\n`{str(e)}`")
         outstr = f"**✘ {input_str.title()} has {len(cmds)} commands**\n"
         for cmd in cmds:
             outstr += f"  - `{cmdprefix}{cmd}`\n"
         outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
-    await edit_or_reply(
+    await eor(
         event, outstr, aslink=True, linktext="Total Commands of DogeUserBot are :"
     )
 
@@ -220,7 +220,7 @@ async def _(event):
         out += f"\n\n__For more info check {cmdprefix}help -c <command>__"
     else:
         out = f"I can't find any such command `{cmd}` in DogeUserBot"
-    await edit_or_reply(event, out)
+    await eor(event, out)
 
 
 @doge.bot_cmd(
@@ -246,4 +246,4 @@ async def _(event):
               \n**DC4 :** Amsterdam, NL\
               \n**DC5 : **Singapore, SG\
                 "
-    await edit_or_reply(event, result)
+    await eor(event, result)

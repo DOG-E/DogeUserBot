@@ -308,7 +308,7 @@ width="150">
 <h2
 align="center">
 
-**[🐶](https://bit.do/DogeUserBot) Made with [❤](https://bit.do/TeleDoge) by [@TeleDoge](https://github.com/TeleDoge) [🐾](https://bit.do/TeleDoge)**
+**[🐶](https://bit.do/DogeUserBot) Made with [❤](https://bit.do/TeleDoge) by [DOG-E](https://github.com/DOG-E) [🐾](https://bit.do/DogeUserBot)**
 
 </h2>
 <br>

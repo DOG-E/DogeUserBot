@@ -18,12 +18,8 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_input_location
 
-from userbot import doge
-
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import reply_id
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
@@ -54,11 +50,11 @@ async def _(event):
         try:
             chat = await event.client.get_entity(input_str)
         except Exception as e:
-            return await edit_delete(event, str(e))
+            return await edl(event, str(e))
     else:
         chat = to_write_chat
         if not event.is_group:
-            return await edit_or_reply(event, "`Are you sure this is a group?`")
+            return await eor(event, "`Are you sure this is a group?`")
     try:
         async for x in event.client.iter_participants(
             chat, filter=ChannelParticipantsAdmins
@@ -73,11 +69,10 @@ async def _(event):
         ):
             if x.deleted:
                 mentions += "\n `{}`".format(x.id)
-            else:
-                if isinstance(x.participant, ChannelParticipantAdmin):
-                    mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
-                        x.first_name, x.id, x.id
-                    )
+            elif isinstance(x.participant, ChannelParticipantAdmin):
+                mentions += "\n ⚜️ [{}](tg://user?id={}) `{}`".format(
+                    x.first_name, x.id, x.id
+                )
     except Exception as e:
         mentions += " " + str(e) + "\n"
     await event.client.send_message(event.chat_id, mentions, reply_to=reply_message)
@@ -108,7 +103,7 @@ async def _(event):
         try:
             chat = await event.client.get_entity(input_str)
         except Exception as e:
-            return await edit_or_reply(event, str(e))
+            return await eor(event, str(e))
     try:
         async for x in event.client.iter_participants(
             chat, filter=ChannelParticipantsBots
@@ -123,7 +118,7 @@ async def _(event):
                 )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await edit_or_reply(event, mentions)
+    await eor(event, mentions)
 
 
 @doge.bot_cmd(
@@ -149,11 +144,10 @@ async def get_users(show):
         try:
             chat = await show.client.get_entity(input_str)
         except Exception as e:
-            return await edit_delete(show, f"`{str(e)}`", 10)
-    else:
-        if not show.is_group:
-            return await edit_or_reply(show, "`Are you sure this is a group?`")
-    dogevent = await edit_or_reply(show, "`getting users list wait...`  ")
+            return await edl(show, f"`{str(e)}`", 10)
+    elif not show.is_group:
+        return await edit_or_reply(show, "`Are you sure this is a group?`")
+    dogevent = await eor(show, "`getting users list wait...`  ")
     try:
         if show.pattern_match.group(1):
             async for user in show.client.iter_participants(chat.id):
@@ -173,7 +167,7 @@ async def get_users(show):
                     )
     except Exception as e:
         mentions += " " + str(e) + "\n"
-    await edit_or_reply(dogevent, mentions)
+    await eor(dogevent, mentions)
 
 
 @doge.bot_cmd(
@@ -191,7 +185,7 @@ async def get_users(show):
 )
 async def info(event):
     "To get group information"
-    dogevent = await edit_or_reply(event, "`Analysing the chat...`")
+    dogevent = await eor(event, "`Analysing the chat...`")
     chat = await get_chatinfo(event, dogevent)
     if chat is None:
         return
@@ -239,7 +233,7 @@ async def get_chatinfo(event, dogevent):
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edit_delete(dogevent, "**Error:**\n__Can't fetch the chat__")
+            await edl(dogevent, "**Error:**\n__Can't fetch the chat__")
             return None
     return chat_info
 

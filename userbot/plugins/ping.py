@@ -1,7 +1,7 @@
 import asyncio
 from datetime import datetime
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import doge, hmention
 
 plugin_category = "tools"
@@ -21,7 +21,7 @@ async def _(event):
     flag = event.pattern_match.group(1)
     start = datetime.now()
     if flag == " -a":
-        dogevent = await edit_or_reply(event, "`!....`")
+        dogevent = await eor(event, "`!....`")
         await asyncio.sleep(0.3)
         await dogevent.edit("`..!..`")
         await asyncio.sleep(0.3)
@@ -31,7 +31,7 @@ async def _(event):
         ms = round((tms - 0.6) / 3, 3)
         await dogevent.edit(f"**☞ Average Pong!**\n➥ {ms} ms")
     else:
-        dogevent = await edit_or_reply(event, "<b><i>☞ Pong!</b></i>", "html")
+        dogevent = await eor(event, "<b><i>☞ Pong!</b></i>", "html")
         end = datetime.now()
         ms = (end - start).microseconds / 1000
         await dogevent.edit(
@@ -50,7 +50,7 @@ async def _(event):
     start = datetime.now()
     animation_interval = 0.3
     animation_ttl = range(26)
-    event = await edit_or_reply(event, "ping....")
+    event = await eor(event, "ping....")
     animation_chars = [
         "⬛⬛⬛⬛⬛⬛⬛⬛⬛",
         "⬛⬛⬛⬛⬛⬛⬛⬛⬛ \n⬛‎📶‎📶‎📶‎📶‎📶‎📶‎📶⬛",

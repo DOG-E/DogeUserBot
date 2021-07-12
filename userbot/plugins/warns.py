@@ -2,7 +2,7 @@ import html
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..sql_helper import warns_sql as sql
 
 plugin_category = "admin"
@@ -45,7 +45,7 @@ async def _(event):
         )
         if warn_reason:
             reply += "\nReason for last warn:\n{}".format(html.escape(warn_reason))
-    await edit_or_reply(event, reply)
+    await eor(event, reply)
 
 
 @doge.bot_cmd(
@@ -59,13 +59,15 @@ async def _(event):
 async def _(event):
     "To get users warns list"
     reply_message = await event.get_reply_message()
+    if not reply_message:
+        return await edl(event, "__Reply to user to get his warns.__")
     result = sql.get_warns(reply_message.sender_id, event.chat_id)
     if not result or result[0] == 0:
-        return await edit_or_reply(event, "this user hasn't got any warnings!")
+        return await eor(event, "this user hasn't got any warnings!")
     num_warns, reasons = result
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     if not reasons:
-        return await edit_or_reply(
+        return await eor(
             event,
             "this user has {} / {} warning, but no reasons for any of them.".format(
                 num_warns, limit
@@ -95,4 +97,4 @@ async def _(event):
     "To reset warns"
     reply_message = await event.get_reply_message()
     sql.reset_warns(reply_message.sender_id, event.chat_id)
-    await edit_or_reply(event, "__Warnings have been reset!__")
+    await eor(event, "__Warnings have been reset!__")

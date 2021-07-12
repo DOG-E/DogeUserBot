@@ -5,7 +5,7 @@ import json
 import requests
 
 from ..sql_helper.globals import gvarstatus
-from . import doge, edit_delete, edit_or_reply
+from . import doge, edl, eor
 
 plugin_category = "extra"
 
@@ -27,7 +27,7 @@ async def get_adzan(adzan):
     url = f"http://muslimsalat.com/{LOKASI}.json?key=bd099c5825cbedb9aa934e255a81a5fc"
     request = requests.get(url)
     if request.status_code != 200:
-        return await edit_delete(
+        return await edl(
             adzan, f"`Couldn't fetch any data about the city {LOKASI}`", 5
         )
     result = json.loads(request.text)
@@ -42,4 +42,4 @@ async def get_adzan(adzan):
             \n<b>Maghrib    : </b><i>{result['items'][0]['maghrib']}</i>\
             \n<b>Isha     : </b><i>{result['items'][0]['isha']}</i>\
     "
-    await edit_or_reply(adzan, dogresult, "html")
+    await eor(adzan, dogresult, "html")

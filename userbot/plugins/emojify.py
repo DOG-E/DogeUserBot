@@ -5,7 +5,7 @@ Userbot plugin for CatUserbot
 """
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers import fonts as emojify
 
 plugin_category = "fun"
@@ -27,7 +27,7 @@ async def itachi(event):
     if not args and get:
         args = get.text
     if not args:
-        await edit_or_reply(
+        await eor(
             event, "`What am I Supposed to do with this idiot, Give me a text. `"
         )
         return
@@ -39,7 +39,7 @@ async def itachi(event):
             result += char
         else:
             result += a
-    await edit_or_reply(event, result)
+    await eor(event, result)
 
 
 @doge.bot_cmd(
@@ -58,7 +58,7 @@ async def itachi(event):
     if not args and get:
         args = get.text
     if not args:
-        return await edit_or_reply(
+        return await eor(
             event, "`What am I Supposed to do with this idiot, Give me a text. `"
         )
     emoji, arg = args.split(" ", 1)
@@ -66,8 +66,8 @@ async def itachi(event):
     for a in arg:
         a = a.lower()
         if a in emojify.kakashitext:
-            char = emojify.itachiemoji[emojify.kakashitext.index(a)].format(cj=emoji)
+            char = emojify.itachiemoji[emojify.kakashitext.index(a)].format(e=emoji)
             result += char
         else:
             result += a
-    await edit_or_reply(event, result)
+    await eor(event, result)

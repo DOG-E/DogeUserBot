@@ -5,7 +5,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_delete
+from ..core.managers import edl
 from ..helpers.tools import media_type
 from ..helpers.utils import _format
 from ..sql_helper import no_log_pms_sql
@@ -154,7 +154,7 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.disapprove(chat.id)
-            await edit_delete(
+            await edl(
                 event, "`logging of messages from this group has been started`", 5
             )
 
@@ -176,7 +176,7 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
-            await edit_delete(
+            await edl(
                 event, "`Logging of messages from this chat has been stopped`", 5
             )
 

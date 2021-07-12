@@ -6,7 +6,7 @@ from datetime import datetime
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import reply_id
 from . import progress, reply_id
 
@@ -16,15 +16,15 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
 
 
 @doge.bot_cmd(
-    pattern="rnup ?(-f)? ([\s\S]*)",
-    command=("rnup", plugin_category),
+    pattern="rename ?(-f)? ([\s\S]*)",
+    command=("rename", plugin_category),
     info={
         "header": "To rename and upload the replied file.",
         "flags": {"f": "will upload as file that is document not streamable."},
         "description": "If flag is not used then will upload as steamable file",
         "usage": [
-            "{tr}rnup <new file name>",
-            "{tr}rnup -f <new file name>",
+            "{tr}rename <new file name>",
+            "{tr}rename -f <new file name>",
         ],
     },
 )
@@ -34,15 +34,15 @@ async def _(event):
     flags = event.pattern_match.group(1)
     forcedoc = bool(flags)
     supsstream = not flags
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
-        "`Rename & Upload in process 🙄🙇‍♂️🙇‍♂️🙇‍♀️ It might take some time if file size is big`",
+        "`Rename & upload in process...`",
     )
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(2)
     if not event.reply_to_msg_id:
         return await dogevent.edit(
-            "**Syntax : **`.rnup file name` as reply to a Telegram media"
+            "**Syntax : **`.rename filename.extension` as reply to a Telegram media"
         )
     start = datetime.now()
     file_name = input_str
@@ -65,7 +65,7 @@ async def _(event):
     if not os.path.exists(downloaded_file_name):
         return await dogevent.edit(f"File Not Found {input_str}")
     c_time = time.time()
-    caat = await event.client.send_file(
+    doog = await event.client.send_file(
         event.chat_id,
         downloaded_file_name,
         force_document=forcedoc,
@@ -80,7 +80,7 @@ async def _(event):
     end_two = datetime.now()
     os.remove(downloaded_file_name)
     ms_two = (end_two - end).seconds
-    await edit_delete(
+    await edl(
         dogevent,
         f"`Downloaded file in {ms_one} seconds.\nAnd Uploaded in {ms_two} seconds.`",
     )

@@ -7,10 +7,10 @@ from PIL import Image, ImageFilter, ImageOps
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import media_type
 from ..helpers.functions import dotify
-from ..helpers.utils import _dogtools
+from ..helpers.utils import _dogetools
 
 plugin_category = "fun"
 
@@ -42,7 +42,7 @@ async def imirror(event):  # sourcery no-metrics
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to make mirror.__")
+        return await edl(event, "__Reply to photo or sticker to make mirror.__")
     dogevent = await event.edit("__Reflecting the image....__")
     args = event.pattern_match.group(1)
     if args:
@@ -52,14 +52,14 @@ async def imirror(event):  # sourcery no-metrics
         filename = "DogeUserBot.jpg"
         f_format = "jpeg"
     try:
-        imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+        imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
         if imag[1] is None:
-            return await edit_delete(
+            return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
         image = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             dogevent, f"**Error in identifying image:**\n__{str(e)}__"
         )
     flag = event.pattern_match.group(3) or "r"
@@ -121,26 +121,26 @@ async def irotate(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(
+        return await edl(
             event, "__Reply to photo or sticker to rotate it with given angle.__"
         )
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to rotate it with given angle. Animated sticker is not supported__",
         )
     args = event.pattern_match.group(1)
-    dogevent = await edit_or_reply(event, "__Rotating the replied media...__")
-    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+    dogevent = await eor(event, "__Rotating the replied media...__")
+    imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
-        return await edit_delete(
+        return await edl(
             imag[0], "__Unable to extract image from the replied message.__"
         )
     image = Image.open(imag[1])
     try:
         image = image.rotate(int(args), expand=True)
     except Exception as e:
-        return await edit_delete(event, "**Error**\n" + str(e))
+        return await edl(event, "**Error**\n" + str(e))
     await event.delete()
     img = io.BytesIO()
     img.name = "DogeUserBot.png"
@@ -167,17 +167,17 @@ async def iresize(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to resize it.__")
+        return await edl(event, "__Reply to photo or sticker to resize it.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to resize it. Animated sticker is not supported__",
         )
     args = (event.pattern_match.group(1)).split()
-    dogevent = await edit_or_reply(event, "__Resizeing the replied media...__")
-    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+    dogevent = await eor(event, "__Resizeing the replied media...__")
+    imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
-        return await edit_delete(
+        return await edl(
             imag[0], "__Unable to extract image from the replied message.__"
         )
     image = Image.open(imag[1])
@@ -187,20 +187,20 @@ async def iresize(event):
         try:
             nw, nh = int(args[0]), int(args[0])
         except ValueError:
-            return await edit_delete(dogevent, f"**Error:**\n__Invalid dimension.__")
+            return await edl(dogevent, f"**Error:**\n__Invalid dimension.__")
     else:
         try:
             nw = int(args[0])
         except ValueError:
-            return await edit_delete(dogevent, f"**Error:**\n__Invalid width.__")
+            return await edl(dogevent, f"**Error:**\n__Invalid width.__")
         try:
             nh = int(args[1])
         except ValueError:
-            return await edit_delete(dogevent, f"**Error:**\n__Invalid height.__")
+            return await edl(dogevent, f"**Error:**\n__Invalid height.__")
     try:
         image = image.resize((nw, nh))
     except Exception as e:
-        return await edit_delete(dogevent, f"**Error:** __While resizing.\n{str(e)}__")
+        return await edl(dogevent, f"**Error:** __While resizing.\n{str(e)}__")
     await event.delete()
     img = io.BytesIO()
     img.name = "DogeUserBot.png"
@@ -223,22 +223,22 @@ async def square_cmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo"]:
-        return await edit_delete(event, "__Reply to photo to make it square image.__")
+        return await edl(event, "__Reply to photo to make it square image.__")
     dogevent = await event.edit("__Adding borders to make it square....__")
     try:
-        imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+        imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
         if imag[1] is None:
-            return await edit_delete(
+            return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
         img = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(
+        return await edl(
             dogevent, f"**Error in identifying image:**\n__{str(e)}__"
         )
     w, h = img.size
     if w == h:
-        return await edit_delete(event, "__The replied image is already in 1:1 ratio__")
+        return await edl(event, "__The replied image is already in 1:1 ratio__")
     _min, _max = min(w, h), max(w, h)
     bg = img.crop(((w - _min) // 2, (h - _min) // 2, (w + _min) // 2, (h + _min) // 2))
     bg = bg.filter(ImageFilter.GaussianBlur(5))
@@ -267,11 +267,11 @@ async def pic_gifcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(
+        return await edl(
             event, "__Reply to photo or sticker to make it doted image.__"
         )
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to make it doted image. Animated sticker is not supported__",
         )
@@ -281,10 +281,10 @@ async def pic_gifcmd(event):
             pix = int(args) if int(args) > 0 else 100
     else:
         pix = 100
-    dogevent = await edit_or_reply(event, "__🎞Dotifying image...__")
-    imag = await _dogtools.media_to_pic(dogevent, reply, noedits=True)
+    dogevent = await eor(event, "__🎞Dotifying image...__")
+    imag = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if imag[1] is None:
-        return await edit_delete(
+        return await edl(
             imag[0], "__Unable to extract image from the replied message.__"
         )
     result = await dotify(imag[1], pix, True)

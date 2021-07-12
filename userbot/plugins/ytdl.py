@@ -4,9 +4,7 @@ import os
 import pathlib
 import re
 import time
-from datetime import datetime
 
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import types
 from telethon.utils import get_attributes
 from youtube_dl import YoutubeDL
@@ -22,7 +20,7 @@ from youtube_dl.utils import (
 )
 
 from ..helpers.utils import _format
-from . import doge, edit_delete, edit_or_reply, hmention, progress, reply_id, ytsearch
+from . import doge, edl, eor, progress, reply_id, ytsearch
 
 plugin_category = "misc"
 
@@ -171,8 +169,8 @@ async def download_audio(event):
         myString = rmsg.text
         url = re.search("(?P<url>https?://[^\s]+)", myString).group("url")
     if not url:
-        return await edit_or_reply(event, "`What I am Supposed to find? Give link`")
-    dogevent = await edit_or_reply(event, "`Preparing to download...`")
+        return await eor(event, "`What I am Supposed to find? Give link`")
+    dogevent = await eor(event, "`Preparing to download...`")
     reply_to_id = await reply_id(event)
     ytdl_data = await ytdl_down(dogevent, audio_opts, url)
     if ytdl_data is None:
@@ -238,8 +236,8 @@ async def download_video(event):
         myString = rmsg.text
         url = re.search("(?P<url>https?://[^\s]+)", myString).group("url")
     if not url:
-        return await edit_or_reply(event, "What I am Supposed to find? Give link")
-    dogevent = await edit_or_reply(event, "`Preparing to download...`")
+        return await eor(event, "What I am Supposed to find? Give link")
+    dogevent = await eor(event, "`Preparing to download...`")
     reply_to_id = await reply_id(event)
     ytdl_data = await ytdl_down(dogevent, video_opts, url)
     if ytdl_down is None:
@@ -303,10 +301,10 @@ async def yt_search(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await edit_delete(
+        return await edl(
             event, "`Reply to a message or pass a query to search!`"
         )
-    video_q = await edit_or_reply(event, "`Searching...`")
+    video_q = await eor(event, "`Searching...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))
         if lim <= 0:
@@ -316,55 +314,7 @@ async def yt_search(event):
     try:
         full_response = await ytsearch(query, limit=lim)
     except Exception as e:
-        return await edit_delete(video_q, str(e), time=10, parse_mode=_format.parse_pre)
+        return await edl(video_q, str(e), time=10, parse_mode=_format.parse_pre)
     reply_text = f"**•  Search Query:**\n`{query}`\n\n**•  Results:**\n{full_response}"
-    await edit_or_reply(video_q, reply_text)
+    await eor(video_q, reply_text)
 
-
-@doge.bot_cmd(
-    pattern="insta ([\s\S]*)",
-    command=("insta", plugin_category),
-    info={
-        "header": "To download instagram video/photo",
-        "description": "Note downloads only public profile photos/videos.",
-        "examples": [
-            "{tr}insta <link>",
-        ],
-    },
-)
-async def kakashi(event):
-    "For downloading instagram media"
-    chat = "@instasavegrambot"
-    link = event.pattern_match.group(1)
-    if "www.instagram.com" not in link:
-        await edit_or_reply(
-            event, "` I need a Instagram link to download it's Video...`(*_*)"
-        )
-    else:
-        start = datetime.now()
-        dogevent = await edit_or_reply(event, "**Downloading.....**")
-    async with event.client.conversation(chat) as conv:
-        try:
-            msg_start = await conv.send_message("/start")
-            response = await conv.get_response()
-            msg = await conv.send_message(link)
-            video = await conv.get_response()
-            details = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await dogevent.edit("**Error:** `unblock` @instasavegrambot `and retry!`")
-            return
-        await dogevent.delete()
-        dog = await event.client.send_file(
-            event.chat_id,
-            video,
-        )
-        end = datetime.now()
-        ms = (end - start).seconds
-        await dog.edit(
-            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-            parse_mode="html",
-        )
-    await event.client.delete_messages(
-        conv.chat_id, [msg_start.id, response.id, msg.id, video.id, details.id]
-    )

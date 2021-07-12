@@ -31,9 +31,9 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
-    _dogutils,
+    _dogeutils,
     doge,
-    edit_delete,
+    edl,
     logging,
 )
 
@@ -282,7 +282,7 @@ async def autopfp_start():
             )
         i += 1
         await doge(functions.photos.UploadProfilePhotoRequest(file))
-        await _dogutils.runcmd("rm -rf donottouch.jpg")
+        await _dogeutils.runcmd("rm -rf donottouch.jpg")
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTOPFP_START = gvarstatus("autopfp_strings") is not None
 
@@ -302,7 +302,7 @@ async def _(event):
     "To set random batman profile pics"
     if gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
-        return await edit_delete(event, f"`{pfp_string} is already running.`")
+        return await edl(event, f"`{pfp_string} is already running.`")
     addgvar("autopfp_strings", "batmanpfp_strings")
     await event.edit("`Starting batman Profile Pic.`")
     await autopfp_start()
@@ -323,7 +323,7 @@ async def _(event):
     "To set random thor profile pics"
     if gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
-        return await edit_delete(event, f"`{pfp_string} is already running.`")
+        return await edl(event, f"`{pfp_string} is already running.`")
     addgvar("autopfp_strings", "thorpfp_strings")
     await event.edit("`Starting thor Profile Pic.`")
     await autopfp_start()
@@ -349,7 +349,7 @@ async def _(event):
 async def _(event):
     "To set time on your profile pic"
     if Config.DEFAULT_PIC is None:
-        return await edit_delete(
+        return await edl(
             event,
             "**Error**\nFor functing of autopic you need to set DEFAULT_PIC var in Heroku vars",
             parse_mode=_format.parse_pre,
@@ -367,11 +367,11 @@ async def _(event):
     elif gvarstatus("autopic_counter") is None:
         addgvar("autopic_counter", 30)
     if gvarstatus("autopic") is not None and gvarstatus("autopic") == "true":
-        return await edit_delete(event, f"`Autopic is already enabled`")
+        return await edl(event, f"`Autopic is already enabled`")
     addgvar("autopic", True)
     if input_str:
         addgvar("autopic_counter", input_str)
-    await edit_delete(event, f"`Autopic has been started by my Master`")
+    await edl(event, f"`Autopic has been started by my Master`")
     await autopicloop()
 
 
@@ -393,9 +393,9 @@ async def _(event):
     while not downloader.isFinished():
         pass
     if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
-        return await edit_delete(event, f"`Digitalpic is already enabled`")
+        return await edl(event, f"`Digitalpic is already enabled`")
     addgvar("digitalpic", True)
-    await edit_delete(event, f"`digitalpfp has been started by my Master`")
+    await edl(event, f"`digitalpfp has been started by my Master`")
     await digitalpicloop()
 
 
@@ -414,7 +414,7 @@ async def _(event):
 async def _(event):
     "To set random colour pic with time to profile pic"
     if Config.DEFAULT_PIC is None:
-        return await edit_delete(
+        return await edl(
             event,
             "**Error**\nFor functing of bloom you need to set DEFAULT_PIC var in Heroku vars",
             parse_mode=_format.parse_pre,
@@ -424,9 +424,9 @@ async def _(event):
     while not downloader.isFinished():
         pass
     if gvarstatus("bloom") is not None and gvarstatus("bloom") == "true":
-        return await edit_delete(event, f"`Bloom is already enabled`")
+        return await edl(event, f"`Bloom is already enabled`")
     addgvar("bloom", True)
-    await edit_delete(event, f"`Bloom has been started by my Master`")
+    await edl(event, f"`Bloom has been started by my Master`")
     await bloom_pfploop()
 
 
@@ -467,22 +467,22 @@ async def useless(event):  # sourcery no-metrics
     list_link = get_collection_list("CUSTOM_PFP_LINKS")
     if flag is None:
         if gvarstatus("CUSTOM_PFP") is not None and gvarstatus("CUSTOM_PFP") == "true":
-            return await edit_delete(event, f"`Custom pfp is already enabled`")
+            return await edl(event, f"`Custom pfp is already enabled`")
         if not list_link:
-            return await edit_delete(event, "**ಠ∀ಠ  There no links for custom pfp...**")
+            return await edl(event, "**ಠ∀ಠ  There no links for custom pfp...**")
         addgvar("CUSTOM_PFP", True)
-        await edit_delete(event, "`Starting custom pfp....`")
+        await edl(event, "`Starting custom pfp....`")
         await custompfploop()
         return
     if flag == "l":
         if not list_link:
-            return await edit_delete(
+            return await edl(
                 event, "**ಠ∀ಠ  There no links set for custom pfp...**"
             )
         links = "**Available links for custom pfp are here:-**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
-        await edit_delete(event, links, 60)
+        await edl(event, links, 60)
         return
     if flag == "s":
         if gvarstatus("CUSTOM_PFP") is not None and gvarstatus("CUSTOM_PFP") == "true":
@@ -492,33 +492,33 @@ async def useless(event):  # sourcery no-metrics
                     await event.client.get_profile_photos("me", limit=1)
                 )
             )
-            return await edit_delete(event, "`Custompfp has been stopped now`")
-        return await edit_delete(event, "`Custompfp haven't enabled`")
+            return await edl(event, "`Custompfp has been stopped now`")
+        return await edl(event, "`Custompfp haven't enabled`")
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
         )
     extractor = URLExtract()
     plink = extractor.find_urls(input_str)
     if len(plink) == 0:
-        return await edit_delete(
+        return await edl(
             event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
         )
     if flag == "a":
         for i in plink:
             if not is_in_list("CUSTOM_PFP_LINKS", i):
                 add_to_list("CUSTOM_PFP_LINKS", i)
-        await edit_delete(
+        await edl(
             event, f"**{len(plink)} pictures sucessfully added to custom pfps**"
         )
     elif flag == "r":
         for i in plink:
             if is_in_list("CUSTOM_PFP_LINKS", i):
                 rm_from_list("CUSTOM_PFP_LINKS", i)
-        await edit_delete(
+        await edl(
             event, f"**{len(plink)} pictures sucessfully removed from custom pfps**"
         )
 
@@ -536,9 +536,9 @@ async def useless(event):  # sourcery no-metrics
 async def _(event):
     "To set your display name along with time"
     if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
-        return await edit_delete(event, f"`Autoname is already enabled`")
+        return await edl(event, f"`Autoname is already enabled`")
     addgvar("autoname", True)
-    await edit_delete(event, "`AutoName has been started by my Master `")
+    await edl(event, "`AutoName has been started by my Master `")
     await autoname_loop()
 
 
@@ -555,9 +555,9 @@ async def _(event):
 async def _(event):
     "To update your bio along with time"
     if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
-        return await edit_delete(event, f"`Autobio is already enabled`")
+        return await edl(event, f"`Autobio is already enabled`")
     addgvar("autobio", True)
-    await edit_delete(event, "`Autobio has been started by my Master `")
+    await edl(event, "`Autobio has been started by my Master `")
     await autobio_loop()
 
 
@@ -587,25 +587,25 @@ async def _(event):  # sourcery no-metrics
     if input_str == "thorpfp" and gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
         if pfp_string != "thorpfp":
-            return await edit_delete(event, f"`thorpfp is not started`")
+            return await edl(event, f"`thorpfp is not started`")
         await event.client(
             functions.photos.DeletePhotosRequest(
                 await event.client.get_profile_photos("me", limit=1)
             )
         )
         delgvar("autopfp_strings")
-        return await edit_delete(event, "`thorpfp has been stopped now`")
+        return await edl(event, "`thorpfp has been stopped now`")
     if input_str == "batmanpfp" and gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
         if pfp_string != "batmanpfp":
-            return await edit_delete(event, f"`batmanpfp is not started`")
+            return await edl(event, f"`batmanpfp is not started`")
         await event.client(
             functions.photos.DeletePhotosRequest(
                 await event.client.get_profile_photos("me", limit=1)
             )
         )
         delgvar("autopfp_strings")
-        return await edit_delete(event, "`batmanpfp has been stopped now`")
+        return await edl(event, "`batmanpfp has been stopped now`")
     if input_str == "autopic":
         if gvarstatus("autopic") is not None and gvarstatus("autopic") == "true":
             delgvar("autopic")
@@ -616,8 +616,8 @@ async def _(event):  # sourcery no-metrics
                     os.remove(autopic_path)
                 except BaseException:
                     return
-            return await edit_delete(event, "`Autopic has been stopped now`")
-        return await edit_delete(event, "`Autopic haven't enabled`")
+            return await edl(event, "`Autopic has been stopped now`")
+        return await edl(event, "`Autopic haven't enabled`")
     if input_str == "digitalpfp":
         if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
             delgvar("digitalpic")
@@ -626,8 +626,8 @@ async def _(event):  # sourcery no-metrics
                     await event.client.get_profile_photos("me", limit=1)
                 )
             )
-            return await edit_delete(event, "`Digitalpfp has been stopped now`")
-        return await edit_delete(event, "`Digitalpfp haven't enabled`")
+            return await edl(event, "`Digitalpfp has been stopped now`")
+        return await edl(event, "`Digitalpfp haven't enabled`")
     if input_str == "bloom":
         if gvarstatus("bloom") is not None and gvarstatus("bloom") == "true":
             delgvar("bloom")
@@ -638,29 +638,29 @@ async def _(event):  # sourcery no-metrics
                     os.remove(autopic_path)
                 except BaseException:
                     return
-            return await edit_delete(event, "`Bloom has been stopped now`")
-        return await edit_delete(event, "`Bloom haven't enabled`")
+            return await edl(event, "`Bloom has been stopped now`")
+        return await edl(event, "`Bloom haven't enabled`")
     if input_str == "autoname":
         if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
             delgvar("autoname")
             await event.client(
                 functions.account.UpdateProfileRequest(first_name=DEFAULTUSER)
             )
-            return await edit_delete(event, "`Autoname has been stopped now`")
-        return await edit_delete(event, "`Autoname haven't enabled`")
+            return await edl(event, "`Autoname has been stopped now`")
+        return await edl(event, "`Autoname haven't enabled`")
     if input_str == "autobio":
         if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
             delgvar("autobio")
             await event.client(
                 functions.account.UpdateProfileRequest(about=DEFAULTUSERBIO)
             )
-            return await edit_delete(event, "`Autobio has been stopped now`")
-        return await edit_delete(event, "`Autobio haven't enabled`")
+            return await edl(event, "`Autobio has been stopped now`")
+        return await edl(event, "`Autobio haven't enabled`")
     if input_str == "spam":
         if gvarstatus("spamwork") is not None and gvarstatus("spamwork") == "true":
             delgvar("spamwork")
-            return await edit_delete(event, "`Spam cmd has been stopped now`")
-        return await edit_delete(event, "`You haven't started spam`")
+            return await edl(event, "`Spam cmd has been stopped now`")
+        return await edl(event, "`You haven't started spam`")
     END_CMDS = [
         "autopic",
         "digitalpfp",
@@ -672,7 +672,7 @@ async def _(event):  # sourcery no-metrics
         "spam",
     ]
     if input_str not in END_CMDS:
-        await edit_delete(
+        await edl(
             event,
             f"{input_str} is invalid end command.Mention clearly what should i end.",
             parse_mode=_format.parse_pre,

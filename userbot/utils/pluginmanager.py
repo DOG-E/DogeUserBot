@@ -7,10 +7,10 @@ from userbot import CMD_HELP, LOAD_PLUG
 from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers.tools import media_type
-from ..helpers.utils import _dogtools, _dogutils, _format, install_pip, reply_id
+from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
 from .decorators import admin_cmd, sudo_cmd
 
 LOGS = logging.getLogger("DogeUserBot")
@@ -46,13 +46,13 @@ def load_module(shortname, plugin_path=None):
         mod.CMD_HELP = CMD_HELP
         mod.reply_id = reply_id
         mod.admin_cmd = admin_cmd
-        mod._dogutils = _dogutils
-        mod._dogtools = _dogtools
+        mod._dogeutils = _dogeutils
+        mod._dogetools = _dogetools
         mod.media_type = media_type
-        mod.edit_delete = edit_delete
+        mod.edl = edl
         mod.install_pip = install_pip
         mod.parse_pre = _format.parse_pre
-        mod.edit_or_reply = edit_or_reply
+        mod.eor = eor
         mod.logger = logging.getLogger(shortname)
         mod.borg = doge
         spec.loader.exec_module(mod)

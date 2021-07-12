@@ -9,8 +9,8 @@ from . import (
     CMD_LIST,
     SUDO_LIST,
     doge,
-    edit_delete,
-    edit_or_reply,
+    edl,
+    eor,
     hmention,
     reply_id,
 )
@@ -42,18 +42,18 @@ async def install(event):
                 path1 = Path(downloaded_file_name)
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
-                await edit_delete(
+                await edl(
                     event,
                     f"Installed Plugin `{os.path.basename(downloaded_file_name)}`",
                     10,
                 )
             else:
                 os.remove(downloaded_file_name)
-                await edit_delete(
+                await edl(
                     event, "Errors! This plugin is already installed/pre-installed.", 10
                 )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{str(e)}`", 10)
             os.remove(downloaded_file_name)
 
 
@@ -76,9 +76,9 @@ async def load(event):
         except BaseException:
             pass
         load_module(shortname)
-        await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
+        await edl(event, f"`Successfully loaded {shortname}`", 10)
     except Exception as e:
-        await edit_or_reply(
+        await eor(
             event,
             f"Could not load {shortname} because of the following error.\n{str(e)}",
         )
@@ -103,7 +103,7 @@ async def send(event):
     the_plugin_file = f"./userbot/plugins/{input_str}.py"
     if os.path.exists(the_plugin_file):
         start = datetime.now()
-        caat = await event.client.send_file(
+        doog = await event.client.send_file(
             event.chat_id,
             the_plugin_file,
             force_document=True,
@@ -114,12 +114,12 @@ async def send(event):
         end = datetime.now()
         ms = (end - start).seconds
         await event.delete()
-        await caat.edit(
+        await doog.edit(
             f"<b><i>➥ Plugin Name :- {input_str} .</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
             parse_mode="html",
         )
     else:
-        await edit_or_reply(event, "404: File Not Found")
+        await eor(event, "404: File Not Found")
 
 
 @doge.bot_cmd(
@@ -137,9 +137,9 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"Unloaded {shortname} successfully")
+        await eor(event, f"Unloaded {shortname} successfully")
     except Exception as e:
-        await edit_or_reply(event, f"Successfully unload {shortname}\n{str(e)}")
+        await eor(event, f"Successfully unload {shortname}\n{str(e)}")
 
 
 @doge.bot_cmd(
@@ -158,7 +158,7 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     path = Path(f"userbot/plugins/{shortname}.py")
     if not os.path.exists(path):
-        return await edit_delete(
+        return await edl(
             event, f"There is no plugin with path {path} to uninstall it"
         )
     os.remove(path)
@@ -170,6 +170,6 @@ async def unload(event):
         CMD_HELP.pop(shortname)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"{shortname} is Uninstalled successfully")
+        await eor(event, f"{shortname} is Uninstalled successfully")
     except Exception as e:
-        await edit_or_reply(event, f"Successfully uninstalled {shortname}\n{str(e)}")
+        await eor(event, f"Successfully uninstalled {shortname}\n{str(e)}")

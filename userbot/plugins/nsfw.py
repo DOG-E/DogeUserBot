@@ -13,7 +13,7 @@ import requests
 from userbot import doge
 
 from ..helpers.functions import age_verification
-from . import edit_delete, edit_or_reply, reply_id, useless
+from . import edl, eor, reply_id, useless
 
 plugin_category = "useless"
 
@@ -38,7 +38,7 @@ async def danbooru(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    await edit_or_reply(event, "`Processing…`")
+    await eor(event, "`Processing…`")
     flag = await useless.importent(event)
     if flag:
         return
@@ -55,19 +55,19 @@ async def danbooru(event):
         if response.status_code == 200:
             response = response.json()
         else:
-            return await edit_delete(
+            return await edl(
                 event, f"**An error occurred, response code: **`{response.status_code}`"
             )
 
     if not response:
-        return await edit_delete(event, f"**No results for query:** __{search_query}__")
+        return await edl(event, f"**No results for query:** __{search_query}__")
     valid_urls = [
         response[0][url]
         for url in ["file_url", "large_file_url", "source"]
         if url in response[0].keys()
     ]
     if not valid_urls:
-        return await edit_delete(
+        return await edl(
             event, f"**Failed to find URLs for query:** __{search_query}__"
         )
     for image_url in valid_urls:
@@ -76,8 +76,8 @@ async def danbooru(event):
             await event.delete()
             return
         except Exception as e:
-            await edit_or_reply(event, f"{e}")
-    await edit_delete(event, f"**Failed to fetch media for query:** __{search_query}__")
+            await eor(event, f"{e}")
+    await edl(event, f"**Failed to fetch media for query:** __{search_query}__")
 
 
 @doge.bot_cmd(
@@ -94,7 +94,7 @@ async def boobs(e):
     reply_to = await reply_id(e)
     if await age_verification(e, reply_to):
         return
-    a = await edit_or_reply(e, "`Sending boobs...`")
+    a = await eor(e, "`Sending boobs...`")
     flag = await useless.importent(e)
     if flag:
         return
@@ -119,7 +119,7 @@ async def butts(e):
     reply_to = await reply_id(e)
     if await age_verification(e, reply_to):
         return
-    a = await edit_or_reply(e, "`Sending beautiful butts...`")
+    a = await eor(e, "`Sending beautiful butts...`")
     flag = await useless.importent(e)
     if flag:
         return

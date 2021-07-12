@@ -12,10 +12,10 @@ from validators.url import url
 from .. import *
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers import *
-from ..helpers.utils import _dogtools, _dogutils, _format, install_pip, reply_id
+from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
 
 # =================== CONSTANT ===================
 bot = doge
@@ -23,6 +23,7 @@ LOGS = logging.getLogger(__name__)
 USERID = doge.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = Config.ALIVE_NAME
 AUTONAME = Config.AUTONAME
+BIO_PREFIX = Config.BIO_PREFIX
 DEFAULT_BIO = Config.DEFAULT_BIO
 
 
@@ -92,7 +93,7 @@ async def make_gif(event, reply, quality=None, fps=None):
     result_p = os.path.join("temp", "animation.gif")
     animation = lottie.parsers.tgs.parse_tgs(reply)
     with open(result_p, "wb") as result:
-        await _dogutils.run_sync(
+        await _dogeutils.run_sync(
             lottie.exporters.gif.export_gif, animation, result, quality, fps
         )
     return result_p

@@ -9,7 +9,7 @@ from pytz import timezone as tz
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from . import reply_id
 
 plugin_category = "utils"
@@ -72,12 +72,12 @@ async def time_func(tdata):
         tz_num = Config.TZ_NUMBER
         timezones = await get_tz(Config.COUNTRY)
     else:
-        return await edit_or_reply(
+        return await eor(
             tdata,
             f"`It's`  **{dt.now().strftime(t_form)}**` on `**{dt.now().strftime(d_form)}** `here.`",
         )
     if not timezones:
-        return await edit_or_reply(tdata, "`Invaild country.`")
+        return await eor(tdata, "`Invaild country.`")
     if len(timezones) == 1:
         time_zone = timezones[0]
     elif len(timezones) > 1:
@@ -94,17 +94,17 @@ async def time_func(tdata):
             return_str += "in the command.`\n"
             return_str += f"`Example: .ctime {c_name} 2`"
 
-            return await edit_or_reply(tdata, return_str)
+            return await eor(tdata, return_str)
 
     dtnow1 = dt.now(tz(time_zone)).strftime(t_form)
     dtnow2 = dt.now(tz(time_zone)).strftime(d_form)
     if c_name != Config.COUNTRY:
-        await edit_or_reply(
+        await eor(
             tdata,
             f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `in {c_name} ({time_zone} timezone).`",
         )
     if Config.COUNTRY:
-        await edit_or_reply(
+        await eor(
             tdata,
             f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `here, in {Config.COUNTRY}"
             f"({time_zone} timezone).`",

@@ -8,7 +8,7 @@ from telethon.tl.types import DocumentAttributeFilename
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers import reply_id
 
 plugin_category = "extra"
@@ -85,25 +85,25 @@ async def _(event):
     "Fries the given sticker or image"
     reply_to = await reply_id(event)
     if not event.reply_to_msg_id:
-        event = await edit_or_reply(event, "Reply to any user message.")
+        event = await eor(event, "Reply to any user message.")
         return
     reply_message = await event.get_reply_message()
     if event.is_reply:
         reply_message = await event.get_reply_message()
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            event = await edit_or_reply(event, "`I can't deep fry that!`")
+            event = await eor(event, "`I can't deep fry that!`")
             return
     if not event.is_reply:
-        event = await edit_or_reply(
+        event = await eor(
             event, "`Reply to an image or sticker to deep fry it!`"
         )
         return
     chat = "@image_deepfrybot"
     if reply_message.sender.bot:
-        event = await edit_or_reply(event, "Reply to actual users message.")
+        event = await eor(event, "Reply to actual users message.")
         return
-    event = await edit_or_reply(event, "```Processing```")
+    event = await eor(event, "```Processing```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -114,7 +114,7 @@ async def _(event):
         except YouBlockedUserError:
             await event.reply("unblock @image_deepfrybot and try again")
             return
-        await bot.send_read_acknowledge(conv.chat_id)
+        await doge.send_read_acknowledge(conv.chat_id)
         if response.text.startswith("Forward"):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
@@ -142,17 +142,14 @@ async def deepfryer(event):
     "image fryer"
     reply_to = await reply_id(event)
     input_str = event.pattern_match.group(1)
-    if input_str:
-        frycount = int(input_str)
-    else:
-        frycount = 1
+    frycount = int(input_str) if input_str else 1
     if event.is_reply:
         reply_message = await event.get_reply_message()
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            return await edit_or_reply(event, "`I can't deep fry that!`")
+            return await eor(event, "`I can't deep fry that!`")
     if not event.is_reply:
-        return await edit_or_reply(
+        return await eor(
             event, "`Reply to an image or sticker to deep fry it!`"
         )
     # download last photo (highres) as byte array
@@ -160,7 +157,7 @@ async def deepfryer(event):
     await event.client.download_media(data, image)
     image = Image.open(image)
     # fry the image
-    hmm = await edit_or_reply(event, "`Deep frying media…`")
+    hmm = await eor(event, "`Deep frying media…`")
     for _ in range(frycount):
         image = await deepfry(image)
     fried_io = io.BytesIO()

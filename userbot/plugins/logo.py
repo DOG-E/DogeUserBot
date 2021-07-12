@@ -13,12 +13,8 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
-from userbot import doge
-
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import clippy
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import convert_toimage, reply_id
+from . import clippy, convert_toimage, doge, _dogetools, edl, eor, reply_id
 
 # ======================================================================================================================================================================================
 
@@ -65,9 +61,9 @@ async def very(event):
     if not text and reply:
         text = reply.text
     if not text:
-        return await edit_delete(event, "**ಠ∀ಠ Gimmi text to make logo**")
+        return await edl(event, "**ಠ∀ಠ Gimmi text to make logo**")
     reply_to_id = await reply_id(event)
-    dogevent = await edit_or_reply(event, "`Processing.....`")
+    dogevent = await eor(event, "`Processing.....`")
     LOGO_FONT_SIZE = gvarstatus("LOGO_FONT_SIZE") or 220
     LOGO_FONT_WIDTH = gvarstatus("LOGO_FONT_WIDTH") or 2
     LOGO_FONT_HEIGHT = gvarstatus("LOGO_FONT_HEIGHT") or 2
@@ -172,30 +168,29 @@ async def bad(event):
         if not input_str and event.reply_to_msg_id and reply_message.media:
             if not os.path.isdir("./temp"):
                 os.mkdir("./temp")
-            output = await _dogtools.media_to_pic(event, reply_message)
+            output = await _dogetools.media_to_pic(event, reply_message)
             convert_toimage(output[1], filename="./temp/bg_img.jpg")
-            return await edit_delete(
+            return await edl(
                 event, "This media is successfully set as background."
             )
-        if input_str.startswith("https://t"):
-            addgvar("LOGO_BACKGROUND", input_str)
-            return await edit_delete(
-                event, f"**Background for logo changed to :-** `{input_str}`"
-            )
-        else:
-            return await edit_delete(
+        if not input_str.startswith("https://t"):
+            return await edl(
                 event, "Give a valid Telegraph picture link, Or reply to a media."
             )
+        addgvar("LOGO_BACKGROUND", input_str)
+        return await edl(
+            event, f"**Background for logo changed to :-** `{input_str}`"
+        )
     if not input_str:
-        return await edit_delete(event, lbg_list, time=60)
+        return await edl(event, lbg_list, time=60)
     if input_str not in bg_name:
-        dogevent = await edit_or_reply(event, "`Give me a correct background name...`")
+        dogevent = await eor(event, "`Give me a correct background name...`")
         await asyncio.sleep(1)
-        await edit_delete(dogevent, lbg_list, time=60)
+        await edl(dogevent, lbg_list, time=60)
     else:
         string = f"https://raw.githubusercontent.com/Jisan09/Files/main/backgroud/{input_str}.jpg"
         addgvar("LOGO_BACKGROUND", string)
-        await edit_delete(
+        await edl(
             event, f"**Background for logo changed to :-** `{input_str}`", time=10
         )
 
@@ -249,11 +244,11 @@ async def pussy(event):
             logo_font.append(dog)
             font_name += f"**{i}.**  `{dog}`\n"
         if not input_str:
-            return await edit_delete(event, font_name, time=80)
+            return await edl(event, font_name, time=80)
         if input_str not in logo_font:
-            dogevent = await edit_or_reply(event, "`Give me a correct font name...`")
+            dogevent = await eor(event, "`Give me a correct font name...`")
             await asyncio.sleep(1)
-            await edit_delete(dogevent, font_name, time=80)
+            await edl(dogevent, font_name, time=80)
         else:
             if " " in input_str:
                 input_str = str(input_str).replace(" ", "%20")
@@ -265,97 +260,95 @@ async def pussy(event):
                     "temp/logo.ttf",
                 )
             addgvar("LOGO_FONT", string)
-            await edit_delete(
+            await edl(
                 event, f"**Font for logo changed to :-** `{input_str}`", time=10
             )
-    elif cmd == "c" or cmd == "sc":
+    elif cmd in ["c", "sc"]:
         fg_name = []
         for name, code in PIL.ImageColor.colormap.items():
             fg_name.append(name)
             fg_list = str(fg_name).replace("'", "`")
         if not input_str:
-            return await edit_delete(
+            return await edl(
                 event,
                 f"**Available color names are here:-**\n\n{fg_list}",
                 time=80,
             )
         if input_str not in fg_name:
-            dogevent = await edit_or_reply(event, "`Give me a correct color name...`")
+            dogevent = await eor(event, "`Give me a correct color name...`")
             await asyncio.sleep(1)
-            await edit_delete(
+            await edl(
                 dogevent,
                 f"**Available color names are here:-**\n\n{fg_list}",
                 time=80,
             )
+        elif cmd == "c":
+            addgvar("LOGO_FONT_COLOR", input_str)
+            await edl(
+                event,
+                f"**Foreground color for logo changed to :-** `{input_str}`",
+                10,
+            )
         else:
-            if cmd == "c":
-                addgvar("LOGO_FONT_COLOR", input_str)
-                await edit_delete(
-                    event,
-                    f"**Foreground color for logo changed to :-** `{input_str}`",
-                    10,
-                )
-            else:
-                addgvar("LOGO_FONT_STROKE_COLOR", input_str)
-                await edit_delete(
-                    event, f"**Stroke color for logo changed to :-** `{input_str}`", 10
-                )
+            addgvar("LOGO_FONT_STROKE_COLOR", input_str)
+            await edl(
+                event, f"**Stroke color for logo changed to :-** `{input_str}`", 10
+            )
     else:
         dog = re.compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
         isint = re.match(dog, input_str)
         if not input_str or not isint:
-            return await edit_delete(
+            return await edl(
                 event, f"**Give an integer value to set**", time=10
             )
-        else:
-            if cmd == "s":
-                input_str = int(input_str)
-                if input_str > 0 and input_str <= 1000:
-                    addgvar("LOGO_FONT_SIZE", input_str)
-                    await edit_delete(
-                        event, f"**Font size is changed to :-** `{input_str}`"
-                    )
-                else:
-                    await edit_delete(
-                        event,
-                        f"**Font size is between 0 - 1000, You can't set limit to :** `{input_str}`",
-                    )
-            elif cmd == "w":
-                input_str = float(input_str)
-                if input_str > 0 and input_str <= 100:
-                    addgvar("LOGO_FONT_WIDTH", input_str)
-                    await edit_delete(
-                        event, f"**Font width is changed to :-** `{input_str}`"
-                    )
-                else:
-                    await edit_delete(
-                        event,
-                        f"**Font width is between 0 - 100, You can't set limit to {input_str}",
-                    )
-            elif cmd == "h":
-                input_str = float(input_str)
-                if input_str > 0 and input_str <= 100:
-                    addgvar("LOGO_FONT_HEIGHT", input_str)
-                    await edit_delete(
-                        event, f"**Font hight is changed to :-** `{input_str}`"
-                    )
-                else:
-                    await edit_delete(
-                        event,
-                        f"**Font hight is between 0 - 100, You can't set limit to {input_str}",
-                    )
-            elif cmd == "sw":
-                input_str = int(input_str)
-                if input_str > 0 and input_str <= 100:
-                    addgvar("LOGO_FONT_STROKE_WIDTH", input_str)
-                    await edit_delete(
-                        event, f"**Font stroke width is changed to :-** `{input_str}`"
-                    )
-                else:
-                    await edit_delete(
-                        event,
-                        f"**Font stroke width size is between 0 - 100, You can't set limit to :** `{input_str}`",
-                    )
+        if cmd == "s":
+            input_str = int(input_str)
+            if input_str > 0 and input_str <= 1000:
+                addgvar("LOGO_FONT_SIZE", input_str)
+                await edl(
+                    event, f"**Font size is changed to :-** `{input_str}`"
+                )
+            else:
+                await edl(
+                    event,
+                    f"**Font size is between 0 - 1000, You can't set limit to :** `{input_str}`",
+                )
+        elif cmd == "w":
+            input_str = float(input_str)
+            if input_str > 0 and input_str <= 100:
+                addgvar("LOGO_FONT_WIDTH", input_str)
+                await edl(
+                    event, f"**Font width is changed to :-** `{input_str}`"
+                )
+            else:
+                await edl(
+                    event,
+                    f"**Font width is between 0 - 100, You can't set limit to {input_str}",
+                )
+        elif cmd == "h":
+            input_str = float(input_str)
+            if input_str > 0 and input_str <= 100:
+                addgvar("LOGO_FONT_HEIGHT", input_str)
+                await edl(
+                    event, f"**Font hight is changed to :-** `{input_str}`"
+                )
+            else:
+                await edl(
+                    event,
+                    f"**Font hight is between 0 - 100, You can't set limit to {input_str}",
+                )
+        elif cmd == "sw":
+            input_str = int(input_str)
+            if input_str > 0 and input_str <= 100:
+                addgvar("LOGO_FONT_STROKE_WIDTH", input_str)
+                await edl(
+                    event, f"**Font stroke width is changed to :-** `{input_str}`"
+                )
+            else:
+                await edl(
+                    event,
+                    f"**Font stroke width size is between 0 - 100, You can't set limit to :** `{input_str}`",
+                )
 
 
 @doge.bot_cmd(
@@ -388,16 +381,14 @@ async def dog(event):
         var = vars_list[input_str]
         if cmd == "g":
             var_data = gvarstatus(var)
-            await edit_delete(event, f"📑 Value of **{var}** is  `{var_data}`", time=60)
+            await edl(event, f"📑 Value of **{var}** is  `{var_data}`", time=60)
         elif cmd == "d":
-            if input_str == "lbg":
-                if os.path.exists("./temp/bg_img.jpg"):
-                    os.remove("./temp/bg_img.jpg")
-            if input_str == "lf":
-                if os.path.exists("./temp/logo.ttf"):
-                    os.remove("./temp/logo.ttf")
+            if input_str == "lbg" and os.path.exists("./temp/bg_img.jpg"):
+                os.remove("./temp/bg_img.jpg")
+            if input_str == "lf" and os.path.exists("./temp/logo.ttf"):
+                os.remove("./temp/logo.ttf")
             delgvar(var)
-            await edit_delete(
+            await edl(
                 event, f"📑 Value of **{var}** is now deleted & set to default.", time=60
             )
     elif not input_str and cmd == "r":
@@ -413,13 +404,13 @@ async def dog(event):
             os.remove("./temp/bg_img.jpg")
         if os.path.exists("./temp/logo.ttf"):
             os.remove("./temp/logo.ttf")
-        await edit_delete(
+        await edl(
             event,
             "📑 Values for all vars deleted successfully & all settings reset.",
             time=20,
         )
     else:
-        await edit_delete(
+        await edl(
             event,
             f"**📑 Give correct vars name :**\n__Correct Vars code list is :__\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",
             time=60,

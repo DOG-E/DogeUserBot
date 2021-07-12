@@ -23,8 +23,8 @@ async def _(event):
     "To Execute terminal commands in a subprocess."
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i execute?..`")
-    dogevent = await edit_or_reply(event, "`Executing.....`")
+        return await edl(event, "`What should i execute?..`")
+    dogevent = await eor(event, "`Executing.....`")
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -37,7 +37,7 @@ async def _(event):
         cresult = f"```{curruser}:~#``` ```{cmd}```\n```{result}```"
     else:
         cresult = f"```{curruser}:~$``` ```{cmd}```\n```{result}```"
-    await edit_or_reply(
+    await eor(
         dogevent,
         text=cresult,
         aslink=True,
@@ -63,13 +63,13 @@ async def _(event):
     "To Execute python script/statements in a subprocess."
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i run ?..`")
+        return await edl(event, "`What should i run ?..`")
     cmd = (
         cmd.replace("sendmessage", "send_message")
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    dogevent = await edit_or_reply(event, "`Running ...`")
+    dogevent = await eor(event, "`Running ...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -95,7 +95,7 @@ async def _(event):
     final_output = (
         f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
     )
-    await edit_or_reply(
+    await eor(
         dogevent,
         text=final_output,
         aslink=True,

@@ -10,8 +10,8 @@ from PIL import Image
 
 from userbot import doge
 
-from ..core.managers import edit_delete
-from ..helpers.utils import _dogtools, _dogutils, reply_id
+from ..core.managers import edl
+from ..helpers.utils import _dogetools, _dogeutils, reply_id
 
 plugin_category = "fun"
 
@@ -36,14 +36,14 @@ async def glitch(event):
     doginput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     dogid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     doginput = int(doginput) if doginput else 2
-    glitch_file = await _dogtools.media_to_pic(event, reply)
+    glitch_file = await _dogetools.media_to_pic(event, reply)
     if glitch_file[1] is None:
-        return await edit_delete(
+        return await edl(
             glitch_file[0], "__Unable to extract image from the replied message.__"
         )
     glitcher = ImageGlitcher()
@@ -67,7 +67,7 @@ async def glitch(event):
             loop=LOOP,
         )
         teledoge = await event.client.send_file(event.chat_id, glitched, reply_to=dogid)
-        await _dogutils.unsavegif(event, teledoge)
+        await _dogeutils.unsavegif(event, teledoge)
     await glitch_file[0].delete()
     for files in (glitch_file[1], glitched):
         if files and os.path.exists(files):

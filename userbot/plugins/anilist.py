@@ -1,4 +1,5 @@
 import html
+from datetime import datetime
 from urllib.parse import quote_plus
 
 import aiohttp
@@ -11,7 +12,7 @@ from telegraph import exceptions, upload_file
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import media_type, readable_time, time_formatter
 from ..helpers.functions import (
     airing_query,
@@ -22,7 +23,7 @@ from ..helpers.functions import (
     memory_file,
     replace_text,
 )
-from ..helpers.utils import _dogtools, reply_id
+from ..helpers.utils import _dogetools, reply_id
 
 jikan = Jikan()
 url = "https://graphql.anilist.co"
@@ -48,14 +49,17 @@ async def anilist(event):
     response = requests.post(
         url, json={"query": airing_query, "variables": variables}
     ).json()["data"]["Media"]
+    if response is None:
+        return await edl(event, "__Unable to find the anime.__")
     ms_g = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
     if response["nextAiringEpisode"]:
         airing_time = response["nextAiringEpisode"]["timeUntilAiring"]
         airing_time_final = time_formatter(airing_time)
-        ms_g += f"\n**Episode**: `{response['nextAiringEpisode']['episode']}`\n**Airing In**: `{airing_time_final}`"
+        airing_at = response["nextAiringEpisode"]["airingAt"]
+        ms_g += f"\n**Episode**: `{response['nextAiringEpisode']['episode']}`\n**Airing In**: `{airing_time_final}`\n**Time: **`{datetime.fromtimestamp(airing_at)}`"
     else:
         ms_g += f"\n**Episode**:{response['episodes']}\n**Status**: `N/A`"
-    await edit_or_reply(event, ms_g)
+    await eor(event, ms_g)
 
 
 @doge.bot_cmd(
@@ -72,10 +76,10 @@ async def anilist(event):
     "Get info on any anime."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(
+        return await edl(
             event, "__What should i search ? Gib me Something to Search__"
         )
-    event = await edit_or_reply(event, "`Searching...`")
+    event = await eor(event, "`Searching...`")
     result = await callAPI(input_str)
     msg = await formatJSON(result)
     await event.edit(msg, link_preview=True)
@@ -99,10 +103,10 @@ async def get_manga(event):
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
+            return await edl(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    dogevent = await edit_or_reply(event, "`Searching Manga..`")
+    dogevent = await eor(event, "`Searching Manga..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", input_str)
     first_mal_id = search_result["results"][0]["mal_id"]
@@ -131,10 +135,10 @@ async def get_manga(event):
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
+            return await edl(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    dogevent = await edit_or_reply(event, "`Searching Anime..`")
+    dogevent = await eor(event, "`Searching Anime..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", input_str)
     first_mal_id = search_result["results"][0]["mal_id"]
@@ -177,14 +181,14 @@ async def character(event):
         if reply:
             search_query = reply.text
         else:
-            return await edit_delete(
+            return await edl(
                 event, "__What should i search ? Gib me Something to Search__"
             )
-    dogevent = await edit_or_reply(event, "`Searching Character...`")
+    dogevent = await eor(event, "`Searching Character...`")
     try:
         search_result = jikan.search("character", search_query)
     except APIException:
-        return await edit_delete(dogevent, "`Character not found.`")
+        return await edl(dogevent, "`Character not found.`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
     caption = f"[{character['name']}]({character['url']})"
@@ -241,10 +245,10 @@ async def anime_download(event):  # sourcery no-metrics
     if not search_query and reply:
         search_query = reply.text
     elif not search_query:
-        return await edit_delete(
+        return await edl(
             event, "__What should i search ? Gib me Something to Search__"
         )
-    dogevent = await edit_or_reply(event, "`Searching anime...`")
+    dogevent = await eor(event, "`Searching anime...`")
     search_query = search_query.replace(" ", "+")
     if input_str == "kaizoku":
         search_url = f"https://animekaizoku.com/?s={search_query}"
@@ -313,7 +317,7 @@ async def upcoming(event):
         rep += f"• <a href='{url}'>{name}</a>\n"
         if len(rep) > 1000:
             break
-    await edit_or_reply(event, rep, parse_mode="html")
+    await eor(event, rep, parse_mode="html")
 
 
 @doge.bot_cmd(
@@ -331,18 +335,18 @@ async def whatanime(event):
     "Reverse search of anime."
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
+        return await edl(
             event, "__reply to media to reverse search that anime__."
         )
     mediatype = media_type(reply)
     if mediatype not in ["Photo", "Video", "Gif", "Sticker"]:
-        return await edit_delete(
+        return await edl(
             event,
             f"__Reply to proper media that is expecting photo/video/gif/sticker. not {mediatype}__.",
         )
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     file = memory_file("anime.jpg", output[1])
@@ -352,7 +356,7 @@ async def whatanime(event):
         try:
             response = upload_file(output[1])
         except exceptions.TelegraphException as exc:
-            return await edit_delete(output[0], f"**Error :**\n__{str(exc)}__")
+            return await edl(output[0], f"**Error :**\n__{str(exc)}__")
     dog = f"https://telegra.ph{response[0]}"
     await output[0].edit("`Searching for result..`")
     async with aiohttp.ClientSession() as session:
@@ -363,7 +367,7 @@ async def whatanime(event):
         framecount = resp0["frameCount"]
         error = resp0["error"]
         if error != "":
-            return await edit_delete(output[0], f"**Error:**\n__{error}__")
+            return await edl(output[0], f"**Error:**\n__{error}__")
         js0 = resp0["result"]
         if not js0:
             return await output[0].edit("`No results found.`")

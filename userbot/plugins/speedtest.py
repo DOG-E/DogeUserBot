@@ -8,7 +8,7 @@ import speedtest
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers.utils import reply_id
 
 plugin_category = "utils"
@@ -51,7 +51,7 @@ async def _(event):
         as_document = True
     elif input_str == "text":
         as_text = True
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event, "`Calculating my internet speed. Please wait!`"
     )
     start = time()

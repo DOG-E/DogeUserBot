@@ -2,8 +2,8 @@ import random
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
-from . import dogmemes
+from ..core.managers import eor
+from . import dogememes
 
 plugin_category = "fun"
 
@@ -18,8 +18,8 @@ plugin_category = "fun"
 )
 async def _(e):
     "Congratulate the people."
-    txt = random.choice(dogmemes.CONGOREACTS)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.CONGOREACTS)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -32,8 +32,8 @@ async def _(e):
 )
 async def shrugger(e):
     "Shrug at it !!"
-    txt = random.choice(dogmemes.SHGS)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.SHGS)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -46,8 +46,8 @@ async def shrugger(e):
 )
 async def runner_lol(e):
     "Run, run, RUNNN!"
-    txt = random.choice(dogmemes.RUNSREACTS)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.RUNSREACTS)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -60,8 +60,8 @@ async def runner_lol(e):
 )
 async def metoo(e):
     "Whadya want to know? Are you a NOOB?"
-    txt = random.choice(dogmemes.NOOBSTR)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.NOOBSTR)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -74,8 +74,8 @@ async def metoo(e):
 )
 async def insult(e):
     "insult someone."
-    txt = random.choice(dogmemes.INSULT_STRINGS)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.INSULT_STRINGS)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -88,8 +88,8 @@ async def insult(e):
 )
 async def suru(chutiyappa):
     "Chutiyappa suru"
-    txt = random.choice(dogmemes.LOVESTR)
-    await edit_or_reply(chutiyappa, txt)
+    txt = random.choice(dogememes.LOVESTR)
+    await eor(chutiyappa, txt)
 
 
 @doge.bot_cmd(
@@ -102,8 +102,8 @@ async def suru(chutiyappa):
 )
 async def katgya(chutiya):
     "Dhokha kha gya"
-    txt = random.choice(dogmemes.DHOKA)
-    await edit_or_reply(chutiya, txt)
+    txt = random.choice(dogememes.DHOKA)
+    await eor(chutiya, txt)
 
 
 @doge.bot_cmd(
@@ -116,8 +116,8 @@ async def katgya(chutiya):
 )
 async def hoi(e):
     "start a conversation with people."
-    txt = random.choice(dogmemes.HELLOSTR)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.HELLOSTR)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -130,8 +130,8 @@ async def hoi(e):
 )
 async def proo(e):
     "If you think you're pro, try this."
-    txt = random.choice(dogmemes.PRO_STRINGS)
-    await edit_or_reply(e, txt)
+    txt = random.choice(dogememes.PRO_STRINGS)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -157,27 +157,27 @@ async def _(e):
     "Make your userbot react."
     input_str = e.pattern_match.group(1)
     if input_str in "happy":
-        emoticons = dogmemes.FACEREACTS[0]
+        emoticons = dogememes.FACEREACTS[0]
     elif input_str in "think":
-        emoticons = dogmemes.FACEREACTS[1]
+        emoticons = dogememes.FACEREACTS[1]
     elif input_str in "wave":
-        emoticons = dogmemes.FACEREACTS[2]
+        emoticons = dogememes.FACEREACTS[2]
     elif input_str in "wtf":
-        emoticons = dogmemes.FACEREACTS[3]
+        emoticons = dogememes.FACEREACTS[3]
     elif input_str in "love":
-        emoticons = dogmemes.FACEREACTS[4]
+        emoticons = dogememes.FACEREACTS[4]
     elif input_str in "teledoge":
-        emoticons = dogmemes.FACEREACTS[5]
+        emoticons = dogememes.FACEREACTS[5]
     elif input_str in "dead":
-        emoticons = dogmemes.FACEREACTS[6]
+        emoticons = dogememes.FACEREACTS[6]
     elif input_str in "sad":
-        emoticons = dogmemes.FACEREACTS[7]
+        emoticons = dogememes.FACEREACTS[7]
     elif input_str in "dog":
-        emoticons = dogmemes.FACEREACTS[8]
+        emoticons = dogememes.FACEREACTS[8]
     else:
-        emoticons = dogmemes.FACEREACTS[9]
+        emoticons = dogememes.FACEREACTS[9]
     txt = random.choice(emoticons)
-    await edit_or_reply(e, txt)
+    await eor(e, txt)
 
 
 @doge.bot_cmd(
@@ -190,7 +190,7 @@ async def _(e):
 )
 async def iqless(e):
     "You retard !!"
-    await edit_or_reply(e, "♿")
+    await eor(e, "♿")
 
 
 @doge.bot_cmd(
@@ -203,7 +203,7 @@ async def iqless(e):
 )
 async def facepalm(e):
     "send you face pam emoji!"
-    await edit_or_reply(e, "🤦‍♂")
+    await eor(e, "🤦‍♂")
 
 
 @doge.bot_cmd(
@@ -217,7 +217,7 @@ async def facepalm(e):
 )
 async def bluetext(e):
     """Believe me, you will find this useful."""
-    await edit_or_reply(
+    await eor(
         e,
         "/BLUETEXT /MUST /CLICK.\n"
         "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS?",
@@ -235,4 +235,4 @@ async def bluetext(e):
 async def _(event):
     "telethon session error code(fun)."
     mentions = "**telethon.errors.rpcerrorlist.AuthKeyDuplicatedError: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by GetMessagesRequest)**"
-    await edit_or_reply(event, mentions)
+    await eor(event, mentions)

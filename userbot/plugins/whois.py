@@ -12,7 +12,7 @@ from userbot import doge
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers import get_user_from_event, reply_id
 from . import spamwatch
 
@@ -88,7 +88,7 @@ async def _(event):
     replied_user, error_i_a = await get_user_from_event(event)
     if not replied_user:
         return
-    dogevent = await edit_or_reply(event, "`Fetching userinfo wait....`")
+    dogevent = await eor(event, "`Fetching userinfo wait....`")
     replied_user = await event.client(GetFullUserRequest(replied_user.id))
     user_id = replied_user.user.id
     # some people have weird HTML in their names
@@ -143,7 +143,7 @@ async def _(event):
         sw,
         cas,
     )
-    await edit_or_reply(dogevent, caption)
+    await eor(dogevent, caption)
 
 
 @doge.bot_cmd(
@@ -162,12 +162,12 @@ async def who(event):
     replied_user, reason = await get_user_from_event(event)
     if not replied_user:
         return
-    dog = await edit_or_reply(event, "`Fetching userinfo wait....`")
+    dog = await eor(event, "`Fetching userinfo wait....`")
     replied_user = await event.client(GetFullUserRequest(replied_user.id))
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        return await edit_or_reply(dog, "`Could not fetch info of that user.`")
+        return await eor(dog, "`Could not fetch info of that user.`")
     message_id_to_reply = await reply_id(event)
     try:
         await event.client.send_file(
@@ -200,6 +200,6 @@ async def permalink(mention):
     if not user:
         return
     if custom:
-        return await edit_or_reply(mention, f"[{custom}](tg://user?id={user.id})")
+        return await eor(mention, f"[{custom}](tg://user?id={user.id})")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
-    await edit_or_reply(mention, f"[{tag}](tg://user?id={user.id})")
+    await eor(mention, f"[{tag}](tg://user?id={user.id})")

@@ -8,7 +8,7 @@ import re
 from telethon import Button
 
 from ..Config import Config
-from . import doge, edit_delete, reply_id
+from . import doge, edl, reply_id
 
 plugin_category = "tools"
 # regex obtained from:
@@ -38,7 +38,7 @@ async def _(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edit_delete(event, "`what text should i use in button post`")
+        return await edl(event, "`what text should i use in button post`")
     prev = 0
     note_data = ""
     buttons = []
@@ -106,7 +106,7 @@ async def _(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edit_delete(event, "`what text should i use in button post`")
+        return await edl(event, "`what text should i use in button post`")
     doginput = "Inline buttons " + markdown_note
     results = await event.client.inline_query(Config.TG_BOT_USERNAME, doginput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)

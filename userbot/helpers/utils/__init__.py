@@ -1,13 +1,14 @@
 from .extdl import *
 from .paste import *
+from .torrentutils import *
 
 flag = True
 check = 0
 while flag:
     try:
         from . import format as _format
-        from . import tools as _dogtools
-        from . import utils as _dogutils
+        from . import tools as _dogetools
+        from . import utils as _dogeutils
         from .events import *
         from .format import *
 

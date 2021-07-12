@@ -11,13 +11,8 @@ from PIL import Image
 from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 
-from userbot import doge
-
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import deEmojify
-from ..helpers.utils import reply_id
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, hide_inlinebot, edl, eor, doge, deEmojify, reply_id
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
@@ -83,7 +78,7 @@ async def scam(results, lim):
 )
 async def gsearch(q_event):
     "Google search command."
-    dogevent = await edit_or_reply(q_event, "`searching........`")
+    dogevent = await eor(q_event, "`Searching...`")
     match = q_event.pattern_match.group(1)
     page = re.findall(r"-p\d+", match)
     lim = re.findall(r"-l\d+", match)
@@ -117,7 +112,7 @@ async def gsearch(q_event):
             try:
                 gresults = await ysearch.async_search(*search_args)
             except Exception as e:
-                return await edit_delete(dogevent, f"**Error:**\n`{str(e)}`", time=10)
+                return await edl(dogevent, f"**Error:**\n`{str(e)}`", time=10)
     msg = ""
     for i in range(lim):
         if i > len(gresults["links"]):
@@ -129,7 +124,7 @@ async def gsearch(q_event):
             msg += f"👉[{title}]({link})\n`{desc}`\n\n"
         except IndexError:
             break
-    await edit_or_reply(
+    await eor(
         dogevent,
         "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg,
         link_preview=False,
@@ -157,7 +152,7 @@ async def _(event):
     start = datetime.now()
     OUTPUT_STR = "Reply to an image to do Google Reverse Search"
     if event.reply_to_msg_id:
-        dogevent = await edit_or_reply(event, "Pre Processing Media")
+        dogevent = await eor(event, "Pre Processing Media")
         previous_message = await event.get_reply_message()
         previous_message_text = previous_message.message
         BASE_URL = "http://www.google.com"
@@ -201,7 +196,7 @@ async def _(event):
             img_size_div = soup.find(id="jHnbRc")
             img_size = img_size_div.find_all("div")
         except Exception:
-            return await edit_delete(
+            return await edl(
                 dogevent, "`Sorry. I am unable to find similar images`"
             )
         end = datetime.now()
@@ -214,7 +209,7 @@ async def _(event):
         )
     else:
         dogevent = event
-    await edit_or_reply(dogevent, OUTPUT_STR, parse_mode="HTML", link_preview=False)
+    await eor(dogevent, OUTPUT_STR, parse_mode="HTML", link_preview=False)
 
 
 @doge.bot_cmd(
@@ -236,10 +231,10 @@ async def _(img):
         photo = io.BytesIO()
         await img.client.download_media(message, photo)
     else:
-        await edit_or_reply(img, "`Reply to photo or sticker nigger.`")
+        await eor(img, "`Reply to photo or sticker nigger.`")
         return
     if photo:
-        dogevent = await edit_or_reply(img, "`Processing...`")
+        dogevent = await eor(img, "`Processing...`")
         try:
             image = Image.open(photo)
         except OSError:
@@ -294,24 +289,26 @@ async def _(img):
         "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
         "usage": [
             "{tr}google query",
+            "{tr}google reply a message"
         ],
     },
 )
 async def google_search(event):
     "Will show you google search link of the given query."
-    input_str = event.pattern_match.group(1)
+    input = event.pattern_match.group(1)
+    if not input:
+        replyinput = await event.get_reply_message()
+        input = replyinput.text
+    if not input:
+        return await edl(event, "__What should i search? Give search query plox.__")
     reply_to_id = await reply_id(event)
-    if not input_str:
-        return await edit_delete(
-            event, "__What should i search? Give search query plox.__"
-        )
-    input_str = deEmojify(input_str).strip()
-    if len(input_str) > 195 or len(input_str) < 1:
-        return await edit_delete(
+    input = deEmojify(input).strip()
+    if len(input) > 195 or len(input) < 1:
+        return await edl(
             event,
             "__Plox your search query exceeds 200 characters or you search query is empty.__",
         )
-    query = "#12" + input_str
+    query = "#12" + input
     results = await event.client.inline_query("@StickerizerBot", query)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()

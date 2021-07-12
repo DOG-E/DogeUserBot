@@ -18,9 +18,9 @@ from telethon.utils import get_display_name
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import convert_tosticker, media_type, process
-from ..helpers.utils import _dogtools, reply_id
+from ..helpers.utils import _dogetools, reply_id
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
@@ -59,10 +59,10 @@ async def q_pic(event):  # sourcery no-metrics
     elif reply and reply.raw_text:
         text = reply.raw_text
     else:
-        return await edit_delete(
+        return await edl(
             event, "__Provide input along with cmd or reply to text message.__"
         )
-    dogevent = await edit_or_reply(event, "__Making Quote pic....__")
+    dogevent = await eor(event, "__Making Quote pic....__")
     mediatype = media_type(reply)
     if (
         (not reply)
@@ -76,9 +76,9 @@ async def q_pic(event):  # sourcery no-metrics
         user = reply.sender_id if reply else event.client.uid
         pfp = await event.client.download_profile_photo(user)
     else:
-        imag = await _dogtools.media_to_pic(event, reply, noedits=True)
+        imag = await _dogetools.media_to_pic(event, reply, noedits=True)
         if imag[1] is None:
-            return await edit_delete(
+            return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
         user = event.client.uid
@@ -151,14 +151,15 @@ async def stickerchat(dogquotes):
     "Makes your message as sticker quote"
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await edit_or_reply(
+        return await eor(
             dogquotes, "`I cant quote the message . reply to a message`"
         )
     fetchmsg = reply.message
     repliedreply = None
-    if reply.media and reply.media.document.mime_type in ("mp4"):
-        return await edit_or_reply(dogquotes, "`this format is not supported now`")
-    dogevent = await edit_or_reply(dogquotes, "`Making quote...`")
+    mediatype = media_type(reply)
+    if mediatype and mediatype in ["Photo", "Round Video", "Gif"]:
+        return await eor(dogquotes, "`Replied message is not supported now`")
+    dogevent = await eor(dogquotes, "`Making quote...`")
     user = (
         await dogquotes.client.get_entity(reply.forward.sender)
         if reply.fwd_from
@@ -187,14 +188,15 @@ async def stickerchat(dogquotes):
     "To make sticker message."
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await edit_or_reply(
+        return await eor(
             dogquotes, "`I cant quote the message . reply to a message`"
         )
     fetchmsg = reply.message
     repliedreply = await reply.get_reply_message()
-    if reply.media and reply.media.document.mime_type in ("mp4"):
-        return await edit_or_reply(dogquotes, "`this format is not supported now`")
-    dogevent = await edit_or_reply(dogquotes, "`Making quote...`")
+    mediatype = media_type(reply)
+    if mediatype and mediatype in ["Photo", "Round Video", "Gif"]:
+        return await eor(dogquotes, "`Replied message is not supported now`")
+    dogevent = await eor(dogquotes, "`Making quote...`")
     user = (
         await dogquotes.client.get_entity(reply.forward.sender)
         if reply.fwd_from
@@ -244,11 +246,11 @@ async def _(event):
     elif input_str:
         message = input_str
     else:
-        return await edit_delete(
+        return await edl(
             event, "`Either reply to message or give input to function properly`"
         )
     chat = "@QuotLyBot"
-    dogevent = await edit_or_reply(event, "```Making a Quote```")
+    dogevent = await eor(event, "```Making a Quote```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -259,7 +261,7 @@ async def _(event):
             elif message != "":
                 await event.client.send_message(conv.chat_id, message)
             else:
-                return await edit_delete(
+                return await edl(
                     dogevent, "`I guess you have used a invalid syntax`"
                 )
             response = await response

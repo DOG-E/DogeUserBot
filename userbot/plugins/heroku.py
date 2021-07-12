@@ -16,7 +16,7 @@ import urllib3
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 
 plugin_category = "tools"
 
@@ -54,7 +54,7 @@ async def variable(var):  # sourcery no-metrics
     Manage most of ConfigVars setting, set new var, get current var, or delete var...
     """
     if (Config.HEROKU_API_KEY is None) or (Config.HEROKU_APP_NAME is None):
-        return await edit_delete(
+        return await edl(
             var,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
@@ -62,7 +62,7 @@ async def variable(var):  # sourcery no-metrics
     exe = var.pattern_match.group(1)
     heroku_var = app.config()
     if exe == "get":
-        dog = await edit_or_reply(var, "`Getting information...`")
+        dog = await eor(var, "`Getting information...`")
         await asyncio.sleep(1.0)
         try:
             variable = var.pattern_match.group(2).split()[0]
@@ -79,7 +79,7 @@ async def variable(var):  # sourcery no-metrics
                 fp.write(configs)
             with open("configs.json", "r") as fp:
                 result = fp.read()
-                await edit_or_reply(
+                await eor(
                     dog,
                     "`[HEROKU]` ConfigVars:\n\n"
                     "================================"
@@ -89,7 +89,7 @@ async def variable(var):  # sourcery no-metrics
             os.remove("configs.json")
     elif exe == "set":
         variable = "".join(var.text.split(maxsplit=2)[2:])
-        dog = await edit_or_reply(var, "`Setting information...`")
+        dog = await eor(var, "`Setting information...`")
         if not variable:
             return await dog.edit("`.set var <ConfigVars-name> <value>`")
         value = "".join(variable.split(maxsplit=1)[1:])
@@ -105,7 +105,7 @@ async def variable(var):  # sourcery no-metrics
             )
         heroku_var[variable] = value
     elif exe == "del":
-        dog = await edit_or_reply(var, "`Getting information to deleting variable...`")
+        dog = await eor(var, "`Getting information to deleting variable...`")
         try:
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
@@ -131,11 +131,11 @@ async def dyno_usage(dyno):
     Get your account Dyno Usage
     """
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
-        return await edit_delete(
+        return await edl(
             dyno,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
-    dyno = await edit_or_reply(dyno, "`Processing...`")
+    dyno = await eor(dyno, "`Processing...`")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -163,6 +163,8 @@ async def dyno_usage(dyno):
     minutes_remaining = remaining_quota / 60
     hours = math.floor(minutes_remaining / 60)
     minutes = math.floor(minutes_remaining % 60)
+    day = math.floor(hours / 24)  # https://github.com/NinjaTG/MyBot/blob/master/bot/modules/usage.py#L50
+    
     # - Current -
     App = result["apps"]
     try:
@@ -180,11 +182,14 @@ async def dyno_usage(dyno):
         "**Dyno Usage**:\n\n"
         f" -> `Dyno usage for`  **{Config.HEROKU_APP_NAME}**:\n"
         f"     •  `{AppHours}`**h**  `{AppMinutes}`**m**  "
-        f"**|**  [`{AppPercentage}`**%**]"
+        f"        **%**`{AppPercentage}`"
         "\n\n"
         " -> `Dyno hours quota remaining this month`:\n"
         f"     •  `{hours}`**h**  `{minutes}`**m**  "
-        f"**|**  [`{percentage}`**%**]"
+        f"        **%**`{percentage}`"
+        "\n\n"
+        " -> `Estimated dyno expired`:\n"
+        f"     •  `{day}` **Days**"
     )
 
 
@@ -199,7 +204,7 @@ async def dyno_usage(dyno):
 async def _(dyno):
     "To get recent 100 lines logs from heroku"
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
-        return await edit_delete(
+        return await edl(
             dyno,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
@@ -211,7 +216,7 @@ async def _(dyno):
             " Please make sure your Heroku API Key, Your App name are configured correctly in the heroku"
         )
     data = app.get_log()
-    await edit_or_reply(
+    await eor(
         dyno, data, deflink=True, linktext="**Recent 100 lines of heroku logs: **"
     )
 

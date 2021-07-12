@@ -9,7 +9,7 @@ from telethon.tl.types import ChatBannedRights
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers.utils import _format
 from . import BOTLOG, BOTLOG_CHATID, extract_time, get_user_from_event
 
@@ -44,7 +44,7 @@ NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play desp
 )
 async def tmuter(event):  # sourcery no-metrics
     "To mute a person for specific time"
-    dogevent = await edit_or_reply(event, "`muting....`")
+    dogevent = await eor(event, "`muting....`")
     user, reason = await get_user_from_event(event, dogevent)
     if not user:
         return
@@ -131,7 +131,7 @@ async def tmuter(event):  # sourcery no-metrics
 )
 async def tban(event):  # sourcery no-metrics
     "To ban a person for specific time"
-    dogevent = await edit_or_reply(event, "`banning....`")
+    dogevent = await eor(event, "`banning....`")
     user, reason = await get_user_from_event(event, dogevent)
     if not user:
         return

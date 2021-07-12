@@ -4,7 +4,7 @@ import asyncio
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..helpers.utils import _format
 from . import ALIVE_NAME
 
@@ -27,11 +27,11 @@ async def _(event):
         reply_message = await event.get_reply_message()
         idd = reply_message.sender_id
         if idd == 1035034432:
-            await edit_or_reply(
+            await eor(
                 event, "This is My Master\nI can't hack my master's Account"
             )
         else:
-            event = await edit_or_reply(event, "Hacking..")
+            event = await eor(event, "Hacking..")
             animation_chars = [
                 "`Connecting To Hacked Private Server...`",
                 "`Target Selected.`",
@@ -51,7 +51,7 @@ async def _(event):
                 await asyncio.sleep(animation_interval)
                 await event.edit(animation_chars[i % 11])
     else:
-        await edit_or_reply(
+        await eor(
             event,
             "No User is Defined\n Can't hack account",
             parse_mode=_format.parse_pre,
@@ -72,7 +72,7 @@ async def _(event):
     "Fun Telegram hack animation."
     animation_interval = 2
     animation_ttl = range(12)
-    event = await edit_or_reply(event, "thack")
+    event = await eor(event, "thack")
     animation_chars = [
         "**Connecting To Telegram Data Centre**",
         f"Target Selected By Hacker: {ALIVE_NAME}",
@@ -105,7 +105,7 @@ async def _(event):
     "Fun Whatsapp hack animation."
     animation_interval = 2
     animation_ttl = range(15)
-    event = await edit_or_reply(event, "wahack..")
+    event = await eor(event, "wahack..")
     animation_chars = [
         "Looking for WhatsApp databases in targeted person...",
         " User online: True\nTelegram access: True\nRead Storage: True ",

@@ -21,7 +21,7 @@ from telethon.utils import get_attributes
 from userbot import doge
 
 from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers import media_type, progress, thumb_from_audio
 from ..helpers.functions import (
     convert_toimage,
@@ -33,7 +33,7 @@ from ..helpers.functions import (
     ud_frames,
     vid_to_gif,
 )
-from ..helpers.utils import _dogtools, _dogutils, _format, parse_pre, reply_id
+from ..helpers.utils import _dogetools, _dogeutils, _format, parse_pre, reply_id
 from . import make_gif
 
 plugin_category = "misc"
@@ -68,12 +68,12 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     args = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edl(event, "`Reply to supported Media...`")
     media_type(reply)
-    dogevent = await edit_or_reply(event, "__Making round spin video wait a sec.....__")
-    output = await _dogtools.media_to_pic(event, reply, noedits=True)
+    dogevent = await eor(event, "__Making round spin video wait a sec.....__")
+    output = await _dogetools.media_to_pic(event, reply, noedits=True)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -83,7 +83,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     try:
         outframes = await spin_frames(image, w, h, outframes)
     except Exception as e:
-        return await edit_delete(output[0], f"**Error**\n__{str(e)}__")
+        return await edl(output[0], f"**Error**\n__{str(e)}__")
     output = io.BytesIO()
     output.name = "Output.gif"
     outframes[0].save(output, save_all=True, append_images=outframes[1:], duration=1)
@@ -93,7 +93,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     final = os.path.join(Config.TEMP_DIR, "output.gif")
     output = await vid_to_gif("Output.gif", final)
     if output is None:
-        return await edit_delete(dogevent, "__Unable to make spin gif.__")
+        return await edl(dogevent, "__Unable to make spin gif.__")
     media_info = MediaInfo.parse(final)
     aspect_ratio = 1
     for track in media_info.tracks:
@@ -104,7 +104,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     PATH = os.path.join(Config.TEMP_DIR, "round.gif")
     if aspect_ratio != 1:
         crop_by = width if (height > width) else height
-        await _dogutils.runcmd(
+        await _dogeutils.runcmd(
             f'ffmpeg -i {final} -vf "crop={crop_by}:{crop_by}" {PATH}'
         )
     else:
@@ -138,7 +138,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         supports_streaming=True,
     )
     if not args:
-        await _dogutils.unsavegif(event, teledoge)
+        await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [final, "Output.gif", meme_file, PATH, final]:
         if os.path.exists(i):
@@ -160,17 +160,17 @@ async def video_dogfile(event):  # sourcery no-metrics
     args = event.pattern_match.group(1)
     dogid = await reply_id(event)
     if not reply or not reply.media:
-        return await edit_delete(event, "`Reply to supported media`")
+        return await edl(event, "`Reply to supported media`")
     mediatype = media_type(reply)
     if mediatype == "Round Video":
-        return await edit_delete(
+        return await edl(
             event,
             "__Do you think I am a dumb person😏? The replied media is already in round format,recheck._",
         )
     if mediatype not in ["Photo", "Audio", "Voice", "Gif", "Sticker", "Video"]:
-        return await edit_delete(event, "```Supported Media not found...```")
+        return await edl(event, "```Supported Media not found...```")
     flag = True
-    dogevent = await edit_or_reply(event, "`Converting to round format..........`")
+    dogevent = await eor(event, "`Converting to round format..........`")
     dogfile = await reply.download_media(file="./temp/")
     if mediatype in ["Gif", "Video", "Sticker"]:
         if not dogfile.endswith((".webp")):
@@ -187,7 +187,7 @@ async def video_dogfile(event):  # sourcery no-metrics
                     width = track.width
             if aspect_ratio != 1:
                 crop_by = width if (height > width) else height
-                await _dogutils.runcmd(
+                await _dogeutils.runcmd(
                     f'ffmpeg -i {dogfile} -vf "crop={crop_by}:{crop_by}" {PATH}'
                 )
             else:
@@ -217,13 +217,13 @@ async def video_dogfile(event):  # sourcery no-metrics
             dogthumb = os.path.join("./temp", "thumb.jpg")
             copyfile(thumb_loc, dogthumb)
         if dogthumb is not None and os.path.exists(dogthumb):
-            await _dogutils.runcmd(
+            await _dogeutils.runcmd(
                 f"""ffmpeg -loop 1 -i {dogthumb} -i {dogfile} -c:v libx264 -tune stillimage -c:a aac -b:a 192k -vf \"scale=\'iw-mod (iw,2)\':\'ih-mod(ih,2)\',format=yuv420p\" -shortest -movflags +faststart {PATH}"""
             )
             os.remove(dogfile)
         else:
             os.remove(dogfile)
-            return await edit_delete(
+            return await edl(
                 dogevent, "`No thumb found to make it video note`", 5
             )
     if (
@@ -272,7 +272,7 @@ async def video_dogfile(event):  # sourcery no-metrics
             )
 
             if not args:
-                await _dogutils.unsavegif(event, teledoge)
+                await _dogeutils.unsavegif(event, teledoge)
             os.remove(PATH)
             if flag:
                 os.remove(dogthumb)
@@ -316,12 +316,12 @@ async def _(event):
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
+        return await edl(
             event, "Reply to any sticker/media to convert it to image.__"
         )
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_toimage(output[1])
@@ -345,12 +345,12 @@ async def _(event):
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
+        return await edl(
             event, "Reply to any image/media to convert it to sticker.__"
         )
-    output = await _dogtools.media_to_pic(event, reply)
+    output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
-        return await edit_delete(
+        return await edl(
             output[0], "__Unable to extract image from the replied message.__"
         )
     meme_file = convert_tosticker(output[1])
@@ -373,7 +373,7 @@ async def get(event):
     "text to file conversion"
     name = event.text[5:]
     if name is None:
-        await edit_or_reply(event, "reply to text message as `.ttf <file name>`")
+        await eor(event, "reply to text message as `.ttf <file name>`")
         return
     m = await event.get_reply_message()
     if m.text:
@@ -383,7 +383,7 @@ async def get(event):
         await event.client.send_file(event.chat_id, name, force_document=True)
         os.remove(name)
     else:
-        await edit_or_reply(event, "reply to text message as `.ttf <file name>`")
+        await eor(event, "reply to text message as `.ttf <file name>`")
 
 
 @doge.bot_cmd(
@@ -401,7 +401,7 @@ async def get(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if mediatype != "Document":
-        return await edit_delete(
+        return await edl(
             event, "__It seems this is not writable file. Reply to writable file.__"
         )
     file_loc = await reply.download_media()
@@ -421,8 +421,8 @@ async def get(event):
         except Exception as e:
             if os.path.exists(file_loc):
                 os.remove(file_loc)
-            return await edit_delete(event, f"**Error**\n__{str(e)}__")
-    await edit_or_reply(
+            return await edl(event, f"**Error**\n__{str(e)}__")
+    await eor(
         event,
         file_content,
         parse_mode=parse_pre,
@@ -448,14 +448,14 @@ async def on_file_to_photo(event):
     try:
         image = target.media.document
     except AttributeError:
-        return await edit_delete(event, "`This isn't an image`")
+        return await edl(event, "`This isn't an image`")
     if not image.mime_type.startswith("image/"):
-        return await edit_delete(event, "`This isn't an image`")
+        return await edl(event, "`This isn't an image`")
     if image.mime_type == "image/webp":
-        return await edit_delete(event, "`For sticker to image use stoi command`")
+        return await edl(event, "`For sticker to image use stoi command`")
     if image.size > 10 * 1024 * 1024:
         return  # We'd get PhotoSaveFileInvalidError otherwise
-    dogt = await edit_or_reply(event, "`Converting.....`")
+    dogt = await eor(event, "`Converting.....`")
     file = await event.client.download_media(target, file=BytesIO())
     file.seek(0)
     img = await event.client.upload_file(file)
@@ -492,31 +492,46 @@ async def _(event):  # sourcery no-metrics
     else:
         loc = input_str.split(";")
         if len(loc) > 2:
-            return await edit_delete(
+            return await edl(
                 event,
                 "wrong syntax . syntax is `.gif quality ; fps(frames per second)`",
             )
         if len(loc) == 2:
+            try:
+                loc[0] = int(loc[0])
+                loc[1] = int(loc[1])
+            except ValueError:
+                return await edl(
+                    event,
+                    "wrong syntax . syntax is `.gif quality ; fps(frames per second)`",
+                )
             if 0 < loc[0] < 721:
                 quality = loc[0].strip()
             else:
-                return await edit_delete(event, "Use quality of range 0 to 721")
+                return await edl(event, "Use quality of range 0 to 721")
             if 0 < loc[1] < 20:
                 quality = loc[1].strip()
             else:
-                return await edit_delete(event, "Use quality of range 0 to 20")
+                return await edl(event, "Use quality of range 0 to 20")
         if len(loc) == 1:
+            try:
+                loc[0] = int(loc[0])
+            except ValueError:
+                return await edl(
+                    event,
+                    "wrong syntax . syntax is `.gif quality ; fps(frames per second)`",
+                )
             if 0 < loc[0] < 721:
                 quality = loc[0].strip()
             else:
-                return await edit_delete(event, "Use quality of range 0 to 721")
+                return await edl(event, "Use quality of range 0 to 721")
     dogreply = await event.get_reply_message()
     dog_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not dogreply or not dogreply.media or not dogreply.media.document:
-        return await edit_or_reply(event, "`Stupid!, This is not animated sticker.`")
+        return await eor(event, "`Stupid!, This is not animated sticker.`")
     if dogreply.media.document.mime_type != "application/x-tgsticker":
-        return await edit_or_reply(event, "`Stupid!, This is not animated sticker.`")
-    dogevent = await edit_or_reply(
+        return await eor(event, "`Stupid!, This is not animated sticker.`")
+    dogevent = await eor(
         event,
         "Converting this Sticker to GiF...\n This may takes upto few mins..",
         parse_mode=_format.parse_pre,
@@ -536,7 +551,7 @@ async def _(event):  # sourcery no-metrics
         force_document=False,
         reply_to=reply_to_id,
     )
-    await _dogutils.unsavegif(event, teledoge)
+    await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for files in (doggif, dogfile):
         if files and os.path.exists(files):
@@ -557,14 +572,14 @@ async def _(event):  # sourcery no-metrics
 async def _(event):
     "Converts the required media file to voice or mp3 file."
     if not event.reply_to_msg_id:
-        await edit_or_reply(event, "```Reply to any media file.```")
+        await eor(event, "```Reply to any media file.```")
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await edit_or_reply(event, "reply to media file")
+        await eor(event, "reply to media file")
         return
     input_str = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "`Converting...`")
+    event = await eor(event, "`Converting...`")
     try:
         start = datetime.now()
         c_time = time.time()
@@ -679,18 +694,18 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to make it gif.__")
+        return await edl(event, "__Reply to photo or sticker to make it gif.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
-        return await edit_delete(
+        return await edl(
             event,
             "__Reply to photo or sticker to make it gif. Animated sticker is not supported__",
         )
     args = event.pattern_match.group(1)
     args = "i" if not args else args.replace("-", "")
-    dogevent = await edit_or_reply(event, "__🎞 Making Gif from the relied media...__")
-    imag = await _dogtools.media_to_pic(event, reply, noedits=True)
+    dogevent = await eor(event, "__🎞 Making Gif from the relied media...__")
+    imag = await _dogetools.media_to_pic(event, reply, noedits=True)
     if imag[1] is None:
-        return await edit_delete(
+        return await edl(
             imag[0], "__Unable to extract image from the replied message.__"
         )
     image = Image.open(imag[1])
@@ -710,7 +725,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         elif args == "i":
             outframes = await invert_frames(image, w, h, outframes)
     except Exception as e:
-        return await edit_delete(dogevent, f"**Error**\n__{str(e)}__")
+        return await edl(dogevent, f"**Error**\n__{str(e)}__")
     output = io.BytesIO()
     output.name = "Output.gif"
     outframes[0].save(output, save_all=True, append_images=outframes[1:], duration=0.7)
@@ -720,7 +735,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     final = os.path.join(Config.TEMP_DIR, "output.gif")
     output = await vid_to_gif("Output.gif", final)
     if output is None:
-        await edit_delete(
+        await edl(
             dogevent, "__There was some error in the media. I can't format it to gif.__"
         )
         for i in [final, "Output.gif", imag[1]]:
@@ -728,7 +743,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
                 os.remove(i)
         return
     teledoge = await event.client.send_file(event.chat_id, output, reply_to=reply)
-    await _dogutils.unsavegif(event, teledoge)
+    await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [final, "Output.gif", imag[1]]:
         if os.path.exists(i):
@@ -749,7 +764,7 @@ async def _(event):
     reply = await event.get_reply_message()
     mediatype = media_type(event)
     if mediatype and mediatype != "video":
-        return await edit_delete(event, "__Reply to video to convert it to gif__")
+        return await edl(event, "__Reply to video to convert it to gif__")
     args = event.pattern_match.group(1)
     if not args:
         args = 2.0
@@ -758,14 +773,14 @@ async def _(event):
             args = float(args)
         except ValueError:
             args = 2.0
-    dogevent = await edit_or_reply(event, "__🎞Converting into Gif..__")
+    dogevent = await eor(event, "__🎞Converting into Gif..__")
     inputfile = await reply.download_media()
     outputfile = os.path.join(Config.TEMP_DIR, "vidtogif.gif")
     result = await vid_to_gif(inputfile, outputfile, speed=args)
     if result is None:
-        return await edit_delete(event, "__I couldn't convert it to gif.__")
+        return await edl(event, "__I couldn't convert it to gif.__")
     teledoge = await event.client.send_file(event.chat_id, result, reply_to=reply)
-    await _dogutils.unsavegif(event, teledoge)
+    await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [inputfile, outputfile]:
         if os.path.exists(i):

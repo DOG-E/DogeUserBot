@@ -11,7 +11,7 @@ from gtts import gTTS
 
 from userbot import doge
 
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from . import deEmojify, reply_id
 
 plugin_category = "utils"
@@ -42,10 +42,10 @@ async def _(event):
         lan = input_str or "en"
     else:
         if not input_str:
-            return await edit_or_reply(event, "Invalid Syntax. Module stopping.")
+            return await eor(event, "Invalid Syntax. Module stopping.")
         text = input_str
         lan = "en"
-    dogevent = await edit_or_reply(event, "`Recording......`")
+    dogevent = await eor(event, "`Recording......`")
     text = deEmojify(text.strip())
     lan = lan.strip()
     if not os.path.isdir("./temp/"):
@@ -89,9 +89,9 @@ async def _(event):
             voice_note=True,
         )
         os.remove(required_file_name)
-        await edit_delete(
+        await edl(
             dogevent,
             "`Processed text {} into voice in {} seconds!`".format(text[0:20], ms),
         )
     except Exception as e:
-        await edit_or_reply(dogevent, f"**Error:**\n`{str(e)}`")
+        await eor(dogevent, f"**Error:**\n`{str(e)}`")

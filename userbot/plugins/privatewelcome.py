@@ -4,7 +4,7 @@ from telethon import events
 
 from userbot import doge
 
-from ..core.managers import edit_or_reply
+from ..core.managers import eor
 from ..sql_helper import pmpermit_sql as pmpermit_sql
 from ..sql_helper.welcomesql import (
     addwelcome_setting,
@@ -125,7 +125,7 @@ async def save_welcome(event):
             )
             msg_id = msg_o.id
         else:
-            await edit_or_reply(
+            await eor(
                 event,
                 "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set.`",
             )
@@ -135,11 +135,11 @@ async def save_welcome(event):
         string = rep_msg.text
     success = "`Welcome note {} for this chat.`"
     if addwelcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("saved"))
+        return await eor(event, success.format("saved"))
     rmwelcome_setting(event.chat_id)
     if addwelcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("updated"))
-    await edit_or_reply("Error while setting welcome in this group")
+        return await eor(event, success.format("updated"))
+    await eor("Error while setting welcome in this group")
 
 
 @doge.bot_cmd(
@@ -154,9 +154,9 @@ async def save_welcome(event):
 async def del_welcome(event):
     "To turn off private welcome message"
     if rmwelcome_setting(event.chat_id) is True:
-        await edit_or_reply(event, "`Welcome note deleted for this chat.`")
+        await eor(event, "`Welcome note deleted for this chat.`")
     else:
-        await edit_or_reply(event, "`Do I have a welcome note here ?`")
+        await eor(event, "`Do I have a welcome note here ?`")
 
 
 @doge.bot_cmd(
@@ -171,18 +171,18 @@ async def show_welcome(event):
     "To show current private welcome message in group"
     cws = getcurrent_welcome_settings(event.chat_id)
     if not cws:
-        await edit_or_reply(event, "`No pwelcome message saved here.`")
+        await eor(event, "`No pwelcome message saved here.`")
         return
     if cws.f_mesg_id:
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )
-        await edit_or_reply(
+        await eor(
             event, "`I am currently pwelcoming new users with this welcome note.`"
         )
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
-        await edit_or_reply(
+        await eor(
             event, "`I am currently pwelcoming new users with this welcome note.`"
         )
         await event.reply(cws.reply)

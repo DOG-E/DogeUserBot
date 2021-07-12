@@ -5,7 +5,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from .. import doge
 from ..core.logger import logging
-from ..core.managers import edit_delete, edit_or_reply
+from ..core.managers import edl, eor
 from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper import broadcast_sql as sql
 from . import BOTLOG, BOTLOG_CHATID
@@ -35,7 +35,7 @@ async def dogbroadcast_add(event):
     if not user:
         return
     if not reason and not reply:
-        return await edit_delete(
+        return await edl(
             event, "__What should i send to the person. reply to msg or give text__"
         )
     if reply and reason and user.id != reply.sender_id:
@@ -47,7 +47,7 @@ async def dogbroadcast_add(event):
                 "The replied message was failed to send to the user. Confusion between to whom it should send.",
                 reply_to=msg.id,
             )
-        return await edit_or_reply(
+        return await eor(
             event,
             f"__Sorry! Confusion between users to whom should i send the person mentioned in message or to the person replied. text message was logged in log group. you can resend message from there__",
         )
@@ -55,7 +55,7 @@ async def dogbroadcast_add(event):
         msg = await event.client.send_message(user.id, reason)
     else:
         msg = await event.client.send_message(user.id, reply)
-    await edit_delete(event, "__Successfully sent the message.__")
+    await edl(event, "__Successfully sent the message.__")
 
 
 @doge.bot_cmd(
@@ -71,7 +71,7 @@ async def dogbroadcast_add(event):
     "To add the chat to the mentioned category"
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "In which category should i add this chat",
             parse_mode=_format.parse_pre,
@@ -79,13 +79,13 @@ async def dogbroadcast_add(event):
     keyword = doginput_str.lower()
     check = sql.is_in_broadcastlist(keyword, event.chat_id)
     if check:
-        return await edit_delete(
+        return await edl(
             event,
             f"This chat is already in this category {keyword}",
             parse_mode=_format.parse_pre,
         )
     sql.add_to_broadcastlist(keyword, event.chat_id)
-    await edit_delete(
+    await edl(
         event,
         f"This chat is Now added to category {keyword}",
         parse_mode=_format.parse_pre,
@@ -119,7 +119,7 @@ async def dogbroadcast_list(event):
     "To list the all chats in the mentioned category."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "Which category Chats should i list ?\nCheck .listall",
             parse_mode=_format.parse_pre,
@@ -127,13 +127,13 @@ async def dogbroadcast_list(event):
     keyword = doginput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     if no_of_chats == 0:
-        return await edit_delete(
+        return await edl(
             event,
             f"There is no category with name {keyword}. Check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event, f"Fetching info of the category {keyword}", parse_mode=_format.parse_pre
     )
     resultlist = f"**The category '{keyword}' have '{no_of_chats}' chats and these are listed below :**\n\n"
@@ -152,7 +152,7 @@ async def dogbroadcast_list(event):
             errorlist += f" 👉 __This id {int(chat)} in database probably you may left the chat/channel or may be invalid id.\
                             \nRemove this id from the database by using this command__ `.frmfrom {keyword} {int(chat)}` \n\n"
     finaloutput = resultlist + errorlist
-    await edit_or_reply(dogevent, finaloutput)
+    await eor(dogevent, finaloutput)
 
 
 @doge.bot_cmd(
@@ -166,7 +166,7 @@ async def dogbroadcast_list(event):
 async def dogbroadcast_list(event):
     "To list all the category names."
     if sql.num_broadcastlist_chats() == 0:
-        return await edit_delete(
+        return await edl(
             event,
             "you haven't created at least one category  check info for more help",
             parse_mode=_format.parse_pre,
@@ -175,7 +175,7 @@ async def dogbroadcast_list(event):
     resultext = "**Here are the list of your category's :**\n\n"
     for i in chats:
         resultext += f" 👉 `{i}` __contains {sql.num_broadcastlist_chat(i)} chats__\n"
-    await edit_or_reply(event, resultext)
+    await eor(event, resultext)
 
 
 @doge.bot_cmd(
@@ -191,7 +191,7 @@ async def dogbroadcast_send(event):
     "To send the message to all chats in the mentioned category."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "To which category should i send this message",
             parse_mode=_format.parse_pre,
@@ -199,7 +199,7 @@ async def dogbroadcast_send(event):
     reply = await event.get_reply_message()
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
-        return await edit_delete(
+        return await edl(
             event,
             "what should i send to to this category ?",
             parse_mode=_format.parse_pre,
@@ -208,13 +208,13 @@ async def dogbroadcast_send(event):
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     group_ = Get(dog)
     if no_of_chats == 0:
-        return await edit_delete(
+        return await edl(
             event,
             f"There is no category with name {keyword}. Check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
@@ -256,7 +256,7 @@ async def dogbroadcast_send(event):
     "To forward the message to all chats in the mentioned category."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "To which category should i send this message",
             parse_mode=_format.parse_pre,
@@ -264,7 +264,7 @@ async def dogbroadcast_send(event):
     reply = await event.get_reply_message()
     dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
-        return await edit_delete(
+        return await edl(
             event,
             "what should i send to to this category ?",
             parse_mode=_format.parse_pre,
@@ -273,13 +273,13 @@ async def dogbroadcast_send(event):
     no_of_chats = sql.num_broadcastlist_chat(keyword)
     group_ = Get(dog)
     if no_of_chats == 0:
-        return await edit_delete(
+        return await edl(
             event,
             f"There is no category with name {keyword}. Check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    dogevent = await edit_or_reply(
+    dogevent = await eor(
         event,
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
@@ -321,7 +321,7 @@ async def dogbroadcast_remove(event):
     "To remove the chat from the mentioned category"
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "From which category should i remove this chat",
             parse_mode=_format.parse_pre,
@@ -329,13 +329,13 @@ async def dogbroadcast_remove(event):
     keyword = doginput_str.lower()
     check = sql.is_in_broadcastlist(keyword, event.chat_id)
     if not check:
-        return await edit_delete(
+        return await edl(
             event,
             f"This chat is not in the category {keyword}",
             parse_mode=_format.parse_pre,
         )
     sql.rm_from_broadcastlist(keyword, event.chat_id)
-    await edit_delete(
+    await edl(
         event,
         f"This chat is Now removed from the category {keyword}",
         parse_mode=_format.parse_pre,
@@ -370,14 +370,14 @@ async def dogbroadcast_remove(event):
     "To force remove the given chat from a category."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
-        return await edit_delete(
+        return await edl(
             event,
             "From which category should i remove this chat",
             parse_mode=_format.parse_pre,
         )
     args = doginput_str.split(" ")
     if len(args) != 2:
-        return await edit_delete(
+        return await edl(
             event,
             "Use proper syntax as shown .frmfrom category_name groupid",
             parse_mode=_format.parse_pre,
@@ -390,7 +390,7 @@ async def dogbroadcast_remove(event):
             groupid = int(args[1])
             keyword = args[0].lower()
         except ValueError:
-            return await edit_delete(
+            return await edl(
                 event,
                 "Use proper syntax as shown .frmfrom category_name groupid",
                 parse_mode=_format.parse_pre,
@@ -398,13 +398,13 @@ async def dogbroadcast_remove(event):
     keyword = keyword.lower()
     check = sql.is_in_broadcastlist(keyword, int(groupid))
     if not check:
-        return await edit_delete(
+        return await edl(
             event,
             f"This chat {groupid} is not in the category {keyword}",
             parse_mode=_format.parse_pre,
         )
     sql.rm_from_broadcastlist(keyword, groupid)
-    await edit_delete(
+    await edl(
         event,
         f"This chat {groupid} is Now removed from the category {keyword}",
         parse_mode=_format.parse_pre,
@@ -439,20 +439,20 @@ async def dogbroadcast_delete(event):
     doginput_str = event.pattern_match.group(1)
     check1 = sql.num_broadcastlist_chat(doginput_str)
     if check1 < 1:
-        return await edit_delete(
+        return await edl(
             event,
             f"Are you sure that there is category {doginput_str}",
             parse_mode=_format.parse_pre,
         )
     try:
         sql.del_keyword_broadcastlist(doginput_str)
-        await edit_or_reply(
+        await eor(
             event,
             f"Successfully deleted the category {doginput_str}",
             parse_mode=_format.parse_pre,
         )
     except Exception as e:
-        await edit_delete(
+        await edl(
             event,
             str(e),
             parse_mode=_format.parse_pre,
