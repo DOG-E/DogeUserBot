@@ -5,7 +5,12 @@ from userbot import doge
 
 from ..core.logger import logging
 from ..core.managers import edl, eor
-from ..helpers.torrentutils import aria2, check_metadata, check_progress_for_dl, subprocess_run
+from ..helpers.torrentutils import (
+    aria2,
+    check_metadata,
+    check_progress_for_dl,
+    subprocess_run,
+)
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "misc"

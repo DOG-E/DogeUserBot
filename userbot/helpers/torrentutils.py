@@ -3,13 +3,12 @@ import os
 from asyncio import sleep
 from subprocess import PIPE, Popen
 
+import aria2p
 from requests import get
 
 from ..Config import Config
 from ..core.logger import logging
 from .progress import humanbytes
-
-import aria2p
 
 LOGS = logging.getLogger(__name__)
 
