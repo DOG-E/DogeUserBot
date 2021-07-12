@@ -73,9 +73,7 @@ async def wallpapers(event):
             i = 0
         else:
             i += 1
-        await eor(
-            event, f"**📥 Downloaded : {count}/{limit}\n\n❌ Errors : {i}/5**"
-        )
+        await eor(event, f"**📥 Downloaded : {count}/{limit}\n\n❌ Errors : {i}/5**")
         if count == int(limit):
             break
         if i == 5:

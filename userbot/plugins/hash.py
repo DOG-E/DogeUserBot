@@ -95,9 +95,7 @@ async def endecrypt(event):
                 with open(downloaded_file_name, "rb") as image_file:
                     result = base64.b64encode(image_file.read()).decode("utf-8")
                 os.remove(downloaded_file_name)
-        await eor(
-            dogevent, result, file_name="encodedfile.txt", caption="It's Encoded"
-        )
+        await eor(dogevent, result, file_name="encodedfile.txt", caption="It's Encoded")
     else:
         try:
             lething = str(

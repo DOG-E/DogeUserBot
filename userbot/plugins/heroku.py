@@ -163,8 +163,10 @@ async def dyno_usage(dyno):
     minutes_remaining = remaining_quota / 60
     hours = math.floor(minutes_remaining / 60)
     minutes = math.floor(minutes_remaining % 60)
-    day = math.floor(hours / 24)  # https://github.com/NinjaTG/MyBot/blob/master/bot/modules/usage.py#L50
-    
+    day = math.floor(
+        hours / 24
+    )  # https://github.com/NinjaTG/MyBot/blob/master/bot/modules/usage.py#L50
+
     # - Current -
     App = result["apps"]
     try:

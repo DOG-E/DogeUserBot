@@ -30,9 +30,7 @@ async def collage(event):
     doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     dogid = await reply_id(event)
-    event = await eor(
-        event, "```collaging this may take several minutes too..... 😁```"
-    )
+    event = await eor(event, "```collaging this may take several minutes too..... 😁```")
     if not (reply and (reply.media)):
         await event.edit("`Media not found...`")
         return

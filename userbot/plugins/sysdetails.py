@@ -93,9 +93,7 @@ async def cpu(event):
     "shows cpu information"
     cmd = "cat /proc/cpuinfo | grep 'model name'"
     o = (await _dogeutils.runcmd(cmd))[0]
-    await eor(
-        event, f"**[Dog's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
-    )
+    await eor(event, f"**[Dog's](tg://need_update_for_some_feature/) CPU Model:**\n{o}")
 
 
 @doge.bot_cmd(

@@ -301,9 +301,7 @@ async def yt_search(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await edl(
-            event, "`Reply to a message or pass a query to search!`"
-        )
+        return await edl(event, "`Reply to a message or pass a query to search!`")
     video_q = await eor(event, "`Searching...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))
@@ -317,4 +315,3 @@ async def yt_search(event):
         return await edl(video_q, str(e), time=10, parse_mode=_format.parse_pre)
     reply_text = f"**•  Search Query:**\n`{query}`\n\n**•  Results:**\n{full_response}"
     await eor(video_q, reply_text)
-

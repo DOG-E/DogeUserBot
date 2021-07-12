@@ -46,9 +46,7 @@ async def _(event):
     elif ";" in input_str:
         lan, text = input_str.split(";")
     else:
-        return await edl(
-            event, "`.tl LanguageCode` as reply to a message", time=5
-        )
+        return await edl(event, "`.tl LanguageCode` as reply to a message", time=5)
     text = deEmojify(text.strip())
     lan = lan.strip()
     Translator()
@@ -83,9 +81,7 @@ async def translateme(trans):
     elif textx:
         message = textx.text
     else:
-        return await eor(
-            trans, "`Give a text or reply to a message to translate!`"
-        )
+        return await eor(trans, "`Give a text or reply to a message to translate!`")
     TRT_LANG = gvarstatus("TRT_LANG") or "en"
     try:
         reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
@@ -132,14 +128,10 @@ async def lang(value):
     LANG = LANGUAGES[arg]
     if input_str == "trt":
         addgvar("TRT_LANG", arg)
-        await eor(
-            value, f"`Language for Translator changed to {LANG.title()}.`"
-        )
+        await eor(value, f"`Language for Translator changed to {LANG.title()}.`")
     else:
         addgvar("AI_LANG", arg)
-        await eor(
-            value, f"`Language for chatbot is changed to {LANG.title()}.`"
-        )
+        await eor(value, f"`Language for chatbot is changed to {LANG.title()}.`")
     LANG = LANGUAGES[arg]
 
     if BOTLOG:

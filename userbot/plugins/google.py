@@ -12,7 +12,7 @@ from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 
 from ..Config import Config
-from . import BOTLOG, BOTLOG_CHATID, hide_inlinebot, edl, eor, doge, deEmojify, reply_id
+from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, reply_id
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
@@ -196,9 +196,7 @@ async def _(event):
             img_size_div = soup.find(id="jHnbRc")
             img_size = img_size_div.find_all("div")
         except Exception:
-            return await edl(
-                dogevent, "`Sorry. I am unable to find similar images`"
-            )
+            return await edl(dogevent, "`Sorry. I am unable to find similar images`")
         end = datetime.now()
         ms = (end - start).seconds
         OUTPUT_STR = """{img_size}
@@ -287,10 +285,7 @@ async def _(img):
     info={
         "header": "To get link for google search",
         "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
-        "usage": [
-            "{tr}google query",
-            "{tr}google reply a message"
-        ],
+        "usage": ["{tr}google query", "{tr}google reply a message"],
     },
 )
 async def google_search(event):

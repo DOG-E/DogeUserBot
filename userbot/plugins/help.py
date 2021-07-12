@@ -51,9 +51,7 @@ async def cmdinfo(input_str, event, plugin=False):
                 f"**There is no plugin or command as **`{input_str}`** in your bot.**",
             )
             return None
-        await edl(
-            event, f"**There is no command as **`{input_str}`** in your bot.**"
-        )
+        await edl(event, f"**There is no command as **`{input_str}`** in your bot.**")
         return None
     except Exception as e:
         await edl(event, f"**Error**\n`{str(e)}`")
@@ -141,7 +139,7 @@ async def cmdlist():
         "usage": [
             "{tr}help or {tr}h (plugin/command name)",
             "{tr}helpc or {tr}hc (command name)",
-            "{tr}helpt or {tr}ht"
+            "{tr}helpt or {tr}ht",
         ],
         "examples": ["{tr}help help", "{tr}helpc help"],
     },

@@ -59,9 +59,7 @@ async def imirror(event):  # sourcery no-metrics
             )
         image = Image.open(imag[1])
     except Exception as e:
-        return await edl(
-            dogevent, f"**Error in identifying image:**\n__{str(e)}__"
-        )
+        return await edl(dogevent, f"**Error in identifying image:**\n__{str(e)}__")
     flag = event.pattern_match.group(3) or "r"
     w, h = image.size
     if w % 2 != 0 and flag in ["r", "l"] or h % 2 != 0 and flag in ["u", "b"]:
@@ -233,9 +231,7 @@ async def square_cmd(event):
             )
         img = Image.open(imag[1])
     except Exception as e:
-        return await edl(
-            dogevent, f"**Error in identifying image:**\n__{str(e)}__"
-        )
+        return await edl(dogevent, f"**Error in identifying image:**\n__{str(e)}__")
     w, h = img.size
     if w == h:
         return await edl(event, "__The replied image is already in 1:1 ratio__")
@@ -267,9 +263,7 @@ async def pic_gifcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edl(
-            event, "__Reply to photo or sticker to make it doted image.__"
-        )
+        return await edl(event, "__Reply to photo or sticker to make it doted image.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
         return await edl(
             event,

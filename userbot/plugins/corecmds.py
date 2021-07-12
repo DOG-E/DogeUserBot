@@ -4,16 +4,7 @@ from pathlib import Path
 
 from ..Config import Config
 from ..utils import load_module, remove_plugin
-from . import (
-    CMD_HELP,
-    CMD_LIST,
-    SUDO_LIST,
-    doge,
-    edl,
-    eor,
-    hmention,
-    reply_id,
-)
+from . import CMD_HELP, CMD_LIST, SUDO_LIST, doge, edl, eor, hmention, reply_id
 
 plugin_category = "tools"
 
@@ -158,9 +149,7 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     path = Path(f"userbot/plugins/{shortname}.py")
     if not os.path.exists(path):
-        return await edl(
-            event, f"There is no plugin with path {path} to uninstall it"
-        )
+        return await edl(event, f"There is no plugin with path {path} to uninstall it")
     os.remove(path)
     if shortname in CMD_LIST:
         CMD_LIST.pop(shortname)

@@ -67,9 +67,7 @@ async def get_user_from_event(
             return user_obj, extra
         if not args:
             if not noedits:
-                await edl(
-                    dogevent, "`Pass the user's username, id or reply!`", 5
-                )
+                await edl(dogevent, "`Pass the user's username, id or reply!`", 5)
             return None, None
     except Exception as e:
         LOGS.error(str(e))

@@ -84,9 +84,7 @@ async def _(event):
 async def _(event):
     "To set profile pic for this account."
     reply_message = await event.get_reply_message()
-    dogevent = await eor(
-        event, "`Downloading Profile Picture to my local ...`"
-    )
+    dogevent = await eor(event, "`Downloading Profile Picture to my local ...`")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     photo = None
@@ -120,9 +118,7 @@ async def _(event):
             except Exception as e:
                 await dogevent.edit(f"**Error:**\n`{str(e)}`")
             else:
-                await eor(
-                    dogevent, "`My profile picture was successfully changed`"
-                )
+                await eor(dogevent, "`My profile picture was successfully changed`")
     try:
         os.remove(photo)
     except Exception as e:
@@ -223,9 +219,7 @@ async def remove_profilepic(delpfp):
         for sep in pfplist.photos
     ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await edl(
-        delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
-    )
+    await edl(delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`")
 
 
 @doge.bot_cmd(

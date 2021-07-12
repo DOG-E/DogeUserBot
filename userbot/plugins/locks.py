@@ -165,9 +165,7 @@ async def _(event):  # sourcery no-metrics
             changeinfo = True
             locktype = "everything"
         elif input_str:
-            return await edl(
-                event, f"**Invalid lock type :** `{input_str}`", time=5
-            )
+            return await edl(event, f"**Invalid lock type :** `{input_str}`", time=5)
 
         else:
             return await eor(event, "`I can't lock nothing !!`")
@@ -353,9 +351,7 @@ async def _(event):  # sourcery no-metrics
             changeinfo = False
             locktype = "everything"
         elif input_str:
-            return await edl(
-                event, f"**Invalid unlock type :** `{input_str}`", time=5
-            )
+            return await edl(event, f"**Invalid unlock type :** `{input_str}`", time=5)
 
         else:
             return await eor(event, "`I can't unlock nothing !!`")
@@ -537,13 +533,9 @@ async def _(event):  # sourcery no-metrics
         locktype = "messages"
     elif input_str == "media":
         if media:
-            return await edl(
-                event, "`This group is already locked with sending media`"
-            )
+            return await edl(event, "`This group is already locked with sending media`")
         if umedia:
-            return await edl(
-                event, "`User is already locked with sending media`"
-            )
+            return await edl(event, "`User is already locked with sending media`")
         umedia = True
         locktype = "media"
     elif input_str == "sticker":
@@ -570,24 +562,16 @@ async def _(event):  # sourcery no-metrics
         locktype = "preview links"
     elif input_str == "gif":
         if gif:
-            return await edl(
-                event, "`This group is already locked with sending GIFs`"
-            )
+            return await edl(event, "`This group is already locked with sending GIFs`")
         if ugif:
-            return await edl(
-                event, "`This user is already locked with sending GIFs`"
-            )
+            return await edl(event, "`This user is already locked with sending GIFs`")
         ugif = True
         locktype = "GIFs"
     elif input_str == "game":
         if gamee:
-            return await edl(
-                event, "`This group is already locked with sending games`"
-            )
+            return await edl(event, "`This group is already locked with sending games`")
         if ugamee:
-            return await edl(
-                event, "`This user is already locked with sending games`"
-            )
+            return await edl(event, "`This user is already locked with sending games`")
         ugamee = True
         locktype = "games"
     elif input_str == "inline":
@@ -603,13 +587,9 @@ async def _(event):  # sourcery no-metrics
         locktype = "inline bots"
     elif input_str == "poll":
         if gpoll:
-            return await edl(
-                event, "`This group is already locked with sending polls`"
-            )
+            return await edl(event, "`This group is already locked with sending polls`")
         if ugpoll:
-            return await edl(
-                event, "`This user is already locked with sending polls`"
-            )
+            return await edl(event, "`This user is already locked with sending polls`")
         ugpoll = True
         locktype = "polls"
     elif input_str == "invite":
@@ -618,9 +598,7 @@ async def _(event):  # sourcery no-metrics
                 event, "`This group is already locked with adding members`"
             )
         if uadduser:
-            return await edl(
-                event, "`This user is already locked with adding members`"
-            )
+            return await edl(event, "`This user is already locked with adding members`")
         uadduser = True
         locktype = "invites"
     elif input_str == "pin":
@@ -663,9 +641,7 @@ async def _(event):  # sourcery no-metrics
         uchangeinfo = True
         locktype = "everything"
     elif input_str:
-        return await edl(
-            event, f"**Invalid lock type :** `{input_str}`", time=5
-        )
+        return await edl(event, f"**Invalid lock type :** `{input_str}`", time=5)
 
     else:
         return await eor(event, "`I can't lock nothing !!`")
@@ -774,9 +750,7 @@ async def _(event):  # sourcery no-metrics
         uchangeinfo = changeinfo
     if input_str == "msg":
         if msg:
-            return await edl(
-                event, "`This Group is locked with messaging permission.`"
-            )
+            return await edl(event, "`This Group is locked with messaging permission.`")
         if not umsg:
             return await edl(
                 event, "`This User is already unlocked with messaging permission.`"
@@ -787,16 +761,12 @@ async def _(event):  # sourcery no-metrics
         if media:
             return await edl(event, "`This Group is locked with sending media`")
         if not umedia:
-            return await edl(
-                event, "`User is already unlocked with sending media`"
-            )
+            return await edl(event, "`User is already unlocked with sending media`")
         umedia = False
         locktype = "media"
     elif input_str == "sticker":
         if sticker:
-            return await edl(
-                event, "`This Group is locked with sending stickers`"
-            )
+            return await edl(event, "`This Group is locked with sending stickers`")
         if not usticker:
             return await edl(
                 event, "`This user is already unlocked with sending stickers`"
@@ -805,9 +775,7 @@ async def _(event):  # sourcery no-metrics
         locktype = "stickers"
     elif input_str == "preview":
         if embed_link:
-            return await edl(
-                event, "`This Group is locked with previewing links`"
-            )
+            return await edl(event, "`This Group is locked with previewing links`")
         if not uembed_link:
             return await edl(
                 event, "`This user is already unlocked with previewing links`"
@@ -818,9 +786,7 @@ async def _(event):  # sourcery no-metrics
         if gif:
             return await edl(event, "`This Group is locked with sending GIFs`")
         if not ugif:
-            return await edl(
-                event, "`This user is already unlocked with sending GIFs`"
-            )
+            return await edl(event, "`This user is already unlocked with sending GIFs`")
         ugif = False
         locktype = "GIFs"
     elif input_str == "game":
@@ -834,9 +800,7 @@ async def _(event):  # sourcery no-metrics
         locktype = "games"
     elif input_str == "inline":
         if ainline:
-            return await edl(
-                event, "`This Group is locked with using inline bots`"
-            )
+            return await edl(event, "`This Group is locked with using inline bots`")
         if not uainline:
             return await edl(
                 event, "`This user is already unlocked with using inline bots`"
@@ -854,9 +818,7 @@ async def _(event):  # sourcery no-metrics
         locktype = "polls"
     elif input_str == "invite":
         if adduser:
-            return await edl(
-                event, "`This Group is locked with adding members`"
-            )
+            return await edl(event, "`This Group is locked with adding members`")
         if not uadduser:
             return await edl(
                 event, "`This user is already unlocked with adding members`"
@@ -914,9 +876,7 @@ async def _(event):  # sourcery no-metrics
             uchangeinfo = False
         locktype = "everything"
     elif input_str:
-        return await edl(
-            event, f"**Invalid lock type :** `{input_str}`", time=5
-        )
+        return await edl(event, f"**Invalid lock type :** `{input_str}`", time=5)
 
     else:
         return await eor(event, "`I can't lock nothing !!`")

@@ -179,14 +179,10 @@ async def show_welcome(event):
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )
-        await eor(
-            event, "`I am currently welcoming new users with this welcome note.`"
-        )
+        await eor(event, "`I am currently welcoming new users with this welcome note.`")
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
-        await eor(
-            event, "`I am currently welcoming new users with this welcome note.`"
-        )
+        await eor(event, "`I am currently welcoming new users with this welcome note.`")
         await event.reply(cws.reply)
 
 

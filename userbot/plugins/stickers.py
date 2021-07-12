@@ -424,9 +424,7 @@ async def pack_kang(event):  # sourcery no-metrics
             event, "`Fetching details of the sticker pack, please wait..`"
         )
     except BaseException:
-        return await edl(
-            event, "`This is not a sticker. Reply to a sticker.`", 5
-        )
+        return await edl(event, "`This is not a sticker. Reply to a sticker.`", 5)
     try:
         get_stickerset = await event.client(
             GetStickerSetRequest(
@@ -589,9 +587,7 @@ async def pic2packcmd(event):
         )
     args = event.pattern_match.group(1)
     if not args:
-        return await edl(
-            event, "__What's your packname ?. pass along with cmd.__"
-        )
+        return await edl(event, "__What's your packname ?. pass along with cmd.__")
     dogevent = await eor(event, "__🔪Cropping and adjusting the image...__")
     try:
         emoji = (re.findall(r"-e[\U00010000-\U0010ffff]+", args))[0]
@@ -679,23 +675,17 @@ async def pic2packcmd(event):
 async def get_pack_info(event):
     "To get information about a sticker pick."
     if not event.is_reply:
-        return await edl(
-            event, "`I can't fetch info from nothing, can I ?!`", 5
-        )
+        return await edl(event, "`I can't fetch info from nothing, can I ?!`", 5)
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await edl(
-            event, "`Reply to a sticker to get the pack details`", 5
-        )
+        return await edl(event, "`Reply to a sticker to get the pack details`", 5)
     try:
         stickerset_attr = rep_msg.document.attributes[1]
         dogevent = await eor(
             event, "`Fetching details of the sticker pack, please wait..`"
         )
     except BaseException:
-        return await edl(
-            event, "`This is not a sticker. Reply to a sticker.`", 5
-        )
+        return await edl(event, "`This is not a sticker. Reply to a sticker.`", 5)
     if not isinstance(stickerset_attr, DocumentAttributeSticker):
         return await dogevent.edit("`This is not a sticker. Reply to a sticker.`")
     get_stickerset = await event.client(

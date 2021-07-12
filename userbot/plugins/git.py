@@ -119,9 +119,7 @@ async def _(event):
 async def download(event):
     "To commit the replied plugin to github."
     if Config.GITHUB_ACCESS_TOKEN is None:
-        return await edl(
-            event, "`Please ADD Proper Access Token from github.com`", 5
-        )
+        return await edl(event, "`Please ADD Proper Access Token from github.com`", 5)
     if Config.GIT_REPO_NAME is None:
         return await edl(
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5

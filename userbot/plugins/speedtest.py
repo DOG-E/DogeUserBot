@@ -51,9 +51,7 @@ async def _(event):
         as_document = True
     elif input_str == "text":
         as_text = True
-    dogevent = await eor(
-        event, "`Calculating my internet speed. Please wait!`"
-    )
+    dogevent = await eor(event, "`Calculating my internet speed. Please wait!`")
     start = time()
     s = speedtest.Speedtest()
     s.get_best_server()

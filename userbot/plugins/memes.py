@@ -149,9 +149,7 @@ async def _(event):
         input_str = input_str.lower()
     if r % 2 == 1:
         if input_str == "heads":
-            await eor(
-                event, "The coin landed on: **Heads**. \n You were correct."
-            )
+            await eor(event, "The coin landed on: **Heads**. \n You were correct.")
         elif input_str == "tails":
             await eor(
                 event,
@@ -161,9 +159,7 @@ async def _(event):
             await eor(event, "The coin landed on: **Heads**.")
     elif r % 2 == 0:
         if input_str == "tails":
-            await eor(
-                event, "The coin landed on: **Tails**. \n You were correct."
-            )
+            await eor(event, "The coin landed on: **Tails**. \n You were correct.")
         elif input_str == "heads":
             await eor(
                 event,
@@ -418,13 +414,9 @@ async def _(event):
     sample_url = f"https://da.gd/s?url=https://lmgtfy.com/?q={input_str.replace(' ', '+')}%26iie=1"
     response_api = requests.get(sample_url).text
     if response_api:
-        await eor(
-            event, f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` "
-        )
+        await eor(event, f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` ")
     else:
-        return await edl(
-            event, "`something is wrong. please try again later.`", 5
-        )
+        return await edl(event, "`something is wrong. please try again later.`", 5)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,

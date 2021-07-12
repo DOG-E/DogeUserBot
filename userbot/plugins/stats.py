@@ -252,9 +252,7 @@ async def _(event):
             try:
                 u = await event.client.get_entity(input_str)
             except ValueError:
-                await edl(
-                    event, "`Give userid or username to find name history`"
-                )
+                await edl(event, "`Give userid or username to find name history`")
             uid = u.id
     else:
         uid = reply_message.sender_id

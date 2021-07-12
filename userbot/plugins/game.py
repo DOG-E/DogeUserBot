@@ -51,9 +51,7 @@ async def igame(event):
     data = dict(zip(game_code, button))
     name = dict(zip(game_code, game_name))
     if not input_str:
-        await edl(
-            event, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60
-        )
+        await edl(event, f"**Available Game Codes & Names :-**\n\n{game_list}", time=60)
         return
     if input_str not in game_code:
         dogevent = await eor(event, "`Give me a correct game code...`")

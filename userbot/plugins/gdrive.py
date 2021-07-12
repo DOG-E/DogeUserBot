@@ -1518,9 +1518,7 @@ async def g_download(event):
     thumb = None
     cmd = event.pattern_match.group(1)
     drive_link = event.pattern_match.group(2)
-    dogevent = await eor(
-        event, "`Downloading Requested File from G-Drive...`"
-    )
+    dogevent = await eor(event, "`Downloading Requested File from G-Drive...`")
     file_name, dogprocess = await gdrive_download(event, dogevent, service, drive_link)
     if dogprocess is not None:
         return await edl(dogevent, file_name)

@@ -30,9 +30,7 @@ async def _(event):
             return await edl(event, f"`{str(e)}`", 5)
         try:
             if p.first_name:
-                return await eor(
-                    event, f"The id of the user `{input_str}` is `{p.id}`"
-                )
+                return await eor(event, f"The id of the user `{input_str}` is `{p.id}`")
         except Exception:
             try:
                 if p.title:

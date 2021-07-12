@@ -163,9 +163,7 @@ async def _(event):
             f"Already a directory named {original} exists",
         )
         return
-    mone = await eor(
-        event, "creating the directory ...", parse_mode=_format.parse_pre
-    )
+    mone = await eor(event, "creating the directory ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _dogeutils.runcmd(f"mkdir {original}")
@@ -209,9 +207,7 @@ async def _(event):
             f"there is no such directory or file with the name `{dog}` check again",
         )
         return
-    mone = await eor(
-        event, "copying the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await eor(event, "copying the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _dogeutils.runcmd(f"cp -r {original} {location}")
@@ -254,9 +250,7 @@ async def _(event):
             event,
             f"there is no such directory or file with the name `{original}` check again",
         )
-    mone = await eor(
-        event, "Moving the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await eor(event, "Moving the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         shutil.move(original, location)

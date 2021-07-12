@@ -4,7 +4,17 @@ from random import choice, randint
 
 from telethon.utils import get_display_name
 
-from . import ALIVE_NAME, doge, mention, amongus_gen, get_impostor_img, eor, reply_id, get_user_from_event, _format
+from . import (
+    ALIVE_NAME,
+    _format,
+    amongus_gen,
+    doge,
+    eor,
+    get_impostor_img,
+    get_user_from_event,
+    mention,
+    reply_id,
+)
 
 plugin_category = "extra"
 

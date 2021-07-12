@@ -172,9 +172,7 @@ async def _(event):
 )
 async def _(event):
     "To unban all banned users from group."
-    dogevent = await eor(
-        event, "__Unbanning all banned accounts in this group.__"
-    )
+    dogevent = await eor(event, "__Unbanning all banned accounts in this group.__")
     succ = 0
     total = 0
     flag = False
@@ -229,9 +227,7 @@ async def rm_deletedacc(show):
     del_u = 0
     del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
     if con != "clean":
-        event = await eor(
-            show, "`Searching for ghost/deleted/zombie accounts...`"
-        )
+        event = await eor(show, "`Searching for ghost/deleted/zombie accounts...`")
         async for user in show.client.iter_participants(show.chat_id):
             if user.deleted:
                 del_u += 1
@@ -247,9 +243,7 @@ async def rm_deletedacc(show):
     if not admin and not creator:
         await edl(show, "`I am not an admin here!`", 5)
         return
-    event = await eor(
-        show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
-    )
+    event = await eor(show, "`Deleting deleted accounts...\nOh I can do that?!?!`")
     del_u = 0
     del_a = 0
     async for user in show.client.iter_participants(show.chat_id):

@@ -64,9 +64,7 @@ async def potocmd(event):
         try:
             uid = int(uid)
             if uid <= 0:
-                await eor(
-                    event, "```number Invalid!``` **Are you Comedy Me ?**"
-                )
+                await eor(event, "```number Invalid!``` **Are you Comedy Me ?**")
                 return
         except BaseException:
             await eor(event, "`Are you comedy me ?`")

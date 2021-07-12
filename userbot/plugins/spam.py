@@ -2,13 +2,23 @@ import asyncio
 import base64
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.types import InputStickerSetID, InputStickerSetShortName
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.tl.types import InputStickerSetID, InputStickerSetShortName
 from telethon.utils import get_display_name
 
-from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, media_type, addgvar, gvarstatus, spamhelper
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    addgvar,
+    doge,
+    edl,
+    eor,
+    gvarstatus,
+    media_type,
+    spamhelper,
+)
 
 plugin_category = "extra"
 
@@ -213,7 +223,9 @@ async def spammer(event):
     dog = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spamhelper.spam_function(event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True)
+    await spamhelper.spam_function(
+        event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True
+    )
 
 
 @doge.bot_cmd(
@@ -226,7 +238,7 @@ async def spammer(event):
     },
 )
 async def limitchecker(event):
-# Thanks to @SiriOT ~ https://github.com/robotlog/SiriUserBot/blob/d2231b436b7dae9e4075d22c747666df9f13819e/userbot/modules/sinfo.py#L35
+    # Thanks to @SiriOT ~ https://github.com/robotlog/SiriUserBot/blob/d2231b436b7dae9e4075d22c747666df9f13819e/userbot/modules/sinfo.py#L35
     dogevent = await eor(event, "**🔄 I'm checking limit for your account...**")
     chat = "@SpamBot"
     lstatus = None
@@ -239,22 +251,48 @@ async def limitchecker(event):
         await doge.send_read_acknowledge(conv.chat_id)
         lstatus = await conv.get_response()
         if lstatus.text.startswith(
-            "Dear" or "عَزِيز" or "Thân yêu"
-            or "Querido" or "亲爱的" or "Drag"
-            or "Milovaný" or "Kære" or "Dierbaar"
-            or "Rakas" or "Aimé" or "Cher"
-            or "Lieb" or "αγαπητός" or "Caro"
-            or "親愛な" or "사랑하는" or "Kjær"
-            or "Kochany" or "дорогой" or "Kär"
-            or "ซึ่งเป็นที่รักยิ่ง" or "Шановний"
+            "Dear"
+            or "عَزِيز"
+            or "Thân yêu"
+            or "Querido"
+            or "亲爱的"
+            or "Drag"
+            or "Milovaný"
+            or "Kære"
+            or "Dierbaar"
+            or "Rakas"
+            or "Aimé"
+            or "Cher"
+            or "Lieb"
+            or "αγαπητός"
+            or "Caro"
+            or "親愛な"
+            or "사랑하는"
+            or "Kjær"
+            or "Kochany"
+            or "дорогой"
+            or "Kär"
+            or "ซึ่งเป็นที่รักยิ่ง"
+            or "Шановний"
         ):
             gstatus = lstatus.text.split("until ")[1].split(", ")[0]
-            ldays, lmonths, lyears = gstatus.split(" ")[0], spamhelper.months[gstatus.split(" ")[1]], gstatus.split(" ")[2]
-            lhours = lstatus.text.split(":")[0].split(", ")[1] + ":" + lstatus.text.split(":")[1].split("UTC.")[0]
+            ldays, lmonths, lyears = (
+                gstatus.split(" ")[0],
+                spamhelper.months[gstatus.split(" ")[1]],
+                gstatus.split(" ")[2],
+            )
+            lhours = (
+                lstatus.text.split(":")[0].split(", ")[1]
+                + ":"
+                + lstatus.text.split(":")[1].split("UTC.")[0]
+            )
             collecx = f"**📅 Your account limit will expire on {ldays} {lmonths} {lyears} {lhours}.**"
             await eor(dogevent, collecx)
         elif lstatus.text.startswith("Good news"):
-            await eor(dogevent, "**🐾 You don't have any limits.\n\n😏 I think you are the freest person on Telegram!**")
+            await eor(
+                dogevent,
+                "**🐾 You don't have any limits.\n\n😏 I think you are the freest person on Telegram!**",
+            )
         else:
             await doge.forward_messages(event.chat_id, lstatus)
             await dogevent.delete()

@@ -1338,9 +1338,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await eor(
-        event, "╔═══════════════════╗ \n  \n╚═══════════════════╝"
-    )
+    event = await eor(event, "╔═══════════════════╗ \n  \n╚═══════════════════╝")
     await asyncio.sleep(1)
     await event.edit("╔═══════════════════╗ \n \t░ \n╚═══════════════════╝")
     await asyncio.sleep(1)

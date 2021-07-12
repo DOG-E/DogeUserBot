@@ -41,9 +41,7 @@ tired_response = [
 async def add_chatbot(event):
     "To enable ai for the replied person"
     if event.reply_to_msg_id is None:
-        return await eor(
-            event, "`Reply to a User's message to activate ai on `"
-        )
+        return await eor(event, "`Reply to a User's message to activate ai on `")
     dogevent = await eor(event, "`Adding ai to user...`")
     user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
@@ -80,9 +78,7 @@ async def add_chatbot(event):
 async def remove_chatbot(event):
     "To stop ai for that user"
     if event.reply_to_msg_id is None:
-        return await eor(
-            event, "Reply to a User's message to stop ai on him."
-        )
+        return await eor(event, "Reply to a User's message to stop ai on him.")
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
     chat_id = event.chat_id
@@ -185,9 +181,7 @@ async def list_chatbot(event):  # sourcery no-metrics
     else:
         lsts = get_users(event.chat_id)
         if len(lsts) <= 0:
-            return await eor(
-                event, "There are no ai enabled users in this chat"
-            )
+            return await eor(event, "There are no ai enabled users in this chat")
         for echos in lsts:
             if echos.user_username:
                 private_chats += (

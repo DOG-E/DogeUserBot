@@ -27,9 +27,7 @@ async def itachi(event):
     if not args and get:
         args = get.text
     if not args:
-        await eor(
-            event, "`What am I Supposed to do with this idiot, Give me a text. `"
-        )
+        await eor(event, "`What am I Supposed to do with this idiot, Give me a text. `")
         return
     result = ""
     for a in args:

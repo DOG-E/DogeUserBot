@@ -33,9 +33,7 @@ plugin_category = "utils"
 async def _(event):
     "To Take a screenshot of a website."
     if Config.CHROME_BIN is None:
-        return await eor(
-            event, "Need to install Google Chrome. Module Stopping."
-        )
+        return await eor(event, "Need to install Google Chrome. Module Stopping.")
     dogevent = await eor(event, "`Processing ...`")
     start = datetime.now()
     try:

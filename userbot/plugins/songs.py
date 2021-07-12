@@ -274,9 +274,7 @@ async def _(event):
                 ("I don't like to say this but I failed to find any such song.")
             ):
                 await delete_messages(event, chat, purgeflag)
-                return await edl(
-                    dogevent, SONG_NOT_FOUND, parse_mode="html", time=5
-                )
+                return await edl(dogevent, SONG_NOT_FOUND, parse_mode="html", time=5)
             await dogevent.edit(SONG_SENDING_STRING, parse_mode="html")
             await baka[0].click(0)
             await conv.get_response()

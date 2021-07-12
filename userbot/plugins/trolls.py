@@ -5,7 +5,19 @@ import os
 
 from telegraph import exceptions, upload_file
 
-from . import doge, convert_toimage, deEmojify, phcomment, threats, trap, trash, edl, eor, _dogetools, reply_id
+from . import (
+    _dogetools,
+    convert_toimage,
+    deEmojify,
+    doge,
+    edl,
+    eor,
+    phcomment,
+    reply_id,
+    threats,
+    trap,
+    trash,
+)
 
 plugin_category = "fun"
 

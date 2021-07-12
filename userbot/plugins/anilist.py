@@ -76,9 +76,7 @@ async def anilist(event):
     "Get info on any anime."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(
-            event, "__What should i search ? Gib me Something to Search__"
-        )
+        return await edl(event, "__What should i search ? Gib me Something to Search__")
     event = await eor(event, "`Searching...`")
     result = await callAPI(input_str)
     msg = await formatJSON(result)
@@ -245,9 +243,7 @@ async def anime_download(event):  # sourcery no-metrics
     if not search_query and reply:
         search_query = reply.text
     elif not search_query:
-        return await edl(
-            event, "__What should i search ? Gib me Something to Search__"
-        )
+        return await edl(event, "__What should i search ? Gib me Something to Search__")
     dogevent = await eor(event, "`Searching anime...`")
     search_query = search_query.replace(" ", "+")
     if input_str == "kaizoku":
@@ -335,9 +331,7 @@ async def whatanime(event):
     "Reverse search of anime."
     reply = await event.get_reply_message()
     if not reply:
-        return await edl(
-            event, "__reply to media to reverse search that anime__."
-        )
+        return await edl(event, "__reply to media to reverse search that anime__.")
     mediatype = media_type(reply)
     if mediatype not in ["Photo", "Video", "Gif", "Sticker"]:
         return await edl(

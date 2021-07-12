@@ -27,9 +27,7 @@ async def get_adzan(adzan):
     url = f"http://muslimsalat.com/{LOKASI}.json?key=bd099c5825cbedb9aa934e255a81a5fc"
     request = requests.get(url)
     if request.status_code != 200:
-        return await edl(
-            adzan, f"`Couldn't fetch any data about the city {LOKASI}`", 5
-        )
+        return await edl(adzan, f"`Couldn't fetch any data about the city {LOKASI}`", 5)
     result = json.loads(request.text)
     dogresult = f"<b>Islamic prayer times </b>\
             \n\n<b>City     : </b><i>{result['query']}</i>\

@@ -99,9 +99,7 @@ async def add_snip(event):
     if add_note(keyword, string, msg_id) is False:
         rm_note(keyword)
         if add_note(keyword, string, msg_id) is False:
-            return await eor(
-                event, f"Error in saving the given snip {keyword}"
-            )
+            return await eor(event, f"Error in saving the given snip {keyword}")
         return await eor(event, success.format(keyword, "updated", keyword))
     return await eor(event, success.format(keyword, "added", keyword))
 
@@ -150,7 +148,5 @@ async def on_snip_delete(event):
     if dogsnip:
         rm_note(name)
     else:
-        return await eor(
-            event, f"Are you sure that #{name} is saved as snip?"
-        )
+        return await eor(event, f"Are you sure that #{name} is saved as snip?")
     await eor(event, f"`snip #{name} deleted successfully`")

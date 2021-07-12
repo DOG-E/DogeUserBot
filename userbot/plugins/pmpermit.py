@@ -618,9 +618,7 @@ async def pmpermit_on(event):
             await edl(event, "__Pmpermit is already enabled for your account__")
     elif gvarstatus("pmpermit") is not None:
         delgvar("pmpermit")
-        await edl(
-            event, "__Pmpermit has been disabled for your account successfully__"
-        )
+        await edl(event, "__Pmpermit has been disabled for your account successfully__")
     else:
         await edl(event, "__Pmpermit is already disabled for your account__")
 
@@ -644,18 +642,14 @@ async def pmpermit_on(event):
                 "__Pmpermit Menu has been disabled for your account successfully.__",
             )
         else:
-            await edl(
-                event, "__Pmpermit Menu is already disabled for your account__"
-            )
+            await edl(event, "__Pmpermit Menu is already disabled for your account__")
     elif gvarstatus("pmmenu") is not None:
         delgvar("pmmenu")
         await edl(
             event, "__Pmpermit Menu has been enabled for your account successfully__"
         )
     else:
-        await edl(
-            event, "__Pmpermit Menu is already enabled for your account__"
-        )
+        await edl(event, "__Pmpermit Menu is already enabled for your account__")
 
 
 @doge.bot_cmd(
@@ -767,9 +761,7 @@ async def disapprove_p_m(event):
                 return
     if reason == "all":
         pmpermit_sql.disapprove_all()
-        return await edl(
-            event, "__Ok! I have disapproved everyone successfully.__"
-        )
+        return await edl(event, "__Ok! I have disapproved everyone successfully.__")
     if not reason:
         reason = "Not Mentioned."
     if pmpermit_sql.is_approved(user.id):

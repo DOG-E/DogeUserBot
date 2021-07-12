@@ -43,17 +43,27 @@ async def _(event):
                 doge(UnblockRequest(chat))
                 await doge.forward_messages(chat, reply)
 
-            response = conv.wait_event(events.MessageEdited(incoming=True,from_users=chat))
+            response = conv.wait_event(
+                events.MessageEdited(incoming=True, from_users=chat)
+            )
             response = await response
             if response.text.startswith("👋"):
-                await eor(dogevent, "**You need to start the @VoicyBot \n& choose your language.**")
+                await eor(
+                    dogevent,
+                    "**You need to start the @VoicyBot \n& choose your language.**",
+                )
             elif response.text.startswith("__👮"):
-                await edl(dogevent, "**The sound is broken.\nI didn't understand what said.**")
+                await edl(
+                    dogevent, "**The sound is broken.\nI didn't understand what said.**"
+                )
             else:
                 await dogevent.edit(f"**I hear something: **\n\n`{response.text}`")
 
     except:
-        if Config.IBM_WATSON_CRED_URL is None or Config.IBM_WATSON_CRED_PASSWORD is None:
+        if (
+            Config.IBM_WATSON_CRED_URL is None
+            or Config.IBM_WATSON_CRED_PASSWORD is None
+        ):
             return await edl(
                 event,
                 "`You need to set the required ENV variables for this module. \nModule stopping`",

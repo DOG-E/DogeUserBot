@@ -2,15 +2,13 @@ import math
 import os
 from asyncio import sleep
 from subprocess import PIPE, Popen
-from .extdl import install_pip
-from ...Config import Config
-
 
 from requests import get
 
+from ...Config import Config
 from ...core.logger import logging
-
 from ..progress import humanbytes
+from .extdl import install_pip
 
 try:
     import aria2p

@@ -77,9 +77,7 @@ async def dva(event):
         ).json()
         url = nsfw.get("url")
     except JSONDecodeError:
-        return await edl(
-            event, "`uuuf.. seems like api down, try again later.`"
-        )
+        return await edl(event, "`uuuf.. seems like api down, try again later.`")
     if not url:
         return await edl(event, "`uuuf.. No URL found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)

@@ -95,9 +95,7 @@ async def _(event):
             event = await eor(event, "`I can't deep fry that!`")
             return
     if not event.is_reply:
-        event = await eor(
-            event, "`Reply to an image or sticker to deep fry it!`"
-        )
+        event = await eor(event, "`Reply to an image or sticker to deep fry it!`")
         return
     chat = "@image_deepfrybot"
     if reply_message.sender.bot:
@@ -149,9 +147,7 @@ async def deepfryer(event):
         if isinstance(data, bool):
             return await eor(event, "`I can't deep fry that!`")
     if not event.is_reply:
-        return await eor(
-            event, "`Reply to an image or sticker to deep fry it!`"
-        )
+        return await eor(event, "`Reply to an image or sticker to deep fry it!`")
     # download last photo (highres) as byte array
     image = io.BytesIO()
     await event.client.download_media(data, image)
