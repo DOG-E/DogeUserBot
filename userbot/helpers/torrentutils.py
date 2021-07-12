@@ -5,16 +5,11 @@ from subprocess import PIPE, Popen
 
 from requests import get
 
-from ...Config import Config
-from ...core.logger import logging
-from ..progress import humanbytes
-from .extdl import install_pip
+from ..Config import Config
+from ..core.logger import logging
+from .progress import humanbytes
 
-try:
-    import aria2p
-except:
-    install_pip("aria2p")
-    import aria2p
+import aria2p
 
 LOGS = logging.getLogger(__name__)
 

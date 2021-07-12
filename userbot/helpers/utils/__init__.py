@@ -1,6 +1,5 @@
 from .extdl import *
 from .paste import *
-from .torrentutils import *
 
 flag = True
 check = 0
