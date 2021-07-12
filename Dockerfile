@@ -1,5 +1,5 @@
 # Get Docker image
-FROM teledoge/dogeuserbot:doger
+FROM mutlcc/dogeuserbot:doger
 
 # Clone Doge repository
 RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/userbot
@@ -8,7 +8,7 @@ RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/userbot
 WORKDIR /root/userbot
 
 # Install requirements
-RUN pip3 install --no-cache-dir -U -r requirements.txt
+RUN pip3 install -U -r requirements.txt
 
 # Minor adjustments
 ENV PATH="/home/userbot/bin:$PATH"
