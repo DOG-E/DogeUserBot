@@ -2,8 +2,8 @@ import asyncio
 
 from telethon.utils import get_display_name
 
-from ..sql_helper.globals import gvarstatus
 from .. import BOTLOG, BOTLOG_CHATID
+from ..sql_helper.globals import gvarstatus
 from .utils import _dogeutils
 
 months = {
