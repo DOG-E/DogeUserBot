@@ -1,6 +1,6 @@
 {
-  "name": "🐶 Telegram Doge UserBot 🐾",
-  "description": "🐶 Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
+  "name": "Telegram Doge UserBot",
+  "description": "Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
   "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
   "keywords": [
       "powerful",
@@ -80,17 +80,17 @@
     }
   },
   "buildpacks": [{
-    "url": "https://github.com/TeleDoge/heroku-buildpack-ffmpeg-latest"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-ffmpeg-latest.git"
   },{
-    "url": "https://github.com/TeleDoge/heroku-buildpack-google-chrome"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-google-chrome.git"
   },{
-    "url": "https://github.com/TeleDoge/heroku-buildpack-chromedriver"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-chromedriver.git"
   },{
-    "url": "https://github.com/TeleDoge/heroku-buildpack-p7zip"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-p7zip.git"
   },{
-    "url": "https://github.com/TeleDoge/aria2-heroku"
+    "url": "https://github.com/TeleDoge/aria2-heroku.git"
   },{
-    "url": "https://github.com/TeleDoge/heroku-buildpack-jq"
+    "url": "https://github.com/TeleDoge/heroku-buildpack-jq.git"
   },{
     "url": "heroku/python"
   }]

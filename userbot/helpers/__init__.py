@@ -1,6 +1,5 @@
 from . import fonts
 from . import memeshelper as dogememes
-from . import spamhelper
 from .aiohttp_helper import AioHttp
 from .utils import *
 
