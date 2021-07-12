@@ -12,13 +12,13 @@ from ..helpers.resources.months import months
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
+    _dogeutils,
     addgvar,
     doge,
     edl,
     eor,
     gvarstatus,
     media_type,
-    _dogeutils,
 )
 
 plugin_category = "extra"
@@ -318,9 +318,7 @@ async def spammer(event):
     dog = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(
-        event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True
-    )
+    await spam_function(event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True)
 
 
 @doge.bot_cmd(
