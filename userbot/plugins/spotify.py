@@ -237,15 +237,13 @@ def get_spotify_info(TIME=5):
 
 
 @doge.bot_cmd(
-    pattern="(spo(tify)?bio) (on|off)",
-    command=("spotify", plugin_category),
+    pattern="spotify (on|off)",
+    command=("spotifybio", plugin_category),
     info={
         "header": "To enable or disable the Spotify current playing to bio.",
         "usage": [
-            "{tr}spobio on",
-            "{tr}spobio off",
-            "{tr}spotifybio on",
-            "{tr}spotifybio off",
+            "{tr}spotify on",
+            "{tr}spotify off",
         ],
     },
 )
@@ -270,14 +268,11 @@ async def set_biostgraph(setstbio):
 
 
 @doge.bot_cmd(
-    pattern="(spo(tify)?mp3)",
-    command=("spotify", plugin_category),
+    pattern="spotifymp3",
+    command=("spotifymp3", plugin_category),
     info={
         "header": "Send current Spotify playing song.",
-        "usage": [
-            "{tr}spomp3",
-            "{tr}spotifymp3",
-        ],
+        "usage": "{tr}spotifymp3",
     },
 )
 async def getmp3(event):
