@@ -69,7 +69,7 @@ ujson
 urlextract
 validators
 vcsi
-wand
+Wand
 wget
 git+https://github.com/TeleDoge/Wikipedia
 youtube-search-python
