@@ -5,9 +5,9 @@ from textwrap import wrap
 import numpy as np
 from colour import Color as asciiColor
 from PIL import Image, ImageDraw, ImageFont
-from wand.color import Color
-from wand.drawing import Drawing
-from wand.image import Image as dogimage
+##### from wand.color import Color
+##### from wand.drawing import Drawing
+##### from wand.image import Image as dogimage
 
 from .utils import _dogeutils
 
@@ -96,29 +96,29 @@ async def dog_meme(CNG_FONTS, topString, bottomString, filename, endname):
     img.save(endname)
 
 
-async def dog_meeme(upper_text, lower_text, CNG_FONTS, picture_name, endname):
-    main_image = dogimage(filename=picture_name)
-    main_image.resize(
-        1024, int(((main_image.height * 1.0) / (main_image.width * 1.0)) * 1024.0)
-    )
-    upper_text = "\n".join(wrap(upper_text, get_warp_length(main_image.width))).upper()
-    lower_text = "\n".join(wrap(lower_text, get_warp_length(main_image.width))).upper()
-    lower_margin = MARGINS[lower_text.count("\n")]
-    text_draw = Drawing()
-    text_draw.font = join(getcwd(), CNG_FONTS)
-    text_draw.font_size = 100
-    text_draw.text_alignment = "center"
-    text_draw.stroke_color = Color("black")
-    text_draw.stroke_width = 3
-    text_draw.fill_color = Color("white")
-    if upper_text:
-        text_draw.text((main_image.width) // 2, 80, upper_text)
-    if lower_text:
-        text_draw.text(
-            (main_image.width) // 2, main_image.height - lower_margin, lower_text
-        )
-    text_draw(main_image)
-    main_image.save(filename=endname)
+##### async def dog_meeme(upper_text, lower_text, CNG_FONTS, picture_name, endname):
+#####     main_image = dogimage(filename=picture_name)
+#####     main_image.resize(
+#####         1024, int(((main_image.height * 1.0) / (main_image.width * 1.0)) * 1024.0)
+#####     )
+#####     upper_text = "\n".join(wrap(upper_text, get_warp_length(main_image.width))).upper()
+#####     lower_text = "\n".join(wrap(lower_text, get_warp_length(main_image.width))).upper()
+#####     lower_margin = MARGINS[lower_text.count("\n")]
+#####     text_draw = Drawing()
+#####     text_draw.font = join(getcwd(), CNG_FONTS)
+#####     text_draw.font_size = 100
+#####     text_draw.text_alignment = "center"
+#####     text_draw.stroke_color = Color("black")
+#####     text_draw.stroke_width = 3
+#####     text_draw.fill_color = Color("white")
+#####     if upper_text:
+#####         text_draw.text((main_image.width) // 2, 80, upper_text)
+#####     if lower_text:
+#####         text_draw.text(
+#####             (main_image.width) // 2, main_image.height - lower_margin, lower_text
+#####         )
+#####     text_draw(main_image)
+#####     main_image.save(filename=endname)
 
 
 async def silently_send_message(conv, text):

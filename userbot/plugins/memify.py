@@ -127,76 +127,75 @@ async def maccmd(event):  # sourcery no-metrics
         os.remove(output)
 
 
-@doge.bot_cmd(
-    pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
-    command=("mmf", plugin_category),
-    info={
-        "header": "To write text on stickers or images.",
-        "description": "To create memes.",
-        "options": {
-            "mmf": "Output will be image.",
-            "mms": "Output will be sticker.",
-        },
-        "usage": [
-            "{tr}mmf toptext ; bottomtext",
-            "{tr}mms toptext ; bottomtext",
-        ],
-        "examples": [
-            "{tr}mmf hello (only on top)",
-            "{tr}mmf ; hello (only on bottom)",
-            "{tr}mmf hi ; hello (both on top and bottom)",
-        ],
-    },
-)
-async def memes(event):
-    "To write text on stickers or image"
-    cmd = event.pattern_match.group(1)
-    doginput = event.pattern_match.group(2)
-    reply = await event.get_reply_message()
-    if not reply:
-        return await edl(event, "`Reply to supported Media...`")
-    dogid = await reply_id(event)
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    if not doginput:
-        return await edl(
-            event, "`what should i write on that u idiot give text to memify`"
-        )
-    if ";" in doginput:
-        top, bottom = doginput.split(";", 1)
-    else:
-        top = doginput
-        bottom = ""
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
-    output = await _dogetools.media_to_pic(event, reply)
-    if output[1] is None:
-        return await edl(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
-    meme_file = convert_toimage(output[1])
-    meme = os.path.join("./temp", "dogmeme.jpg")
-    if gvarstatus("CNG_FONTS") is None:
-        CNG_FONTS = "userbot/helpers/styles/impact.ttf"
-    else:
-        CNG_FONTS = gvarstatus("CNG_FONTS")
-    if max(len(top), len(bottom)) < 21:
-        await dog_meme(CNG_FONTS, top, bottom, meme_file, meme)
-    else:
-        await dog_meeme(top, bottom, CNG_FONTS, meme_file, meme)
-    if cmd != "mmf":
-        meme = convert_tosticker(meme)
-    await event.client.send_file(
-        event.chat_id, meme, reply_to=dogid, force_document=False
-    )
-    await output[0].delete()
-    for files in (meme, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+##### @doge.bot_cmd(
+#####     pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
+#####     command=("mmf", plugin_category),
+#####     info={
+#####         "header": "To write text on stickers or images.",
+#####         "description": "To create memes.",
+#####         "options": {
+#####             "mmf": "Output will be image.",
+#####             "mms": "Output will be sticker.",
+#####         },
+#####         "usage": [
+#####             "{tr}mmf toptext ; bottomtext",
+#####             "{tr}mms toptext ; bottomtext",
+#####         ],
+#####         "examples": [
+#####             "{tr}mmf hello (only on top)",
+#####             "{tr}mmf ; hello (only on bottom)",
+#####             "{tr}mmf hi ; hello (both on top and bottom)",
+#####         ],
+#####     },
+##### )
+##### async def memes(event):
+#####     "To write text on stickers or image"
+#####     cmd = event.pattern_match.group(1)
+#####     doginput = event.pattern_match.group(2)
+#####     reply = await event.get_reply_message()
+#####     if not reply:
+#####         return await edl(event, "`Reply to supported Media...`")
+#####     dogid = await reply_id(event)
+#####     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+#####     if not doginput:
+#####         return await edl(
+#####             event, "`what should i write on that u idiot give text to memify`"
+#####         )
+#####     if ";" in doginput:
+#####         top, bottom = doginput.split(";", 1)
+#####     else:
+#####         top = doginput
+#####         bottom = ""
+#####     if not os.path.isdir("./temp"):
+#####         os.mkdir("./temp")
+#####     output = await _dogetools.media_to_pic(event, reply)
+#####     if output[1] is None:
+#####         return await edl(
+#####             output[0], "__Unable to extract image from the replied message.__"
+#####         )
+#####     try:
+#####         san = Get(san)
+#####         await event.client(san)
+#####     except BaseException:
+#####         pass
+#####     meme_file = convert_toimage(output[1])
+#####     meme = os.path.join("./temp", "dogmeme.jpg")
+#####     if gvarstatus("CNG_FONTS") is None:
+#####         CNG_FONTS = "userbot/helpers/styles/impact.ttf"
+#####     else:
+#####         CNG_FONTS = gvarstatus("CNG_FONTS")
+#####     if max(len(top), len(bottom)) < 21:
+#####         await dog_meme(CNG_FONTS, top, bottom, meme_file, meme)
+#####     else:
+#####         await dog_meeme(top, bottom, CNG_FONTS, meme_file, meme)
+#####     if cmd != "mmf":
+#####         meme = convert_tosticker(meme)
+#####     await event.client.send_file(
+#####         event.chat_id, meme, reply_to=dogid, force_document=False
+#####     )
+#####     await output[0].delete()
+#####         if files and os.path.exists(files):
+#####             os.remove(files)
 
 
 @doge.bot_cmd(
