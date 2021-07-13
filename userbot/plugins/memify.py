@@ -13,11 +13,10 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from userbot import doge
 
 from ..core.managers import edl, eor
-from ..helpers import asciiart, dog_meeme, dog_meme, media_type
+from ..helpers import asciiart, media_type
 from ..helpers.functions import (
     add_frame,
     convert_toimage,
-    convert_tosticker,
     crop,
     flip_image,
     grayscale,
@@ -26,7 +25,7 @@ from ..helpers.functions import (
     solarize,
 )
 from ..helpers.utils import _dogetools, reply_id
-from ..sql_helper.globals import addgvar, gvarstatus
+from ..sql_helper.globals import addgvar
 
 plugin_category = "fun"
 
