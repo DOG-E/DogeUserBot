@@ -74,10 +74,10 @@
         "plan": "heroku-postgresql"
     }],
     "formation": [{
-        "doger": [{
+        "doger": {
             "quantity": 1,
             "size": "free"
-        }]
+        }
     }],
     "buildpacks": [{
         "url": "https://github.com/amivin/aria2-heroku"
