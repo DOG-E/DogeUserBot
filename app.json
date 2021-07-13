@@ -3,21 +3,21 @@
         "plan": "heroku-postgresql"
     }],
     "buildpacks": [{
-        "url": "heroku/python"
-    },{
-        "url": "https://github.com/heroku/heroku-buildpack-apt.git"
-    },{
-        "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip.git"
-    },{
-        "url": "https://github.com/chrismytton/heroku-buildpack-jq.git"
-    },{
-        "url": "https://github.com/heroku/heroku-buildpack-chromedriver.git"
-    },{
-        "url": "https://github.com/heroku/heroku-buildpack-google-chrome.git"
-    },{
         "url": "https://github.com/amivin/aria2-heroku.git"
     },{
         "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    },{
+        "url": "https://github.com/heroku/heroku-buildpack-google-chrome.git"
+    },{
+        "url": "https://github.com/heroku/heroku-buildpack-chromedriver.git"
+    },{
+        "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip.git"
+    },{
+        "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+    },{
+        "url": "https://github.com/chrismytton/heroku-buildpack-jq.git"
+    },{
+        "url": "heroku/python"
     }],
     "env": {
         "ALIVE_NAME": {
@@ -78,6 +78,8 @@
             "size": "free"
         }
     },
+    "repository": "https://github.com/DOG-E/DogeUserBot",
+    "stack": "container",
     "name": "Telegram Doge UserBot 🐾",
     "description": "🐶 Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
     "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
@@ -92,8 +94,6 @@
         "telethon",
         "postgresql"
     ],
-    "repository": "https://github.com/DOG-E/DogeUserBot",
-    "stack": "container",
     "website": "https://t.me/DogeUserBot",
     "success_url": "https://t.me/DogeSup"
 }
