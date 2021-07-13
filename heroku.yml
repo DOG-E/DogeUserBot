@@ -2,4 +2,4 @@ build:
   docker:
       doger: Dockerfile
 run:
-   doger: python3 doger.py
+   doger: python3 dog-e

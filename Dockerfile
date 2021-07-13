@@ -15,4 +15,4 @@ ENV PATH="/home/userbot/bin:$PATH"
 RUN chmod -R 755 bin
 
 # Run Doge
-CMD ["python3", "doger.py"]
+CMD ["python3", "-m", "userbot"]
