@@ -110,7 +110,7 @@ async def dlive(event):
     if user.id == event.client.uid:
         return await edl(event, "Only Doge admins can use, dude!__")
     start = datetime.now()
-    await event.reply("ㅤ")
+    ppingx = await event.reply("ㅤ")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     uptime = await get_readable_time((time() - StartTime))
@@ -138,13 +138,13 @@ async def dlive(event):
                 event.chat_id, PIC, caption=caption, reply_to=reply_to_id
             )
             await event.delete()
-            del _pingx
+            del ppingx
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
             await event.reply(caption)
-            del _pingx
+            del ppingx
     else:
         await event.reply(caption)
-        del _pingx
+        del ppingx
 
 
 @doge.bot_cmd(
