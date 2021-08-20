@@ -6,13 +6,14 @@ from math import floor
 from os import remove
 from random import choice
 from re import findall
-from string import ascii_uppercase, ascii_lowercase
+from string import ascii_lowercase, ascii_uppercase
 from urllib.request import Request, urlopen
 
+from bs4 import BeautifulSoup
 from cloudscraper import create_scraper
 from emoji import UNICODE_EMOJI
-from bs4 import BeautifulSoup
-from PIL.Image import new, open as Imopen
+from PIL.Image import new
+from PIL.Image import open as Imopen
 from telethon.events import NewMessage
 from telethon.tl.functions.messages import GetStickerSetRequest, ImportChatInviteRequest
 from telethon.tl.types import (
@@ -23,7 +24,18 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from . import DOGEKANG, _dogetools, crop_and_divide, doge, edl, eor, fsmessage, gvarstatus, media_type, tr
+from . import (
+    DOGEKANG,
+    _dogetools,
+    crop_and_divide,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    gvarstatus,
+    media_type,
+    tr,
+)
 
 plugin_category = "misc"
 
@@ -169,9 +181,7 @@ async def add_to_pack(
             pack = 1
         packname = pack_name(userid, pack, is_anim)
         packnick = pack_nick(username, pack, is_anim)
-        await dogevent.edit(
-            f"`Switching to Pack {pack} due to insufficient space`"
-        )
+        await dogevent.edit(f"`Switching to Pack {pack} due to insufficient space`")
         await conv.send_message(packname)
         x = await conv.get_response()
         if x.text == "Invalid pack selected.":
@@ -274,7 +284,9 @@ async def kang(args):  # sourcery no-metrics
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
-        emoji = emoji if emojibypass else choice(['🐾','😂','🧡','🐕','✨','🤔','😳','😉'])
+        emoji = (
+            emoji if emojibypass else choice(["🐾", "😂", "🧡", "🐕", "✨", "🤔", "😳", "😉"])
+        )
         pack = 1
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
@@ -302,9 +314,7 @@ async def kang(args):  # sourcery no-metrics
             image = await resize_photo(photo)
             stfile.name = "sticker.png"
             image.save(stfile, "PNG")
-        response = urlopen(
-            Request(f"http://t.me/addstickers/{packname}")
-        )
+        response = urlopen(Request(f"http://t.me/addstickers/{packname}"))
         htmlstr = response.read().decode("utf8").split("\n")
         if (
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
@@ -370,7 +380,7 @@ async def kang(args):  # sourcery no-metrics
     info={
         "header": "To kang entire sticker sticker.",
         "description": "Kang's the entire sticker pack of replied sticker to the specified pack",
-        "usage": ["{tr}pkang <number>", "{tr}pdızla <number>"]
+        "usage": ["{tr}pkang <number>", "{tr}pdızla <number>"],
     },
 )
 async def pack_kang(event):  # sourcery no-metrics
@@ -457,7 +467,7 @@ async def pack_kang(event):  # sourcery no-metrics
             return
         if photo:
             splat = ("".join(event.text.split(maxsplit=1)[1:])).split()
-            emoji = emoji or choice(['🐾','😂','🧡','🐕','✨','🤔','😳','😉'])
+            emoji = emoji or choice(["🐾", "😂", "🧡", "🐕", "✨", "🤔", "😳", "😉"])
             if pack is None:
                 pack = 1
                 if len(splat) == 1:
@@ -482,9 +492,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 image = await resize_photo(photo)
                 stfile.name = "sticker.png"
                 image.save(stfile, "PNG")
-            response = urlopen(
-                Request(f"http://t.me/addstickers/{packname}")
-            )
+            response = urlopen(Request(f"http://t.me/addstickers/{packname}"))
             htmlstr = response.read().decode("utf8").split("\n")
             if (
                 "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
@@ -573,8 +581,7 @@ async def pic2packcmd(event):
         emoji = "▫️"
     chat = "@Stickers"
     name = "DogeUserBot_" + "".join(
-        choice(list(ascii_lowercase + ascii_uppercase))
-        for _ in range(16)
+        choice(list(ascii_lowercase + ascii_uppercase)) for _ in range(16)
     )
     image = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if image[1] is None:
@@ -612,17 +619,13 @@ async def pic2packcmd(event):
             await event.client.send_read_acknowledge(conv.chat_id)
             await sleep(1)
             i += 1
-            await dogevent.edit(
-                f"__Making the pack.\nProgress: {i}/{len(images)}__"
-            )
+            await dogevent.edit(f"__Making the pack.\nProgress: {i}/{len(images)}__")
         await event.client.send_message(chat, "/publish")
         await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await event.client.send_file(chat, new_img, force_document=True)
         await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await event.client.send_message(chat, name)
-        ending = await conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        ending = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await event.client.send_read_acknowledge(conv.chat_id)
         for packname in ending.raw_text.split():
             stick_pack_name = packname

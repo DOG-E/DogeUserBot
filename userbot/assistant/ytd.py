@@ -6,16 +6,16 @@ from asyncio import get_event_loop, sleep
 from glob import glob
 from io import open as iopen
 from os import path
-from re import compile
 from pathlib import Path
+from re import compile
 from time import time
 
-from ujson import load
 from telethon import Button
-from telethon.tl.types import InputMediaUploadedDocument
 from telethon.errors import BotResponseTimeoutError
 from telethon.events import CallbackQuery
+from telethon.tl.types import InputMediaUploadedDocument
 from telethon.utils import get_attributes
+from ujson import load
 from wget import download
 
 from ..Config import Config
@@ -31,7 +31,7 @@ from ..helpers.functions.utube import (
     get_ytthumb,
     yt_search_btns,
 )
-from . import doge, lan, BOTLOG_CHATID
+from . import BOTLOG_CHATID, doge, lan
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -87,9 +87,7 @@ async def yt_inline(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(
-        data=compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?")
-    )
+    CallbackQuery(data=compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?"))
 )
 @check_owner
 async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
@@ -212,7 +210,8 @@ async def ytdl_callback(c_q: CallbackQuery):
     total = len(search_data) if search_data is not None else 0
     if total == 0:
         return await c_q.answer(
-            "🚨 Your bot lost the information about this. Please search again.", alert=True
+            "🚨 Your bot lost the information about this. Please search again.",
+            alert=True,
         )
     if choosen_btn == "back":
         index = int(page) - 1

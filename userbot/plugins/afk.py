@@ -7,23 +7,22 @@ from telegraph import upload_file
 from telethon import Button
 from telethon.events import MessageEdited, NewMessage
 
+from ..sql_helper.pmpermit_sql import is_approved
 from . import (
     BOTLOG_CHATID,
     DOGEAFK,
-    _format,
     Config,
+    _format,
     addgvar,
     delgvar,
     doge,
     edl,
     eor,
     gvarstatus,
-    lan,
     logging,
     media_type,
     tgbot,
 )
-from ..sql_helper.pmpermit_sql import is_approved
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -81,7 +80,9 @@ async def set_afk(event):
             )
         else:
             msg1 = await event.client.send_message(
-                event.chat_id, "**I'm going AFK.**\n\n**Reason:** `{}`".format(text), file=media
+                event.chat_id,
+                "**I'm going AFK.**\n\n**Reason:** `{}`".format(text),
+                file=media,
             )
     elif media:
         if "Sticker" in minfo:
@@ -105,22 +106,15 @@ async def set_afk(event):
     await tgbot.send_message(BOTLOG_CHATID, msg1.text)
 
 
-@doge.on(
-    NewMessage(
-        outgoing=True
-    )
-)
-@doge.on(
-    MessageEdited(
-        outgoing=True
-    )
-)
+@doge.on(NewMessage(outgoing=True))
+@doge.on(MessageEdited(outgoing=True))
 async def remove_afk(event):
     if (
         event.is_private
         and gvarstatus("pmpermit") == "true"
         and not is_approved(event.chat_id)
-        and "afk" or "#afk" in event.text
+        and "afk"
+        or "#afk" in event.text
     ):
         return
 
@@ -128,7 +122,10 @@ async def remove_afk(event):
         _, _, _, afktime = is_afk()
         del_afk()
         await event.reply("**No Longer Afk**\n\nWas away for ~ `{}`".format(afktime))
-        await tgbot.send_message(BOTLOG_CHATID, "#AFK\nSet AFK mode to False.\nWas AFK since ~ `{}`".format(afktime))
+        await tgbot.send_message(
+            BOTLOG_CHATID,
+            "#AFK\nSet AFK mode to False.\nWas AFK since ~ `{}`".format(afktime),
+        )
         for x in old_afk_msg:
             try:
                 await x.delete()
@@ -137,13 +134,7 @@ async def remove_afk(event):
 
 
 @doge.on(
-    NewMessage(
-        incoming=True,
-        func=lambda e: bool(
-            e.mentioned
-            or e.is_private
-        )
-    ),
+    NewMessage(incoming=True, func=lambda e: bool(e.mentioned or e.is_private)),
 )
 async def on_afk(event):
     if (
@@ -151,7 +142,8 @@ async def on_afk(event):
         and gvarstatus("pmpermit") == "true"
         and not is_approved(event.chat_id)
         or not is_afk()
-        or "afk" and "#afk" in event.text
+        or "afk"
+        and "#afk" in event.text
     ):
         return
 
@@ -172,20 +164,23 @@ async def on_afk(event):
     customafkmsg = gvarstatus("AFK") or None
     if customafkmsg is not None:
         if text:
-            dogeafk = customafkmsg.format(
-                mention=mention,
-                first=first,
-                last=last,
-                fullname=fullname,
-                username=username,
-                my_first=my_first,
-                my_last=my_last,
-                my_fullname=my_fullname,
-                my_username=my_username,
-                my_mention=my_mention,
-                afktime=afktime,
-            )+f"\n\n\
+            dogeafk = (
+                customafkmsg.format(
+                    mention=mention,
+                    first=first,
+                    last=last,
+                    fullname=fullname,
+                    username=username,
+                    my_first=my_first,
+                    my_last=my_last,
+                    my_fullname=my_fullname,
+                    my_username=my_username,
+                    my_mention=my_mention,
+                    afktime=afktime,
+                )
+                + f"\n\n\
                 **🐾 Reason:** `{text}`"
+            )
         else:
             dogafk = customafkmsg.format(
                 mention=mention,
@@ -202,8 +197,11 @@ async def on_afk(event):
             )
     else:
         if text:
-            dogeafk = DOGEAFK+f"\n\n\
+            dogeafk = (
+                DOGEAFK
+                + f"\n\n\
                 **🐾 Reason:** `{text}`"
+            )
         else:
             dogafk = DOGEAFK
     if text and media:
@@ -211,9 +209,7 @@ async def on_afk(event):
             msg1 = await event.reply(file=media)
             msg2 = await event.reply(dogeafk)
         else:
-            msg1 = await event.reply(
-                dogeafk, file=media
-            )
+            msg1 = await event.reply(dogeafk, file=media)
     elif media:
         if "Sticker" in minfo:
             msg1 = await event.reply(file=media)
@@ -244,7 +240,9 @@ async def on_afk(event):
     messaget = media_type(event)
     resalt = f"#AFK\n<b>Group: </b><code>{hmm.title}</code>"
     if full is not None:
-        resalt += f"\n<b>From: </b> 👤 {_format.htmlmentionuser(full.first_name , full.id)}"
+        resalt += (
+            f"\n<b>From: </b> 👤 {_format.htmlmentionuser(full.first_name , full.id)}"
+        )
     if messaget is not None:
         resalt += f"\n<b>Message Type: </b><code>{messaget}</code>"
     else:

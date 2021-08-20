@@ -1,14 +1,16 @@
 # DogeUserBot module for getting the event of a event.
 
+from datetime import datetime
 from io import BytesIO
 from json import loads
-from datetime import datetime
 
 from aiohttp import ClientSession
+from pytz import country_names as c_n
+from pytz import country_timezones as c_tz
+from pytz import timezone as tz
 from requests import get
-from pytz import country_names as c_n, country_timezones as c_tz, timezone as tz
 
-from . import _format, Config, addgvar, doge, eor, gvarstatus, logging, reply_id
+from . import Config, _format, addgvar, doge, eor, gvarstatus, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -57,9 +59,7 @@ async def get_weather(event):  # sourcery no-metrics
     "To get the weather report of a city."
     if not Config.OPEN_WEATHER_MAP_APPID:
         Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
-        await eor(
-            event, "`Get an API key from` https://openweathermap.org/ ``"
-        )
+        await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
     timezone_countries = {
@@ -145,9 +145,7 @@ async def set_default_city(event):
     "To set default city for climate/weather cmd"
     if not Config.OPEN_WEATHER_MAP_APPID:
         Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
-        await eor(
-            event, "`Get an API key from` https://openweathermap.org/ ``"
-        )
+        await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = event.pattern_match.group(1)
     CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
     timezone_countries = {

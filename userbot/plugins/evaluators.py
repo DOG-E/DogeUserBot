@@ -1,9 +1,9 @@
+import sys
 from asyncio import create_subprocess_shell
 from asyncio.subprocess import PIPE
 from io import StringIO
 from os import geteuid
 from traceback import format_exc
-import sys
 
 from . import BOTLOG, BOTLOG_CHATID, _format, doge, edl, eor
 
@@ -25,9 +25,7 @@ async def _(event):
     if not cmd:
         return await edl(event, "`What should i execute?..`")
     dogevent = await eor(event, "`Executing.....`")
-    process = await create_subprocess_shell(
-        cmd, stdout=PIPE, stderr=PIPE
-    )
+    process = await create_subprocess_shell(cmd, stdout=PIPE, stderr=PIPE)
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
     doguser = await event.client.get_me()

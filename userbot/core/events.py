@@ -1,28 +1,28 @@
-from typing import Optional, Union, List, Sequence
+from typing import List, Optional, Sequence, Union
 
 from telethon import events
 from telethon.hints import (
+    DateLike,
     EntityLike,
-    MessageLike,
     FileLike,
     MarkupLike,
-    DateLike,
     MessageIDLike,
+    MessageLike,
     ProgressCallback,
 )
 from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
     InputPeerChannel,
     InputPeerChat,
     InputPeerUser,
+    Message,
     MessageMediaWebPage,
     PeerUser,
-    ChannelParticipantCreator,
-    ChannelParticipantAdmin,
-    UpdateEditMessage,
-    UpdateEditChannelMessage,
-    TypeMessageEntity,
     TypeDocumentAttribute,
-    Message,
+    TypeMessageEntity,
+    UpdateEditChannelMessage,
+    UpdateEditMessage,
 )
 
 from ..Config import Config
@@ -122,7 +122,10 @@ async def safe_check_text(msg):  # sourcery no-metrics
             or (Config.G_DRIVE_DATA and Config.G_DRIVE_DATA in msg)
             or (Config.GENIUS_API and Config.GENIUS_API in msg)
             or (Config.GITHUB_ACCESS_TOKEN and Config.GITHUB_ACCESS_TOKEN in msg)
-            or (Config.IBM_WATSON_CRED_PASSWORD and Config.IBM_WATSON_CRED_PASSWORD in msg)
+            or (
+                Config.IBM_WATSON_CRED_PASSWORD
+                and Config.IBM_WATSON_CRED_PASSWORD in msg
+            )
             or (Config.IBM_WATSON_CRED_URL and Config.IBM_WATSON_CRED_URL in msg)
             or (Config.IPDATA_API and Config.IPDATA_API in msg)
             or (Config.LASTFM_API and Config.LASTFM_API in msg)
@@ -132,11 +135,17 @@ async def safe_check_text(msg):  # sourcery no-metrics
             or (Config.OPEN_WEATHER_MAP_APPID and Config.OPEN_WEATHER_MAP_APPID in msg)
             or (Config.RANDOM_STUFF_API_KEY and Config.RANDOM_STUFF_API_KEY in msg)
             or (Config.RMBG_API and Config.RMBG_API in msg)
-            or (Config.SCREEN_SHOT_LAYER_ACCESS_KEY and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg)
+            or (
+                Config.SCREEN_SHOT_LAYER_ACCESS_KEY
+                and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg
+            )
             or (Config.SP_DC and Config.SP_DC in msg)
             or (Config.SP_KEY and Config.SP_KEY in msg)
             or (Config.SPAMWATCH_API and Config.SPAMWATCH_API in msg)
-            or (Config.TG_2STEP_VERIFICATION_CODE and Config.TG_2STEP_VERIFICATION_CODE in msg)
+            or (
+                Config.TG_2STEP_VERIFICATION_CODE
+                and Config.TG_2STEP_VERIFICATION_CODE in msg
+            )
         )
     )
 

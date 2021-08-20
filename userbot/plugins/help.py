@@ -1,5 +1,5 @@
-from . import Config, doge, edl, eor, reply_id, tr
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
+from . import Config, doge, edl, eor, reply_id, tr
 
 plugin_category = "bot"
 
@@ -44,8 +44,11 @@ async def cmdinfo(input_str, event, plugin=False):
         await edl(event, f"**🚨 I couldn't find** `{input_str}` **command.**")
         return None
     except Exception as e:
-        await edl(event, f"**🚨 ERROR:**\
-            \n➡ `{e}`")
+        await edl(
+            event,
+            f"**🚨 ERROR:**\
+            \n➡ `{e}`",
+        )
         return None
     outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
         \n\n⌨ Coᴍᴍᴀɴᴅ:** `{tr}{input_str}`\n"
@@ -66,8 +69,11 @@ async def plugininfo(input_str, event, flag):
         outstr = await cmdinfo(input_str, event, plugin=True)
         return outstr
     except Exception as e:
-        await edl(event, f"**🚨 ERROR:**\
-            \n➡ `{e}`")
+        await edl(
+            event,
+            f"**🚨 ERROR:**\
+            \n➡ `{e}`",
+        )
         return None
     if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
@@ -188,16 +194,22 @@ async def _(event):
         except KeyError:
             return await edl(event, "__🚨 Invalid plugin name recheck it.__")
         except Exception as e:
-            return await edl(event, f"**🚨 ERROR:**\
-                \n➡ `{e}`")
+            return await edl(
+                event,
+                f"**🚨 ERROR:**\
+                \n➡ `{e}`",
+            )
         outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
             \n\n🐾 {input_str.title()} has {len(cmds)} commands:**\n"
         for cmd in cmds:
             outstr += f"  - `{tr}{cmd}`\n\n"
         outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge .c <command name>`"
     await eor(
-        event, outstr, aslink=True, linktext="🐶 Doɢᴇ UsᴇʀBoᴛ\
-            \n\n🐾 Total list of commands: "
+        event,
+        outstr,
+        aslink=True,
+        linktext="🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n\n🐾 Total list of commands: ",
     )
 
 

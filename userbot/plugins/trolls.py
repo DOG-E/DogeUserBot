@@ -161,7 +161,7 @@ async def dogbot(event):
         "description": "pornhub comment creator",
         "usage": [
             "{tr}phub <username>;<text in comment> <reply a pic>",
-        ]
+        ],
     },
 )
 async def dogbot(event):
@@ -173,15 +173,11 @@ async def dogbot(event):
         username, text = input_str.split(";")
     elif not input_str and event.is_reply:
         text = reply.message
-        getuser = await event.client(
-            GetFullUserRequest(reply.from_id)
-        )
+        getuser = await event.client(GetFullUserRequest(reply.from_id))
         username = getuser.user.first_name
     elif input_str and event.is_reply:
         text = input_str
-        getuser = await event.client(
-            GetFullUserRequest(reply.from_id)
-        )
+        getuser = await event.client(GetFullUserRequest(reply.from_id))
         username = getuser.user.first_name
     elif input_str:
         text = input_str

@@ -1,6 +1,8 @@
 from asyncio import sleep
 from io import BytesIO
-from os import getcwd, listdir, path as osp, stat
+from os import getcwd, listdir
+from os import path as osp
+from os import stat
 from pathlib import Path
 from shutil import move
 from time import ctime
@@ -8,7 +10,18 @@ from time import ctime
 from bs4 import BeautifulSoup
 from requests import get
 
-from . import _dogeutils, _format, Config, deEmojify, doge, edl, eor, getTranslate, gvarstatus, humanbytes
+from . import (
+    Config,
+    _dogeutils,
+    _format,
+    deEmojify,
+    doge,
+    edl,
+    eor,
+    getTranslate,
+    gvarstatus,
+    humanbytes,
+)
 
 plugin_category = "bot"
 
@@ -59,9 +72,13 @@ async def lst(event):  # sourcery no-metrics
                     files += f"🔉 `{contents}`\n"
                 elif str(contents).endswith((".flac", ".m4a", ".mp3", ".ogg", ".wav")):
                     files += f"🎵 `{contents}`\n"
-                elif str(contents).endswith((".avi", ".flv", ".gif", ".mkv", ".mov", ".mp4", ".webm")):
+                elif str(contents).endswith(
+                    (".avi", ".flv", ".gif", ".mkv", ".mov", ".mp4", ".webm")
+                ):
                     files += f"🎞 `{contents}`\n"
-                elif str(contents).endswith((".bmp", ".ico", ".jpg", ".jpeg", ".png", ".webp")):
+                elif str(contents).endswith(
+                    (".bmp", ".ico", ".jpg", ".jpeg", ".png", ".webp")
+                ):
                     files += f"🖼 `{contents}`\n"
                 elif str(contents).endswith((".rar", ".tar", ".tar.gz", ".zip")):
                     files += f"🗃 `{contents}`\n"
@@ -93,7 +110,9 @@ async def lst(event):  # sourcery no-metrics
             mode = "🔉"
         elif str(path).endswith((".flac", ".m4a", ".mp3", ".ogg", ".wav")):
             mode = "🎵"
-        elif str(path).endswith((".avi", ".flv", ".gif", ".mkv", ".mov", ".mp4", ".webm")):
+        elif str(path).endswith(
+            (".avi", ".flv", ".gif", ".mkv", ".mov", ".mp4", ".webm")
+        ):
             mode = "🎞"
         elif str(path).endswith((".bmp", ".ico", ".jpg", ".jpeg", ".png", ".webp")):
             mode = "🖼"

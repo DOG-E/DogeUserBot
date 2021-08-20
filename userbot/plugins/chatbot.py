@@ -2,7 +2,6 @@ from random import choice
 
 from telethon.utils import get_display_name
 
-from . import doge, edl, eor, get_user_from_event, gvarstatus, logging, rs_client
 from ..sql_helper.chatbot_sql import (
     addai,
     get_all_users,
@@ -12,6 +11,7 @@ from ..sql_helper.chatbot_sql import (
     remove_all_users,
     remove_users,
 )
+from . import doge, edl, eor, get_user_from_event, gvarstatus, logging, rs_client
 
 plugin_category = "fun"
 LOGS = logging.getLogger(__name__)

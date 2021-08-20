@@ -1,8 +1,8 @@
 # Kanged from FridayUserBot
 # Ported by @kirito6969
 
-from flag import flag
 from countryinfo import CountryInfo
+from flag import flag
 
 from . import doge, edl, eor
 
@@ -28,9 +28,7 @@ async def country_(message):
     try:
         a = country.info()
     except:
-        await edl(
-            message, "`Country not found. Maybe you need to learn geography!`"
-        )
+        await edl(message, "`Country not found. Maybe you need to learn geography!`")
         return
     name = a.get("name")
     bb = a.get("altSpellings")

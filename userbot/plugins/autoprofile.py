@@ -1,20 +1,20 @@
 # batmanpfp and thorpfp by @Nihinivi
 from asyncio import sleep
 from base64 import b64decode
-from os import path, getcwd, remove
-from random import randint, choice
+from datetime import datetime
+from os import getcwd, path, remove
+from random import choice, randint
 from re import compile, findall
 from shutil import copy
 from time import strftime
 from urllib.request import urlretrieve
-from datetime import datetime
 
-from requests import get
 from PIL import Image, ImageDraw, ImageFont
 from pySmartDL import SmartDL
+from requests import get
 from telethon.errors import FloodWaitError
-from telethon.tl.functions.photos import UploadProfilePhotoRequest, DeletePhotosRequest
 from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 from urlextract import URLExtract
 
 from ..sql_helper.global_list import (
@@ -28,9 +28,9 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
+    Config,
     _dogeutils,
     _format,
-    Config,
     addgvar,
     delgvar,
     doge,
@@ -119,9 +119,7 @@ async def custompfploop():
         try:
             if i > 0:
                 await doge(
-                    DeletePhotosRequest(
-                        await doge.get_profile_photos("me", limit=1)
-                    )
+                    DeletePhotosRequest(await doge.get_profile_photos("me", limit=1))
                 )
             i += 1
             await doge(UploadProfilePhotoRequest(file))
@@ -146,9 +144,11 @@ async def digitalpicloop():
         current_time = datetime.now().strftime("%H:%M")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
-        dog = str(b64decode("dXNlcmJvdC9oZWxwZXJzL3Jlc291cmNlcy9vdGhlcmZvbnRzL2RpZ2l0YWwudHRm"))[
-            2:36
-        ]
+        dog = str(
+            b64decode(
+                "dXNlcmJvdC9oZWxwZXJzL3Jlc291cmNlcy9vdGhlcmZvbnRzL2RpZ2l0YWwudHRm"
+            )
+        )[2:36]
         fnt = ImageFont.truetype(dog, 200)
         drawn_text.text((350, 100), current_time, font=fnt, fill=(124, 252, 0))
         img.save(autophoto_path)
@@ -156,9 +156,7 @@ async def digitalpicloop():
         try:
             if i > 0:
                 await doge(
-                    DeletePhotosRequest(
-                        await doge.get_profile_photos("me", limit=1)
-                    )
+                    DeletePhotosRequest(await doge.get_profile_photos("me", limit=1))
                 )
             i += 1
             await doge(UploadProfilePhotoRequest(file))
@@ -275,9 +273,7 @@ async def autopfp_start():
         file = await doge.upload_file("donottouch.jpg")
         if i > 0:
             await doge(
-                DeletePhotosRequest(
-                    await doge.get_profile_photos("me", limit=1)
-                )
+                DeletePhotosRequest(await doge.get_profile_photos("me", limit=1))
             )
         i += 1
         await doge(UploadProfilePhotoRequest(file))
@@ -584,9 +580,7 @@ async def _(event):  # sourcery no-metrics
         if pfp_string != "tpp":
             return await edl(event, "`Thor pp isn't started`")
         await event.client(
-            DeletePhotosRequest(
-                await event.client.get_profile_photos("me", limit=1)
-            )
+            DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
         delgvar("autopfp_strings")
         return await edl(event, "`Thor pp has been stopped now`")
@@ -595,9 +589,7 @@ async def _(event):  # sourcery no-metrics
         if pfp_string != "bpp":
             return await edl(event, "`Batman pp isn't started`")
         await event.client(
-            DeletePhotosRequest(
-                await event.client.get_profile_photos("me", limit=1)
-            )
+            DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
         delgvar("autopfp_strings")
         return await edl(event, "`Batman pp has been stopped now`")
@@ -638,17 +630,13 @@ async def _(event):  # sourcery no-metrics
     if input_str == "autoname":
         if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
             delgvar("autoname")
-            await event.client(
-                UpdateProfileRequest(first_name=DEFAULTUSER)
-            )
+            await event.client(UpdateProfileRequest(first_name=DEFAULTUSER))
             return await edl(event, "`Autoname has been stopped now`")
         return await edl(event, "`Autoname haven't enabled`")
     if input_str == "autobio":
         if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
             delgvar("autobio")
-            await event.client(
-                UpdateProfileRequest(about=DEFAULTUSERBIO)
-            )
+            await event.client(UpdateProfileRequest(about=DEFAULTUSERBIO))
             return await edl(event, "`Autobio has been stopped now`")
         return await edl(event, "`Autobio haven't enabled`")
     if input_str == "spam":

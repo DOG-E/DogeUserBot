@@ -2,7 +2,8 @@
 Thenks goes to Emily ( The creater of Poto cmd) from ftg userbot
 """
 from PIL import UnidentifiedImageError
-from PIL.Image import open as Imopen, UnidentifiedImageError
+from PIL.Image import UnidentifiedImageError
+from PIL.Image import open as Imopen
 from PIL.ImageFilter import GaussianBlur
 
 from . import doge, edl, eor, reply_id

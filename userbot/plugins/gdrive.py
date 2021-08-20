@@ -5,8 +5,11 @@ from io import FileIO
 from json import JSONDecodeError, loads
 from math import floor
 from mimetypes import guess_type
-from os import getcwd, listdir, makedirs, mkdir, path as osp, remove
-from pickle import loads as ploads, dumps
+from os import getcwd, listdir, makedirs, mkdir
+from os import path as osp
+from os import remove
+from pickle import dumps
+from pickle import loads as ploads
 from re import findall, search
 from time import time
 from urllib.parse import quote
@@ -29,9 +32,9 @@ from . import (
     G_DRIVE_DATA,
     G_DRIVE_FOLDER_ID,
     TMP_DOWNLOAD_DIRECTORY,
-    _format,
     CancelProcess,
     Config,
+    _format,
     doge,
     edl,
     eor,
@@ -128,9 +131,7 @@ async def create_app(gdrive):
             await gdrive.edit("`Refreshing credentials...`")
             """Refresh credentials"""
             creds.refresh(Request())
-            helper.save_credentials(
-                str(hmm), b64encode(dumps(creds)).decode()
-            )
+            helper.save_credentials(str(hmm), b64encode(dumps(creds)).decode())
         else:
             await gdrive.edit("`Credentials is empty, please generate it...`")
             return False
@@ -297,11 +298,7 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
                 return reply
     except Exception as e:
         status = status.replace("DOWNLOAD]", "ERROR]")
-        reply += (
-            f"**{status}**\n\n"
-            "**Status: **`failed`\n"
-            f"**Reason: **`{e}`\n\n"
-        )
+        reply += f"**{status}**\n\n" "**Status: **`failed`\n" f"**Reason: **`{e}`\n\n"
         return reply
 
 
@@ -643,8 +640,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
             eta = round((file_size - uploaded) / speed)
             prog_str = "`Uploading :`\n`[{0}{1}] {2}`".format(
                 "".join(
-                    Config.FINISHED_PROGRESS_STR
-                    for i in range(floor(percentage / 10))
+                    Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 10))
                 ),
                 "".join(
                     Config.UNFINISHED_PROGRESS_STR
@@ -886,9 +882,7 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
         except HttpError as e:
             await eor(
                 gdrive,
-                "**[GDRIVE - LIST]**\n\n"
-                "**Status: **`BAD`\n"
-                f"**Reason: **`{e}`",
+                "**[GDRIVE - LIST]**\n\n" "**Status: **`BAD`\n" f"**Reason: **`{e}`",
             )
             return
         for files in response.get("files", []):
@@ -1161,9 +1155,7 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
             except HttpError as e:
                 status.replace("DELETE", "ERROR")
                 reply += (
-                    f"**{status}**\n\n"
-                    "**Status: **`BAD`\n"
-                    f"**Reason: **`{e}`\n\n"
+                    f"**{status}**\n\n" "**Status: **`BAD`\n" f"**Reason: **`{e}`\n\n"
                 )
                 continue
             else:
@@ -1485,20 +1477,17 @@ async def set_upload_folder(gdrive):
         if True in [c1 or c2]:
             GDRIVE_.parent_Id = inp
             await gdrive.edit(
-                "**[PARENT - FOLDER]**\n\n"
-                "**Status: **`OK - Successfully changed.`"
+                "**[PARENT - FOLDER]**\n\n" "**Status: **`OK - Successfully changed.`"
             )
             return None
         await gdrive.edit(
-            "**[PARENT - FOLDER]**\n\n"
-            "**Status: WARNING** -` forcing use...`"
+            "**[PARENT - FOLDER]**\n\n" "**Status: WARNING** -` forcing use...`"
         )
         GDRIVE_.parent_Id = inp
     else:
         GDRIVE_.parent_Id, _ = await get_file_id(ext_id)
         await gdrive.edit(
-            "**[PARENT - FOLDER]**\n\n"
-            "**Status: **`OK - Successfully changed.`"
+            "**[PARENT - FOLDER]**\n\n" "**Status: **`OK - Successfully changed.`"
         )
 
 

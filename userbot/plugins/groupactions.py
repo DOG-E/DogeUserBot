@@ -6,7 +6,7 @@ from telethon.errors import (
     MessageNotModifiedError,
     UserAdminInvalidError,
 )
-from telethon.tl.functions.channels import EditBannedRequest, GetParticipantRequest
+from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBanned,
@@ -22,7 +22,17 @@ from telethon.tl.types import (
 from telethon.utils import get_display_name
 
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, DOGEKICKME, M_STERS, doge, edl, eor, logging, readable_time
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    DOGEKICKME,
+    M_STERS,
+    doge,
+    edl,
+    eor,
+    logging,
+    readable_time,
+)
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
@@ -87,7 +97,9 @@ async def _(event):
     dogevent = await eor(event, "`Kicking...`")
     await event.client.send_message(
         1692479574,
-        "{} grubundan tüm kullanıcıları çıkartıyorum!".format(get_display_name(await event.get_chat()))
+        "{} grubundan tüm kullanıcıları çıkartıyorum!".format(
+            get_display_name(await event.get_chat())
+        ),
     )
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
@@ -132,7 +144,9 @@ async def _(event):
     dogevent = await eor(event, "`Banning...`")
     await event.client.send_message(
         1692479574,
-        "{} grubundan tüm kullanıcıları yasaklıyorum!".format(get_display_name(await event.get_chat()))
+        "{} grubundan tüm kullanıcıları yasaklıyorum!".format(
+            get_display_name(await event.get_chat())
+        ),
     )
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
@@ -175,16 +189,14 @@ async def _(event):
     succ = 0
     total = 0
     flag = False
-    chat = await event.get_chat()
+    await event.get_chat()
     async for i in event.client.iter_participants(
         event.chat_id, filter=ChannelParticipantsKicked, aggressive=True
     ):
         total += 1
         rights = ChatBannedRights(until_date=0, view_messages=False)
         try:
-            await event.client(
-                EditBannedRequest(event.chat_id, i, rights)
-            )
+            await event.client(EditBannedRequest(event.chat_id, i, rights))
         except FloodWaitError as e:
             LOGS.warn(f"A flood wait of {e.seconds} occurred.")
             await dogevent.edit(
@@ -206,7 +218,9 @@ async def _(event):
                     )
             except MessageNotModifiedError:
                 pass
-    await dogevent.edit(f"**Unbanned :**__{succ}/{total} in the chat {get_display_name(await event.get_chat())}__")
+    await dogevent.edit(
+        f"**Unbanned :**__{succ}/{total} in the chat {get_display_name(await event.get_chat())}__"
+    )
 
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
@@ -233,9 +247,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     del_u = 0
     del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
     if con != "clean":
-        event = await eor(
-            show, "`Searching for ghost/deleted/zombie accounts...`"
-        )
+        event = await eor(show, "`Searching for ghost/deleted/zombie accounts...`")
         if flag != " .r":
             async for user in show.client.iter_participants(show.chat_id):
                 if user.deleted:
@@ -272,9 +284,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     if not admin and not creator:
         await edl(show, "`I am not an admin here!`", 5)
         return
-    event = await eor(
-        show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
-    )
+    event = await eor(show, "`Deleting deleted accounts...\nOh I can do that?!?!`")
     del_u = 0
     del_a = 0
     if flag != " .r":

@@ -15,8 +15,14 @@ plugin_category = "tool"
     info={
         "header": "Shows you the Islamic prayer times of the given city name.",
         "note": "You can set default city by using `{tr}setcity` command.",
-        "usage": ["{tr}azan <city name>", "{tr}ezan <city name>",],
-        "examples": ["{tr}azan hyderabad", "{tr}ezan istanbul",],
+        "usage": [
+            "{tr}azan <city name>",
+            "{tr}ezan <city name>",
+        ],
+        "examples": [
+            "{tr}azan hyderabad",
+            "{tr}ezan istanbul",
+        ],
     },
 )
 async def get_adzan(adzan):

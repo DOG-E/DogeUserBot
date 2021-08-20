@@ -6,7 +6,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL.Image import open as Imopen
 
-from . import Config, doge, eor, lan, _dogetools
+from . import Config, _dogetools, doge, eor, lan
 
 plugin_category = "tool"
 
@@ -101,4 +101,7 @@ async def _(event):
             reply_to=event.message.id,
         )
     else:
-        await eor(event, "No thumbnails have been saved.\nWrite `.sthumb` as a reply to a media")
+        await eor(
+            event,
+            "No thumbnails have been saved.\nWrite `.sthumb` as a reply to a media",
+        )

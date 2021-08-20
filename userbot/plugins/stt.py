@@ -1,6 +1,6 @@
 # speech to text module for catuserbot by uniborg (@spechide)
-from os import makedirs, path, remove
 from datetime import datetime
+from os import makedirs, path, remove
 
 from requests import post
 from telethon.events import MessageEdited
@@ -32,9 +32,7 @@ async def _(event):
             )
         dogevent = await eor(event, "`I'm listening to voice...`")
         async with doge.conversation(chat) as conv:
-            response = conv.wait_event(
-                MessageEdited(incoming=True, from_users=chat)
-            )
+            response = conv.wait_event(MessageEdited(incoming=True, from_users=chat))
             await fsmessage(event, reply, forward=True, chat=chat)
             response = await response
             if response.text.startswith("👋"):
@@ -47,7 +45,10 @@ async def _(event):
                     dogevent, "**The sound is broken.\nI didn't understand what said.**"
                 )
             else:
-                res = response.text.replace("Powered by [Todorant](https://todorant.com/?utm_source=voicy)","`\n🧡 Doɢᴇ UsᴇʀBoᴛ 🐾")
+                res = response.text.replace(
+                    "Powered by [Todorant](https://todorant.com/?utm_source=voicy)",
+                    "`\n🧡 Doɢᴇ UsᴇʀBoᴛ 🐾",
+                )
                 await dogevent.edit(f"**I heard something: **\n\n`{res}`")
             await conv.mark_read()
             await conv.cancel_all()
@@ -124,9 +125,7 @@ async def _(event):
     dogevent = await eor(event, lan("processing"))
     async with doge.conversation(chat) as conv:
         await fsmessage(event=event, text="/files", chat=chat)
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         response = await response
         if response.text.startswith("📁"):
             await eor(
@@ -134,9 +133,6 @@ async def _(event):
                 f"**Changed the setting:\n\n{response.text}**",
             )
         else:
-            await edl(
-                dogevent,
-                "**Voicy not working!**"
-            )
+            await edl(dogevent, "**Voicy not working!**")
         await conv.mark_read()
         await conv.cancel_all()

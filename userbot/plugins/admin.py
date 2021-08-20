@@ -21,7 +21,20 @@ from telethon.tl.types import (
 from telethon.utils import get_display_name
 
 from ..sql_helper.mute_sql import is_muted, mute, unmute
-from . import BOTLOG, BOTLOG_CHATID, _format, doge, edl, eor, get_user_from_event, lan, logging, media_type, tr, wowmydev
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    _format,
+    doge,
+    edl,
+    eor,
+    get_user_from_event,
+    lan,
+    logging,
+    media_type,
+    tr,
+    wowmydev,
+)
 
 # =================== STRINGS ============
 plugin_category = "admin"

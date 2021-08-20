@@ -9,13 +9,11 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import AddChatUserRequest
-from telethon.tl.types import (
-    InputPeerUser,
-)
+from telethon.tl.types import InputPeerUser
 
 from . import MMSGTEXT, doge, edl, eor, get_chatinfo, wowmygroup
 
-plugin_category="tool"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -48,9 +46,7 @@ async def _(event):
         for user_id in to_add_users.split(" "):
             try:
                 await event.client(
-                    InviteToChannelRequest(
-                        channel=event.chat_id, users=[user_id]
-                    )
+                    InviteToChannelRequest(channel=event.chat_id, users=[user_id])
                 )
             except Exception as e:
                 return await edl(event, f"`{e}`", 5)
@@ -91,9 +87,7 @@ async def get_users(event):
                     f"**Terminal Finished With Error**\n(`May Got Limit Error from telethon Please try agin Later`)\n**Error**: \n`{error}`\n\n• Invited `{s}` people \n• Failed to Invite `{f}` people"
                 )
 
-            await event.client(
-                InviteToChannelRequest(channel=chat, users=[user.id])
-            )
+            await event.client(InviteToChannelRequest(channel=chat, users=[user.id]))
             s = s + 1
             await dogevent.edit(
                 f"**Terminal Running...**\n\n• Invited `{s}` people \n• Failed to Invite `{f}` people\n\n**× LastError:** `{error}`"
@@ -160,9 +154,7 @@ async def addmembers(event):
     if not creator:
         return await edl(event, "`I am not owner here!`", 5)
 
-    xedoc = await eor(
-        event, "`The process of adding members, starting from 0`"
-    )
+    xedoc = await eor(event, "`The process of adding members, starting from 0`")
     user_to_add = None
     saint = event.client
     x = []
@@ -176,9 +168,7 @@ async def addmembers(event):
     for i in x:
         y += 1
         if y % 30 == 0:
-            await eor(
-                event, f"`Has reached 30 members, wait until {200/60} min.`"
-            )
+            await eor(event, f"`Has reached 30 members, wait until {200/60} min.`")
             await sleep(200)
 
         if user_to_add is None:
@@ -187,11 +177,7 @@ async def addmembers(event):
             except BaseException:
                 pass
         try:
-            await saint(
-                InviteToChannelRequest(
-                    channel=chat, users=[user_to_add]
-                )
-            )
+            await saint(InviteToChannelRequest(channel=chat, users=[user_to_add]))
             await sleep(randrange(5, 7))
             await eor(event, f"`Prosess of adding {y} Members...`")
         except TypeError:

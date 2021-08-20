@@ -7,7 +7,16 @@
 
 from requests import get
 
-from . import BOTLOG, BOTLOG_CHATID, _dogeutils, age_verification, doge, edl, logging, reply_id 
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    _dogeutils,
+    age_verification,
+    doge,
+    edl,
+    logging,
+    reply_id,
+)
 
 plugin_category = "fun"
 LOGS = logging.getLogger(__name__)

@@ -41,6 +41,4 @@ doge.tgbot = tgbot = DogeUserBotClient(
     connection=ConnectionTcpAbridged,
     auto_reconnect=True,
     connection_retries=None,
-).start(
-    bot_token=Config.BOT_TOKEN
-)
+).start(bot_token=Config.BOT_TOKEN)

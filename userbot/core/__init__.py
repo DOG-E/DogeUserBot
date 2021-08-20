@@ -1,5 +1,5 @@
-from .decorators import check_owner
 from .. import dogeversion
+from .decorators import check_owner
 
 CMD_INFO = {}
 PLG_INFO = {}

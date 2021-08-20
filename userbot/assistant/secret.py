@@ -20,11 +20,9 @@ async def on_plug_in_callback_query_handler(event):
                 encrypted_tcxt = message["text"]
                 reply_pop_up_alert = encrypted_tcxt
             else:
-                reply_pop_up_alert = (
-                    "🐶 Doɢᴇ UsᴇʀBoᴛ\
+                reply_pop_up_alert = "🐶 Doɢᴇ UsᴇʀBoᴛ\
                     \n\n🐾 Why were you looking at this,\
                     \ngo and do your own thing."
-                )
         except KeyError:
             reply_pop_up_alert = "🚨 This message no longer exists in Doge server."
     else:

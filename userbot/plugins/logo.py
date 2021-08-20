@@ -5,11 +5,12 @@ Created by @Jisan7509
 
 from asyncio import sleep
 from glob import glob
-from os import mkdir, path as osp, remove
+from os import mkdir
+from os import path as osp
+from os import remove
 from random import choice
 from re import compile, match
 from urllib.request import urlretrieve
-from userbot.helpers.tools import media_type
 
 from bs4 import BeautifulSoup
 from PIL.Image import open as Imopen
@@ -19,7 +20,22 @@ from PIL.ImageFont import truetype
 from requests import get
 from telethon.tl.types import InputMessagesFilterPhotos
 
-from . import _dogetools, addgvar, clippy, convert_toimage, delgvar, doge, edl, eor, gvarstatus, lan, mcaption, reply_id
+from userbot.helpers.tools import media_type
+
+from . import (
+    _dogetools,
+    addgvar,
+    clippy,
+    convert_toimage,
+    delgvar,
+    doge,
+    edl,
+    eor,
+    gvarstatus,
+    lan,
+    mcaption,
+    reply_id,
+)
 
 plugin_category = "misc"
 vars_list = {
@@ -187,7 +203,8 @@ async def bad(event):
         string = f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Logo/Backgrounds/{input_str}.jpg"
         addgvar("LOGO_BACKGROUND", string)
         await edl(
-            event, f"**Background for logo changed to :-** `{input_str}`", 
+            event,
+            f"**Background for logo changed to :-** `{input_str}`",
         )
 
 
@@ -256,7 +273,10 @@ async def pussy(event):
                     "temp/logo.ttf",
                 )
             addgvar("LOGO_FONT", string)
-            await edl(event, f"**Font for logo changed to :-** `{input_str}`", )
+            await edl(
+                event,
+                f"**Font for logo changed to :-** `{input_str}`",
+            )
     elif cmd in ["c", "sc"]:
         fg_name = []
         for name, code in colormap.items():
@@ -281,18 +301,18 @@ async def pussy(event):
             await edl(
                 event,
                 f"**Foreground color for logo changed to :-** `{input_str}`",
-                
             )
         else:
             addgvar("LOGO_FONT_STROKE_COLOR", input_str)
-            await edl(
-                event, f"**Stroke color for logo changed to :-** `{input_str}`"
-            )
+            await edl(event, f"**Stroke color for logo changed to :-** `{input_str}`")
     else:
         dog = compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
         isint = match(dog, input_str)
         if not input_str or not isint:
-            return await edl(event, f"**Give an integer value to set**", )
+            return await edl(
+                event,
+                f"**Give an integer value to set**",
+            )
         if cmd == "s":
             input_str = int(input_str)
             if input_str > 0 and input_str <= 1000:

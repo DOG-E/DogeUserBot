@@ -1,5 +1,5 @@
-from os import remove
 from datetime import datetime
+from os import remove
 
 from instaloader import Instaloader
 from instaloader.Profile import from_username
@@ -56,10 +56,7 @@ async def kakashi(event):
     command=("iginfo", plugin_category),
     info={
         "header": "Learn information about the Instagram profile",
-        "examples": [
-            "{tr}iginfo <username>",
-            "{tr}iginfo <reply username>"
-        ],
+        "examples": ["{tr}iginfo <username>", "{tr}iginfo <reply username>"],
     },
 )
 async def iginfo(event):
@@ -94,8 +91,7 @@ async def iginfo(event):
         with open("@DogeUserBot.jpg", "wb") as file:
             file.write(r.content)
         igtv = profile.igtvcount
-        msg = (
-            f"""**• Iɴsᴛᴀɢʀᴀᴍ Pʀoғɪʟᴇ Iɴғoʀᴍᴀᴛɪoɴ •**
+        msg = f"""**• Iɴsᴛᴀɢʀᴀᴍ Pʀoғɪʟᴇ Iɴғoʀᴍᴀᴛɪoɴ •**
 
         **🔗 Lɪɴᴋ:** [{last}](https://instagr.am/{last})
 
@@ -115,7 +111,6 @@ async def iginfo(event):
         **✅ Vᴇʀɪғɪᴇᴅ?:**  `{verif}`
         **💼 Bᴜssɪɴᴇss?:** `{busacc}`
         **🔒 Pʀɪᴠᴀᴛᴇ?:**    `{priv}`"""
-        )
         await dogevent.delete()
         await doge.send_file(event.chat_id, "@DogeUserBot.jpg", caption=msg)
         remove("@DogeUserBot.jpg")

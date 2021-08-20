@@ -1,9 +1,10 @@
 #    Copyright (C) 2020  sandeep.n(π.$)
 # button post makker for catuserbot thanks to uniborg for the base
 
+from os import remove
+
 # by @sandy1709 (@mrconfused)
 from re import compile
-from os import remove
 
 from telethon import Button
 

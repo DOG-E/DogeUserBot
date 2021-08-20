@@ -1,9 +1,9 @@
-
 from asyncio import get_event_loop
 from base64 import b64decode, b64encode
-from os import path, remove
 from datetime import datetime
-from subprocess import PIPE, run as runapp
+from os import path, remove
+from subprocess import PIPE
+from subprocess import run as runapp
 from time import time
 
 from barcode import get
@@ -227,9 +227,7 @@ async def endecrypt(event):
     else:
         try:
             lething = str(
-                b64decode(
-                    bytes(event.pattern_match.group(2), "utf-8"), validate=True
-                )
+                b64decode(bytes(event.pattern_match.group(2), "utf-8"), validate=True)
             )[2:]
             await eor(event, "**Decoded text :**\n`" + lething[:-1] + "`")
         except Exception as e:

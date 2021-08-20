@@ -84,7 +84,7 @@ async def _(event):
     command=("lmvar", plugin_category),
     info={
         "header": "Searches the given app name in heroku and show that app vars page link .",
-        "usage": ["{tr}lmvar <app name>", "{tr}lmvar"]
+        "usage": ["{tr}lmvar <app name>", "{tr}lmvar"],
     },
 )
 async def _(event):
@@ -112,7 +112,7 @@ async def _(event):
     command=("lmdyno", plugin_category),
     info={
         "header": "Searches the given app name in heroku and shows you dyno page link of that app.",
-        "usage": ["{tr}lmdyno <query>", "{tr}lmdyno"]
+        "usage": ["{tr}lmdyno <query>", "{tr}lmdyno"],
     },
 )
 async def _(event):

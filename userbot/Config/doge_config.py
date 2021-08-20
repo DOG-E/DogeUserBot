@@ -1,6 +1,7 @@
 # Config values will be loaded from here
 
-from os import environ as ose, path as osp
+from os import environ as ose
+from os import path as osp
 
 ENV = bool(ose.get("ENV", False))
 

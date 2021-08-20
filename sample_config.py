@@ -27,9 +27,7 @@ class Config(object):
     # Get this value from http://www.timezoneconverter.com/cgi-bin/findzone.tzc
     TZ = ose.get("TZ", "Europe/Istanbul")
     # Set this with required Doge repository link
-    UPSTREAM_REPO = ose.get(
-        "UPSTREAM_REPO", "https://github.com/DOG-E/DogeUserBot.git"
-    )
+    UPSTREAM_REPO = ose.get("UPSTREAM_REPO", "https://github.com/DOG-E/DogeUserBot.git")
 
     # BASIC & MAIN CONFIG VARS
     # For profile default name
@@ -50,9 +48,7 @@ class Config(object):
     OWNER_ID = int(ose.get("OWNER_ID") or 0)
     # Set this with group ID so it keeps notifying about your tagged messages or PMs
     PM_LOGGER_GROUP_ID = int(
-        ose.get("PM_LOGGER_GROUP_ID")
-        or ose.get("PM_LOGGR_BOT_API_ID")
-        or 0
+        ose.get("PM_LOGGER_GROUP_ID") or ose.get("PM_LOGGR_BOT_API_ID") or 0
     )
 
     # CUSTOM VARS
@@ -152,9 +148,7 @@ class Config(object):
         until_date=None, view_messages=None, send_messages=True
     )
     CHROME_BIN = ose.get("CHROME_BIN", "/app/.apt/usr/bin/google-chrome")
-    CHROME_DRIVER = ose.get(
-        "CHROME_DRIVER", "/app/.chromedriver/bin/chromedriver"
-    )
+    CHROME_DRIVER = ose.get("CHROME_DRIVER", "/app/.chromedriver/bin/chromedriver")
     # For sed plugin
     GROUP_REG_SED_EX_BOT_S = ose.get(
         "GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot"

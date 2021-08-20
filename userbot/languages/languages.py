@@ -11,7 +11,7 @@ from yaml import safe_load
 from .. import gvarstatus
 
 languages = {}
-Trs = Translator() 
+Trs = Translator()
 languages_folder = path.join(path.dirname(path.realpath(__file__)), "languages")
 
 

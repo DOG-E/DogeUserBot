@@ -1,8 +1,8 @@
 from asyncio import sleep
 from io import BytesIO
 from os import path
-from re import findall
 from random import choice, randint
+from re import findall
 from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageFont
@@ -11,8 +11,8 @@ from telethon.utils import get_display_name
 
 from . import (
     ALIVE_NAME,
-    _format,
     Config,
+    _format,
     doge,
     eor,
     get_user_from_event,

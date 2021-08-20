@@ -9,7 +9,18 @@ from telegraph.exceptions import TelegraphException
 from telethon.events import NewMessage
 from telethon.utils import get_display_name
 
-from . import BOTLOG, BOTLOG_CHATID, Config, doge, edl, eor, fsmessage, lan, logging, mention
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    Config,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    lan,
+    logging,
+    mention,
+)
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -107,8 +118,7 @@ async def _(event):
         except Exception as e:
             LOGS.info(e)
             title_of_page = "".join(
-                choice(list(ascii_lowercase + ascii_uppercase))
-                for _ in range(16)
+                choice(list(ascii_lowercase + ascii_uppercase)) for _ in range(16)
             )
             response = telegraph.create_page(title_of_page, html_content=page_content)
         end = datetime.now()
@@ -127,7 +137,7 @@ async def _(event):
     command=("tgl", plugin_category),
     info={
         "header": "Reply or write link convert to Telegraph page.",
-        "usage": ["{tr}tgl <reply link>", "{tr}tgl <link>"]
+        "usage": ["{tr}tgl <reply link>", "{tr}tgl <link>"],
     },
 )
 async def _(event):
@@ -141,9 +151,7 @@ async def _(event):
     chat = "@ChotamReaderBot"
     dogevent = await eor(event, lan("processing"))
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, input_str, forward=True, chat=chat)
         response = await response
         await event.client.send_read_acknowledge(conv.chat_id)

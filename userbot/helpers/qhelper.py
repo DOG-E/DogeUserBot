@@ -1,6 +1,7 @@
 # This file is part of NiceGrill.
 from json import loads
-from os import path as ospath, remove
+from os import path as ospath
+from os import remove
 from random import choice
 from textwrap import wrap
 from urllib.request import urlopen, urlretrieve
@@ -8,7 +9,16 @@ from urllib.request import urlopen, urlretrieve
 from emoji import UNICODE_EMOJI
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from telethon.tl.types import ChannelParticipantCreator, ChannelParticipantAdmin, MessageEntityMention,MessageEntityTextUrl,MessageEntityUrl,MessageEntityCode,MessageEntityItalic,MessageEntityBold
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    MessageEntityBold,
+    MessageEntityCode,
+    MessageEntityItalic,
+    MessageEntityMention,
+    MessageEntityTextUrl,
+    MessageEntityUrl,
+)
 
 from . import _dogeutils
 
@@ -26,11 +36,21 @@ COLORS = [
 
 async def process(msg, user, client, reply, replied=None):
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 43, encoding="utf-16")
-    font2 = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_regular.ttf", 33, encoding="utf-16")
-    mono = ImageFont.truetype("userbot/helpers/resources/fonts/droidsans_mono.ttf", 30, encoding="utf-16")
-    italic = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16")
+    font = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_medium.ttf", 43, encoding="utf-16"
+    )
+    font2 = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_regular.ttf", 33, encoding="utf-16"
+    )
+    mono = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/droidsans_mono.ttf", 30, encoding="utf-16"
+    )
+    italic = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_italic.ttf", 33, encoding="utf-16"
+    )
+    fallback = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16"
+    )
 
     # Splitting text
     maxlength = 0
@@ -209,7 +229,9 @@ async def process(msg, user, client, reply, replied=None):
 
     # Writing User's Name
     space = pfpbg.width + 30
-    namefallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16")
+    namefallback = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16"
+    )
     for letter in tot:
         if letter in UNICODE_EMOJI["en"]:
             newemoji, mask = await emoji_fetch(letter)
@@ -233,7 +255,9 @@ async def process(msg, user, client, reply, replied=None):
     bold, mono, italic, link = await get_entity(reply)
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 33, encoding="utf-16")
+    textfallback = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/quivira.otf", 33, encoding="utf-16"
+    )
     textcolor = "white"
     for line in text:
         for letter in line:
@@ -243,25 +267,33 @@ async def process(msg, user, client, reply, replied=None):
             for offset, length in bold.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "userbot/helpers/resources/fonts/roboto_medium.ttf", 33, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_medium.ttf",
+                        33,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "userbot/helpers/resources/fonts/roboto_italic.ttf", 33, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_italic.ttf",
+                        33,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "userbot/helpers/resources/fonts/droidsans_mono.ttf", 30, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/droidsans_mono.ttf",
+                        30,
+                        encoding="utf-16",
                     )
                     textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "userbot/helpers/resources/fonts/roboto_regular.ttf", 30, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_regular.ttf",
+                        30,
+                        encoding="utf-16",
                     )
                     textcolor = "#898989"
             if letter in UNICODE_EMOJI["en"]:
@@ -357,9 +389,7 @@ async def no_photo(reply, tot):
 
 async def emoji_fetch(emoji):
     emojis = loads(
-        urlopen(
-            "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
-        )
+        urlopen("https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt")
         .read()
         .decode()
     )
@@ -382,10 +412,16 @@ async def transparent(emoji):
 
 
 async def replied_user(draw, tot, text, maxlength, title):
-    namefont = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 38)
+    namefont = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_medium.ttf", 38
+    )
     namefallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 38)
-    textfont = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_regular.ttf", 32)
-    textfallback = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 38)
+    textfont = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_regular.ttf", 32
+    )
+    textfallback = ImageFont.truetype(
+        "userbot/helpers/resources/fonts/roboto_medium.ttf", 38
+    )
     maxlength = maxlength + 7 if maxlength < 10 else maxlength
     text = text[: maxlength - 2] + ".." if len(text) > maxlength else text
     draw.line((165, 90, 165, 170), width=5, fill="white")

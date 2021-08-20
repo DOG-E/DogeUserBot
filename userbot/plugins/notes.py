@@ -1,6 +1,6 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 
-from ..sql_helper.notes_sql import add_note, get_note, get_notes, del_note
+from ..sql_helper.notes_sql import add_note, del_note, get_note, get_notes
 from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, get_message_link, reply_id
 
 plugin_category = "misc"

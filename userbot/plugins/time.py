@@ -1,11 +1,13 @@
 from calendar import month
-from os import makedirs, path, remove
 from datetime import datetime as dt
+from os import makedirs, path, remove
 
 from PIL.Image import new
 from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype
-from pytz import country_names as c_n, country_timezones as c_tz, timezone as tz
+from pytz import country_names as c_n
+from pytz import country_timezones as c_tz
+from pytz import timezone as tz
 
 from . import Config, doge, edl, eor, reply_id
 
@@ -137,6 +139,7 @@ async def _(event):
     )
     remove(required_file_name)
     await event.delete()
+
 
 @doge.bot_cmd(
     pattern="calendar ([\s\S]*)",

@@ -10,7 +10,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from requests import post
 
-from . import Config, doge, eor, logging, lan
+from . import Config, doge, eor, lan, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -51,9 +51,7 @@ async def labstack(event):
         "ttl": 604800,
         "files": [{"name": filename, "type": "", "size": filesize}],
     }
-    r2 = post(
-        "https://up.labstack.com/api/v1/links", json=files2, headers=headers2
-    )
+    r2 = post("https://up.labstack.com/api/v1/links", json=files2, headers=headers2)
     r2json = loads(r2.text)
 
     url = "https://up.labstack.com/api/v1/links/{}/send".format(r2json["code"])
@@ -139,9 +137,7 @@ async def _(event):
         return await editor.edit("Invalid selected Transfer")
     cmd = selected_one
     # start the subprocess $SHELL
-    process = await create_subprocess_shell(
-        cmd, stdout=PIPE, stderr=PIPE
-    )
+    process = await create_subprocess_shell(cmd, stdout=PIPE, stderr=PIPE)
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
     t_response = stdout.decode().strip()

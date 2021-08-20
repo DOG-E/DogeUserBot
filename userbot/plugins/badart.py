@@ -6,7 +6,7 @@ Plugin for CatUserbot
 
 from asyncio import sleep
 
-from . import doge, mention, eor
+from . import doge, eor, mention
 
 plugin_category = "hub"
 

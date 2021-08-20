@@ -100,7 +100,9 @@ async def _(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await dogevent.edit("I don't have sufficient permissions! This is so sed. Alexa play despacito")
+        return await dogevent.edit(
+            "I don't have sufficient permissions! This is so sed. Alexa play despacito"
+        )
     except Exception as e:
         return await edl(dogevent, f"__{e}__")
     await dogevent.edit("`Promoted Successfully! Now gib Party`")

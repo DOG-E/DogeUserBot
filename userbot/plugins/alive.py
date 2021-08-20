@@ -17,8 +17,8 @@ from . import (
     Config,
     StartTime,
     check_data_base_heal_th,
-    dogealive,
     doge,
+    dogealive,
     dogeversion,
     edl,
     eor,
@@ -26,7 +26,7 @@ from . import (
     get_user_from_event,
     gvarstatus,
     mention,
-    reply_id
+    reply_id,
 )
 
 plugin_category = "bot"
@@ -72,7 +72,9 @@ async def thisalive(event):
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "🐶 Dᴏɢᴇ UsᴇʀBᴏᴛ 🐾"
-    DOG_IMG = gvarstatus("ALIVE_PIC")  or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    DOG_IMG = (
+        gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    )
     doge_caption = gvarstatus("ALIVE") or temp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,
@@ -101,25 +103,22 @@ async def thisalive(event):
         await eor(event, caption)
 
 
-@doge.bot_cmd(
-    incoming=True,
-    from_users=M_STERS,
-    pattern="dlive$",
-    disable_errors=True
-)
+@doge.bot_cmd(incoming=True, from_users=M_STERS, pattern="dlive$", disable_errors=True)
 async def dlive(event):
     reply_to_id = await reply_id(event)
     user = await get_user_from_event(event)
     if user.id == event.client.uid:
         return await edl(event, "Only Doge admins can use, dude!__")
     start = datetime.now()
-    _pingx = await event.reply("ㅤ")
+    await event.reply("ㅤ")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "🐶 Dᴏɢᴇ UsᴇʀBᴏᴛ 🐾"
-    DOG_IMG = gvarstatus("ALIVE_PIC")  or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    DOG_IMG = (
+        gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+    )
     doge_caption = gvarstatus("ALIVE") or temp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,

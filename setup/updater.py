@@ -13,9 +13,7 @@ async def lines_differnce(file1, file2):
     with open(file2) as f2:
         lines2 = f2.readlines()
         lines2 = [line.rstrip("\n") for line in lines2]
-    diff = unified_diff(
-        lines1, lines2, fromfile=file1, tofile=file2, lineterm="", n=0
-    )
+    diff = unified_diff(lines1, lines2, fromfile=file1, tofile=file2, lineterm="", n=0)
     lines = list(diff)[2:]
     added = [line[1:] for line in lines if line[0] == "+"]
     removed = [line[1:] for line in lines if line[0] == "-"]
@@ -26,9 +24,7 @@ async def lines_differnce(file1, file2):
 
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     args = split(cmd)
-    process = await create_subprocess_exec(
-        *args, stdout=PIPE, stderr=PIPE
-    )
+    process = await create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE)
     stdout, stderr = await process.communicate()
     return (
         stdout.decode("utf-8", "replace").strip(),

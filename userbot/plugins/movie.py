@@ -1,12 +1,20 @@
-
-
 from os import getcwd, path, remove
 
 from bs4 import BeautifulSoup
 from justwatch import JustWatch, justwatchapi
 from pySmartDL import SmartDL
 
-from . import Config, doge, eor, get_cast, get_moviecollections, imdb, logging, mov_titles, reply_id
+from . import (
+    Config,
+    doge,
+    eor,
+    get_cast,
+    get_moviecollections,
+    imdb,
+    logging,
+    mov_titles,
+    reply_id,
+)
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)

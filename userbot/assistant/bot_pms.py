@@ -1,11 +1,11 @@
-from re import compile
 from collections import defaultdict
 from datetime import datetime
+from re import compile
 from typing import Optional, Union
 
 from telethon import Button
 from telethon.errors import UserIsBlockedError
-from telethon.events import CallbackQuery, StopPropagation, MessageDeleted
+from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
 from telethon.utils import get_display_name
 
 from ..Config import Config
@@ -110,7 +110,7 @@ async def bot_start(event):
             (
                 Button.url("💬 Sᴜᴘᴘoʀᴛ", "https://t.me/DogeSup"),
                 Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
-            )
+            ),
         ]
     else:
         start_msg = f"**🐶 Wolf! Wolf!\
@@ -345,7 +345,7 @@ async def send_flood_alert(user_) -> None:
                 await doge.tgbot.send_message(
                     BOTLOG_CHATID,
                     f"**🚨 ERROR:**\nℹ While updating flood count\
-                    \n➡ `{e}`"
+                    \n➡ `{e}`",
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
     else:
@@ -406,7 +406,9 @@ async def send_flood_alert(user_) -> None:
             )
         except UserIsBlockedError:
             if BOTLOG:
-                await doge.tgbot.send_message(BOTLOG_CHATID, f"**🚨 Please unblock {botusername}!**")
+                await doge.tgbot.send_message(
+                    BOTLOG_CHATID, f"**🚨 Please unblock {botusername}!**"
+                )
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
 
@@ -457,7 +459,9 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
-        return await c_q.answer("**ℹ Bot AntiFlood was already disabled.**", alert=False)
+        return await c_q.answer(
+            "**ℹ Bot AntiFlood was already disabled.**", alert=False
+        )
     delgvar("bot_antif")
     await c_q.answer("**ℹ Bot AntiFlood disabled.**", alert=False)
     await c_q.edit("**ℹ BOT_ANTIFLOOD is now disabled!**")

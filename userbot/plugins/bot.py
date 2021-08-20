@@ -19,9 +19,7 @@ async def botmsg(event):
     chat = event.chat_id
     reply_to_id = await reply_id(event)
     if not text:
-        return await edl(
-            event, "__What should I send through bot? Give some text.__"
-        )
+        return await edl(event, "__What should I send through bot? Give some text.__")
     await event.client.tgbot.send_message(chat, text, reply_to=reply_to_id)
     await event.delete()
 

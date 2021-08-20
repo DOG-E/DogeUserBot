@@ -1,5 +1,5 @@
-from time import time
 from datetime import datetime
+from time import time
 
 from emoji import get_emoji_regexp
 from telethon.tl.types import Channel, PollAnswer

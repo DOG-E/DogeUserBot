@@ -1,6 +1,6 @@
-from math import floor
-from os import path, makedirs, getcwd
 from asyncio import sleep
+from math import floor
+from os import getcwd, makedirs, path
 from subprocess import PIPE, Popen
 
 from aria2p import API, Client

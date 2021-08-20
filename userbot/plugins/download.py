@@ -2,7 +2,8 @@ from asyncio import get_event_loop, sleep
 from datetime import datetime
 from io import FileIO
 from math import floor
-from os import getcwd, makedirs, path as osp
+from os import getcwd, makedirs
+from os import path as osp
 from pathlib import Path
 from time import time
 
@@ -10,7 +11,7 @@ from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from . import _format, Config, doge, edl, eor, humanbytes, progress
+from . import Config, _format, doge, edl, eor, humanbytes, progress
 
 plugin_category = "misc"
 

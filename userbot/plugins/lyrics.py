@@ -63,9 +63,7 @@ async def lyrics(event):  # sourcery no-metrics
         args = query.split("-", 1)
         artist = args[0].strip(" ")
         song = args[1].strip(" ")
-        dogevent = await eor(
-            event, f"`Searching lyrics for {artist} - {song}...`"
-        )
+        dogevent = await eor(event, f"`Searching lyrics for {artist} - {song}...`")
         try:
             songs = genius.search_song(song, artist)
         except TypeError:

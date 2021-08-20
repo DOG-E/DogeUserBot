@@ -1,13 +1,14 @@
 # Heavily based on
 # https://github.com/SijmenSchoon/regexbot/blob/master/regexbot.py
-from re import compile, IGNORECASE
 from collections import defaultdict, deque
+from re import IGNORECASE, compile
 
-from regex import IGNORECASE as regexIGNORECASE, subn as regexsubn
+from regex import IGNORECASE as regexIGNORECASE
+from regex import subn as regexsubn
 from telethon.events import MessageEdited, NewMessage, StopPropagation
-from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.types import InputPeerChat, InputPeerChannel
+from telethon.tl.functions.messages import GetFullChatRequest
+from telethon.tl.types import InputPeerChannel, InputPeerChat
 
 from . import Config, doge, edl, eor
 

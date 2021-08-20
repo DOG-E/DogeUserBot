@@ -3,7 +3,7 @@
 from asyncio import sleep
 from base64 import b64decode
 from os import mkdir, path, remove, rmdir
-from random import sample, randint
+from random import randint, sample
 
 from bs4 import BeautifulSoup
 from pySmartDL import SmartDL
@@ -15,7 +15,17 @@ from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.types import InputPeerNotifySettings
 from urlextract import URLExtract
 
-from . import PMSGTEXT, _dogeutils, age_verification, doge, edl, eor, hub, reply_id, wowmygroup
+from . import (
+    PMSGTEXT,
+    _dogeutils,
+    age_verification,
+    doge,
+    edl,
+    eor,
+    hub,
+    reply_id,
+    wowmygroup,
+)
 
 plugin_category = "hub"
 
@@ -459,16 +469,14 @@ async def some(event):
     if flag:
         return
 
-    res = b64decode(
-        "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
-    ).decode("utf-8")
+    res = b64decode("aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk=").decode(
+        "utf-8"
+    )
     resource = await event.client(GetFullChannelRequest(res))
     chat = resource.chats[0].username
     try:
         await event.client(
-            GetParticipantRequest(
-                channel=chat, participant=event.from_id.user_id
-            )
+            GetParticipantRequest(channel=chat, participant=event.from_id.user_id)
         )
     except UserNotParticipantError:
         await event.client(ImportChatInviteRequest(res.split("/")[4]))

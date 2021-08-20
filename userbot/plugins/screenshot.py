@@ -4,9 +4,9 @@ from ..helpers.utils import _format
 Modified by @mrconfused
 """
 
+from datetime import datetime
 from io import BytesIO
 from traceback import format_exc
-from datetime import datetime
 
 from requests import get
 from selenium.webdriver import Chrome, ChromeOptions

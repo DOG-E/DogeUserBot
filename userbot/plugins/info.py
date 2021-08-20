@@ -14,7 +14,27 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_input_location, pack_bot_file_id
 
-from . import _dogeutils, Config, doge, edl, eor, fsmessage, get_user_from_event, humanbytes, inline_mention, lan, logging, parse_pre, post_to_telegraph, reply_id, sanga_seperator, spamwatch, user_full_name, wowcg_y, wowcmydev, yaml_format
+from . import (
+    Config,
+    _dogeutils,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    get_user_from_event,
+    humanbytes,
+    inline_mention,
+    lan,
+    logging,
+    parse_pre,
+    post_to_telegraph,
+    reply_id,
+    sanga_seperator,
+    spamwatch,
+    wowcg_y,
+    wowcmydev,
+    yaml_format,
+)
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -277,17 +297,17 @@ async def creationdate(event):
         return await edl(event, "`Reply to any user message.`")
     reply_message = await event.get_reply_message()
     if reply_message.sender.bot:
-       return await edl(event, "`Actually need to reply to a user.`")
+        return await edl(event, "`Actually need to reply to a user.`")
     dogevent = await eor(event, lan("processing"))
     chat = "@CreationDateBot"
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(NewMessage(incoming=True,from_users=chat))
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await response
         if response.text.startswith("Looks"):
             await edl(
                 dogevent,
-                "`Can you kindly disable your forward privacy settings for good?`"
+                "`Can you kindly disable your forward privacy settings for good?`",
             )
         else:
             await dogevent.edit(response.text)
@@ -635,7 +655,6 @@ async def _(event):
     await event.edit(f"Chain length: `{count}`")
 
 
-
 @doge.bot_cmd(
     pattern="dc$",
     command=("dc", plugin_category),
@@ -714,15 +733,11 @@ async def _(event):
     chat = "@Rekognition_Bot"
     dog = await eor(event, "recognizeing this media")
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await response
         if response.text.startswith("See next message."):
-            response = conv.wait_event(
-                NewMessage(incoming=True, from_users=chat)
-            )
+            response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
             response = await response
             msg = response.message.message
             await dog.edit(msg)

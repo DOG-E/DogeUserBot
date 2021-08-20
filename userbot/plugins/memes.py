@@ -4,7 +4,7 @@
 # catUserbot module for having some fun with people.
 from asyncio import sleep
 from random import choice, randint
-from re import sub 
+from re import sub
 
 from cowpy.cow import COWACTERS, get_cow
 from nekos import fact, textcat, why
@@ -12,7 +12,19 @@ from requests import get
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins, MessageEntityMentionName
 
-from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id, dogememes, _dogeutils, parse_pre, mention, mememaker, reply_id
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    _dogeutils,
+    doge,
+    dogememes,
+    edl,
+    eor,
+    mememaker,
+    mention,
+    parse_pre,
+    reply_id,
+)
 
 plugin_category = "fun"
 

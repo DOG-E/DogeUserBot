@@ -1,17 +1,35 @@
 # image search for catuserbot
 from io import BytesIO
-from os import path, mkdir, remove, system
+from os import mkdir, path, remove, system
 from shutil import rmtree
 
 from glitch_this import ImageGlitcher
-from PIL.Image import open as Imopen, new
+from PIL.Image import new
+from PIL.Image import open as Imopen
 from PIL.ImageColor import getrgb
 from PIL.ImageFilter import GaussianBlur
 from PIL.ImageOps import flip, mirror
 from telethon.events import NewMessage
 
-from . import _dogetools, _dogeutils, clippy, convert_toimage, deepfry, doge, dotify, edl, eor, fsfile, fsmessage, lan, mcaption, media_type, mediatoarttext, reply_id
 from ..helpers.google_image_download import googleimagesdownload
+from . import (
+    _dogetools,
+    _dogeutils,
+    clippy,
+    convert_toimage,
+    deepfry,
+    doge,
+    dotify,
+    edl,
+    eor,
+    fsfile,
+    fsmessage,
+    lan,
+    mcaption,
+    media_type,
+    mediatoarttext,
+    reply_id,
+)
 
 plugin_category = "misc"
 
@@ -347,15 +365,13 @@ async def colorizer(event):
     chat = "@PhotoColorizerBot"
     dogevent = await eor(event, lan("processing"))
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await response
         if response.text.startswith("Forward"):
             await edl(
                 dogevent,
-                "`Can you kindly disable your forward privacy settings for good?`"
+                "`Can you kindly disable your forward privacy settings for good?`",
             )
         else:
             await dogevent.delete()
@@ -387,15 +403,13 @@ async def picture(event):
     chat = "@PixelatorBot"
     dogevent = await eor(event, lan("processing"))
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await response
         if response.text.startswith("Forward"):
             await edl(
                 dogevent,
-                "`Can you kindly disable your forward privacy settings for good?`"
+                "`Can you kindly disable your forward privacy settings for good?`",
             )
         else:
             await dogevent.delete()
@@ -578,7 +592,7 @@ async def asciiartx(event):
         if response.text.startswith("Forward"):
             await edl(
                 dogevent,
-                "`Can you kindly disable your forward privacy settings for good?`"
+                "`Can you kindly disable your forward privacy settings for good?`",
             )
         else:
             await dogevent.delete()
@@ -617,7 +631,7 @@ async def lineartx(event):
     output_file = path.join("./temp", "doge.jpg")
     output = await _dogetools.media_to_pic(event, reply_message)
     outputt = convert_toimage(output[1], filename="./temp/doge.jpg")
-    chat="@Lines50Bot"
+    chat = "@Lines50Bot"
     async with event.client.conversation(chat) as conv:
         await fsfile(event, output_file, chat=chat)
         pic = await conv.get_response()
@@ -660,9 +674,7 @@ async def _(event):
         return
     event = await eor(event, lan("processing"))
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply, forward=True, chat=chat)
         response = await response
         if response.text.startswith("Forward"):
@@ -745,10 +757,7 @@ async def txt_art(event):
     try:
         outputfile = mediatoarttext(dogemedia, output)
         await event.client.send_file(
-            event.chat_id,
-            outputfile,
-            reply_to=dogeid,
-            force_document=False
+            event.chat_id, outputfile, reply_to=dogeid, force_document=False
         )
         await output[0].delete()
         for files in (outputfile, output[1]):

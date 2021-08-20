@@ -1,16 +1,19 @@
 from datetime import datetime
 from html import escape
-from os import getcwd, path as osp, remove
+from os import getcwd
+from os import path as osp
+from os import remove
 from re import findall
 from textwrap import dedent
 from urllib.parse import quote_plus
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
-from requests import get, post
-from jikanpy import Jikan, jikan as jikanpy
+from jikanpy import Jikan
+from jikanpy import jikan as jikanpy
 from jikanpy.exceptions import APIException
 from pySmartDL import SmartDL
+from requests import get, post
 from telegraph import upload_file
 from telegraph.exceptions import TelegraphException
 
@@ -227,9 +230,7 @@ async def anilist(event):
     "Get info on any anime."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(
-            event, "__What should i search ? Gib me Something to Search__"
-        )
+        return await edl(event, "__What should i search ? Gib me Something to Search__")
     event = await eor(event, "`Searching...`")
     result = await callAPI(input_str)
     msg = await formatJSON(result)
@@ -483,9 +484,7 @@ async def anime_download(event):  # sourcery no-metrics
     if not search_query and reply:
         search_query = reply.text
     elif not search_query:
-        return await edl(
-            event, "__What should i search ? Gib me Something to Search__"
-        )
+        return await edl(event, "__What should i search ? Gib me Something to Search__")
     dogevent = await eor(event, "`Searching anime...`")
     search_query = search_query.replace(" ", "+")
     if input_str == "kaizoku":
@@ -598,9 +597,7 @@ async def whatanime(event):
     "Reverse search of anime."
     reply = await event.get_reply_message()
     if not reply:
-        return await edl(
-            event, "__reply to media to reverse search that anime__."
-        )
+        return await edl(event, "__reply to media to reverse search that anime__.")
     mediatype = media_type(reply)
     if mediatype not in ["Photo", "Video", "Gif", "Sticker"]:
         return await edl(
@@ -615,7 +612,7 @@ async def whatanime(event):
     file = memory_file("anime.jpg", output[1])
     try:
         response = upload_file(file)
-    except TelegraphException as exc:
+    except TelegraphException:
         try:
             response = upload_file(output[1])
         except TelegraphException as exc:
@@ -635,12 +632,8 @@ async def whatanime(event):
         if not js0:
             return await output[0].edit("`No results found.`")
         js0 = js0[0]
-        text = (
-            f'**Titile Romaji : **`{escape(js0["anilist"]["title"]["romaji"])}`\n'
-        )
-        text += (
-            f'**Titile Native :** `{escape(js0["anilist"]["title"]["native"])}`\n'
-        )
+        text = f'**Titile Romaji : **`{escape(js0["anilist"]["title"]["romaji"])}`\n'
+        text += f'**Titile Native :** `{escape(js0["anilist"]["title"]["native"])}`\n'
         text += (
             f'**Titile English :** `{escape(js0["anilist"]["title"]["english"])}`\n'
             if js0["anilist"]["title"]["english"] is not None

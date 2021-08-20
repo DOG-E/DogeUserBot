@@ -1,11 +1,24 @@
-from os import path, remove
 from datetime import datetime
+from os import path, remove
 from pathlib import Path
 
 from telethon.tl.types import InputMessagesFilterDocument
 
 from ..utils import load_module, remove_plugin
-from . import CMD_HELP, CMD_LIST, PLUGIN_CHANNEL, SUDO_LIST, Config, _dogeutils, doge, edl, eor, hmention, reply_id, tr
+from . import (
+    CMD_HELP,
+    CMD_LIST,
+    PLUGIN_CHANNEL,
+    SUDO_LIST,
+    Config,
+    _dogeutils,
+    doge,
+    edl,
+    eor,
+    hmention,
+    reply_id,
+    tr,
+)
 
 plugin_category = "bot"
 thumb_image_path = path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
@@ -215,7 +228,7 @@ async def unload(event):
         await eor(
             event,
             f"{shortname} uninstalled:\
-                \n{e}"
+                \n{e}",
         )
 
 

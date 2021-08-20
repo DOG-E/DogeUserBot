@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from io import BytesIO
 from os import path, remove
@@ -6,9 +5,9 @@ from re import I, M, findall
 from urllib.parse import quote_plus
 from urllib.request import build_opener
 
-from requests import get, post
 from bs4 import BeautifulSoup
 from PIL import Image
+from requests import get, post
 from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 

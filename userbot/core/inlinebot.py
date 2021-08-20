@@ -7,13 +7,13 @@ from time import time
 from uuid import uuid4
 
 from telethon import Button
-from telethon.tl.types import (
-    InputWebDocument,
-    InputBotInlineResult,
-    InputBotInlineMessageMediaAuto
-)
 from telethon.errors import QueryIdInvalidError
 from telethon.events import CallbackQuery, InlineQuery
+from telethon.tl.types import (
+    InputBotInlineMessageMediaAuto,
+    InputBotInlineResult,
+    InputWebDocument,
+)
 from youtubesearchpython import VideosSearch
 
 from userbot import doge
@@ -215,7 +215,7 @@ def paginate_help(
                         "⛔ Cʟosᴇ",
                         data="close",
                     ),
-                )
+                ),
             ]
         else:
             pairs = pairs + [
@@ -248,7 +248,7 @@ def paginate_help(
                     data="mainmenu",
                 ),
             ),
-            (Button.inline("⛔ Cʟosᴇ", data="close"),)
+            (Button.inline("⛔ Cʟosᴇ", data="close"),),
         ]
     else:
         if category_pgno < 0:
@@ -264,7 +264,7 @@ def paginate_help(
                     data="mainmenu",
                 ),
             ),
-            (Button.inline("⛔ Cʟosᴇ", data="close"),)
+            (Button.inline("⛔ Cʟosᴇ", data="close"),),
         ]
     return pairs
 
@@ -643,7 +643,8 @@ async def inline_handler(event):  # sourcery no-metrics
             \n❤ Doge is an advanced dog that makes using Telegram easy and fun.\
             \n\
             \n**🐕‍🦺 If you want to have a Doge on Telegram,\
-            \n🐾 come to the [support group](https://t.me/DogeSup)!**", "md"
+            \n🐾 come to the [support group](https://t.me/DogeSup)!**",
+            "md",
         )
         result = InputBotInlineResult(
             id=str(uuid4()),
@@ -809,9 +810,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(
-        data=compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")
-    )
+    CallbackQuery(data=compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -836,7 +835,7 @@ async def on_plug_in_callback_query_handler(event):
                 "⛔ Cʟosᴇ",
                 data="close",
             ),
-        )
+        ),
     ]
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
             \n🐾 Hᴇʟᴘᴇʀ\

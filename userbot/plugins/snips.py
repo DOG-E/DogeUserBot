@@ -1,6 +1,6 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 
-from ..sql_helper.snip_sql import add_snip, get_snip, get_snips, del_snip
+from ..sql_helper.snip_sql import add_snip, del_snip, get_snip, get_snips
 from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, get_message_link, reply_id
 
 plugin_category = "misc"

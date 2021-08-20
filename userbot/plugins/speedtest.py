@@ -1,4 +1,3 @@
-
 from time import time
 
 from speedtest import Speedtest

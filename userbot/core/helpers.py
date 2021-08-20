@@ -1,7 +1,7 @@
 from logging import getLogger
 from typing import Union
 
-from telethon.tl.types import User, Chat, Channel
+from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_display_name
 
 from .events import NewMessage

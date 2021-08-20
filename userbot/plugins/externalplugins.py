@@ -11,6 +11,7 @@ plugin_category = "bot"
 
 
 if Config.PLUGIN_CHANNEL:
+
     async def install():
         documentss = await doge.get_messages(
             Config.PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
@@ -38,10 +39,12 @@ if Config.PLUGIN_CHANNEL:
                     check += 1
                     if check > 5:
                         break
+
     doge.loop.create_task(install())
 
 
 if Config.DOGEPLUGIN == True:
+
     async def dogeplugininstall():
         try:
             documentss = await doge.get_messages(
@@ -56,7 +59,7 @@ if Config.DOGEPLUGIN == True:
                     "**🚨 I couldn't install plugins of @DogePlugin!\n\
                         \n\
                         🧩 Please join @DogePlugin channel,\n\
-                        if you want external plugins.**"
+                        if you want external plugins.**",
                 )
         total = int(documentss.total)
         for module in range(total):
@@ -81,10 +84,12 @@ if Config.DOGEPLUGIN == True:
                     check += 1
                     if check > 5:
                         break
+
     doge.loop.create_task(dogeplugininstall())
 
 
 if Config.DOGEHUB == True:
+
     async def dogehubinstall():
         try:
             documentss = await doge.get_messages(
@@ -99,7 +104,7 @@ if Config.DOGEHUB == True:
                     "**🚨 I couldn't install hub plugins of @DogeHub!\n\
                         \n\
                         🍑 Please join @DogeHub channel,\n\
-                        if you want external hub plugins.**"
+                        if you want external hub plugins.**",
                 )
         total = int(documentss.total)
         for module in range(total):
@@ -124,4 +129,5 @@ if Config.DOGEHUB == True:
                     check += 1
                     if check > 5:
                         break
+
     doge.loop.create_task(dogehubinstall())

@@ -12,11 +12,21 @@ from sys import setrecursionlimit
 from requests import get, post
 from spotify_token import start_session
 from telegraph import Telegraph
-from telethon.events import NewMessage
 from telethon.errors import AboutTooLongError
+from telethon.events import NewMessage
 from telethon.tl.functions.account import UpdateProfileRequest
 
-from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, Config, doge, edl, eor, fsmessage
+from . import (
+    BIO_PREFIX,
+    BOTLOG,
+    BOTLOG_CHATID,
+    DEFAULT_BIO,
+    Config,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+)
 
 plugin_category = "misc"
 

@@ -1,7 +1,7 @@
 from html import escape
 
-from . import doge, edl, eor, logging
 from ..sql_helper import warns_sql as sql
+from . import doge, edl, eor, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)

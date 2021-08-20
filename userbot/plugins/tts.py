@@ -1,7 +1,6 @@
-
+from datetime import datetime
 from os import makedirs, path, remove
 from subprocess import STDOUT, CalledProcessError, check_output
-from datetime import datetime
 
 from gtts import gTTS
 
@@ -63,9 +62,7 @@ async def _(event):
             required_file_name + ".opus",
         ]
         try:
-            t_response = check_output(
-                command_to_execute, stderr=STDOUT
-            )
+            t_response = check_output(command_to_execute, stderr=STDOUT)
         except (CalledProcessError, NameError, FileNotFoundError) as exc:
             await dogevent.edit(str(exc))
             # continue sending required_file_name

@@ -1,5 +1,5 @@
-from . import BOTLOG_CHATID, doge, edl, eor, tr
 from ..sql_helper.globals import delr_var, getr_var, setr_var
+from . import BOTLOG_CHATID, doge, edl, eor, tr
 
 plugin_category = "bot"
 
@@ -12,18 +12,15 @@ plugin_category = "bot"
         "flags": {
             "set": "To set a new variable or modify an old one.",
             "get": "To get the value of a variable.",
-            "del": "To delete a variable"
+            "del": "To delete a variable",
         },
         "usage": [
             "{tr}set rw <var name> <var value>",
             "{tr}get rw <var name>",
-            "{tr}del rw <var name"
+            "{tr}del rw <var name",
         ],
-        "examples": [
-            "{tr}get rw ALIVE_NAME",
-            "{tr}set rw ALIVE_NAME Mutlu"
-        ]
-    }
+        "examples": ["{tr}get rw ALIVE_NAME", "{tr}set rw ALIVE_NAME Mutlu"],
+    },
 )
 async def railway_variable(event):
     "To play with Railway variables"
@@ -35,13 +32,12 @@ async def railway_variable(event):
             return await eor(
                 event,
                 f"__Try typing__ `{tr}doge rw` __before proceeding further .__\n"
-                "__If you still don't get it, then you should try using this 🔫 on yourself.__"
+                "__If you still don't get it, then you should try using this 🔫 on yourself.__",
             )
 
         if not await setr_var(key, value):
             return await edl(
-                event,
-                "__You have already set this var with the same value.__"
+                event, "__You have already set this var with the same value.__"
             )
 
         await setr_var(key, value)
@@ -51,7 +47,7 @@ async def railway_variable(event):
             "#RAILWAY_VARIABLE\n\n"
             "**Variable has been set!!**\n"
             f"Variable Name: {key}\n"
-            f"Variable Value: {value}"
+            f"Variable Value: {value}",
         )
 
     if exe == "get":
@@ -60,21 +56,17 @@ async def railway_variable(event):
             return await eor(
                 event,
                 f"__Try typing__ `{tr}doge rw` __before proceeding further .__\n"
-                "__If you stil don't get it, then you should try using this 🔫 on yourself.__"
+                "__If you stil don't get it, then you should try using this 🔫 on yourself.__",
             )
 
         if not await getr_var(key):
             return await edl(
                 event,
-                f"__I couldn't find `{key}` __variable. I guess you haven't set that yet.__"
+                f"__I couldn't find `{key}` __variable. I guess you haven't set that yet.__",
             )
 
         value = await getr_var(key)
-        return await eor(
-            event,
-            "**Config Vars:**"
-            f"\n\n`{key}` = `{value}`\n"
-        )
+        return await eor(event, "**Config Vars:**" f"\n\n`{key}` = `{value}`\n")
 
     if exe == "del":
         key = event.pattern_match.group(2)
@@ -82,17 +74,20 @@ async def railway_variable(event):
             return await eor(
                 event,
                 f"__Try typing__ `{tr}doge rw` __before proceeding further .__\n"
-                "__If you stil don't get it, then you should try using this 🔫 on yourself.__"
+                "__If you stil don't get it, then you should try using this 🔫 on yourself.__",
             )
 
         if await delr_var(key) == "Click Clack!":
             return await eor(
                 event,
-                f"**Error:**\n __I can't delete__ `{key}` __variable. Please delete it manually from__ railway.app"
+                f"**Error:**\n __I can't delete__ `{key}` __variable. Please delete it manually from__ railway.app",
             )
 
         if not await delr_var(key):
-            return await eor(event, f"__First set the variable by__ `{tr}set railway var {key} <some value>`")
+            return await eor(
+                event,
+                f"__First set the variable by__ `{tr}set railway var {key} <some value>`",
+            )
 
         value = await getr_var(key)
         await delr_var(key)
@@ -102,5 +97,5 @@ async def railway_variable(event):
             "#RAILWAY_VARIABLE\n\n"
             "**Variable has been deleted!!**\n"
             f"Variable Name: {key}\n"
-            f"Variable Value: {value}"
+            f"Variable Value: {value}",
         )

@@ -4,7 +4,13 @@ from telethon.events import ChatAction
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from telethon.tl.types import ChatBannedRights, MessageEntityBotCommand, MessageEntityEmail, MessageEntityTextUrl, MessageEntityUrl
+from telethon.tl.types import (
+    ChatBannedRights,
+    MessageEntityBotCommand,
+    MessageEntityEmail,
+    MessageEntityTextUrl,
+    MessageEntityUrl,
+)
 from telethon.utils import get_display_name
 
 from ..sql_helper.locks_sql import get_locks, is_locked, update_lock
@@ -1031,9 +1037,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
         is_url = False
         if entities:
             for entity in entities:
-                if isinstance(
-                    entity, (MessageEntityTextUrl, MessageEntityUrl)
-                ):
+                if isinstance(entity, (MessageEntityTextUrl, MessageEntityUrl)):
                     is_url = True
         if is_url:
             try:
@@ -1069,9 +1073,7 @@ async def _(event):
                 is_ban_able = True
                 try:
                     await event.client(
-                        EditBannedRequest(
-                            event.chat_id, user_obj, rights
-                        )
+                        EditBannedRequest(event.chat_id, user_obj, rights)
                     )
                 except Exception as e:
                     await event.reply(

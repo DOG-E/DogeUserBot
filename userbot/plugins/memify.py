@@ -1,11 +1,13 @@
 # Made by @mrconfused and @sandy1709
 # memify plugin for catuserbot
-from asyncio import sleep, create_subprocess_exec
+from asyncio import create_subprocess_exec, sleep
 from asyncio.subprocess import PIPE
 from base64 import b64decode
-from os import path as ospath, mkdir, remove
+from os import mkdir
+from os import path as ospath
+from os import remove
 
-from cv2 import imwrite, VideoCapture
+from cv2 import VideoCapture, imwrite
 from PIL.Image import open as Imopen
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
@@ -35,8 +37,7 @@ from . import (
 
 plugin_category = "fun"
 
-FONTS = (
-    "1. `droidsans_mono.ttf`\n\
+FONTS = "1. `droidsans_mono.ttf`\n\
     2. `impact.ttf`\n\
     3. `modern.ttf`\n\
     4. `productsans_bolditalic.ttf`\n\
@@ -44,7 +45,6 @@ FONTS = (
     6. `roboto_italic.ttf`\n\
     7. `roboto_medium.ttf`\n\
     8. `roboto_regular.ttf`"
-)
 font_list = [
     "droidsans_mono.ttf",
     "impact.ttf",
@@ -93,7 +93,7 @@ async def maccmd(event):  # sourcery no-metrics
         image = Imopen(imag[1])
     except Exception as e:
         return await edl(dogevent, f"**Error in identifying image:**\n__{e}__")
-    output=pframehelper(image)
+    output = pframehelper(image)
     await event.client.send_file(
         event.chat_id, output, reply_to=reply, force_document=force
     )
@@ -560,9 +560,7 @@ async def dogemmf(event):
         dogevent = await eor(event, "`WOW this is animated sticker!`")
         cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
         file = "@DogeUserBot.png"
-        process = await create_subprocess_exec(
-            *cmd, stdout=PIPE, stderr=PIPE
-        )
+        process = await create_subprocess_exec(*cmd, stdout=PIPE, stderr=PIPE)
         stdout, stderr = await process.communicate()
         stderr.decode().strip()
         stdout.decode().strip()
@@ -622,9 +620,7 @@ async def dogemms(event):
         dogevent = await eor(event, "`WOW this is animated sticker`")
         cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
         file = "@DogeUserBot.png"
-        process = await create_subprocess_exec(
-            *cmd, stdout=PIPE, stderr=PIPE
-        )
+        process = await create_subprocess_exec(*cmd, stdout=PIPE, stderr=PIPE)
         stdout, stderr = await process.communicate()
         stderr.decode().strip()
         stdout.decode().strip()

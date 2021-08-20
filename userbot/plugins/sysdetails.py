@@ -6,7 +6,14 @@ from datetime import datetime
 from platform import uname as puname
 from sys import version
 
-from psutil import boot_time, cpu_count, cpu_freq, cpu_percent, net_io_counters, virtual_memory
+from psutil import (
+    boot_time,
+    cpu_count,
+    cpu_freq,
+    cpu_percent,
+    net_io_counters,
+    virtual_memory,
+)
 from telethon import __version__
 
 from . import _dogeutils, doge, eor

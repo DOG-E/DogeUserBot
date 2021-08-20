@@ -3,6 +3,7 @@ try:
 except ImportError:
     raise AttributeError
 from os import environ
+
 from sqlalchemy import Column, String, UnicodeText
 
 
@@ -55,6 +56,7 @@ class Railway_Variables(BASE):
     __tablename__ = "Variables_Railway"
     VarName = Column(String(14), primary_key=True)
     Value = Column(UnicodeText, primary_key=True)
+
     def __init__(self, VarName, Value):
         self.Key = VarName
         self.Value = Value

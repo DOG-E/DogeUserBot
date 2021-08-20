@@ -10,7 +10,21 @@ from telethon.tl.types import DocumentAttributeFilename
 from validators.url import url as vurl
 from youtubesearchpython.Video import get as Vget
 
-from . import _dogeutils, doge, edl, eor, fsmessage, hmention, logging, media_type, name_dl, reply_id, song_dl, video_dl, yt_search
+from . import (
+    _dogeutils,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    hmention,
+    logging,
+    media_type,
+    name_dl,
+    reply_id,
+    song_dl,
+    video_dl,
+    yt_search,
+)
 
 plugin_category = "fun"
 LOGS = logging.getLogger(__name__)
@@ -223,9 +237,7 @@ async def shazamcmd(event):
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
-        return await edl(
-            dogevent, f"**Error while reverse searching song:**\n__{e}__"
-        )
+        return await edl(dogevent, f"**Error while reverse searching song:**\n__{e}__")
     image = track["images"]["background"]
     song = track["share"]["subject"]
     await event.client.send_file(
@@ -270,35 +282,38 @@ async def _(event):
 
 
 @doge.bot_cmd(
-	pattern="sng ?([\s\S]*)",
-	command=("sng", plugin_category),
-	info={
-		"header": "Get Songs from @LyBot quickly",
-		"usage": [
-			"{tr}sng <song_name>",
-			"{tr}sng <reply to a song name>",
-		],
-		"examples": ["{tr}sng Erik Dalı"],
-	}
+    pattern="sng ?([\s\S]*)",
+    command=("sng", plugin_category),
+    info={
+        "header": "Get Songs from @LyBot quickly",
+        "usage": [
+            "{tr}sng <song_name>",
+            "{tr}sng <reply to a song name>",
+        ],
+        "examples": ["{tr}sng Erik Dalı"],
+    },
 )
 async def lybot(e):
-	"Get your song asap!"
-	reply_to = await reply_id(e)
-	args = e.pattern_match.group(1)
-	if not args:
-		if e.is_reply:
-			reply = await e.get_reply_message()
-			args = reply.text
-		else:
-			await edl(e, "`No input found`")
-	eris = await eor(e, "`Searching for your song 🎵`")
-	res = await e.client.inline_query("lybot", args,)
-	try:
-		await res[0].click(
-			e.chat_id,
-			hide_via=True,
-			reply_to=reply_to,
-		)
-		await eris.delete()
-	except Exception as fx:
-		await eris.edit(f"`{fx}`")
+    "Get your song asap!"
+    reply_to = await reply_id(e)
+    args = e.pattern_match.group(1)
+    if not args:
+        if e.is_reply:
+            reply = await e.get_reply_message()
+            args = reply.text
+        else:
+            await edl(e, "`No input found`")
+    eris = await eor(e, "`Searching for your song 🎵`")
+    res = await e.client.inline_query(
+        "lybot",
+        args,
+    )
+    try:
+        await res[0].click(
+            e.chat_id,
+            hide_via=True,
+            reply_to=reply_to,
+        )
+        await eris.delete()
+    except Exception as fx:
+        await eris.edit(f"`{fx}`")

@@ -1,6 +1,6 @@
 from googletrans import LANGUAGES
 
-from . import BOTLOG, BOTLOG_CHATID, doge, deEmojify, edl, eor, getTranslate, gvarstatus
+from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, getTranslate, gvarstatus
 
 plugin_category = "tool"
 
@@ -80,4 +80,3 @@ async def translateme(trans):
             BOTLOG_CHATID,
             f"`Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.`",
         )
-

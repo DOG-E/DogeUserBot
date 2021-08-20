@@ -1,8 +1,8 @@
 from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.messages import CreateChatRequest, ExportChatInviteRequest
 
-from . import Config, doge, edl, eor, tr
 from ..utils.tools import create_supergroup
+from . import Config, doge, edl, eor, tr
 
 plugin_category = "tool"
 

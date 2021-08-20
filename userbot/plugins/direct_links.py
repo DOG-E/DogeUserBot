@@ -1,12 +1,12 @@
 from json import JSONDecodeError, loads
-from re import findall, search, sub
-from urllib.parse import unquote
 from os import popen
 from random import choice
+from re import findall, search, sub
+from urllib.parse import unquote
 
-from requests import get, Session
 from bs4 import BeautifulSoup
 from humanize import naturalsize
+from requests import Session, get
 
 from . import doge, edl, eor, lan, logging
 
@@ -106,9 +106,7 @@ def gdrive(url: str) -> str:
         page = BeautifulSoup(download.content, "lxml")
         export = drive + page.find("a", {"id": "uc-download-link"}).get("href")
         name = page.find("span", {"class": "uc-name-size"}).text
-        response = get(
-            export, stream=True, allow_redirects=False, cookies=cookies
-        )
+        response = get(export, stream=True, allow_redirects=False, cookies=cookies)
         dl_url = response.headers["location"]
         if "accounts.google.com" in dl_url:
             reply += "Link is not public!"

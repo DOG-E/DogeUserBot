@@ -10,7 +10,17 @@ from requests import get
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, Config, Heroku, doge, edl, eor, heroku_api, lan
+from . import (
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    Config,
+    Heroku,
+    doge,
+    edl,
+    eor,
+    heroku_api,
+    lan,
+)
 
 plugin_category = "bot"
 
@@ -111,7 +121,7 @@ async def variable(var):  # sourcery no-metrics
     command=("usage", plugin_category),
     info={
         "header": "To Check dyno usage of userbot and also to know how much left.",
-        "usage": ["{tr}usage", "{tr}dyno"]
+        "usage": ["{tr}usage", "{tr}dyno"],
     },
 )
 async def dyno_usage(dyno):

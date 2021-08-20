@@ -1,4 +1,5 @@
-from os import path as osp, remove
+from os import path as osp
+from os import remove
 from re import findall
 
 from pygments import highlight
@@ -10,7 +11,17 @@ from telethon.utils import get_extension
 from urlextract import URLExtract
 
 from ..core.events import MessageEdited
-from . import Config, doge, edl, eor, fsmessage, logging, media_type, pastetext, reply_id
+from . import (
+    Config,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    logging,
+    media_type,
+    pastetext,
+    reply_id,
+)
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -88,7 +99,10 @@ async def paste_img(event):
         if d_file_name is not None:
             remove(d_file_name)
     except Exception as e:
-        await edl(dogevent, f"**Error:**\n`{e}`", )
+        await edl(
+            dogevent,
+            f"**Error:**\n`{e}`",
+        )
 
 
 @doge.bot_cmd(

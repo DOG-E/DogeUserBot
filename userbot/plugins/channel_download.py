@@ -5,7 +5,7 @@ usage: .geta channel_username [will  get all media from channel, tho there is li
 By: @Zero_cool7870
 """
 from os import makedirs, path
-from subprocess import check_output, PIPE, Popen
+from subprocess import PIPE, Popen, check_output
 
 from . import Config, doge, eor, media_type
 

@@ -6,7 +6,18 @@ from telegraph import upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.events import NewMessage
 
-from . import Config, awooify, baguette, convert_toimage, doge, eor, fsmessage, iphonex, lan, lolice
+from . import (
+    Config,
+    awooify,
+    baguette,
+    convert_toimage,
+    doge,
+    eor,
+    fsmessage,
+    iphonex,
+    lan,
+    lolice,
+)
 
 plugin_category = "fun"
 
@@ -29,9 +40,7 @@ async def _(dogbot):
         return await eor(dogbot, "```Reply to actual users message.```")
     event = await dogbot.edit(lan("processing"))
     async with dogbot.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await response
         if response.text.startswith("Forward"):

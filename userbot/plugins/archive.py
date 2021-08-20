@@ -1,11 +1,14 @@
 from asyncio import get_event_loop
+from datetime import datetime
 from io import FileIO
-from os import path as osp, mkdir, remove, walk
+from os import mkdir
+from os import path as osp
+from os import remove, walk
+from pathlib import Path
+from tarfile import is_tarfile
+from tarfile import open as tar_open
 from time import time
 from zipfile import ZipFile, is_zipfile
-from datetime import datetime
-from pathlib import Path
-from tarfile import is_tarfile, open as tar_open
 
 from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
@@ -53,9 +56,7 @@ async def zip_file(event):
         return await edl(event, "`File compressing is not implemented yet`")
     mone = await eor(event, "`Zipping in progress...`")
     filePaths = zipdir(input_str)
-    filepath = osp.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str))
-    )
+    filepath = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str)))
     zip_file = ZipFile(filepath + ".zip", "w")
     with zip_file:
         for file in filePaths:
@@ -94,9 +95,7 @@ async def tar_file(event):
     mone = await eor(event, "`Tar creation in progress...`")
     start = datetime.now()
     filePaths = zipdir(input_str)
-    filepath = osp.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str))
-    )
+    filepath = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str)))
     destination = f"{filepath}.tar.gz"
     zip_file = tar_open(destination, "w:gz")
     with zip_file:

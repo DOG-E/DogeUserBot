@@ -1,7 +1,7 @@
-from requests import get, post
 from PIL.Image import open as Imopen
 from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype as Imftruetype
+from requests import get
 from telegraph import upload_file
 from validators.url import url
 
@@ -14,7 +14,9 @@ async def fakegs(search, result):
     drawing = Draw(img)
     blue = (0, 0, 255)
     black = (0, 0, 0)
-    font1 = Imftruetype("userbot/helpers/resources/fonts/productsans_bolditalic.ttf", 20)
+    font1 = Imftruetype(
+        "userbot/helpers/resources/fonts/productsans_bolditalic.ttf", 20
+    )
     font2 = Imftruetype("userbot/helpers/resources/fonts/productsans_light.ttf", 23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
@@ -23,9 +25,7 @@ async def fakegs(search, result):
 
 
 async def trumptweet(text):
-    r = get(
-        f"https://nekobot.xyz/api/imagegen?type=trumptweet&text={text}"
-    ).json()
+    r = get(f"https://nekobot.xyz/api/imagegen?type=trumptweet&text={text}").json()
     teledoge = r.get("message")
     dogurl = url(teledoge)
     if not dogurl:
@@ -38,9 +38,7 @@ async def trumptweet(text):
 
 
 async def changemymind(text):
-    r = get(
-        f"https://nekobot.xyz/api/imagegen?type=changemymind&text={text}"
-    ).json()
+    r = get(f"https://nekobot.xyz/api/imagegen?type=changemymind&text={text}").json()
     teledoge = r.get("message")
     dogurl = url(teledoge)
     if not dogurl:
@@ -53,9 +51,7 @@ async def changemymind(text):
 
 
 async def kannagen(text):
-    r = get(
-        f"https://nekobot.xyz/api/imagegen?type=kannagen&text={text}"
-    ).json()
+    r = get(f"https://nekobot.xyz/api/imagegen?type=kannagen&text={text}").json()
     teledoge = r.get("message")
     dogurl = url(teledoge)
     if not dogurl:
@@ -96,9 +92,7 @@ async def iphonex(text):
 
 
 async def baguette(text):
-    r = get(
-        f"https://nekobot.xyz/api/imagegen?type=baguette&url={text}"
-    ).json()
+    r = get(f"https://nekobot.xyz/api/imagegen?type=baguette&url={text}").json()
     teledoge = r.get("message")
     dogurl = url(teledoge)
     if not dogurl:
@@ -207,6 +201,8 @@ async def phcomment(text1, text2, text3):
 async def magik(photo):
     Photo = await photo.download_media()
     uphoto = upload_file(Photo)
-    r = get(f"https://nekobot.xyz/api/imagegen?type=magik&image=https://telegra.ph{uphoto[0]}").json()
+    r = get(
+        f"https://nekobot.xyz/api/imagegen?type=magik&image=https://telegra.ph{uphoto[0]}"
+    ).json()
     teledoge = r["message"]
     return teledoge

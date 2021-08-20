@@ -3,11 +3,10 @@ from re import compile
 from telethon import Button
 from telethon.events import CallbackQuery
 
-from . import doge
-
 from ..core.decorators import check_owner
 from ..core.logger import logging
 from ..sql_helper.globals import addgvar
+from . import doge
 
 LOGS = logging.getLogger(__name__)
 
@@ -17,14 +16,8 @@ LOGS = logging.getLogger(__name__)
 async def chg_of_decision_(event: CallbackQuery):
     buttons = [
         (
-            Button.inline(
-                text="⚠ Yᴇs ɪ'ᴍ +18",
-                data="age_verification_true"
-            ),
-            Button.inline(
-                text="🔞 No ɪ'ᴍ ɴoᴛ",
-                data="age_verification_false"
-            ),
+            Button.inline(text="⚠ Yᴇs ɪ'ᴍ +18", data="age_verification_true"),
+            Button.inline(text="🔞 No ɪ'ᴍ ɴoᴛ", data="age_verification_false"),
         )
     ]
     await event.edit(
@@ -63,8 +56,8 @@ async def yes_im_sure(event: CallbackQuery):
     addgvar("PNSFW", True)
     buttons = [
         Button.inline(
-                text="⛔ Cʟosᴇ",
-                data="close_this",
+            text="⛔ Cʟosᴇ",
+            data="close_this",
         ),
     ]
     await event.edit(

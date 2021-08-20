@@ -26,7 +26,6 @@ from . import (
 plugin_category = "fun"
 
 
-
 @doge.bot_cmd(
     pattern="(|b)qbs(?:\s|$)([\s\S]*)",
     command=("qbs", plugin_category),
@@ -241,12 +240,12 @@ async def sticklet(event):
     G = randint(0, 256)
     B = randint(0, 256)
     FONTS = [
-    "userbot/helpers/resources/fonts/droidsans_mono.ttf",
-    "userbot/helpers/resources/fonts/impact.ttf",
-    "userbot/helpers/resources/fonts/modern.ttf",
-    "userbot/helpers/resources/fonts/productsans_light.ttf",
-    "userbot/helpers/resources/fonts/roboto_medium.ttf",
-    "userbot/helpers/resources/fonts/roboto_italic.ttf",
+        "userbot/helpers/resources/fonts/droidsans_mono.ttf",
+        "userbot/helpers/resources/fonts/impact.ttf",
+        "userbot/helpers/resources/fonts/modern.ttf",
+        "userbot/helpers/resources/fonts/productsans_light.ttf",
+        "userbot/helpers/resources/fonts/roboto_medium.ttf",
+        "userbot/helpers/resources/fonts/roboto_italic.ttf",
     ]
     reply_to_id = await reply_id(event)
     sticktext = event.pattern_match.group(1)

@@ -2,7 +2,19 @@ from googletrans import LANGUAGES
 from telethon.events import NewMessage
 from validators.url import url as validatorsurl
 
-from . import BOTLOG, BOTLOG_CHATID, addgvar, delgvar, doge, edl, eor, fsmessage, gvarstatus, lan, logging
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    addgvar,
+    delgvar,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    gvarstatus,
+    lan,
+    logging,
+)
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -152,7 +164,7 @@ async def dvdvdv(event):  # sourcery no-metrics
             "{totalwarns}": "totalwarns",
             "{warns}": "warns",
             "{remwarns}": "remaining warns",
-            "{afktime}": "see afk time for afk command"
+            "{afktime}": "see afk time for afk command",
         },
         "usage": "{tr}custom <option> reply",
         "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
@@ -223,23 +235,38 @@ async def lang_set(value):
         await eor(value, f"`Language for Translator changed to {LANG.title()}.`")
     elif input_str == "tts":
         addgvar("TTS_LANG", arg)
-        await eor(
-            value, f"`Language for Translated TTS changed to {LANG.title()}.`"
-        )
+        await eor(value, f"`Language for Translated TTS changed to {LANG.title()}.`")
     elif input_str == "tocr":
         addgvar("TOCR_LANG", arg)
-        await eor(
-            value, f"`Language for Translated OCR changed to {LANG.title()}.`"
-        )
+        await eor(value, f"`Language for Translated OCR changed to {LANG.title()}.`")
     elif input_str == "ai":
         addgvar("AI_LANG", arg)
         await eor(value, f"`Language for chatbot is changed to {LANG.title()}.`")
     elif input_str == "xg":
-        XLANGLIST = ["ar", "be", "bg", "cn", "cs", "de", "en", "es", "fr", "id", "it", "mx", "nl", "pl", "pt", "ru", "sq", "tr"]
+        XLANGLIST = [
+            "ar",
+            "be",
+            "bg",
+            "cn",
+            "cs",
+            "de",
+            "en",
+            "es",
+            "fr",
+            "id",
+            "it",
+            "mx",
+            "nl",
+            "pl",
+            "pt",
+            "ru",
+            "sq",
+            "tr",
+        ]
         if not arg and arg not in XLANGLIST:
-                return await edl(
-                    value,
-                    "@XiaomiGeekBot Language List:\
+            return await edl(
+                value,
+                "@XiaomiGeekBot Language List:\
                         \n\
                         \n🇸🇦 `ar` - Arabic (العربية)\
                         \n🇧🇾 `be` - Belarusian (Беларуская)\
@@ -261,34 +288,54 @@ async def lang_set(value):
                         \n🇹🇷 `tr` - Turkish (Türkçe)\
                         \n\
                         \n",
-                    time=60,
-                )
+                time=60,
+            )
 
         dogevent = await eor(value, lan("processing"))
-        chat="@XiaomiGeeksBot"
+        chat = "@XiaomiGeeksBot"
         async with doge.conversation(chat) as conv:
-            if arg=="ar": xl="ar - Arabic (العربية)"
-            elif arg=="be": xl="be - Belarusian (Беларуская)"
-            elif arg=="bg": xl="bg - Bulgarian (български език)"
-            elif arg=="cn": xl="zh-CN - Chinese (中文)"
-            elif arg=="cs": xl="cs - Czech (česky)"
-            elif arg=="de": xl="de - German (Deutsch)"
-            elif arg=="en": xl="en - English (English)"
-            elif arg=="es": xl="es-ES - Spanish (español)"
-            elif arg=="fr": xl="fr - French (français)"
-            elif arg=="id": xl="id - Indonesian (Bahasa Indonesia)"
-            elif arg=="it": xl="it - Italian (Italiano)"
-            elif arg=="mx": xl="es-MX - Spanish (Mexico) (español)"
-            elif arg=="nl": xl="nl - Dutch (Nederlands)"
-            elif arg=="pl": xl="pl - Polish (polski)"
-            elif arg=="pt": xl="pt-BR - Portuguese (Brazil) (Português)"
-            elif arg=="ru": xl="ru - Russian (русский язык)"
-            elif arg=="sq": xl="sq - Albanian (Shqip)"
-            elif arg=="tr": xl="tr - Turkish (Türkçe)"
-            await fsmessage(event=value, text=xl, chat=chat,)
-            response = conv.wait_event(
-                NewMessage(incoming=True, from_users=chat)
+            if arg == "ar":
+                xl = "ar - Arabic (العربية)"
+            elif arg == "be":
+                xl = "be - Belarusian (Беларуская)"
+            elif arg == "bg":
+                xl = "bg - Bulgarian (български език)"
+            elif arg == "cn":
+                xl = "zh-CN - Chinese (中文)"
+            elif arg == "cs":
+                xl = "cs - Czech (česky)"
+            elif arg == "de":
+                xl = "de - German (Deutsch)"
+            elif arg == "en":
+                xl = "en - English (English)"
+            elif arg == "es":
+                xl = "es-ES - Spanish (español)"
+            elif arg == "fr":
+                xl = "fr - French (français)"
+            elif arg == "id":
+                xl = "id - Indonesian (Bahasa Indonesia)"
+            elif arg == "it":
+                xl = "it - Italian (Italiano)"
+            elif arg == "mx":
+                xl = "es-MX - Spanish (Mexico) (español)"
+            elif arg == "nl":
+                xl = "nl - Dutch (Nederlands)"
+            elif arg == "pl":
+                xl = "pl - Polish (polski)"
+            elif arg == "pt":
+                xl = "pt-BR - Portuguese (Brazil) (Português)"
+            elif arg == "ru":
+                xl = "ru - Russian (русский язык)"
+            elif arg == "sq":
+                xl = "sq - Albanian (Shqip)"
+            elif arg == "tr":
+                xl = "tr - Turkish (Türkçe)"
+            await fsmessage(
+                event=value,
+                text=xl,
+                chat=chat,
             )
+            response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
             respond = await response
             await dogevent.edit(f"**Changed @XiaomiGeeksBot language:**\n{respond}")
             await conv.mark_read()
@@ -305,7 +352,8 @@ async def lang_set(value):
             )
         elif input_str == "tocr":
             await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for Translated OCR changed to {LANG.title()}.`"
+                BOTLOG_CHATID,
+                f"`Language for Translated OCR changed to {LANG.title()}.`",
             )
         elif input_str == "ai":
             await value.client.send_message(
@@ -313,5 +361,6 @@ async def lang_set(value):
             )
         elif input_str == "xg":
             await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for @XiaomiGeekBot is changed to {LANG.title()}.`"
+                BOTLOG_CHATID,
+                f"`Language for @XiaomiGeekBot is changed to {LANG.title()}.`",
             )

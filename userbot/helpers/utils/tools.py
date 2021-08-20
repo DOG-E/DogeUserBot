@@ -1,4 +1,5 @@
-from os import remove, path as ospath
+from os import path as ospath
+from os import remove
 from typing import Optional
 
 from lottie import exporters, parsers
@@ -8,7 +9,7 @@ from PIL import Image
 from ...core.logger import logging
 from ...core.managers import eor
 from ..tools import media_type
-from .utils import runcmd, run_sync
+from .utils import run_sync, runcmd
 
 LOGS = logging.getLogger(__name__)
 
@@ -92,13 +93,9 @@ async def make_gif(event, reply, quality=None, fps=None):
     result_p = ospath.join("temp", "animation.gif")
     animation = parsers.tgs.parse_tgs(reply)
     with open(result_p, "wb") as result:
-        await run_sync(
-            exporters.gif.export_gif, animation, result, quality, fps
-        )
+        await run_sync(exporters.gif.export_gif, animation, result, quality, fps)
     return result_p
 
 
 async def thumb_from_audio(audio_path, output):
-    await runcmd(
-        f"ffmpeg -i {audio_path} -filter:v scale=500:500 -an {output}"
-    )
+    await runcmd(f"ffmpeg -i {audio_path} -filter:v scale=500:500 -an {output}")

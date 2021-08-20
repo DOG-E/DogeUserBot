@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from PyDictionary import PyDictionary
 from requests import get
 
-from . import _format, AioHttp, doge, edl, eor, getSimilarWords, logging
+from . import AioHttp, _format, doge, edl, eor, getSimilarWords, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -74,37 +74,51 @@ async def meaning(event):
         "usage": "{tr}tdk <word>",
     },
 )
-async def tdk(event): 
+async def tdk(event):
     inp = event.pattern_match.group(1)
-    await eor(event, '__Searching...__')
-    response = get(f'https://sozluk.gov.tr/gts?ara={inp}').json()
-    if 'error' in response:
+    await eor(event, "__Searching...__")
+    response = get(f"https://sozluk.gov.tr/gts?ara={inp}").json()
+    if "error" in response:
         await edl(event, f"**I couldn't find ({inp}) in Turkish dictionary.**")
         words = getSimilarWords(inp)
-        if not words == '':
-            return await edl(event, f"__I couldn't find ({inp}) in Turkish dictionary.__\n\n**Similar Words: **{words}", time=30)
+        if not words == "":
+            return await edl(
+                event,
+                f"__I couldn't find ({inp}) in Turkish dictionary.__\n\n**Similar Words: **{words}",
+                time=30,
+            )
     else:
         meaningsStr = ""
         for mean in response[0]["anlamlarListe"]:
             meaningsStr += f"\n**{mean['anlam_sira']}.**"
-            if ('ozelliklerListe' in mean) and ((not mean["ozelliklerListe"][0]["tam_adi"] == None) or (not mean["ozelliklerListe"][0]["tam_adi"] == '')):
+            if ("ozelliklerListe" in mean) and (
+                (not mean["ozelliklerListe"][0]["tam_adi"] == None)
+                or (not mean["ozelliklerListe"][0]["tam_adi"] == "")
+            ):
                 meaningsStr += f"__({mean['ozelliklerListe'][0]['tam_adi']})__"
             meaningsStr += f' ```{mean["anlam"]}```'
 
-            if response[0]["cogul_mu"] == '0':
-                cogul = '❌'
+            if response[0]["cogul_mu"] == "0":
+                cogul = "❌"
             else:
-                cogul = '✅'
+                cogul = "✅"
 
-            if response[0]["ozel_mi"] == '0':
-                ozel = '❌'
+            if response[0]["ozel_mi"] == "0":
+                ozel = "❌"
             else:
-                ozel = '✅'
+                ozel = "✅"
 
-        await eor(event, f'**Word: **`{inp}`\n\n**Is the plural?: **{cogul}\n**Is the word a proper noun?: **{ozel}\n\n**Meanings: **{meaningsStr}')
+        await eor(
+            event,
+            f"**Word: **`{inp}`\n\n**Is the plural?: **{cogul}\n**Is the word a proper noun?: **{ozel}\n\n**Meanings: **{meaningsStr}",
+        )
         words = getSimilarWords(inp)
-        if not words == '':
-            return await eor(event, f'**Word: **`{inp}`\n\n**Is the plural?: **`{cogul}`\n**Is the word a proper noun?: **{ozel}\n\n**Meanings: **{meaningsStr}' + f'\n\n**Similar Words: **{words}')
+        if not words == "":
+            return await eor(
+                event,
+                f"**Word: **`{inp}`\n\n**Is the plural?: **`{cogul}`\n**Is the word a proper noun?: **{ozel}\n\n**Meanings: **{meaningsStr}"
+                + f"\n\n**Similar Words: **{words}",
+            )
 
 
 @doge.bot_cmd(
@@ -115,20 +129,20 @@ async def tdk(event):
         "usage": "{tr}tureng <word>",
     },
 )
-async def tureng(event): 
+async def tureng(event):
     word = event.pattern_match.group(1)
-    url="https://tureng.com/tr/turkce-ingilizce/"+word
+    url = "https://tureng.com/tr/turkce-ingilizce/" + word
     try:
         answer = get(url)
     except:
         return await edl(event, "No connection")
-    soup = BeautifulSoup(answer.content, 'html.parser')
-    trlated='The meaning of the word {}:\n\n'.format(word)
+    soup = BeautifulSoup(answer.content, "html.parser")
+    trlated = "The meaning of the word {}:\n\n".format(word)
     try:
-        table = soup.find('table')
-        td = table.find_all('td', attrs={'lang':'en'})
+        table = soup.find("table")
+        td = table.find_all("td", attrs={"lang": "en"})
         for val in td[0:5]:
-            trlated = '{} 👉 {}\n'.format(trlated , val.text )
+            trlated = "{} 👉 {}\n".format(trlated, val.text)
         await eor(event, trlated)
     except:
         await edl(event, "I couldn't find the result")

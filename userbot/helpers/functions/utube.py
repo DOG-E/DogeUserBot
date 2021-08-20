@@ -1,12 +1,12 @@
+from collections import defaultdict
 from os import path
 from re import compile, findall
-from urllib.request import urlopen
 from urllib.parse import quote
-from collections import defaultdict
+from urllib.request import urlopen
 
-from ujson import load, dump
-from youtube_dl import YoutubeDL
 from telethon import Button
+from ujson import dump, load
+from youtube_dl import YoutubeDL
 from youtube_dl.utils import DownloadError, ExtractorError, GeoRestrictedError
 from youtubesearchpython import VideosSearch
 
@@ -35,9 +35,7 @@ name_dl = (
 async def yt_search(dog):
     try:
         dog = quote(dog)
-        html = urlopen(
-            "https://www.youtube.com/results?search_query=" + dog
-        )
+        html = urlopen("https://www.youtube.com/results?search_query=" + dog)
         user_data = findall(r"watch\?v=(\S{11})", html.read().decode())
         video_link = []
         k = 0

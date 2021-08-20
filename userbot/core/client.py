@@ -1,9 +1,9 @@
 from datetime import datetime
 from inspect import stack as stacck
+from pathlib import Path
 from re import compile
 from sys import exc_info
 from traceback import format_exc, format_exception
-from pathlib import Path
 from typing import Dict, List, Union
 
 from telethon import TelegramClient, events

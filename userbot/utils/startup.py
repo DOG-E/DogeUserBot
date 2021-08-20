@@ -1,10 +1,13 @@
 from asyncio.exceptions import CancelledError
 from datetime import timedelta
 from glob import glob
-from os import environ, execle, path as osp, remove
+from os import environ, execle
+from os import path as osp
+from os import remove
 from pathlib import Path
 from sqlite3 import connect
-from sys import executable as sysexecutable, exit as sysexit
+from sys import executable as sysexecutable
+from sys import exit as sysexit
 
 from requests import get
 from telethon import Button
@@ -21,7 +24,7 @@ from .. import (
     M_STERS,
     PLUGIN_CHANNEL,
     PM_LOGGER_GROUP_ID,
-    tr
+    tr,
 )
 from ..Config import Config
 from ..core.logger import logging
@@ -61,11 +64,16 @@ async def setup_bot():
         try:
             doge(JoinChannelRequest("@DogeUserBot"))
             if gvarstatus("AUTOUS") is None:
-                try: doge(JoinChannelRequest("@DogeSup"))
-                except: pass
-                try: doge(JoinChannelRequest("@DogePlugin"))
-                except: pass
-        except: pass
+                try:
+                    doge(JoinChannelRequest("@DogeSup"))
+                except:
+                    pass
+                try:
+                    doge(JoinChannelRequest("@DogePlugin"))
+                except:
+                    pass
+        except:
+            pass
 
         bot_details = await doge.tgbot.get_me()
         Config.BOT_USERNAME = f"@{bot_details.username}"
@@ -95,7 +103,9 @@ async def setup_bot():
                 ",
                 file="https://telegra.ph/file/b7e740bbda31d43d510ab.jpg",
             )
-            LOGS.error("🐶 My admins have banned you from using @DogeUserBot!\n🐾 Check your saved messages!")
+            LOGS.error(
+                "🐶 My admins have banned you from using @DogeUserBot!\n🐾 Check your saved messages!"
+            )
             doge.disconnect()
             sysexit(1)
     except Exception as e:
@@ -187,8 +197,7 @@ async def verifyLoggerGroup():
                 + str(e)
             )
     else:
-        descript = (
-            "**🚧 DON'T LEAVE OR\
+        descript = "**🚧 DON'T LEAVE OR\
             \n🚧 DON'T DELETE OR\
             \n🚧 DON'T CHANGE THIS GROUP!**\n\
             \n\
@@ -196,7 +205,6 @@ async def verifyLoggerGroup():
             all your previous snips, welcome, etc. will be lost.\n\
             \n\
             **🧡 @DogeUserBot**"
-        )
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         _, groupid = await create_supergroup(
             "🐾 Doɢᴇ Boᴛ Loɢ", doge, Config.BOT_USERNAME, descript, gphoto
@@ -210,8 +218,7 @@ async def verifyLoggerGroup():
         flag = True
 
     if PLUGIN_CHANNEL == 0:
-        descript = (
-            "**🚧 DON'T LEAVE OR\
+        descript = "**🚧 DON'T LEAVE OR\
             \n🚧 DON'T DELETE OR\
             \n🚧 DON'T CHANGE THIS CHANNEL!**\n\
             \n\
@@ -219,7 +226,6 @@ async def verifyLoggerGroup():
             all your installed externally plugins will be lost.\n\
             \n\
             **🧡 @DogeUserBot**"
-        )
         cphoto = await doge.upload_file(file="userbot/helpers/resources/DogePlugin.jpg")
         _, channelid = await create_channel(
             "🐾 Doɢᴇ Exᴛᴇʀɴᴀʟ Pʟᴜɢɪɴs", doge, descript, cphoto
@@ -346,16 +352,14 @@ async def startupmessage():
 
 def lm_sters():
     try:
-        if osp.exists('m_sters.check'):
-            remove('m_sters.check')
-        URL = (
-            'https://raw.githubusercontent.com/MUTLCC/Doge/DOGE/m_sters.check'
-        )
-        with open('m_sters', 'wb') as load:
+        if osp.exists("m_sters.check"):
+            remove("m_sters.check")
+        URL = "https://raw.githubusercontent.com/MUTLCC/Doge/DOGE/m_sters.check"
+        with open("m_sters", "wb") as load:
             load.write(get(URL).content)
-        DB = connect('m_sters.check')
+        DB = connect("m_sters.check")
         CURSOR = DB.cursor()
-        CURSOR.execute('SELECT * FROM W0W')
+        CURSOR.execute("SELECT * FROM W0W")
         ALL_ROWS = CURSOR.fetchall()
         for i in ALL_ROWS:
             M_STERS.append(i[0])
@@ -366,16 +370,14 @@ def lm_sters():
 
 def lg_ys():
     try:
-        if osp.exists('g_ys.check'):
-            remove('g_ys.check')
-        URL = (
-            'https://raw.githubusercontent.com/MUTLCC/Doge/DOGE/g_ys.check'
-        )
-        with open('g_ys.check', 'wb') as load:
+        if osp.exists("g_ys.check"):
+            remove("g_ys.check")
+        URL = "https://raw.githubusercontent.com/MUTLCC/Doge/DOGE/g_ys.check"
+        with open("g_ys.check", "wb") as load:
             load.write(get(URL).content)
-        DB = connect('g_ys.check')
+        DB = connect("g_ys.check")
         CURSOR = DB.cursor()
-        CURSOR.execute('SELECT * FROM G4YS')
+        CURSOR.execute("SELECT * FROM G4YS")
         ALL_ROWS = CURSOR.fetchall()
         for i in ALL_ROWS:
             G_YS.append(i[0])

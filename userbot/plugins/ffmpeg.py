@@ -1,12 +1,13 @@
 # ported from uniborg by @spechide
 from asyncio import create_subprocess_exec, get_event_loop
 from asyncio.subprocess import PIPE
-from io import FileIO
-from os import path as osp, remove
-from time import time
 from datetime import datetime
+from io import FileIO
+from os import path as osp
+from os import remove
+from time import time
 
-from . import _dogetools, Config, doge, edl, eor, media_type, progress, reply_id, tr
+from . import Config, _dogetools, doge, edl, eor, media_type, progress, reply_id, tr
 
 plugin_category = "tool"
 
@@ -201,9 +202,7 @@ async def ff_mpeg_trim_cmd(event):
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
-    out_put_file_name = osp.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, f"{round(time())}.mp3"
-    )
+    out_put_file_name = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, f"{round(time())}.mp3")
     if len(cmt) == 3:
         # output should be audio
         cmd, start_time, end_time = cmt

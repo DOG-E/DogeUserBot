@@ -8,7 +8,16 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 
-from . import BOTLOG, BOTLOG_CHATID, doge, extract_time, get_user_from_event, eor, _format, S_NOPERM
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    S_NOPERM,
+    _format,
+    doge,
+    eor,
+    extract_time,
+    get_user_from_event,
+)
 
 plugin_category = "admin"
 

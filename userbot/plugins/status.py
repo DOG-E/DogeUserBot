@@ -29,9 +29,7 @@ async def pussy(event):
     photo = "./temp/donottouch.jpg"
     if not path.isdir("./temp"):
         mkdir("./temp")
-    urlretrieve(
-        "https://telegra.ph/file/249f27d5b52a87babcb3f.jpg", photo
-    )
+    urlretrieve("https://telegra.ph/file/249f27d5b52a87babcb3f.jpg", photo)
     if photo:
         file = await event.client.upload_file(photo)
         try:
@@ -47,11 +45,7 @@ async def pussy(event):
     if last_name:
         addgvar("my_last_name", last_name)
     tag_name = OFFLINE_TAG
-    await event.client(
-        UpdateProfileRequest(
-            last_name=first_name, first_name=tag_name
-        )
-    )
+    await event.client(UpdateProfileRequest(last_name=first_name, first_name=tag_name))
     await edl(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
 
 
@@ -74,9 +68,7 @@ async def dog(event):
         return
     try:
         await event.client(
-            DeletePhotosRequest(
-                await event.client.get_profile_photos("me", limit=1)
-            )
+            DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
     except Exception as e:  # pylint:disable=C0103,W0703
         await eor(event, str(e))
@@ -84,9 +76,5 @@ async def dog(event):
         await eor(event, "**Changed profile to Online.**")
     first_name = gvarstatus("my_first_name")
     last_name = gvarstatus("my_last_name") or ""
-    await event.client(
-        UpdateProfileRequest(
-            last_name=last_name, first_name=first_name
-        )
-    )
+    await event.client(UpdateProfileRequest(last_name=last_name, first_name=first_name))
     await edl(event, f"**`{first_name} {last_name}`\nI am Online!**")

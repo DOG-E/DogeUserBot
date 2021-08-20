@@ -15,9 +15,9 @@ from . import (
     eor,
     fakegs,
     kannagen,
+    lan,
     magik,
     mcaption,
-    lan,
     reply_id,
     trumptweet,
     tweets,
@@ -174,14 +174,10 @@ async def nekobot(dog):
         username, text = text.split(";")
     elif not text and dog.is_reply and not reply.media:
         text = reply.message
-        getuser = await dog.client(
-            GetFullUserRequest(reply.from_id)
-        )
+        getuser = await dog.client(GetFullUserRequest(reply.from_id))
         username = getuser.user.first_name
     elif text and dog.is_reply:
-        getuser = await dog.client(
-            GetFullUserRequest(reply.from_id)
-        )
+        getuser = await dog.client(GetFullUserRequest(reply.from_id))
         username = getuser.user.first_name
         text = text
     elif text:
@@ -223,10 +219,7 @@ async def magiker(event):
     dogevent = await eor(event, lan("processing"))
     teledoge = await magik(reply_message)
     await event.client.send_file(
-        event.chat_id,
-        teledoge,
-        caption=mcaption,
-        reply_to=reply_message
+        event.chat_id, teledoge, caption=mcaption, reply_to=reply_message
     )
     await dogevent.delete()
     remove(teledoge)

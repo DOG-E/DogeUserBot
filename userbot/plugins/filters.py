@@ -9,7 +9,7 @@ from ..sql_helper.filter_sql import (
     remove_all_filters,
     remove_filter,
 )
-from . import BOTLOG, BOTLOG_CHATID, FMSGTEXT, doge, eor, edl
+from . import BOTLOG, BOTLOG_CHATID, FMSGTEXT, doge, edl, eor
 
 plugin_category = "misc"
 

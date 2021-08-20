@@ -15,7 +15,19 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, Config, deEmojify, doge, hide_inlinebot, lan, logging, reply_id
+from . import (
+    BIO_PREFIX,
+    BOTLOG,
+    BOTLOG_CHATID,
+    DEFAULT_BIO,
+    Config,
+    deEmojify,
+    doge,
+    hide_inlinebot,
+    lan,
+    logging,
+    reply_id,
+)
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)

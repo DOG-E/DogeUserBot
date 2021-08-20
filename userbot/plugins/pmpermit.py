@@ -1,16 +1,31 @@
+from datetime import datetime
 from random import choice
 from re import compile
-from datetime import datetime
 
 from telethon import Button
-from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.events import CallbackQuery
+from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.utils import get_display_name
 
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from ..sql_helper import pmpermit_sql
-from . import BOTLOG_CHATID, _format, Config, addgvar, delgvar, doge, edl, eor, get_user_from_event, gvarstatus, logging, mention, reply_id, tr
+from . import (
+    BOTLOG_CHATID,
+    Config,
+    _format,
+    addgvar,
+    delgvar,
+    doge,
+    edl,
+    eor,
+    get_user_from_event,
+    gvarstatus,
+    logging,
+    mention,
+    reply_id,
+    tr,
+)
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -123,9 +138,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     PM_WARNS[str(chat.id)] += 1
     try:
         if gvarstatus("pmmenu") is None:
-            results = await event.client.inline_query(
-                Config.BOT_USERNAME, "pmpermit"
-            )
+            results = await event.client.inline_query(Config.BOT_USERNAME, "pmpermit")
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
             PM_PIC = gvarstatus("PM_PIC")

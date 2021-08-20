@@ -1,8 +1,22 @@
 from asyncio import sleep
 from asyncio.exceptions import TimeoutError
 
-from . import BOTLOG, BOTLOG_CHATID, _format, Config, doge, edl, eor, fsmessage, get_user_from_event, logging, reply_id, tr, wowmydev
 from ..sql_helper.global_collectionjson import add_collection, get_collection
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    Config,
+    _format,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    get_user_from_event,
+    logging,
+    reply_id,
+    tr,
+    wowmydev,
+)
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
@@ -82,7 +96,6 @@ async def group_fban(event):
                     return await edl(
                         dogevent,
                         "__You must be owner of the group(FBAN_GROUP_ID) to perform this action__",
-                        
                     )
                 await conv.send_message(f"/fban {user_id} {reason}")
                 reply = await conv.get_response()
@@ -169,7 +182,6 @@ async def group_unfban(event):
                     return await edl(
                         dogevent,
                         "__You must be owner of the group(FBAN_GROUP_ID) to perform this action__",
-                        
                     )
                 await conv.send_message(f"/unfban {user_id} {reason}")
                 reply = await conv.get_response()
@@ -258,7 +270,8 @@ async def quote_search(event):  # sourcery no-metrics
                             fedidstoadd.append(fed_id)
             except Exception as e:
                 await edl(
-                    dogevent, f"**Error while fecthing myfeds:**\n__{e}__", 
+                    dogevent,
+                    f"**Error while fecthing myfeds:**\n__{e}__",
                 )
             await conv.mark_read()
             await conv.cancel_all()
@@ -292,9 +305,7 @@ async def quote_search(event):  # sourcery no-metrics
     else:
         feds[fedgroup] = [fedid]
     add_collection("fedids", feds)
-    await eor(
-        event, "__The given fed is succesfully added to fed category.__"
-    )
+    await eor(event, "__The given fed is succesfully added to fed category.__")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -330,14 +341,10 @@ async def quote_search(event):
         feds = {}
     if fedgroup == ".all":
         if fedid not in feds:
-            return await edl(
-                event, "__There is no such fedgroup in your database.__"
-            )
+            return await edl(event, "__There is no such fedgroup in your database.__")
         feds[fedid] = []
         add_collection("fedids", feds)
-        await eor(
-            event, f"__Succesfully removed all feds in the category {fedid}__"
-        )
+        await eor(event, f"__Succesfully removed all feds in the category {fedid}__")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -347,20 +354,14 @@ async def quote_search(event):
             )
         return
     if fedgroup not in feds:
-        return await edl(
-            event, "__There is no such fedgroup in your database.__"
-        )
+        return await edl(event, "__There is no such fedgroup in your database.__")
     fed_ids = feds[fedgroup]
     if fedid not in fed_ids:
-        return await edl(
-            event, "__This fed is not part of given fed category.__"
-        )
+        return await edl(event, "__This fed is not part of given fed category.__")
     fed_ids.remove(fedid)
     feds[fedgroup] = fed_ids
     add_collection("fedids", feds)
-    await eor(
-        event, "__The given fed is succesfully removed from fed category.__"
-    )
+    await eor(event, "__The given fed is succesfully removed from fed category.__")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -402,9 +403,7 @@ async def quote_search(event):
             for fid in fedids:
                 output += f"☞ `{fid}`\n"
     else:
-        return await edl(
-            event, "__There is no such fedgroup in your database.__"
-        )
+        return await edl(event, "__There is no such fedgroup in your database.__")
     if output != "" and fedgroup:
         output = (
             f"**The list of feds in the category** `{fedgroup}` **are:**\n" + output
@@ -412,9 +411,7 @@ async def quote_search(event):
     elif output != "":
         output = "**The list of all feds in your database are :**\n" + output
     else:
-        output = (
-            f"__There are no feds in your database try by adding them using {tr}addfed__"
-        )
+        output = f"__There are no feds in your database try by adding them using {tr}addfed__"
     await eor(event, output)
 
 
@@ -442,7 +439,8 @@ async def fetch_fedinfo(event):
             await dogevent.edit(response.text)
         except Exception as e:
             await edl(
-                dogevent, f"**Error while fecthing fedinfo:**\n__{e}__", 
+                dogevent,
+                f"**Error while fecthing fedinfo:**\n__{e}__",
             )
         await conv.mark_read()
         await conv.cancel_all()
@@ -476,7 +474,8 @@ async def fetch_fedinfo(event):
             )
         except Exception as e:
             await edl(
-                dogevent, f"**Error while fecthing fedinfo:**\n__{e}__", 
+                dogevent,
+                f"**Error while fecthing fedinfo:**\n__{e}__",
             )
         await conv.mark_read()
         await conv.cancel_all()
@@ -516,7 +515,8 @@ async def myfeds_fedinfo(event):
             await dogevent.edit(response.text)
         except Exception as e:
             await edl(
-                dogevent, f"**Error while fecthing myfeds:**\n__{e}__", 
+                dogevent,
+                f"**Error while fecthing myfeds:**\n__{e}__",
             )
         await conv.mark_read()
         await conv.cancel_all()
@@ -550,7 +550,9 @@ async def fstat_rose(event):
     replyid = await reply_id(event)
     async with event.client.conversation(rose) as conv:
         try:
-            await fsmessage(event, text=f"/fedstat {user_id} {fedid.strip()}", chat=rose)
+            await fsmessage(
+                event, text=f"/fedstat {user_id} {fedid.strip()}", chat=rose
+            )
             response = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
             if "can only" in response.text:
@@ -575,7 +577,8 @@ async def fstat_rose(event):
             await dogevent.edit(result + response.text)
         except Exception as e:
             await edl(
-                dogevent, f"**Error while fecthing fedstat:**\n__{e}__", 
+                dogevent,
+                f"**Error while fecthing fedstat:**\n__{e}__",
             )
         await conv.mark_read()
         await conv.cancel_all()

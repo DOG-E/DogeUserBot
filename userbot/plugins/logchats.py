@@ -4,7 +4,19 @@ from asyncio import sleep
 from telethon import Button
 
 from ..sql_helper import no_log_pms_sql
-from . import BOTLOG, BOTLOG_CHATID, _format, Config, addgvar, doge, edl, gvarstatus, logging, media_type, tgbot
+from . import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    Config,
+    _format,
+    addgvar,
+    doge,
+    edl,
+    gvarstatus,
+    logging,
+    media_type,
+    tgbot,
+)
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -171,7 +183,9 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
-            await edl(event, "`Logging of messages from this chat has been stopped!`", 5)
+            await edl(
+                event, "`Logging of messages from this chat has been stopped!`", 5
+            )
 
 
 @doge.bot_cmd(
@@ -192,7 +206,6 @@ async def set_pmlog(event):
         return await edl(
             event,
             "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
-            
         )
     input_str = event.pattern_match.group(1)
     if input_str == "off":
@@ -234,7 +247,6 @@ async def set_grplog(event):
         return await edl(
             event,
             "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
-            
         )
     input_str = event.pattern_match.group(1)
     if input_str == "off":

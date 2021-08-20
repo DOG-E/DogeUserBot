@@ -1,4 +1,3 @@
-
 from telethon.password import compute_check
 from telethon.tl.functions.account import GetPasswordRequest
 from telethon.tl.functions.channels import EditCreatorRequest

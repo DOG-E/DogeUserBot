@@ -1,7 +1,8 @@
 from asyncio import create_subprocess_shell
 from asyncio.exceptions import CancelledError
 from asyncio.subprocess import PIPE
-from os import path as osp, remove
+from os import path as osp
+from os import remove
 from sys import executable
 
 from git import Repo
@@ -10,12 +11,21 @@ from heroku3 import from_key
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_APP, UPSTREAM_REPO_URL, Config, delgvar, doge, edl, eor, logging, tr
-
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
     get_collectionlist_items,
+)
+from . import (
+    HEROKU_APP,
+    UPSTREAM_REPO_URL,
+    Config,
+    delgvar,
+    doge,
+    edl,
+    eor,
+    logging,
+    tr,
 )
 
 plugin_category = "bot"
@@ -185,9 +195,7 @@ async def upstream(event):
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await eor(
-            event, "`Set the required vars first to update the bot`"
-        )
+        return await eor(event, "`Set the required vars first to update the bot`")
     try:
         txt = "`Oops.. Updater cannot continue due to "
         txt += "some problems occured`\n\n**LOGTRACE:**\n"

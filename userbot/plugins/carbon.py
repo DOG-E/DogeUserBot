@@ -47,9 +47,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     await dog.edit("`Be Patient...\n50%`")
     download_path = "./"
@@ -126,9 +124,7 @@ async def carbon_api(event):
     chrome_options.add_argument("--disable-gpu")
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     await dog.edit("`Be Patient...\n50%`")
     download_path = "./"
@@ -212,9 +208,7 @@ async def carbon_api(event):
     chrome_options.add_experimental_option("prefs", prefs)
     await dog.edit("🔳🔳🔲🔲🔲")
 
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
@@ -278,9 +272,7 @@ async def carbon_api(event):
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
     await dog.edit("🔘🔘📛📛📛")
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
@@ -346,9 +338,7 @@ async def carbon_api(event):
     chrome_options.add_experimental_option("prefs", prefs)
     await dog.edit("🔵🔵🎛🎛🎛")
 
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
@@ -412,9 +402,7 @@ async def carbon_api(event):
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
     await dog.edit("🌝🌝🌚🌚🌚")
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     download_path = "./"
     driver.command_executor._commands["send_command"] = (
@@ -513,9 +501,7 @@ async def carbon_api(event):
     prefs = {"download.default_directory": "./"}
     chrome_options.add_experimental_option("prefs", prefs)
     await dog.edit("⬛⬛⬜⬜⬜")
-    driver = Chrome(
-        executable_path=Config.CHROME_DRIVER, options=chrome_options
-    )
+    driver = Chrome(executable_path=Config.CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     download_path = "./"
     driver.command_executor._commands["send_command"] = (

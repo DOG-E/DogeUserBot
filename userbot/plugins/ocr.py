@@ -1,14 +1,16 @@
-from os import makedirs, path as osp, remove
+from os import makedirs
+from os import path as osp
+from os import remove
 
 from googletrans import LANGUAGES
 from requests import post
 
 from . import (
-    _dogetools,
     Config,
+    _dogetools,
     convert_toimage,
-    doge,
     deEmojify,
+    doge,
     edl,
     eor,
     getTranslate,
@@ -68,34 +70,58 @@ async def ocr(event):
         makedirs(Config.TEMP_DIR)
     cmd = event.pattern_match.group(1)
     arg = event.pattern_match.group(2)
-    if arg=="ar": arg="ara"
-    elif arg=="bg": arg="bul"
-    elif arg=="cs": arg="cze"
-    elif arg=="da": arg="dan"
-    elif arg=="de": arg="ger"
-    elif arg=="el": arg="gre"
-    elif arg=="en": arg="eng"
-    elif arg=="es": arg="spa"
-    elif arg=="fi": arg="fn"
-    elif arg=="fr": arg="fre"
-    elif arg=="hr": arg="hrv"
-    elif arg=="hu": arg="hun"
-    elif arg=="it": arg="ita"
-    elif arg=="ja": arg="jpn"
-    elif arg=="ko": arg="kor"
-    elif arg=="nl": arg="dut"
-    elif arg=="pl": arg="pol"
-    elif arg=="pt": arg="por"
-    elif arg=="ru": arg="rus"
-    elif arg=="sl": arg="slv"
-    elif arg=="sv": arg="swe"
-    elif arg=="tr": arg="tur"
-    elif arg=="zh-cn" or arg=="cn": arg="chs"
-    elif arg=="zh-tw": arg="cht"
+    if arg == "ar":
+        arg = "ara"
+    elif arg == "bg":
+        arg = "bul"
+    elif arg == "cs":
+        arg = "cze"
+    elif arg == "da":
+        arg = "dan"
+    elif arg == "de":
+        arg = "ger"
+    elif arg == "el":
+        arg = "gre"
+    elif arg == "en":
+        arg = "eng"
+    elif arg == "es":
+        arg = "spa"
+    elif arg == "fi":
+        arg = "fn"
+    elif arg == "fr":
+        arg = "fre"
+    elif arg == "hr":
+        arg = "hrv"
+    elif arg == "hu":
+        arg = "hun"
+    elif arg == "it":
+        arg = "ita"
+    elif arg == "ja":
+        arg = "jpn"
+    elif arg == "ko":
+        arg = "kor"
+    elif arg == "nl":
+        arg = "dut"
+    elif arg == "pl":
+        arg = "pol"
+    elif arg == "pt":
+        arg = "por"
+    elif arg == "ru":
+        arg = "rus"
+    elif arg == "sl":
+        arg = "slv"
+    elif arg == "sv":
+        arg = "swe"
+    elif arg == "tr":
+        arg = "tur"
+    elif arg == "zh-cn" or arg == "cn":
+        arg = "chs"
+    elif arg == "zh-tw":
+        arg = "cht"
     output_file = osp.join(Config.TEMP_DIR, "ocr.jpg")
     try:
         output = await _dogetools.media_to_pic(event, reply)
-        outputt = convert_toimage(output[1], filename= output_file)
+        outputt = convert_toimage(output[1], filename=output_file)
     except AttributeError:
         await dogevent.edit("`Couldn't read it.. you sure this readable !?`")
     test_file = await ocr_space_file(filename=output_file, language=arg)
@@ -105,8 +131,10 @@ async def ocr(event):
         await dogevent.edit("`Couldn't read it.`\n`I guess I need new glasses.`")
     else:
         if cmd == "":
-            await dogevent.edit(f"**Here's what I could read from it:**\n\n`{ParsedText}`")
-        if cmd =="t":
+            await dogevent.edit(
+                f"**Here's what I could read from it:**\n\n`{ParsedText}`"
+            )
+        if cmd == "t":
             TRT_LANG = gvarstatus("TOCR_LANG") or "en"
             try:
                 reply_text = await getTranslate(deEmojify(ParsedText), dest=TRT_LANG)
@@ -115,7 +143,9 @@ async def ocr(event):
             source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
             transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
             tran_text = f"📜**Translate:\nFrom {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}) :**\n\n`{reply_text.text}`"
-            await dogevent.edit(f"🧧 **Here's what I could read from it:**\n\n`{ParsedText}`\n\n{tran_text}")
+            await dogevent.edit(
+                f"🧧 **Here's what I could read from it:**\n\n`{ParsedText}`\n\n{tran_text}"
+            )
     remove(output_file)
 
 

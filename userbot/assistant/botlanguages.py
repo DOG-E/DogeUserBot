@@ -7,10 +7,10 @@ from re import compile
 from telethon import Button
 from telethon.events import CallbackQuery
 
-from . import lngs, doge, get_back_button
 from ..core import check_owner
 from ..core.logger import logging
 from ..sql_helper.globals import addgvar
+from . import doge, get_back_button, lngs
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)

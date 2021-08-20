@@ -6,7 +6,11 @@ for catuserbot
 from asyncio import sleep
 from random import choice
 
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantsAdmins, ChannelParticipantCreator
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    ChannelParticipantsAdmins,
+)
 from telethon.utils import get_display_name
 
 from ..helpers.fonts import emojitag
@@ -110,12 +114,18 @@ async def alltags(event):
 
     async for x in event.client.iter_participants(event.chat_id):
         if not (x.bot or x.deleted):
-            if not isinstance(x.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)):
+            if not isinstance(
+                x.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
+            ):
                 users.append(f" [{get_display_name(x)}](tg://user?id={x.id}) ")
             if isinstance(x.participant, ChannelParticipantAdmin):
-                users.append(f"**👮 Admin: **[{get_display_name(x)}](tg://user?id={x.id}) ")
+                users.append(
+                    f"**👮 Admin: **[{get_display_name(x)}](tg://user?id={x.id}) "
+                )
             if isinstance(x.participant, ChannelParticipantCreator):
-                users.append(f"**🤴 Owner: **[{get_display_name(x)}](tg://user?id={x.id}) ")
+                users.append(
+                    f"**🤴 Owner: **[{get_display_name(x)}](tg://user?id={x.id}) "
+                )
 
     mentions = list(user_list(users, 6))
     for mention in mentions:
@@ -162,7 +172,9 @@ async def etags(event):
 
     async for x in event.client.iter_participants(event.chat_id):
         if not (x.bot or x.deleted):
-            if not isinstance(x.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)):
+            if not isinstance(
+                x.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
+            ):
                 users.append(f" [{choice(emojitag)}](tg://user?id={x.id}) ")
             if isinstance(x.participant, ChannelParticipantAdmin):
                 users.append(f" [{choice(emojitag)}](tg://user?id={x.id}) ")

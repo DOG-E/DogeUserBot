@@ -1,8 +1,8 @@
 # Credits of Plugin @ViperAdnan and @mrconfused(revert)[will add sql soon]
 from html import escape
 
-from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
 from . import (
@@ -21,11 +21,7 @@ from . import (
 plugin_category = "fun"
 
 DEFAULTUSER = str(AUTONAME) if AUTONAME else str(ALIVE_NAME)
-DEFAULTUSERBIO = (
-    str(DEFAULT_BIO)
-    if DEFAULT_BIO
-    else "🐶 @DogeUserBot 🐾"
-)
+DEFAULTUSERBIO = str(DEFAULT_BIO) if DEFAULT_BIO else "🐶 @DogeUserBot 🐾"
 
 
 @doge.bot_cmd(
@@ -90,9 +86,7 @@ async def _(event):
     blank = ""
     bio = f"{DEFAULTUSERBIO}"
     await event.client(
-        DeletePhotosRequest(
-            await event.client.get_profile_photos("me", limit=1)
-        )
+        DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
     )
     await event.client(UpdateProfileRequest(about=bio))
     await event.client(UpdateProfileRequest(first_name=name))

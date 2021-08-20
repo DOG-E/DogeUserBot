@@ -5,8 +5,8 @@ from shutil import rmtree
 from bs4 import BeautifulSoup
 from requests import get, post
 
-from . import doge, edl, eor, lan, logging, reply_id
 from ..helpers.google_image_download import googleimagesdownload
+from . import doge, edl, eor, lan, logging, reply_id
 
 plugin_category = "misc"
 LOGS = logging.getLogger(path.basename(__name__))
@@ -51,15 +51,11 @@ async def noods(event):
     if int(limit) > 10:
         return await edl(event, "`Wallpaper search limit is 1-10`")
     dogevent = await eor(event, "🔍 `Searching...`")
-    r = get(
-        f"https://wall.alphacoders.com/search.php?search={query.replace(' ','+')}"
-    )
+    r = get(f"https://wall.alphacoders.com/search.php?search={query.replace(' ','+')}")
     soup = BeautifulSoup(r.content, "lxml")
     walls = soup.find_all("img", class_="img-responsive")
     if not walls:
-        return await edl(
-            dogevent, f"**Can't find anything with** `{query}`"
-        )
+        return await edl(dogevent, f"**Can't find anything with** `{query}`")
     i = count = 0
     piclist = []
     piclinks = []
@@ -82,9 +78,7 @@ async def noods(event):
             await eor(dogevent, "📥** Downloading...**")
             pic = await wall_download(a, query)
             if pic is None:
-                return await edl(
-                    dogevent, "__Sorry i can't download wallpaper.__"
-                )
+                return await edl(dogevent, "__Sorry i can't download wallpaper.__")
             piclist.append(pic)
             piclinks.append(a)
             captionlist.append("")
@@ -92,9 +86,7 @@ async def noods(event):
             i = 0
         else:
             i += 1
-        await eor(
-            dogevent, f"**📥 Downloaded: {count}/{limit}\n\n❌ Errors: {i}/5**"
-        )
+        await eor(dogevent, f"**📥 Downloaded: {count}/{limit}\n\n❌ Errors: {i}/5**")
         if count == int(limit):
             break
         if i == 5:

@@ -1,12 +1,12 @@
 # copied from https://github.com/tulir/mautrix-telegram/blob/master/mautrix_telegram/util/parallel_file_transfer.py
 # Copyright (C) 2021 Tulir Asokan
-from asyncio import sleep, Task, AbstractEventLoop, gather, Lock
+from asyncio import AbstractEventLoop, Lock, Task, gather, sleep
+from collections import defaultdict
 from hashlib import md5
 from inspect import isawaitable
-from logging import getLogger, Logger
+from logging import Logger, getLogger
 from math import ceil
 from os import path
-from collections import defaultdict
 from typing import (
     AsyncGenerator,
     Awaitable,
@@ -19,10 +19,9 @@ from typing import (
 )
 
 from telethon import TelegramClient
-from telethon.helpers import generate_random_long
-from telethon.utils import get_appropriated_part_size, get_input_location
 from telethon.crypto import AuthKey
 from telethon.errors import FloodWaitError
+from telethon.helpers import generate_random_long
 from telethon.network import MTProtoSender
 from telethon.tl.alltlobjects import LAYER
 from telethon.tl.functions import InvokeWithLayerRequest
@@ -45,6 +44,7 @@ from telethon.tl.types import (
     InputPhotoFileLocation,
     TypeInputFile,
 )
+from telethon.utils import get_appropriated_part_size, get_input_location
 
 try:
     from mautrix.crypto.attachments import async_encrypt_attachment
@@ -334,9 +334,7 @@ class ParallelTransferrer:
         await self._cleanup()
 
 
-parallel_transfer_locks: DefaultDict[int, Lock] = defaultdict(
-    lambda: Lock()
-)
+parallel_transfer_locks: DefaultDict[int, Lock] = defaultdict(lambda: Lock())
 
 
 def stream_file(file_to_stream: BinaryIO, chunk_size=1024):

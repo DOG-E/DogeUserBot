@@ -35,7 +35,7 @@ async def danbooru(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    dogevent=await eor(event, lan("processing"))
+    dogevent = await eor(event, lan("processing"))
     flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
@@ -46,14 +46,13 @@ async def danbooru(event):
         "random": "true",
         "tags": f"Rating:{rating} {search_query}".strip(),
     }
-    with get(
-        "http://danbooru.donmai.us/posts.json", params=params
-    ) as response:
+    with get("http://danbooru.donmai.us/posts.json", params=params) as response:
         if response.status_code == 200:
             response = response.json()
         else:
             return await edl(
-                dogevent, f"**An error occurred, response code: **`{response.status_code}`"
+                dogevent,
+                f"**An error occurred, response code: **`{response.status_code}`",
             )
 
     if not response:

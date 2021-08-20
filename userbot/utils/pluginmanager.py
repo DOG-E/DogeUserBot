@@ -3,7 +3,6 @@ from pathlib import Path
 from sys import modules
 
 from .. import CMD_HELP, LOAD_PLUG
-
 from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
 from ..core.logger import logging

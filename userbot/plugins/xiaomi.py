@@ -59,6 +59,7 @@ async def _(event):
     dogevent = await eor(event, lan("processing"))
     await xiaomeme(event, msg, dogevent)
 
+
 @doge.bot_cmd(
     pattern="fastboot ([\s\S]*)",
     command=("fastboot", plugin_category),

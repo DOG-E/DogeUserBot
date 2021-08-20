@@ -52,9 +52,7 @@ async def s_paste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/v1/documents/"
     try:
-        response = post(
-            siteurl, data={"content": message, "extension": extension}
-        )
+        response = post(siteurl, data={"content": message, "extension": extension})
     except Exception as e:
         return {"error": str(e)}
     if response.ok:

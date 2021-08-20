@@ -1,6 +1,6 @@
 from io import BytesIO
-from random import choice, randint, uniform
 from os import path, remove
+from random import choice, randint, uniform
 from string import hexdigits
 from textwrap import wrap
 
@@ -11,7 +11,12 @@ from PIL.ImageDraw import Draw
 from PIL.ImageEnhance import Brightness, Contrast, Sharpness
 from PIL.ImageFilter import GaussianBlur
 from PIL.ImageFont import load_default, truetype
-from PIL.ImageOps import colorize, crop as IOcrop, expand, flip, grayscale as IOgrayscale, invert, mirror, posterize, solarize as IOsolarize
+from PIL.ImageOps import colorize
+from PIL.ImageOps import crop as IOcrop
+from PIL.ImageOps import expand, flip
+from PIL.ImageOps import grayscale as IOgrayscale
+from PIL.ImageOps import invert, mirror, posterize
+from PIL.ImageOps import solarize as IOsolarize
 from scipy.ndimage import gaussian_gradient_magnitude
 from wordcloud import ImageColorGenerator, WordCloud
 
@@ -274,9 +279,7 @@ async def dogemmfhelper(image_path, dogeinput, CNG_FONTS):
         upper_text = text
         lower_text = ""
     draw = Draw(img)
-    m_font = truetype(
-        CNG_FONTS, int((70 / 640) * i_width)
-    )
+    m_font = truetype(CNG_FONTS, int((70 / 640) * i_width))
     current_h, pad = 10, 5
     if upper_text:
         for u_text in wrap(upper_text, width=15):
@@ -377,9 +380,7 @@ async def dogemmshelper(image_path, dogeinput, CNG_FONTS):
         upper_text = text
         lower_text = ""
     draw = Draw(img)
-    m_font = truetype(
-        CNG_FONTS, int((70 / 640) * i_width)
-    )
+    m_font = truetype(CNG_FONTS, int((70 / 640) * i_width))
     current_h, pad = 10, 5
     if upper_text:
         for u_text in wrap(upper_text, width=15):
@@ -469,7 +470,6 @@ async def dogemmshelper(image_path, dogeinput, CNG_FONTS):
     return pics
 
 
-
 def mediatoarttext(dogemedia, output):
     text = open("userbot/helpers/resources/story.txt", encoding="utf-8").read()
     image_color = array(Image.open(output[1]))
@@ -477,27 +477,27 @@ def mediatoarttext(dogemedia, output):
     image_mask = image_color.copy()
     image_mask[image_mask.sum(axis=2) == 0] = 255
     edges = mean(
-            [
-                gaussian_gradient_magnitude(image_color[:, :, i] / 255.0, 2)
-                for i in range(3)
-            ],
-            axis=0,
+        [
+            gaussian_gradient_magnitude(image_color[:, :, i] / 255.0, 2)
+            for i in range(3)
+        ],
+        axis=0,
     )
     image_mask[edges > 0.08] = 255
     wc = WordCloud(
-            max_words=2000,
-            mask=image_mask,
-            max_font_size=40,
-            random_state=42,
-            relative_scaling=0,
+        max_words=2000,
+        mask=image_mask,
+        max_font_size=40,
+        random_state=42,
+        relative_scaling=0,
     )
     wc.generate(text)
     image_colors = ImageColorGenerator(image_color)
     wc.recolor(color_func=image_colors)
     outputfile = (
-            path.join("./temp", "textart.webp")
-            if dogemedia
-            else path.join("./temp", "textart.jpg")
+        path.join("./temp", "textart.webp")
+        if dogemedia
+        else path.join("./temp", "textart.jpg")
     )
     wc.to_file(outputfile)
     return outputfile

@@ -1,12 +1,16 @@
 from os import makedirs, path, remove, stat
 
 from telethon.errors.rpcerrorlist import UsernameOccupiedError
-from telethon.tl.functions.account import UpdateUsernameRequest, UpdateProfileRequest
+from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
 from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
-from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest, UploadProfilePhotoRequest
+from telethon.tl.functions.photos import (
+    DeletePhotosRequest,
+    GetUserPhotosRequest,
+    UploadProfilePhotoRequest,
+)
 from telethon.tl.types import Channel, Chat, InputPhoto, User
 
-from . import Config, edl, eor, lan, doge, logging
+from . import Config, doge, edl, eor, lan, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -58,9 +62,7 @@ async def _(event):
         first_name, last_name = names.split(";", 1)
     try:
         await event.client(
-            UpdateProfileRequest(
-                first_name=first_name, last_name=last_name
-            )
+            UpdateProfileRequest(first_name=first_name, last_name=last_name)
         )
         await edl(event, "`My name was changed successfully`")
     except Exception as e:

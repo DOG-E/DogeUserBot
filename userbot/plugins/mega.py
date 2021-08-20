@@ -18,7 +18,8 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from asyncio import create_subprocess_shell as asyncSubprocess, sleep
+from asyncio import create_subprocess_shell as asyncSubprocess
+from asyncio import sleep
 from asyncio.subprocess import PIPE as asyncPIPE
 from errno import EEXIST, ENOENT
 from json import JSONDecodeError, loads

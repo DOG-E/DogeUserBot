@@ -1,9 +1,9 @@
 from datetime import datetime
 from inspect import stack as stacck
+from pathlib import Path
 from re import compile, search
 from sys import exc_info
 from traceback import format_exc
-from pathlib import Path
 
 from .. import CMD_LIST, LOAD_PLUG, SUDO_LIST, dogeversion
 from ..Config import Config

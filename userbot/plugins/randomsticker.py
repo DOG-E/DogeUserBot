@@ -70,9 +70,7 @@ async def _(event):
         get_input_document(x)
         for x in (
             await event.client(
-                GetStickerSetRequest(
-                    InputStickerSetShortName("DabOnHaters")
-                )
+                GetStickerSetRequest(InputStickerSetShortName("DabOnHaters"))
             )
         ).documents
         if x.id not in blacklist
@@ -97,9 +95,7 @@ async def handler(event):
         get_input_document(x)
         for x in (
             await event.client(
-                GetStickerSetRequest(
-                    InputStickerSetShortName("supermind")
-                )
+                GetStickerSetRequest(InputStickerSetShortName("supermind"))
             )
         ).documents
         if x.id not in blacklist

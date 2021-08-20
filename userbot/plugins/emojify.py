@@ -3,7 +3,8 @@ Created by @Jisan7509
 modified by  @mrconfused
 Userbot plugin for CatUserbot
 """
-from . import doge, eor, fonts as emojify
+from . import doge, eor
+from . import fonts as emojify
 
 plugin_category = "fun"
 

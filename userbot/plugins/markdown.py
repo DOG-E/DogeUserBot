@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from functools import partial
 from random import choice
-from re import escape, DOTALL, sub
+from re import DOTALL, escape, sub
 
 from telethon.events import StopPropagation
 from telethon.extensions.markdown import DEFAULT_URL_RE

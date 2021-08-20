@@ -6,7 +6,8 @@ from time import time
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
-from jikanpy import AioJikan, Jikan, jikan as jikanpy
+from jikanpy import AioJikan, Jikan
+from jikanpy import jikan as jikanpy
 from requests import get, post
 from telethon.tl.types import DocumentAttributeAnimated
 from telethon.utils import is_video
@@ -248,9 +249,7 @@ def shorten(description, info="anilist.co"):
 async def anilist_user(input_str):
     "Fetch user details from anilist"
     username = {"search": input_str}
-    result = post(
-        anilisturl, json={"query": user_query, "variables": username}
-    ).json()
+    result = post(anilisturl, json={"query": user_query, "variables": username}).json()
     error = result.get("errors")
     if error:
         error_sts = error[0].get("message")
@@ -319,9 +318,9 @@ def getBannerLink(mal, kitsu_search=True, anilistid=0):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    image = post("https://graphql.anilist.co", json=data).json()["data"][
-        "Media"
-    ]["bannerImage"]
+    image = post("https://graphql.anilist.co", json=data).json()["data"]["Media"][
+        "bannerImage"
+    ]
     if image:
         return image
     return getPosterLink(mal)
@@ -462,9 +461,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
 def get_poster(query):
     url_enc_name = query.replace(" ", "+")
     # Searching for query list in imdb
-    page = get(
-        f"https://www.imdb.com/find?ref_=nv_sr_fn&q={url_enc_name}&s=all"
-    )
+    page = get(f"https://www.imdb.com/find?ref_=nv_sr_fn&q={url_enc_name}&s=all")
     soup = BeautifulSoup(page.content, "lxml")
     odds = soup.findAll("tr", "odd")
     # Fetching the first post from search

@@ -8,7 +8,8 @@ from os import path, remove
 from re import findall
 from textwrap import wrap
 
-from PIL.Image import new as Imnew, open as Imopen
+from PIL.Image import new as Imnew
+from PIL.Image import open as Imopen
 from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype
 from requests import get
@@ -17,7 +18,18 @@ from telethon.events import NewMessage
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.utils import get_display_name
 
-from . import doge, edl, eor, convert_tosticker, logging, media_type, process, _dogetools, reply_id, get_warp_length
+from . import (
+    _dogetools,
+    convert_tosticker,
+    doge,
+    edl,
+    eor,
+    get_warp_length,
+    logging,
+    media_type,
+    process,
+    reply_id,
+)
 
 plugin_category = "fun"
 LOGS = logging.getLogger(__name__)
@@ -85,11 +97,7 @@ async def q_pic(event):  # sourcery no-metrics
     if not pfp:
         pfp = "profilepic.jpg"
         with open(pfp, "wb") as f:
-            f.write(
-                get(
-                    "https://telegra.ph/file/1fd74fa4a4dbf1655f3ec.jpg"
-                ).content
-            )
+            f.write(get("https://telegra.ph/file/1fd74fa4a4dbf1655f3ec.jpg").content)
     text = "\n".join(wrap(text, 25))
     text = "“" + text + "„"
     font = truetype(FONT_FILE_TO_USE, 50)
@@ -242,9 +250,7 @@ async def _(event):
     chat = "@QuotLyBot"
     dogevent = await eor(event, "```Making a Quote```")
     async with event.client.conversation(chat) as conv:
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         try:
             if messages_id != []:
                 await event.client.forward_messages(chat, messages_id, event.chat_id)

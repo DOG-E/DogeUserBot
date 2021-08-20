@@ -70,7 +70,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     return (
-        ((str(int(days)) + " "+lan('days')+", ") if days else "")
+        ((str(int(days)) + " " + lan("days") + ", ") if days else "")
         + ((str(int(hours)) + ":") if hours else "00:")
         + ((str(int(minutes)) + ":") if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")
@@ -138,9 +138,7 @@ async def progress(
             status = "Unknown"
         progress_str = "`{0}` | `[{1}{2}] {3}%`".format(
             status,
-            "".join(
-                Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))
-            ),
+            "".join(Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))),
             "".join(
                 Config.UNFINISHED_PROGRESS_STR
                 for i in range(20 - floor(percentage / 5))

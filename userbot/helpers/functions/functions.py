@@ -1,12 +1,13 @@
 from asyncio import sleep
-from os import path
-from zipfile import ZipFile
 from json import loads
+from os import path
 from random import choice
 from textwrap import wrap
 from uuid import uuid4
+from zipfile import ZipFile
 
 from ..utils.extdl import install_pip
+
 try:
     from imdb import IMDb
 except ModuleNotFoundError:
@@ -14,10 +15,10 @@ except ModuleNotFoundError:
     from imdb import IMDb
 
 from googletrans import Translator
-from requests import get
 from PIL import Image, ImageColor, ImageDraw, ImageFont
-from telethon.events import NewMessage
+from requests import get
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.events import NewMessage
 from telethon.tl.functions.contacts import UnblockRequest
 
 from ...Config import Config
@@ -28,7 +29,7 @@ from ...sql_helper.globals import gvarstatus
 LOGS = logging.getLogger(__name__)
 
 
-mcaption=f"**🐶 Doɢᴇ UsᴇʀBoᴛ 🐾\
+mcaption = f"**🐶 Doɢᴇ UsᴇʀBoᴛ 🐾\
     \n\
     \n➥ Uploaded By:** {mention}"
 
@@ -201,16 +202,10 @@ async def fsmessage(event, text, forward=False, chat=None):
     cHat = chat if chat else event.chat_id
     if not forward:
         try:
-            e = await event.client.send_message(
-                cHat,
-                text
-            )
+            e = await event.client.send_message(cHat, text)
         except YouBlockedUserError:
             await event.client(UnblockRequest(cHat))
-            e = await event.client.send_message(
-                cHat,
-                text
-            )
+            e = await event.client.send_message(cHat, text)
     else:
         try:
             e = await event.client.forward_messages(cHat, text)
@@ -225,16 +220,10 @@ async def fsmessage(event, text, forward=False, chat=None):
 async def fsfile(event, file=None, chat=None):
     cHat = chat if chat else event.chat_id
     try:
-        e = await event.send_file(
-            cHat,
-            file
-        )
+        e = await event.send_file(cHat, file)
     except YouBlockedUserError:
         await event.client(UnblockRequest(cHat))
-        e = await event.send_file(
-            cHat,
-            file
-        )
+        e = await event.send_file(cHat, file)
     return e
 
 
@@ -254,7 +243,7 @@ async def clippy(borg, msg, chat_id, reply_to_id):
 
 
 async def mememaker(event, msg, dog, chat_id, reply_to_id):
-    chat="@TheMemeMakerBot"
+    chat = "@TheMemeMakerBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event=event, text=msg, chat=chat)
         pic = await conv.get_response()
@@ -268,13 +257,12 @@ async def mememaker(event, msg, dog, chat_id, reply_to_id):
         await conv.mark_read()
         await conv.cancel_all()
 
+
 async def xiaomeme(event, msg, dogevent):
     chat = "@XiaomiGeeksBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event=event, text=msg, chat=chat)
-        response = conv.wait_event(
-            NewMessage(incoming=True, from_users=chat)
-        )
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         respond = await response
         await dogevent.delete()
         await event.client.forward_messages(event.chat_id, respond.message)
@@ -369,19 +357,19 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
 
 
 # Credit: https://github.com/yusufusta/AsenaUserBot/blob/master/userbot/modules/sozluk.py#L45
-def getSimilarWords(wordx, limit = 5):
+def getSimilarWords(wordx, limit=5):
     similars = []
-    if not path.exists('autocomplete.json'):
-        words = get(f'https://sozluk.gov.tr/autocomplete.json')
-        open('autocomplete.json', 'a+').write(words.text)
+    if not path.exists("autocomplete.json"):
+        words = get(f"https://sozluk.gov.tr/autocomplete.json")
+        open("autocomplete.json", "a+").write(words.text)
         words = words.json()
     else:
-        words = loads(open('autocomplete.json', 'r').read())
+        words = loads(open("autocomplete.json", "r").read())
     for word in words:
-        if word['madde'].startswith(wordx) and not word['madde'] == wordx:
+        if word["madde"].startswith(wordx) and not word["madde"] == wordx:
             if len(similars) > limit:
                 break
-            similars.append(word['madde'])
+            similars.append(word["madde"])
     similarsStr = ""
     for similar in similars:
         if similarsStr != "":

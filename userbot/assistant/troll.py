@@ -17,11 +17,9 @@ async def on_plug_in_callback_query_handler(event):
             userid = message["userid"]
             ids = [userid]
             if event.query.user_id in ids:
-                reply_pop_up_alert = (
-                    "🐶 Doɢᴇ UsᴇʀBoᴛ\
+                reply_pop_up_alert = "🐶 Doɢᴇ UsᴇʀBoᴛ\
                     \n\n🐾 Why were you looking at this,\
                     \ngo and do your own thing."
-                )
             else:
                 encrypted_tcxt = message["text"]
                 reply_pop_up_alert = encrypted_tcxt

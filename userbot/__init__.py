@@ -7,7 +7,6 @@ from .core.logger import logging
 from .core.session import doge
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
-
 __version__ = "0.9"
 __license__ = "GNU Affero General Public License v3.0"
 __author__ = "DogeUserBot <https://github.com/DOG-E/DogeUserBot>"
@@ -55,9 +54,7 @@ elif str(Config.PM_LOGGER_GROUP_ID)[0] != "-":
 
 try:
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:
-        HEROKU_APP = from_key(Config.HEROKU_API_KEY).apps()[
-            Config.HEROKU_APP_NAME
-        ]
+        HEROKU_APP = from_key(Config.HEROKU_API_KEY).apps()[Config.HEROKU_APP_NAME]
     else:
         HEROKU_APP = None
 except Exception:

@@ -5,17 +5,22 @@
 ###### Searching and Downloading Google Images to the local disk ######
 
 from argparse import ArgumentParser
-
-# Import Libraries
-from os import path as ospath, environ, makedirs, stat
 from codecs import open as codecopen
 from datetime import datetime
 from http.client import _MAXHEADERS, BadStatusLine
 from json import dump, load, loads
+
+# Import Libraries
+from os import environ, makedirs
+from os import path as ospath
+from os import stat
 from re import compile
 from ssl import CertificateError
 from sys import exit
-from time import time, sleep  # Importing the time library to check the time of code execution
+from time import (  # Importing the time library to check the time of code execution
+    sleep,
+    time,
+)
 from urllib.parse import quote
 from urllib.request import HTTPError, Request, URLError, urlopen
 

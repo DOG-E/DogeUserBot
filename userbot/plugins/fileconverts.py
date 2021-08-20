@@ -3,8 +3,11 @@ from asyncio import create_subprocess_exec, get_event_loop
 from asyncio.subprocess import PIPE
 from base64 import b64decode
 from datetime import datetime
-from io import BytesIO, open as iopen
-from os import makedirs, path as osp, remove, rename
+from io import BytesIO
+from io import open as iopen
+from os import makedirs
+from os import path as osp
+from os import remove, rename
 from shutil import copyfile
 from time import time
 
@@ -15,17 +18,17 @@ from telethon.errors import PhotoInvalidDimensionsError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.functions.messages import SendMediaRequest
 from telethon.tl.types import (
-    InputMediaUploadedDocument,
     DocumentAttributeVideo,
+    InputMediaUploadedDocument,
     InputMediaUploadedPhoto,
 )
 from telethon.utils import get_attributes
 
 from . import (
+    Config,
     _dogetools,
     _dogeutils,
     _format,
-    Config,
     convert_toimage,
     convert_tosticker,
     doge,
@@ -40,8 +43,8 @@ from . import (
     progress,
     r_frames,
     reply_id,
-    thumb_from_audio,
     spin_frames,
+    thumb_from_audio,
     ud_frames,
     vid_to_gif,
 )
@@ -112,7 +115,7 @@ async def pic_gifcmd(event):  # sourcery no-metrics
             width = track.width
     PATH = osp.join(Config.TEMP_DIR, "round.gif")
     if aspect_ratio != 1:
-        crop_by = min(height,width)
+        crop_by = min(height, width)
         await _dogeutils.runcmd(
             f'ffmpeg -i {final} -vf "crop={crop_by}:{crop_by}" {PATH}'
         )
@@ -217,11 +220,7 @@ async def video_dogfile(event):  # sourcery no-metrics
         if dogthumb is not None and not osp.exists(dogthumb):
             dogthumb = osp.join("./temp", "thumb.jpg")
             copyfile(thumb_loc, dogthumb)
-        if (
-            dogthumb is not None
-            and not osp.exists(dogthumb)
-            and osp.exists(thumb_loc)
-        ):
+        if dogthumb is not None and not osp.exists(dogthumb) and osp.exists(thumb_loc):
             flag = False
             dogthumb = osp.join("./temp", "thumb.jpg")
             copyfile(thumb_loc, dogthumb)

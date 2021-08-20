@@ -1,9 +1,11 @@
 from asyncio import get_event_loop
 from datetime import datetime
 from io import open as iopen
-from os import listdir, path as osp, walk
+from os import listdir
+from os import path as osp
+from os import walk
 from pathlib import Path
-from subprocess import DEVNULL, PIPE, Popen 
+from subprocess import DEVNULL, PIPE, Popen
 from time import time
 
 from hachoir.metadata import extractMetadata
@@ -166,6 +168,4 @@ async def uploadir(event):
         await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
-        await edl(
-            udir_event, f"`Uploaded file {path} successfully in {ms} seconds. `"
-        )
+        await edl(udir_event, f"`Uploaded file {path} successfully in {ms} seconds. `")

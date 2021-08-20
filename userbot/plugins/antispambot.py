@@ -14,6 +14,7 @@ LOGS = logging.getLogger(__name__)
 
 
 if Config.ANTISPAMBOT_BAN:
+
     @doge.on(ChatAction())
     async def anti_spambot(event):  # sourcery no-metrics
         if not event.user_joined and not event.user_added:
@@ -138,10 +139,10 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No CAS Banned users found!"
-    except ChatAdminRequiredError as carerr:
+    except ChatAdminRequiredError:
         await dogevent.edit("`CAS check failed: Admin privileges are required`")
         return
-    except BaseException as be:
+    except BaseException:
         await dogevent.edit("`CAS check failed`")
         return
     await dogevent.edit(text)
@@ -187,10 +188,10 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No spamwatch Banned users found!"
-    except ChatAdminRequiredError as carerr:
+    except ChatAdminRequiredError:
         await dogevent.edit("`spamwatch check failed: Admin privileges are required`")
         return
-    except BaseException as be:
+    except BaseException:
         await dogevent.edit("`spamwatch check failed`")
         return
     await dogevent.edit(text)

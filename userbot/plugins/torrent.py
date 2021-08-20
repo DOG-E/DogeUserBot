@@ -1,11 +1,21 @@
-
 from asyncio import sleep
 from re import findall
 
 from bs4 import BeautifulSoup
 from requests import get
 
-from . import edl, eor, doge, logging, lan, aria2, check_metadata, check_progress_for_dl, subprocess_run, paste_links
+from . import (
+    aria2,
+    check_metadata,
+    check_progress_for_dl,
+    doge,
+    edl,
+    eor,
+    lan,
+    logging,
+    paste_links,
+    subprocess_run,
+)
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -82,7 +92,9 @@ async def torrent_download(event):
     if not torrent_file_path and reply and reply.media:
         torrent_file_path = await reply.download_media()
     if not torrent_file_path:
-        return await edl(event,"__Provide either path of file or reply to .torrent files.__")
+        return await edl(
+            event, "__Provide either path of file or reply to .torrent files.__"
+        )
     try:
         print(torrent_file_path)
         download = aria2.add_torrent(
@@ -114,9 +126,9 @@ async def remove_all(event):
         await sleep(5)
     if not removed:  # If API returns False Try to Remove Through System Call.
         subprocess_run("aria2p remove-all")
-    await eor(event,"`Clearing on-going downloads... `")
+    await eor(event, "`Clearing on-going downloads... `")
     await sleep(2.5)
-    await eor(event,"`Successfully cleared all downloads.`")
+    await eor(event, "`Successfully cleared all downloads.`")
 
 
 @doge.bot_cmd(
@@ -212,9 +224,7 @@ async def tor_search(event):  # sourcery no-metrics
             lim = 10
     except IndexError:
         lim = 10
-    dogevent = await eor(
-        event, f"`Searching torrents for " + search_str + ".....`"
-    )
+    dogevent = await eor(event, f"`Searching torrents for " + search_str + ".....`")
     if " " in search_str:
         search_str = search_str.replace(" ", "+")
         res = get(
@@ -231,7 +241,7 @@ async def tor_search(event):  # sourcery no-metrics
     magnets = []
     titles = []
     counter = 0
-    lim = lim+2
+    lim = lim + 2
     for div in source.find_all("div", {"class": "grey_bar3 back_none"}):
         try:
             title = div.p.a["title"]
@@ -248,9 +258,7 @@ async def tor_search(event):  # sourcery no-metrics
             break
         counter += 1
     if not urls:
-        return await edl(
-            dogevent, "__Either the query was restricted or not found..__"
-        )
+        return await edl(dogevent, "__Either the query was restricted or not found..__")
     for url in urls:
         res = get(url, headers)
         source = BeautifulSoup(res.text, "lxml")

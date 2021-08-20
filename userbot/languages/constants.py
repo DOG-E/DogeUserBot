@@ -1,14 +1,12 @@
 from random import choice
 
-from .languages import lan
 from .. import tr
+from .languages import lan
 
-
-#BASIS:
-STARTINGDOGE=lan('startingdoge')
-STARTUPDOGE=lan('startupdoge')
-STARTEDUPDOGE=(
-    f"\
+# BASIS:
+STARTINGDOGE = lan("startingdoge")
+STARTUPDOGE = lan("startupdoge")
+STARTEDUPDOGE = f"\
     ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n\
     🐶 {lan('wowialive')}\n\
     🐾 {lan('dogeisready')}\n\
@@ -17,7 +15,8 @@ STARTEDUPDOGE=(
     {lan('writedogelc')}\n\
     ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n\
     {lan('visitoursup')}: t.me/DogeSup\n\
-    ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖".format(tr)
+    ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖".format(
+    tr
 )
 
 MONTHS = {
@@ -112,7 +111,6 @@ DEF_KANGS = [
     "👁‍🗨 Why shouldn't I have this nice sticker on my package as well?",
     "👀 Mr.Steal your sticker is stealing this sticker...",
     "🔮 I'm using witchery to kang this sticker...",
-
 ]
 DOGEKANG = f"{str(choice(DEF_KANGS))}"
 

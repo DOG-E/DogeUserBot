@@ -1,12 +1,17 @@
 from asyncio import get_event_loop
 from glob import glob
 from io import open as iopen
-from os import path as osp, remove
+from os import path as osp
+from os import remove
 from pathlib import Path
 from re import search
 from time import time
 
-from telethon.tl.types import DocumentAttributeAudio, DocumentAttributeVideo, InputMediaUploadedDocument
+from telethon.tl.types import (
+    DocumentAttributeAudio,
+    DocumentAttributeVideo,
+    InputMediaUploadedDocument,
+)
 from telethon.utils import get_attributes
 from wget import download
 from youtube_dl import YoutubeDL
@@ -21,8 +26,21 @@ from youtube_dl.utils import (
     XAttrMetadataError,
 )
 
-from . import _format, Config, doge, edl, eor, get_yt_video_id, get_ytthumb, logging, progress, reply_id, _mp3Dl, ytsearch
 from ..core.pool import run_in_thread
+from . import (
+    Config,
+    _format,
+    _mp3Dl,
+    doge,
+    edl,
+    eor,
+    get_yt_video_id,
+    get_ytthumb,
+    logging,
+    progress,
+    reply_id,
+    ytsearch,
+)
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -296,9 +314,7 @@ async def yt_search(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await edl(
-            event, "`Reply to a message or pass a query to search!`"
-        )
+        return await edl(event, "`Reply to a message or pass a query to search!`")
     video_q = await eor(event, "`Searching...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))

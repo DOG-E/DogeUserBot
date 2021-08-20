@@ -1,4 +1,8 @@
-from telethon.tl.functions.channels import CreateChannelRequest, EditPhotoRequest, InviteToChannelRequest
+from telethon.tl.functions.channels import (
+    CreateChannelRequest,
+    EditPhotoRequest,
+    InviteToChannelRequest,
+)
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
 

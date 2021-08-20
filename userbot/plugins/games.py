@@ -61,9 +61,7 @@ async def truth_dare_task(event):
         dogevent = await eor(event, "Getting a random task for you.....")
         taskmode = choice(["truth", "dare"])
     else:
-        dogevent = await eor(
-            event, f"Getting a random {taskmode} task for you....."
-        )
+        dogevent = await eor(event, f"Getting a random {taskmode} task for you.....")
     category = event.pattern_match.group(2)
     category = int(choice(category)) if category else choice([1, 2])
     try:
@@ -132,30 +130,21 @@ async def igame(event):
         for i, item in enumerate(game, start=1)
     )
     if not input_str:
-        await edl(
-            event,
-            f"**Available Game Codes & Names:**\n\n{game_list}",
-            60
-        )
+        await edl(event, f"**Available Game Codes & Names:**\n\n{game_list}", 60)
         return
     if input_str not in game_code:
         dogevent = await eor(event, "`Give me a correct game code...`")
         await sleep(1)
-        await edl(
-            dogevent,
-            f"**Available Game Codes & Names:**\n\n{game_list}",
-            60
-        )
+        await edl(dogevent, f"**Available Game Codes & Names:**\n\n{game_list}", 60)
     else:
         await eor(
             event,
-            f"**Game code `{input_str}` is selected for game:** __{game[input_str]}__"
+            f"**Game code `{input_str}` is selected for game:** __{game[input_str]}__",
         )
         await sleep(1)
         bot = "@inlinegamesbot"
         results = await event.client.inline_query(bot, input_str)
         await results[game_code.index(input_str)].click(
-            event.chat_id,
-            reply_to=reply_to_id
+            event.chat_id, reply_to=reply_to_id
         )
         await event.delete()
