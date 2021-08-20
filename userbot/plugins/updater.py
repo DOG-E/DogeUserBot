@@ -92,10 +92,10 @@ async def pull(event, repo, ups_rem, ac_br):
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
-    xedoc = await event.edit(
+    dogevent = await event.edit(
         "`Successfully Updated!\n" "Bot is restarting... Wait for a minute!`"
     )
-    await event.client.reload(xedoc)
+    await event.client.reload(dogevent)
 
 
 async def push(event, repo, ups_rem, ac_br, txt):
@@ -120,7 +120,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
             f"{txt}\n" "`Invalid Heroku credentials for deploying Doge dyno.`"
         )
         return repo.__del__()
-    xedoc = await event.edit(
+    dogevent = await event.edit(
         "`Doge dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
     )
     try:
@@ -131,7 +131,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [xedoc.chat_id, xedoc.id])
+        add_to_collectionlist("restart_update", [dogevent.chat_id, dogevent.id])
     except Exception as e:
         LOGS.error(e)
     ups_rem.fetch(ac_br)

@@ -105,10 +105,10 @@ async def thisalive(event):
 
 @doge.bot_cmd(incoming=True, from_users=M_STERS, pattern="dlive$", disable_errors=True)
 async def dlive(event):
-    reply_to_id = await reply_id(event)
     user = await get_user_from_event(event)
-    if user.id == event.client.uid:
-        return await edl(event, "Only Doge admins can use, dude!__")
+    if user.id not in M_STERS:
+        return await edl(event, "**Only Doge admins can use, dude!**")
+    reply_to_id = await reply_id(event)
     start = datetime.now()
     ppingx = await event.reply("ㅤ")
     end = datetime.now()
@@ -138,13 +138,14 @@ async def dlive(event):
                 event.chat_id, PIC, caption=caption, reply_to=reply_to_id
             )
             await event.delete()
-            del ppingx
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
             await event.reply(caption)
-            del ppingx
     else:
         await event.reply(caption)
-        del ppingx
+    try:
+        ppingx.delete()
+    except:
+        pass
 
 
 @doge.bot_cmd(

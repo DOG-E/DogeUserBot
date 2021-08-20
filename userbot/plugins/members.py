@@ -75,12 +75,12 @@ async def get_users(event):
         dogevent = await eor(event, "`Processing...`")
     else:
         dogevent = await eor(event, "`Processing...`")
-    xedoc = await get_chatinfo(event)
+    dog = await get_chatinfo(event)
     s = 0
     f = 0
     error = "None"
     await dogevent.edit("**TerminalStatus**\n\n`Collecting Users...`")
-    async for user in event.client.iter_participants(xedoc.full_chat.id):
+    async for user in event.client.iter_participants(dog.full_chat.id):
         try:
             if error.startswith("Too"):
                 return await dogevent.edit(
@@ -122,7 +122,7 @@ async def getmembers(event):
     if not creator:
         return await edl(event, "`I am not owner here!`", 5)
 
-    xedoc = await eor(event, "`Please wait...`")
+    dogevent = await eor(event, "`Please wait...`")
     saint = event.client
     members = await saint.get_participants(channel, aggressive=True)
     with open("members.csv", "w", encoding="UTF-8") as f:
@@ -130,7 +130,7 @@ async def getmembers(event):
         write.writerow(["user_id", "hash"])
         for member in members:
             write.writerow([member.id, member.access_hash])
-    await eor(xedoc, "`Successfully collect data members.`")
+    await eor(dogevent, "`Successfully collect data members.`")
 
 
 @doge.bot_cmd(
@@ -154,7 +154,7 @@ async def addmembers(event):
     if not creator:
         return await edl(event, "`I am not owner here!`", 5)
 
-    xedoc = await eor(event, "`The process of adding members, starting from 0`")
+    dogevent = await eor(event, "`The process of adding members, starting from 0`")
     user_to_add = None
     saint = event.client
     x = []
@@ -168,7 +168,7 @@ async def addmembers(event):
     for i in x:
         y += 1
         if y % 30 == 0:
-            await eor(event, f"`Has reached 30 members, wait until {200/60} min.`")
+            await eor(dogevent, f"`Has reached 30 members, wait until {200/60} min.`")
             await sleep(200)
 
         if user_to_add is None:
@@ -179,7 +179,7 @@ async def addmembers(event):
         try:
             await saint(InviteToChannelRequest(channel=chat, users=[user_to_add]))
             await sleep(randrange(5, 7))
-            await eor(event, f"`Prosess of adding {y} Members...`")
+            await eor(dogevent, f"`Prosess of adding {y} Members...`")
         except TypeError:
             y -= 1
             continue
