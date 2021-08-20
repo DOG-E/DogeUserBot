@@ -1,20 +1,13 @@
-""" Google Text to Speech
-Available Commands:
-.tts LanguageCode as reply to a message
-.tts LangaugeCode | text to speak"""
 
-import os
-import subprocess
+from os import makedirs, path, remove
+from subprocess import STDOUT, CalledProcessError, check_output
 from datetime import datetime
 
 from gtts import gTTS
 
-from userbot import doge
+from . import deEmojify, doge, edl, eor, gvarstatus, reply_id
 
-from ..core.managers import edl, eor
-from . import deEmojify, reply_id
-
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -35,25 +28,25 @@ async def _(event):
     start = datetime.now()
     reply_to_id = await reply_id(event)
     if ";" in input_str:
-        lan, text = input_str.split(";")
+        lng, text = input_str.split(";")
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input_str or "en"
+        lng = input_str or gvarstatus("TTS_LANG") or "en"
     else:
         if not input_str:
             return await eor(event, "Invalid Syntax. Module stopping.")
         text = input_str
-        lan = "en"
+        lng = gvarstatus("TTS_LANG") or "en"
     dogevent = await eor(event, "`Recording......`")
     text = deEmojify(text.strip())
-    lan = lan.strip()
-    if not os.path.isdir("./temp/"):
-        os.makedirs("./temp/")
+    lng = lng.strip()
+    if not path.isdir("./temp/"):
+        makedirs("./temp/")
     required_file_name = "./temp/" + "voice.ogg"
     try:
         # https://github.com/SpEcHiDe/UniBorg/commit/17f8682d5d2df7f3921f50271b5b6722c80f4106
-        tts = gTTS(text, lang=lan)
+        tts = gTTS(text, lang=lng)
         tts.save(required_file_name)
         command_to_execute = [
             "ffmpeg",
@@ -70,14 +63,14 @@ async def _(event):
             required_file_name + ".opus",
         ]
         try:
-            t_response = subprocess.check_output(
-                command_to_execute, stderr=subprocess.STDOUT
+            t_response = check_output(
+                command_to_execute, stderr=STDOUT
             )
-        except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
+        except (CalledProcessError, NameError, FileNotFoundError) as exc:
             await dogevent.edit(str(exc))
             # continue sending required_file_name
         else:
-            os.remove(required_file_name)
+            remove(required_file_name)
             required_file_name = required_file_name + ".opus"
         end = datetime.now()
         ms = (end - start).seconds
@@ -88,10 +81,10 @@ async def _(event):
             allow_cache=False,
             voice_note=True,
         )
-        os.remove(required_file_name)
+        remove(required_file_name)
         await edl(
             dogevent,
             "`Processed text {} into voice in {} seconds!`".format(text[0:20], ms),
         )
     except Exception as e:
-        await eor(dogevent, f"**Error:**\n`{str(e)}`")
+        await eor(dogevent, f"**Error:**\n`{e}`")

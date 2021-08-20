@@ -1,21 +1,19 @@
-#    Copyright (C) 2020  sandeep.n(π.$)
-# baning spmmers plugin for catuserbot by @sandy1709
-# included both cas(combot antispam service) and spamwatch (need to add more feaututres)
-
+# @sandy1709
 from requests import get
 from telethon.errors import ChatAdminRequiredError
 from telethon.events import ChatAction
 from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.utils import get_display_name
 
-from ..Config import Config
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, doge, eor, logging, spamwatch
+from . import BOTLOG, BOTLOG_CHATID, Config, doge, eor, logging, spamwatch
 
-LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
-if Config.ANTISPAMBOT_BAN:
+LOGS = logging.getLogger(__name__)
 
+
+if Config.ANTISPAMBOT_BAN:
     @doge.on(ChatAction())
     async def anti_spambot(event):  # sourcery no-metrics
         if not event.user_joined and not event.user_added:
@@ -96,19 +94,19 @@ if Config.ANTISPAMBOT_BAN:
                 BOTLOG_CHATID,
                 "#ANTISPAMBOT\n"
                 f"**User :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat :** {event.chat.title} (`{event.chat_id}`)\n"
+                f"**Chat :** {get_display_name(await event.get_chat())} (`{event.chat_id}`)\n"
                 f"**Reason :** {hmm.text}",
             )
 
 
 @doge.bot_cmd(
-    pattern="cascheck$",
-    command=("cascheck", plugin_category),
+    pattern="casc$",
+    command=("casc", plugin_category),
     info={
         "header": "To check the users who are banned in cas",
         "description": "When you use this cmd it will check every user in the group where you used whether \
         he is banned in cas (combat antispam service) and will show there names if they are flagged in cas",
-        "usage": "{tr}cascheck",
+        "usage": "{tr}casc",
     },
     groups_only=True,
 )
@@ -140,23 +138,23 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No CAS Banned users found!"
-    except ChatAdminRequiredError:
+    except ChatAdminRequiredError as carerr:
         await dogevent.edit("`CAS check failed: Admin privileges are required`")
         return
-    except BaseException:
+    except BaseException as be:
         await dogevent.edit("`CAS check failed`")
         return
     await dogevent.edit(text)
 
 
 @doge.bot_cmd(
-    pattern="spamcheck$",
-    command=("spamcheck", plugin_category),
+    pattern="spamc$",
+    command=("spamc", plugin_category),
     info={
         "header": "To check the users who are banned in spamwatch",
         "description": "When you use this command it will check every user in the group where you used whether \
         he is banned in spamwatch federation and will show there names if they are banned in spamwatch federation",
-        "usage": "{tr}spamcheck",
+        "usage": "{tr}spamc",
     },
     groups_only=True,
 )
@@ -189,10 +187,10 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No spamwatch Banned users found!"
-    except ChatAdminRequiredError:
+    except ChatAdminRequiredError as carerr:
         await dogevent.edit("`spamwatch check failed: Admin privileges are required`")
         return
-    except BaseException:
+    except BaseException as be:
         await dogevent.edit("`spamwatch check failed`")
         return
     await dogevent.edit(text)
@@ -209,7 +207,5 @@ def banchecker(user_id):
 
 
 def spamchecker(user_id):
-    ban = None
-    if spamwatch:
-        ban = spamwatch.get_ban(user_id)
+    ban = spamwatch.get_ban(user_id) if spamwatch else None
     return bool(ban)

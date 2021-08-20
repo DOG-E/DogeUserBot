@@ -1,8 +1,8 @@
 from asyncio import sleep
 
-from userbot import doge
+from . import doge
 
-plugin_category = "utils"
+plugin_category = "misc"
 
 
 @doge.bot_cmd(

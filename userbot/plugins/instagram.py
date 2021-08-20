@@ -1,15 +1,15 @@
-import os
+from os import remove
 from datetime import datetime
 
-import instaloader
-import requests
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.contacts import UnblockRequest
+from instaloader import Instaloader
+from instaloader.Profile import from_username
+from requests import get
 
-from . import doge, edl, eor, hmention
+from . import doge, edl, eor, fsmessage, hmention
 
 plugin_category = "misc"
-IGU = instaloader.Instaloader()
+
+IGU = Instaloader()
 
 
 @doge.bot_cmd(
@@ -32,28 +32,23 @@ async def kakashi(event):
     else:
         start = datetime.now()
         dogevent = await eor(event, "**Downloading...**")
-    async with doge.conversation(chat) as conv:
-        try:
-            await conv.send_message("/start")
-        except YouBlockedUserError:
-            doge(UnblockRequest(chat))
-            await conv.send_message("/start")
-        await conv.get_response()
-        await conv.send_message(link)
+    async with event.client.conversation(chat) as conv:
+        await fsmessage(event, text=link, chat=chat)
         video = await conv.get_response()
         await conv.get_response()
-        await doge.send_read_acknowledge(conv.chat_id)
         await dogevent.delete()
-        dog = await doge.send_file(
+        dog = await event.client.send_file(
             event.chat_id,
             video,
         )
         end = datetime.now()
         ms = (end - start).seconds
         await dog.edit(
-            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {hmention}</i></b>",
             parse_mode="html",
         )
+        await conv.mark_read()
+        await conv.cancel_all()
 
 
 @doge.bot_cmd(
@@ -62,7 +57,8 @@ async def kakashi(event):
     info={
         "header": "Learn information about the Instagram profile",
         "examples": [
-            "{tr}insta <username>",
+            "{tr}iginfo <username>",
+            "{tr}iginfo <reply username>"
         ],
     },
 )
@@ -78,14 +74,14 @@ async def iginfo(event):
         dogevent = await eor(
             event, "⏳ I bring the information of the desired Instagram profile..."
         )
-        profile = instaloader.Profile.from_username(IGU.context, last)
+        profile = from_username(IGU.context, last)
         pp = profile.get_profile_pic_url()
         name = profile.full_name
         if not name:
-            name = "❗ This user has no name."
+            name = "🚨 This user has no name."
         bio = profile.biography
         if not bio:
-            bio = "❗ This user has no bio."
+            bio = "🚨 This user has no bio."
         follower = profile.followers
         verif = profile.is_verified
         post = profile.mediacount
@@ -94,37 +90,38 @@ async def iginfo(event):
         busacc = profile.is_business_account
         priv = profile.is_private
         user = profile.userid
-        r = requests.get(pp)
+        r = get(pp)
         with open("@DogeUserBot.jpg", "wb") as file:
             file.write(r.content)
         igtv = profile.igtvcount
-        msg = f"""• Iɴsᴛᴀɢʀᴀᴍ Pʀᴏғɪʟᴇ Iɴғᴏʀᴍᴀᴛɪᴏɴ •
+        msg = (
+            f"""**• Iɴsᴛᴀɢʀᴀᴍ Pʀoғɪʟᴇ Iɴғoʀᴍᴀᴛɪoɴ •**
 
         **🔗 Lɪɴᴋ:** [{last}](https://instagr.am/{last})
 
         **🆔 Iᴅ:**   `{user}`
         **👤 Nᴀᴍᴇ:** `{name}`
 
-        **📍 Bɪᴏ:**
-`{bio}`
+        **📍 Bɪo:**
+        `{bio}`
 
-        **🔗 Bɪᴏ Lɪɴᴋ:** {url}
+        **🔗 Bɪo Lɪɴᴋ:** {url}
 
-        **❤️ Fᴏʟʟᴏᴡᴇʀs:**   `{follower}`
-        **👀 Fᴏʟʟᴏᴡᴇs:**    `{follow}`
-        **📸 Pᴏsᴛ:**        `{post}`
-        **📺 IɢTᴠ Pᴏsᴛ:**   `{igtv}`
+        **❤️ Foʟʟoᴡᴇʀs:**  `{follower}`
+        **👀 Foʟʟoᴡᴇs:**   `{follow}`
+        **📸 Posᴛ:**       `{post}`
+        **📺 IɢTᴠ Posᴛ:**  `{igtv}`
 
-        **✅ Vᴇʀɪғɪᴇᴅ ?:**  `{verif}`
-        **💼 Bᴜssɪɴᴇss ?:** `{busacc}`
-        **🔒 Pʀɪᴠᴀᴛᴇ ?:**    `{priv}`
-            """
+        **✅ Vᴇʀɪғɪᴇᴅ?:**  `{verif}`
+        **💼 Bᴜssɪɴᴇss?:** `{busacc}`
+        **🔒 Pʀɪᴠᴀᴛᴇ?:**    `{priv}`"""
+        )
         await dogevent.delete()
         await doge.send_file(event.chat_id, "@DogeUserBot.jpg", caption=msg)
-        os.remove("@DogeUserBot.jpg")
+        remove("@DogeUserBot.jpg")
     except:
         await edl(
             dogevent,
-            f"**⚠️ Error!\n❗ Instagram username `{last}` is incorrect.\n\n💫 Check & try again!**",
-            time=30,
+            f"**🚨 ERROR:\n⛔ Instagram username **`{last}`** is incorrect.\n\n💫 Check & try again!**",
+            15,
         )

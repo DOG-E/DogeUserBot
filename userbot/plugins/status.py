@@ -1,15 +1,12 @@
-import os
-import urllib
+from os import mkdir, path, remove
+from urllib.request import urlretrieve
 
-from telethon.tl import functions
+from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from userbot import doge
+from . import addgvar, doge, edl, eor, gvarstatus
 
-from ..core.managers import edl, eor
-from ..sql_helper.globals import addgvar, gvarstatus
-
-plugin_category = "utils"
-
+plugin_category = "tool"
 
 OFFLINE_TAG = "[OFFLINE]"
 
@@ -30,20 +27,20 @@ async def pussy(event):
         return await edl(event, "**Already in Offline Mode.**")
     await eor(event, "**Changing Profile to Offline...**")
     photo = "./temp/donottouch.jpg"
-    if not os.path.isdir("./temp"):
-        os.mkdir("./temp")
-    urllib.request.urlretrieve(
+    if not path.isdir("./temp"):
+        mkdir("./temp")
+    urlretrieve(
         "https://telegra.ph/file/249f27d5b52a87babcb3f.jpg", photo
     )
     if photo:
         file = await event.client.upload_file(photo)
         try:
-            await event.client(functions.photos.UploadProfilePhotoRequest(file))
+            await event.client(UploadProfilePhotoRequest(file))
         except Exception as e:  # pylint:disable=C0103,W0703
             await eor(event, str(e))
         else:
             await eor(event, "**Changed profile to OffLine.**")
-    os.remove(photo)
+    remove(photo)
     first_name = user.first_name
     addgvar("my_first_name", first_name)
     last_name = user.last_name
@@ -51,7 +48,7 @@ async def pussy(event):
         addgvar("my_last_name", last_name)
     tag_name = OFFLINE_TAG
     await event.client(
-        functions.account.UpdateProfileRequest(
+        UpdateProfileRequest(
             last_name=first_name, first_name=tag_name
         )
     )
@@ -77,7 +74,7 @@ async def dog(event):
         return
     try:
         await event.client(
-            functions.photos.DeletePhotosRequest(
+            DeletePhotosRequest(
                 await event.client.get_profile_photos("me", limit=1)
             )
         )
@@ -88,8 +85,8 @@ async def dog(event):
     first_name = gvarstatus("my_first_name")
     last_name = gvarstatus("my_last_name") or ""
     await event.client(
-        functions.account.UpdateProfileRequest(
+        UpdateProfileRequest(
             last_name=last_name, first_name=first_name
         )
     )
-    await edl(event, f"**`{first_name} {last_name}`\nI am Online !**")
+    await edl(event, f"**`{first_name} {last_name}`\nI am Online!**")

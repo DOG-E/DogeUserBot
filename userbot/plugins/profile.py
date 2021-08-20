@@ -1,21 +1,15 @@
-import os
+from os import makedirs, path, remove, stat
 
 from telethon.errors.rpcerrorlist import UsernameOccupiedError
-from telethon.tl import functions
-from telethon.tl.functions.account import UpdateUsernameRequest
+from telethon.tl.functions.account import UpdateUsernameRequest, UpdateProfileRequest
 from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
-from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
+from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest, UploadProfilePhotoRequest
 from telethon.tl.types import Channel, Chat, InputPhoto, User
 
-from userbot import doge
+from . import Config, edl, eor, lan, doge, logging
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import edl, eor
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-plugin_category = "utils"
-
 
 # ====================== CONSTANT ===============================
 INVALID_MEDIA = "```The extension of the media entity is invalid.```"
@@ -41,10 +35,10 @@ async def _(event):
     "To set bio for this account."
     bio = event.pattern_match.group(1)
     try:
-        await event.client(functions.account.UpdateProfileRequest(about=bio))
+        await event.client(UpdateProfileRequest(about=bio))
         await edl(event, "`Successfully changed my profile bio`")
     except Exception as e:
-        await eor(event, f"**Error:**\n`{str(e)}`")
+        await eor(event, f"**Error:**\n`{e}`")
 
 
 @doge.bot_cmd(
@@ -64,13 +58,13 @@ async def _(event):
         first_name, last_name = names.split(";", 1)
     try:
         await event.client(
-            functions.account.UpdateProfileRequest(
+            UpdateProfileRequest(
                 first_name=first_name, last_name=last_name
             )
         )
         await edl(event, "`My name was changed successfully`")
     except Exception as e:
-        await eor(event, f"**Error:**\n`{str(e)}`")
+        await eor(event, f"**Error:**\n`{e}`")
 
 
 @doge.bot_cmd(
@@ -85,8 +79,8 @@ async def _(event):
     "To set profile pic for this account."
     reply_message = await event.get_reply_message()
     dogevent = await eor(event, "`Downloading Profile Picture to my local ...`")
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if not path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     photo = None
     try:
         photo = await event.client.download_media(
@@ -99,10 +93,10 @@ async def _(event):
             await dogevent.edit("`now, Uploading to Telegram ...`")
             if photo.endswith((".mp4", ".MP4")):
                 # https://t.me/tgbetachat/324694
-                size = os.stat(photo).st_size
+                size = stat(photo).st_size
                 if size > 2097152:
                     await dogevent.edit("`size must be less than 2 mb`")
-                    os.remove(photo)
+                    remove(photo)
                     return
                 dogepic = None
                 dogevideo = await event.client.upload_file(photo)
@@ -111,16 +105,16 @@ async def _(event):
                 dogevideo = None
             try:
                 await event.client(
-                    functions.photos.UploadProfilePhotoRequest(
+                    UploadProfilePhotoRequest(
                         file=dogepic, video=dogevideo, video_start_ts=0.01
                     )
                 )
             except Exception as e:
-                await dogevent.edit(f"**Error:**\n`{str(e)}`")
+                await dogevent.edit(f"**Error:**\n`{e}`")
             else:
                 await eor(dogevent, "`My profile picture was successfully changed`")
     try:
-        os.remove(photo)
+        remove(photo)
     except Exception as e:
         LOGS.info(str(e))
 
@@ -142,7 +136,7 @@ async def update_username(username):
     except UsernameOccupiedError:
         await eor(username, USERNAME_TAKEN)
     except Exception as e:
-        await eor(username, f"**Error:**\n`{str(e)}`")
+        await eor(username, f"**Error:**\n`{e}`")
 
 
 @doge.bot_cmd(
@@ -161,7 +155,7 @@ async def count(event):
     bc = 0
     b = 0
     result = ""
-    dogevent = await eor(event, "`Processing..`")
+    dogevent = await eor(event, lan("processing"))
     dialogs = await event.client.get_dialogs(limit=None, ignore_migrated=True)
     for d in dialogs:
         currrent_entity = d.entity
@@ -194,7 +188,7 @@ async def count(event):
     command=("delpfp", plugin_category),
     info={
         "header": "To delete profile pic for this account.",
-        "description": "If you havent mentioned no of profile pics then only 1 will be deleted.",
+        "description": "If you haven't mentioned no of profile pics then only 1 will be deleted.",
         "usage": ["{tr}delpfp <no of pics to be deleted>", "{tr}delpfp"],
     },
 )

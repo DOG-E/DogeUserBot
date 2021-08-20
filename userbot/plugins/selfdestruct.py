@@ -1,9 +1,8 @@
 from asyncio import sleep
 
-from userbot import doge
-from userbot.core.logger import logging
+from . import doge, logging
 
-plugin_category = "tools"
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
 
@@ -44,7 +43,7 @@ async def selfdestruct(destroy):
     message = dog[1]
     ttl = int(dog[0])
     text = (
-        message + f"\n\n`This message shall be self-destructed in {str(ttl)} seconds`"
+        message + f"\n\n`This message shall be self-destructed in {ttl} seconds`"
     )
     await destroy.delete()
     smsg = await destroy.client.send_message(destroy.chat_id, text)

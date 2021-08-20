@@ -1,11 +1,10 @@
-from telethon.tl import functions
+from telethon.tl.functions.channels import CreateChannelRequest
+from telethon.tl.functions.messages import CreateChatRequest, ExportChatInviteRequest
 
-from .. import doge
-from ..Config import Config
-from ..core.managers import edl, eor
+from . import Config, doge, edl, eor, tr
 from ..utils.tools import create_supergroup
 
-plugin_category = "tools"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -28,14 +27,16 @@ async def _(event):
     type_of_group = event.pattern_match.group(1)
     group_name = event.pattern_match.group(2)
     if type_of_group == "c":
-        descript = "This is a Test Channel created using DogeUserBot"
+        descript = "This is a Test Channel created using DogeUserBot\n\
+            @DogeUserBot"
     else:
-        descript = "This is a Test Group created using DogeUserBot"
+        descript = "This is a Test Group created using DogeUserBot\n\
+            @DogeUserBot"
     if type_of_group == "g":
         try:
             result = await event.client(
-                functions.messages.CreateChatRequest(
-                    users=[Config.TG_BOT_USERNAME],
+                CreateChatRequest(
+                    users=[Config.BOT_USERNAME],
                     # Not enough users (to create a chat, for example)
                     # Telegram, no longer allows creating a chat with ourselves
                     title=group_name,
@@ -43,7 +44,7 @@ async def _(event):
             )
             created_chat_id = result.chats[0].id
             result = await event.client(
-                functions.messages.ExportChatInviteRequest(
+                ExportChatInviteRequest(
                     peer=created_chat_id,
                 )
             )
@@ -55,7 +56,7 @@ async def _(event):
     elif type_of_group == "c":
         try:
             r = await event.client(
-                functions.channels.CreateChannelRequest(
+                CreateChannelRequest(
                     title=group_name,
                     about=descript,
                     megagroup=False,
@@ -63,7 +64,7 @@ async def _(event):
             )
             created_chat_id = r.chats[0].id
             result = await event.client(
-                functions.messages.ExportChatInviteRequest(
+                ExportChatInviteRequest(
                     peer=created_chat_id,
                 )
             )
@@ -72,10 +73,10 @@ async def _(event):
                 f"Channel `{group_name}` created successfully. Join {result.link}",
             )
         except Exception as e:
-            await edl(event, f"**Error:**\n{str(e)}")
+            await edl(event, f"**Error:**\n{e}")
     elif type_of_group == "b":
         answer = await create_supergroup(
-            group_name, event.client, Config.TG_BOT_USERNAME, descript
+            group_name, event.client, Config.BOT_USERNAME, descript
         )
         if answer[0] != "error":
             await eor(
@@ -83,6 +84,6 @@ async def _(event):
                 f"Mega group `{group_name}` created successfully. Join {answer[0].link}",
             )
         else:
-            await edl(event, f"**Error:**\n{str(answer[1])}")
+            await edl(event, f"**Error:**\n{answer[1]}")
     else:
-        await edl(event, "Read `.help create` to know how to use me")
+        await edl(event, f"Read `{tr}doge create` to know how to use me")

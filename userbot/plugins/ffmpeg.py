@@ -1,32 +1,27 @@
 # ported from uniborg by @spechide
-import asyncio
-import io
-import os
-import time
+from asyncio import create_subprocess_exec, get_event_loop
+from asyncio.subprocess import PIPE
+from io import FileIO
+from os import path as osp, remove
+from time import time
 from datetime import datetime
 
-from userbot import doge
+from . import _dogetools, Config, doge, edl, eor, media_type, progress, reply_id, tr
 
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers import _dogetools, media_type, progress, reply_id
+plugin_category = "tool"
 
-plugin_category = "utils"
-
-
-FF_MPEG_DOWN_LOAD_MEDIA_PATH = os.path.join(
+FF_MPEG_DOWN_LOAD_MEDIA_PATH = osp.join(
     Config.TMP_DOWNLOAD_DIRECTORY, "DogeUserBot.media.ffmpeg"
 )
 
+
 # https://github.com/Nekmo/telegram-upload/blob/master/telegram_upload/video.py#L26
-
-
 async def cult_small_video(
     video_file, output_directory, start_time, end_time, out_put_file_name=None
 ):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = out_put_file_name or os.path.join(
-        output_directory, f"{str(round(time.time()))}.mp4"
+    out_put_file_name = out_put_file_name or osp.join(
+        output_directory, f"{round(time())}.mp4"
     )
     file_genertor_command = [
         "ffmpeg",
@@ -42,15 +37,15 @@ async def cult_small_video(
         "-2",
         out_put_file_name,
     ]
-    process = await asyncio.create_subprocess_exec(
+    process = await create_subprocess_exec(
         *file_genertor_command,
         # stdout must a pipe to be accessible as process.stdout
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
+        stdout=PIPE,
+        stderr=PIPE,
     )
     # Wait for the subprocess to finish
     await process.communicate()
-    if os.path.lexists(out_put_file_name):
+    if osp.lexists(out_put_file_name):
         return out_put_file_name
     return None
 
@@ -66,7 +61,7 @@ async def cult_small_video(
 )
 async def ff_mpeg_trim_cmd(event):
     "Saves the media file in bot to trim mutliple times"
-    if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
+    if not osp.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         reply_message = await event.get_reply_message()
         if reply_message:
             start = datetime.now()
@@ -75,18 +70,18 @@ async def ff_mpeg_trim_cmd(event):
                 return await edl(event, "`Only media files are supported`", 5)
             dogevent = await eor(event, "`Saving the file...`")
             try:
-                c_time = time.time()
-                dl = io.FileIO(FF_MPEG_DOWN_LOAD_MEDIA_PATH, "a")
+                c_time = time()
+                dl = FileIO(FF_MPEG_DOWN_LOAD_MEDIA_PATH, "a")
                 await event.client.fast_download_file(
                     location=reply_message.document,
                     out=dl,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                    progress_callback=lambda d, t: get_event_loop().create_task(
                         progress(d, t, dogevent, c_time, "trying to download")
                     ),
                 )
                 dl.close()
             except Exception as e:
-                await dogevent.edit(f"**Error:**\n`{str(e)}`")
+                await dogevent.edit(f"**Error:**\n`{e}`")
             else:
                 end = datetime.now()
                 ms = (end - start).seconds
@@ -98,7 +93,7 @@ async def ff_mpeg_trim_cmd(event):
     else:
         await edl(
             event,
-            f"A media file already exists in path. Please remove the media and try again!\n`.ffmpegclear`",
+            f"A media file already exists in path. Please remove the media and try again!\n`{tr}ffmpegclear`",
         )
 
 
@@ -115,7 +110,7 @@ async def ff_mpeg_trim_cmd(event):
 )
 async def ff_mpeg_trim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as video if it is video"
-    if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
+    if not osp.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edl(
             event,
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
@@ -137,7 +132,7 @@ async def ff_mpeg_trim_cmd(event):
         if o is None:
             return await edl(dogevent, f"**Error : **`Can't complete the process`")
         try:
-            c_time = time.time()
+            c_time = time()
             await event.client.send_file(
                 event.chat_id,
                 o,
@@ -146,21 +141,21 @@ async def ff_mpeg_trim_cmd(event):
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=reply_to_id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
-            os.remove(o)
+            remove(o)
         except Exception as e:
-            return await edl(dogevent, f"**Error : **`{e}`")
+            return await edl(dogevent, f"**Error: **`{e}`")
     elif len(cmt) == 2:
         # output should be image
         cmd, start_time = cmt
         o = await _dogetools.take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
         if o is None:
-            return await edl(dogevent, f"**Error : **`Can't complete the process`")
+            return await edl(dogevent, "**Error: **`Can't complete the process`")
         try:
-            c_time = time.time()
+            c_time = time()
             await event.client.send_file(
                 event.chat_id,
                 o,
@@ -169,11 +164,11 @@ async def ff_mpeg_trim_cmd(event):
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=event.message.id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
-            os.remove(o)
+            remove(o)
         except Exception as e:
             return await edl(dogevent, f"**Error : **`{e}`")
     else:
@@ -196,7 +191,7 @@ async def ff_mpeg_trim_cmd(event):
 )
 async def ff_mpeg_trim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as audio"
-    if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
+    if not osp.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edl(
             event,
             f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
@@ -206,8 +201,8 @@ async def ff_mpeg_trim_cmd(event):
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
-    out_put_file_name = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, f"{str(round(time.time()))}.mp3"
+    out_put_file_name = osp.join(
+        Config.TMP_DOWNLOAD_DIRECTORY, f"{round(time())}.mp3"
     )
     if len(cmt) == 3:
         # output should be audio
@@ -220,9 +215,9 @@ async def ff_mpeg_trim_cmd(event):
             out_put_file_name,
         )
         if o is None:
-            return await edl(dogevent, f"**Error : **`Can't complete the process`")
+            return await edl(dogevent, "**Error: **`Can't complete the process`")
         try:
-            c_time = time.time()
+            c_time = time()
             await event.client.send_file(
                 event.chat_id,
                 o,
@@ -231,13 +226,13 @@ async def ff_mpeg_trim_cmd(event):
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=reply_to_id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, dogevent, c_time, "trying to upload")
                 ),
             )
-            os.remove(o)
+            remove(o)
         except Exception as e:
-            return await edl(dogevent, f"**Error : **`{e}`")
+            return await edl(dogevent, f"**Error: **`{e}`")
     else:
         await edl(dogevent, "RTFM")
         return
@@ -257,10 +252,10 @@ async def ff_mpeg_trim_cmd(event):
 )
 async def ff_mpeg_trim_cmd(event):
     "Deletes the saved media so you can save new one"
-    if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
+    if not osp.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         await edl(event, "`There is no media saved in bot for triming`")
     else:
-        os.remove(FF_MPEG_DOWN_LOAD_MEDIA_PATH)
+        remove(FF_MPEG_DOWN_LOAD_MEDIA_PATH)
         await edl(
             event,
             "`The media saved in bot for triming is deleted now . you can save now new one `",

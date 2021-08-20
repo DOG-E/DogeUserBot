@@ -1,13 +1,13 @@
-import asyncio
-import io
-import os
+from asyncio import create_subprocess_shell
+from asyncio.subprocess import PIPE
+from io import StringIO
+from os import geteuid
+from traceback import format_exc
 import sys
-import traceback
 
-from ..helpers.utils import _format
-from . import *
+from . import BOTLOG, BOTLOG_CHATID, _format, doge, edl, eor
 
-plugin_category = "tools"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -16,7 +16,7 @@ plugin_category = "tools"
     info={
         "header": "To Execute terminal commands in a subprocess.",
         "usage": "{tr}exec <command>",
-        "examples": "{tr}exec dog stringsetup.py",
+        "examples": "{tr}exec doge stringsetup.py",
     },
 )
 async def _(event):
@@ -25,14 +25,14 @@ async def _(event):
     if not cmd:
         return await edl(event, "`What should i execute?..`")
     dogevent = await eor(event, "`Executing.....`")
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    process = await create_subprocess_shell(
+        cmd, stdout=PIPE, stderr=PIPE
     )
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
     doguser = await event.client.get_me()
     curruser = doguser.username or "DogeUserBot"
-    uid = os.geteuid()
+    uid = geteuid()
     if uid == 0:
         cresult = f"```{curruser}:~#``` ```{cmd}```\n```{result}```"
     else:
@@ -41,7 +41,7 @@ async def _(event):
         dogevent,
         text=cresult,
         aslink=True,
-        linktext=f"**•  Exec : **\n```{cmd}``` \n\n**•  Result : **\n",
+        linktext=f"**•  Exec: **\n```{cmd}``` \n\n**•  Result : **\n",
     )
     if BOTLOG:
         await event.client.send_message(
@@ -69,16 +69,16 @@ async def _(event):
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    dogevent = await eor(event, "`Running ...`")
+    dogevent = await eor(event, "`Running...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
-    redirected_output = sys.stdout = io.StringIO()
-    redirected_error = sys.stderr = io.StringIO()
+    redirected_output = sys.stdout = StringIO()
+    redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     try:
         await aexec(cmd, event)
     except Exception:
-        exc = traceback.format_exc()
+        exc = format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -113,7 +113,7 @@ async def aexec(code, smessatatus):
     p = lambda _x: print(_format.yaml_format(_x))
     reply = await event.get_reply_message()
     exec(
-        f"async def __aexec(message, event , reply, client, p, chat): "
+        "async def __aexec(message, event , reply, client, p, chat): "
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](

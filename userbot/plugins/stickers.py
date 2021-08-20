@@ -1,44 +1,33 @@
-import asyncio
-import base64
-import io
-import math
-import random
-import re
-import string
-import urllib.request
+# modified and developed by @mrconfused
+from asyncio import sleep
+from base64 import b64decode
+from io import BytesIO
+from math import floor
 from os import remove
+from random import choice
+from re import findall
+from string import ascii_uppercase, ascii_lowercase
+from urllib.request import Request, urlopen
 
-import cloudscraper
-import emoji as dogemoji
-from bs4 import BeautifulSoup as bs
-from PIL import Image
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl import functions, types
-from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from cloudscraper import create_scraper
+from emoji import UNICODE_EMOJI
+from bs4 import BeautifulSoup
+from PIL.Image import new, open as Imopen
+from telethon.events import NewMessage
+from telethon.tl.functions.messages import GetStickerSetRequest, ImportChatInviteRequest
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
     InputStickerSetID,
+    InputStickerSetShortName,
     MessageMediaPhoto,
 )
 
-from userbot import doge
+from . import DOGEKANG, _dogetools, crop_and_divide, doge, edl, eor, fsmessage, gvarstatus, media_type, tr
 
-from ..core.managers import edl, eor
-from ..helpers.functions import crop_and_divide
-from ..helpers.tools import media_type
-from ..helpers.utils import _dogetools
-from ..sql_helper.globals import gvarstatus
-
-plugin_category = "fun"
-
-# modified and developed by @mrconfused
-
+plugin_category = "misc"
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
-
 EMOJI_SEN = [
     "Можно отправить несколько смайлов в одном сообщении, однако мы рекомендуем использовать не больше одного или двух на каждый стикер.",
     "You can list several emoji in one message, but I recommend using no more than two per sticker",
@@ -46,19 +35,6 @@ EMOJI_SEN = [
     "Você pode listar vários emojis em uma mensagem, mas recomendo não usar mais do que dois por cada sticker.",
     "Puoi elencare diverse emoji in un singolo messaggio, ma ti consiglio di non usarne più di due per sticker.",
     "emoji",
-]
-
-KANGING_STR = [
-    "Using Witchery to kang this sticker...",
-    "Plagiarising hehe...",
-    "Inviting this sticker over to my pack...",
-    "Kanging this sticker...",
-    "Hey that's a nice sticker!\nMind if I kang?!..",
-    "hehe me stel ur stikér\nhehe.",
-    "Ay look over there (☉｡☉)!→\nWhile I kang this...",
-    "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
-    "Imprisoning this sticker...",
-    "Mr.Steal Your Sticker is stealing this sticker... ",
 ]
 
 
@@ -73,25 +49,25 @@ def pack_name(userid, pack, is_anim):
 
 
 def char_is_emoji(character):
-    return character in dogemoji.UNICODE_EMOJI["en"]
+    return character in UNICODE_EMOJI["en"]
 
 
 def pack_nick(username, pack, is_anim):
     if gvarstatus("CUSTOM_STICKER_PACKNAME"):
-        if is_anim:
-            packnick = f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack} (Animated)"
-        else:
-            packnick = f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack}"
+        return (
+            f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} A. {pack}"
+            if is_anim
+            else f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} {pack}"
+        )
     elif is_anim:
-        packnick = f"@{username} Vol.{pack} (Animated)"
+        return f"@DogeUserBot @{username} A. {pack}"
     else:
-        packnick = f"@{username} Vol.{pack}"
-    return packnick
+        return f"@DogeUserBot @{username} {pack}"
 
 
 async def resize_photo(photo):
     """Resize the given photo to 512x512"""
-    image = Image.open(photo)
+    image = Imopen(photo)
     if (image.width and image.height) < 512:
         size1 = image.width
         size2 = image.height
@@ -103,8 +79,8 @@ async def resize_photo(photo):
             scale = 512 / size2
             size1new = size1 * scale
             size2new = 512
-        size1new = math.floor(size1new)
-        size2new = math.floor(size2new)
+        size1new = floor(size1new)
+        size2new = floor(size2new)
         sizenew = (size1new, size2new)
         image = image.resize(sizenew)
     else:
@@ -142,7 +118,7 @@ async def newpacksticker(
     rsp = await conv.get_response()
     if not verify_cond(EMOJI_SEN, rsp.text):
         await dogevent.edit(
-            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**error :**{rsp}"
+            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**Error:**{rsp}"
         )
         return
     await conv.send_message(emoji)
@@ -194,7 +170,7 @@ async def add_to_pack(
         packname = pack_name(userid, pack, is_anim)
         packnick = pack_nick(username, pack, is_anim)
         await dogevent.edit(
-            f"`Switching to Pack {str(pack)} due to insufficient space`"
+            f"`Switching to Pack {pack} due to insufficient space`"
         )
         await conv.send_message(packname)
         x = await conv.get_response()
@@ -222,7 +198,7 @@ async def add_to_pack(
     rsp = await conv.get_response()
     if not verify_cond(EMOJI_SEN, rsp.text):
         await dogevent.edit(
-            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**error :**{rsp}"
+            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**Error:**{rsp}"
         )
         return
     await conv.send_message(emoji)
@@ -237,12 +213,12 @@ async def add_to_pack(
 
 
 @doge.bot_cmd(
-    pattern="kang(?:\s|$)([\s\S]*)",
+    pattern="(kang|d[ıi]zla)(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
         "header": "To kang a sticker.",
         "description": "Kang's the sticker/image to the specified pack and uses the emoji('s) you picked",
-        "usage": "{tr}kang [emoji('s)] [number]",
+        "usage": ["{tr}kang <emoji('s)> <number>", "{tr}dızla <emoji('s)> <number>"],
     },
 )
 async def kang(args):  # sourcery no-metrics
@@ -264,12 +240,12 @@ async def kang(args):  # sourcery no-metrics
     userid = user.id
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
-            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
+            dogevent = await eor(args, DOGEKANG)
+            photo = BytesIO()
             photo = await args.client.download_media(message.photo, photo)
         elif "image" in message.media.document.mime_type.split("/"):
-            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
-            photo = io.BytesIO()
+            dogevent = await eor(args, DOGEKANG)
+            photo = BytesIO()
             await args.client.download_file(message.media.document, photo)
             if (
                 DocumentAttributeFilename(file_name="sticker.webp")
@@ -278,7 +254,7 @@ async def kang(args):  # sourcery no-metrics
                 emoji = message.media.document.attributes[1].alt
                 emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
-            dogevent = await eor(args, f"`{random.choice(KANGING_STR)}`")
+            dogevent = await eor(args, DOGEKANG)
             await args.client.download_file(
                 message.media.document, "AnimatedSticker.tgs"
             )
@@ -298,19 +274,19 @@ async def kang(args):  # sourcery no-metrics
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
-        emoji = emoji if emojibypass else "😂"
+        emoji = emoji if emojibypass else choice(['🐾','😂','🧡','🐕','✨','🤔','😳','😉'])
         pack = 1
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
                 if char_is_emoji(splat[1][0]):
-                    return await dogevent.edit("check `.info stickers`")
+                    return await dogevent.edit(f"check `{tr}doge stickers`")
                 pack = splat[1]  # User sent both
                 emoji = splat[0]
             elif char_is_emoji(splat[1][0]):
                 pack = splat[0]  # User sent both
                 emoji = splat[1]
             else:
-                return await dogevent.edit("check `.info stickers`")
+                return await dogevent.edit(f"check `{tr}doge stickers`")
         elif len(splat) == 1:
             if char_is_emoji(splat[0][0]):
                 emoji = splat[0]
@@ -319,15 +295,15 @@ async def kang(args):  # sourcery no-metrics
         packnick = pack_nick(username, pack, is_anim)
         packname = pack_name(userid, pack, is_anim)
         cmd = "/newpack"
-        stfile = io.BytesIO()
+        stfile = BytesIO()
         if is_anim:
             cmd = "/newanimated"
         else:
             image = await resize_photo(photo)
             stfile.name = "sticker.png"
             image.save(stfile, "PNG")
-        response = urllib.request.urlopen(
-            urllib.request.Request(f"http://t.me/addstickers/{packname}")
+        response = urlopen(
+            Request(f"http://t.me/addstickers/{packname}")
         )
         htmlstr = response.read().decode("utf8").split("\n")
         if (
@@ -352,8 +328,8 @@ async def kang(args):  # sourcery no-metrics
                 dogevent,
                 f"`Sticker kanged successfully!\
                     \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                30,
                 parse_mode="md",
-                time=10,
             )
         else:
             await dogevent.edit("`Brewing a new Pack...`")
@@ -375,26 +351,26 @@ async def kang(args):  # sourcery no-metrics
                     dogevent,
                     f"`Sticker kanged to a Different Pack !\
                     \nAnd Newly created pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                    30,
                     parse_mode="md",
-                    time=10,
                 )
             else:
                 await edl(
                     dogevent,
                     f"`Sticker kanged successfully!\
                     \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                    30,
                     parse_mode="md",
-                    time=10,
                 )
 
 
 @doge.bot_cmd(
-    pattern="pkang(?:\s|$)([\s\S]*)",
+    pattern="(pkang|pd[iı]zla)(?:\s|$)([\s\S]*)",
     command=("pkang", plugin_category),
     info={
         "header": "To kang entire sticker sticker.",
         "description": "Kang's the entire sticker pack of replied sticker to the specified pack",
-        "usage": "{tr}pkang [number]",
+        "usage": ["{tr}pkang <number>", "{tr}pdızla <number>"]
     },
 )
 async def pack_kang(event):  # sourcery no-metrics
@@ -413,7 +389,7 @@ async def pack_kang(event):  # sourcery no-metrics
     is_anim = False
     emoji = None
     reply = await event.get_reply_message()
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
         return await edl(
             event, "`reply to any sticker to send all stickers in that pack`"
@@ -437,12 +413,12 @@ async def pack_kang(event):  # sourcery no-metrics
     except Exception:
         return await edl(
             dogevent,
-            "`I guess this sticker is not part of any pack. So, i cant kang this sticker pack try kang for this sticker`",
+            "`I guess this sticker is not part of any pack. So, i can't kang this sticker pack try kang for this sticker`",
         )
     kangst = 1
     reqd_sticker_set = await event.client(
-        functions.messages.GetStickerSetRequest(
-            stickerset=types.InputStickerSetShortName(
+        GetStickerSetRequest(
+            stickerset=InputStickerSetShortName(
                 short_name=f"{get_stickerset.set.short_name}"
             )
         )
@@ -455,9 +431,9 @@ async def pack_kang(event):  # sourcery no-metrics
         if "image" in message.mime_type.split("/"):
             await eor(
                 dogevent,
-                f"`This sticker pack is kanging now . Status of kang process : {kangst}/{noofst}`",
+                f"`This sticker pack is kanging now . Status of kang process: {kangst}/{noofst}`",
             )
-            photo = io.BytesIO()
+            photo = BytesIO()
             await event.client.download_file(message, photo)
             if (
                 DocumentAttributeFilename(file_name="sticker.webp")
@@ -467,7 +443,7 @@ async def pack_kang(event):  # sourcery no-metrics
         elif "tgsticker" in message.mime_type:
             await eor(
                 dogevent,
-                f"`This sticker pack is kanging now . Status of kang process : {kangst}/{noofst}`",
+                f"`This sticker pack is kanging now . Status of kang process: {kangst}/{noofst}`",
             )
             await event.client.download_file(message, "AnimatedSticker.tgs")
             attributes = message.attributes
@@ -481,7 +457,7 @@ async def pack_kang(event):  # sourcery no-metrics
             return
         if photo:
             splat = ("".join(event.text.split(maxsplit=1)[1:])).split()
-            emoji = emoji or "😂"
+            emoji = emoji or choice(['🐾','😂','🧡','🐕','✨','🤔','😳','😉'])
             if pack is None:
                 pack = 1
                 if len(splat) == 1:
@@ -489,25 +465,25 @@ async def pack_kang(event):  # sourcery no-metrics
                 elif len(splat) > 1:
                     return await edl(
                         dogevent,
-                        "`Sorry the given name cant be used for pack or there is no pack with that name`",
+                        "`Sorry the given name can't be used for pack or there is no pack with that name`",
                     )
             try:
-                dog = Get(dog)
+                dog = ImportChatInviteRequest(dog)
                 await event.client(dog)
             except BaseException:
                 pass
             packnick = pack_nick(username, pack, is_anim)
             packname = pack_name(userid, pack, is_anim)
             cmd = "/newpack"
-            stfile = io.BytesIO()
+            stfile = BytesIO()
             if is_anim:
                 cmd = "/newanimated"
             else:
                 image = await resize_photo(photo)
                 stfile.name = "sticker.png"
                 image.save(stfile, "PNG")
-            response = urllib.request.urlopen(
-                urllib.request.Request(f"http://t.me/addstickers/{packname}")
+            response = urlopen(
+                Request(f"http://t.me/addstickers/{packname}")
             )
             htmlstr = response.read().decode("utf8").split("\n")
             if (
@@ -548,7 +524,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 blablapacks.append(dogpackname)
                 blablapacknames.append(pack)
         kangst += 1
-        await asyncio.sleep(2)
+        await sleep(2)
     result = "`This sticker pack is kanged into the following your sticker pack(s):`\n"
     for i in enumerate(blablapacks):
         result += (
@@ -563,14 +539,14 @@ async def pack_kang(event):  # sourcery no-metrics
     info={
         "header": "To split the replied image and make sticker pack.",
         "flags": {
-            "-e": "to use custom emoji by default ▫️ is emoji.",
+            ".e": "to use custom emoji by default ▫️ is emoji.",
         },
         "usage": [
             "{tr}gridpack <packname>",
-            "{tr}gridpack -e👌 <packname>",
+            "{tr}gridpack .e👌 <packname>",
         ],
         "examples": [
-            "{tr}gridpack -e👌 DogeUserBot",
+            "{tr}gridpack .e👌 DogeUserBot",
         ],
     },
 )
@@ -587,17 +563,17 @@ async def pic2packcmd(event):
         )
     args = event.pattern_match.group(1)
     if not args:
-        return await edl(event, "__What's your packname ?. pass along with cmd.__")
+        return await edl(event, "__What's your packname? Pass along with cmd.__")
     dogevent = await eor(event, "__🔪Cropping and adjusting the image...__")
     try:
-        emoji = (re.findall(r"-e[\U00010000-\U0010ffff]+", args))[0]
+        emoji = (findall(r".e[\U00010000-\U0010ffff]+", args))[0]
         args = args.replace(emoji, "")
-        emoji = emoji.replace("-e", "")
+        emoji = emoji.replace(".e", "")
     except Exception:
         emoji = "▫️"
     chat = "@Stickers"
     name = "DogeUserBot_" + "".join(
-        random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
+        choice(list(ascii_lowercase + ascii_uppercase))
         for _ in range(16)
     )
     image = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
@@ -605,13 +581,13 @@ async def pic2packcmd(event):
         return await edl(
             image[0], "__Unable to extract image from the replied message.__"
         )
-    image = Image.open(image[1])
+    image = Imopen(image[1])
     w, h = image.size
     www = max(w, h)
-    img = Image.new("RGBA", (www, www), (0, 0, 0, 0))
+    img = new("RGBA", (www, www), (0, 0, 0, 0))
     img.paste(image, ((www - w) // 2, 0))
     newimg = img.resize((100, 100))
-    new_img = io.BytesIO()
+    new_img = BytesIO()
     new_img.name = name + ".png"
     images = await crop_and_divide(img)
     newimg.save(new_img)
@@ -619,48 +595,44 @@ async def pic2packcmd(event):
     dogevent = await event.edit("__Making the pack.__")
     async with event.client.conversation(chat) as conv:
         i = 0
-        try:
-            await event.client.send_message(chat, "/cancel")
-            await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-            await event.client.send_message(chat, "/newpack")
-            await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-            await event.client.send_message(chat, args)
-            await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-            for im in images:
-                img = io.BytesIO(im)
-                img.name = name + ".png"
-                img.seek(0)
-                await event.client.send_file(chat, img, force_document=True)
-                await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-                await event.client.send_message(chat, emoji)
-                await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-                await event.client.send_read_acknowledge(conv.chat_id)
-                await asyncio.sleep(1)
-                i += 1
-                await dogevent.edit(
-                    f"__Making the pack.\nProgress: {i}/{len(images)}__"
-                )
-            await event.client.send_message(chat, "/publish")
-            await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-            await event.client.send_file(chat, new_img, force_document=True)
-            await conv.wait_event(events.NewMessage(incoming=True, from_users=chat))
-            await event.client.send_message(chat, name)
-            ending = await conv.wait_event(
-                events.NewMessage(incoming=True, from_users=chat)
-            )
+        await fsmessage(event=event, text="/cancel", chat=chat)
+        await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+        await event.client.send_message(chat, "/newpack")
+        await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+        await event.client.send_message(chat, args)
+        await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+        for im in images:
+            img = BytesIO(im)
+            img.name = name + ".png"
+            img.seek(0)
+            await event.client.send_file(chat, img, force_document=True)
+            await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+            await event.client.send_message(chat, emoji)
+            await conv.wait_event(NewMessage(incoming=True, from_users=chat))
             await event.client.send_read_acknowledge(conv.chat_id)
-            for packname in ending.raw_text.split():
-                stick_pack_name = packname
-                if packname.startswith("https://t.me/"):
-                    break
+            await sleep(1)
+            i += 1
             await dogevent.edit(
-                f"__Successfully created the pack for the replied media : __[{args}]({stick_pack_name})"
+                f"__Making the pack.\nProgress: {i}/{len(images)}__"
             )
-
-        except YouBlockedUserError:
-            await dogevent.edit(
-                "__You blocked @Stickers bot. unblock it and try again__"
-            )
+        await event.client.send_message(chat, "/publish")
+        await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+        await event.client.send_file(chat, new_img, force_document=True)
+        await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+        await event.client.send_message(chat, name)
+        ending = await conv.wait_event(
+            NewMessage(incoming=True, from_users=chat)
+        )
+        await event.client.send_read_acknowledge(conv.chat_id)
+        for packname in ending.raw_text.split():
+            stick_pack_name = packname
+            if stick_pack_name.startswith("https://t.me/"):
+                break
+        await dogevent.edit(
+            f"__Successfully created the pack for the replied media: __[{args}]({stick_pack_name})"
+        )
+        await conv.mark_read()
+        await conv.cancel_all()
 
 
 @doge.bot_cmd(
@@ -726,13 +698,13 @@ async def cb_sticker(event):
     if not split:
         return await edl(event, "`Provide some name to search for pack.`", 5)
     dogevent = await eor(event, "`Searching sticker packs....`")
-    scraper = cloudscraper.create_scraper()
+    scraper = create_scraper()
     text = scraper.get(combot_stickers_url + split).text
-    soup = bs(text, "lxml")
+    soup = BeautifulSoup(text, "lxml")
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
-        return await edl(dogevent, "`No results found :(.`", 5)
-    reply = f"**Sticker packs found for {split} are :**"
+        return await edl(dogevent, "`No results found:(.`", 5)
+    reply = f"**Sticker packs found for {split} are:**"
     for pack in results:
         if pack.button:
             packtitle = (pack.find("div", "sticker-pack__title")).get_text()

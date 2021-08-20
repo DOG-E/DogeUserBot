@@ -4,17 +4,13 @@ Plugin for CatUserbot
 #credit @GulfysHalfyyyy
 """
 
-import asyncio
+from asyncio import sleep
 
-from ..core.managers import eor
-from . import doge, mention
+from . import doge, mention, eor
 
-plugin_category = "fun"
+plugin_category = "hub"
 
-
-# ==================================================================
-
-C = (
+FUCCK = (
     "\n......................................../´¯/) "
     "\n......................................,/¯../ "
     "\n...................................../..../ "
@@ -42,8 +38,7 @@ C = (
     "\n..............\.............\..."
 )
 
-
-GAMBAR_TITIT = """
+DICCK = """
 🍆🍆
 🍆🍆🍆
   🍆🍆🍆
@@ -60,14 +55,12 @@ GAMBAR_TITIT = """
     🍆🍆       🍆🍆
 """
 
-# =======================================================
-
 
 @doge.bot_cmd(
     pattern="muth$",
     command=("muth", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}muth",
     },
 )
@@ -89,7 +82,7 @@ async def kakashi(bsdk):
         "8=✊️==D💦💦💦",
     ]
     for i in animation_ttl:
-        await asyncio.sleep(animation_interval)
+        await sleep(animation_interval)
         await bsdk.edit(animation_chars[i % 10])
 
 
@@ -97,7 +90,7 @@ async def kakashi(bsdk):
     pattern="ohnoo$",
     command=("ohnoo", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}ohnoo",
     },
 )
@@ -120,7 +113,7 @@ async def kakashi(bsdk):
         "__**Love u babe**__\n\n 😍\n  |\  \n  |  \   \n 8=👊-D\n  |   \         \n 👟 👟       🤤",
     ]
     for i in animation_ttl:
-        await asyncio.sleep(animation_interval)
+        await sleep(animation_interval)
         await bsdk.edit(animation_chars[i % 11])
 
 
@@ -128,7 +121,7 @@ async def kakashi(bsdk):
     pattern="lovestory$",
     command=("lovestory", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}lovestory",
     },
 )
@@ -155,7 +148,7 @@ async def kakashi(event):
     ]
 
     for i in animation_ttl:
-        await asyncio.sleep(animation_interval)
+        await sleep(animation_interval)
         await event.edit(animation_chars[i % 14])
 
 
@@ -163,7 +156,7 @@ async def kakashi(event):
     pattern="ohhyaah$",
     command=("ohhyaah", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}ohhyaah",
     },
 )
@@ -195,7 +188,7 @@ async def kakashi(baby):
     pattern="foff$",
     command=("foff", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}foff",
     },
 )
@@ -203,7 +196,7 @@ async def kakashi(fooku):
     "Bad stuff"
     await eor(
         fooku,
-        ".                       /¯ )\n"
+        "ㅤ                      /¯ )\n"
         "                      /¯  /\n"
         "                    /    /\n"
         "              /´¯/'   '/´¯¯`•¸\n"
@@ -212,11 +205,11 @@ async def kakashi(fooku):
         "         \                        /\n"
         "          \                _.•´\n"
         "            \              (\n"
-        "              \  \n"
+        "              \ \n"
         "Roses are RED\n"
         "Violets are BLUE\n"
         "This is my middle finger\n"
-        "It just for U🖕😂\n",
+        "It just for U 🖕😂\n",
     )
 
 
@@ -224,20 +217,20 @@ async def kakashi(fooku):
     pattern="mf$",
     command=("mf", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}mf",
     },
 )
 async def kakashi(mf):
     "Bad stuff"
-    await eor(mf, C)
+    await eor(mf, FUCCK)
 
 
 @doge.bot_cmd(
     pattern="sporn$",
     command=("sporn", plugin_category),
     info={
-        "header": "bad animation, try yourself ",
+        "header": "bad animation, try yourself",
         "usage": "{tr}sporn",
     },
 )
@@ -273,43 +266,10 @@ async def kakashi(pornhub):
 
 
 @doge.bot_cmd(
-    pattern="spika$",
-    command=("spika", plugin_category),
-    info={
-        "header": "bad art, try yourself ",
-        "usage": "{tr}spika",
-    },
-)
-async def kakashi(pikachu):
-    "Bad stuff"
-    await eor(
-        pikachu,
-        "⢀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⣠⣤⣶⣶\n"
-        "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⢰⣿⣿⣿⣿\n"
-        "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣀⣀⣾⣿⣿⣿⣿\n"
-        "⣿⡏⠉⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
-        "⣿⣿⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿\n"
-        "⣿⣿⣧⡀⠀⠀⠀⠀⠙⠿⠿⠻⠿⠟⠿⠛⠉⠀⠀⠀⠀⠀⣸⣿\n"
-        "⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿\n"
-        "⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿\n"
-        "⣿⣿⣿⣿⡟⠀⠀⢰⣹⡆⠀⠀⠀⠀⠀⠀⣭⣷⠀⠀⠸⣿⣿⣿\n"
-        "⣿⣿⣿⣿⠃⠀⠀⠈⠉⠀⠀⠀⠤⠄⠀⠀⠉⠁⠀⠀⠀⢿⣿⣿\n"
-        "⣿⣿⣿⣿⠀⢾⣿⣷⠀⠀⠀⠀⡠⠤⢄⠀⠀⠠⣿⣿⣷⠀⣿⣿\n"
-        "⣿⣿⣿⣿⡀⠀⠉⠀⠀⠀⠀⠀⢄⠀⢀⠀⠀⠀⠉⠉⠁⠀⣿⣿\n"
-        "⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿\n"
-        "⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿\n"
-        "⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿\n"
-        "⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿\n"
-        "⣿⣿⣿⣿⣿⣿🅼🅰️ 🅺🅸 🅲🅷🆄⢸⣿⣿⣿⣿⣿⣿\n"
-        "🅿️🅸🅺🅰️ 🅿️🅸🅺🅰️ 🅿️🅸🅺🅰️🅲🅷🆄\n",
-    )
-
-
-@doge.bot_cmd(
     pattern="sxx$",
     command=("sxx", plugin_category),
     info={
-        "header": "bad art, try yourself ",
+        "header": "bad art, try yourself",
         "usage": "{tr}sxx",
     },
 )
@@ -362,7 +322,7 @@ async def kakashi(saxy):
     pattern="sdick ([\s\S]*)",
     command=("sdick", plugin_category),
     info={
-        "header": "bad art, try yourself ",
+        "header": "bad art, try yourself",
         "usage": "{tr}sdick <text>",
     },
 )
@@ -396,14 +356,14 @@ async def kakashi(dicksay):
     pattern=r"^\.(?:penis|dick)\s?(.)?",
     command=("penis|dick", plugin_category),
     info={
-        "header": "bad art, try yourself ",
+        "header": "bad art, try yourself",
         "usage": "{tr}penis",
     },
 )
 async def kakashi(e):
     "Bad stuff"
     emoji = e.pattern_match.group(1)
-    titid = GAMBAR_TITIT
+    titid = DICCK
     if emoji:
         titid = titid.replace("🍆", emoji)
     await e.edit(titid)

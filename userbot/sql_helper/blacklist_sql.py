@@ -1,4 +1,4 @@
-import threading
+from threading import RLock
 
 from sqlalchemy import Column, String, UnicodeText, distinct, func
 
@@ -27,7 +27,7 @@ class BlackListFilters(BASE):
 
 BlackListFilters.__table__.create(checkfirst=True)
 
-BLACKLIST_FILTER_INSERTION_LOCK = threading.RLock()
+BLACKLIST_FILTER_INSERTION_LOCK = RLock()
 
 
 class BLACKLIST_SQL:

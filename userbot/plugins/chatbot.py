@@ -1,11 +1,8 @@
-import random
+from random import choice
 
 from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers import get_user_from_event, rs_client
+from . import doge, edl, eor, get_user_from_event, gvarstatus, logging, rs_client
 from ..sql_helper.chatbot_sql import (
     addai,
     get_all_users,
@@ -15,9 +12,9 @@ from ..sql_helper.chatbot_sql import (
     remove_all_users,
     remove_users,
 )
-from ..sql_helper.globals import gvarstatus
 
 plugin_category = "fun"
+LOGS = logging.getLogger(__name__)
 
 tired_response = [
     "I am little tired, Please give me some rest",
@@ -53,7 +50,7 @@ async def add_chatbot(event):
         chat_name = user.first_name
         chat_type = "Personal"
     else:
-        chat_name = event.chat.title
+        chat_name = get_display_name(await event.get_chat())
         chat_type = "Group"
     user_name = user.first_name
     user_username = user.username
@@ -62,7 +59,7 @@ async def add_chatbot(event):
     try:
         addai(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edl(dogevent, f"**Error:**\n`{str(e)}`")
+        await edl(dogevent, f"**Error:**\n`{e}`")
     else:
         await eor(dogevent, "Hi")
 
@@ -86,7 +83,7 @@ async def remove_chatbot(event):
         try:
             remove_ai(chat_id, user_id)
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`")
+            await edl(event, f"**Error:**\n`{e}`")
         else:
             await eor(event, "Ai has been stopped for the user")
     else:
@@ -113,24 +110,24 @@ async def delete_chatbot(event):
         lecho = get_all_users()
         if len(lecho) == 0:
             return await edl(
-                event, "You havent enabled ai atleast for one user in any chat."
+                event, "You haven't enabled ai atleast for one user in any chat."
             )
         try:
             remove_all_users()
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{str(e)}`")
         else:
             await eor(event, "Deleted ai for all enabled users in all chats.")
     else:
         lecho = get_users(event.chat_id)
         if len(lecho) == 0:
             return await edl(
-                event, "You havent enabled ai atleast for one user in this chat."
+                event, "You haven't enabled ai atleast for one user in this chat."
             )
         try:
             remove_users(event.chat_id)
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{e}`")
         else:
             await eor(event, "Deleted ai for all enabled users in this chat")
 
@@ -191,7 +188,7 @@ async def list_chatbot(event):  # sourcery no-metrics
                 private_chats += (
                     f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
                 )
-        output_str = f"**Ai enabled users in this chat are:**\n" + private_chats
+        output_str = "**Ai enabled users in this chat are:**\n" + private_chats
     await eor(event, output_str)
 
 
@@ -212,4 +209,4 @@ async def ai_reply(event):
             await event.reply(response.message)
         except Exception as e:
             LOGS.error(str(e))
-            await event.reply(random.choice(tired_response))
+            await event.reply(choice(tired_response))

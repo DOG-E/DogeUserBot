@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import sleep
 
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
@@ -8,8 +8,8 @@ from ..utils import is_admin
 from . import doge, eor
 
 plugin_category = "admin"
-CHAT_FLOOD = sql.__load_flood_settings()
 
+CHAT_FLOOD = sql.__load_flood_settings()
 ANTI_FLOOD_WARN_MODE = ChatBannedRights(
     until_date=None, view_messages=None, send_messages=True
 )
@@ -36,14 +36,14 @@ async def _(event):
     except Exception as e:
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
-            message=f"""**Automatic AntiFlooder**
-@admin [User](tg://user?id={event.message.sender_id}) is flooding this chat.
-`{str(e)}`""",
+            message=f"**Automatic AntiFlooder**\
+                \n@admin [User](tg://user?id={event.message.sender_id}) is flooding this chat.\
+                \n`{e}`",
             reply_to=event.message.id,
         )
-        await asyncio.sleep(4)
+        await sleep(4)
         await no_admin_privilege_message.edit(
-            "This is useless SPAM dude. Stop this, enjoy the chat buddy "
+            "This is odd SPAM dude. Stop this, enjoy the chat buddy "
         )
     else:
         await event.client.send_message(
@@ -74,7 +74,7 @@ async def _(event):
     "To setup antiflood in a group to prevent spam"
     input_str = event.pattern_match.group(1)
     event = await eor(event, "`updating flood settings!`")
-    await asyncio.sleep(2)
+    await sleep(2)
     try:
         sql.set_flood(event.chat_id, input_str)
         sql.__load_flood_settings()

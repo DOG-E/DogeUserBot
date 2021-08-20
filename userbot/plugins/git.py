@@ -1,23 +1,17 @@
-import os
+from os import getcwd, makedirs, path as osp, remove
 from datetime import datetime
 
-import aiohttp
-import requests
+from aiohttp import ClientSession
+from requests import get
 from github import Github
 from pySmartDL import SmartDL
 
-from userbot import doge
+from . import Config, doge, edl, eor, lan, logging, reply_id
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers.utils import reply_id
-from . import reply_id
+plugin_category = "tool"
+LOGS = logging.getLogger(osp.basename(__name__))
 
-LOGS = logging.getLogger(os.path.basename(__name__))
-ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
-plugin_category = "misc"
-
+ppath = osp.join(getcwd(), "temp", "githubuser.jpg")
 GIT_TEMP_DIR = "./temp/"
 
 
@@ -40,13 +34,13 @@ async def source(e):
 
 
 @doge.bot_cmd(
-    pattern="github( -l(\d+))? ([\s\S]*)",
+    pattern="github( .l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
         "header": "Shows the information about an user on GitHub of given username",
-        "flags": {"-l": "repo limit : default to 5"},
+        "flags": {".l": "repo limit : default to 5"},
         "usage": ".github [flag] [username]",
-        "examples": [".github teledoge", ".github -l5 teledoge"],
+        "examples": [".github teledoge", ".github .l5 mutlcc"],
     },
 )
 async def _(event):
@@ -54,17 +48,18 @@ async def _(event):
     reply_to = await reply_id(event)
     username = event.pattern_match.group(3)
     URL = f"https://api.github.com/users/{username}"
-    async with aiohttp.ClientSession() as session:
+    async with ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
                 return await edl(event, "`" + username + " not found`")
-            dogevent = await eor(event, "`fetching github info ...`")
+
+            dogevent = await eor(event, "`fetching github info...`")
             result = await request.json()
             photo = result["avatar_url"]
             if result["bio"]:
                 result["bio"] = result["bio"].strip()
             repos = []
-            sec_res = requests.get(result["repos_url"])
+            sec_res = get(result["repos_url"])
             if sec_res.status_code == 200:
                 limit = event.pattern_match.group(2)
                 limit = 5 if not limit else int(limit)
@@ -77,20 +72,19 @@ async def _(event):
                 \n👤 **Name:** [{name}]({html_url})\
                 \n🔧 **Type:** `{type}`\
                 \n🏢 **Company:** `{company}`\
-                \n🔭 **Blog** : {blog}\
-                \n📍 **Location** : `{location}`\
-                \n📝 **Bio** : __{bio}__\
-                \n❤️ **Followers** : `{followers}`\
-                \n👁 **Following** : `{following}`\
-                \n📊 **Public Repos** : `{public_repos}`\
-                \n📄 **Public Gists** : `{public_gists}`\
-                \n🔗 **Profile Created** : `{created_at}`\
-                \n✏️ **Profile Updated** : `{updated_at}`".format(
+                \n🔭 **Blog:** {blog}\
+                \n📍 **Location:** `{location}`\
+                \n📝 **Bio:** __{bio}__\
+                \n❤️ **Followers:** `{followers}`\
+                \n👁 **Following:** `{following}`\
+                \n📊 **Public Repos:** `{public_repos}`\
+                \n📄 **Public Gists:** `{public_gists}`\
+                \n🔗 **Profile Created:** `{created_at}`\
+                \n✏️ **Profile Updated:** `{updated_at}`".format(
                 username=username, **result
             )
-
             if repos:
-                REPLY += "\n🔍 **Some Repos** : " + " | ".join(repos)
+                REPLY += "\n🔍 **Some Repos:** " + " | ".join(repos)
             downloader = SmartDL(photo, ppath, progress_bar=False)
             downloader.start(blocking=False)
             while not downloader.isFinished():
@@ -101,7 +95,7 @@ async def _(event):
                 caption=REPLY,
                 reply_to=reply_to,
             )
-            os.remove(ppath)
+            remove(ppath)
             await dogevent.delete()
 
 
@@ -120,15 +114,22 @@ async def download(event):
     "To commit the replied plugin to github."
     if Config.GITHUB_ACCESS_TOKEN is None:
         return await edl(event, "`Please ADD Proper Access Token from github.com`", 5)
+
     if Config.GIT_REPO_NAME is None:
         return await edl(
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5
         )
-    mone = await eor(event, "`Processing ...`")
-    if not os.path.isdir(GIT_TEMP_DIR):
-        os.makedirs(GIT_TEMP_DIR)
+
+    mone = await eor(event, lan("processing"))
+    if not osp.isdir(GIT_TEMP_DIR):
+        makedirs(GIT_TEMP_DIR)
     start = datetime.now()
     reply_message = await event.get_reply_message()
+    if not reply_message or not reply_message.media:
+        return await edl(
+            event, "__Reply to a file which you want to commit in your github.__"
+        )
+
     try:
         downloaded_file_name = await event.client.download_media(reply_message.media)
     except Exception as e:
@@ -160,6 +161,7 @@ async def git_commit(file_name, mone):
         create_file = True
         if i == 'ContentFile(path="' + file_name + '")':
             return await mone.edit("`File Already Exists`")
+
     if create_file:
         file_name = "userbot/plugins/" + file_name
         LOGS.info(file_name)

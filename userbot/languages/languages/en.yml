@@ -1,0 +1,59 @@
+name: English
+natively: 🇬🇧 English
+
+authors:
+  - mutlcc
+  - teledoge
+
+
+# BASIS;
+startingdoge: STARTING DOGE USERBOT
+startupdoge: STARTUP COMPLETED
+wowialive: wow Doge is alive!
+dogeisready: Doge UserBot is ready to use.
+writealivetc: Write {}alive to check.
+writedogelc: Learn the commands by writing {}doge
+visitoursup: Visit our Telegram group for help
+
+processing: "**⏳ Processing...**"
+
+# times;
+seconds: "second(s)"
+minutes: "minute(s)"
+hours: "hour(s)"
+days: "day(s)"
+
+# months;
+jan: "January"
+feb: "February"
+mar: "March"
+apr: "April"
+may: "May"
+jun: "June"
+jul: "July"
+aug: "August"
+sep: "September"
+oct: "October"
+nov: "November"
+dec: "December"
+
+
+# ADMIN;
+noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+
+
+# FILTERS;
+fmsgtext: "**⛔ FILTER USE NOT ALLOWED HERE!**\n\
+  🎈 You can use filters in the @SohbetDoge group."
+
+
+# OTHERS;
+cmsgtext: "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\
+  \n\n\
+  💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+mmsgtext: "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\
+  \n\n\
+  💨 BECAUSE I WAS TRYING TO GET MEMBERS HERE.**"
+pmsgtext: "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\
+  \n\n\
+  💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**"

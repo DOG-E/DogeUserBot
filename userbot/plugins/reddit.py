@@ -5,20 +5,14 @@
 # All rights reserved.
 
 
-import requests
+from requests import get
 
-from userbot import doge
+from . import BOTLOG, BOTLOG_CHATID, _dogeutils, age_verification, doge, edl, logging, reply_id 
 
-from ..core.logger import logging
-from ..core.managers import edl
-from ..helpers.functions import age_verification
-from ..helpers.utils import _dogeutils, reply_id
-from . import BOTLOG, BOTLOG_CHATID
-
+plugin_category = "fun"
 LOGS = logging.getLogger(__name__)
-API = "https://meme-api.herokuapp.com/gimme"
 
-plugin_category = "misc"
+API = "https://meme-api.herokuapp.com/gimme"
 
 
 @doge.bot_cmd(
@@ -36,10 +30,11 @@ async def reddit_fetch(event):
     sub_r = event.pattern_match.group(1)
     subreddit_api = f"{API}/{sub_r}" if sub_r else API
     try:
-        cn = requests.get(subreddit_api)
+        cn = get(subreddit_api)
         r = cn.json()
     except ValueError:
         return await edl(event, "Value error!.")
+
     if "code" in r:
         if BOTLOG:
             code = r["code"]
@@ -54,6 +49,7 @@ async def reddit_fetch(event):
                 event,
                 "Coudn't Find a post with Image, Please Try Again",
             )
+
         postlink = r["postLink"]
         subreddit = r["subreddit"]
         title = r["title"]
@@ -67,7 +63,6 @@ async def reddit_fetch(event):
             captionx += "⚠️ Post marked as SPOILER\n"
         if r["nsfw"]:
             captionx += "🔞 Post marked Adult \n"
-
             if await age_verification(event, reply_to):
                 return
 

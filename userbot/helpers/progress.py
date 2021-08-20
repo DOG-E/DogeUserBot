@@ -14,25 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-import hashlib
-import math
-import re
-import time
+from hashlib import md5 as hashlibmd5
+from math import floor
+from re import match, sub
+from time import time
 from typing import Dict, Tuple
 
 from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from ..Config import Config
 from ..core.logger import logging
+from ..languages import lan
 
 LOGS = logging.getLogger(__name__)
-
 _TASKS: Dict[str, Tuple[int, int]] = {}
 
 
 async def md5(fname: str) -> str:
-    hash_md5 = hashlib.md5()
+    hash_md5 = hashlibmd5()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
@@ -71,7 +70,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     return (
-        ((str(int(days)) + " day(s), ") if days else "")
+        ((str(int(days)) + " "+lan('days')+", ") if days else "")
         + ((str(int(hours)) + ":") if hours else "00:")
         + ((str(int(minutes)) + ":") if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")
@@ -89,8 +88,8 @@ def human_to_bytes(size: str) -> int:
     }
 
     size = size.upper()
-    if not re.match(r" ", size):
-        size = re.sub(r"([KMGT])", r" \1", size)
+    if not match(r" ", size):
+        size = sub(r"([KMGT])", r" \1", size)
     number, unit = [string.strip() for string in size.split()]
     return int(float(number) * units[unit])
 
@@ -113,13 +112,13 @@ async def progress(
             return
         del _TASKS[task_id]
         try:
-            await gdrive.edit("`finalizing process ...`")
+            await gdrive.edit("`Finalizing process...`")
         except MessageNotModifiedError:
             pass
         except Exception as e:
             LOGS.error(str(e))
         return
-    now = time.time()
+    now = time()
     if task_id not in _TASKS:
         _TASKS[task_id] = (now, now)
     start, last = _TASKS[task_id]
@@ -132,19 +131,19 @@ async def progress(
         eta = round((total - current) / speed)
         elapsed_time = round(elapsed_time)
         if "upload" in prog_type.lower():
-            status = f"Uploading"
+            status = "Uploading"
         elif "download" in prog_type.lower():
-            status = f"Downloading"
+            status = "Downloading"
         else:
             status = "Unknown"
         progress_str = "`{0}` | `[{1}{2}] {3}%`".format(
             status,
             "".join(
-                Config.FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 5))
+                Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))
             ),
             "".join(
                 Config.UNFINISHED_PROGRESS_STR
-                for i in range(20 - math.floor(percentage / 5))
+                for i in range(20 - floor(percentage / 5))
             ),
             round(percentage, 2),
         )
@@ -152,14 +151,14 @@ async def progress(
             f"{progress_str}\n"
             f"`{humanbytes(current)} of {humanbytes(total)}"
             f" @ {humanbytes(speed)}`\n"
-            f"**ETA :**` {time_formatter(eta)}`\n"
-            f"**Duration :** `{time_formatter(elapsed_time)}`"
+            f"**ETA:**` {time_formatter(eta)}`\n"
+            f"**Duration:** `{time_formatter(elapsed_time)}`"
         )
         if tmp != oldtmp:
             if file_name:
                 await gdrive.edit(
                     f"**{prog_type}**\n\n"
-                    f"**File Name : **`{file_name}`**\nStatus**\n{tmp}"
+                    f"**File Name: **`{file_name}`**\nStatus**\n{tmp}"
                 )
             else:
                 await gdrive.edit(f"**{prog_type}**\n\n" f"**Status**\n{tmp}")

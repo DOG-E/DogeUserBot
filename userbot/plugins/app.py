@@ -4,12 +4,12 @@ Fetch App Details from Playstore.
   © [cHAuHaN](http://t.me/amnd33p)
 """
 
-import bs4
-import requests
+from bs4 import BeautifulSoup
+from requests import get
 
 from . import ALIVE_NAME, doge, eor
 
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -28,11 +28,11 @@ async def app_search(event):
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
-        page = requests.get(
+        page = get(
             "https://play.google.com/store/search?q=" + final_name + "&c=apps"
         )
         str(page.status_code)
-        soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
+        soup = BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
         app_name = (
             results[0].findNext("div", "Vpfmgd").findNext("div", "WsMG1c nnK0zc").text

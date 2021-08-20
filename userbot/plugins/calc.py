@@ -1,35 +1,35 @@
-import io
+from io import StringIO
 import sys
-import traceback
+from traceback import format_exc
 
 from . import doge, eor
 
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
-    pattern="calc ([\s\S]*)",
-    command=("calc", plugin_category),
+    pattern="cal ([\s\S]*)",
+    command=("cal", plugin_category),
     info={
         "header": "To solve basic mathematics equations.",
         "description": "Solves the given maths equation by BODMAS rule.",
-        "usage": "{tr}calc 2+9",
+        "usage": "{tr}cal 2+9",
     },
 )
 async def calculator(event):
     "To solve basic mathematics equations."
     cmd = event.text.split(" ", maxsplit=1)[1]
-    event = await eor(event, "Calculating ...")
+    event = await eor(event, "Calculating...")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
-    redirected_output = sys.stdout = io.StringIO()
-    redirected_error = sys.stderr = io.StringIO()
+    redirected_output = sys.stdout = StringIO()
+    redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
-    san = f"print({cmd})"
+    happy = f"print({cmd})"
     try:
-        await aexec(san, event)
+        await aexec(happy, event)
     except Exception:
-        exc = traceback.format_exc()
+        exc = format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
@@ -43,12 +43,12 @@ async def calculator(event):
         evaluation = stdout
     else:
         evaluation = "Sorry I can't find result for the given equation"
-    final_output = "**EQUATION**: `{}` \n\n **SOLUTION**: \n`{}` \n".format(
+    final_output = "**EQUATION:** `{}` \n\n **SOLUTION:** \n`{}` \n".format(
         cmd, evaluation
     )
     await event.edit(final_output)
 
 
 async def aexec(code, event):
-    exec(f"async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
+    exec("async def __aexec(event): " + "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["__aexec"](event)

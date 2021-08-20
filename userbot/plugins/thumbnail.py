@@ -1,36 +1,29 @@
-import os
+# Thumbnail Utilities ported from uniborg
+# credits @spechide
+from os import path, remove
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from PIL import Image
+from PIL.Image import open as Imopen
 
-from userbot import doge
+from . import Config, doge, eor, lan, _dogetools
 
-from ..Config import Config
-from ..core.managers import eor
-from ..helpers.utils import _dogetools
-from . import CMD_HELP
-
-plugin_category = "utils"
-
-# Thumbnail Utilities ported from uniborg
-# credits @spechide
-
+plugin_category = "tool"
 
 thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 
 @doge.bot_cmd(
-    pattern="savethumb$",
-    command=("savethumb", plugin_category),
+    pattern="sthumb$",
+    command=("sthumb", plugin_category),
     info={
         "header": "To save replied image as temporary thumb.",
-        "usage": "{tr}savethumb",
+        "usage": "{tr}sthumb",
     },
 )
 async def _(event):
     "To save replied image as temporary thumb."
-    dogevent = await eor(event, "`Processing ...`")
+    dogevent = await eor(event, lan("processing"))
     if not event.reply_to_msg_id:
         return await dogevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(
@@ -44,37 +37,37 @@ async def _(event):
             downloaded_file_name, duration
         )
     # https://stackoverflow.com/a/21669827/4723940
-    Image.open(downloaded_file_name).convert("RGB").save(thumb_image_path, "JPEG")
+    Imopen(downloaded_file_name).convert("RGB").save(thumb_image_path, "JPEG")
     # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
-    os.remove(downloaded_file_name)
+    remove(downloaded_file_name)
     await dogevent.edit(
-        "Custom video/file thumbnail saved. This image will be used in the upload, till `.clearthumb`."
+        "Custom video/file thumbnail saved. This image will be used in the upload, till `.dthumb`."
     )
 
 
 @doge.bot_cmd(
-    pattern="clearthumb$",
-    command=("clearthumb", plugin_category),
+    pattern="dthumb$",
+    command=("dthumb", plugin_category),
     info={
         "header": "To delete thumb image.",
-        "usage": "{tr}clearthumb",
+        "usage": "{tr}dthumb",
     },
 )
 async def _(event):
     "To delete thumb image."
-    if os.path.exists(thumb_image_path):
-        os.remove(thumb_image_path)
+    if path.exists(thumb_image_path):
+        remove(thumb_image_path)
     else:
         await eor(event, "`No thumbnail is set to clear`")
-    await eor(event, "✅ Custom thumbnail cleared successfully.")
+    await eor(event, "✅ Custom thumbnail deleted successfully.")
 
 
 @doge.bot_cmd(
-    pattern="getthumb$",
-    command=("getthumb", plugin_category),
+    pattern="thumb$",
+    command=("thumb", plugin_category),
     info={
         "header": "To get thumbnail of given video or gives your present thumbnail.",
-        "usage": "{tr}getthumb",
+        "usage": "{tr}thumb",
     },
 )
 async def _(event):
@@ -93,12 +86,12 @@ async def _(event):
                 allow_cache=False,
                 reply_to=event.reply_to_msg_id,
             )
-            os.remove(a)
+            remove(a)
             await event.delete()
         except Exception as e:
             await eor(event, str(e))
-    elif os.path.exists(thumb_image_path):
-        caption_str = "Currently Saved Thumbnail"
+    elif path.exists(thumb_image_path):
+        caption_str = "Current thumbnail"
         await event.client.send_file(
             event.chat_id,
             thumb_image_path,
@@ -107,20 +100,5 @@ async def _(event):
             allow_cache=False,
             reply_to=event.message.id,
         )
-        await eor(event, caption_str)
     else:
-        await eor(event, "Reply `.gethumbnail` as a reply to a media")
-
-
-CMD_HELP.update(
-    {
-        "thumbnail": "**Plugin :** `thumbnail`\
-    \n\n**Syntax :** `.savethumb`\
-    \n**Usage : **Reply to file or video to save it as temporary thumbimage\
-    \n\n**Syntax : **`.clearthumb`\
-    \n**Usage : **To clear Thumbnail no longer you uploads uses custom thumbanail\
-    \n\n**Syntax : **`.getthumb`\
-    \n**Usage : **To get thumbnail of given video or gives your present thumbnail\
-    "
-    }
-)
+        await eor(event, "No thumbnails have been saved.\nWrite `.sthumb` as a reply to a media")

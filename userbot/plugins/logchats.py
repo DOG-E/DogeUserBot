@@ -1,20 +1,13 @@
 # pm and tagged messages logger for catuserbot by @mrconfused (@sandy1709)
-import asyncio
+from asyncio import sleep
 
-from userbot import doge
-from userbot.core.logger import logging
+from telethon import Button
 
-from ..Config import Config
-from ..core.managers import edl
-from ..helpers.tools import media_type
-from ..helpers.utils import _format
 from ..sql_helper import no_log_pms_sql
-from ..sql_helper.globals import addgvar, gvarstatus
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, _format, Config, addgvar, doge, edl, gvarstatus, logging, media_type, tgbot
 
+plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
-
-plugin_category = "utils"
 
 
 class LOG_CHATS:
@@ -55,7 +48,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                     LOG_CHATS_.COUNT = 0
                 LOG_CHATS_.NEWPM = await event.client.send_message(
                     Config.PM_LOGGER_GROUP_ID,
-                    f"👤{_format.mentionuser(sender.first_name , sender.id)} has sent a new message \nId : `{chat.id}`",
+                    f"👤{_format.mentionuser(sender.first_name , sender.id)} has sent a new message \nID: `{chat.id}`",
                 )
             try:
                 if event.message:
@@ -70,39 +63,41 @@ async def monito_p_m_s(event):  # sourcery no-metrics
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
 async def log_tagged_messages(event):
     hmm = await event.get_chat()
-    from .afk import AFK_
+    from .afk import is_afk
 
     if gvarstatus("GRPLOG") and gvarstatus("GRPLOG") == "false":
         return
     if (
         (no_log_pms_sql.is_approved(hmm.id))
         or (Config.PM_LOGGER_GROUP_ID == -100)
-        or ("on" in AFK_.USERAFK_ON)
+        or (is_afk())
         or (await event.get_sender() and (await event.get_sender()).bot)
     ):
         return
+
     full = None
     try:
         full = await event.client.get_entity(event.message.from_id)
     except Exception as e:
         LOGS.info(str(e))
     messaget = media_type(event)
-    resalt = f"#TAGS \n<b>Group : </b><code>{hmm.title}</code>"
+    resalt = f"#TAGS \n<b>Group: </b><code>{hmm.title}</code>"
     if full is not None:
         resalt += (
-            f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
+            f"\n<b>From: </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
         )
     if messaget is not None:
-        resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
+        resalt += f"\n<b>Message Type: </b><code>{messaget}</code>"
     else:
-        resalt += f"\n<b>Message : </b>{event.message.message}"
-    resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+        resalt += f"\n<b>Message: </b>{event.message.message}"
+    button = [(Button.url("💬 Message", f"https://t.me/c/{hmm.id}/{event.message.id}"))]
     if not event.is_private:
-        await event.client.send_message(
+        await tgbot.send_message(
             Config.PM_LOGGER_GROUP_ID,
             resalt,
             parse_mode="html",
             link_preview=False,
+            buttons=button,
         )
 
 
@@ -124,7 +119,7 @@ async def log(log_text):
             reply_msg = await log_text.get_reply_message()
             await reply_msg.forward_to(BOTLOG_CHATID)
         elif log_text.pattern_match.group(1):
-            user = f"#LOG / Chat ID: {log_text.chat_id}\n\n"
+            user = f"#LOG\nChat ID: {log_text.chat_id}\n\n"
             textx = user + log_text.pattern_match.group(1)
             await log_text.client.send_message(BOTLOG_CHATID, textx)
         else:
@@ -133,18 +128,18 @@ async def log(log_text):
         await log_text.edit("`Logged Successfully`")
     else:
         await log_text.edit("`This feature requires Logging to be enabled!`")
-    await asyncio.sleep(2)
+    await sleep(2)
     await log_text.delete()
 
 
 @doge.bot_cmd(
-    pattern="log$",
-    command=("log", plugin_category),
+    pattern="logon$",
+    command=("logon", plugin_category),
     info={
         "header": "To turn on logging of messages from that chat.",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
-            "{tr}log",
+            "{tr}logon",
         ],
     },
 )
@@ -155,18 +150,18 @@ async def set_no_log_p_m(event):
         if no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.disapprove(chat.id)
             await edl(
-                event, "`logging of messages from this group has been started`", 5
+                event, "`Logging of messages from this chat has been started!`", 5
             )
 
 
 @doge.bot_cmd(
-    pattern="nolog$",
-    command=("nolog", plugin_category),
+    pattern="logoff$",
+    command=("logoff", plugin_category),
     info={
         "header": "To turn off logging of messages from that chat.",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
-            "{tr}nolog",
+            "{tr}logoff",
         ],
     },
 )
@@ -176,7 +171,7 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
-            await edl(event, "`Logging of messages from this chat has been stopped`", 5)
+            await edl(event, "`Logging of messages from this chat has been stopped!`", 5)
 
 
 @doge.bot_cmd(
@@ -193,6 +188,12 @@ async def set_no_log_p_m(event):
 )
 async def set_pmlog(event):
     "To turn on or turn off logging of Private messages"
+    if Config.PM_LOGGER_GROUP_ID == -100:
+        return await edl(
+            event,
+            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
+            
+        )
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         h_type = False
@@ -229,6 +230,12 @@ async def set_pmlog(event):
 )
 async def set_grplog(event):
     "To turn on or turn off group tags logging"
+    if Config.PM_LOGGER_GROUP_ID == -100:
+        return await edl(
+            event,
+            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
+            
+        )
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         h_type = False

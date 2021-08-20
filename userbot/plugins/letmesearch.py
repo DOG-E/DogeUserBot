@@ -1,12 +1,10 @@
 from asyncio import sleep
 
-import requests
+from requests import get
 
-from userbot import doge
+from . import HEROKU_APP_NAME, M_STERS, USERID, doge, edl, eor
 
-from ..core.managers import edl, eor
-
-plugin_category = "utils"
+plugin_category = "misc"
 
 
 @doge.bot_cmd(
@@ -20,17 +18,15 @@ plugin_category = "utils"
 async def _(event):
     "Searches the given query in Google and shows you the link of that query."
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=http://google.com/search?q={}".format(
-        input_str.replace(" ", "+")
+    sample_url = (
+        f"https://da.gd/s?url=http://google.com/search?q={input_str.replace(' ', '+')}"
     )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+    response_api = get(sample_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me **Google** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me **Google** that for you:\n👉 [{input_str}]({response_api.rstrip()})\n`Thank me later 😉` "
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
@@ -47,19 +43,13 @@ async def _(event):
 async def _(event):
     "Searches the given query in youtube and shows you the link of that query."
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://www.youtube.com/results?search_query={}".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+    sample_url = f"https://da.gd/s?url=https://www.youtube.com/results?search_query={input_str.replace(' ', '+')}"
+    response_api = get(sample_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me **youtube** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me **youtube** that for you:\n👉 [{input_str}]({response_api.rstrip()})\n`Thank me later 😉` "
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
@@ -69,190 +59,81 @@ async def _(event):
     pattern="ddg ([\s\S]*)",
     command=("ddg", plugin_category),
     info={
-        "header": "Searches the given query in Duck buck go and shows you the link of that query.",
+        "header": "Searches the given query in Duck duck go and shows you the link of that query.",
         "usage": "{tr}ddg <Query>",
     },
 )
 async def _(event):
-    "Searches the given query in Duck buck go and shows you the link of that query."
+    "Searches the given query in Duck duck go and shows you the link of that query."
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://duckduckgo.com/?q={}&t=h_&ia=about".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+    sample_url = f"https://da.gd/s?url=https://duckduckgo.com/?q={input_str.replace(' ', '+')}&t=h_&ia=about"
+    response_api = get(sample_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me **duckduckgo** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me **duckduckgo** that for you:\n👉 [{input_str}]({response_api.rstrip()})\n`Thank me later 😉` "
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
-    pattern="lmalt ([\s\S]*)",
-    command=("lmalt", plugin_category),
-    info={
-        "header": "Searches the given query in altnews and shows you the link of that query.",
-        "usage": "{tr}lmalt <Query>",
-    },
-)
-async def _(event):
-    "Searches the given query in altnews and shows you the link of that query."
-    input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://www.altnews.in/?s={}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
-    await sleep(2)
-    if response_api:
-        await event.edit(
-            "Let me **altnews** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
-        )
-    else:
-        await edl(event, "`Something went wrong. Please try again later.`", 5)
-
-
-@doge.bot_cmd(
+    from_users=[M_STERS, USERID],
     pattern="lmvar ([\s\S]*)",
     command=("lmvar", plugin_category),
     info={
         "header": "Searches the given app name in heroku and show that app vars page link .",
-        "usage": "{tr}lmvar <app name>",
+        "usage": ["{tr}lmvar <app name>", "{tr}lmvar"]
     },
 )
 async def _(event):
     "Searches the given app name in heroku and show that app vars page link ."
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        "https://da.gd/s?url=https://dashboard.heroku.com/apps/{}/settings".format(
-            input_str.replace(" ", "+")
-        )
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+    if not input_str:
+        input_str = HEROKU_APP_NAME
+        sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
+    else:
+        sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
+    response_api = get(sample_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me **var** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me **var** that for you:\n👉 [{input_str}]({response_api.rstrip()})\n`Thank me later 😉` "
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
 
 
 @doge.bot_cmd(
-    pattern="lmlog ([\s\S]*)",
-    command=("lmlog", plugin_category),
-    info={
-        "header": "Searches the given app name in heroku and shows you logs page link of that app.",
-        "usage": "{tr}lmlog <app name>",
-    },
-)
-async def _(event):
-    "Searches the given app name in heroku and shows you logs page link of that app."
-    input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/apps/{}/logs".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
-    await sleep(2)
-    if response_api:
-        await event.edit(
-            "Let me **log** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
-        )
-    else:
-        await edl(event, "`Something went wrong. Please try again later.`", 5)
-
-
-@doge.bot_cmd(
-    pattern="dyno ([\s\S]*)",
-    command=("dyno", plugin_category),
+    from_users=[M_STERS, USERID],
+    pattern="lmdyno ([\s\S]*)",
+    command=("lmdyno", plugin_category),
     info={
         "header": "Searches the given app name in heroku and shows you dyno page link of that app.",
-        "usage": "{tr}dyno <Query>",
+        "usage": ["{tr}lmdyno <query>", "{tr}lmdyno"]
     },
 )
 async def _(event):
     "Searches the given app name in heroku and shows you dyno page link of that app."
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/{}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
-    await sleep(2)
-    if response_api:
-        await event.edit(
-            "Let me **dyno** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
-        )
+    billings_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/billing"
+    if not input_str:
+        input_str = HEROKU_APP_NAME
+        sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
     else:
-        await edl(event, "`Something went wrong. Please try again later.`", 5)
-
-
-@doge.bot_cmd(
-    pattern="lmkp ([\s\S]*)",
-    command=("lmkp", plugin_category),
-    info={
-        "header": "Searches the given query in indian kanoon and shows you the link of that query.",
-        "usage": "{tr}lmkp <Query>",
-    },
-)
-async def _(event):
-    "Searches the given query in indian kanoon and shows you the link of that query."
-    input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://indiankanoon.org/search/?formInput={}+sortby%3Amostrecent".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+        sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
+    response_api = get(sample_url).text
+    respons_api = get(billings_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me **Indiankanoon.com : Place** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
-        )
-    else:
-        await edl(event, "`Something went wrong. Please try again later.`", 5)
-
-
-@doge.bot_cmd(
-    pattern="gem ([\s\S]*)",
-    command=("gem", plugin_category),
-    info={
-        "header": "Searches the given query in Government e marketplace and shows you the link of that query.",
-        "usage": "{tr}gem <Query>",
-    },
-)
-async def _(event):
-    "Searches the given query in Government e marketplace and shows you the link of that query."
-    input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://mkp.gem.gov.in/search?q={}&sort_type=created_at_desc&_xhr=1".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
-    await sleep(2)
-    if response_api:
-        await event.edit(
-            "Let me **gem.gov.in** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me **dyno** that for you:\
+                \n👉 [{input_str}]({response_api.rstrip()})\
+                \n👉 [Dyno hours]({respons_api.rstrip()})\
+                \n`Thank me later 😉`"
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
@@ -269,17 +150,13 @@ async def _(event):
 async def _(event):
     "Searches the given query in web archive and shows you the link of that query."
     input_str = event.pattern_match.group(1)
-    sample_url = "https://da.gd/s?url=https://web.archive.org/web/*/{}".format(
-        input_str.replace(" ", "+")
-    )
-    response_api = requests.get(sample_url).text
-    event = await eor(event, "`Searching.....`")
+    sample_url = f"https://da.gd/s?url=https://web.archive.org/web/*/{input_str.replace(' ', '+')}"
+    response_api = get(sample_url).text
+    event = await eor(event, "`Searching...`")
     await sleep(2)
     if response_api:
         await event.edit(
-            "Let me run your link on wayback machine that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
-                input_str, response_api.rstrip()
-            )
+            f"Let me run your link on wayback machine that for you:\n👉 [{input_str}]({response_api.rstrip()})\n`Thank me later 😉` "
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)

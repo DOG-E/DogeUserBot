@@ -1,8 +1,8 @@
 # Userbot module for purging unneeded messages(usually spam or ot).
-import re
+from re import findall
 from asyncio import sleep
 
-from telethon.errors import rpcbaseerrors
+from telethon.errors.rpcbaseerrors import BadRequestError
 from telethon.tl.types import (
     InputMessagesFilterDocument,
     InputMessagesFilterEmpty,
@@ -16,17 +16,11 @@ from telethon.tl.types import (
     InputMessagesFilterVoice,
 )
 
-from userbot import doge
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id
 
-from ..core.managers import edl, eor
-from ..helpers.utils import reply_id
-from . import BOTLOG, BOTLOG_CHATID
-
-plugin_category = "utils"
-
+plugin_category = "tool"
 
 purgelist = {}
-
 purgetype = {
     "a": InputMessagesFilterVoice,
     "f": InputMessagesFilterDocument,
@@ -66,7 +60,7 @@ async def delete_it(event):
                     await event.client.send_message(
                         BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`"
                     )
-            except rpcbaseerrors.BadRequestError:
+            except BadRequestError:
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
@@ -83,7 +77,7 @@ async def delete_it(event):
                     await event.client.send_message(
                         BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`"
                     )
-            except rpcbaseerrors.BadRequestError:
+            except BadRequestError:
                 await eor(event, "`Well, I can't delete a message`")
     elif not input_str:
         await event.delete()
@@ -162,7 +156,7 @@ async def purge_to(event):
                 "#PURGE \n`Purge of " + str(count) + " messages done successfully.`",
             )
     except Exception as e:
-        await edl(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**Error**\n`{e}`")
 
 
 @doge.bot_cmd(
@@ -208,7 +202,7 @@ async def purgeme(event):
         "description": "•  Deletes the x(count) amount of messages from the replied message\
         \n•  If you don't use count then deletes all messages from the replied messages\
         \n•  If you haven't replied to any message and used count then deletes recent x messages.\
-        \n•  If you haven't replied to any message or havent mentioned any flag or count then doesnt do anything\
+        \n•  If you haven't replied to any message or haven't mentioned any flag or count then doesnt do anything\
         \n•  If flag is used then selects that type of messages else will select all types\
         \n•  You can use multiple flags like -gi 10 (It will delete 10 images and 10 gifs but not 10 messages of combination images and gifs.)\
         ",
@@ -231,8 +225,8 @@ async def purgeme(event):
         ],
         "examples": [
             "{tr}purge 10",
-            "{tr}purge -f 10",
-            "{tr}purge -gi 10",
+            "{tr}purge .f 10",
+            "{tr}purge .gi 10",
         ],
     },
 )
@@ -242,7 +236,7 @@ async def fastpurger(event):  # sourcery no-metrics
     msgs = []
     count = 0
     input_str = event.pattern_match.group(1)
-    ptype = re.findall(r"-\w+", input_str)
+    ptype = findall(r".\w+", input_str)
     try:
         p_type = ptype[0].replace("-", "")
         input_str = input_str.replace(ptype[0], "").strip()
@@ -272,7 +266,7 @@ async def fastpurger(event):  # sourcery no-metrics
                         if msgs:
                             await event.client.delete_messages(chat, msgs)
                     elif ty == "s":
-                        error += f"\n• __You can't use s flag along with otherflags.__"
+                        error += "\n• __You can't use s flag along with otherflags.__"
                     else:
                         error += f"\n• `{ty}` __is Invalid flag.__"
             else:
@@ -329,7 +323,7 @@ async def fastpurger(event):  # sourcery no-metrics
             else:
                 error += f"\n• `{ty}` __is Invalid flag.__"
         elif input_str:
-            error += f"\n• `.purge {input_str}` __is invalid syntax try again by reading__ `.help .c purge`"
+            error += f"\n• `.purge {input_str}` __is invalid syntax try again by reading__ `.doge .c purge`"
         elif p_type is not None:
             for ty in p_type:
                 if ty in purgetype:
@@ -420,7 +414,7 @@ async def fastpurger(event):  # sourcery no-metrics
                 if msgs:
                     await event.client.delete_messages(chat, msgs)
             elif ty == "s":
-                error += f"\n• __You can't use s with other flags or you haven't given search query.__"
+                error += "\n• __You can't use s with other flags or you haven't given search query.__"
             else:
                 error += f"\n• `{ty}` __is Invalid flag.__"
     elif input_str.isnumeric():
@@ -433,7 +427,7 @@ async def fastpurger(event):  # sourcery no-metrics
         if msgs:
             await event.client.delete_messages(chat, msgs)
     else:
-        error += "\n•  __Nothing is specified Recheck the help__ (`.help .c purge`)"
+        error += "\n•  __Nothing is specified Recheck the help__ (`.doge .c purge`)"
     if msgs:
         await event.client.delete_messages(chat, msgs)
     if count > 0:
@@ -486,7 +480,7 @@ async def fast_purger(event):  # sourcery no-metrics
     count = 0
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
-    ptype = re.findall(r"-\w+", input_str)
+    ptype = findall(r"-\w+", input_str)
     try:
         p_type = ptype[0].replace("-", "")
         input_str = input_str.replace(ptype[0], "").strip()
@@ -526,7 +520,7 @@ async def fast_purger(event):  # sourcery no-metrics
                     await event.client.delete_messages(chat, msgs)
                     msgs = []
         elif input_str:
-            error += f"\n• `.upurge {input_str}` __is invalid syntax try again by reading__ `.help .c purge`"
+            error += f"\n• `.upurge {input_str}` __is invalid syntax try again by reading__ `.doge .c purge`"
         else:
             async for msg in event.client.iter_messages(
                 chat,

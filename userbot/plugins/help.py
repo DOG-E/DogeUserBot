@@ -1,25 +1,15 @@
-from telethon import functions
-
-from userbot import doge
-
-from ..Config import Config
+from . import Config, doge, edl, eor, reply_id, tr
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
-from ..core.managers import edl, eor
-from ..helpers.utils import reply_id
 
-cmdprefix = Config.COMMAND_HAND_LER
-
-plugin_category = "tools"
+plugin_category = "bot"
 
 hemojis = {
     "admin": "👮‍♂️",
     "bot": "🤖",
-    "fun": "🎨",
-    "misc": "🧩",
-    "tools": "🧰",
-    "utils": "🗂",
-    "extra": "➕",
-    "useless": "⚰️",
+    "fun": "🎈",
+    "misc": "🪀",
+    "tool": "🧰",
+    "hub": "🔮",
 }
 
 
@@ -40,7 +30,7 @@ def getkey(val):
 
 
 async def cmdinfo(input_str, event, plugin=False):
-    if input_str[0] == cmdprefix:
+    if input_str[0] == tr:
         input_str = input_str[1:]
     try:
         about = CMD_INFO[input_str]
@@ -48,22 +38,24 @@ async def cmdinfo(input_str, event, plugin=False):
         if plugin:
             await edl(
                 event,
-                f"**There is no plugin or command as **`{input_str}`** in your bot.**",
+                f"**🚨 I couldn't find** `{input_str}` **plugin or command.**",
             )
             return None
-        await edl(event, f"**There is no command as **`{input_str}`** in your bot.**")
+        await edl(event, f"**🚨 I couldn't find** `{input_str}` **command.**")
         return None
     except Exception as e:
-        await edl(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**🚨 ERROR:**\
+            \n➡ `{e}`")
         return None
-    outstr = f"**Command :** `{cmdprefix}{input_str}`\n"
+    outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n⌨ Coᴍᴍᴀɴᴅ:** `{tr}{input_str}`\n"
     plugin = get_key(input_str)
     if plugin is not None:
-        outstr += f"**Plugin :** `{plugin}`\n"
+        outstr += f"**🧩 Pʟᴜɢɪɴ:** `{plugin}`\n"
         category = getkey(plugin)
         if category is not None:
-            outstr += f"**Category :** `{category}`\n\n"
-    outstr += f"**✘ Intro :**\n{about[0]}"
+            outstr += f"**🗃 Cᴀᴛᴇɢoʀʏ:** `{category}`\n\n"
+    outstr += f"**🐾 Iɴᴛʀo:**\n{about[0]}"
     return outstr
 
 
@@ -74,31 +66,35 @@ async def plugininfo(input_str, event, flag):
         outstr = await cmdinfo(input_str, event, plugin=True)
         return outstr
     except Exception as e:
-        await edl(event, f"**Error**\n`{str(e)}`")
+        await edl(event, f"**🚨 ERROR:**\
+            \n➡ `{e}`")
         return None
     if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
         return outstr
-    outstr = f"**Plugin : **`{input_str}`\n"
-    outstr += f"**Commands Available :** `{len(cmds)}`\n"
+    outstr = f"**🧩 Pʟᴜɢɪɴ:** `{input_str}`\n"
+    outstr += f"**⌨ Coᴍᴍᴀɴᴅs:** `{len(cmds)}`\n"
     category = getkey(input_str)
     if category is not None:
-        outstr += f"**Category :** `{category}`\n\n"
-    for cmd in cmds:
-        outstr += f"**✘ Cmd :** `{cmdprefix}{cmd}`\n"
+        outstr += f"**🗃 Cᴀᴛᴇɢoʀʏ:** `{category}`\n\n"
+    for cmd in sorted(cmds):
+        outstr += f"**🐾 Cᴍᴅ:** `{tr}{cmd}`\n"
         try:
-            outstr += f"**➥ Info :** __{CMD_INFO[cmd][1]}__\n\n"
+            outstr += f"**🔹 Iɴғo:** __{CMD_INFO[cmd][1]}__\n\n"
         except IndexError:
-            outstr += f"**➥ Info :** `None`\n\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <command name>`\
-        \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help .c <command name>`."
+            outstr += f"**🔹 Iɴғo:** -\n\n"
+    outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge <command name>`\
+        \n\
+        \n**🐾 Note:** If command name is same as plugin name then use this `{tr}doge .c <command name>`."
     return outstr
 
 
 async def grpinfo():
-    outstr = "**Plugins in DogeUserBot are:**\n\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <plugin name>`\n\n"
-    category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra", "useless"]
+    outstr = "**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n🐾 Aʟʟ Pʟᴜɢɪɴs:**\
+        \n\n"
+    outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge <plugin name>`\n\n"
+    category = ["admin", "bot", "fun", "misc", "tool", "hub"]
     for dog in category:
         plugins = GRP_INFO[dog]
         outstr += f"**{hemojis[dog]} {dog.title()} **({len(plugins)})\n"
@@ -109,43 +105,45 @@ async def grpinfo():
 
 
 async def cmdlist():
-    outstr = "**Total list of Commands in your DogeUserBot are :**\n\n"
-    category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra"]
+    outstr = "**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n🐾 Toᴛᴀʟ Lɪsᴛ Oғ Coᴍᴍᴀɴᴅs:** \
+        \n\n"
+    category = ["admin", "bot", "fun", "misc", "tool", "hub"]
     for dog in category:
         plugins = GRP_INFO[dog]
         outstr += f"**{hemojis[dog]} {dog.title()} ** - {len(plugins)}\n\n"
         for plugin in plugins:
             cmds = PLG_INFO[plugin]
-            outstr += f"• **{plugin.title()} has {len(cmds)} commands**\n"
-            for cmd in cmds:
-                outstr += f"  - `{cmdprefix}{cmd}`\n"
+            outstr += f"🔹** {plugin.title()} has {len(cmds)} commands**\n"
+            for cmd in sorted(cmds):
+                outstr += f"  - `{tr}{cmd}`\n"
             outstr += "\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help .c <command name>`"
+    outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge .c <command name>`"
     return outstr
 
 
 @doge.bot_cmd(
-    pattern="help ?(.c|.p|.t)? ?([\s\S]*)?",
-    command=("help", plugin_category),
+    pattern="[Dd][Oo][Gg][Ee] ?(.c|.p|.all)? ?([\s\S]*)?",
+    command=("doge", plugin_category),
     info={
         "header": "To get guide for DogeUserBot.",
-        "description": "To get information or guide for the command or plugin",
-        "note": "if command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide",
+        "description": "To get information or guide for the command or plugin.",
+        "note": "If command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide.",
         "flags": {
             "c": "To get info of command.",
             "p": "To get info of plugin.",
-            "t": "To get all plugins in text format.",
+            "all": "To get all plugins in text format.",
         },
         "usage": [
-            "{tr}help (plugin/command name)",
-            "{tr}help .c (command name)",
-            "{tr}help .t",
+            "{tr}doge (plugin/command name)",
+            "{tr}doge .c (command name)",
+            "{tr}doge .all",
         ],
-        "examples": ["{tr}help help", "{tr}help .c help"],
+        "examples": ["{tr}doge doge", "{tr}doge .c doge"],
     },
 )
 async def _(event):
-    "To get guide for DogeUserBot."
+    "🐶 To get guide for @DogeUserBot."
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
@@ -157,10 +155,10 @@ async def _(event):
         outstr = await plugininfo(input_str, event, flag)
         if outstr is None:
             return
-    elif flag == ".t":
+    elif flag == ".all":
         outstr = await grpinfo()
     else:
-        results = await event.client.inline_query(Config.TG_BOT_USERNAME, "help")
+        results = await event.client.inline_query(Config.BOT_USERNAME, "help")
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
         await event.delete()
         return
@@ -168,14 +166,14 @@ async def _(event):
 
 
 @doge.bot_cmd(
-    pattern="cmds(?:\s|$)([\s\S]*)",
-    command=("cmds", plugin_category),
+    pattern="cmd(s)(?:\s|$)([\s\S]*)",
+    command=("cmd", plugin_category),
     info={
         "header": "To show list of cmds.",
-        "description": "if no input is given then will show list of all commands.",
+        "description": "If no input is given then will show list of all commands.",
         "usage": [
-            "{tr}cmds for all cmds",
-            "{tr}cmds <plugin name> for paticular plugin",
+            "{tr}cmds",
+            "{tr}cmd <plugin name> for paticular plugin",
         ],
     },
 )
@@ -188,20 +186,23 @@ async def _(event):
         try:
             cmds = PLG_INFO[input_str]
         except KeyError:
-            return await edl(event, "__Invalid plugin name recheck it.__")
+            return await edl(event, "__🚨 Invalid plugin name recheck it.__")
         except Exception as e:
-            return await edl(event, f"**Error**\n`{str(e)}`")
-        outstr = f"**✘ {input_str.title()} has {len(cmds)} commands**\n"
+            return await edl(event, f"**🚨 ERROR:**\
+                \n➡ `{e}`")
+        outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n\n🐾 {input_str.title()} has {len(cmds)} commands:**\n"
         for cmd in cmds:
-            outstr += f"  - `{cmdprefix}{cmd}`\n"
-        outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help .c <command name>`"
+            outstr += f"  - `{tr}{cmd}`\n\n"
+        outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge .c <command name>`"
     await eor(
-        event, outstr, aslink=True, linktext="Total Commands of DogeUserBot are :"
+        event, outstr, aslink=True, linktext="🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n\n🐾 Total list of commands: "
     )
 
 
 @doge.bot_cmd(
-    pattern="s ([\s\S]*)",
+    pattern="[sS] ([\s\S]*)",
     command=("s", plugin_category),
     info={
         "header": "To search commands.",
@@ -214,34 +215,13 @@ async def _(event):
     found = [i for i in sorted(list(CMD_INFO)) if cmd in i]
     if found:
         out_str = "".join(f"`{i}`    " for i in found)
-        out = f"**I found {len(found)} command(s) for: **`{cmd}`\n\n{out_str}"
-        out += f"\n\n__For more info check {cmdprefix}help .c <command>__"
+        out = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n\n🐾 I found {len(found)} commands for:** `{cmd}`\
+            \n\n{out_str}"
+        out += f"\n\
+            \n__💬 For more info check__ `{tr}doge .c <command>`"
     else:
-        out = f"I can't find any such command `{cmd}` in DogeUserBot"
+        out = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n\n🙁 I can't find any such command:** `{cmd}`\
+            \n\n🐾 You can get info about other plugins with `{tr}doge`"
     await eor(event, out)
-
-
-@doge.bot_cmd(
-    pattern="dc$",
-    command=("dc", plugin_category),
-    info={
-        "header": "To show dc of your account.",
-        "description": "Dc of your account and list of dc's will be showed",
-        "usage": "{tr}dc",
-    },
-)
-async def _(event):
-    "To get dc of your bot"
-    result = await event.client(functions.help.GetNearestDcRequest())
-    result = f"**Dc details of your account:**\
-              \n**Country :** {result.country}\
-              \n**Current Dc :** {result.this_dc}\
-              \n**Nearest Dc :** {result.nearest_dc}\
-              \n\n**List Of Telegram Data Centres:**\
-              \n**DC1 : **Miami FL, USA\
-              \n**DC2 :** Amsterdam, NL\
-              \n**DC3 :** Miami FL, USA\
-              \n**DC4 :** Amsterdam, NL\
-              \n**DC5 : **Singapore, SG\
-                "
-    await eor(event, result)

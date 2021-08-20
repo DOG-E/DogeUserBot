@@ -1,10 +1,12 @@
-# config values will be loaded from here
+# Config values will be loaded from here
 
-import os
+from os import environ as ose, path as osp
 
-ENV = bool(os.environ.get("ENV", False))
+ENV = bool(ose.get("ENV", False))
+
 
 if ENV:
     from sample_config import Config  # noqa
-elif os.path.exists("config.py"):
+
+elif osp.exists("config.py"):
     from config import Development as Config  # noqa

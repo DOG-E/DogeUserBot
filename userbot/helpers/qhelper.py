@@ -1,28 +1,16 @@
-#    This file is part of NiceGrill.
-#    NiceGrill is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#    NiceGrill is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#    You should have received a copy of the GNU General Public License
-#    along with NiceGrill.  If not, see <https://www.gnu.org/licenses/>.
+# This file is part of NiceGrill.
+from json import loads
+from os import path as ospath, remove
+from random import choice
+from textwrap import wrap
+from urllib.request import urlopen, urlretrieve
 
-import json
-import logging
-import os
-import random
-import textwrap
-import urllib
-
-import emoji
+from emoji import UNICODE_EMOJI
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from telethon.tl import functions, types
+from telethon.tl.types import ChannelParticipantCreator, ChannelParticipantAdmin, MessageEntityMention,MessageEntityTextUrl,MessageEntityUrl,MessageEntityCode,MessageEntityItalic,MessageEntityBold
 
-from .utils import _dogeutils
+from . import _dogeutils
 
 COLORS = [
     "#F07975",
@@ -35,40 +23,14 @@ COLORS = [
     "#E181AC",
 ]
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
 
 async def process(msg, user, client, reply, replied=None):
-    if not os.path.isdir("./temp/"):
-        os.mkdir("./temp/", 0o755)
-    urllib.request.urlretrieve(
-        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf",
-        "./temp/Roboto-Regular.ttf",
-    )
-    urllib.request.urlretrieve(
-        "https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf",
-        "./temp/Quivira.otf",
-    )
-    urllib.request.urlretrieve(
-        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf",
-        "./temp/Roboto-Medium.ttf",
-    )
-    urllib.request.urlretrieve(
-        "https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf",
-        "./temp/DroidSansMono.ttf",
-    )
-    urllib.request.urlretrieve(
-        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
-        "./temp/Roboto-Italic.ttf",
-    )
-
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("./temp/Roboto-Medium.ttf", 43, encoding="utf-16")
-    font2 = ImageFont.truetype("./temp/Roboto-Regular.ttf", 33, encoding="utf-16")
-    mono = ImageFont.truetype("./temp/DroidSansMono.ttf", 30, encoding="utf-16")
-    italic = ImageFont.truetype("./temp/Roboto-Italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype("./temp/Quivira.otf", 43, encoding="utf-16")
+    font = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 43, encoding="utf-16")
+    font2 = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_regular.ttf", 33, encoding="utf-16")
+    mono = ImageFont.truetype("userbot/helpers/resources/fonts/droidsans_mono.ttf", 30, encoding="utf-16")
+    italic = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_italic.ttf", 33, encoding="utf-16")
+    fallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16")
 
     # Splitting text
     maxlength = 0
@@ -77,7 +39,7 @@ async def process(msg, user, client, reply, replied=None):
     for line in msg.split("\n"):
         length = len(line)
         if length > 43:
-            text += textwrap.wrap(line, 43)
+            text += wrap(line, 43)
             maxlength = 43
             if width < fallback.getsize(line[:43])[0]:
                 if "MessageEntityCode" in str(reply.entities):
@@ -91,17 +53,14 @@ async def process(msg, user, client, reply, replied=None):
                     width = mono.getsize(line)[0] + 30
                 else:
                     width = fallback.getsize(line)[0]
-            if maxlength < length:
-                maxlength = length
+            maxlength = max(maxlength, length)
 
     title = ""
     try:
-        details = await client(
-            functions.channels.GetParticipantRequest(reply.chat_id, user.id)
-        )
-        if isinstance(details.participant, types.ChannelParticipantCreator):
+        details = await client.get_permissions(reply.chat_id, user.id)
+        if isinstance(details.participant, ChannelParticipantCreator):
             title = details.participant.rank if details.participant.rank else "Creator"
-        elif isinstance(details.participant, types.ChannelParticipantAdmin):
+        elif isinstance(details.participant, ChannelParticipantAdmin):
             title = details.participant.rank if details.participant.rank else "Admin"
     except TypeError:
         pass
@@ -125,13 +84,13 @@ async def process(msg, user, client, reply, replied=None):
     top, middle, bottom = await drawer(width, height)
     # Profile Photo Check and Fetch
     yes = False
-    color = random.choice(COLORS)
+    color = choice(COLORS)
     async for photo in client.iter_profile_photos(user, limit=1):
         yes = True
     if yes:
         pfp = await client.download_profile_photo(user)
         paste = Image.open(pfp)
-        os.remove(pfp)
+        remove(pfp)
         paste.thumbnail((105, 105))
 
         # Mask
@@ -160,7 +119,7 @@ async def process(msg, user, client, reply, replied=None):
         reptot = replied.sender.first_name + " " + replname
         if reply.sticker:
             sticker = await reply.download_media()
-            file_1 = os.path.join("./temp/", "q.png")
+            file_1 = ospath.join("./temp/", "q.png")
             if sticker.endswith(("tgs")):
                 cmd = (
                     f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
@@ -172,9 +131,9 @@ async def process(msg, user, client, reply, replied=None):
             canvas = canvas.resize((stimg.width + pfpbg.width + 30, stimg.height + 10))
             canvas.paste(pfpbg, (0, 0))
             canvas.paste(stimg, (pfpbg.width + 10, 10))
-            os.remove(sticker)
-            if os.path.lexists(file_1):
-                os.remove(file_1)
+            remove(sticker)
+            if ospath.lexists(file_1):
+                remove(file_1)
             return True, canvas
         canvas = canvas.resize((canvas.width + 60, canvas.height + 120))
         top, middle, bottom = await drawer(middle.width + 60, height + 105)
@@ -203,7 +162,7 @@ async def process(msg, user, client, reply, replied=None):
         y = 200
     elif reply.sticker:
         sticker = await reply.download_media()
-        file_1 = os.path.join("./temp/", "q.png")
+        file_1 = ospath.join("./temp/", "q.png")
         if sticker.endswith(("tgs")):
             cmd = f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
             stdout, stderr = (await _dogeutils.runcmd(cmd))[:2]
@@ -213,9 +172,9 @@ async def process(msg, user, client, reply, replied=None):
         canvas = canvas.resize((stimg.width + pfpbg.width + 30, stimg.height + 10))
         canvas.paste(pfpbg, (0, 0))
         canvas.paste(stimg, (pfpbg.width + 10, 10))
-        os.remove(sticker)
-        if os.path.lexists(file_1):
-            os.remove(file_1)
+        remove(sticker)
+        if ospath.lexists(file_1):
+            remove(file_1)
         return True, canvas
     elif reply.document and not reply.audio:
         docname = ".".join(reply.document.attributes[-1].file_name.split(".")[:-1])
@@ -250,9 +209,9 @@ async def process(msg, user, client, reply, replied=None):
 
     # Writing User's Name
     space = pfpbg.width + 30
-    namefallback = ImageFont.truetype("./temp/Quivira.otf", 43, encoding="utf-16")
+    namefallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 43, encoding="utf-16")
     for letter in tot:
-        if letter in emoji.UNICODE_EMOJI["en"]:
+        if letter in UNICODE_EMOJI["en"]:
             newemoji, mask = await emoji_fetch(letter)
             canvas.paste(newemoji, (space, 24), mask)
             space += 40
@@ -274,7 +233,7 @@ async def process(msg, user, client, reply, replied=None):
     bold, mono, italic, link = await get_entity(reply)
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype("./temp/Quivira.otf", 33, encoding="utf-16")
+    textfallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 33, encoding="utf-16")
     textcolor = "white"
     for line in text:
         for letter in line:
@@ -284,28 +243,28 @@ async def process(msg, user, client, reply, replied=None):
             for offset, length in bold.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Medium.ttf", 33, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_medium.ttf", 33, encoding="utf-16"
                     )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Italic.ttf", 33, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_italic.ttf", 33, encoding="utf-16"
                     )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/DroidSansMono.ttf", 30, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/droidsans_mono.ttf", 30, encoding="utf-16"
                     )
                     textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Regular.ttf", 30, encoding="utf-16"
+                        "userbot/helpers/resources/fonts/roboto_regular.ttf", 30, encoding="utf-16"
                     )
                     textcolor = "#898989"
-            if letter in emoji.UNICODE_EMOJI["en"]:
+            if letter in UNICODE_EMOJI["en"]:
                 newemoji, mask = await emoji_fetch(letter)
                 canvas.paste(newemoji, (x, y - 2), mask)
                 x += 45
@@ -341,7 +300,7 @@ async def drawer(width, height):
 
 
 async def fontTest(letter):
-    test = TTFont("./temp/Roboto-Medium.ttf")
+    test = TTFont("userbot/helpers/resources/fonts/roboto_medium.ttf")
     for table in test["cmap"].tables:
         if ord(letter) in table.cmap.keys():
             return True
@@ -355,23 +314,23 @@ async def get_entity(msg):
     if not msg.entities:
         return bold, mono, italic, link
     for entity in msg.entities:
-        if isinstance(entity, types.MessageEntityBold):
+        if isinstance(entity, MessageEntityBold):
             bold[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityItalic):
+        elif isinstance(entity, MessageEntityItalic):
             italic[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityCode):
+        elif isinstance(entity, MessageEntityCode):
             mono[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityUrl):
+        elif isinstance(entity, MessageEntityUrl):
             link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityTextUrl):
+        elif isinstance(entity, MessageEntityTextUrl):
             link[entity.offset] = entity.offset + entity.length
-        elif isinstance(entity, types.MessageEntityMention):
+        elif isinstance(entity, MessageEntityMention):
             link[entity.offset] = entity.offset + entity.length
     return bold, mono, italic, link
 
 
 async def dogdoctype(name, size, htype, canvas):
-    font = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
+    font = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 38)
     doc = Image.new("RGBA", (130, 130), (29, 29, 29, 255))
     draw = ImageDraw.Draw(doc)
     draw.ellipse((0, 0, 130, 130), fill="#434343")
@@ -388,17 +347,17 @@ async def dogdoctype(name, size, htype, canvas):
 async def no_photo(reply, tot):
     pfp = Image.new("RGBA", (105, 105), (0, 0, 0, 0))
     pen = ImageDraw.Draw(pfp)
-    color = random.choice(COLORS)
+    color = choice(COLORS)
     pen.ellipse((0, 0, 105, 105), fill=color)
     letter = "" if not tot else tot[0]
-    font = ImageFont.truetype("./temp/Roboto-Regular.ttf", 60)
+    font = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_regular.ttf", 60)
     pen.text((32, 17), letter, font=font, fill="white")
     return pfp, color
 
 
 async def emoji_fetch(emoji):
-    emojis = json.loads(
-        urllib.request.urlopen(
+    emojis = loads(
+        urlopen(
             "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
         )
         .read()
@@ -406,9 +365,9 @@ async def emoji_fetch(emoji):
     )
     if emoji in emojis:
         img = emojis[emoji]
-        return await transparent(urllib.request.urlretrieve(img, "./temp/emoji.png")[0])
+        return await transparent(urlretrieve(img, "./temp/emoji.png")[0])
     img = emojis["⛔"]
-    return await transparent(urllib.request.urlretrieve(img, "./temp/emoji.png")[0])
+    return await transparent(urlretrieve(img, "./temp/emoji.png")[0])
 
 
 async def transparent(emoji):
@@ -423,10 +382,10 @@ async def transparent(emoji):
 
 
 async def replied_user(draw, tot, text, maxlength, title):
-    namefont = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
-    namefallback = ImageFont.truetype("./temp/Quivira.otf", 38)
-    textfont = ImageFont.truetype("./temp/Roboto-Regular.ttf", 32)
-    textfallback = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
+    namefont = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 38)
+    namefallback = ImageFont.truetype("userbot/helpers/resources/fonts/quivira.otf", 38)
+    textfont = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_regular.ttf", 32)
+    textfallback = ImageFont.truetype("userbot/helpers/resources/fonts/roboto_medium.ttf", 38)
     maxlength = maxlength + 7 if maxlength < 10 else maxlength
     text = text[: maxlength - 2] + ".." if len(text) > maxlength else text
     draw.line((165, 90, 165, 170), width=5, fill="white")

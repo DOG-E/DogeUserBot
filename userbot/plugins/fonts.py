@@ -1,14 +1,11 @@
-from userbot import doge
+from . import doge, edl, eor, fonts
 
-from ..core.managers import eor
-from . import fonts
-
-plugin_category = "extra"
+plugin_category = "misc"
 
 
 @doge.bot_cmd(
     pattern="[Ff]1(?:\s|$)([\s\S]*)",
-    command=("f1 ៣ ⩏ ន ɨ ¢ ♬ ɭ", plugin_category),
+    command=("f1", plugin_category),
     info={
         "header": "៣ ⩏ ន ɨ ¢ ♬ ɭ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -25,7 +22,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normalfontcharacter in string:
@@ -39,7 +36,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]2(?:\s|$)([\s\S]*)",
-    command=("f2 ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄", plugin_category),
+    command=("f2", plugin_category),
     info={
         "header": "ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -56,7 +53,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normalfontcharacter in string:
@@ -70,7 +67,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]3(?:\s|$)([\s\S]*)",
-    command=("f3 ｖａｐｏｒ", plugin_category),
+    command=("f3", plugin_category),
     info={
         "header": "ｖａｐｏｒ Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f3 <text>", "{tr}f3 reply this command to text message"],
@@ -87,7 +84,7 @@ async def vapor(event):
     elif textx:
         message = textx.text
     else:
-        await eor(event, "`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await edl(event, "`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
         return
 
     for charac in message:
@@ -103,7 +100,7 @@ async def vapor(event):
 
 @doge.bot_cmd(
     pattern="[Ff]4(?:\s|$)([\s\S]*)",
-    command=("f4 sᴍᴀʟʟᴄᴀᴘs", plugin_category),
+    command=("f4", plugin_category),
     info={
         "header": "sᴍᴀʟʟᴄᴀᴘs Font style command.(Changes font style of the given text)",
         "usage": [
@@ -120,7 +117,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = "".join(args).lower()
     for normaltextcharacter in string:
@@ -134,7 +131,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]5(?:\s|$)([\s\S]*)",
-    command=("f5 🅑 🅛 🅐 🅒 🅚 🅑 🅕", plugin_category),
+    command=("f5", plugin_category),
     info={
         "header": "🅑 🅛 🅐 🅒 🅚 🅑 🅕 Font style command.(Changes font style of the given text)",
         "usage": [
@@ -151,7 +148,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -165,7 +162,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]6(?:\s|$)([\s\S]*)",
-    command=("f6 Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ", plugin_category),
+    command=("f6", plugin_category),
     info={
         "header": "Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -182,7 +179,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -196,7 +193,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]7(?:\s|$)([\s\S]*)",
-    command=("f7 Ꮏ Ꭿ Ꮑ Ꮄ", plugin_category),
+    command=("f7", plugin_category),
     info={
         "header": "Ꮏ Ꭿ Ꮑ Ꮄ Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f7 <text>", "{tr}f7 reply this command to text message"],
@@ -210,7 +207,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -224,7 +221,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]8(?:\s|$)([\s\S]*)",
-    command=("f8 🄱 🄾 🅇 🄵", plugin_category),
+    command=("f8", plugin_category),
     info={
         "header": "🄱 🄾 🅇 🄵 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f8 <text>", "{tr}f8 reply this command to text message"],
@@ -238,7 +235,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -252,7 +249,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]9(?:\s|$)([\s\S]*)",
-    command=("f9 ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ", plugin_category),
+    command=("f9", plugin_category),
     info={
         "header": "ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -269,7 +266,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -283,7 +280,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]10(?:\s|$)([\s\S]*)",
-    command=("f10 є ﻮ א ק t Ŧ", plugin_category),
+    command=("f10", plugin_category),
     info={
         "header": "є ﻮ א ק t Ŧ Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f10 <text>", "{tr}f10 reply this command to text message"],
@@ -297,7 +294,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -311,7 +308,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]11(?:\s|$)([\s\S]*)",
-    command=("f11 𝖒𝖆𝖗𝖊𝖋", plugin_category),
+    command=("f11", plugin_category),
     info={
         "header": "𝖒𝖆𝖗𝖊𝖋 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f11 <text>", "{tr}f11 reply this command to text message"],
@@ -325,7 +322,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = "".join(args).lower()
     for normaltextcharacter in string:
@@ -339,7 +336,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]12(?:\s|$)([\s\S]*)",
-    command=("f12 𝓗 𝓐 𝓝 𝓓 𝓒 𝓕", plugin_category),
+    command=("f12", plugin_category),
     info={
         "header": "𝓗 𝓐 𝓝 𝓓 𝓒 𝓕 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f12 <text>", "{tr}f12 reply this command to text message"],
@@ -353,7 +350,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -367,7 +364,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]13(?:\s|$)([\s\S]*)",
-    command=("f13 ⅅ Ꮎ U ℬ ℒ ℰ ℱ", plugin_category),
+    command=("f13", plugin_category),
     info={
         "header": "ⅅ Ꮎ U ℬ ℒ ℰ ℱ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -384,7 +381,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -398,7 +395,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]14(?:\s|$)([\s\S]*)",
-    command=("f14 𝕲 𝕳 𝕺 𝕾 𝕿 𝕱", plugin_category),
+    command=("f14", plugin_category),
     info={
         "header": "𝕲 𝕳 𝕺 𝕾 𝕿 𝕱 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f14 <text>", "{tr}f14 reply this command to text message"],
@@ -412,7 +409,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -426,7 +423,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]15(?:\s|$)([\s\S]*)",
-    command=("f15 𝒽 𝒶 𝓃 𝒹 𝓈 𝒻", plugin_category),
+    command=("f15", plugin_category),
     info={
         "header": "𝒽 𝒶 𝓃 𝒹 𝓈 𝒻 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f15 <text>", "{tr}f15 reply this command to text message"],
@@ -440,7 +437,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -452,7 +449,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]16(?:\s|$)([\s\S]*)",
-    command=("f16 ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ", plugin_category),
+    command=("f16", plugin_category),
     info={
         "header": "ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ Font style command.(Changes font style of the given text)",
         "usage": [
@@ -469,7 +466,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "What I am Supposed to change give text")
+        await edl(event, "What I am Supposed to change give text")
         return
     string = " ".join(args).lower()
     for normaltextcharacter in string:
@@ -483,7 +480,7 @@ async def stylish_generator(event):
 
 @doge.bot_cmd(
     pattern="[Ff]17(?:\s|$)([\s\S]*)",
-    command=("f17 山 乇 乇 乃", plugin_category),
+    command=("f17", plugin_category),
     info={
         "header": "山 乇 乇 乃 Font style command.(Changes font style of the given text)",
         "usage": ["{tr}f17 <text>", "{tr}f17 reply this command to text message"],
@@ -497,7 +494,7 @@ async def weebify(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await eor(event, "`What I am Supposed to Weebify `")
+        await edl(event, "`What I am Supposed to Weebify `")
         return
     string = " ".join(args).lower()
     for normiecharacter in string:

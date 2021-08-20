@@ -7,7 +7,7 @@ from asyncio import sleep
 from os import environ
 from re import sub
 from sys import setrecursionlimit
-from urllib import parse
+from urllib.parse import quote
 
 from pylast import LastFMNetwork, User, WSError, md5
 from telethon.errors import AboutTooLongError
@@ -15,17 +15,10 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from userbot import doge
+from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, Config, deEmojify, doge, hide_inlinebot, lan, logging, reply_id
 
-from ..Config import Config
-from ..core.logger import logging
-from ..helpers.functions import deEmojify, hide_inlinebot
-from ..helpers.utils import reply_id
-from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO
-
+plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
-plugin_category = "extra"
-
 
 LASTFM_API = Config.LASTFM_API
 LASTFM_SECRET = Config.LASTFM_SECRET
@@ -168,7 +161,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
 )
 async def last_fm(lastFM):
     ".lastfm command, fetch scrobble data from last.fm."
-    await lastFM.edit("Processing...")
+    await lastFM.edit(lan("processing"))
     preview = None
     playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
@@ -178,7 +171,7 @@ async def last_fm(lastFM):
         except IndexError:
             image = None
         tags = await gettags(isNowPlaying=True, playing=playing)
-        rectrack = parse.quote(f"{playing}")
+        rectrack = quote(f"{playing}")
         rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
         if image:
             output = f"[‎]({image})[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
@@ -193,7 +186,7 @@ async def last_fm(lastFM):
             LOGS.info(i)
             printable = await artist_and_song(track)
             tags = await gettags(track)
-            rectrack = parse.quote(str(printable))
+            rectrack = quote(str(printable))
             rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
             output += f"• [{printable}]({rectrack})\n"
             if tags:

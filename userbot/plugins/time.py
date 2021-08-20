@@ -1,23 +1,17 @@
-import os
+from calendar import month
+from os import makedirs, path, remove
 from datetime import datetime as dt
 
-from PIL import Image, ImageDraw, ImageFont
-from pytz import country_names as c_n
-from pytz import country_timezones as c_tz
-from pytz import timezone as tz
+from PIL.Image import new
+from PIL.ImageDraw import Draw
+from PIL.ImageFont import truetype
+from pytz import country_names as c_n, country_timezones as c_tz, timezone as tz
 
-from userbot import doge
+from . import Config, doge, edl, eor, reply_id
 
-from ..Config import Config
-from ..core.managers import eor
-from . import reply_id
+plugin_category = "tool"
 
-plugin_category = "utils"
-
-# Userbot timezone
-
-
-FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
+FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
 
 
 async def get_tz(con):
@@ -76,8 +70,10 @@ async def time_func(tdata):
             tdata,
             f"`It's`  **{dt.now().strftime(t_form)}**` on `**{dt.now().strftime(d_form)}** `here.`",
         )
+
     if not timezones:
         return await eor(tdata, "`Invaild country.`")
+
     if len(timezones) == 1:
         time_zone = timezones[0]
     elif len(timezones) > 1:
@@ -86,14 +82,11 @@ async def time_func(tdata):
             time_zone = timezones[tz_num - 1]
         else:
             return_str = f"`{c_name} has multiple timezones:`\n\n"
-
             for i, item in enumerate(timezones):
                 return_str += f"`{i+1}. {item}`\n"
-
             return_str += "\n`Choose one by typing the number "
             return_str += "in the command.`\n"
             return_str += f"`Example: .ctime {c_name} 2`"
-
             return await eor(tdata, return_str)
 
     dtnow1 = dt.now(tz(time_zone)).strftime(t_form)
@@ -124,17 +117,17 @@ async def _(event):
     "To show current time"
     reply_msg_id = await reply_id(event)
     current_time = dt.now().strftime(
-        f"⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡\n⚡USERBOT TIMEZONE⚡\n⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡\n   {os.path.basename(Config.TZ)}\n  Time: %H:%M:%S \n  Date: %d.%m.%y \n⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡"
+        f"⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡\n⚡USERBOT TIMEZONE⚡\n⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡\n   {path.basename(Config.TZ)}\n  Time: %H:%M:%S \n  Date: %d.%m.%y \n⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡⚡"
     )
     input_str = event.pattern_match.group(1)
     if input_str:
         current_time = input_str
-    if not os.path.isdir(Config.TEMP_DIR):
-        os.makedirs(Config.TEMP_DIR)
+    if not path.isdir(Config.TEMP_DIR):
+        makedirs(Config.TEMP_DIR)
     required_file_name = Config.TEMP_DIR + " " + str(dt.now()) + ".webp"
-    img = Image.new("RGBA", (350, 220), color=(0, 0, 0, 115))
-    fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
-    drawn_text = ImageDraw.Draw(img)
+    img = new("RGBA", (350, 220), color=(0, 0, 0, 115))
+    fnt = truetype(FONT_FILE_TO_USE, 30)
+    drawn_text = Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
     img.save(required_file_name)
     await event.client.send_file(
@@ -142,5 +135,29 @@ async def _(event):
         required_file_name,
         reply_to=reply_msg_id,
     )
-    os.remove(required_file_name)
+    remove(required_file_name)
     await event.delete()
+
+@doge.bot_cmd(
+    pattern="calendar ([\s\S]*)",
+    command=("calendar", plugin_category),
+    info={
+        "header": "To get calendar of given month and year.",
+        "usage": "{tr}calendar year ; month",
+        "examples": "{tr}calendar 2021 ; 5",
+    },
+)
+async def _(event):
+    "To get calendar of given month and year."
+    input_str = event.pattern_match.group(1)
+    input_sgra = input_str.split(";")
+    if len(input_sgra) != 2:
+        return await edl(event, "**Syntax: **`.calendar year ; month`", 5)
+
+    yyyy = input_sgra[0]
+    mm = input_sgra[1]
+    try:
+        output_result = month(int(yyyy.strip()), int(mm.strip()))
+        await eor(event, f"```{output_result}```")
+    except Exception as e:
+        await edl(event, f"**Error:**\n`{e}`", 5)

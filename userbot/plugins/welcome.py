@@ -1,24 +1,20 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
-from telethon import events
+from telethon.events import ChatAction
+from telethon.utils import get_display_name
 
-from userbot import doge
-from userbot.core.logger import logging
-
-from ..core.managers import edl, eor
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..sql_helper.welcome_sql import (
     add_welcome_setting,
     get_current_welcome_settings,
     rm_welcome_setting,
     update_previous_welcome,
 )
-from . import BOTLOG_CHATID
+from . import BOTLOG_CHATID, addgvar, delgvar, doge, eor, edl, gvarstatus, logging
 
-plugin_category = "utils"
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
 
-@doge.on(events.ChatAction)
+@doge.on(ChatAction)
 async def _(event):  # sourcery no-metrics
     cws = get_current_welcome_settings(event.chat_id)
     if (
@@ -34,7 +30,7 @@ async def _(event):  # sourcery no-metrics
         a_user = await event.get_user()
         chat = await event.get_chat()
         me = await event.client.get_me()
-        title = chat.title or "this chat"
+        title = get_display_name(await event.get_chat()) or "this chat"
         participants = await event.client.get_participants(chat)
         count = len(participants)
         mention = "<a href='tg://user?id={}'>{}</a>".format(
@@ -59,8 +55,10 @@ async def _(event):  # sourcery no-metrics
                 )
                 file_media = msg_o.media
                 current_saved_welcome_message = msg_o.message
+                link_preview = True
             elif cws.reply:
                 current_saved_welcome_message = cws.reply
+                link_preview = False
         current_message = await event.reply(
             current_saved_welcome_message.format(
                 mention=mention,
@@ -79,6 +77,7 @@ async def _(event):  # sourcery no-metrics
             ),
             file=file_media,
             parse_mode="html",
+            link_preview=link_preview,
         )
         update_previous_welcome(event.chat_id, current_message.id)
 
@@ -122,7 +121,7 @@ async def save_welcome(event):
                 BOTLOG_CHATID,
                 f"#WELCOME_NOTE\
                 \nCHAT ID: {event.chat_id}\
-                \nThe following message is saved as the welcome note for the {event.chat.title}, Don't delete this message !!",
+                \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, Don't delete this message !!",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
@@ -183,7 +182,7 @@ async def show_welcome(event):
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
         await eor(event, "`I am currently welcoming new users with this welcome note.`")
-        await event.reply(cws.reply)
+        await event.reply(cws.reply, link_preview=False)
 
 
 @doge.bot_cmd(

@@ -1,8 +1,8 @@
-import importlib
-import sys
+from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
+from sys import modules
 
-from userbot import CMD_HELP, LOAD_PLUG
+from .. import CMD_HELP, LOAD_PLUG
 
 from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
@@ -21,10 +21,9 @@ def load_module(shortname, plugin_path=None):
         pass
     elif shortname.endswith("_"):
         path = Path(f"userbot/plugins/{shortname}.py")
-        checkplugins(path)
         name = "userbot.plugins.{}".format(shortname)
-        spec = importlib.util.spec_from_file_location(name, path)
-        mod = importlib.util.module_from_spec(spec)
+        spec = spec_from_file_location(name, path)
+        mod = module_from_spec(spec)
         spec.loader.exec_module(mod)
         LOGS.info("Successfully imported " + shortname)
     else:
@@ -34,9 +33,8 @@ def load_module(shortname, plugin_path=None):
         else:
             path = Path((f"{plugin_path}/{shortname}.py"))
             name = f"{plugin_path}/{shortname}".replace("/", ".")
-        checkplugins(path)
-        spec = importlib.util.spec_from_file_location(name, path)
-        mod = importlib.util.module_from_spec(spec)
+        spec = spec_from_file_location(name, path)
+        mod = module_from_spec(spec)
         mod.bot = doge
         mod.LOGS = LOGS
         mod.Config = Config
@@ -49,15 +47,17 @@ def load_module(shortname, plugin_path=None):
         mod._dogeutils = _dogeutils
         mod._dogetools = _dogetools
         mod.media_type = media_type
-        mod.edl = edl
         mod.install_pip = install_pip
         mod.parse_pre = _format.parse_pre
+        mod.edl = edl
         mod.eor = eor
+        mod.edit_delete = edl
+        mod.edit_or_reply = eor
         mod.logger = logging.getLogger(shortname)
         mod.borg = doge
         spec.loader.exec_module(mod)
         # for imports
-        sys.modules["userbot.plugins." + shortname] = mod
+        modules["userbot.plugins." + shortname] = mod
         LOGS.info("Successfully imported " + shortname)
 
 
@@ -90,13 +90,3 @@ def remove_plugin(shortname):
                 del doge._event_builders[i]
     except BaseException:
         raise ValueError
-
-
-def checkplugins(filename):
-    with open(filename, "r") as f:
-        filedata = f.read()
-    filedata = filedata.replace("sendmessage", "send_message")
-    filedata = filedata.replace("sendfile", "send_file")
-    filedata = filedata.replace("editmessage", "edit_message")
-    with open(filename, "w") as f:
-        f.write(filedata)

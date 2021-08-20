@@ -1,15 +1,12 @@
-import random
+from random import getrandbits
 
 from telethon.errors.rpcbaseerrors import ForbiddenError
 from telethon.errors.rpcerrorlist import PollOptionInvalidError
 from telethon.tl.types import InputMediaPoll, Poll
 
-from userbot import doge
+from . import Build_Poll, doge, eor, reply_id
 
-from ..core.managers import eor
-from . import Build_Poll, reply_id
-
-plugin_category = "extra"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -33,7 +30,7 @@ async def pollcreator(dogpoll):
                 dogpoll.chat_id,
                 file=InputMediaPoll(
                     poll=Poll(
-                        id=random.getrandbits(32),
+                        id=getrandbits(32),
                         question="👆👆So do you guys agree with this?",
                         answers=options,
                     )
@@ -58,7 +55,7 @@ async def pollcreator(dogpoll):
                     dogpoll.chat_id,
                     file=InputMediaPoll(
                         poll=Poll(
-                            id=random.getrandbits(32),
+                            id=getrandbits(32),
                             question=doginput[0],
                             answers=options,
                         )

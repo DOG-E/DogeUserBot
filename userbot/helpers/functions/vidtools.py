@@ -1,5 +1,4 @@
-import logging
-import random
+from random import choice
 
 from moviepy.editor import VideoFileClip
 from PIL import Image, ImageOps
@@ -67,7 +66,7 @@ async def spin_frames(image, w, h, outframes):
     img = Image.new("RGB", (512, 512), "black")
     img.paste(image, ((512 - w) // 2, (512 - h) // 2))
     image = img
-    way = random.choice([1, -1])
+    way = choice([1, -1])
     for i in range(1, 60):
         img = image.rotate(i * 6 * way)
         outframes.append(img)

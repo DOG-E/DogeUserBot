@@ -1,23 +1,18 @@
-# telegraph utils for catuserbot
-import os
-import random
-import string
 from datetime import datetime
+from os import remove
+from random import choice
+from string import ascii_lowercase, ascii_uppercase
 
-from PIL import Image
-from telegraph import Telegraph, exceptions, upload_file
+from PIL.Image import open as Imopen
+from telegraph import Telegraph, upload_file
+from telegraph.exceptions import TelegraphException
+from telethon.events import NewMessage
 from telethon.utils import get_display_name
 
-from userbot import doge
+from . import BOTLOG, BOTLOG_CHATID, Config, doge, edl, eor, fsmessage, lan, logging, mention
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import eor
-from . import BOTLOG, BOTLOG_CHATID, mention
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-plugin_category = "utils"
-
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
@@ -25,7 +20,7 @@ auth_url = r["auth_url"]
 
 
 def resize_image(image):
-    im = Image.open(image)
+    im = Imopen(image)
     im.save(image, "PNG")
 
 
@@ -50,7 +45,7 @@ def resize_image(image):
 )  # sourcery no-metrics
 async def _(event):
     "To get telegraph link."
-    dogevent = await eor(event, "`Processing...`")
+    dogevent = await eor(event, lan("processing"))
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -74,17 +69,17 @@ async def _(event):
             resize_image(downloaded_file_name)
         try:
             media_urls = upload_file(downloaded_file_name)
-        except exceptions.TelegraphException as exc:
-            await dogevent.edit(f"**Error : **\n`{str(exc)}`")
-            os.remove(downloaded_file_name)
+        except TelegraphException as exc:
+            await dogevent.edit(f"**Error: **\n`{exc}`")
+            remove(downloaded_file_name)
         else:
             end = datetime.now()
             ms = (end - start).seconds
-            os.remove(downloaded_file_name)
+            remove(downloaded_file_name)
             await dogevent.edit(
-                f"**➥ Uploaded to :-**[telegraph](https://telegra.ph{media_urls[0]})\
+                f"**➥ Uploaded to: **[telegraph](https://telegra.ph{media_urls[0]})\
                  \n**➥ Uploaded in {ms} seconds.**\
-                 \n**➥ Uploaded by :-** {mention}",
+                 \n**➥ Uploaded by:** {mention}",
                 link_preview=True,
             )
     elif input_str in ["text", "t"]:
@@ -105,14 +100,14 @@ async def _(event):
                 m_list = fd.readlines()
             for m in m_list:
                 page_content += m.decode("UTF-8") + "\n"
-            os.remove(downloaded_file_name)
+            remove(downloaded_file_name)
         page_content = page_content.replace("\n", "<br>")
         try:
             response = telegraph.create_page(title_of_page, html_content=page_content)
         except Exception as e:
             LOGS.info(e)
             title_of_page = "".join(
-                random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
+                choice(list(ascii_lowercase + ascii_uppercase))
                 for _ in range(16)
             )
             response = telegraph.create_page(title_of_page, html_content=page_content)
@@ -120,8 +115,42 @@ async def _(event):
         ms = (end - start).seconds
         dog = f"https://telegra.ph/{response['path']}"
         await dogevent.edit(
-            f"**➥ Uploaded to :-** [telegraph]({dog})\
+            f"**➥ Uploaded to:** [telegraph]({dog})\
                  \n**➥ Uploaded in {ms} seconds.**\
-                 \n**➥ Uploaded by :-** {mention}",
+                 \n**➥ Uploaded by:** {mention}",
             link_preview=True,
         )
+
+
+@doge.bot_cmd(
+    pattern="tgl(?:\s|$)([\s\S]*)",
+    command=("tgl", plugin_category),
+    info={
+        "header": "Reply or write link convert to Telegraph page.",
+        "usage": ["{tr}tgl <reply link>", "{tr}tgl <link>"]
+    },
+)
+async def _(event):
+    "To get link preview"
+    input_str = event.pattern_match.group(1)
+    if not input_str:
+        reply_message = await event.get_reply_message()
+        input_str = reply_message.text
+    if not input_str:
+        return await edl(event, "Give me a link.")
+    chat = "@ChotamReaderBot"
+    dogevent = await eor(event, lan("processing"))
+    async with event.client.conversation(chat) as conv:
+        response = conv.wait_event(
+            NewMessage(incoming=True, from_users=chat)
+        )
+        await fsmessage(event, input_str, forward=True, chat=chat)
+        response = await response
+        await event.client.send_read_acknowledge(conv.chat_id)
+        if response.text.startswith(""):
+            await dogevent.edit("Am I Dumb Or Am I Dumb?")
+        else:
+            await dogevent.delete()
+            await event.client.send_message(event.chat_id, response.message)
+        await conv.mark_read()
+        await conv.cancel_all()

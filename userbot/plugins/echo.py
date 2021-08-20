@@ -2,10 +2,8 @@
 created by @sandy1709
 Idea by @BlazingRobonix
 """
+from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import edl, eor
 from ..sql_helper.echo_sql import (
     addecho,
     get_all_echos,
@@ -15,7 +13,7 @@ from ..sql_helper.echo_sql import (
     remove_echo,
     remove_echos,
 )
-from . import get_user_from_event
+from . import doge, edl, eor, get_user_from_event, wowmydev
 
 plugin_category = "fun"
 
@@ -37,6 +35,10 @@ async def echo(event):
     user, rank = await get_user_from_event(event, dogevent, nogroup=True)
     if not user:
         return
+    userid = user.id
+    flag = await wowmydev(userid, event)
+    if flag:
+        return
     reply_msg = await event.get_reply_message()
     chat_id = event.chat_id
     user_id = reply_msg.sender_id
@@ -44,7 +46,7 @@ async def echo(event):
         chat_name = user.first_name
         chat_type = "Personal"
     else:
-        chat_name = event.chat.title
+        chat_name = get_display_name(await event.get_chat())
         chat_type = "Group"
     user_name = user.first_name
     user_username = user.username
@@ -53,7 +55,7 @@ async def echo(event):
     try:
         addecho(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edl(dogevent, f"**Error:**\n`{str(e)}`")
+        await edl(dogevent, f"**Error:**\n`{e}`")
     else:
         await eor(dogevent, "Hi")
 
@@ -78,7 +80,7 @@ async def echo(event):
         try:
             remove_echo(chat_id, user_id)
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`")
+            await edl(event, f"**Error:**\n`{e}`")
         else:
             await eor(event, "Echo has been stopped for the user")
     else:
@@ -86,7 +88,7 @@ async def echo(event):
 
 
 @doge.bot_cmd(
-    pattern="delecho( -a)?",
+    pattern="delecho( .a)?",
     command=("delecho", plugin_category),
     info={
         "header": "To delete echo in this chat.",
@@ -94,7 +96,7 @@ async def echo(event):
         "flags": {"a": "To stop in all chats"},
         "usage": [
             "{tr}delecho",
-            "{tr}delecho -a",
+            "{tr}delecho .a",
         ],
     },
 )
@@ -105,30 +107,30 @@ async def echo(event):
         lecho = get_all_echos()
         if len(lecho) == 0:
             return await edl(
-                event, "You havent enabled echo atleast for one user in any chat."
+                event, "You haven't enabled echo atleast for one user in any chat."
             )
         try:
             remove_all_echos()
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{str(e)}`")
         else:
             await eor(event, "Deleted echo for all enabled users in all chats.")
     else:
         lecho = get_echos(event.chat_id)
         if len(lecho) == 0:
             return await edl(
-                event, "You havent enabled echo atleast for one user in this chat."
+                event, "You haven't enabled echo atleast for one user in this chat."
             )
         try:
             remove_echos(event.chat_id)
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`", 10)
+            await edl(event, f"**Error:**\n`{e}`")
         else:
             await eor(event, "Deleted echo for all enabled users in this chat")
 
 
 @doge.bot_cmd(
-    pattern="listecho( -a)?$",
+    pattern="listecho( .a)?$",
     command=("listecho", plugin_category),
     info={
         "header": "shows the list of users for whom you enabled echo",
@@ -137,7 +139,7 @@ async def echo(event):
         },
         "usage": [
             "{tr}listecho",
-            "{tr}listecho -a",
+            "{tr}listecho .a",
         ],
     },
 )
@@ -183,7 +185,7 @@ async def echo(event):  # sourcery no-metrics
                 private_chats += (
                     f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
                 )
-        output_str = f"**Echo enabled users in this chat are:**\n" + private_chats
+        output_str = "**Echo enabled users in this chat are:**\n" + private_chats
 
     await eor(event, output_str)
 

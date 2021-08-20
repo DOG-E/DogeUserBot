@@ -1,57 +1,33 @@
-import asyncio
-import os
-import sys
+from asyncio import create_subprocess_shell
 from asyncio.exceptions import CancelledError
+from asyncio.subprocess import PIPE
+from os import path as osp, remove
+from sys import executable
 
-import heroku3
-import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
+from heroku3 import from_key
+from urllib3 import disable_warnings
+from urllib3.exceptions import InsecureRequestWarning
 
-from userbot import HEROKU_APP, UPSTREAM_REPO_URL, doge
+from . import HEROKU_APP, UPSTREAM_REPO_URL, Config, delgvar, doge, edl, eor, logging, tr
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import edl, eor
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
-from ..sql_helper.globals import delgvar
 
-plugin_category = "tools"
-cmdhd = Config.COMMAND_HAND_LER
-
+plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
-# -- Constants -- #
 
 HEROKU_APP_NAME = Config.HEROKU_APP_NAME or None
 HEROKU_API_KEY = Config.HEROKU_API_KEY or None
-Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
-heroku_api = "https://api.heroku.com"
-
+Heroku = from_key(Config.HEROKU_API_KEY)
 UPSTREAM_REPO_BRANCH = Config.UPSTREAM_REPO_BRANCH
-
-REPO_REMOTE_NAME = "temponame"
-IFFUCI_ACTIVE_BRANCH_NAME = "master"
-NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
-HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
-RESTARTING_APP = "re-starting heroku application"
-IS_SELECTED_DIFFERENT_BRANCH = (
-    "looks like a custom branch {branch_name} "
-    "is being used:\n"
-    "in this case, Updater is unable to identify the branch to be updated."
-    "please check out to an official branch, and re-start the updater."
-)
-
-
-# -- Constants End -- #
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-requirements_path = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "requirements.txt"
+disable_warnings(InsecureRequestWarning)
+requirements_path = osp.join(
+    osp.dirname(osp.dirname(osp.dirname(__file__))), "requirements.txt"
 )
 
 
@@ -69,14 +45,14 @@ async def print_changelogs(event, ac_br, changelog):
     )
     if len(changelog_str) > 4096:
         await event.edit("`Changelog is too big, view the file to see it.`")
-        with open("output.txt", "w+") as file:
+        with open("@DogeUserBot.txt", "w+") as file:
             file.write(changelog_str)
         await event.client.send_file(
             event.chat_id,
-            "output.txt",
+            "@DogeUserBot.txt",
             reply_to=event.id,
         )
-        os.remove("output.txt")
+        remove("@DogeUserBot.txt")
     else:
         await event.client.send_message(
             event.chat_id,
@@ -89,10 +65,10 @@ async def print_changelogs(event, ac_br, changelog):
 async def update_requirements():
     reqs = str(requirements_path)
     try:
-        process = await asyncio.create_subprocess_shell(
-            " ".join([sys.executable, "-m", "pip", "install", "-r", reqs]),
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+        process = await create_subprocess_shell(
+            " ".join([executable, "-m", "pip", "install", "-r", reqs]),
+            stdout=PIPE,
+            stderr=PIPE,
         )
         await process.communicate()
         return process.returncode
@@ -100,28 +76,28 @@ async def update_requirements():
         return repr(e)
 
 
-async def update(event, repo, ups_rem, ac_br):
+async def pull(event, repo, ups_rem, ac_br):
     try:
         ups_rem.pull(ac_br)
     except GitCommandError:
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
-    teledoge = await event.edit(
+    xedoc = await event.edit(
         "`Successfully Updated!\n" "Bot is restarting... Wait for a minute!`"
     )
-    await event.client.reload(teledoge)
+    await event.client.reload(xedoc)
 
 
-async def deploy(event, repo, ups_rem, ac_br, txt):
+async def push(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is None:
         return await event.edit("`Please set up`  **HEROKU_API_KEY**  ` Var...`")
-    heroku = heroku3.from_key(HEROKU_API_KEY)
+    heroku = from_key(HEROKU_API_KEY)
     heroku_app = None
     heroku_applications = heroku.apps()
     if HEROKU_APP_NAME is None:
         await event.edit(
             "`Please set up the` **HEROKU_APP_NAME** `Var`"
-            " to be able to deploy your userbot...`"
+            " to be able to deploy your doge...`"
         )
         repo.__del__()
         return
@@ -131,11 +107,11 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             break
     if heroku_app is None:
         await event.edit(
-            f"{txt}\n" "`Invalid Heroku credentials for deploying userbot dyno.`"
+            f"{txt}\n" "`Invalid Heroku credentials for deploying Doge dyno.`"
         )
         return repo.__del__()
-    teledoge = await event.edit(
-        "`Userbot dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
+    xedoc = await event.edit(
+        "`Doge dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
     )
     try:
         ulist = get_collectionlist_items()
@@ -145,7 +121,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
+        add_to_collectionlist("restart_update", [xedoc.chat_id, xedoc.id])
     except Exception as e:
         LOGS.error(e)
     ups_rem.fetch(ac_br)
@@ -166,7 +142,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
         return await edl(
-            event, "`Build failed!\n" "Cancelled or there were some errors...`"
+            event, "`Build failed! ❌\n" "Cancelled or there were some errors...`"
         )
     try:
         remote.push("master:main", force=True)
@@ -184,30 +160,34 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
 
 
 @doge.bot_cmd(
-    pattern="update(| now)?$",
+    pattern="update( pull| push|$)",
     command=("update", plugin_category),
     info={
-        "header": "To update userbot.",
-        "description": "I recommend you to do update deploy atlest once a week.",
+        "header": "To update DogeUserbot.",
+        "description": "I recommend you to do update push atlest once a week.",
         "options": {
-            "now": "Will update bot but requirements doesnt update.",
-            "deploy": "Bot will update completly with requirements also.",
+            "pull": "Will update bot but requirements doesnt update.",
+            "push": "Bot will update completly with requirements also.",
+            "dogeup": "to update to the original repository, if you fork.",
         },
         "usage": [
             "{tr}update",
-            "{tr}update now",
-            "{tr}update deploy",
+            "{tr}update pull",
+            "{tr}update push",
+            "{tr}dogeup",
         ],
     },
 )
 async def upstream(event):
     "To check if the bot is up to date and update if specified"
     conf = event.pattern_match.group(1).strip()
-    event = await eor(event, "`Checking for updates, please wait....`")
+    event = await eor(event, "`Checking for updates, please wait...`")
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await eor(event, "`Set the required vars first to update the bot`")
+        return await eor(
+            event, "`Set the required vars first to update the bot`"
+        )
     try:
         txt = "`Oops.. Updater cannot continue due to "
         txt += "some problems occured`\n\n**LOGTRACE:**\n"
@@ -223,16 +203,16 @@ async def upstream(event):
             return await event.edit(
                 f"`Unfortunately, the directory {error} "
                 "does not seem to be a git repository.\n"
-                "But we can fix that by force updating the userbot using "
-                ".update now.`"
+                "But we can fix that by force updating the doge bot using "
+                ".update pull.`"
             )
         repo = Repo.init()
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
         force_update = True
-        repo.create_head("master", origin.refs.master)
-        repo.heads.master.set_tracking_branch(origin.refs.master)
-        repo.heads.master.checkout(True)
+        repo.create_head("DOGE", origin.refs.DOGE)
+        repo.heads.DOGE.set_tracking_branch(origin.refs.DOGE)
+        repo.heads.DOGE.checkout(True)
     ac_br = repo.active_branch.name
     if ac_br != UPSTREAM_REPO_BRANCH:
         await event.edit(
@@ -251,78 +231,58 @@ async def upstream(event):
     ups_rem.fetch(ac_br)
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     # Special case for deploy
+    if conf == "push":
+        await event.edit("`Deploying Doge, please wait...`")
+        await push(event, repo, ups_rem, ac_br, txt)
+        return
     if changelog == "" and not force_update:
         await event.edit(
-            "\n`DogeUserBot is`  **up-to-date**  `with`  "
-            f"**{UPSTREAM_REPO_BRANCH}**\n"
+            "\n`Doge is`  **up-to-date**  `with`  " f"**{UPSTREAM_REPO_BRANCH}**\n"
         )
         return repo.__del__()
     if conf == "" and not force_update:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            f"do `{cmdhd}update deploy` to update the DogeUserBot"
+            f"**Command:**\n\n[ `{tr}update push` ] > update deploy\n[ `{tr}update pull` ] > update now"
         )
 
     if force_update:
-        await event.edit(
-            "`Force-Syncing to latest stable userbot code, please wait...`"
-        )
-    if conf == "now":
-        await event.edit("`Updating userbot, please wait...`")
-        await update(event, repo, ups_rem, ac_br)
+        await event.edit("`Force-Syncing to latest stable bot code, please wait...`")
+    if conf == "pull":
+        await event.edit("`Updating doge, please wait...`")
+        await pull(event, repo, ups_rem, ac_br)
     return
 
 
 @doge.bot_cmd(
-    pattern="update deploy$",
+    pattern="dogeup$",
+    command=("dogeup", plugin_category),
+    info={
+        "header": "To update to Doge.",
+        "description": "I recommend you to do update push atlest once a week.",
+        "options": {
+            "dogeup": "To update to the original repository, if you fork.",
+        },
+        "usage": [
+            "{tr}dogeup",
+        ],
+    },
 )
-async def upstream(event):
-    event = await eor(event, "`Pulling repo wait a sec...`")
-    off_repo = "https://github.com/DOG-E/Source/tree/SETUP"
-    os.chdir("/app")
-    try:
-        txt = "`Oops.. Updater cannot continue due to "
-        txt += "some problems occured`\n\n**LOGTRACE:**\n"
-        repo = Repo()
-    except NoSuchPathError as error:
-        await event.edit(f"{txt}\n`directory {error} is not found`")
-        return repo.__del__()
-    except GitCommandError as error:
-        await event.edit(f"{txt}\n`Early failure! {error}`")
-        return repo.__del__()
-    except InvalidGitRepositoryError:
-        repo = Repo.init()
-        origin = repo.create_remote("upstream", off_repo)
-        origin.fetch()
-        repo.create_head("master", origin.refs.master)
-        repo.heads.master.set_tracking_branch(origin.refs.master)
-        repo.heads.master.checkout(True)
-    try:
-        repo.create_remote("upstream", off_repo)
-    except BaseException:
-        pass
-    ac_br = repo.active_branch.name
-    ups_rem = repo.remote("upstream")
-    ups_rem.fetch(ac_br)
-    await event.edit("`Deploying userbot, please wait....`")
-    await deploy(event, repo, ups_rem, ac_br, txt)
-
-
-@doge.bot_cmd(pattern="SHIBA$")
 async def variable(var):
+    "To update to to the DogeRepository."
     if Config.HEROKU_API_KEY is None:
         return await edl(
             var,
-            "Set the required var in Heroku to function this normally `HEROKU_API_KEY`.",
+            "Set the required var in heroku to function this normally `HEROKU_API_KEY`.",
         )
     if Config.HEROKU_APP_NAME is not None:
         app = Heroku.app(Config.HEROKU_APP_NAME)
     else:
         return await edl(
             var,
-            "Set the required var in Heroku to function this normally `HEROKU_APP_NAME`.",
+            "Set the required var in heroku to function this normally `HEROKU_APP_NAME`.",
         )
     heroku_var = app.config()
-    await eor(var, f"`Changing Doge to Shiba wait for 2-3 minutes.`")
-    heroku_var["UPSTREAM_REPO"] = "https://github.com/TeleDoge/DogeUserBot"
+    await eor(var, f"`Switch... wait for 2-3 minutes.`")
+    heroku_var["UPSTREAM_REPO"] = "DogeUserBot"

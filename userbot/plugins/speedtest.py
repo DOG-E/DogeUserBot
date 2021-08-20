@@ -1,17 +1,11 @@
-"""Check your internet speed powered by speedtest.net
-Syntax: .speedtest
-Available Options: image, file, text"""
 
 from time import time
 
-import speedtest
+from speedtest import Speedtest
 
-from userbot import doge
+from . import doge, eor, reply_id
 
-from ..core.managers import eor
-from ..helpers.utils import reply_id
-
-plugin_category = "utils"
+plugin_category = "bot"
 
 
 def convert_from_bytes(size):
@@ -53,7 +47,7 @@ async def _(event):
         as_text = True
     dogevent = await eor(event, "`Calculating my internet speed. Please wait!`")
     start = time()
-    s = speedtest.Speedtest()
+    s = Speedtest()
     s.get_best_server()
     s.download()
     s.upload()

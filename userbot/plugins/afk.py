@@ -1,166 +1,34 @@
-import asyncio
+# Credits to: Ultroid - UserBot
+# Copyright (C) 2021 TeamUltroid
+# <https://github.com/TeamUltroid/Ultroid/>
 from datetime import datetime
 
-from telethon.tl import functions, types
+from telegraph import upload_file
+from telethon import Button
+from telethon.events import MessageEdited, NewMessage
 
-from userbot import doge
+from . import (
+    BOTLOG_CHATID,
+    DOGEAFK,
+    _format,
+    Config,
+    addgvar,
+    delgvar,
+    doge,
+    edl,
+    eor,
+    gvarstatus,
+    lan,
+    logging,
+    media_type,
+    tgbot,
+)
+from ..sql_helper.pmpermit_sql import is_approved
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers.tools import media_type
-from ..helpers.utils import _format
-from . import BOTLOG, BOTLOG_CHATID
-
-plugin_category = "utils"
-
+plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
-
-class AFK:
-    def __init__(self):
-        self.USERAFK_ON = {}
-        self.afk_time = None
-        self.last_afk_message = {}
-        self.afk_star = {}
-        self.afk_end = {}
-        self.reason = None
-        self.msg_link = False
-        self.afk_type = None
-        self.media_afk = None
-        self.afk_on = False
-
-
-AFK_ = AFK()
-
-
-@doge.bot_cmd(outgoing=True, edited=False)
-async def set_not_afk(event):
-    if AFK_.afk_on is False:
-        return
-    back_alive = datetime.now()
-    AFK_.afk_end = back_alive.replace(microsecond=0)
-    if AFK_.afk_star != {}:
-        total_afk_time = AFK_.afk_end - AFK_.afk_star
-        time = int(total_afk_time.seconds)
-        d = time // (24 * 3600)
-        time %= 24 * 3600
-        h = time // 3600
-        time %= 3600
-        m = time // 60
-        time %= 60
-        s = time
-        endtime = ""
-        if d > 0:
-            endtime += f"{d}d {h}h {m}m {s}s"
-        elif h > 0:
-            endtime += f"{h}h {m}m {s}s"
-        else:
-            endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
-    current_message = event.message.message
-    if ("afk" not in current_message) and ("on" in AFK_.USERAFK_ON):
-        shite = await event.client.send_message(
-            event.chat_id,
-            "`Back alive! No Longer afk.\nWas afk for " + endtime + "`",
-        )
-        AFK_.USERAFK_ON = {}
-        AFK_.afk_time = None
-        await asyncio.sleep(5)
-        await shite.delete()
-        AFK_.afk_on = False
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                "#AFKFALSE \n`Set AFK mode to False\n"
-                + "Back alive! No Longer afk.\nWas afk for "
-                + endtime
-                + "`",
-            )
-
-
-@doge.bot_cmd(
-    incoming=True, func=lambda e: bool(e.mentioned or e.is_private), edited=False
-)
-async def on_afk(event):  # sourcery no-metrics
-    if AFK_.afk_on is False:
-        return
-    back_alivee = datetime.now()
-    AFK_.afk_end = back_alivee.replace(microsecond=0)
-    if AFK_.afk_star != {}:
-        total_afk_time = AFK_.afk_end - AFK_.afk_star
-        time = int(total_afk_time.seconds)
-        d = time // (24 * 3600)
-        time %= 24 * 3600
-        h = time // 3600
-        time %= 3600
-        m = time // 60
-        time %= 60
-        s = time
-        endtime = ""
-        if d > 0:
-            endtime += f"{d}d {h}h {m}m {s}s"
-        elif h > 0:
-            endtime += f"{h}h {m}m {s}s"
-        else:
-            endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
-    current_message_text = event.message.message.lower()
-    if "afk" in current_message_text:
-        return False
-    if not await event.get_sender():
-        return
-    if AFK_.USERAFK_ON and not (await event.get_sender()).bot:
-        msg = None
-        if AFK_.afk_type == "media":
-            if AFK_.reason:
-                message_to_reply = (
-                    f"`I am AFK .\n\nAFK Since {endtime}\nReason : {AFK_.reason}`"
-                )
-            else:
-                message_to_reply = f"`I am AFK .\n\nAFK Since {endtime}\nReason : Not Mentioned ( ಠ ʖ̯ ಠ)`"
-            if event.chat_id:
-                msg = await event.reply(message_to_reply, file=AFK_.media_afk.media)
-        elif AFK_.afk_type == "text":
-            if AFK_.msg_link and AFK_.reason:
-                message_to_reply = (
-                    f"**I am AFK .\n\nAFK Since {endtime}\nReason : **{AFK_.reason}"
-                )
-            elif AFK_.reason:
-                message_to_reply = (
-                    f"`I am AFK .\n\nAFK Since {endtime}\nReason : {AFK_.reason}`"
-                )
-            else:
-                message_to_reply = f"`I am AFK .\n\nAFK Since {endtime}\nReason : Not Mentioned ( ಠ ʖ̯ ಠ)`"
-            if event.chat_id:
-                msg = await event.reply(message_to_reply)
-        if event.chat_id in AFK_.last_afk_message:
-            await AFK_.last_afk_message[event.chat_id].delete()
-        AFK_.last_afk_message[event.chat_id] = msg
-        if event.is_private:
-            return
-        hmm = await event.get_chat()
-        if Config.PM_LOGGER_GROUP_ID == -100:
-            return
-        full = None
-        try:
-            full = await event.client.get_entity(event.message.from_id)
-        except Exception as e:
-            LOGS.info(str(e))
-        messaget = media_type(event)
-        resalt = f"#AFK_TAGS \n<b>Group : </b><code>{hmm.title}</code>"
-        if full is not None:
-            resalt += f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
-        if messaget is not None:
-            resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
-        else:
-            resalt += f"\n<b>Message : </b>{event.message.message}"
-        resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
-        if not event.is_private:
-            await event.client.send_message(
-                Config.PM_LOGGER_GROUP_ID,
-                resalt,
-                parse_mode="html",
-                link_preview=False,
-            )
+old_afk_msg = []
 
 
 @doge.bot_cmd(
@@ -170,114 +38,242 @@ async def on_afk(event):  # sourcery no-metrics
         "header": "Enables afk for your account",
         "description": "When you are in afk if any one tags you then your bot will reply as he is offline.\
         AFK mean away from keyboard.",
-        "options": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
+        "options": "If you want AFK reason with media, then reply media.",
         "usage": [
             "{tr}afk <reason>",
-            "{tr}afk <reason> ; <link>",
         ],
         "examples": "{tr}afk Let Me Sleep",
         "note": "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it",
     },
 )
-async def _(event):
-    "To mark yourself as afk i.e. Away from keyboard"
-    AFK_.USERAFK_ON = {}
-    AFK_.afk_time = None
-    AFK_.last_afk_message = {}
-    AFK_.afk_end = {}
-    AFK_.afk_type = "text"
-    start_1 = datetime.now()
-    AFK_.afk_on = True
-    AFK_.afk_star = start_1.replace(microsecond=0)
-    if not AFK_.USERAFK_ON:
-        input_str = event.pattern_match.group(1)
-        if ";" in input_str:
-            msg, mlink = input_str.split(";", 1)
-            AFK_.reason = f"[{msg.strip()}]({mlink.strip()})"
-            AFK_.msg_link = True
-        else:
-            AFK_.reason = input_str
-            AFK_.msg_link = False
-        last_seen_status = await event.client(
-            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
-        )
-        if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
-            AFK_.afk_time = datetime.now()
-        AFK_.USERAFK_ON = f"on: {AFK_.reason}"
-        if AFK_.reason:
-            await edl(event, f"`I shall be Going afk! because ~` {AFK_.reason}", 5)
-        else:
-            await edl(event, f"`I shall be Going afk! `", 5)
-        if BOTLOG:
-            if AFK_.reason:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
-                )
-            else:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
-                )
+async def set_afk(event):
+    if event.client._bot:
+        await edl(event, "Master, I'm a Bot, I can't be AFK..")
+    elif is_afk():
+        return
 
-
-@doge.bot_cmd(
-    pattern="mafk(?:\s|$)([\s\S]*)",
-    command=("mafk", plugin_category),
-    info={
-        "header": "Enables afk for your account",
-        "description": "When you are in afk if any one tags you then your bot will reply as he is offline.\
-         AFK mean away from keyboard. Here it supports media unlike afk command",
-        "options": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
-        "usage": [
-            "{tr}mafk <reason> and reply to media",
-        ],
-        "examples": "{tr}mafk Let Me Sleep",
-        "note": "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it",
-    },
-)
-async def _(event):
-    "To mark yourself as afk i.e. Away from keyboard (supports media)"
+    text, media, minfo = None, None, None
+    if event.pattern_match.group(1):
+        text = event.text.split(maxsplit=1)[1]
     reply = await event.get_reply_message()
-    media_t = media_type(reply)
-    if media_t == "Sticker" or not media_t:
-        return await eor(
-            event, "`You haven't replied to any media to activate media afk`"
-        )
-    if not BOTLOG:
-        return await eor(
-            event, "`To use media afk you need to set PRIVATE_GROUP_BOT_API_ID config`"
-        )
-    AFK_.USERAFK_ON = {}
-    AFK_.afk_time = None
-    AFK_.last_afk_message = {}
-    AFK_.afk_end = {}
-    AFK_.media_afk = None
-    AFK_.afk_type = "media"
-    start_1 = datetime.now()
-    AFK_.afk_on = True
-    AFK_.afk_star = start_1.replace(microsecond=0)
-    if not AFK_.USERAFK_ON:
-        input_str = event.pattern_match.group(1)
-        AFK_.reason = input_str
-        last_seen_status = await event.client(
-            functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
-        )
-        if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
-            AFK_.afk_time = datetime.now()
-        AFK_.USERAFK_ON = f"on: {AFK_.reason}"
-        if AFK_.reason:
-            await edl(event, f"`I shall be Going afk! because ~` {AFK_.reason}", 5)
-        else:
-            await edl(event, f"`I shall be Going afk! `", 5)
-        AFK_.media_afk = await reply.forward_to(BOTLOG_CHATID)
-        if AFK_.reason:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
+    if reply:
+        if reply.text and not text:
+            text = reply.text
+        if reply.media:
+            minfo = media_type(reply.media)
+            if minfo.startswith(("Photo", "Gif")):
+                file = await event.client.download_media(reply.media)
+                iurl = upload_file(file)
+                media = f"https://telegra.ph{iurl[0]}"
+            elif "Sticker" in minfo:
+                media = reply.file.id
+            else:
+                return await edl(event, "`Unsupported media`")
+
+    add_afk(text, minfo, media)
+    await eor(event, "`Done`")
+    msg1, msg2 = None, None
+    if text and media:
+        if "Sticker" in minfo:
+            msg1 = await event.client.send_file(event.chat_id, file=media)
+            msg2 = await event.client.send_message(
+                event.chat_id, "**I'm going AFK.**\n\n**Reason:** `{}`".format(text)
             )
         else:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
+            msg1 = await event.client.send_message(
+                event.chat_id, "**I'm going AFK.**\n\n**Reason:** `{}`".format(text), file=media
             )
+    elif media:
+        if "Sticker" in minfo:
+            msg1 = await event.client.send_file(event.chat_id, file=media)
+            msg2 = await event.client.send_message(event.chat_id, "**I'm going AFK.**")
+        else:
+            msg1 = await event.client.send_message(
+                event.chat_id, "**I'm going AFK.**", file=media
+            )
+    elif text:
+        msg1 = await event.client.send_message(
+            event.chat_id, "**I'm going AFK.**\n\n**Reason:** `{}`".format(text)
+        )
+    else:
+        msg1 = await event.client.send_message(event.chat_id, "**I'm going AFK.**")
+    old_afk_msg.append(msg1)
+    if msg2:
+        old_afk_msg.append(msg2)
+        return await tgbot.send_message(BOTLOG_CHATID, msg2.text)
+
+    await tgbot.send_message(BOTLOG_CHATID, msg1.text)
+
+
+@doge.on(
+    NewMessage(
+        outgoing=True
+    )
+)
+@doge.on(
+    MessageEdited(
+        outgoing=True
+    )
+)
+async def remove_afk(event):
+    if (
+        event.is_private
+        and gvarstatus("pmpermit") == "true"
+        and not is_approved(event.chat_id)
+        and "afk" or "#afk" in event.text
+    ):
+        return
+
+    if is_afk():
+        _, _, _, afktime = is_afk()
+        del_afk()
+        await event.reply("**No Longer Afk**\n\nWas away for ~ `{}`".format(afktime))
+        await tgbot.send_message(BOTLOG_CHATID, "#AFK\nSet AFK mode to False.\nWas AFK since ~ `{}`".format(afktime))
+        for x in old_afk_msg:
+            try:
+                await x.delete()
+            except BaseException:
+                pass
+
+
+@doge.on(
+    NewMessage(
+        incoming=True,
+        func=lambda e: bool(
+            e.mentioned
+            or e.is_private
+        )
+    ),
+)
+async def on_afk(event):
+    if (
+        event.is_private
+        and gvarstatus("pmpermit") == "true"
+        and not is_approved(event.chat_id)
+        or not is_afk()
+        or "afk" and "#afk" in event.text
+    ):
+        return
+
+    text, minfo, media, afktime = is_afk()
+    msg1, msg2 = None, None
+    chat = await event.get_user()
+    mention = f"[{chat.first_name}](tg://user?id={chat.id})"
+    first = chat.first_name
+    last = chat.last_name
+    fullname = f"{first} {last}" if last else first
+    username = f"@{chat.username}" if chat.username else mention
+    me = await event.client.get_me()
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
+    my_first = me.first_name
+    my_last = me.last_name
+    my_fullname = f"{my_first} {my_last}" if my_last else my_first
+    my_username = f"@{me.username}" if me.username else my_mention
+    customafkmsg = gvarstatus("AFK") or None
+    if customafkmsg is not None:
+        if text:
+            dogeafk = customafkmsg.format(
+                mention=mention,
+                first=first,
+                last=last,
+                fullname=fullname,
+                username=username,
+                my_first=my_first,
+                my_last=my_last,
+                my_fullname=my_fullname,
+                my_username=my_username,
+                my_mention=my_mention,
+                afktime=afktime,
+            )+f"\n\n\
+                **🐾 Reason:** `{text}`"
+        else:
+            dogafk = customafkmsg.format(
+                mention=mention,
+                first=first,
+                last=last,
+                fullname=fullname,
+                username=username,
+                my_first=my_first,
+                my_last=my_last,
+                my_fullname=my_fullname,
+                my_username=my_username,
+                my_mention=my_mention,
+                afktime=afktime,
+            )
+    else:
+        if text:
+            dogeafk = DOGEAFK+f"\n\n\
+                **🐾 Reason:** `{text}`"
+        else:
+            dogafk = DOGEAFK
+    if text and media:
+        if "Sticker" in minfo:
+            msg1 = await event.reply(file=media)
+            msg2 = await event.reply(dogeafk)
+        else:
+            msg1 = await event.reply(
+                dogeafk, file=media
+            )
+    elif media:
+        if "Sticker" in minfo:
+            msg1 = await event.reply(file=media)
+            msg2 = await event.reply(dogafk)
+        else:
+            msg1 = await event.reply(dogafk, file=media)
+    elif text:
+        msg1 = await event.reply(dogeafk)
+    else:
+        msg1 = await event.reply(dogafk)
+    for x in old_afk_msg:
+        try:
+            await x.delete()
+        except BaseException:
+            pass
+    old_afk_msg.append(msg1)
+    if msg2:
+        old_afk_msg.append(msg2)
+    hmm = await event.get_chat()
+    if Config.PM_LOGGER_GROUP_ID == -100:
+        return
+
+    full = None
+    try:
+        full = await event.client.get_entity(event.message.from_id)
+    except Exception as e:
+        LOGS.info(str(e))
+    messaget = media_type(event)
+    resalt = f"#AFK\n<b>Group: </b><code>{hmm.title}</code>"
+    if full is not None:
+        resalt += f"\n<b>From: </b> 👤 {_format.htmlmentionuser(full.first_name , full.id)}"
+    if messaget is not None:
+        resalt += f"\n<b>Message Type: </b><code>{messaget}</code>"
+    else:
+        resalt += f"\n<b>Message: </b>{event.message.message}"
+    button = [(Button.url("💬 Message", f"https://t.me/c/{hmm.id}/{event.message.id}"))]
+    if not event.is_private:
+        await tgbot.send_message(
+            Config.PM_LOGGER_GROUP_ID,
+            resalt,
+            parse_mode="html",
+            link_preview=False,
+            buttons=button,
+        )
+
+
+def add_afk(msg, minfo, media):
+    time = datetime.now().strftime("%b %d %Y %I:%M:%S%p")
+    addgvar("AFK_DB", str([msg, minfo, media, time]))
+    return
+
+
+def is_afk():
+    afk = eval(gvarstatus("AFK_DB"))
+    if afk:
+        start_time = datetime.strptime(afk[3], "%b %d %Y %I:%M:%S%p")
+        afk_since = str(datetime.now().replace(microsecond=0) - start_time)
+        return afk[0], afk[1], afk[2], afk_since
+    return False
+
+
+def del_afk():
+    return delgvar("AFK_DB")

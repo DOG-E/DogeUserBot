@@ -1,21 +1,17 @@
-import random
 from os import remove
 from random import choice
-from urllib import parse
+from urllib.parse import quote
 
-import nekos
-import requests
-from PIL import Image
-from telethon import functions, types, utils
+from nekos import cat
+from PIL.Image import open as Imopen
+from requests import get
+from telethon.functions.messages import GetStickerSetRequest
+from telethon.types import InputStickerSetShortName
+from telethon.utils import get_input_document
 
-from userbot import doge
+from . import doge, reply_id
 
-from ..helpers import reply_id
-
-plugin_category = "extra"
-
-BASE_URL = "https://headp.at/pats/{}"
-PAT_IMAGE = "pat.webp"
+plugin_category = "fun"
 
 
 @doge.bot_cmd(
@@ -31,8 +27,8 @@ async def _(event):
     await event.delete()
     reply_to_id = await reply_id(event)
     with open("temp.png", "wb") as f:
-        f.write(requests.get(nekos.cat()).content)
-    img = Image.open("temp.png")
+        f.write(get(cat()).content)
+    img = Imopen("temp.png")
     img.save("temp.webp", "webp")
     img.seek(0)
     await event.client.send_file(
@@ -42,8 +38,6 @@ async def _(event):
 
 
 # credit to @r4v4n4
-
-
 @doge.bot_cmd(
     pattern="dab$",
     command=("dab", plugin_category),
@@ -73,17 +67,17 @@ async def _(event):
     }
     await event.delete()
     docs = [
-        utils.get_input_document(x)
+        get_input_document(x)
         for x in (
             await event.client(
-                functions.messages.GetStickerSetRequest(
-                    types.InputStickerSetShortName("DabOnHaters")
+                GetStickerSetRequest(
+                    InputStickerSetShortName("DabOnHaters")
                 )
             )
         ).documents
         if x.id not in blacklist
     ]
-    await event.respond(file=random.choice(docs), reply_to=reply_to_id)
+    await event.respond(file=choice(docs), reply_to=reply_to_id)
 
 
 @doge.bot_cmd(
@@ -100,24 +94,20 @@ async def handler(event):
     blacklist = {}
     await event.delete()
     docs = [
-        utils.get_input_document(x)
+        get_input_document(x)
         for x in (
             await event.client(
-                functions.messages.GetStickerSetRequest(
-                    types.InputStickerSetShortName("supermind")
+                GetStickerSetRequest(
+                    InputStickerSetShortName("supermind")
                 )
             )
         ).documents
         if x.id not in blacklist
     ]
-    await event.respond(file=random.choice(docs), reply_to=reply_to_id)
+    await event.respond(file=choice(docs), reply_to=reply_to_id)
 
 
-# HeadPat Module for Userbot (http://headp.at)
-# cmd:- .pat username or reply to msg
 # By:- git: jaskaranSM tg: @Zero_cool7870
-
-
 @doge.bot_cmd(
     pattern="pat$",
     command=("pat", plugin_category),
@@ -130,10 +120,10 @@ async def lastfm(event):
     "To get random pat stickers."
     await event.delete()
     reply_to_id = await reply_id(event)
-    resp = requests.get("http://headp.at/js/pats.json")
+    resp = get("http://headp.at/js/pats.json")
     pats = resp.json()
-    pat = BASE_URL.format(parse.quote(choice(pats)))
-    with open(PAT_IMAGE, "wb") as f:
-        f.write(requests.get(pat).content)
-    await event.client.send_file(event.chat_id, PAT_IMAGE, reply_to=reply_to_id)
-    remove(PAT_IMAGE)
+    pat = "https://headp.at/pats/{}".format(quote(choice(pats)))
+    with open("pat.webp", "wb") as f:
+        f.write(get(pat).content)
+    await event.client.send_file(event.chat_id, "pat.webp", reply_to=reply_to_id)
+    remove("pat.webp")

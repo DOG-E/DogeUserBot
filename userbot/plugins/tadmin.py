@@ -6,18 +6,11 @@ from telethon.errors import BadRequestError
 from telethon.errors.rpcerrorlist import UserAdminInvalidError, UserIdInvalidError
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
+from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import eor
-from ..helpers.utils import _format
-from . import BOTLOG, BOTLOG_CHATID, extract_time, get_user_from_event
+from . import BOTLOG, BOTLOG_CHATID, doge, extract_time, get_user_from_event, eor, _format, S_NOPERM
 
 plugin_category = "admin"
-
-# =================== CONSTANT ===================
-NO_ADMIN = "`I am not an admin nub nibba!`"
-NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
 
 
 @doge.bot_cmd(
@@ -49,7 +42,7 @@ async def tmuter(event):  # sourcery no-metrics
     if not user:
         return
     if not reason:
-        return await dogevent.edit("you haven't mentioned time, check `.help tmute`")
+        return await dogevent.edit("You haven't mentioned time, check `.doge tmute`")
     reason = reason.split(" ", 1)
     hmm = len(reason)
     dogtime = reason[0].strip()
@@ -58,7 +51,7 @@ async def tmuter(event):  # sourcery no-metrics
     if not ctime:
         return
     if user.id == event.client.uid:
-        return await dogevent.edit(f"Sorry, I can't mute myself")
+        return await dogevent.edit("Sorry, I can't mute myself")
     try:
         await dogevent.client(
             EditBannedRequest(
@@ -70,31 +63,31 @@ async def tmuter(event):  # sourcery no-metrics
         # Announce that the function is done
         if reason:
             await dogevent.edit(
-                f"{_format.mentionuser(user.first_name ,user.id)} was muted in {event.chat.title}\n"
-                f"**Muted for : **{dogtime}\n"
-                f"**Reason : **__{reason}__"
+                f"{_format.mentionuser(user.first_name ,user.id)} was muted in {get_display_name(await event.get_chat())}\n"
+                f"**Muted for: **{dogtime}\n"
+                f"**Reason: **__{reason}__"
             )
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
                     "#TMUTE\n"
-                    f"**User : **[{user.first_name}](tg://user?id={user.id})\n"
-                    f"**Chat : **{event.chat.title}(`{event.chat_id}`)\n"
-                    f"**Muted for : **`{dogtime}`\n"
-                    f"**Reason : **`{reason}``",
+                    f"**User: **[{user.first_name}](tg://user?id={user.id})\n"
+                    f"**Chat: **{get_display_name(await event.get_chat())}(`{event.chat_id}`)\n"
+                    f"**Muted for: **`{dogtime}`\n"
+                    f"**Reason: **`{reason}``",
                 )
         else:
             await dogevent.edit(
-                f"{_format.mentionuser(user.first_name ,user.id)} was muted in {event.chat.title}\n"
+                f"{_format.mentionuser(user.first_name ,user.id)} was muted in {get_display_name(await event.get_chat())}\n"
                 f"Muted for {dogtime}\n"
             )
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
                     "#TMUTE\n"
-                    f"**User : **[{user.first_name}](tg://user?id={user.id})\n"
-                    f"**Chat : **{event.chat.title}(`{event.chat_id}`)\n"
-                    f"**Muted for : **`{dogtime}`",
+                    f"**User: **[{user.first_name}](tg://user?id={user.id})\n"
+                    f"**Chat: **{get_display_name(await event.get_chat())}(`{event.chat_id}`)\n"
+                    f"**Muted for: **`{dogtime}`",
                 )
         # Announce to logging group
     except UserIdInvalidError:
@@ -104,7 +97,7 @@ async def tmuter(event):  # sourcery no-metrics
             "`Either you're not an admin or you tried to mute an admin that you didn't promote`"
         )
     except Exception as e:
-        return await dogevent.edit(f"`{str(e)}`")
+        return await dogevent.edit(f"`{e}`")
 
 
 @doge.bot_cmd(
@@ -136,7 +129,7 @@ async def tban(event):  # sourcery no-metrics
     if not user:
         return
     if not reason:
-        return await dogevent.edit("you haven't mentioned time, check `.help tban`")
+        return await dogevent.edit("you haven't mentioned time, check `.doge tban`")
     reason = reason.split(" ", 1)
     hmm = len(reason)
     dogtime = reason[0].strip()
@@ -145,7 +138,7 @@ async def tban(event):  # sourcery no-metrics
     if not ctime:
         return
     if user.id == event.client.uid:
-        return await dogevent.edit(f"Sorry, I can't ban myself")
+        return await dogevent.edit("Sorry, I can't ban myself")
     await dogevent.edit("`Whacking the pest!`")
     try:
         await event.client(
@@ -160,7 +153,7 @@ async def tban(event):  # sourcery no-metrics
             "`Either you're not an admin or you tried to ban an admin that you didn't promote`"
         )
     except BadRequestError:
-        return await dogevent.edit(NO_PERM)
+        return await dogevent.edit(S_NOPERM)
     # Helps ban group join spammers more easily
     try:
         reply = await event.get_reply_message()
@@ -168,14 +161,14 @@ async def tban(event):  # sourcery no-metrics
             await reply.delete()
     except BadRequestError:
         return await dogevent.edit(
-            "`I dont have message nuking rights! But still he was banned!`"
+            "`I don't have message nuking rights! But still he was banned!`"
         )
     # Delete message and then tell that the command
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
     if reason:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} was banned in {event.chat.title}\n"
+            f"{_format.mentionuser(user.first_name ,user.id)} was banned in {get_display_name(await event.get_chat())}\n"
             f"banned for {dogtime}\n"
             f"Reason:`{reason}`"
         )
@@ -183,21 +176,21 @@ async def tban(event):  # sourcery no-metrics
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#TBAN\n"
-                f"**User : **[{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat : **{event.chat.title}(`{event.chat_id}`)\n"
-                f"**Banned untill : **`{dogtime}`\n"
-                f"**Reason : **__{reason}__",
+                f"**User: **[{user.first_name}](tg://user?id={user.id})\n"
+                f"**Chat: **{get_display_name(await event.get_chat())}(`{event.chat_id}`)\n"
+                f"**Banned untill: **`{dogtime}`\n"
+                f"**Reason: **__{reason}__",
             )
     else:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} was banned in {event.chat.title}\n"
+            f"{_format.mentionuser(user.first_name ,user.id)} was banned in {get_display_name(await event.get_chat())}\n"
             f"banned for {dogtime}\n"
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#TBAN\n"
-                f"**User : **[{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat : **{event.chat.title}(`{event.chat_id}`)\n"
-                f"**Banned untill : **`{dogtime}`",
+                f"**User: **[{user.first_name}](tg://user?id={user.id})\n"
+                f"**Chat: **{get_display_name(await event.get_chat())}(`{event.chat_id}`)\n"
+                f"**Banned untill: **`{dogtime}`",
             )

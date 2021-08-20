@@ -1,13 +1,10 @@
 #    Credts @Mrconfused
 from geopy.geocoders import Nominatim
-from telethon.tl import types
+from telethon.tl.types import InputGeoPoint, InputMediaGeoPoint
 
-from userbot import doge
+from . import doge, eor, reply_id
 
-from ..core.managers import eor
-from ..helpers import reply_id
-
-plugin_category = "extra"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -23,7 +20,7 @@ async def gps(event):
     "Map of the given location."
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
-    dogevent = await eor(event, "`finding.....`")
+    dogevent = await eor(event, "`Finding...`")
     geolocator = Nominatim(user_agent="DogeUserBot")
     geoloc = geolocator.geocode(input_str)
     if geoloc:
@@ -31,10 +28,10 @@ async def gps(event):
         lat = geoloc.latitude
         await event.client.send_file(
             event.chat_id,
-            file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon)),
-            caption=f"**Location : **`{input_str}`",
+            file=InputMediaGeoPoint(InputGeoPoint(lat, lon)),
+            caption=f"**Location: **`{input_str}`",
             reply_to=reply_to_id,
         )
         await dogevent.delete()
     else:
-        await dogevent.edit("`i coudn't find it`")
+        await dogevent.edit("`I coudn't find it`")

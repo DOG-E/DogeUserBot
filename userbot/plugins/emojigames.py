@@ -27,7 +27,6 @@ BOWL_E_MOJI = "🎳"
         ],
         "examples": ["{tr}dart 3", "{tr}🎯 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific dart emoji animation"
@@ -66,7 +65,6 @@ async def _(event):
         ],
         "examples": ["{tr}dice 3", "{tr}🎲 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific dice emoji animation"
@@ -105,7 +103,6 @@ async def _(event):
         ],
         "examples": ["{tr}bb 3", "{tr}🏀 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific basket ball emoji animation"
@@ -144,7 +141,6 @@ async def _(event):
         ],
         "examples": ["{tr}fb 3", "{tr}⚽️ 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific football emoji animation"
@@ -183,7 +179,6 @@ async def _(event):
         ],
         "examples": ["{tr}jp 3", "{tr}🎰 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific jackpot emoji animation"
@@ -224,7 +219,6 @@ async def _(event):
         ],
         "examples": ["{tr}bowl 3", "{tr}🎳 4"],
     },
-    groups_only=True,
 )
 async def _(event):
     "To get specific bowl emoji animation"

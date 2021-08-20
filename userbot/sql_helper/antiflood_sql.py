@@ -1,4 +1,4 @@
-import threading
+from threading import RLock
 
 from sqlalchemy import Column, Integer, String
 
@@ -25,7 +25,7 @@ class FloodControl(BASE):
 
 FloodControl.__table__.create(checkfirst=True)
 
-INSERTION_LOCK = threading.RLock()
+INSERTION_LOCK = RLock()
 
 
 class ANTIFLOOD_SQL:

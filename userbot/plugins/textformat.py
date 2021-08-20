@@ -1,6 +1,6 @@
 from . import doge, edl, eor, parse_pre
 
-plugin_category = "Extra"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(

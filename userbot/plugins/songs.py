@@ -1,27 +1,18 @@
 # by  @sandy1709 ( https://t.me/mrconfused  )
-
-# songs finder for DogeUserBot
-import asyncio
-import base64
-import io
-import os
+from base64 import b64decode
+from io import FileIO
+from os import path, remove
 from pathlib import Path
 
 from ShazamAPI import Shazam
-from telethon import types
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from validators.url import url
+from telethon.tl.types import DocumentAttributeFilename
+from validators.url import url as vurl
+from youtubesearchpython.Video import get as Vget
 
-from userbot import doge
+from . import _dogeutils, doge, edl, eor, fsmessage, hmention, logging, media_type, name_dl, reply_id, song_dl, video_dl, yt_search
 
-from ..core.logger import logging
-from ..helpers.functions import name_dl, song_dl, video_dl, yt_search
-from ..helpers.tools import media_type
-from ..helpers.utils import _dogeutils, reply_id
-from . import edl, eor, hmention
-
-plugin_category = "utils"
+plugin_category = "fun"
 LOGS = logging.getLogger(__name__)
 
 # =========================================================== #
@@ -55,15 +46,14 @@ async def _(event):
     reply = await event.get_reply_message()
     if event.pattern_match.group(2):
         query = event.pattern_match.group(2)
-    elif reply:
-        if reply.message:
-            query = reply.message
+    elif reply and reply.message:
+        query = reply.message
     else:
         return await eor(event, "`What I am Supposed to find `")
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
-    if not url(video_link):
+    if not vurl(video_link):
         return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
@@ -79,40 +69,40 @@ async def _(event):
         pass
     stderr = (await _dogeutils.runcmd(song_cmd))[1]
     if stderr:
-        return await dogevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error:** `{stderr}`")
     dogname, stderr = (await _dogeutils.runcmd(name_cmd))[:2]
     if stderr:
-        return await dogevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error:** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
-    dogname = os.path.splitext(dogname)[0]
+    dogname = path.splitext(dogname)[0]
     # if stderr:
-    #    return await dogevent.edit(f"**Error :** `{stderr}`")
+    #    return await dogevent.edit(f"**Error:** `{stderr}`")
     song_file = Path(f"{dogname}.mp3")
-    if not os.path.exists(song_file):
+    if not path.exists(song_file):
         return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
     await dogevent.edit("`yeah..! i found something wi8..🥰`")
     dogthumb = Path(f"{dogname}.jpg")
-    if not os.path.exists(dogthumb):
+    if not path.exists(dogthumb):
         dogthumb = Path(f"{dogname}.webp")
-    elif not os.path.exists(dogthumb):
+    elif not path.exists(dogthumb):
         dogthumb = None
-
+    ytdata = Vget(video_link)
     await event.client.send_file(
         event.chat_id,
         song_file,
         force_document=False,
-        caption=f"<b><i>➥ Song :- {query}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by:- {hmention}</i></b>",
+        parse_mode="html",
         thumb=dogthumb,
         supports_streaming=True,
-        parse_mode="html",
         reply_to=reply_to_id,
     )
     await dogevent.delete()
     for files in (dogthumb, song_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and path.exists(files):
+            remove(files)
 
 
 async def delete_messages(event, chat, from_message):
@@ -140,15 +130,14 @@ async def _(event):
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
-    elif reply:
-        if reply.message:
-            query = reply.messag
+    elif reply and reply.message:
+        query = reply.message
     else:
         return await eor(event, "`What I am Supposed to find`")
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
-    if not url(video_link):
+    if not vurl(video_link):
         return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
@@ -157,10 +146,10 @@ async def _(event):
     video_cmd = video_dl.format(video_link=video_link)
     stderr = (await _dogeutils.runcmd(video_cmd))[1]
     if stderr:
-        return await dogevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error:** `{stderr}`")
     dogname, stderr = (await _dogeutils.runcmd(name_cmd))[:2]
     if stderr:
-        return await dogevent.edit(f"**Error :** `{stderr}`")
+        return await dogevent.edit(f"**Error:** `{stderr}`")
     # stderr = (await runcmd(thumb_cmd))[1]
     try:
         dog = Get(dog)
@@ -168,35 +157,36 @@ async def _(event):
     except BaseException:
         pass
     # if stderr:
-    #    return await dogevent.edit(f"**Error :** `{stderr}`")
-    dogname = os.path.splitext(dogname)[0]
+    #    return await dogevent.edit(f"**Error:** `{stderr}`")
+    dogname = path.splitext(dogname)[0]
     vsong_file = Path(f"{dogname}.mp4")
-    if not os.path.exists(vsong_file):
+    if not path.exists(vsong_file):
         vsong_file = Path(f"{dogname}.mkv")
-    elif not os.path.exists(vsong_file):
+    elif not path.exists(vsong_file):
         return await dogevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
     await dogevent.edit("`yeah..! i found something wi8..🥰`")
     dogthumb = Path(f"{dogname}.jpg")
-    if not os.path.exists(dogthumb):
+    if not path.exists(dogthumb):
         dogthumb = Path(f"{dogname}.webp")
-    elif not os.path.exists(dogthumb):
+    elif not path.exists(dogthumb):
         dogthumb = None
+    ytdata = Vget(video_link)
     await event.client.send_file(
         event.chat_id,
         vsong_file,
         force_document=False,
-        caption=f"<b><i>➥ Song :- {query}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by:- {hmention}</i></b>",
+        parse_mode="html",
         thumb=dogthumb,
         supports_streaming=True,
-        parse_mode="html",
         reply_to=reply_to_id,
     )
     await dogevent.delete()
     for files in (dogthumb, vsong_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and path.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -219,9 +209,9 @@ async def shazamcmd(event):
     dogevent = await eor(event, "__Downloading the audio clip...__")
     try:
         for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
+            if isinstance(attr, DocumentAttributeFilename):
                 name = attr.file_name
-        dl = io.FileIO(name, "a")
+        dl = FileIO(name, "a")
         await event.client.fast_download_file(
             location=reply.document,
             out=dl,
@@ -234,7 +224,7 @@ async def shazamcmd(event):
     except Exception as e:
         LOGS.error(e)
         return await edl(
-            dogevent, f"**Error while reverse searching song:**\n__{str(e)}__"
+            dogevent, f"**Error while reverse searching song:**\n__{e}__"
         )
     image = track["images"]["background"]
     song = track["share"]["subject"]
@@ -242,56 +232,6 @@ async def shazamcmd(event):
         event.chat_id, image, caption=f"**Song:** `{song}`", reply_to=reply
     )
     await dogevent.delete()
-
-
-@doge.bot_cmd(
-    pattern="song2(?:\s|$)([\s\S]*)",
-    command=("song2", plugin_category),
-    info={
-        "header": "To search songs and upload to telegram",
-        "description": "Searches the song you entered in query and sends it quality of it is 320k",
-        "usage": "{tr}song2 <song name>",
-        "examples": "{tr}song2 memories song",
-    },
-)
-async def _(event):
-    "To search songs"
-    song = event.pattern_match.group(1)
-    chat = "@songdl_bot"
-    reply_id_ = await reply_id(event)
-    dogevent = await eor(event, SONG_SEARCH_STRING, parse_mode="html")
-    async with event.client.conversation(chat) as conv:
-        try:
-            purgeflag = await conv.send_message("/start")
-            await conv.get_response()
-            await conv.send_message(song)
-            hmm = await conv.get_response()
-            while hmm.edit_hide is not True:
-                await asyncio.sleep(0.1)
-                hmm = await event.client.get_messages(chat, ids=hmm.id)
-            baka = await event.client.get_messages(chat)
-            if baka[0].message.startswith(
-                ("I don't like to say this but I failed to find any such song.")
-            ):
-                await delete_messages(event, chat, purgeflag)
-                return await edl(dogevent, SONG_NOT_FOUND, parse_mode="html", time=5)
-            await dogevent.edit(SONG_SENDING_STRING, parse_mode="html")
-            await baka[0].click(0)
-            await conv.get_response()
-            await conv.get_response()
-            music = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            return await dogevent.edit(SONGBOT_BLOCKED_STRING, parse_mode="html")
-        await event.client.send_file(
-            event.chat_id,
-            music,
-            caption=f"<b><i>➥ Song :- {song}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-            parse_mode="html",
-            reply_to=reply_id_,
-        )
-        await dogevent.delete()
-        await delete_messages(event, chat, purgeflag)
 
 
 # reverse search by  @Lal_bakthan
@@ -312,21 +252,53 @@ async def _(event):
     chat = "@auddbot"
     dogevent = await eor(event, "```Identifying the song```")
     async with event.client.conversation(chat) as conv:
-        try:
-            await conv.send_message("/start")
-            await conv.get_response()
-            await conv.send_message(reply_message)
-            check = await conv.get_response()
-            if not check.text.startswith("Audio received"):
-                return await dogevent.edit(
-                    "An error while identifying the song. Try to use a 5-10s long audio message."
-                )
-            await dogevent.edit("Wait just a sec...")
-            result = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await dogevent.edit("```Please unblock (@auddbot) and try again```")
-            return
-    namem = f"**Song Name : **`{result.text.splitlines()[0]}`\
-        \n\n**Details : **__{result.text.splitlines()[2]}__"
+        await fsmessage(event=event, text="/start", chat=chat)
+        await conv.get_response()
+        await conv.send_message(reply_message)
+        check = await conv.get_response()
+        if not check.text.startswith("Audio received"):
+            return await dogevent.edit(
+                "An error while identifying the song. Try to use a 5-10s long audio message."
+            )
+        await dogevent.edit("Wait just a sec...")
+        result = await conv.get_response()
+        await conv.mark_read()
+        await conv.cancel_all()
+    namem = f"**Song Name: **`{result.text.splitlines()[0]}`\
+        \n\n**Details: **__{result.text.splitlines()[2]}__"
     await dogevent.edit(namem)
+
+
+@doge.bot_cmd(
+	pattern="sng ?([\s\S]*)",
+	command=("sng", plugin_category),
+	info={
+		"header": "Get Songs from @LyBot quickly",
+		"usage": [
+			"{tr}sng <song_name>",
+			"{tr}sng <reply to a song name>",
+		],
+		"examples": ["{tr}sng Erik Dalı"],
+	}
+)
+async def lybot(e):
+	"Get your song asap!"
+	reply_to = await reply_id(e)
+	args = e.pattern_match.group(1)
+	if not args:
+		if e.is_reply:
+			reply = await e.get_reply_message()
+			args = reply.text
+		else:
+			await edl(e, "`No input found`")
+	eris = await eor(e, "`Searching for your song 🎵`")
+	res = await e.client.inline_query("lybot", args,)
+	try:
+		await res[0].click(
+			e.chat_id,
+			hide_via=True,
+			reply_to=reply_to,
+		)
+		await eris.delete()
+	except Exception as fx:
+		await eris.edit(f"`{fx}`")

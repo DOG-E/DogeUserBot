@@ -1,29 +1,25 @@
 {
-    "addons": [{
+    "addons": {
         "plan": "heroku-postgresql"
-    }],
+    },
     "buildpacks": [{
-        "url": "https://github.com/amivin/aria2-heroku.git"
+        "url": "https://github.com/TeleDoge/aria2-heroku.git"
     },{
-        "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-ffmpeg-latest.git"
     },{
-        "url": "https://github.com/heroku/heroku-buildpack-google-chrome.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-google-chrome.git"
     },{
-        "url": "https://github.com/heroku/heroku-buildpack-chromedriver.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-chromedriver.git"
     },{
-        "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-p7zip.git"
     },{
-        "url": "https://github.com/heroku/heroku-buildpack-apt.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-apt.git"
     },{
-        "url": "https://github.com/chrismytton/heroku-buildpack-jq.git"
+        "url": "https://github.com/TeleDoge/heroku-buildpack-jq.git"
     },{
         "url": "heroku/python"
     }],
     "env": {
-        "ALIVE_NAME": {
-            "description": "Give me your name.",
-            "value": ""
-        },
         "APP_ID": {
             "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
             "value": ""
@@ -32,16 +28,12 @@
             "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
             "value": ""
         },
+        "BOT_TOKEN": {
+            "description": "Needed for inline buttons maker. Create a bot at https://t.me/BotFather and get the token of your bot. Worth it. Get it.",
+            "value": ""
+        },
         "STRING_SESSION": {
             "description": "Go to https://repl.it/@DogeUserBot/DogeString or paste the # TODO code into a program like termux, terminal, run it and paste the code you get here.",
-            "value": ""
-        },
-        "TG_BOT_USERNAME": {
-            "description": "Needed for inline buttons maker. Make a bot at https://t.me/BotFather and get the username of your bot,",
-            "value": ""
-        },
-        "TG_BOT_TOKEN": {
-            "description": "Needed for inline buttons maker. Make a bot at https://t.me/BotFather and get the token of your bot. Worth it. Get it.",
             "value": ""
         },
         "HEROKU_API_KEY": {
@@ -52,23 +44,26 @@
             "description": "Add the Heroku app name you specified above here. It helps to keep Doge up to date.",
             "value": ""
         },
+        "ENV": {
+            "description": "Setting this to ANYTHING will enable Heroku.",
+            "value": "ANYTHING"
+        },
+        "CMDSET": {
+            "description": "(Optional) Set this one with only one the symbol to use it before your command to run like . , ! ' ` /",
+            "value": "."
+        },
         "UPSTREAM_REPO": {
-            "description": "Required for installation and updates. Recommend don't change it.",
-            "value": "doge"
+            "description": "Required for installation and updates. Recommend, don't change it.",
+            "value": "DogeUserBot"
+        },
+        "ALIVE_NAME": {
+            "description": "(Optional) If you don't give name i'll auto detect your name.",
+            "value": "",
+            "required": false
         },
         "TZ": {
             "description": "Required for correct time on autopic/get time. Write your time zone location closest to your current location in English. Know your timezone from http://www.timezoneconverter.com/cgi-bin/findzone.tzc",
             "value": "Europe/Istanbul",
-            "required": false
-        },
-        "COMMAND_HAND_LER": {
-            "description": "Set this one with only one the symbol to use it before your command to run like . , ! ' ` /",
-            "value": ".",
-            "required": false
-        },
-        "ENV": {
-            "description": "Setting this to ANYTHING will enable Heroku.",
-            "value": "ANYTHING",
             "required": false
         }
     },

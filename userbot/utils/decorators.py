@@ -1,11 +1,11 @@
-import datetime
-import inspect
-import re
-import sys
-import traceback
+from datetime import datetime
+from inspect import stack as stacck
+from re import compile, search
+from sys import exc_info
+from traceback import format_exc
 from pathlib import Path
 
-from .. import CMD_LIST, LOAD_PLUG, SUDO_LIST
+from .. import CMD_LIST, LOAD_PLUG, SUDO_LIST, dogeversion
 from ..Config import Config
 from ..core.data import _sudousers_list, blacklist_chats_list
 from ..core.events import MessageEdited, NewMessage
@@ -20,29 +20,29 @@ LOGS = logging.getLogger(__name__)
 
 def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     args["func"] = lambda e: e.via_bot_id is None
-    stack = inspect.stack()
+    stack = stacck()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
     allow_sudo = args.get("allow_sudo", False)
     if pattern is not None:
         if pattern.startswith(r"\#"):
-            args["pattern"] = re.compile(pattern)
+            args["pattern"] = compile(pattern)
         elif pattern.startswith(r"^"):
-            args["pattern"] = re.compile(pattern)
+            args["pattern"] = compile(pattern)
             cmd = pattern.replace("$", "").replace("^", "").replace("\\", "")
             try:
                 CMD_LIST[file_test].append(cmd)
             except BaseException:
                 CMD_LIST.update({file_test: [cmd]})
         else:
-            if len(Config.COMMAND_HAND_LER) == 2:
-                dogreg = "^" + Config.COMMAND_HAND_LER
-                reg = Config.COMMAND_HAND_LER[1]
-            elif len(Config.COMMAND_HAND_LER) == 1:
-                dogreg = "^\\" + Config.COMMAND_HAND_LER
-                reg = Config.COMMAND_HAND_LER
-            args["pattern"] = re.compile(dogreg + pattern)
+            if len(Config.CMDSET) == 2:
+                dogreg = "^" + Config.CMDSET
+                reg = Config.CMDSET[1]
+            elif len(Config.CMDSET) == 1:
+                dogreg = "^\\" + Config.CMDSET
+                reg = Config.CMDSET
+            args["pattern"] = compile(dogreg + pattern)
             if command is not None:
                 cmd = reg + command
             else:
@@ -70,7 +70,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
 
 def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     args["func"] = lambda e: e.via_bot_id is None
-    stack = inspect.stack()
+    stack = stacck()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
@@ -79,22 +79,22 @@ def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     if pattern is not None:
         if pattern.startswith(r"\#"):
             # special fix for snip.py
-            args["pattern"] = re.compile(pattern)
+            args["pattern"] = compile(pattern)
         elif pattern.startswith(r"^"):
-            args["pattern"] = re.compile(pattern)
+            args["pattern"] = compile(pattern)
             cmd = pattern.replace("$", "").replace("^", "").replace("\\", "")
             try:
                 SUDO_LIST[file_test].append(cmd)
             except BaseException:
                 SUDO_LIST.update({file_test: [cmd]})
         else:
-            if len(Config.SUDO_COMMAND_HAND_LER) == 2:
-                dogreg = "^" + Config.SUDO_COMMAND_HAND_LER
-                reg = Config.SUDO_COMMAND_HAND_LER[1]
-            elif len(Config.SUDO_COMMAND_HAND_LER) == 1:
-                dogreg = "^\\" + Config.SUDO_COMMAND_HAND_LER
-                reg = Config.COMMAND_HAND_LER
-            args["pattern"] = re.compile(dogreg + pattern)
+            if len(Config.SUDO_CMDSET) == 2:
+                dogreg = "^" + Config.SUDO_CMDSET
+                reg = Config.SUDO_CMDSET[1]
+            elif len(Config.SUDO_CMDSET) == 1:
+                dogreg = "^\\" + Config.SUDO_CMDSET
+                reg = Config.CMDSET
+            args["pattern"] = compile(dogreg + pattern)
             if command is not None:
                 cmd = reg + command
             else:
@@ -128,41 +128,52 @@ def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
 
 
 def errors_handler(func):
-    async def wrapper(errors):
+    async def wrapper(check):
         try:
-            await func(errors)
+            await func(check)
         except BaseException:
             if Config.PRIVATE_GROUP_BOT_API_ID != 0:
                 return
-            date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-            ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                  \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                  \nyou may not report this error if you've\
-                                  \nany confidential data here, no one will see your data\
-                                  \n\n--------BEGIN USERBOT TRACEBACK LOG--------\
-                                  \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                  \nSender ID: {str(check.sender_id)}\
-                                  \n\nEvent Trigger:\n{str(check.text)}\
-                                  \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                  \n\nError text:\n{str(sys.exc_info()[1])}"
+            date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
+            ftext = f"\nℹ DISCLAIMER:\
+                        \nThis file is pasted ONLY here,\
+                        \nwe logged only fact of error and date,\
+                        \nwe respect your privacy,\
+                        \nif you've any confidential data here,\
+                        \nyou may not report this error.\
+                        \nNo one will see your data.\
+                        \n\
+                        \n--------BEGIN DOGE USERBOT ERROR LOG--------\
+                        \n\
+                        \n🐶 Doge Version: {dogeversion}\
+                        \n📅 Date: {date}\
+                        \n👥 Group ID: {str(check.chat_id)}\
+                        \n👤 Sender ID: {str(check.sender_id)}\
+                        \n\
+                        \n➡ Event Trigger:\n{str(check.text)}\
+                        \n\
+                        \nℹ Traceback Info:\n{str(format_exc())}\
+                        \n\
+                        \n🚨 Error Text:\n{str(exc_info()[1])}"
             new = {
-                "error": str(sys.exc_info()[1]),
-                "date": datetime.datetime.now(),
+                "error": str(exc_info()[1]),
+                "date": datetime.now(),
             }
 
-            ftext += "\n\n--------END USERBOT TRACEBACK LOG--------"
+            ftext += "\n\
+                        \n--------END DOGE USERBOT ERROR LOG--------"
             command = 'git log --pretty=format:"%an: %s" -5'
-            ftext += "\n\n\nLast 5 commits:\n"
+            ftext += "\n\n\n🐾 Last 5 Commits:\n"
             output = (await runcmd(command))[:2]
             result = output[0] + output[1]
             ftext += result
-            pastelink = await paste_message(ftext)
-            text = "**DogeUserBot Error report**\n\n"
+            pastelink = await paste_message(ftext, markdown=False)
+            text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**\n\n"
             link = "[here](https://t.me/DogeSup)"
-            text += "If you wanna you can report it"
-            text += f"- just forward this message {link}.\n"
-            text += "Nothing is logged except the fact of error and date\n\n"
-            text += f"**Error report : ** [{new['error']}]({pastelink})"
+            text += "__💬 If you wanna you can report it.__\n\n"
+            text += f"🐾 Forward this message {link}.\n\n"
+            text += "__**🦴 Nothing is logged except of error and date!**__\n\n"
+            text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
             await check.client.send_message(
                 Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
             )
@@ -172,7 +183,7 @@ def errors_handler(func):
 
 def register(**args):
     args["func"] = lambda e: e.via_bot_id is None
-    stack = inspect.stack()
+    stack = stacck()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
@@ -186,10 +197,10 @@ def register(**args):
     if "disable_edited" in args:
         del args["disable_edited"]
 
-    reg = re.compile("(.*)")
+    reg = compile("(.*)")
     if pattern is not None:
         try:
-            cmd = re.search(reg, pattern)
+            cmd = search(reg, pattern)
             try:
                 cmd = cmd.group(1).replace("$", "").replace("\\", "").replace("^", "")
             except BaseException:
@@ -232,7 +243,7 @@ def register(**args):
 
 def command(**args):
     args["func"] = lambda e: e.via_bot_id is None
-    stack = inspect.stack()
+    stack = stacck()
     previous_stack_frame = stack[1]
     file_test = Path(previous_stack_frame.filename)
     file_test = file_test.stem.replace(".py", "")
@@ -248,10 +259,10 @@ def command(**args):
             args["pattern"] = "(?i)" + pattern
     except BaseException:
         pass
-    reg = re.compile("(.*)")
+    reg = compile("(.*)")
     if pattern is not None:
         try:
-            cmd = re.search(reg, pattern)
+            cmd = search(reg, pattern)
             try:
                 cmd = cmd.group(1).replace("$", "").replace("\\", "").replace("^", "")
             except BaseException:

@@ -1,1 +1,1 @@
-doger: bash dog-e
+doger: bash doger

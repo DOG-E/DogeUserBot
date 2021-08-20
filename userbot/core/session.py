@@ -1,4 +1,4 @@
-import sys
+from sys import exit
 
 from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
@@ -6,14 +6,15 @@ from telethon.sessions import StringSession
 from ..Config import Config
 from .client import DogeUserBotClient
 
-__version__ = "2.10.6"
-
+__version__ = "0.9"
 loop = None
+
 
 if Config.STRING_SESSION:
     session = StringSession(str(Config.STRING_SESSION))
 else:
     session = "DogeUserBot"
+
 
 try:
     doge = DogeUserBotClient(
@@ -27,8 +28,8 @@ try:
         connection_retries=None,
     )
 except Exception as e:
-    print(f"STRING_SESSION - {str(e)}")
-    sys.exit()
+    print(f"STRING_SESSION - {e}")
+    exit()
 
 
 doge.tgbot = tgbot = DogeUserBotClient(
@@ -40,4 +41,6 @@ doge.tgbot = tgbot = DogeUserBotClient(
     connection=ConnectionTcpAbridged,
     auto_reconnect=True,
     connection_retries=None,
-).start(bot_token=Config.TG_BOT_TOKEN)
+).start(
+    bot_token=Config.BOT_TOKEN
+)

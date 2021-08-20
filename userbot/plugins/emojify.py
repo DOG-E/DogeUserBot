@@ -3,10 +3,7 @@ Created by @Jisan7509
 modified by  @mrconfused
 Userbot plugin for CatUserbot
 """
-from userbot import doge
-
-from ..core.managers import eor
-from ..helpers import fonts as emojify
+from . import doge, eor, fonts as emojify
 
 plugin_category = "fun"
 
@@ -46,7 +43,7 @@ async def itachi(event):
     info={
         "header": "Converts your text to big emoji text, with your custom emoji.\n use @ symbol for line space.",
         "usage": "{tr}cmoji <emoji> <text>",
-        "examples": ["{tr}cmoji 🐶 DogeUserBot"],
+        "examples": ["{tr}cmoji 🐾 DogeUserBot"],
     },
 )
 async def itachi(event):

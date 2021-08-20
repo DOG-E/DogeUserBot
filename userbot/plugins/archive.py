@@ -1,28 +1,27 @@
-import asyncio
-import io
-import os
-import time
-import zipfile
+from asyncio import get_event_loop
+from io import FileIO
+from os import path as osp, mkdir, remove, walk
+from time import time
+from zipfile import ZipFile, is_zipfile
 from datetime import datetime
 from pathlib import Path
-from tarfile import is_tarfile
-from tarfile import open as tar_open
+from tarfile import is_tarfile, open as tar_open
 
-from telethon import types
+from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from ..Config import Config
-from . import doge, edl, eor, progress
+from . import Config, doge, edl, eor, progress
 
-thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
-plugin_category = "misc"
+plugin_category = "tool"
+
+thumb_image_path = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 def zipdir(dirName):
     filePaths = []
-    for root, directories, files in os.walk(dirName):
+    for root, directories, files in walk(dirName):
         for filename in files:
-            filePath = os.path.join(root, filename)
+            filePath = osp.join(root, filename)
             filePaths.append(filePath)
     return filePaths
 
@@ -45,19 +44,19 @@ async def zip_file(event):
     if not input_str:
         return await edl(event, "`Provide file path to zip`")
     start = datetime.now()
-    if not os.path.exists(Path(input_str)):
+    if not osp.exists(Path(input_str)):
         return await eor(
             event,
             f"There is no such directory or file with the name `{input_str}` check again",
         )
-    if os.path.isfile(Path(input_str)):
+    if osp.isfile(Path(input_str)):
         return await edl(event, "`File compressing is not implemented yet`")
-    mone = await eor(event, "`Zipping in progress....`")
+    mone = await eor(event, "`Zipping in progress...`")
     filePaths = zipdir(input_str)
-    filepath = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
+    filepath = osp.join(
+        Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str))
     )
-    zip_file = zipfile.ZipFile(filepath + ".zip", "w")
+    zip_file = ZipFile(filepath + ".zip", "w")
     with zip_file:
         for file in filePaths:
             zip_file.write(file)
@@ -85,18 +84,18 @@ async def tar_file(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await edl(event, "`Provide file path to compress`")
-    if not os.path.exists(Path(input_str)):
+    if not osp.exists(Path(input_str)):
         return await eor(
             event,
             f"There is no such directory or file with the name `{input_str}` check again",
         )
-    if os.path.isfile(Path(input_str)):
+    if osp.isfile(Path(input_str)):
         return await edl(event, "`File compressing is not implemented yet`")
-    mone = await eor(event, "`Tar creation in progress....`")
+    mone = await eor(event, "`Tar creation in progress...`")
     start = datetime.now()
     filePaths = zipdir(input_str)
-    filepath = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
+    filepath = osp.join(
+        Config.TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str))
     )
     destination = f"{filepath}.tar.gz"
     zip_file = tar_open(destination, "w:gz")
@@ -126,18 +125,19 @@ async def zip_file(event):  # sourcery no-metrics
     input_str = event.pattern_match.group(1)
     if input_str:
         path = Path(input_str)
-        if os.path.exists(path):
+        if osp.exists(path):
             start = datetime.now()
-            if not zipfile.is_zipfile(path):
+            if not is_zipfile(path):
                 return await edl(
-                    event, f"`The Given path {str(path)} is not zip file to unpack`"
+                    event, f"`The Given path {path} is not zip file to unpack`"
                 )
-            mone = await eor(event, "`Unpacking....`")
-            destination = os.path.join(
+
+            mone = await eor(event, "`Unpacking...`")
+            destination = osp.join(
                 Config.TMP_DOWNLOAD_DIRECTORY,
-                os.path.splitext(os.path.basename(path))[0],
+                osp.splitext(osp.basename(path))[0],
             )
-            with zipfile.ZipFile(path, "r") as zip_ref:
+            with ZipFile(path, "r") as zip_ref:
                 zip_ref.extractall(destination)
             end = datetime.now()
             ms = (end - start).seconds
@@ -145,7 +145,7 @@ async def zip_file(event):  # sourcery no-metrics
                 f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
             )
         else:
-            await edl(event, f"I can't find that path `{input_str}`", 10)
+            await edl(event, f"I can't find that path `{input_str}`")
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
@@ -155,40 +155,41 @@ async def zip_file(event):  # sourcery no-metrics
                 event,
                 "`The replied file is not a zip file recheck the replied message`",
             )
-        mone = await eor(event, "`Unpacking....`")
+        mone = await eor(event, "`Unpacking...`")
         for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
+            if isinstance(attr, DocumentAttributeFilename):
                 filename = attr.file_name
-        filename = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, filename)
-        c_time = time.time()
+        filename = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, filename)
+        c_time = time()
         try:
-            dl = io.FileIO(filename, "a")
+            dl = FileIO(filename, "a")
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edl(mone, f"**Error:**\n__{str(e)}__")
+            return await edl(mone, f"**Error:**\n__{e}__")
+
         await mone.edit("`Download finished Unpacking now`")
-        destination = os.path.join(
+        destination = osp.join(
             Config.TMP_DOWNLOAD_DIRECTORY,
-            os.path.splitext(os.path.basename(filename))[0],
+            osp.splitext(osp.basename(filename))[0],
         )
-        with zipfile.ZipFile(filename, "r") as zip_ref:
+        with ZipFile(filename, "r") as zip_ref:
             zip_ref.extractall(destination)
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
+            f"unzipped and stored to `{destination}` \n**Time Taken:** `{ms} seconds`"
         )
-        os.remove(filename)
+        remove(filename)
     else:
         await edl(
-            mone,
+            event,
             "`Either reply to the zipfile or provide path of zip file along with command`",
         )
 
@@ -209,18 +210,19 @@ async def untar_file(event):  # sourcery no-metrics
     input_str = event.pattern_match.group(1)
     if input_str:
         path = Path(input_str)
-        if os.path.exists(path):
+        if osp.exists(path):
             start = datetime.now()
             if not is_tarfile(path):
                 return await edl(
-                    event, f"`The Given path {str(path)} is not tar file to unpack`"
+                    event, f"`The Given path {path} is not tar file to unpack`"
                 )
-            mone = await eor(event, "`Unpacking....`")
-            destination = os.path.join(
-                Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0]
+
+            mone = await eor(event, "`Unpacking...`")
+            destination = osp.join(
+                Config.TMP_DOWNLOAD_DIRECTORY, (osp.basename(path).split("."))[0]
             )
-            if not os.path.exists(destination):
-                os.mkdir(destination)
+            if not osp.exists(destination):
+                mkdir(destination)
             file = tar_open(path)
             # extracting file
             file.extractall(destination)
@@ -228,43 +230,45 @@ async def untar_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"**Time Taken :** `{ms} seconds`\
+                f"**Time Taken:** `{ms} seconds`\
                 \nUnpacked the input path `{input_str}` and stored to `{destination}`"
             )
         else:
-            await edl(event, f"I can't find that path `{input_str}`", 10)
+            await edl(event, f"I can't find that path `{input_str}`")
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
-        mone = await eor(event, "`Unpacking....`")
+        mone = await eor(event, "`Unpacking...`")
         for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
+            if isinstance(attr, DocumentAttributeFilename):
                 filename = attr.file_name
-        filename = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, filename)
-        c_time = time.time()
+        filename = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, filename)
+        c_time = time()
         try:
-            dl = io.FileIO(filename, "a")
+            dl = FileIO(filename, "a")
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edl(mone, f"**Error:**\n__{str(e)}__")
+            return await edl(mone, f"**Error:**\n__{e}__")
+
         if not is_tarfile(filename):
             return await edl(
                 mone, "`The replied file is not tar file to unpack it recheck it`"
             )
+
         await mone.edit("`Download finished Unpacking now`")
-        destination = os.path.join(
-            Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(filename).split("."))[0]
+        destination = osp.join(
+            Config.TMP_DOWNLOAD_DIRECTORY, (osp.basename(filename).split("."))[0]
         )
 
-        if not os.path.exists(destination):
-            os.mkdir(destination)
+        if not osp.exists(destination):
+            mkdir(destination)
         file = tar_open(filename)
         # extracting file
         file.extractall(destination)
@@ -272,12 +276,12 @@ async def untar_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**Time Taken :** `{ms} seconds`\
+            f"**Time Taken:** `{ms} seconds`\
                 \nUnpacked the replied file and stored to `{destination}`"
         )
-        os.remove(filename)
+        remove(filename)
     else:
         await edl(
-            mone,
+            event,
             "`Either reply to the tarfile or provide path of tarfile along with command`",
         )

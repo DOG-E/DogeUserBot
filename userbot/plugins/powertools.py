@@ -1,21 +1,16 @@
-import sys
+from os import _exit
 from asyncio.exceptions import CancelledError
 from time import sleep
 
-from userbot import doge
-
-from ..core.logger import logging
-from ..core.managers import eor
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
+from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP, addgvar, delgvar, doge, edl, eor, gvarstatus, logging
 
+plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
-plugin_category = "tools"
 
 
 @doge.bot_cmd(
@@ -33,7 +28,7 @@ async def _(event):
         await event.client.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot Restarted")
     teledoge = await eor(
         event,
-        "Restarted. `.ping` me or `.help` to check if I am online, actually it takes 1-2 min for restarting",
+        "Restarted. `.ping` me or `.doge` to check if I am online, actually it takes 1-2 min for restarting",
     )
     try:
         ulist = get_collectionlist_items()
@@ -60,7 +55,7 @@ async def _(event):
     command=("shutdown", plugin_category),
     info={
         "header": "Shutdowns the bot !!",
-        "description": "To turn off the dyno of heroku. you cant turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
+        "description": "To turn off the dyno of heroku. you can't turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
         "usage": "{tr}shutdown",
     },
 )
@@ -72,7 +67,7 @@ async def _(event):
     if HEROKU_APP is not None:
         HEROKU_APP.process_formation()["worker"].scale(0)
     else:
-        sys.exit(0)
+        _exit(143)
 
 
 @doge.bot_cmd(

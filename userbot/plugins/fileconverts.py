@@ -1,66 +1,75 @@
 # by @mrconfused (@sandy1709)
-import asyncio
-import base64
-import io
-import logging
-import os
-import time
+from asyncio import create_subprocess_exec, get_event_loop
+from asyncio.subprocess import PIPE
+from base64 import b64decode
 from datetime import datetime
-from io import BytesIO
+from io import BytesIO, open as iopen
+from os import makedirs, path as osp, remove, rename
 from shutil import copyfile
+from time import time
 
-import fitz
+from fitz import open as fitzopen
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
-from pymediainfo import MediaInfo
-from telethon import types
+from pymediainfo.MediaInfo import parse as MediaInfoparse
 from telethon.errors import PhotoInvalidDimensionsError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.functions.messages import SendMediaRequest
+from telethon.tl.types import (
+    InputMediaUploadedDocument,
+    DocumentAttributeVideo,
+    InputMediaUploadedPhoto,
+)
 from telethon.utils import get_attributes
 
-from userbot import doge
-
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers import media_type, progress, thumb_from_audio
-from ..helpers.functions import (
+from . import (
+    _dogetools,
+    _dogeutils,
+    _format,
+    Config,
     convert_toimage,
     convert_tosticker,
+    doge,
+    edl,
+    eor,
     invert_frames,
     l_frames,
+    logging,
+    make_gif,
+    media_type,
+    parse_pre,
+    progress,
     r_frames,
+    reply_id,
+    thumb_from_audio,
     spin_frames,
     ud_frames,
     vid_to_gif,
 )
-from ..helpers.utils import _dogetools, _dogeutils, _format, parse_pre, reply_id
-from . import make_gif
 
-plugin_category = "misc"
-
-
-if not os.path.isdir("./temp"):
-    os.makedirs("./temp")
-
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-PATH = os.path.join("./temp", "temp_vid.mp4")
 
-thumb_loc = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+
+if not osp.isdir("./temp"):
+    makedirs("./temp")
+
+
+PATH = osp.join("./temp", "temp_vid.mp4")
+thumb_loc = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 @doge.bot_cmd(
-    pattern="spin(?: |$)((-)?(s)?)$",
+    pattern="spin(?: |$)((.)?(s)?)$",
     command=("spin", plugin_category),
     info={
         "header": "To convert replied image or sticker to spining round video.",
         "flags": {
-            "-s": "to save in saved gifs.",
+            ".s": "to save in saved gifs.",
         },
         "usage": [
             "{tr}spin <flag>",
         ],
-        "examples": ["{tr}spin", "{tr}spin -s"],
+        "examples": ["{tr}spin", "{tr}spin .s"],
     },
 )
 async def pic_gifcmd(event):  # sourcery no-metrics
@@ -83,43 +92,43 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     try:
         outframes = await spin_frames(image, w, h, outframes)
     except Exception as e:
-        return await edl(output[0], f"**Error**\n__{str(e)}__")
-    output = io.BytesIO()
+        return await edl(output[0], f"**Error**\n__{e}__")
+    output = BytesIO()
     output.name = "Output.gif"
     outframes[0].save(output, save_all=True, append_images=outframes[1:], duration=1)
     output.seek(0)
     with open("Output.gif", "wb") as outfile:
         outfile.write(output.getbuffer())
-    final = os.path.join(Config.TEMP_DIR, "output.gif")
+    final = osp.join(Config.TEMP_DIR, "output.gif")
     output = await vid_to_gif("Output.gif", final)
     if output is None:
         return await edl(dogevent, "__Unable to make spin gif.__")
-    media_info = MediaInfo.parse(final)
+    media_info = MediaInfoparse(final)
     aspect_ratio = 1
     for track in media_info.tracks:
         if track.track_type == "Video":
             aspect_ratio = track.display_aspect_ratio
             height = track.height
             width = track.width
-    PATH = os.path.join(Config.TEMP_DIR, "round.gif")
+    PATH = osp.join(Config.TEMP_DIR, "round.gif")
     if aspect_ratio != 1:
-        crop_by = width if (height > width) else height
+        crop_by = min(height,width)
         await _dogeutils.runcmd(
             f'ffmpeg -i {final} -vf "crop={crop_by}:{crop_by}" {PATH}'
         )
     else:
         copyfile(final, PATH)
-    time.time()
-    ul = io.open(PATH, "rb")
+    time()
+    ul = iopen(PATH, "rb")
     uploaded = await event.client.fast_upload_file(
         file=ul,
     )
     ul.close()
-    media = types.InputMediaUploadedDocument(
+    media = InputMediaUploadedDocument(
         file=uploaded,
         mime_type="video/mp4",
         attributes=[
-            types.DocumentAttributeVideo(
+            DocumentAttributeVideo(
                 duration=0,
                 w=1,
                 h=1,
@@ -141,8 +150,8 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [final, "Output.gif", meme_file, PATH, final]:
-        if os.path.exists(i):
-            os.remove(i)
+        if osp.exists(i):
+            remove(i)
 
 
 @doge.bot_cmd(
@@ -176,9 +185,9 @@ async def video_dogfile(event):  # sourcery no-metrics
         if not dogfile.endswith((".webp")):
             if dogfile.endswith((".tgs")):
                 hmm = await make_gif(dogevent, dogfile)
-                os.rename(hmm, "./temp/circle.mp4")
+                rename(hmm, "./temp/circle.mp4")
                 dogfile = "./temp/circle.mp4"
-            media_info = MediaInfo.parse(dogfile)
+            media_info = MediaInfoparse(dogfile)
             aspect_ratio = 1
             for track in media_info.tracks:
                 if track.track_type == "Video":
@@ -186,43 +195,43 @@ async def video_dogfile(event):  # sourcery no-metrics
                     height = track.height
                     width = track.width
             if aspect_ratio != 1:
-                crop_by = width if (height > width) else height
+                crop_by = min(height, width)
                 await _dogeutils.runcmd(
                     f'ffmpeg -i {dogfile} -vf "crop={crop_by}:{crop_by}" {PATH}'
                 )
             else:
                 copyfile(dogfile, PATH)
             if str(dogfile) != str(PATH):
-                os.remove(dogfile)
+                remove(dogfile)
             try:
                 dogthumb = await reply.download_media(thumb=-1)
             except Exception as e:
-                LOGS.error(f"circle - {str(e)}")
+                LOGS.error(f"circle - {e}")
     elif mediatype in ["Voice", "Audio"]:
         dogthumb = None
         try:
             dogthumb = await reply.download_media(thumb=-1)
         except Exception:
-            dogthumb = os.path.join("./temp", "thumb.jpg")
+            dogthumb = osp.join("./temp", "thumb.jpg")
             await thumb_from_audio(dogfile, dogthumb)
-        if dogthumb is not None and not os.path.exists(dogthumb):
-            dogthumb = os.path.join("./temp", "thumb.jpg")
+        if dogthumb is not None and not osp.exists(dogthumb):
+            dogthumb = osp.join("./temp", "thumb.jpg")
             copyfile(thumb_loc, dogthumb)
         if (
             dogthumb is not None
-            and not os.path.exists(dogthumb)
-            and os.path.exists(thumb_loc)
+            and not osp.exists(dogthumb)
+            and osp.exists(thumb_loc)
         ):
             flag = False
-            dogthumb = os.path.join("./temp", "thumb.jpg")
+            dogthumb = osp.join("./temp", "thumb.jpg")
             copyfile(thumb_loc, dogthumb)
-        if dogthumb is not None and os.path.exists(dogthumb):
+        if dogthumb is not None and osp.exists(dogthumb):
             await _dogeutils.runcmd(
                 f"""ffmpeg -loop 1 -i {dogthumb} -i {dogfile} -c:v libx264 -tune stillimage -c:a aac -b:a 192k -vf \"scale=\'iw-mod (iw,2)\':\'ih-mod(ih,2)\',format=yuv420p\" -shortest -movflags +faststart {PATH}"""
             )
-            os.remove(dogfile)
+            remove(dogfile)
         else:
-            os.remove(dogfile)
+            remove(dogfile)
             return await edl(dogevent, "`No thumb found to make it video note`", 5)
     if (
         mediatype
@@ -235,22 +244,22 @@ async def video_dogfile(event):  # sourcery no-metrics
         ]
         and not dogfile.endswith((".webp"))
     ):
-        if os.path.exists(PATH):
-            c_time = time.time()
+        if osp.exists(PATH):
+            c_time = time()
             attributes, mime_type = get_attributes(PATH)
-            ul = io.open(PATH, "rb")
+            ul = iopen(PATH, "rb")
             uploaded = await event.client.fast_upload_file(
                 file=ul,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, dogevent, c_time, "Uploading....")
                 ),
             )
             ul.close()
-            media = types.InputMediaUploadedDocument(
+            media = InputMediaUploadedDocument(
                 file=uploaded,
                 mime_type="video/mp4",
                 attributes=[
-                    types.DocumentAttributeVideo(
+                    DocumentAttributeVideo(
                         duration=0,
                         w=1,
                         h=1,
@@ -271,13 +280,13 @@ async def video_dogfile(event):  # sourcery no-metrics
 
             if not args:
                 await _dogeutils.unsavegif(event, teledoge)
-            os.remove(PATH)
+            remove(PATH)
             if flag:
-                os.remove(dogthumb)
+                remove(dogthumb)
         await dogevent.delete()
         return
     data = reply.photo or reply.media.document
-    img = io.BytesIO()
+    img = BytesIO()
     await event.client.download_file(data, img)
     im = Image.open(img)
     w, h = im.size
@@ -292,7 +301,7 @@ async def video_dogfile(event):  # sourcery no-metrics
     mask = mask.filter(ImageFilter.GaussianBlur(2))
     img = ImageOps.fit(img, (w, h))
     img.putalpha(mask)
-    im = io.BytesIO()
+    im = BytesIO()
     im.name = "dog.webp"
     img.save(im)
     im.seek(0)
@@ -301,12 +310,12 @@ async def video_dogfile(event):  # sourcery no-metrics
 
 
 @doge.bot_cmd(
-    pattern="stoi$",
-    command=("stoi", plugin_category),
+    pattern="sti$",
+    command=("sti", plugin_category),
     info={
         "header": "Reply this command to a sticker to get image.",
         "description": "This also converts every media to image. that is if video then extracts image from that video.if audio then extracts thumb.",
-        "usage": "{tr}stoi",
+        "usage": "{tr}sti",
     },
 )
 async def _(event):
@@ -328,12 +337,12 @@ async def _(event):
 
 
 @doge.bot_cmd(
-    pattern="itos$",
-    command=("itos", plugin_category),
+    pattern="its$",
+    command=("its", plugin_category),
     info={
         "header": "Reply this command to image to get sticker.",
         "description": "This also converts every media to sticker. that is if video then extracts image from that video. if audio then extracts thumb.",
-        "usage": "{tr}itos",
+        "usage": "{tr}its",
     },
 )
 async def _(event):
@@ -375,7 +384,7 @@ async def get(event):
             f.write(m.message)
         await event.delete()
         await event.client.send_file(event.chat_id, name, force_document=True)
-        os.remove(name)
+        remove(name)
     else:
         await eor(event, "reply to text message as `.ttf <file name>`")
 
@@ -409,13 +418,13 @@ async def get(event):
         LOGS.info(e)
     if file_content == "":
         try:
-            with fitz.open(file_loc) as doc:
+            with fitzopen(file_loc) as doc:
                 for page in doc:
                     file_content += page.getText()
         except Exception as e:
-            if os.path.exists(file_loc):
-                os.remove(file_loc)
-            return await edl(event, f"**Error**\n__{str(e)}__")
+            if osp.exists(file_loc):
+                remove(file_loc)
+            return await edl(event, f"**Error:**\n__{e}__")
     await eor(
         event,
         file_content,
@@ -424,8 +433,8 @@ async def get(event):
         noformat=True,
         linktext="**Telegram allows only 4096 charcters in a single message. But replied file has much more. So pasting it to pastebin\nlink :**",
     )
-    if os.path.exists(file_loc):
-        os.remove(file_loc)
+    if osp.exists(file_loc):
+        remove(file_loc)
 
 
 @doge.bot_cmd(
@@ -449,7 +458,7 @@ async def on_file_to_photo(event):
         return await edl(event, "`For sticker to image use stoi command`")
     if image.size > 10 * 1024 * 1024:
         return  # We'd get PhotoSaveFileInvalidError otherwise
-    dogt = await eor(event, "`Converting.....`")
+    dogt = await eor(event, "`Converting...`")
     file = await event.client.download_media(target, file=BytesIO())
     file.seek(0)
     img = await event.client.upload_file(file)
@@ -458,7 +467,7 @@ async def on_file_to_photo(event):
         await event.client(
             SendMediaRequest(
                 peer=await event.get_input_chat(),
-                media=types.InputMediaUploadedPhoto(img),
+                media=InputMediaUploadedPhoto(img),
                 message=target.message,
                 entities=target.entities,
                 reply_to_msg_id=target.id,
@@ -520,7 +529,7 @@ async def _(event):  # sourcery no-metrics
             else:
                 return await edl(event, "Use quality of range 0 to 721")
     dogreply = await event.get_reply_message()
-    dog_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    doge_event = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not dogreply or not dogreply.media or not dogreply.media.document:
         return await eor(event, "`Stupid!, This is not animated sticker.`")
     if dogreply.media.document.mime_type != "application/x-tgsticker":
@@ -531,8 +540,8 @@ async def _(event):  # sourcery no-metrics
         parse_mode=_format.parse_pre,
     )
     try:
-        dog_event = Get(dog_event)
-        await event.client(dog_event)
+        doge_event = Get(doge_event)
+        await event.client(doge_event)
     except BaseException:
         pass
     reply_to_id = await reply_id(event)
@@ -548,8 +557,8 @@ async def _(event):  # sourcery no-metrics
     await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for files in (doggif, dogfile):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and osp.exists(files):
+            remove(files)
 
 
 @doge.bot_cmd(
@@ -576,11 +585,11 @@ async def _(event):
     event = await eor(event, "`Converting...`")
     try:
         start = datetime.now()
-        c_time = time.time()
+        c_time = time()
         downloaded_file_name = await event.client.download_media(
             reply_message,
             Config.TMP_DOWNLOAD_DIRECTORY,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: get_event_loop().create_task(
                 progress(d, t, event, c_time, "trying to download")
             ),
         )
@@ -598,7 +607,7 @@ async def _(event):
         voice_note = False
         supports_streaming = False
         if input_str == "voice":
-            new_required_file_caption = "voice_" + str(round(time.time())) + ".opus"
+            new_required_file_caption = "voice_" + str(round(time())) + ".opus"
             new_required_file_name = (
                 Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
             )
@@ -619,7 +628,7 @@ async def _(event):
             voice_note = True
             supports_streaming = True
         elif input_str == "mp3":
-            new_required_file_caption = "mp3_" + str(round(time.time())) + ".mp3"
+            new_required_file_caption = "mp3_" + str(round(time())) + ".mp3"
             new_required_file_name = (
                 Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
             )
@@ -634,18 +643,18 @@ async def _(event):
             supports_streaming = True
         else:
             await event.edit("not supported")
-            os.remove(downloaded_file_name)
+            remove(downloaded_file_name)
             return
-        process = await asyncio.create_subprocess_exec(
+        process = await create_subprocess_exec(
             *command_to_run,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+            stdout=PIPE,
+            stderr=PIPE,
         )
         stdout, stderr = await process.communicate()
         stderr.decode().strip()
         stdout.decode().strip()
-        os.remove(downloaded_file_name)
-        if os.path.exists(new_required_file_name):
+        remove(downloaded_file_name)
+        if osp.exists(new_required_file_name):
             force_document = False
             await event.client.send_file(
                 entity=event.chat_id,
@@ -655,11 +664,11 @@ async def _(event):
                 force_document=force_document,
                 voice_note=voice_note,
                 supports_streaming=supports_streaming,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, event, c_time, "trying to upload")
                 ),
             )
-            os.remove(new_required_file_name)
+            remove(new_required_file_name)
             await event.delete()
 
 
@@ -719,29 +728,29 @@ async def pic_gifcmd(event):  # sourcery no-metrics
         elif args == "i":
             outframes = await invert_frames(image, w, h, outframes)
     except Exception as e:
-        return await edl(dogevent, f"**Error**\n__{str(e)}__")
-    output = io.BytesIO()
+        return await edl(dogevent, f"**Error**\n__{e}__")
+    output = BytesIO()
     output.name = "Output.gif"
     outframes[0].save(output, save_all=True, append_images=outframes[1:], duration=0.7)
     output.seek(0)
     with open("Output.gif", "wb") as outfile:
         outfile.write(output.getbuffer())
-    final = os.path.join(Config.TEMP_DIR, "output.gif")
+    final = osp.join(Config.TEMP_DIR, "output.gif")
     output = await vid_to_gif("Output.gif", final)
     if output is None:
         await edl(
             dogevent, "__There was some error in the media. I can't format it to gif.__"
         )
         for i in [final, "Output.gif", imag[1]]:
-            if os.path.exists(i):
-                os.remove(i)
+            if osp.exists(i):
+                remove(i)
         return
     teledoge = await event.client.send_file(event.chat_id, output, reply_to=reply)
     await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [final, "Output.gif", imag[1]]:
-        if os.path.exists(i):
-            os.remove(i)
+        if osp.exists(i):
+            remove(i)
 
 
 @doge.bot_cmd(
@@ -769,7 +778,7 @@ async def _(event):
             args = 2.0
     dogevent = await eor(event, "__🎞Converting into Gif..__")
     inputfile = await reply.download_media()
-    outputfile = os.path.join(Config.TEMP_DIR, "vidtogif.gif")
+    outputfile = osp.join(Config.TEMP_DIR, "vidtogif.gif")
     result = await vid_to_gif(inputfile, outputfile, speed=args)
     if result is None:
         return await edl(event, "__I couldn't convert it to gif.__")
@@ -777,5 +786,5 @@ async def _(event):
     await _dogeutils.unsavegif(event, teledoge)
     await dogevent.delete()
     for i in [inputfile, outputfile]:
-        if os.path.exists(i):
-            os.remove(i)
+        if osp.exists(i):
+            remove(i)

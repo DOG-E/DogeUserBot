@@ -1,6 +1,5 @@
 from asyncio import sleep
 
-from telethon import functions
 from telethon.errors import (
     BadRequestError,
     ImageProcessFailedError,
@@ -19,21 +18,18 @@ from telethon.tl.types import (
     InputChatPhotoEmpty,
     MessageMediaPhoto,
 )
+from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers import media_type
-from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper.mute_sql import is_muted, mute, unmute
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, _format, doge, edl, eor, get_user_from_event, lan, logging, media_type, tr, wowmydev
 
 # =================== STRINGS ============
+plugin_category = "admin"
+LOGS = logging.getLogger(__name__)
+
 PP_TOO_SMOL = "`The image is too small`"
 PP_ERROR = "`Failure while processing the image`"
-NO_ADMIN = "`I am not an admin nub nibba!`"
-NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+NO_PERM = lan("noperm")
 CHAT_PP_CHANGED = "`Chat Picture Changed`"
 INVALID_MEDIA = "`Invalid Extension`"
 
@@ -60,11 +56,8 @@ UNBAN_RIGHTS = ChatBannedRights(
     embed_links=None,
 )
 
-LOGS = logging.getLogger(__name__)
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
-
-plugin_category = "admin"
 # ================================================
 
 
@@ -112,13 +105,13 @@ async def set_group_photo(event):  # sourcery no-metrics
             except ImageProcessFailedError:
                 return await edl(event, PP_ERROR)
             except Exception as e:
-                return await edl(event, f"**Error : **`{str(e)}`")
+                return await edl(event, f"**Error: **`{str(e)}`")
             process = "updated"
     else:
         try:
             await event.client(EditPhotoRequest(event.chat_id, InputChatPhotoEmpty()))
         except Exception as e:
-            return await edl(event, f"**Error : **`{str(e)}`")
+            return await edl(event, f"**Error: **`{e}`")
         process = "deleted"
         await edl(event, "```Successfully group profile pic deleted.```")
     if BOTLOG:
@@ -126,7 +119,7 @@ async def set_group_photo(event):  # sourcery no-metrics
             BOTLOG_CHATID,
             "#GROUPPIC\n"
             f"Group profile pic {process} successfully "
-            f"CHAT: {event.chat.title}(`{event.chat_id}`)",
+            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
         )
 
 
@@ -171,7 +164,7 @@ async def promote(event):
             BOTLOG_CHATID,
             f"#PROMOTE\
             \nUSER: [{user.first_name}](tg://user?id={user.id})\
-            \nCHAT: {event.chat.title} (`{event.chat_id}`)",
+            \nCHAT: {get_display_name(await event.get_chat())} (`{event.chat_id}`)",
         )
 
 
@@ -195,6 +188,10 @@ async def demote(event):
     user, _ = await get_user_from_event(event)
     if not user:
         return
+    user_id = user.id
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
     dogevent = await eor(event, "`Demoting...`")
     newrights = ChatAdminRights(
         add_admins=None,
@@ -215,7 +212,7 @@ async def demote(event):
             BOTLOG_CHATID,
             f"#DEMOTE\
             \nUSER: [{user.first_name}](tg://user?id={user.id})\
-            \nCHAT: {event.chat.title}(`{event.chat_id}`)",
+            \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
         )
 
 
@@ -239,11 +236,15 @@ async def _ban_person(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    if user.id == event.client.uid:
-        return await edl(event, "__You cant ban yourself.__")
+    user_id = user.id
+    if user_id == event.client.uid:
+        return await edl(event, "__You can't ban yourself.__")
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
     dogevent = await eor(event, "`Whacking the pest!`")
     try:
-        await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
+        await event.client(EditBannedRequest(event.chat_id, user_id, BANNED_RIGHTS))
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
     try:
@@ -252,31 +253,31 @@ async def _ban_person(event):
             await reply.delete()
     except BadRequestError:
         return await dogevent.edit(
-            "`I dont have message nuking rights! But still he is banned!`"
+            "`I don't have message nuking rights! But still he is banned!`"
         )
     if reason:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)}` is banned !!`\n**Reason : **`{reason}`"
+            f"{_format.mentionuser(user.first_name ,user_id)}` is banned !!`\n**Reason : **`{reason}`"
         )
     else:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} `is banned !!`"
+            f"{_format.mentionuser(user.first_name ,user_id)} `is banned !!`"
         )
     if BOTLOG:
         if reason:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#BAN\
-                \nUSER: [{user.first_name}](tg://user?id={user.id})\
-                \nCHAT: {event.chat.title}(`{event.chat_id}`)\
+                \nUSER: [{user.first_name}](tg://user?id={user_id})\
+                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
                 \nREASON : {reason}",
             )
         else:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#BAN\
-                \nUSER: [{user.first_name}](tg://user?id={user.id})\
-                \nCHAT: {event.chat.title}(`{event.chat_id}`)",
+                \nUSER: [{user.first_name}](tg://user?id={user_id})\
+                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 
@@ -311,7 +312,7 @@ async def nothanos(event):
                 BOTLOG_CHATID,
                 "#UNBAN\n"
                 f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                f"CHAT: {event.chat.title}(`{event.chat_id}`)",
+                f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
     except UserIdInvalidError:
         await dogevent.edit("`Uh oh my unban logic broke!`")
@@ -354,11 +355,14 @@ async def startmute(event):
                 "`This user is already muted in this chat ~~lmfao sed rip~~`"
             )
         if event.chat_id == doge.uid:
-            return await edl(event, "`You cant mute yourself`")
+            return await edl(event, "`You can't mute yourself`")
+        flag = await wowmydev(replied_user, event)
+        if flag:
+            return
         try:
             mute(event.chat_id, event.chat_id)
         except Exception as e:
-            await event.edit(f"**Error **\n`{str(e)}`")
+            await event.edit(f"**Error:**\n`{e}`")
         else:
             await event.edit("`Successfully muted that person.\n**｀-´)⊃━☆ﾟ.*･｡ﾟ **`")
         if BOTLOG:
@@ -378,15 +382,17 @@ async def startmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == doge.uid:
+        user_id = user.id
+        if user_id == doge.uid:
             return await eor(event, "`Sorry, I can't mute myself`")
-        if is_muted(user.id, event.chat_id):
+        flag = await wowmydev(user_id, event)
+        if flag:
+            return
+        if is_muted(user_id, event.chat_id):
             return await eor(
                 event, "`This user is already muted in this chat ~~lmfao sed rip~~`"
             )
-        result = await event.client(
-            functions.channels.GetParticipantRequest(event.chat_id, user.id)
-        )
+        result = await event.client.get_permissions(event.chat_id, user.id)
         try:
             if result.participant.banned_rights.send_messages:
                 return await eor(
@@ -396,40 +402,40 @@ async def startmute(event):
         except AttributeError:
             pass
         except Exception as e:
-            return await eor(event, f"**Error : **`{str(e)}`", 10)
+            return await eor(event, f"**Error: **`{e}`")
         try:
-            await event.client(EditBannedRequest(event.chat_id, user.id, MUTE_RIGHTS))
+            await event.client(EditBannedRequest(event.chat_id, user_id, MUTE_RIGHTS))
         except UserAdminInvalidError:
             if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
                 if chat.admin_rights.delete_messages is not True:
                     return await eor(
                         event,
-                        "`You can't mute a person if you dont have delete messages permission. ಥ﹏ಥ`",
+                        "`You can't mute a person if you don't have delete messages permission. ಥ﹏ಥ`",
                     )
             elif "creator" not in vars(chat):
                 return await eor(
                     event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
                 )
-            mute(user.id, event.chat_id)
+            mute(user_id, event.chat_id)
         except Exception as e:
-            return await eor(event, f"**Error : **`{str(e)}`", 10)
+            return await eor(event, f"**Error: **`{e}`")
         if reason:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user.id)} `is muted in {event.chat.title}`\n"
+                f"{_format.mentionuser(user.first_name ,user_id)} `is muted in {get_display_name(await event.get_chat())}`\n"
                 f"`Reason:`{reason}",
             )
         else:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user.id)} `is muted in {event.chat.title}`\n",
+                f"{_format.mentionuser(user.first_name ,user_id)} `is muted in {get_display_name(await event.get_chat())}`\n",
             )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#MUTE\n"
-                f"**User :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat :** {event.chat.title}(`{event.chat_id}`)",
+                f"**User :** [{user.first_name}](tg://user?id={user_id})\n"
+                f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 
@@ -459,7 +465,7 @@ async def endmute(event):
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
-            await event.edit(f"**Error **\n`{str(e)}`")
+            await event.edit(f"**Error:**\n`{e}`")
         else:
             await event.edit(
                 "`Successfully unmuted that person\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`"
@@ -468,7 +474,7 @@ async def endmute(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#PM_UNMUTE\n"
-                f"**User :** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
+                f"**User:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
         user, _ = await get_user_from_event(event)
@@ -478,9 +484,7 @@ async def endmute(event):
             if is_muted(user.id, event.chat_id):
                 unmute(user.id, event.chat_id)
             else:
-                result = await event.client(
-                    functions.channels.GetParticipantRequest(event.chat_id, user.id)
-                )
+                result = await event.client.get_permissions(event.chat_id, user.id)
                 if result.participant.banned_rights.send_messages:
                     await event.client(
                         EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS)
@@ -491,17 +495,17 @@ async def endmute(event):
                 "`This user can already speak freely in this chat ~~lmfao sed rip~~`",
             )
         except Exception as e:
-            return await eor(event, f"**Error : **`{str(e)}`")
+            return await eor(event, f"**Error: **`{e}`")
         await eor(
             event,
-            f"{_format.mentionuser(user.first_name ,user.id)} `is unmuted in {event.chat.title}\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`",
+            f"{_format.mentionuser(user.first_name ,user.id)} `is unmuted in {get_display_name(await event.get_chat())}\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`",
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#UNMUTE\n"
                 f"**User :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat :** {event.chat.title}(`{event.chat_id}`)",
+                f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 
@@ -525,37 +529,41 @@ async def endmute(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
+    user_id = user.id
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
     dogevent = await eor(event, "`Kicking...`")
     try:
-        await event.client.kick_participant(event.chat_id, user.id)
+        await event.client.kick_participant(event.chat_id, user_id)
     except Exception as e:
-        return await dogevent.edit(NO_PERM + f"\n{str(e)}")
+        return await dogevent.edit(NO_PERM + f"\n{e}")
     if reason:
         await dogevent.edit(
-            f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`\nReason: {reason}"
+            f"`Kicked` [{user.first_name}](tg://user?id={user_id})`!`\nReason: {reason}"
         )
     else:
-        await dogevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
+        await dogevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user_id})`!`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
             "#KICK\n"
-            f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-            f"CHAT: {event.chat.title}(`{event.chat_id}`)\n",
+            f"USER: [{user.first_name}](tg://user?id={user_id})\n"
+            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
         )
 
 
 @doge.bot_cmd(
-    pattern="pin( loud|$)",
+    pattern="pin( l|$)",
     command=("pin", plugin_category),
     info={
         "header": "For pining messages in chat",
         "description": "reply to a message to pin it in that in chat\
         \nNote : You need proper rights for this if you want to use in group.",
-        "options": {"loud": "To notify everyone without this.it will pin silently"},
+        "options": {"l": "To notify everyone without this.it will pin silently"},
         "usage": [
             "{tr}pin <reply>",
-            "{tr}pin loud <reply>",
+            "{tr}pin l <reply>",
         ],
     },
 )
@@ -571,20 +579,20 @@ async def pin(event):
     except BadRequestError:
         return await edl(event, NO_PERM, 5)
     except Exception as e:
-        return await edl(event, f"`{str(e)}`", 5)
+        return await edl(event, f"`{e}`", 5)
     await edl(event, "`Pinned Successfully!`", 3)
     if BOTLOG and not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#PIN\
                 \n__Successfully pinned a message in chat__\
-                \nCHAT: {event.chat.title}(`{event.chat_id}`)\
+                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
                 \nLOUD: {is_silent}",
         )
 
 
 @doge.bot_cmd(
-    pattern="unpin( all|$)",
+    pattern="unpin(all|$)",
     command=("unpin", plugin_category),
     info={
         "header": "For unpining messages in chat",
@@ -593,7 +601,7 @@ async def pin(event):
         "options": {"all": "To unpin all messages in the chat"},
         "usage": [
             "{tr}unpin <reply>",
-            "{tr}unpin all",
+            "{tr}unpinall",
         ],
     },
 )
@@ -614,38 +622,38 @@ async def pin(event):
             await event.client.unpin_message(event.chat_id)
         else:
             return await edl(
-                event, "`Reply to a message to unpin it or use .unpin all`", 5
+                event, f"`Reply to a message to unpin it or use {tr}unpinall`", 5
             )
     except BadRequestError:
         return await edl(event, NO_PERM, 5)
     except Exception as e:
-        return await edl(event, f"`{str(e)}`", 5)
-    await edl(event, "`Unpinned Successfully!`", 3)
+        return await edl(event, f"`{e}`", 5)
+    await edl(event, "`Unpinned successfully!`", 3)
     if BOTLOG and not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#UNPIN\
                 \n__Successfully unpinned message(s) in chat__\
-                \nCHAT: {event.chat.title}(`{event.chat_id}`)",
+                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
         )
 
 
 @doge.bot_cmd(
-    pattern="undlt( -u)?(?: |$)(\d*)?",
+    pattern="undlt( .u)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
         "header": "To get recent deleted messages in group",
         "description": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
         "flags": {
-            "u": "use this flag to upload media to chat else will just show as media."
+            "m": "use this flag to upload media to chat else will just show as media."
         },
         "usage": [
             "{tr}undlt <count>",
-            "{tr}undlt -u <count>",
+            "{tr}undlt .m <count>",
         ],
         "examples": [
             "{tr}undlt 7",
-            "{tr}undlt -u 7 (this will reply all 7 messages to this message",
+            "{tr}undlt .m 7 (this will reply all 7 messages to this message",
         ],
     },
     groups_only=True,

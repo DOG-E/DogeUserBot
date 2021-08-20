@@ -1,18 +1,14 @@
 # Get Docker image
-FROM mutlcc/dogeuserbot:doger
+FROM mutlcc/dogebot:dogeuserbot
 
-# Clone Doge repository
-RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/userbot
-
-# Work directory
-WORKDIR /root/userbot
+# Clone Doge repository + work directory + minor adjustment
+RUN git clone https://github.com/DOG-E/DogeUserBot.git /usr/src/userbot
+WORKDIR /usr/src/userbot
+ENV PATH="/usr/src/userbot/bin:$PATH"
 
 # Install requirements
 RUN pip3 install -U -r requirements.txt
 
-# Minor adjustments
-ENV PATH="/home/userbot/bin:$PATH"
-RUN chmod -R 755 bin
-
 # Run Doge
-CMD ["python3", "-m", "userbot"]
+RUN chmod a+x doger
+CMD ["./doger"]

@@ -4,7 +4,7 @@ from . import BASE, SESSION
 
 
 class Filter(BASE):
-    __tablename__ = "dogfilters"
+    __tablename__ = "dogefilters"
     chat_id = Column(String(14), primary_key=True)
     keyword = Column(UnicodeText, primary_key=True, nullable=False)
     reply = Column(UnicodeText)

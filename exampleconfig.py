@@ -11,14 +11,11 @@ class Development(Config):
     DB_URI = "Your value"
     # Get this value by running https://repl.it/@DogeUserBot/DogeString or # TODO
     STRING_SESSION = "Your value"
-    # Create a new bot in @BotFather ( https://t.me/BotFather ) and fill the following vales with Bot TokenAPI and username respectively
-    TG_BOT_TOKEN = "Your value"
-    TG_BOT_USERNAME = "Your value"
+    # Create a new bot in @BotFather ( https://t.me/BotFather ) and fill the following vales with Bot TokenAPI
+    BOT_TOKEN = "Your value"
     # Create a private group and a @MissRose_bot to it and type /id and paste that Chat ID here (replace that -100 with that group ID)
     PRIVATE_GROUP_BOT_API_ID = -100
     # Command handler
-    COMMAND_HAND_LER = "."
-    # Sudo enter the ID of sudo users UserID's in that array
-    SUDO_USERS = []
+    CMDSET = "."
     # Command hanler for sudo
-    SUDO_COMMAND_HAND_LER = "."
+    SUDO_CMDSET = "."

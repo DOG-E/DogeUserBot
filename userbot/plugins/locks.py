@@ -1,20 +1,18 @@
-import base64
+from base64 import b64decode
 
-from telethon import events, functions, types
+from telethon.events import ChatAction
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from telethon.tl.types import ChatBannedRights
+from telethon.tl.types import ChatBannedRights, MessageEntityBotCommand, MessageEntityEmail, MessageEntityTextUrl, MessageEntityUrl
+from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers.utils import _format
 from ..sql_helper.locks_sql import get_locks, is_locked, update_lock
 from ..utils import is_admin
-from . import BOTLOG, get_user_from_event
+from . import BOTLOG, _format, doge, edl, eor, get_user_from_event, logging
 
 plugin_category = "admin"
+LOGS = logging.getLogger(__name__)
 
 
 @doge.bot_cmd(
@@ -56,7 +54,7 @@ async def _(event):  # sourcery no-metrics
     if not event.is_group:
         return await edl(event, "`Idiot! ,This is not a group to lock things `")
     chat_per = (await event.get_chat()).default_banned_rights
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, True)
         await eor(event, "`Locked {}`".format(input_str))
@@ -198,7 +196,7 @@ async def _(event):  # sourcery no-metrics
         except BaseException as e:
             await edl(
                 event,
-                f"`Do I have proper rights for that ??`\n\n**Error:** `{str(e)}`",
+                f"`Do I have proper rights for that ??`\n\n**Error:** `{e}`",
                 time=5,
             )
 
@@ -241,7 +239,7 @@ async def _(event):  # sourcery no-metrics
     peer_id = event.chat_id
     if not event.is_group:
         return await edl(event, "`Idiot! ,This is not a group to lock things `")
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     chat_per = (await event.get_chat()).default_banned_rights
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, False)
@@ -384,7 +382,7 @@ async def _(event):  # sourcery no-metrics
         except BaseException as e:
             return await edl(
                 event,
-                f"`Do I have proper rights for that ??`\n\n**Error:** `{str(e)}`",
+                f"`Do I have proper rights for that ??`\n\n**Error:** `{e}`",
                 time=5,
             )
 
@@ -420,7 +418,7 @@ async def _(event):  # sourcery no-metrics
     try:
         chat_per = current_chat.default_banned_rights
     except AttributeError as e:
-        logger.info(str(e))
+        LOGS.info(str(e))
     else:
         umsg = "❌" if chat_per.send_messages else "✅"
         umedia = "❌" if chat_per.send_media else "✅"
@@ -478,13 +476,11 @@ async def _(event):  # sourcery no-metrics
     peer_id = event.chat_id
     reply = await event.get_reply_message()
     chat_per = (await event.get_chat()).default_banned_rights
-    result = await event.client(
-        functions.channels.GetParticipantRequest(peer_id, reply.from_id)
-    )
+    result = await event.client.get_permissions(peer_id, reply.from_id)
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
-        return await edl(event, "`This user is admin you cant play with him`")
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+        return await edl(event, "`This user is admin you can't play with him`")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers
@@ -670,7 +666,7 @@ async def _(event):  # sourcery no-metrics
     except BaseException as e:
         await edl(
             event,
-            f"`Do I have proper rights for that ??`\n\n**Error:** `{str(e)}`",
+            f"`Do I have proper rights for that ??`\n\n**Error:** `{e}`",
             time=5,
         )
 
@@ -680,7 +676,7 @@ async def _(event):  # sourcery no-metrics
     command=("punlock", plugin_category),
     info={
         "header": "To unlock the given permission for replied person only.",
-        "note": "If entire group is locked with that permission then you cant unlock that permission only for him.",
+        "note": "If entire group is locked with that permission then you can't unlock that permission only for him.",
         "api options": {
             "msg": "To unlock messages",
             "media": "To unlock media like videos/photo",
@@ -706,13 +702,11 @@ async def _(event):  # sourcery no-metrics
     peer_id = event.chat_id
     reply = await event.get_reply_message()
     chat_per = (await event.get_chat()).default_banned_rights
-    result = await event.client(
-        functions.channels.GetParticipantRequest(peer_id, reply.from_id)
-    )
+    result = await event.client.get_permissions(peer_id, reply.from_id)
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
-        return await edl(event, "`This user is admin you cant play with him`")
-    dog = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+        return await edl(event, "`This user is admin you can't play with him`")
+    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers
@@ -905,7 +899,7 @@ async def _(event):  # sourcery no-metrics
     except BaseException as e:
         await edl(
             event,
-            f"`Do I have proper rights for that ??`\n\n**Error:** `{str(e)}`",
+            f"`Do I have proper rights for that ??`\n\n**Error:** `{e}`",
             time=5,
         )
 
@@ -926,9 +920,7 @@ async def _(event):  # sourcery no-metrics
     if not user:
         return
     admincheck = await is_admin(event.client, peer_id, user.id)
-    result = await event.client(
-        functions.channels.GetParticipantRequest(peer_id, user.id)
-    )
+    result = await event.client.get_permissions(peer_id, user.id)
     output = ""
     if admincheck:
         c_info = "✅" if result.participant.admin_rights.change_info else "❌"
@@ -938,7 +930,7 @@ async def _(event):  # sourcery no-metrics
         pin = "✅" if result.participant.admin_rights.pin_messages else "❌"
         add_a = "✅" if result.participant.admin_rights.add_admins else "❌"
         call = "✅" if result.participant.admin_rights.manage_call else "❌"
-        output += f"**Admin rights of **{_format.mentionuser(user.first_name ,user.id)} **in {event.chat.title} chat are **\n"
+        output += f"**Admin rights of **{_format.mentionuser(user.first_name ,user.id)} **in {get_display_name(await event.get_chat())} chat are **\n"
         output += f"__Change info :__ {c_info}\n"
         output += f"__Delete messages :__ {del_me}\n"
         output += f"__Ban users :__ {ban}\n"
@@ -972,7 +964,7 @@ async def _(event):  # sourcery no-metrics
             uadduser = "❌" if chat_per.invite_users else "✅"
             ucpin = "❌" if chat_per.pin_messages else "✅"
             uchangeinfo = "❌" if chat_per.change_info else "✅"
-        output += f"{_format.mentionuser(user.first_name ,user.id)} **permissions in {event.chat.title} chat are **\n"
+        output += f"{_format.mentionuser(user.first_name ,user.id)} **permissions in {get_display_name(await event.get_chat())} chat are **\n"
         output += f"__Send Messages :__ {umsg}\n"
         output += f"__Send Media :__ {umedia}\n"
         output += f"__Send Stickers :__ {usticker}\n"
@@ -1001,7 +993,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
         is_command = False
         if entities:
             for entity in entities:
-                if isinstance(entity, types.MessageEntityBotCommand):
+                if isinstance(entity, MessageEntityBotCommand):
                     is_command = True
         if is_command:
             try:
@@ -1024,7 +1016,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
         is_email = False
         if entities:
             for entity in entities:
-                if isinstance(entity, types.MessageEntityEmail):
+                if isinstance(entity, MessageEntityEmail):
                     is_email = True
         if is_email:
             try:
@@ -1040,7 +1032,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
         if entities:
             for entity in entities:
                 if isinstance(
-                    entity, (types.MessageEntityTextUrl, types.MessageEntityUrl)
+                    entity, (MessageEntityTextUrl, MessageEntityUrl)
                 ):
                     is_url = True
         if is_url:
@@ -1053,7 +1045,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
                 update_lock(peer_id, "url", False)
 
 
-@doge.on(events.ChatAction())
+@doge.on(ChatAction())
 async def _(event):
     if not event.is_private:
         chat = await event.get_chat()
@@ -1069,7 +1061,7 @@ async def _(event):
     if event.user_added:
         users_added_by = event.action_message.sender_id
         is_ban_able = False
-        rights = types.ChatBannedRights(until_date=None, view_messages=True)
+        rights = ChatBannedRights(until_date=None, view_messages=True)
         added_users = event.action_message.action.users
         for user_id in added_users:
             user_obj = await event.client.get_entity(user_id)
@@ -1077,7 +1069,7 @@ async def _(event):
                 is_ban_able = True
                 try:
                     await event.client(
-                        functions.channels.EditBannedRequest(
+                        EditBannedRequest(
                             event.chat_id, user_obj, rights
                         )
                     )

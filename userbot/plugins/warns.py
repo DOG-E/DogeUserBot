@@ -1,11 +1,10 @@
-import html
+from html import escape
 
-from userbot import doge
-
-from ..core.managers import eor
+from . import doge, edl, eor, logging
 from ..sql_helper import warns_sql as sql
 
 plugin_category = "admin"
+LOGS = logging.getLogger(__name__)
 
 
 @doge.bot_cmd(
@@ -30,12 +29,12 @@ async def _(event):
     if num_warns >= limit:
         sql.reset_warns(reply_message.sender_id, event.chat_id)
         if soft_warn:
-            logger.info("TODO: kick user")
+            LOGS.info("TODO: kick user")
             reply = "{} warnings, [user](tg://user?id={}) has to bee kicked!".format(
                 limit, reply_message.sender_id
             )
         else:
-            logger.info("TODO: ban user")
+            LOGS.info("TODO: ban user")
             reply = "{} warnings, [user](tg://user?id={}) has to bee banned!".format(
                 limit, reply_message.sender_id
             )
@@ -44,7 +43,7 @@ async def _(event):
             reply_message.sender_id, num_warns, limit
         )
         if warn_reason:
-            reply += "\nReason for last warn:\n{}".format(html.escape(warn_reason))
+            reply += "\nReason for last warn:\n{}".format(escape(warn_reason))
     await eor(event, reply)
 
 

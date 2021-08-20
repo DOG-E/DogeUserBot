@@ -1,8 +1,8 @@
-import datetime
-import inspect
-import re
-import sys
-import traceback
+from datetime import datetime
+from inspect import stack as stacck
+from re import compile
+from sys import exc_info
+from traceback import format_exc, format_exception
 from pathlib import Path
 from typing import Dict, List, Union
 
@@ -14,7 +14,7 @@ from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..helpers.utils.utils import runcmd
 from ..sql_helper.globals import gvarstatus
-from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
+from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO, dogeversion
 from .cmdinfo import _format_about
 from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
@@ -57,7 +57,7 @@ class DogeUserBotClient(TelegramClient):
         if gvarstatus("blacklist_chats") is not None:
             kwargs["blacklist_chats"] = True
             kwargs["chats"] = blacklist_chats_list()
-        stack = inspect.stack()
+        stack = stacck()
         previous_stack_frame = stack[1]
         file_test = Path(previous_stack_frame.filename)
         file_test = file_test.stem.replace(".py", "")
@@ -83,20 +83,20 @@ class DogeUserBotClient(TelegramClient):
                 or not pattern.startswith(r"\#")
                 and pattern.startswith(r"^")
             ):
-                REGEX_.regex1 = REGEX_.regex2 = re.compile(pattern)
+                REGEX_.regex1 = REGEX_.regex2 = compile(pattern)
             else:
-                reg1 = "\\" + Config.COMMAND_HAND_LER
-                reg2 = "\\" + Config.SUDO_COMMAND_HAND_LER
-                REGEX_.regex1 = re.compile(reg1 + pattern)
-                REGEX_.regex2 = re.compile(reg2 + pattern)
+                reg1 = "\\" + Config.CMDSET
+                reg2 = "\\" + Config.SUDO_CMDSET
+                REGEX_.regex1 = compile(reg1 + pattern)
+                REGEX_.regex2 = compile(reg2 + pattern)
 
         def decorator(func):  # sourcery no-metrics
             async def wrapper(check):
                 if groups_only and not check.is_group:
-                    await edl(check, "`I don't think this is a group.`", 10)
+                    await edl(check, "`🐾 I don't think this is a group.`")
                     return
                 if private_only and not check.is_private:
-                    await edl(check, "`I don't think this is a personal Chat.`", 10)
+                    await edl(check, "`🐾 I don't think this is a personal chat.`")
                     return
                 try:
                     await func(check)
@@ -107,45 +107,56 @@ class DogeUserBotClient(TelegramClient):
                 except MessageNotModifiedError:
                     LOGS.error("Message was same as previous message")
                 except MessageIdInvalidError:
-                    LOGS.error("Message was deleted or cant be found")
+                    LOGS.error("Message was deleted or can't be found")
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
-                        date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                  \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                  \nyou may not report this error if you've\
-                                  \nany confidential data here, no one will see your data\
-                                  \n\n--------BEGIN USERBOT TRACEBACK LOG--------\
-                                  \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                  \nSender ID: {str(check.sender_id)}\
-                                  \nMessage Link: {await check.client.get_msg_link(check)}\
-                                  \n\nEvent Trigger:\n{str(check.text)}\
-                                  \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                  \n\nError text:\n{str(sys.exc_info()[1])}"
+                        date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
+                        ftext = f"\nℹ DISCLAIMER:\
+                                    \nThis file is pasted ONLY here,\
+                                    \nwe logged only fact of error and date,\
+                                    \nwe respect your privacy,\
+                                    \nif you've any confidential data here,\
+                                    \nyou may not report this error.\
+                                    \nNo one will see your data.\
+                                    \n\
+                                    \n--------BEGIN DOGE USERBOT ERROR LOG--------\
+                                    \n\
+                                    \n🐶 Doge Version: {dogeversion}\
+                                    \n📅 Date: {date}\
+                                    \n👥 Group ID: {str(check.chat_id)}\
+                                    \n👤 Sender ID: {str(check.sender_id)}\
+                                    \n🔗 Message Link: {await check.client.get_msg_link(check)}\
+                                    \n\
+                                    \n➡ Event Trigger:\n{str(check.text)}\
+                                    \n\
+                                    \nℹ Traceback Info:\n{str(format_exc())}\
+                                    \n\
+                                    \n🚨 Error Text:\n{str(exc_info()[1])}"
                         new = {
-                            "error": str(sys.exc_info()[1]),
-                            "date": datetime.datetime.now(),
+                            "error": str(exc_info()[1]),
+                            "date": datetime.now(),
                         }
-                        ftext += "\n\n--------END USERBOT TRACEBACK LOG--------"
+                        ftext += "\n\
+                                    \n--------END DOGE USERBOT ERROR LOG--------"
                         command = 'git log --pretty=format:"%an: %s" -5'
-                        ftext += "\n\n\nLast 5 commits:\n"
+                        ftext += "\n\n\n🐾 Last 5 Commits:\n"
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
                         pastelink = await paste_message(
                             ftext, pastetype="s", markdown=False
                         )
-                        text = "**DogeUserBot Error report**\n\n"
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**\n\n"
                         link = "[here](https://t.me/DogeSup)"
-                        text += "If you wanna you can report it"
-                        text += f"- just forward this message {link}.\n"
+                        text += "__💬 If you wanna you can report it.__\n\n"
+                        text += f"🐾 Forward this message {link}.\n\n"
                         text += (
-                            "Nothing is logged except the fact of error and date\n\n"
+                            "__**🦴 Nothing is logged except of error and date!**__\n\n"
                         )
-                        text += f"**Error report : ** [{new['error']}]({pastelink})"
+                        text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
@@ -223,46 +234,56 @@ class DogeUserBotClient(TelegramClient):
                 except MessageNotModifiedError:
                     LOGS.error("Message was same as previous message")
                 except MessageIdInvalidError:
-                    LOGS.error("Message was deleted or cant be found")
+                    LOGS.error("Message was deleted or can't be found")
                 except BaseException as e:
                     # Check if we have to disable error logging.
                     LOGS.exception(e)  # Log the error in console
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
-                        date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                    \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                    \nyou may not report this error if you've\
-                                    \nany confidential data here, no one will see your data\
-                                    \n\n--------BEGIN USERBOT TRACEBACK LOG--------\
-                                    \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                    \nSender ID: {str(check.sender_id)}\
-                                    \nMessage Link: {await check.client.get_msg_link(check)}\
-                                    \n\nEvent Trigger:\n{str(check.text)}\
-                                    \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                    \n\nError text:\n{str(sys.exc_info()[1])}"
+                        date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
+                        ftext = f"\nℹ DISCLAIMER:\
+                                    \nThis file is pasted ONLY here,\
+                                    \nwe logged only fact of error and date,\
+                                    \nwe respect your privacy,\
+                                    \nif you've any confidential data here,\
+                                    \nyou may not report this error.\
+                                    \nNo one will see your data.\
+                                    \n\
+                                    \n--------BEGIN DOGE USERBOT ERROR LOG--------\
+                                    \n🐶 Doge Version: {dogeversion}\
+                                    \n📅 Date: {date}\
+                                    \n👥 Group ID: {str(check.chat_id)}\
+                                    \n👤 Sender ID: {str(check.sender_id)}\
+                                    \n🔗 Message Link: {await check.client.get_msg_link(check)}\
+                                    \n\
+                                    \n➡ Event Trigger:\n{str(check.text)}\
+                                    \n\
+                                    \nℹ Traceback Info:\n{str(format_exc())}\
+                                    \n\
+                                    \n🚨 Error Text:\n{str(exc_info()[1])}"
                         new = {
-                            "error": str(sys.exc_info()[1]),
-                            "date": datetime.datetime.now(),
+                            "error": str(exc_info()[1]),
+                            "date": datetime.now(),
                         }
-                        ftext += "\n\n--------END USERBOT TRACEBACK LOG--------"
+                        ftext += "\n\
+                                    \n--------END DOGE USERBOT ERROR LOG--------"
                         command = 'git log --pretty=format:"%an: %s" -5'
-                        ftext += "\n\n\nLast 5 commits:\n"
+                        ftext += "\n\n\n🐾 Last 5 Commits:\n"
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
                         pastelink = await paste_message(
                             ftext, pastetype="s", markdown=False
                         )
-                        text = "**DogeUserBot Error report**\n\n"
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**\n\n"
                         link = "[here](https://t.me/DogeSup)"
-                        text += "If you wanna you can report it"
-                        text += f"- just forward this message {link}.\n"
+                        text += "__💬 If you wanna you can report it.__\n\n"
+                        text += f"🐾 Forward this message {link}.\n\n"
                         text += (
-                            "Nothing is logged except the fact of error and date\n\n"
+                            "__**🦴 Nothing is logged except of error and date!**__\n\n"
                         )
-                        text += f"**Error report : ** [{new['error']}]({pastelink})"
+                        text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
@@ -280,7 +301,7 @@ class DogeUserBotClient(TelegramClient):
 
     async def get_traceback(self, exc: Exception) -> str:
         return "".join(
-            traceback.format_exception(etype=type(exc), value=exc, tb=exc.__traceback__)
+            format_exception(etype=type(exc), value=exc, tb=exc.__traceback__)
         )
 
     def _kill_running_processes(self) -> None:

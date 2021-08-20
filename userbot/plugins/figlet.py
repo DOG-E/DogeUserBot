@@ -1,13 +1,14 @@
-import pyfiglet
+from random import choice
 
-from ..helpers.utils import _format
-from . import _format, deEmojify, doge, edl, eor
+from pyfiglet import figlet_format
 
-plugin_category = "extra"
+from . import _format, deEmojify, doge, edl, eor, tr
+
+plugin_category = "fun"
 
 CMD_FIG = {
     "slant": "slant",
-    "3D": "3-d",
+    "3d": "3-d",
     "5line": "5lineoblique",
     "alpha": "alphabet",
     "banner": "banner3-D",
@@ -25,15 +26,15 @@ CMD_FIG = {
 
 
 @doge.bot_cmd(
-    pattern="figlet(?:\s|$)([\s\S]*)",
-    command=("figlet", plugin_category),
+    pattern="fg(?:\s|$)([\s\S]*)",
+    command=("fg", plugin_category),
     info={
         "header": "Changes the given text into the given style",
-        "usage": ["{tr}figlet <style> ; <text>", "{tr}figlet <text>"],
-        "examples": ["{tr}figlet digi ; hello", "{tr}figlet hello"],
+        "usage": ["{tr}fg <style> ; <text>", "{tr}fg <text>"],
+        "examples": ["{tr}fg digi ; hello", "{tr}fg hello"],
         "styles": [
             "slant",
-            "3D",
+            "3d",
             "5line",
             "alpha",
             "banner",
@@ -55,7 +56,7 @@ async def figlet(event):
     input_str = event.pattern_match.group(1)
     if ";" in input_str:
         cmd, text = input_str.split(";", maxsplit=1)
-    elif input_str is not None:
+    elif input_str:
         cmd = None
         text = input_str
     else:
@@ -65,12 +66,12 @@ async def figlet(event):
     text = text.strip()
     if style is not None:
         try:
-            font = CMD_FIG[style.strip()]
+            font = choice(CMD_FIG[style.strip()])
         except KeyError:
             return await edl(
-                event, "**Invalid style selected**, __Check__ `.info figlet`."
+                event, f"**Invalid style selected**, __Check__ `{tr}doge figlet`."
             )
-        result = pyfiglet.figlet_format(deEmojify(text), font=font)
+        result = figlet_format(deEmojify(text), font=font)
     else:
-        result = pyfiglet.figlet_format(deEmojify(text))
-    await eor(event, result, parse_mode=_format.parse_pre)
+        result = figlet_format(deEmojify(text))
+    await eor(event, f"ㅤ \n{result}", parse_mode=_format.parse_pre)

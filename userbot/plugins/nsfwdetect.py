@@ -1,16 +1,13 @@
 # Copyright (C) 2020 BY - GitHub.com/code-rgb [TG - @deleteduser420]
 # ported to cat by @mrconfused (@sandy1709)
 
-import os
+from os import remove
 
-import requests
+from requests import post
 
-from userbot import doge
+from . import Config, doge, edl, eor
 
-from ..Config import Config
-from ..core.managers import edl, eor
-
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -36,14 +33,14 @@ async def detect(event):
     if not media.endswith(("png", "jpg", "webp")):
         return await edl(event, "`Reply to any image or non animated sticker !`", 5)
     dogevent = await eor(event, "`Detecting NSFW limit...`")
-    r = requests.post(
+    r = post(
         "https://api.deepai.org/api/nsfw-detector",
         files={
             "image": open(media, "rb"),
         },
         headers={"api-key": Config.DEEP_AI},
     )
-    os.remove(media)
+    remove(media)
     if "status" in r.json():
         return await edl(dogevent, r.json()["status"])
     r_json = r.json()["output"]
@@ -51,7 +48,7 @@ async def detect(event):
     percentage = r_json["nsfw_score"] * 100
     detections = r_json["detections"]
     link = f"https://api.deepai.org/job-view-file/{pic_id}/inputs/image.jpg"
-    result = f"<b>Detected Nudity :</b>\n<a href='{link}'>>>></a> <code>{percentage:.3f}%</code>\n\n"
+    result = f"<b>Detected Nudity:</b>\n<a href='{link}'>>>></a> <code>{percentage:.3f}%</code>\n\n"
     if detections:
         for parts in detections:
             name = parts["name"]

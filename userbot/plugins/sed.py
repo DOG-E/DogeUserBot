@@ -1,22 +1,20 @@
-import re
-from collections import defaultdict, deque
-
-import regex
-from telethon import events
-from telethon.tl import functions, types
-
-from userbot import doge
-
-from ..Config import Config
-
-plugin_category = "tools"
-
-HEADER = "「sed」\n"
-KNOWN_RE_BOTS = re.compile(Config.GROUP_REG_SED_EX_BOT_S, flags=re.IGNORECASE)
-
 # Heavily based on
 # https://github.com/SijmenSchoon/regexbot/blob/master/regexbot.py
+from re import compile, IGNORECASE
+from collections import defaultdict, deque
 
+from regex import IGNORECASE as regexIGNORECASE, subn as regexsubn
+from telethon.events import MessageEdited, NewMessage, StopPropagation
+from telethon.tl.functions.messages import GetFullChatRequest
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.types import InputPeerChat, InputPeerChannel
+
+from . import Config, doge, edl, eor
+
+plugin_category = "misc"
+
+HEADER = ""
+KNOWN_RE_BOTS = compile(Config.GROUP_REG_SED_EX_BOT_S, flags=IGNORECASE)
 last_msgs = defaultdict(lambda: deque(maxlen=10))
 
 
@@ -37,7 +35,7 @@ def doit(chat_id, match, original):
     flags = 0
     for f in fl:
         if f == "i":
-            flags |= regex.IGNORECASE
+            flags |= regexIGNORECASE
         elif f == "g":
             count = 0
         else:
@@ -48,11 +46,11 @@ def doit(chat_id, match, original):
             s = original.message
             if s.startswith(HEADER):
                 s = s[len(HEADER) :]
-            s, i = regex.subn(fr, to, s, count=count, flags=flags)
+            s, i = regexsubn(fr, to, s, count=count, flags=flags)
             if i > 0:
                 return original, s
         except Exception as e:
-            return None, f"u dun goofed m8: {str(e)}"
+            return None, f"u dun goofed m8: {e}"
         return None, None
 
     if original is not None:
@@ -66,22 +64,22 @@ def doit(chat_id, match, original):
 
 
 async def group_has_sedbot(group):
-    if isinstance(group, types.InputPeerChannel):
-        full = await doge(functions.channels.GetFullChannelRequest(group))
-    elif isinstance(group, types.InputPeerChat):
-        full = await doge(functions.messages.GetFullChatRequest(group.chat_id))
+    if isinstance(group, InputPeerChannel):
+        full = await doge(GetFullChannelRequest(group))
+    elif isinstance(group, InputPeerChat):
+        full = await doge(GetFullChatRequest(group.chat_id))
     else:
         return False
 
     return any(KNOWN_RE_BOTS.match(x.username or "") for x in full.users)
 
 
-@doge.on(events.NewMessage)
+@doge.on(NewMessage)
 async def on_message(event):
     last_msgs[event.chat_id].appendleft(event.message)
 
 
-@doge.on(events.MessageEdited)
+@doge.on(MessageEdited)
 async def on_edit(event):
     for m in last_msgs[event.chat_id]:
         if m.id == event.id:
@@ -107,11 +105,11 @@ async def on_regex(event):
         return
     m, s = doit(event.chat_id, event.pattern_match, await event.get_reply_message())
     if m is not None:
-        s = f"{HEADER}{s}"
+        s = f"{s}"
         out = await event.client.send_message(
             await event.get_input_chat(), s, reply_to=m.id
         )
         last_msgs[event.chat_id].appendleft(out)
     elif s is not None:
         await eor(event, s)
-    raise events.StopPropagation
+    raise StopPropagation

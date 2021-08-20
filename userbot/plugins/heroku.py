@@ -1,36 +1,24 @@
-# Heroku manager for your catuserbot
-
-# CC- @refundisillegal\nSyntax:-\n.get var NAME\n.del var NAME\n.set var NAME
-
+# CC- @refundisillegal
 # Copyright (C) 2020 Adek Maulana.
-# All rights reserved.
 
-import asyncio
-import math
-import os
+from asyncio import sleep
+from math import floor
+from os import remove
 
-import heroku3
-import requests
-import urllib3
+from heroku3 import from_key
+from requests import get
+from urllib3 import disable_warnings
+from urllib3.exceptions import InsecureRequestWarning
 
-from userbot import doge
+from . import HEROKU_API_KEY, HEROKU_APP_NAME, Config, Heroku, doge, edl, eor, heroku_api, lan
 
-from ..Config import Config
-from ..core.managers import edl, eor
+plugin_category = "bot"
 
-plugin_category = "tools"
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-# =================
-
-Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
-heroku_api = "https://api.heroku.com"
-HEROKU_APP_NAME = Config.HEROKU_APP_NAME
-HEROKU_API_KEY = Config.HEROKU_API_KEY
+disable_warnings(InsecureRequestWarning)
 
 
 @doge.bot_cmd(
-    pattern="(set|get|del) var ([\s\S]*)",
+    pattern="([Ss]et|[Gg]et|[Dd]el)[ Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
         "header": "To manage heroku vars.",
@@ -63,7 +51,7 @@ async def variable(var):  # sourcery no-metrics
     heroku_var = app.config()
     if exe == "get":
         dog = await eor(var, "`Getting information...`")
-        await asyncio.sleep(1.0)
+        await sleep(1.0)
         try:
             variable = var.pattern_match.group(2).split()[0]
             if variable in heroku_var:
@@ -86,7 +74,7 @@ async def variable(var):  # sourcery no-metrics
                     f"\n```{result}```\n"
                     "================================",
                 )
-            os.remove("configs.json")
+            remove("configs.json")
     elif exe == "set":
         variable = "".join(var.text.split(maxsplit=2)[2:])
         dog = await eor(var, "`Setting information...`")
@@ -96,12 +84,12 @@ async def variable(var):  # sourcery no-metrics
         variable = "".join(variable.split(maxsplit=1)[0])
         if not value:
             return await dog.edit("`.set var <ConfigVars-name> <value>`")
-        await asyncio.sleep(1.5)
+        await sleep(1.5)
         if variable in heroku_var:
-            await dog.edit(f"`{variable}` **successfully changed to  ->  **`{value}`")
+            await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
         else:
             await dog.edit(
-                f"`{variable}`**  successfully added with value`  ->  **{value}`"
+                f"`{variable}`** successfully added with value` -> **{value}`"
             )
         heroku_var[variable] = value
     elif exe == "del":
@@ -110,32 +98,32 @@ async def variable(var):  # sourcery no-metrics
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
             return await dog.edit("`Please specify ConfigVars you want to delete`")
-        await asyncio.sleep(1.5)
+        await sleep(1.5)
         if variable not in heroku_var:
-            return await dog.edit(f"`{variable}`**  does not exist**")
+            return await dog.edit(f"`{variable}`** does not exist**")
 
-        await dog.edit(f"`{variable}`  **successfully deleted**")
+        await dog.edit(f"`{variable}` **successfully deleted**")
         del heroku_var[variable]
 
 
 @doge.bot_cmd(
-    pattern="usage$",
+    pattern="(usage|dyno)$",
     command=("usage", plugin_category),
     info={
         "header": "To Check dyno usage of userbot and also to know how much left.",
-        "usage": "{tr}usage",
+        "usage": ["{tr}usage", "{tr}dyno"]
     },
 )
 async def dyno_usage(dyno):
     """
-    Get your account Dyno Usage
+    Get your account Dyno usage
     """
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
         return await edl(
             dyno,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
-    dyno = await eor(dyno, "`Processing...`")
+    dyno = await eor(dyno, lan("processing"))
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -148,7 +136,7 @@ async def dyno_usage(dyno):
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
-    r = requests.get(heroku_api + path, headers=headers)
+    r = get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await dyno.edit(
             "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
@@ -157,17 +145,14 @@ async def dyno_usage(dyno):
     quota = result["account_quota"]
     quota_used = result["quota_used"]
 
-    # - Used -
     remaining_quota = quota - quota_used
-    percentage = math.floor(remaining_quota / quota * 100)
+    percentage = floor(remaining_quota / quota * 100)
     minutes_remaining = remaining_quota / 60
-    hours = math.floor(minutes_remaining / 60)
-    minutes = math.floor(minutes_remaining % 60)
-    day = math.floor(
-        hours / 24
-    )  # https://github.com/NinjaTG/MyBot/blob/master/bot/modules/usage.py#L50
+    hours = floor(minutes_remaining / 60)
+    minutes = floor(minutes_remaining % 60)
+    # https://github.com/NinjaTG/MyBot/blob/master/bot/modules/usage.py#L50
+    day = floor(hours / 24)
 
-    # - Current -
     App = result["apps"]
     try:
         App[0]["quota_used"]
@@ -176,18 +161,18 @@ async def dyno_usage(dyno):
         AppPercentage = 0
     else:
         AppQuotaUsed = App[0]["quota_used"] / 60
-        AppPercentage = math.floor(App[0]["quota_used"] * 100 / quota)
-    AppHours = math.floor(AppQuotaUsed / 60)
-    AppMinutes = math.floor(AppQuotaUsed % 60)
-    await asyncio.sleep(1.5)
+        AppPercentage = floor(App[0]["quota_used"] * 100 / quota)
+    AppHours = floor(AppQuotaUsed / 60)
+    AppMinutes = floor(AppQuotaUsed % 60)
+    await sleep(1.5)
     return await dyno.edit(
         "**Dyno Usage**:\n\n"
-        f" -> `Dyno usage for`  **{Config.HEROKU_APP_NAME}**:\n"
-        f"     •  `{AppHours}`**h**  `{AppMinutes}`**m**  "
+        f" -> `Dyno usage for` **{Config.HEROKU_APP_NAME}**:\n"
+        f"     •  `{AppHours}`**h** `{AppMinutes}`**m**\n"
         f"        **%**`{AppPercentage}`"
         "\n\n"
         " -> `Dyno hours quota remaining this month`:\n"
-        f"     •  `{hours}`**h**  `{minutes}`**m**  "
+        f"     •  `{hours}`**h** `{minutes}`**m**\n"
         f"        **%**`{percentage}`"
         "\n\n"
         " -> `Estimated dyno expired`:\n"
@@ -196,11 +181,11 @@ async def dyno_usage(dyno):
 
 
 @doge.bot_cmd(
-    pattern="(herokulogs|logs)$",
+    pattern="(logs|hlog)$",
     command=("logs", plugin_category),
     info={
         "header": "To get recent 100 lines logs from heroku.",
-        "usage": ["{tr}herokulogs", "{tr}logs"],
+        "usage": ["{tr}logs", "{tr}hlog"],
     },
 )
 async def _(dyno):
@@ -211,7 +196,7 @@ async def _(dyno):
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
     try:
-        Heroku = heroku3.from_key(HEROKU_API_KEY)
+        Heroku = from_key(HEROKU_API_KEY)
         app = Heroku.app(HEROKU_APP_NAME)
     except BaseException:
         return await dyno.reply(

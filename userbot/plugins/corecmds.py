@@ -1,15 +1,14 @@
-import os
+from os import path, remove
 from datetime import datetime
 from pathlib import Path
 
-from ..Config import Config
+from telethon.tl.types import InputMessagesFilterDocument
+
 from ..utils import load_module, remove_plugin
-from . import CMD_HELP, CMD_LIST, SUDO_LIST, doge, edl, eor, hmention, reply_id
+from . import CMD_HELP, CMD_LIST, PLUGIN_CHANNEL, SUDO_LIST, Config, _dogeutils, doge, edl, eor, hmention, reply_id, tr
 
-plugin_category = "tools"
-
-DELETE_TIMEOUT = 5
-thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+plugin_category = "bot"
+thumb_image_path = path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 @doge.bot_cmd(
@@ -17,12 +16,53 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
     command=("install", plugin_category),
     info={
         "header": "To install an external plugin.",
-        "description": "Reply to any external plugin(supported by dog) to install it in your bot.",
+        "description": "Reply to any external plugin(supported by Doge) to install it in your bot.",
         "usage": "{tr}install",
     },
 )
 async def install(event):
     "To install an external plugin."
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        try:
+            downloaded_file_name = await event.client.download_media(
+                reply_message,
+                "userbot/plugins/",
+            )
+            if "(" not in downloaded_file_name:
+                path1 = Path(downloaded_file_name)
+                shortname = path1.stem
+                load_module(shortname.replace(".py", ""))
+                await reply_message.forward_to(PLUGIN_CHANNEL)
+                await edl(
+                    event,
+                    f"**🔮 Plugin installed {path.basename(downloaded_file_name)} successfully!\
+                    \n\n\
+                    ✨ If you want to learn about {path.basename(downloaded_file_name)} you have installed, write** `{tr}doge {path.basename(downloaded_file_name)}`.",
+                    90,
+                )
+            else:
+                remove(downloaded_file_name)
+                await edl(
+                    event, "Errors! This plugin is already installed/pre-installed."
+                )
+        except Exception as e:
+            await edl(event, f"**Error:**\n`{e}`")
+            remove(downloaded_file_name)
+
+
+@doge.bot_cmd(
+    pattern="ptest$",
+    command=("ptest", plugin_category),
+    info={
+        "header": "To temporary install for test an external plugin.",
+        "description": "Reply to any external plugin(supported by Doge) to temporary install for test it in your bot.",
+        "note": "The plugin will be removed automatically when you restart Doge.",
+        "usage": "{tr}ptest",
+    },
+)
+async def install(event):
+    "To install for test an external plugin."
     if event.reply_to_msg_id:
         try:
             downloaded_file_name = await event.client.download_media(
@@ -35,17 +75,23 @@ async def install(event):
                 load_module(shortname.replace(".py", ""))
                 await edl(
                     event,
-                    f"Installed Plugin `{os.path.basename(downloaded_file_name)}`",
-                    10,
+                    f"**🔮 Plugin temporary installed {path.basename(downloaded_file_name)} successfully!\
+                    \n\n\
+                    ✨ If you want to learn about {path.basename(downloaded_file_name)} you have installed, write** `{tr}doge {path.basename(downloaded_file_name)}`.",
                 )
             else:
-                os.remove(downloaded_file_name)
+                remove(downloaded_file_name)
                 await edl(
-                    event, "Errors! This plugin is already installed/pre-installed.", 10
+                    event,
+                    f"**🚨 Error!\
+                    \n🚧 This plugin is already installed or pre-installed.\
+                    \n\n\
+                    ✨ If you want to learn about {path.basename(downloaded_file_name)} you have installed, write** `{tr}doge {path.basename(downloaded_file_name)}`.",
+                    60,
                 )
         except Exception as e:
-            await edl(event, f"**Error:**\n`{str(e)}`", 10)
-            os.remove(downloaded_file_name)
+            await edl(event, f"**Error:**\n`{e}`")
+            remove(downloaded_file_name)
 
 
 @doge.bot_cmd(
@@ -67,11 +113,12 @@ async def load(event):
         except BaseException:
             pass
         load_module(shortname)
-        await edl(event, f"`Successfully loaded {shortname}`", 10)
+        await edl(event, f"`Loaded successfully {shortname}`")
     except Exception as e:
         await eor(
             event,
-            f"Could not load {shortname} because of the following error.\n{str(e)}",
+            f"Couldn't load {shortname} because of the following error:\
+                \n{e}",
         )
 
 
@@ -87,12 +134,10 @@ async def load(event):
 async def send(event):
     "To uplaod a plugin file to telegram chat"
     reply_to_id = await reply_id(event)
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if path.exists(thumb_image_path) else None
     input_str = event.pattern_match.group(1)
     the_plugin_file = f"./userbot/plugins/{input_str}.py"
-    if os.path.exists(the_plugin_file):
+    if path.exists(the_plugin_file):
         start = datetime.now()
         doog = await event.client.send_file(
             event.chat_id,
@@ -106,11 +151,11 @@ async def send(event):
         ms = (end - start).seconds
         await event.delete()
         await doog.edit(
-            f"<b><i>➥ Plugin Name :- {input_str} .</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+            f"<b><i>➥ Plugin Name: {input_str}</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {hmention}</i></b>",
             parse_mode="html",
         )
     else:
-        await eor(event, "404: File Not Found")
+        await eor(event, "Error 404: File not found!")
 
 
 @doge.bot_cmd(
@@ -125,12 +170,12 @@ async def send(event):
 )
 async def unload(event):
     "To unload a plugin temporarily."
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(1).lower
     try:
         remove_plugin(shortname)
-        await eor(event, f"Unloaded {shortname} successfully")
+        await eor(event, f"Unloaded {shortname} successfully!")
     except Exception as e:
-        await eor(event, f"Successfully unload {shortname}\n{str(e)}")
+        await eor(event, f"Unloaded {shortname}:\n{e}")
 
 
 @doge.bot_cmd(
@@ -146,11 +191,11 @@ async def unload(event):
 )
 async def unload(event):
     "To uninstall a plugin."
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(1).lower
     path = Path(f"userbot/plugins/{shortname}.py")
-    if not os.path.exists(path):
+    if not path.exists(path):
         return await edl(event, f"There is no plugin with path {path} to uninstall it")
-    os.remove(path)
+    remove(path)
     if shortname in CMD_LIST:
         CMD_LIST.pop(shortname)
     if shortname in SUDO_LIST:
@@ -159,6 +204,67 @@ async def unload(event):
         CMD_HELP.pop(shortname)
     try:
         remove_plugin(shortname)
-        await eor(event, f"{shortname} is Uninstalled successfully")
+        async for message in event.client.iter_messages(
+            PLUGIN_CHANNEL,
+            filter=InputMessagesFilterDocument,
+            search=shortname,
+        ):
+            await message.delete()
+        await eor(event, f"{shortname} uninstalled successfully!")
     except Exception as e:
-        await eor(event, f"Successfully uninstalled {shortname}\n{str(e)}")
+        await eor(
+            event,
+            f"{shortname} uninstalled:\
+                \n{e}"
+        )
+
+
+@doge.bot_cmd(
+    pattern="suicide$",
+    command=("suicide", plugin_category),
+    info={
+        "header": "Deletes all the files and folder in the current directory.",
+        "usage": "{tr}suicide",
+    },
+)
+async def _(event):
+    "To delete all files and folders in userbot"
+    cmd = "rm -rf .*"
+    await _dogeutils.runcmd(cmd)
+    OUTPUT = "**SUICIDE BOMB:**\nSuccessfully deleted all folders and files in userbot server"
+    event = await eor(event, OUTPUT)
+
+
+@doge.bot_cmd(
+    pattern="plugins$",
+    command=("plugins", plugin_category),
+    info={
+        "header": "To list all plugins in userbot.",
+        "usage": "{tr}plugins",
+    },
+)
+async def _(event):
+    "To list all plugins in userbot"
+    cmd = "ls userbot/plugins"
+    o = (await _dogeutils.runcmd(cmd))[0]
+    OUTPUT = f"**[Doge's](tg://need_update_for_some_feature/) PLUGINS:**\n{o}"
+    await eor(event, OUTPUT)
+
+
+@doge.bot_cmd(
+    pattern="env$",
+    command=("env", plugin_category),
+    info={
+        "header": "To list all environment values in userbot.",
+        "description": "to show all heroku vars/Config values in your userbot",
+        "usage": "{tr}env",
+    },
+)
+async def _(event):
+    "To show all config values in userbot"
+    cmd = "env"
+    o = (await _dogeutils.runcmd(cmd))[0]
+    OUTPUT = (
+        f"**[Doge's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
+    )
+    await eor(event, OUTPUT)

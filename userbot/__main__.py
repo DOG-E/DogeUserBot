@@ -1,11 +1,18 @@
-import sys
+from sys import argv, exit
 
 import userbot
-from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
-
-from .Config import Config
+from userbot import (
+    BOTLOG_CHATID,
+    HEROKU_APP,
+    PM_LOGGER_GROUP_ID,
+)
 from .core.logger import logging
 from .core.session import doge
+from .languages.constants import (
+    STARTEDUPDOGE,
+    STARTINGDOGE,
+    STARTUPDOGE,
+)
 from .utils import (
     add_bot_to_logger_group,
     ipchange,
@@ -15,20 +22,20 @@ from .utils import (
     verifyLoggerGroup,
 )
 
+
 LOGS = logging.getLogger("DogeUserBot")
 
 print(userbot.__copyright__)
-print("Licensed under the terms of the " + userbot.__license__)
+print("🔐 Licensed under the terms of the " + userbot.__license__)
 
-cmdhr = Config.COMMAND_HAND_LER
 
 try:
-    LOGS.info("Starting Userbot")
+    LOGS.info(f"⏳ {STARTINGDOGE} 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info("TG Bot Startup Completed")
+    LOGS.info(f"✅ {STARTUPDOGE} 🐾")
 except Exception as e:
-    LOGS.error(f"{str(e)}")
-    sys.exit()
+    LOGS.error(f"{e}")
+    exit()
 
 
 class DogCheck:
@@ -47,13 +54,7 @@ async def startup_process():
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
-    print("Yay your userbot is officially working.!!!")
-    print(
-        f"Congratulation, now type {cmdhr}alive to see message if doge is live\
-        \nIf you need assistance, head to https://t.me/DogeSup"
-    )
-    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
+    LOGS.info(STARTEDUPDOGE)
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
@@ -65,7 +66,8 @@ async def startup_process():
 
 doge.loop.run_until_complete(startup_process())
 
-if len(sys.argv) not in (1, 3, 4):
+
+if len(argv) not in (1, 3, 4):
     doge.disconnect()
 elif not Dogcheck.sucess:
     if HEROKU_APP is not None:

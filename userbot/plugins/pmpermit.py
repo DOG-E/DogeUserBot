@@ -1,26 +1,19 @@
-import random
-import re
+from random import choice
+from re import compile
 from datetime import datetime
 
-from telethon import Button, functions
+from telethon import Button
+from telethon.tl.functions.contacts import BlockRequest, UnblockRequest
 from telethon.events import CallbackQuery
 from telethon.utils import get_display_name
 
-from userbot import doge
-from userbot.core.logger import logging
-
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers.utils import _format, get_user_from_event, reply_id
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from ..sql_helper import pmpermit_sql
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import mention
+from . import BOTLOG_CHATID, _format, Config, addgvar, delgvar, doge, edl, eor, get_user_from_event, gvarstatus, logging, mention, reply_id, tr
 
-plugin_category = "utils"
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-cmdhd = Config.COMMAND_HAND_LER
 
 
 async def do_pm_permit_action(event, chat):  # sourcery no-metrics
@@ -84,7 +77,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
         else:
             USER_BOT_WARN_ZERO = f"**You were spamming my master** {my_mention}**'s inbox, henceforth you have been blocked.**"
         msg = await event.reply(USER_BOT_WARN_ZERO)
-        await event.client(functions.contacts.BlockRequest(chat.id))
+        await event.client(BlockRequest(chat.id))
         the_message = f"#BLOCKED_PM\
                             \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                             \n**Message Count:** {PM_WARNS[str(chat.id)]}"
@@ -131,7 +124,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     try:
         if gvarstatus("pmmenu") is None:
             results = await event.client.inline_query(
-                Config.TG_BOT_USERNAME, "pmpermit"
+                Config.BOT_USERNAME, "pmpermit"
             )
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
@@ -139,7 +132,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
             if PM_PIC:
                 DOG = [x for x in PM_PIC.split()]
                 PIC = list(DOG)
-                DOG_IMG = random.choice(PIC)
+                DOG_IMG = choice(PIC)
             else:
                 DOG_IMG = None
             if DOG_IMG is not None:
@@ -203,7 +196,7 @@ async def do_pm_options_action(event, chat):
 Though you ignored that message.So, I simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
     await event.reply(USER_BOT_WARN_ZERO)
-    await event.client(functions.contacts.BlockRequest(chat.id))
+    await event.client(BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                             \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                             \n**Reason:** __He/She didn't opt for any provided options and kept on messaging.__"
@@ -253,7 +246,7 @@ __My master will respond when he/she comes online, if he/she wants to.__
 Though you ignored that message. So, I simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
     await event.reply(USER_BOT_WARN_ZERO)
-    await event.client(functions.contacts.BlockRequest(chat.id))
+    await event.client(BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                 \n**Reason:** __He/She opted for enquire option but didn't wait after being told also and kept on messaging so blocked.__"
@@ -303,7 +296,7 @@ __My master will respond when he/she comes back online, if he/she wants to.__
 Though you ignored me and messaged me. So, i simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
     await event.reply(USER_BOT_WARN_ZERO)
-    await event.client(functions.contacts.BlockRequest(chat.id))
+    await event.client(BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                 \n**Reason:** __He/She opted for the request option but didn't wait after being told also so blocked.__"
@@ -353,7 +346,7 @@ __My master will respond when he/she comes back online, if he/she wants to.__
 Though you ignored that message. So, I simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
     await event.reply(USER_BOT_WARN_ZERO)
-    await event.client(functions.contacts.BlockRequest(chat.id))
+    await event.client(BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                 \n**Reason:** __He/She select opted for the chat option but didn't wait after being told also so blocked.__"
@@ -382,7 +375,7 @@ async def do_pm_spam_action(event, chat):
 Though you ignored that message. So, I simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
     await event.reply(USER_BOT_WARN_ZERO)
-    await event.client(functions.contacts.BlockRequest(chat.id))
+    await event.client(BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                             \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
                             \n**Reason:** he opted for spam option and messaged again."
@@ -438,11 +431,11 @@ async def you_dm_other(event):
         return
     if event.text and event.text.startswith(
         (
-            f"{cmdhd}block",
-            f"{cmdhd}disapprove",
-            f"{cmdhd}a",
-            f"{cmdhd}da",
-            f"{cmdhd}approve",
+            f"{tr}block",
+            f"{tr}disapprove",
+            f"{tr}a",
+            f"{tr}da",
+            f"{tr}approve",
         )
     ):
         return
@@ -471,7 +464,7 @@ async def you_dm_other(event):
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
+@doge.tgbot.on(CallbackQuery(data=compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who messages you, not for you"
@@ -502,7 +495,7 @@ __Let's make this smooth and let me know why you are here.__
     await event.edit(text, buttons=buttons)
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
+@doge.tgbot.on(CallbackQuery(data=compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
@@ -523,7 +516,7 @@ Then we can extend this conversation more but not right now.__"""
     await event.edit(text)
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
+@doge.tgbot.on(CallbackQuery(data=compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
@@ -544,7 +537,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
+@doge.tgbot.on(CallbackQuery(data=compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
@@ -564,7 +557,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
     await event.edit(text)
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
+@doge.tgbot.on(CallbackQuery(data=compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
@@ -668,7 +661,7 @@ async def approve_p_m(event):  # sourcery no-metrics
     if gvarstatus("pmpermit") is None:
         return await edl(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -747,7 +740,7 @@ async def disapprove_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edl(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -793,7 +786,7 @@ async def block_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edl(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -826,7 +819,7 @@ async def block_p_m(event):
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmwarns", PM_WARNS, {})
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-    await event.client(functions.contacts.BlockRequest(user.id))
+    await event.client(BlockRequest(user.id))
     await edl(
         event,
         f"[{user.first_name}](tg://user?id={user.id}) __is blocked, he can no longer personal message you.__\n**Reason:** __{reason}__",
@@ -849,7 +842,7 @@ async def unblock_pm(event):
     if gvarstatus("pmpermit") is None:
         return await edl(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -860,14 +853,14 @@ async def unblock_pm(event):
             return
     if not reason:
         reason = "Not Mentioned."
-    await event.client(functions.contacts.UnblockRequest(user.id))
+    await event.client(UnblockRequest(user.id))
     await event.edit(
         f"[{user.first_name}](tg://user?id={user.id}) __is unblocked he/she can personal message you from now on.__\n**Reason:** __{reason}__"
     )
 
 
 @doge.bot_cmd(
-    pattern="listapproved$",
+    pattern="l(ist)?a(pproved)?$",
     command=("listapproved", plugin_category),
     info={
         "header": "To see list of approved users.",
@@ -881,7 +874,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edl(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __to work this plugin__",
+            f"__Turn on pmpermit by doing __`{tr}pmguard on` __to work this plugin__",
         )
     approved_users = pmpermit_sql.get_all_approved()
     APPROVED_PMs = "**Current Approved PMs**\n\n"

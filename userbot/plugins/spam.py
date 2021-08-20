@@ -1,27 +1,26 @@
-import asyncio
-import base64
+from asyncio import sleep
+from base64 import b64decode
 
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import InputStickerSetID, InputStickerSetShortName
 from telethon.utils import get_display_name
 
-from ..helpers.resources.months import months
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
+    MONTHS,
     _dogeutils,
     addgvar,
     doge,
     edl,
     eor,
+    fsmessage,
     gvarstatus,
     media_type,
 )
 
-plugin_category = "extra"
+plugin_category = "misc"
 
 
 async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=False):
@@ -36,7 +35,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
                 await teledoge.reply(spam_message)
             else:
                 await event.client.send_message(event.chat_id, spam_message)
-            await asyncio.sleep(sleeptimet)
+            await sleep(sleeptimet)
     elif event.reply_to_msg_id and teledoge.media:
         for _ in range(counter):
             if gvarstatus("spamwork") is None:
@@ -45,7 +44,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
                 event.chat_id, teledoge, caption=teledoge.text
             )
             await _dogeutils.unsavegif(event, teledoge)
-            await asyncio.sleep(sleeptimem)
+            await sleep(sleeptimem)
         if BOTLOG:
             if DelaySpam is not True:
                 if event.is_private:
@@ -82,7 +81,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
             if gvarstatus("spamwork") is None:
                 return
             await event.client.send_message(event.chat_id, spam_message)
-            await asyncio.sleep(sleeptimet)
+            await sleep(sleeptimet)
     else:
         return
     if DelaySpam is not True:
@@ -136,7 +135,7 @@ async def spammer(event):
         counter = int(dog[0])
     except Exception:
         return await edl(
-            event, "__Use proper syntax to spam. Foe syntax refer help menu.__"
+            event, "__Use proper syntax to spam. For syntax refer doge menu.__"
         )
     if counter > 50:
         sleeptimet = 0.5
@@ -165,7 +164,7 @@ async def stickerpack_spam(event):
         return await edl(
             event, "`reply to any sticker to send all stickers in that pack`"
         )
-    hmm = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    hmm = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     try:
         stickerset_attr = reply.document.attributes[1]
         dogevent = await eor(
@@ -186,7 +185,7 @@ async def stickerpack_spam(event):
     except Exception:
         return await edl(
             dogevent,
-            "`I guess this sticker is not part of any pack so i cant kang this sticker pack try kang for this sticker`",
+            "`I guess this sticker is not part of any pack so i can't kang this sticker pack try kang for this sticker`",
         )
     try:
         hmm = Get(hmm)
@@ -205,7 +204,7 @@ async def stickerpack_spam(event):
         if gvarstatus("spamwork") is None:
             return
         await event.client.send_file(event.chat_id, m)
-        await asyncio.sleep(0.7)
+        await sleep(0.7)
     if BOTLOG:
         if event.is_private:
             await event.client.send_message(
@@ -247,13 +246,13 @@ async def tmeme(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#CSPAM\n"
-                + f"Letter Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with : `{message}`",
+                + f"Letter Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with: `{message}`",
             )
         else:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#CSPAM\n"
-                + f"Letter Spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) chat with : `{message}`",
+                + f"Letter Spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) chat with: `{message}`",
             )
 
 
@@ -262,7 +261,7 @@ async def tmeme(event):
     command=("wspam", plugin_category),
     info={
         "header": "Spam the text word by word.",
-        "description": "Spams the chat with every word in given text asnew message.",
+        "description": "Spams the chat with every word in given text as new message.",
         "usage": "{tr}wspam <text>",
         "examples": "{tr}wspam I am using DogeUserBot",
     },
@@ -282,13 +281,13 @@ async def tmeme(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#WSPAM\n"
-                + f"Word Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with : `{message}`",
+                + f"Word Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with: `{message}`",
             )
         else:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#WSPAM\n"
-                + f"Word Spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) chat with : `{message}`",
+                + f"Word Spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) chat with: `{message}`",
             )
 
 
@@ -313,9 +312,15 @@ async def spammer(event):
         sleeptimet = sleeptimem = float(input_str[0])
     except Exception:
         return await edl(
-            event, "__Use proper syntax to spam. Foe syntax refer help menu.__"
+            event, "__Use proper syntax to spam. For syntax refer doge menu.__"
         )
     dog = input_str[1:]
+    try:
+        int(dog[0])
+    except Exception:
+        return await edl(
+            event, "__Use proper syntax for delay spam. For syntax refer doge menu.__"
+        )
     await event.delete()
     addgvar("spamwork", True)
     await spam_function(event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True)
@@ -323,7 +328,7 @@ async def spammer(event):
 
 @doge.bot_cmd(
     pattern="limitc$",
-    command=("limitcheck", plugin_category),
+    command=("limitc", plugin_category),
     info={
         "header": "Check the limit status of your Telegram account.",
         "description": "You shouldn't break Telegram's rules to avoid being restricted by any limit.",
@@ -331,17 +336,12 @@ async def spammer(event):
     },
 )
 async def limitchecker(event):
-    # Thanks to @SiriOT ~ https://github.com/robotlog/SiriUserBot/blob/d2231b436b7dae9e4075d22c747666df9f13819e/userbot/modules/sinfo.py#L35
-    dogevent = await eor(event, "**🔄 I'm checking limit for your account...**")
+    # Credits to robotlog ~ https://github.com/robotlog/SiriUserBot/blob/d2231b436b7dae9e4075d22c747666df9f13819e/userbot/modules/sinfo.py#L35
+    dogevent = await eor(event, "**⏳ I'm checking limit for your account...**")
     chat = "@SpamBot"
     lstatus = None
-    async with doge.conversation(chat) as conv:
-        try:
-            await conv.send_message("/start")
-        except YouBlockedUserError:
-            await doge(UnblockRequest(chat))
-            await conv.send_message("/start")
-        await doge.send_read_acknowledge(conv.chat_id)
+    async with event.client.conversation(chat) as conv:
+        await fsmessage(event=event, text="/start", chat=chat)
         lstatus = await conv.get_response()
         if lstatus.text.startswith(
             "Dear"
@@ -371,7 +371,7 @@ async def limitchecker(event):
             gstatus = lstatus.text.split("until ")[1].split(", ")[0]
             ldays, lmonths, lyears = (
                 gstatus.split(" ")[0],
-                months[gstatus.split(" ")[1]],
+                MONTHS[gstatus.split(" ")[1]],
                 gstatus.split(" ")[2],
             )
             lhours = (
@@ -387,5 +387,7 @@ async def limitchecker(event):
                 "**🐾 You don't have any limits.\n\n😏 I think you are the freest person on Telegram!**",
             )
         else:
-            await doge.forward_messages(event.chat_id, lstatus)
+            await event.client.forward_messages(event.chat_id, lstatus)
             await dogevent.delete()
+        await conv.mark_read()
+        await conv.cancel_all()

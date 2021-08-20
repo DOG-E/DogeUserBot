@@ -1,26 +1,27 @@
-import asyncio
-import os
-import re
-import sys
+from asyncio.subprocess import PIPE
+from asyncio import create_subprocess_exec, get_event_loop
+from os import execle, _exit, environ
+from re import compile
+from sys import executable as sysexecutable
 
 from telethon import TelegramClient
 
-from ..core.logger import logging
+from .logger import logging
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
 
-package_patern = re.compile(r"([\w-]+)(?:=|<|>|!)")
-github_patern = re.compile(r"(?:https?)?(?:www.)?(?:github.com/)?([\w\-.]+/[\w\-.]+)/?")
-github_raw_pattern = re.compile(
+LOGS = logging.getLogger(__name__)
+
+package_patern = compile(r"([\w-]+)(?:=|<|>|!)")
+github_patern = compile(r"(?:https?)?(?:www.)?(?:github.com/)?([\w\-.]+/[\w\-.]+)/?")
+github_raw_pattern = compile(
     r"(?:https?)?(?:raw.)?(?:githubusercontent.com/)?([\w\-.]+/[\w\-.]+)/?"
 )
 trees_pattern = "https://api.github.com/repos/{}/git/trees/master"
 raw_pattern = "https://raw.githubusercontent.com/{}/master/{}"
-
-LOGS = logging.getLogger(__name__)
 
 
 async def get_pip_packages(requirements):
@@ -28,13 +29,13 @@ async def get_pip_packages(requirements):
     if requirements:
         packages = requirements
     else:
-        cmd = await asyncio.create_subprocess_exec(
-            sys.executable.replace(" ", "\\ "),
+        cmd = await create_subprocess_exec(
+            sysexecutable.replace(" ", "\\ "),
             "-m",
             "pip",
             "freeze",
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+            stdout=PIPE,
+            stderr=PIPE,
         )
         stdout, _ = await cmd.communicate()
         packages = stdout.decode("utf-8")
@@ -45,12 +46,12 @@ async def get_pip_packages(requirements):
 async def install_pip_packages(packages):
     """Install pip packages."""
     args = ["-m", "pip", "install", "--upgrade", "--user"]
-    cmd = await asyncio.create_subprocess_exec(
-        sys.executable.replace(" ", "\\ "),
+    cmd = await create_subprocess_exec(
+        sysexecutable.replace(" ", "\\ "),
         *args,
         *packages,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
+        stdout=PIPE,
+        stderr=PIPE,
     )
     await cmd.communicate()
     return cmd.returncode == 0
@@ -58,7 +59,7 @@ async def install_pip_packages(packages):
 
 def run_async(func: callable):
     """Run async functions with the right event loop."""
-    asyncio.get_event_loop()
+    loop = get_event_loop()
     return loop.run_until_complete(func)
 
 
@@ -75,10 +76,10 @@ async def restart_script(client: TelegramClient, teledoge):
         add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
         LOGS.error(e)
-    executable = sys.executable.replace(" ", "\\ ")
+    executable = sysexecutable.replace(" ", "\\ ")
     args = [executable, "-m", "userbot"]
-    os.execle(executable, *args, os.environ)
-    sys.exit(0)
+    execle(executable, *args, environ)
+    _exit(143)
 
 
 async def get_message_link(client, event):

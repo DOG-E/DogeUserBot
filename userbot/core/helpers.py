@@ -1,29 +1,29 @@
-import logging
+from logging import getLogger
 from typing import Union
 
-from telethon.tl import types
+from telethon.tl.types import User, Chat, Channel
 from telethon.utils import get_display_name
 
 from .events import NewMessage
 
-LOGGER = logging.getLogger("userbot")
+LOGGER = getLogger("userbot")
 
 
-def printUser(entity: types.User) -> None:
+def printUser(entity: User) -> None:
     """Print the user's first name + last name upon start"""
     user = get_display_name(entity)
     LOGGER.warning("Successfully logged in as {0}".format(user))
 
 
 async def get_chat_link(
-    arg: Union[types.User, types.Chat, types.Channel, NewMessage.Event], reply=None
+    arg: Union[User, Chat, Channel, NewMessage.Event], reply=None
 ) -> str:
-    if isinstance(arg, (types.User, types.Chat, types.Channel)):
+    if isinstance(arg, (User, Chat, Channel)):
         entity = arg
     else:
         entity = await arg.get_chat()
 
-    if isinstance(entity, types.User):
+    if isinstance(entity, User):
         if entity.is_self:
             name = 'your "Saved Messages"'
         else:

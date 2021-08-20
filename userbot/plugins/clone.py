@@ -1,27 +1,30 @@
 # Credits of Plugin @ViperAdnan and @mrconfused(revert)[will add sql soon]
-import html
+from html import escape
 
-from telethon.tl import functions
+from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
+from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from ..Config import Config
 from . import (
     ALIVE_NAME,
     AUTONAME,
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
+    Config,
     doge,
     edl,
     get_user_from_event,
+    wowmydev,
 )
 
-plugin_category = "utils"
+plugin_category = "fun"
+
 DEFAULTUSER = str(AUTONAME) if AUTONAME else str(ALIVE_NAME)
 DEFAULTUSERBIO = (
     str(DEFAULT_BIO)
     if DEFAULT_BIO
-    else "sıɥʇ ǝpoɔǝp uǝɥʇ llıʇu∩ ˙ ǝɔɐds ǝʇɐʌıɹd ǝɯos ǝɯ ǝʌı⅁˙"
+    else "🐶 @DogeUserBot 🐾"
 )
 
 
@@ -34,18 +37,21 @@ DEFAULTUSERBIO = (
     },
 )
 async def _(event):
-    "To clone account of mentiond user or replied user"
+    "To clone account of mention user or replied user"
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
         return
     user_id = replied_user.id
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
-    first_name = html.escape(replied_user.first_name)
+    first_name = escape(replied_user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
     last_name = replied_user.last_name
     if last_name is not None:
-        last_name = html.escape(last_name)
+        last_name = escape(last_name)
         last_name = last_name.replace("\u2060", "")
     if last_name is None:
         last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
@@ -53,14 +59,14 @@ async def _(event):
     user_bio = replied_user.about
     if user_bio is not None:
         user_bio = replied_user.about
-    await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
-    await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
-    await event.client(functions.account.UpdateProfileRequest(about=user_bio))
+    await event.client(UpdateProfileRequest(first_name=first_name))
+    await event.client(UpdateProfileRequest(last_name=last_name))
+    await event.client(UpdateProfileRequest(about=user_bio))
     try:
         pfile = await event.client.upload_file(profile_pic)
     except Exception as e:
-        return await edl(event, f"**Failed to clone due to error:**\n__{str(e)}__")
-    await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
+        return await edl(event, f"**Failed to clone due to error:**\n__{e}__")
+    await event.client(UploadProfilePhotoRequest(pfile))
     await edl(event, "**LET US BE AS ONE**")
     if BOTLOG:
         await event.client.send_message(
@@ -84,15 +90,16 @@ async def _(event):
     blank = ""
     bio = f"{DEFAULTUSERBIO}"
     await event.client(
-        functions.photos.DeletePhotosRequest(
+        DeletePhotosRequest(
             await event.client.get_profile_photos("me", limit=1)
         )
     )
-    await event.client(functions.account.UpdateProfileRequest(about=bio))
-    await event.client(functions.account.UpdateProfileRequest(first_name=name))
-    await event.client(functions.account.UpdateProfileRequest(last_name=blank))
+    await event.client(UpdateProfileRequest(about=bio))
+    await event.client(UpdateProfileRequest(first_name=name))
+    await event.client(UpdateProfileRequest(last_name=blank))
     await edl(event, "successfully reverted to your account back")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, f"#REVERT\nSuccessfully reverted back to your profile"
+            BOTLOG_CHATID,
+            "#REVERT\nSuccessfully reverted back to your profile",
         )

@@ -1,5 +1,3 @@
 build:
-  docker:
-      doger: Dockerfile
-run:
-   doger: python3 -m userbot
+    docker:
+        doger: Dockerfile

@@ -1,29 +1,39 @@
-import os
-import zipfile
-from io import BytesIO
-from random import choice, randint
+from asyncio import sleep
+from os import path
+from zipfile import ZipFile
+from json import loads
+from random import choice
 from textwrap import wrap
 from uuid import uuid4
 
-import requests
-
 from ..utils.extdl import install_pip
-
 try:
     from imdb import IMDb
 except ModuleNotFoundError:
     install_pip("IMDbPY")
     from imdb import IMDb
 
+from googletrans import Translator
+from requests import get
 from PIL import Image, ImageColor, ImageDraw, ImageFont
+from telethon.events import NewMessage
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest
 
 from ...Config import Config
+from ...core.logger import logging
+from ...plugins import mention
 from ...sql_helper.globals import gvarstatus
-from ..resources.states import states
+
+LOGS = logging.getLogger(__name__)
+
+
+mcaption=f"**🐶 Doɢᴇ UsᴇʀBoᴛ 🐾\
+    \n\
+    \n➥ Uploaded By:** {mention}"
+
 
 imdb = IMDb()
-
 mov_titles = [
     "long imdb title",
     "long imdb canonical title",
@@ -65,12 +75,25 @@ def rand_key():
     return str(uuid4())[:8]
 
 
+# https://github.com/ssut/py-googletrans/issues/234#issuecomment-722379788
+async def getTranslate(text, **kwargs):
+    translator = Translator()
+    result = None
+    for _ in range(10):
+        try:
+            result = translator.translate(text, **kwargs)
+        except Exception:
+            translator = Translator()
+            await sleep(0.1)
+    return result
+
+
 async def age_verification(event, reply_to_id):
-    ALLOW_NSFW = gvarstatus("ALLOW_NSFW") or "False"
-    if ALLOW_NSFW.lower() == "true":
+    PNSFW = gvarstatus("PNSFW") or "False"
+    if PNSFW.lower() == "true":
         return False
     results = await event.client.inline_query(
-        Config.TG_BOT_USERNAME, "age_verification_alert"
+        Config.BOT_USERNAME, "age_verification_alert"
     )
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
@@ -108,7 +131,7 @@ def higlighted_text(
     source_img = templait.convert("RGBA").resize((1024, 1024))
     w, h = source_img.size
     if font_name is None:
-        font_name = "userbot/helpers/styles/impact.ttf"
+        font_name = "userbot/helpers/resources/fonts/impact.ttf"
     font = ImageFont.truetype(font_name, font_size)
     ew, eh = position
     # get text size
@@ -173,22 +196,90 @@ def higlighted_text(
     source_img.save(output_img, "png")
 
 
-async def clippy(borg, msg, chat_id, reply_to_id):
-    chat = "@clippy"
-    async with borg.conversation(chat) as conv:
+# Credit robotlog ~ https://github.com/robotlog/SiriUserBot/blob/master/userbot/helps/forc.py#L5
+async def fsmessage(event, text, forward=False, chat=None):
+    cHat = chat if chat else event.chat_id
+    if not forward:
         try:
-            msg = await conv.send_file(msg)
-            pic = await conv.get_response()
-            await borg.send_read_acknowledge(conv.chat_id)
+            e = await event.client.send_message(
+                cHat,
+                text
+            )
         except YouBlockedUserError:
-            await kakashi.edit("Please unblock @clippy and try again")
-            return
+            await event.client(UnblockRequest(cHat))
+            e = await event.client.send_message(
+                cHat,
+                text
+            )
+    else:
+        try:
+            e = await event.client.forward_messages(cHat, text)
+            e = await e
+        except YouBlockedUserError:
+            await event.client(UnblockRequest(cHat))
+            e = await event.client.forward_messages(cHat, text)
+            e = await e
+    return e
+
+
+async def fsfile(event, file=None, chat=None):
+    cHat = chat if chat else event.chat_id
+    try:
+        e = await event.send_file(
+            cHat,
+            file
+        )
+    except YouBlockedUserError:
+        await event.client(UnblockRequest(cHat))
+        e = await event.send_file(
+            cHat,
+            file
+        )
+    return e
+
+
+async def clippy(borg, msg, chat_id, reply_to_id):
+    chat = "@Clippy"
+    async with borg.conversation(chat) as conv:
+        await fsfile(event=borg, file=msg, chat=chat)
+        pic = await conv.get_response()
         await borg.send_file(
             chat_id,
             pic,
             reply_to=reply_to_id,
+            caption=mcaption,
         )
-    await borg.delete_messages(conv.chat_id, [msg.id, pic.id])
+        await conv.mark_read()
+        await conv.cancel_all()
+
+
+async def mememaker(event, msg, dog, chat_id, reply_to_id):
+    chat="@TheMemeMakerBot"
+    async with event.client.conversation(chat) as conv:
+        await fsmessage(event=event, text=msg, chat=chat)
+        pic = await conv.get_response()
+        await dog.delete()
+        await event.client.send_file(
+            chat_id,
+            pic,
+            reply_to=reply_to_id,
+            caption=mcaption,
+        )
+        await conv.mark_read()
+        await conv.cancel_all()
+
+async def xiaomeme(event, msg, dogevent):
+    chat = "@XiaomiGeeksBot"
+    async with event.client.conversation(chat) as conv:
+        await fsmessage(event=event, text=msg, chat=chat)
+        response = conv.wait_event(
+            NewMessage(incoming=True, from_users=chat)
+        )
+        respond = await response
+        await dogevent.delete()
+        await event.client.forward_messages(event.chat_id, respond.message)
+        await conv.mark_read()
+        await conv.cancel_all()
 
 
 # https://www.tutorialspoint.com/How-do-you-split-a-list-into-evenly-sized-chunks-in-Python
@@ -212,22 +303,10 @@ async def sanga_seperator(sanga_list):
 
 # unziping file
 async def unzip(downloaded_file_name):
-    with zipfile.ZipFile(downloaded_file_name, "r") as zip_ref:
+    with ZipFile(downloaded_file_name, "r") as zip_ref:
         zip_ref.extractall("./temp")
-    downloaded_file_name = os.path.splitext(downloaded_file_name)[0]
+    downloaded_file_name = path.splitext(downloaded_file_name)[0]
     return f"{downloaded_file_name}.gif"
-
-
-# covid india data
-
-
-async def covidindia(state):
-    url = "https://www.mohfw.gov.in/data/datanew.json"
-    req = requests.get(url).json()
-    for i in states:
-        if i == state:
-            return req[states.index(i)]
-    return None
 
 
 async def hide_inlinebot(borg, bot_name, text, chat_id, reply_to_id, c_lick=0):
@@ -254,62 +333,30 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
         2,
         3,
         4,
-        5,
-        6,
-        7,
-        8,
         9,
-        10,
-        11,
-        12,
-        13,
-        14,
         15,
-        16,
-        17,
-        18,
-        19,
         20,
-        21,
         22,
-        23,
-        24,
-        25,
-        26,
         27,
-        28,
         29,
-        30,
-        31,
         32,
         33,
         34,
-        35,
-        36,
         37,
         38,
-        39,
-        40,
         41,
         42,
-        43,
         44,
         45,
-        46,
         47,
         48,
-        49,
-        50,
         51,
         52,
         53,
-        54,
         55,
         56,
         57,
         58,
-        59,
-        60,
         61,
         62,
         63,
@@ -321,77 +368,23 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
         await dog.delete()
 
 
-# Thanks to Seden UserBot ~ https://github.com/TeamDerUntergang/Telegram-SedenUserBot/blob/ff20e7d1f0c5a20899d12e3cc93523670eabe747/sedenbot/modules/memes.py#L790
-async def amongus_gen(text: str, clr: int) -> str:
-    url = "https://github.com/DOG-E/Source/raw/DOGE/Material/AmongUs/"
-    font = ImageFont.truetype(
-        BytesIO(
-            requests.get(
-                "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/bold.ttf"
-            ).content
-        ),
-        60,
-    )
-    impostor = Image.open(BytesIO(requests.get(f"{url}{clr}.png").content))
-    text_ = "\n".join("\n".join(wrap(part, 30)) for part in text.split("\n"))
-    w, h = ImageDraw.Draw(Image.new("RGB", (1, 1))).multiline_textsize(
-        text_, font, stroke_width=2
-    )
-    text = Image.new("RGBA", (w + 30, h + 30))
-    ImageDraw.Draw(text).multiline_text(
-        (15, 15), text_, "#FFF", font, stroke_width=2, stroke_fill="#000"
-    )
-    w = impostor.width + text.width + 10
-    h = max(impostor.height, text.height)
-    image = Image.new("RGBA", (w, h))
-    image.paste(impostor, (0, h - impostor.height), impostor)
-    image.paste(text, (w - text.width, 0), text)
-    image.thumbnail((512, 512))
-    output = BytesIO()
-    output.name = "impostor.webp"
-    webp_file = os.path.join(Config.TEMP_DIR, output.name)
-    image.save(webp_file, "WebP")
-    return webp_file
-
-
-async def get_impostor_img(text: str) -> str:
-    background = requests.get(
-        f"https://github.com/DOG-E/Source/raw/DOGE/Material/Impostor/{randint(1,22)}.png"
-    ).content
-    font = requests.get(
-        "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf"
-    ).content
-    font = BytesIO(font)
-    font = ImageFont.truetype(font, 30)
-    image = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(image)
-    w, h = draw.multiline_textsize(text=text, font=font)
-    image = Image.open(BytesIO(background))
-    x, y = image.size
-    draw = ImageDraw.Draw(image)
-    draw.multiline_text(
-        ((x - w) // 2, (y - h) // 2), text=text, font=font, fill="white", align="center"
-    )
-    output = BytesIO()
-    output.name = "impostor.png"
-    webp_file = os.path.join(Config.TEMP_DIR, output.name)
-    image.save(webp_file, "png")
-    return webp_file
-
-
-async def wall_download(piclink, query):
-    try:
-        if not os.path.isdir("./temp"):
-            os.mkdir("./temp")
-        picpath = f"./temp/{query.title().replace(' ', '')}.jpg"
-        if os.path.exists(picpath):
-            i = 1
-            while os.path.exists(picpath) and i < 11:
-                picpath = f"./temp/{query.title().replace(' ', '')}-{i}.jpg"
-                i += 1
-        with open(picpath, "wb") as f:
-            f.write(requests.get(piclink).content)
-        return picpath
-    except Exception as e:
-        LOGS.info(str(e))
-        return None
+# Credit: https://github.com/yusufusta/AsenaUserBot/blob/master/userbot/modules/sozluk.py#L45
+def getSimilarWords(wordx, limit = 5):
+    similars = []
+    if not path.exists('autocomplete.json'):
+        words = get(f'https://sozluk.gov.tr/autocomplete.json')
+        open('autocomplete.json', 'a+').write(words.text)
+        words = words.json()
+    else:
+        words = loads(open('autocomplete.json', 'r').read())
+    for word in words:
+        if word['madde'].startswith(wordx) and not word['madde'] == wordx:
+            if len(similars) > limit:
+                break
+            similars.append(word['madde'])
+    similarsStr = ""
+    for similar in similars:
+        if similarsStr != "":
+            similarsStr += ", "
+        similarsStr += f"`{similar}`"
+    return similarsStr

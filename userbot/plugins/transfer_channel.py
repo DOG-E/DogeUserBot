@@ -1,15 +1,11 @@
-"""Transfer Ownership of Channels
-Available Commands:
-.otransfer @username"""
 
-import telethon.password as pwd_mod
-from telethon.tl import functions
+from telethon.password import compute_check
+from telethon.tl.functions.account import GetPasswordRequest
+from telethon.tl.functions.channels import EditCreatorRequest
 
-from userbot import doge
+from . import Config, doge
 
-from ..Config import Config
-
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -25,14 +21,14 @@ async def _(event):
     "To transfer channel ownership"
     user_name = event.pattern_match.group(1)
     try:
-        pwd = await event.client(functions.account.GetPasswordRequest())
-        my_srp_password = pwd_mod.compute_check(pwd, Config.TG_2STEP_VERIFICATION_CODE)
+        pwd = await event.client(GetPasswordRequest())
+        my_srp_password = compute_check(pwd, Config.TG_2STEP_VERIFICATION_CODE)
         await event.client(
-            functions.channels.EditCreatorRequest(
+            EditCreatorRequest(
                 channel=event.chat_id, user_id=user_name, password=my_srp_password
             )
         )
     except Exception as e:
-        await event.edit(f"**Error:**\n`{str(e)}`")
+        await event.edit(f"**Error:**\n`{e}`")
     else:
         await event.edit("Transferred 🌚")

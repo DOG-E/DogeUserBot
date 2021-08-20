@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+
+_gzl () {
+    local regex
+    regex='(https?)://github.com/.+/.+'
+    if [[ $UPSTREAM_REPO == "DogeUserBot" ]]
+    then
+        echo "aHR0cHM6Ly9naXRodWIuY29tL0RPRy1FL0RvZ2VVc2VyQm90L2FyY2hpdmUvRE9HRS56aXA=" | base64 -d
+    elif [[ $UPSTREAM_REPO == "DogeUserBot" ]]
+    then
+        echo "aHR0cHM6Ly9naXRodWIuY29tL0RPRy1FL0RvZ2VVc2VyQm90LnppcA==" | base64 -d
+    elif [[ $UPSTREAM_REPO =~ $regex ]]
+    then
+        if [[ $UPSTREAM_REPO_BRANCH ]]
+        then
+            echo "${UPSTREAM_REPO}/archive/${UPSTREAM_REPO_BRANCH}.zip"
+        else
+            echo "${UPSTREAM_REPO}/archive/DOGE.zip"
+        fi
+    else
+        echo "aHR0cHM6Ly9naXRodWIuY29tL0RPRy1FL0RvZ2VVc2VyQm90L2FyY2hpdmUvRE9HRS56aXA=" | base64 -d
+    fi
+}
+
+
+_grl () {
+    local regex
+    local rlink
+    regex='(https?)://github.com/.+/.+'
+    if [[ $UPSTREAM_REPO == "DogeUserBot" ]]
+    then
+        rlink=`echo "aHR0cHM6Ly9naXRodWIuY29tL0RPRy1FL0RvZ2VVc2VyQm90" | base64 -d`
+    elif [[ $UPSTREAM_REPO =~ $regex ]]
+    then
+        rlink=`echo "${UPSTREAM_REPO}"`
+    else
+        rlink=`echo "aHR0cHM6Ly9naXRodWIuY29tL0RPRy1FL0RvZ2VVc2VyQm90" | base64 -d`
+    fi
+    echo "$rlink"
+}
+
+
+_pycode() {
+    python3${pVer%.*} -c "$1"
+}
+
+
+_rDogeUserBot() {
+    $(_pycode '
+from git import Repo
+import sys
+
+OFFICIAL_UPSTREAM_REPO = "https://github.com/DOG-E/DogeUserBot"
+ACTIVE_BRANCH_NAME = "DOGE"
+
+repo = Repo.init()
+origin = repo.create_remote("temponame", OFFICIAL_UPSTREAM_REPO)
+
+origin.fetch()
+repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+repo.heads[ACTIVE_BRANCH_NAME].checkout(True)
+')
+}
+
+
+_rwow() {
+    local repolink=$(_grl)
+    $(_pycode '
+from git import Repo
+import sys
+
+OFFICIAL_UPSTREAM_REPO="'$repolink'"
+ACTIVE_BRANCH_NAME = "'$UPSTREAM_REPO_BRANCH'" or "DOGE"
+
+repo = Repo.init()
+origin = repo.create_remote("temponame", OFFICIAL_UPSTREAM_REPO)
+
+origin.fetch()
+repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+repo.heads[ACTIVE_BRANCH_NAME].checkout(True)
+')
+}
+
+
+_dogerun () {
+    local zippath
+    echo "⏳ Downloading setup... ⬇"
+    zippath="DogeUserBot.zip"
+    wget -q $(_gzl) -O "$zippath"
+    echo "✅ Done!"
+
+    echo "⏳ Unpacking data... 🗃"
+    DOGEBOTPATH=$(zipinfo -1 "$zippath" | grep -v "/.");
+    unzip -qq "$zippath"
+    echo "✅ Done!"
+
+    echo "⏳ Cleaning unnecessary data... 🗑"
+    rm -rf "$zippath"
+    echo "✅ Done!"
+
+    echo "⏳ Fetching repository... 🐾"
+    _rDogeUserBot
+    echo "✅ Done!"
+
+    echo "⏳ Loading... 🦴"
+    cd $DOGEBOTPATH
+    _rwow
+    echo "✅ Done!"
+
+    echo "⏳ Updating requirements... 💨"
+    python3 ../setup/updater.py ../requirements.txt requirements.txt
+    chmod -R 755 bin
+    echo "✅ Done!"
+
+    echo "🦮"
+    python3 -m userbot
+}
+
+
+_dogerun

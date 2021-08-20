@@ -1,0 +1,26 @@
+name: Turkish
+natively: 🇹🇷 Türkçe
+
+authors:
+  - mutlcc
+  - yigih
+  - hesenezor
+  - thelucii
+  - teledoge
+
+
+# TEMEL
+processing: "**⏳ İşleniyor...**"
+# aylar
+jan: "Ocak"
+feb: "Şubat"
+mar: "Mart"
+apr: "Nisan"
+may: "Mayıs"
+jun: "Haziran"
+jul: "Temmuz"
+aug: "Ağustos"
+sep: "Eylül"
+oct: "Ekim"
+nov: "Kasım"
+dec: "Aralık"

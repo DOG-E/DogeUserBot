@@ -1,26 +1,22 @@
-import asyncio
-import json
-import os
-import re
-import subprocess
-
-import requests
-
-from userbot import doge
-from userbot.core.logger import logging
-
-from ..Config import Config
-from ..core.managers import eor
-
-plugin_category = "misc"
-LOGS = logging.getLogger(__name__)
-
 # originally created by
 # https://github.com/Total-Noob-69/X-tra-Telegram/blob/master/userbot/plugins/webupload.py
 
+from asyncio import create_subprocess_shell
+from asyncio.subprocess import PIPE
+from json import dumps, loads
+from os import path, remove
+from re import DOTALL, compile, findall
+from subprocess import STDOUT, CalledProcessError, check_output
 
-link_regex = re.compile(
-    "((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", re.DOTALL
+from requests import post
+
+from . import Config, doge, eor, logging, lan
+
+plugin_category = "tool"
+LOGS = logging.getLogger(__name__)
+
+link_regex = compile(
+    "((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", DOTALL
 )
 
 
@@ -35,7 +31,7 @@ link_regex = re.compile(
 )
 async def labstack(event):
     "to upload media to labstack"
-    editor = await eor(event, "Processing...")
+    editor = await eor(event, lan("processing"))
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if input_str:
@@ -48,17 +44,17 @@ async def labstack(event):
         return await editor.edit(
             "Reply to a media file or provide a directory to upload the file to labstack"
         )
-    filesize = os.path.getsize(filebase)
-    filename = os.path.basename(filebase)
+    filesize = path.getsize(filebase)
+    filename = path.basename(filebase)
     headers2 = {"Up-User-ID": "IZfFbjUcgoo3Ao3m"}
     files2 = {
         "ttl": 604800,
         "files": [{"name": filename, "type": "", "size": filesize}],
     }
-    r2 = requests.post(
+    r2 = post(
         "https://up.labstack.com/api/v1/links", json=files2, headers=headers2
     )
-    r2json = json.loads(r2.text)
+    r2json = loads(r2.text)
 
     url = "https://up.labstack.com/api/v1/links/{}/send".format(r2json["code"])
     max_days = 7
@@ -73,9 +69,9 @@ async def labstack(event):
         url,
     ]
     try:
-        t_response = subprocess.check_output(command_to_exec, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError as exc:
-        LOGS.info("Status : FAIL", exc.returncode, exc.output)
+        t_response = check_output(command_to_exec, stderr=STDOUT)
+    except CalledProcessError as exc:
+        LOGS.info("Status: FAIL", exc.returncode, exc.output)
         return await editor.edit(exc.output.decode("UTF-8"))
     else:
         LOGS.info(t_response)
@@ -110,7 +106,7 @@ async def labstack(event):
 )
 async def _(event):
     "To upload media to some online media sharing platforms"
-    editor = await eor(event, "processing ...")
+    editor = await eor(event, lan("processing"))
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
     dogecheck = None
@@ -128,13 +124,13 @@ async def _(event):
         "oload": 'curl -F "file=@{full_file_path}" https://api.openload.cc/upload',
         "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
         "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
-        + os.path.basename(file_name),
+        + path.basename(file_name),
         "filebin": 'curl -X POST --data-binary "@{full_file_path}" -H "filename: {bare_local_name}" "https://filebin.net"',
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
         "bayfiles": 'curl -F "file=@{full_file_path}" https://bayfiles.com/api/upload',
     }
-    filename = os.path.basename(file_name)
+    filename = path.basename(file_name)
     try:
         selected_one = CMD_WEB[selected_transfer].format(
             full_file_path=file_name, bare_local_name=filename
@@ -143,26 +139,26 @@ async def _(event):
         return await editor.edit("Invalid selected Transfer")
     cmd = selected_one
     # start the subprocess $SHELL
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    process = await create_subprocess_shell(
+        cmd, stdout=PIPE, stderr=PIPE
     )
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
     t_response = stdout.decode().strip()
     if t_response:
         try:
-            t_response = json.dumps(json.loads(t_response), sort_keys=True, indent=4)
+            t_response = dumps(loads(t_response), sort_keys=True, indent=4)
         except Exception as e:
             # some sites don't return valid JSONs
             LOGS.info(str(e))
-        urls = links = re.findall(link_regex, t_response)
+        urls = links = findall(link_regex, t_response)
         result = ""
         for i in urls:
             if not result:
-                result = f"**Uploaded File link/links :**"
+                result = "**Uploaded File link/links:**"
             result += f"\n{i[0]}"
         await editor.edit(result)
     else:
         await editor.edit(error)
     if dogecheck:
-        os.remove(file_name)
+        remove(file_name)

@@ -1,23 +1,19 @@
 # DogeUserBot module for getting the event of a event.
 
-import io
-import json
+from io import BytesIO
+from json import loads
 from datetime import datetime
 
-import aiohttp
-import requests
-from pytz import country_names as c_n
-from pytz import country_timezones as c_tz
-from pytz import timezone as tz
+from aiohttp import ClientSession
+from requests import get
+from pytz import country_names as c_n, country_timezones as c_tz, timezone as tz
 
-from ..Config import Config
-from ..helpers.utils import _format
-from ..sql_helper.globals import addgvar, gvarstatus
-from . import doge, eor, logging, reply_id
+from . import _format, Config, addgvar, doge, eor, gvarstatus, logging, reply_id
 
-plugin_category = "utils"
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
+
+
 # Get time zone of the given country. Credits: @aragon12 and @zakaryan2004.
 async def get_tz(con):
     for c_code in c_n:
@@ -49,7 +45,7 @@ def sun(unix, ctimezone):
     command=("climate", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city. By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city. By default it is Istanbul, you can change it by {tr}setcity command.",
         "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
         "usage": [
             "{tr}climate",
@@ -60,11 +56,12 @@ def sun(unix, ctimezone):
 async def get_weather(event):  # sourcery no-metrics
     "To get the weather report of a city."
     if not Config.OPEN_WEATHER_MAP_APPID:
-        return await eor(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
+        Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
+        await eor(
+            event, "`Get an API key from` https://openweathermap.org/ ``"
         )
     input_str = "".join(event.text.split(maxsplit=1)[1:])
-    CITY = gvarstatus("DEFCITY") or "Delhi" if not input_str else input_str
+    CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -82,11 +79,11 @@ async def get_weather(event):  # sourcery no-metrics
                 return await eor(event, "`Invalid Country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={Config.OPEN_WEATHER_MAP_APPID}"
-    async with aiohttp.ClientSession() as _session:
+    async with ClientSession() as _session:
         async with _session.get(url) as request:
             requeststatus = request.status
             requesttext = await request.text()
-    result = json.loads(requesttext)
+    result = loads(requesttext)
     if requeststatus != 200:
         return await eor(event, "`Invalid Country.`")
     cityname = result["name"]
@@ -147,11 +144,12 @@ async def get_weather(event):  # sourcery no-metrics
 async def set_default_city(event):
     "To set default city for climate/weather cmd"
     if not Config.OPEN_WEATHER_MAP_APPID:
-        return await eor(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
+        Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
+        await eor(
+            event, "`Get an API key from` https://openweathermap.org/ ``"
         )
     input_str = event.pattern_match.group(1)
-    CITY = gvarstatus("DEFCITY") or "Delhi" if not input_str else input_str
+    CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -169,8 +167,8 @@ async def set_default_city(event):
                 return await eor(event, "`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={Config.OPEN_WEATHER_MAP_APPID}"
-    request = requests.get(url)
-    result = json.loads(request.text)
+    request = get(url)
+    result = loads(request.text)
     if request.status_code != 200:
         return await eor(event, "`Invalid country.`")
     addgvar("DEFCITY", CITY)
@@ -185,7 +183,7 @@ async def set_default_city(event):
     command=("weather", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city . By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city . By default it is Istanbul, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}weather",
             "{tr}weather <city name>",
@@ -196,8 +194,8 @@ async def _(event):
     "weather report today from 'wttr.in'"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Delhi"
-    output = requests.get(f"https://wttr.in/{input_str}?mnTC0&lang=en").text
+        input_str = gvarstatus("DEFCITY") or "Istanbul"
+    output = get(f"https://wttr.in/{input_str}?mnTC0&lang=en").text
     await eor(event, output, parse_mode=_format.parse_pre)
 
 
@@ -206,7 +204,7 @@ async def _(event):
     command=("wttr", plugin_category),
     info={
         "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city for next 3 days . By default it is Delhi, you can change it by {tr}setcity command.",
+        "description": "Shows you the weather report of a city for next 3 days . By default it is Istanbul, you can change it by {tr}setcity command.",
         "usage": [
             "{tr}wttr",
             "{tr}wttr <city name>",
@@ -218,12 +216,12 @@ async def _(event):
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Delhi"
-    async with aiohttp.ClientSession() as session:
+        input_str = gvarstatus("DEFCITY") or "Istanbul"
+    async with ClientSession() as session:
         sample_url = "https://wttr.in/{}.png"
         response_api_zero = await session.get(sample_url.format(input_str))
         response_api = await response_api_zero.read()
-        with io.BytesIO(response_api) as out_file:
+        with BytesIO(response_api) as out_file:
             await event.reply(
                 f"**City : **`{input_str}`", file=out_file, reply_to=reply_to_id
             )

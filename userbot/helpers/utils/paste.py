@@ -1,12 +1,11 @@
-import json
+from json import dumps
 
-import requests
+from requests import post
 
 from ...Config import Config
 from ...core.logger import logging
 
 LOGS = logging.getLogger("DogeUserBot")
-
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36",
     "content-type": "application/json",
@@ -20,7 +19,7 @@ async def p_paste(message, extension=None):
     siteurl = "https://pasty.lus.pm/api/v1/pastes"
     data = {"content": message}
     try:
-        response = requests.post(url=siteurl, data=json.dumps(data), headers=headers)
+        response = post(url=siteurl, data=dumps(data), headers=headers)
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -53,7 +52,7 @@ async def s_paste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/v1/documents/"
     try:
-        response = requests.post(
+        response = post(
             siteurl, data={"content": message, "extension": extension}
         )
     except Exception as e:
@@ -77,7 +76,7 @@ async def n_paste(message, extension=None):
     siteurl = "https://nekobin.com/api/documents"
     data = {"content": message}
     try:
-        response = requests.post(url=siteurl, data=json.dumps(data), headers=headers)
+        response = post(url=siteurl, data=dumps(data), headers=headers)
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -102,7 +101,7 @@ async def d_paste(message, extension=None):
     siteurl = "https://del.dog/documents"
     data = {"content": message}
     try:
-        response = requests.post(url=siteurl, data=json.dumps(data), headers=headers)
+        response = post(url=siteurl, data=dumps(data), headers=headers)
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -145,3 +144,14 @@ async def pastetext(text_to_print, pastetype=None, extension=None):
     if "error" in response:
         response = await d_paste(text_to_print, extension)
     return response
+
+
+async def paste_links(magnets):
+    urls = []
+    for txt in magnets:
+        response = await pastetext(txt, pastetype="d", extension="txt")
+        if "url" in response:
+            urls.append(response["url"])
+        else:
+            return None
+    return urls

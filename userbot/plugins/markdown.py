@@ -1,33 +1,31 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-import re
 from functools import partial
 from random import choice
+from re import escape, DOTALL, sub
 
-from telethon import events
+from telethon.events import StopPropagation
 from telethon.extensions.markdown import DEFAULT_URL_RE
-from telethon.tl import types
 from telethon.tl.functions.messages import EditMessageRequest
 from telethon.tl.types import (
     MessageEntityBold,
     MessageEntityCode,
     MessageEntityItalic,
     MessageEntityPre,
+    MessageEntityStrike,
     MessageEntityTextUrl,
     MessageEntityUnderline,
 )
 from telethon.utils import add_surrogate, del_surrogate
 
-from userbot import doge
-from userbot.core.logger import logging
+from . import doge, logging
 
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
-plugin_category = "utils"
-
-usernexp = re.compile(r"@(\w{3,32})\[(.+?)\]")
-nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
+usernexp = compile(r"@(\w{3,32})\[(.+?)\]")
+nameexp = compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
 
 
 def parse_url_match(m):
@@ -41,8 +39,8 @@ def get_tag_parser(tag, entity):
     def tag_parser(m):
         return m.group(1), entity(offset=m.start(), length=len(m.group(1)))
 
-    tag = re.escape(tag)
-    return re.compile(tag + r"(.+?)" + tag, re.DOTALL), tag_parser
+    tag = escape(tag)
+    return compile(tag + r"(.+?)" + tag, DOTALL), tag_parser
 
 
 PRINTABLE_ASCII = range(0x21, 0x7F)
@@ -66,7 +64,7 @@ def parse_randcase(m):
 
 
 def parse_b_meme(m):
-    return re.sub(r"(\s|^)\S(\S)", r"\1🅱️\2", m[1]), None
+    return sub(r"(\s|^)\S(\S)", r"\1🅱️\2", m[1]), None
 
 
 def parse_subreddit(m):
@@ -100,9 +98,9 @@ MATCHERS = [
     (get_tag_parser("```", partial(MessageEntityPre, language=""))),
     (get_tag_parser("`", MessageEntityCode)),
     (get_tag_parser("--", MessageEntityUnderline)),
-    (re.compile(r"\+\+(.+?)\+\+"), parse_aesthetics),
-    (re.compile(r"([^/\w]|^)(/?(r/\w+))"), parse_subreddit),
-    (re.compile(r"(?<!\w)(~{2})(?!~~)(.+?)(?<!~)\1(?!\w)"), parse_strikethrough),
+    (compile(r"\+\+(.+?)\+\+"), parse_aesthetics),
+    (compile(r"([^/\w]|^)(/?(r/\w+))"), parse_subreddit),
+    (compile(r"(?<!\w)(~{2})(?!~~)(.+?)(?<!~)\1(?!\w)"), parse_strikethrough),
 ]
 
 
@@ -176,7 +174,7 @@ async def reparse(event):
                 entities=msg_entities,
             )
         )
-        raise events.StopPropagation
+        raise StopPropagation
 
 
 @doge.bot_cmd(outgoing=True)
@@ -192,20 +190,20 @@ async def mention(event):
             if entities:
                 for e in entities:
                     tag = None
-                    if isinstance(e, types.MessageEntityBold):
+                    if isinstance(e, MessageEntityBold):
                         tag = "<b>{}</b>"
-                    elif isinstance(e, types.MessageEntityItalic):
+                    elif isinstance(e, MessageEntityItalic):
                         tag = "<i>{}</i>"
-                    elif isinstance(e, types.MessageEntityCode):
+                    elif isinstance(e, MessageEntityCode):
                         tag = "<code>{}</code>"
-                    elif isinstance(e, types.MessageEntityStrike):
+                    elif isinstance(e, MessageEntityStrike):
                         tag = "<s>{}</s>"
-                    elif isinstance(e, types.MessageEntityPre):
+                    elif isinstance(e, MessageEntityPre):
                         tag = "<pre>{}</pre>"
-                    elif isinstance(e, types.MessageEntityUnderline):
+                    elif isinstance(e, MessageEntityUnderline):
                         tag = "<u>{}</u>"
                     if tag:
                         rep = tag.format(rep)
-            newstr = re.sub(re.escape(match.group(0)), rep, newstr)
+            newstr = sub(escape(match.group(0)), rep, newstr)
     if newstr != event.text:
         await event.edit(newstr, parse_mode="html")

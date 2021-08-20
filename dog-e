@@ -1,6 +1,0 @@
-#!/bin/bash
-_set_bot () {
-    python3 -m userbot
-}
-
-_set_bot

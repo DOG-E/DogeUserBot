@@ -1,14 +1,14 @@
-import math
-import os
+from math import floor
+from os import path, makedirs, getcwd
 from asyncio import sleep
 from subprocess import PIPE, Popen
 
-import aria2p
+from aria2p import API, Client
 from requests import get
 
 from ..Config import Config
 from ..core.logger import logging
-from .progress import humanbytes
+from . import humanbytes
 
 LOGS = logging.getLogger(__name__)
 
@@ -50,12 +50,12 @@ cmd = f"aria2c \
 
 subprocess_run(cmd)
 
-if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-    os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+if not path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+    makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
 
-download_path = os.path.join(os.getcwd() + Config.TMP_DOWNLOAD_DIRECTORY.strip("."))
+download_path = path.join(getcwd(), Config.TMP_DOWNLOAD_DIRECTORY)
 
-aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=8210, secret=""))
+aria2 = API(Client(host="http://localhost", port=8210, secret=""))
 
 aria2.set_global_options({"dir": download_path})
 
@@ -79,11 +79,11 @@ async def check_progress_for_dl(gid, event, previous):  # sourcery no-metrics
                 prog_str = "Downloading | [{0}{1}] {2}".format(
                     "".join(
                         Config.FINISHED_PROGRESS_STR
-                        for i in range(math.floor(percentage / 10))
+                        for i in range(floor(percentage / 10))
                     ),
                     "".join(
                         Config.UNFINISHED_PROGRESS_STR
-                        for i in range(10 - math.floor(percentage / 10))
+                        for i in range(10 - floor(percentage / 10))
                     ),
                     t_file.progress_string(),
                 )
@@ -92,7 +92,7 @@ async def check_progress_for_dl(gid, event, previous):  # sourcery no-metrics
                     f"**Status** -> `{t_file.status.capitalize()}`\n"
                     f"`{prog_str}`\n"
                     f"`{humanbytes(downloaded)} of {t_file.total_length_string()}"
-                    f" @ {t_file.download_speed_string()}`\n"
+                    f"@ {t_file.download_speed_string()}`\n"
                     f"**ETA** -> {t_file.eta_string()}\n"
                 )
                 if msg != previous:
@@ -106,17 +106,17 @@ async def check_progress_for_dl(gid, event, previous):  # sourcery no-metrics
             complete = t_file.is_complete
             if complete:
                 return await event.edit(
-                    f"**Name :** `{t_file.name}`\n"
-                    f"**Size :** `{t_file.total_length_string()}`\n"
-                    f"**Path :** `{os.path.join(Config.TMP_DOWNLOAD_DIRECTORY , t_file.name)}`\n"
-                    "**Response :** __OK - Successfully downloaded...__"
+                    f"**Name:** `{t_file.name}`\n"
+                    f"**Size:** `{t_file.total_length_string()}`\n"
+                    f"**Path:** `{path.join(Config.TMP_DOWNLOAD_DIRECTORY , t_file.name)}`\n"
+                    "**Response:** __OK - Successfully downloaded...__"
                 )
         except Exception as e:
             if "not found" in str(e) or "'file'" in str(e):
                 if "Your Torrent/Link is Dead." not in event.text:
-                    await event.edit(f"**Download Canceled :**\n`{t_file.name}`")
+                    await event.edit(f"**Download Canceled:**\n`{t_file.name}`")
             elif "depth exceeded" in str(e):
                 t_file.remove(force=True)
                 await event.edit(
-                    f"**Download Auto Canceled :**\n`{t_file.name}`\nYour Torrent/Link is Dead."
+                    f"**Download Auto Canceled:**\n`{t_file.name}`\nYour Torrent/Link is Dead."
                 )

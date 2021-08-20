@@ -1,87 +1,103 @@
-import re
+from re import compile
 
 from telethon import Button
-from telethon.errors import MessageNotModifiedError
 from telethon.events import CallbackQuery
 
-from userbot import doge
+from . import doge
 
-from ..Config import Config
+from ..core.decorators import check_owner
 from ..core.logger import logging
+from ..sql_helper.globals import addgvar
 
 LOGS = logging.getLogger(__name__)
 
 
-@doge.tgbot.on(CallbackQuery(data=re.compile(r"^age_verification_true")))
-async def age_verification_true(event: CallbackQuery):
-    u_id = event.query.user_id
-    if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
-        return await event.answer(
-            "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
-            alert=True,
-        )
-    await event.answer("Yes I'm 18+", alert=False)
-    buttons = [
-        Button.inline(
-            text="Unsure / Change of Decision ❔",
-            data="chg_of_decision_",
-        )
-    ]
-    try:
-        await event.edit(
-            text="Set `ALLOW_NSFW` = True in Database Vars to access this plugin",
-            file="https://telegra.ph/file/85f3071c31279bcc280ef.jpg",
-            buttons=buttons,
-        )
-    except MessageNotModifiedError:
-        pass
-
-
-@doge.tgbot.on(CallbackQuery(data=re.compile(r"^age_verification_false")))
-async def age_verification_false(event: CallbackQuery):
-    u_id = event.query.user_id
-    if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
-        return await event.answer(
-            "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
-            alert=True,
-        )
-    await event.answer("No I'm Not", alert=False)
-    buttons = [
-        Button.inline(
-            text="Unsure / Change of Decision ❔",
-            data="chg_of_decision_",
-        )
-    ]
-    try:
-        await event.edit(
-            text="GO AWAY KID !",
-            file="https://telegra.ph/file/1140f16a883d35224e6a1.jpg",
-            buttons=buttons,
-        )
-    except MessageNotModifiedError:
-        pass
-
-
-@doge.tgbot.on(CallbackQuery(data=re.compile(r"^chg_of_decision_")))
+@doge.tgbot.on(CallbackQuery(data=compile(r"^chg_of_decision_")))
+@check_owner
 async def chg_of_decision_(event: CallbackQuery):
-    u_id = event.query.user_id
-    if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
-        return await event.answer(
-            "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
-            alert=True,
-        )
-    await event.answer("Unsure", alert=False)
     buttons = [
         (
-            Button.inline(text="Yes I'm 18+", data="age_verification_true"),
-            Button.inline(text="No I'm Not", data="age_verification_false"),
+            Button.inline(
+                text="⚠ Yᴇs ɪ'ᴍ +18",
+                data="age_verification_true"
+            ),
+            Button.inline(
+                text="🔞 No ɪ'ᴍ ɴoᴛ",
+                data="age_verification_false"
+            ),
         )
     ]
-    try:
-        await event.edit(
-            text="**ARE YOU OLD ENOUGH FOR THIS ?**",
-            file="https://telegra.ph/file/238f2c55930640e0e8c56.jpg",
-            buttons=buttons,
+    await event.edit(
+        text="**ARE YOU OLD ENOUGH FOR THIS?**",
+        file="https://telegra.ph/file/238f2c55930640e0e8c56.jpg",
+        buttons=buttons,
+    )
+
+
+@doge.tgbot.on(CallbackQuery(data=compile(r"^age_verification_true")))
+@check_owner
+async def age_verification_true(event: CallbackQuery):
+    buttons = [
+        (
+            Button.inline(
+                text="⬅ No, ɪ'ᴠᴇ ᴄʜᴀɴɢᴇᴅ oᴘɪɴɪoɴ",
+                data="chg_of_decision_",
+            ),
+            Button.inline(
+                text="✅ Yᴇs ɪ'ᴍ sᴜʀᴇ",
+                data="yes_im_sure",
+            ),
         )
-    except MessageNotModifiedError:
-        pass
+    ]
+    await event.edit(
+        text="**Are you sure want to open this?**",
+        file="https://telegra.ph/file/31836a76386fd3d49a099.jpg",
+        buttons=buttons,
+    )
+
+
+@doge.tgbot.on(CallbackQuery(data=compile(r"^yes_im_sure")))
+@check_owner
+async def yes_im_sure(event: CallbackQuery):
+    await event.answer("✅ Yes I'm sure!", alert=False)
+    addgvar("PNSFW", True)
+    buttons = [
+        Button.inline(
+                text="⛔ Cʟosᴇ",
+                data="close_this",
+        ),
+    ]
+    await event.edit(
+        text="**All right.\nNow you can do whatever want.**",
+        file="https://telegra.ph/file/efebf3a24dd260896d662.jpg",
+        buttons=buttons,
+    )
+
+
+@doge.tgbot.on(CallbackQuery(data=compile(r"^age_verification_false")))
+@check_owner
+async def age_verification_false(event: CallbackQuery):
+    buttons = [
+        (
+            Button.inline(
+                text="⬅ I'ᴠᴇ ᴄʜᴀɴɢᴇᴅ oᴘɪɴɪoɴ",
+                data="chg_of_decision_",
+            ),
+            Button.inline(
+                text="⛔ Exɪᴛ",
+                data="close_this",
+            ),
+        )
+    ]
+    await event.edit(
+        text="**GO AWAY KID!**",
+        file="https://telegra.ph/file/b7e740bbda31d43d510ab.jpg",
+        buttons=buttons,
+    )
+
+
+@doge.tgbot.on(CallbackQuery(data=compile(r"^close_this")))
+@check_owner
+async def close_this(event: CallbackQuery):
+    await event.answer("⛔ Closed!", alert=False)
+    await event.delete()

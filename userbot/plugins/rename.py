@@ -1,18 +1,13 @@
-import asyncio
-import os
-import time
+from asyncio import get_event_loop
 from datetime import datetime
+from os import path, remove
+from time import time
 
-from userbot import doge
+from . import Config, doge, edl, eor, progress, reply_id
 
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers.utils import reply_id
-from . import progress, reply_id
+plugin_category = "tool"
 
-plugin_category = "utils"
-
-thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+thumb_image_path = path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 @doge.bot_cmd(
@@ -30,7 +25,7 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
 )
 async def _(event):
     "To rename and upload the file"
-    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
+    thumb = thumb_image_path if path.exists(thumb_image_path) else None
     flags = event.pattern_match.group(1)
     forcedoc = bool(flags)
     supsstream = not flags
@@ -47,12 +42,12 @@ async def _(event):
     start = datetime.now()
     file_name = input_str
     reply_message = await event.get_reply_message()
-    c_time = time.time()
-    downloaded_file_name = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, file_name)
+    c_time = time()
+    downloaded_file_name = path.join(Config.TMP_DOWNLOAD_DIRECTORY, file_name)
     downloaded_file_name = await event.client.download_media(
         reply_message,
         downloaded_file_name,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        progress_callback=lambda d, t: get_event_loop().create_task(
             progress(d, t, dogevent, c_time, "trying to download", file_name)
         ),
     )
@@ -62,9 +57,9 @@ async def _(event):
         thumb = await reply_message.download_media(thumb=-1)
     except Exception:
         thumb = thumb
-    if not os.path.exists(downloaded_file_name):
+    if not path.exists(downloaded_file_name):
         return await dogevent.edit(f"File Not Found {input_str}")
-    c_time = time.time()
+    c_time = time()
     doog = await event.client.send_file(
         event.chat_id,
         downloaded_file_name,
@@ -73,12 +68,12 @@ async def _(event):
         allow_cache=False,
         reply_to=reply_to_id,
         thumb=thumb,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        progress_callback=lambda d, t: get_event_loop().create_task(
             progress(d, t, event, c_time, "trying to upload", downloaded_file_name)
         ),
     )
     end_two = datetime.now()
-    os.remove(downloaded_file_name)
+    remove(downloaded_file_name)
     ms_two = (end_two - end).seconds
     await edl(
         dogevent,

@@ -2,16 +2,11 @@ from datetime import datetime
 
 from telethon.utils import get_display_name
 
-from userbot import doge
-from userbot.core.logger import logging
-
+from . import addgvar, delgvar, doge, eor, edl, gvarstatus, logging
 from ..core.data import blacklist_chats_list
-from ..core.managers import edl, eor
-from ..sql_helper import global_collectionjson as sql
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from ..sql_helper.global_collectionjson import add_collection, del_collection, get_collection
 
-plugin_category = "tools"
-
+plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 
@@ -51,7 +46,7 @@ async def chat_blacklist(event):
         )
     if gvarstatus("blacklist_chats") is not None:
         delgvar("blacklist_chats")
-        text = "__Your DogeUserBot is as free as a bird.It works in Every Chat .__"
+        text = "__Your DogeUserBot is as free as a bird. It works in Every Chat.__"
         if len(blkchats) != 0:
             text += (
                 "**Bot is reloading to apply the changes. Please wait for a minute**"
@@ -90,7 +85,7 @@ async def add_blacklist_chat(event):
     result = ""
     blkchats = blacklist_chats_list()
     try:
-        blacklistchats = sql.get_collection("blacklist_chats_list").json
+        blacklistchats = get_collection("blacklist_chats_list").json
     except AttributeError:
         blacklistchats = {}
     if input_str:
@@ -114,7 +109,7 @@ async def add_blacklist_chat(event):
                     f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
                 )
             except Exception as e:
-                errors += f"**While adding the {chatid}** - __{str(e)}__\n"
+                errors += f"**While adding the {chatid}** - __{e}__\n"
     else:
         chat = await event.get_chat()
         try:
@@ -134,9 +129,9 @@ async def add_blacklist_chat(event):
                     f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
                 )
         except Exception as e:
-            errors += f"**While adding the {chatid}** - __{str(e)}__\n"
-    sql.del_collection("blacklist_chats_list")
-    sql.add_collection("blacklist_chats_list", blacklistchats, {})
+            errors += f"**While adding the {chatid}** - __{e}__\n"
+    del_collection("blacklist_chats_list")
+    add_collection("blacklist_chats_list", blacklistchats, {})
     output = ""
     if result != "":
         output += f"**Success:**\n{result}\n"
@@ -169,7 +164,7 @@ async def add_blacklist_chat(event):
     result = ""
     blkchats = blacklist_chats_list()
     try:
-        blacklistchats = sql.get_collection("blacklist_chats_list").json
+        blacklistchats = get_collection("blacklist_chats_list").json
     except AttributeError:
         blacklistchats = {}
     if input_str:
@@ -186,7 +181,7 @@ async def add_blacklist_chat(event):
                 else:
                     errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
             except Exception as e:
-                errors += f"**While removing the {chatid}** - __{str(e)}__\n"
+                errors += f"**While removing the {chatid}** - __{e}__\n"
     else:
         chat = await event.get_chat()
         try:
@@ -198,9 +193,9 @@ async def add_blacklist_chat(event):
             else:
                 errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
         except Exception as e:
-            errors += f"**While removing the {chatid}** - __{str(e)}__\n"
-    sql.del_collection("blacklist_chats_list")
-    sql.add_collection("blacklist_chats_list", blacklistchats, {})
+            errors += f"**While removing the {chatid}** - __{e}__\n"
+    del_collection("blacklist_chats_list")
+    add_collection("blacklist_chats_list", blacklistchats, {})
     output = ""
     if result != "":
         output += f"**Success:**\n{result}\n"
@@ -227,16 +222,16 @@ async def add_blacklist_chat(event):
     "To show list of chats which are blacklisted."
     blkchats = blacklist_chats_list()
     try:
-        blacklistchats = sql.get_collection("blacklist_chats_list").json
+        blacklistchats = get_collection("blacklist_chats_list").json
     except AttributeError:
         blacklistchats = {}
     if len(blkchats) == 0:
         return await edl(event, "__There are no blacklisted chats in your bot.__")
-    result = "**The list of blacklisted chats are :**\n\n"
+    result = "**The list of blacklisted chats are:**\n\n"
     for chat in blkchats:
         result += f"☞ {blacklistchats[str(chat)]['chat_name']}\n"
-        result += f"**Chat Id :** `{chat}`\n"
+        result += f"**Chat ID:** `{chat}`\n"
         username = blacklistchats[str(chat)]["chat_username"] or "__Private group__"
-        result += f"**Username :** {username}\n"
+        result += f"**Username:** {username}\n"
         result += f"Added on {blacklistchats[str(chat)]['date']}\n\n"
     await eor(event, result)

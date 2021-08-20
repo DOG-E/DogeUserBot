@@ -3,17 +3,12 @@
 # Copyright (C) 2020 Alfiananda P.A
 #
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
-# you may not use this file except in compliance with the License.import os
+# you may not use this file except in compliance with the License.
+from os import mkdir, path, remove
 
-import os
+from . import _dogeutils, doge, edl, eor, make_gif, reply_id
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers import _dogeutils, reply_id
-from . import make_gif
-
-plugin_category = "utils"
+plugin_category = "misc"
 
 
 @doge.bot_cmd(
@@ -34,23 +29,23 @@ async def collage(event):
     if not (reply and (reply.media)):
         await event.edit("`Media not found...`")
         return
-    if not os.path.isdir("./temp/"):
-        os.mkdir("./temp/")
+    if not path.isdir("./temp/"):
+        mkdir("./temp/")
     dogsticker = await reply.download_media(file="./temp/")
     if not dogsticker.endswith((".mp4", ".mkv", ".tgs")):
-        os.remove(dogsticker)
+        remove(dogsticker)
         await event.edit("`Media format is not supported...`")
         return
     if doginput:
         if not doginput.isdigit():
-            os.remove(dogsticker)
+            remove(dogsticker)
             await event.edit("`You input is invalid, check help`")
             return
         doginput = int(doginput)
         if not 0 < doginput < 10:
-            os.remove(dogsticker)
+            remove(dogsticker)
             await event.edit(
-                "`Why too big grid you cant see images, use size of grid between 1 to 9`"
+                "`Why too big grid you can't see images, use size of grid between 1 to 9`"
             )
             return
     else:
@@ -58,7 +53,7 @@ async def collage(event):
     if dogsticker.endswith(".tgs"):
         hmm = await make_gif(event, dogsticker)
         if hmm.endswith(("@tgstogifbot")):
-            os.remove(dogsticker)
+            remove(dogsticker)
             return await event.edit(hmm)
         collagefile = hmm
     else:
@@ -66,12 +61,14 @@ async def collage(event):
     endfile = "./temp/collage.png"
     dogecmd = f"vcsi -g {doginput}x{doginput} '{collagefile}' -o {endfile}"
     stdout, stderr = (await _dogeutils.runcmd(dogecmd))[:2]
-    if not os.path.exists(endfile):
+    if not path.exists(endfile):
         for files in (dogsticker, collagefile):
-            if files and os.path.exists(files):
-                os.remove(files)
+            if files and path.exists(files):
+                remove(files)
         return await edl(
-            event, f"`media is not supported or try with smaller grid size`", 5
+            event,
+            "`media is not supported or try with smaller grid size`",
+            5,
         )
     await event.client.send_file(
         event.chat_id,
@@ -80,5 +77,5 @@ async def collage(event):
     )
     await event.delete()
     for files in (dogsticker, collagefile, endfile):
-        if files and os.path.exists(files):
-            os.remove(files)
+        if files and path.exists(files):
+            remove(files)

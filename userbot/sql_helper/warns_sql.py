@@ -1,4 +1,4 @@
-import threading
+from threading import RLock
 
 from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
 
@@ -42,8 +42,8 @@ class WarnSettings(BASE):
 Warns.__table__.create(checkfirst=True)
 WarnSettings.__table__.create(checkfirst=True)
 
-WARN_INSERTION_LOCK = threading.RLock()
-WARN_SETTINGS_LOCK = threading.RLock()
+WARN_INSERTION_LOCK = RLock()
+WARN_SETTINGS_LOCK = RLock()
 
 
 def warn_user(user_id, chat_id, reason=None):

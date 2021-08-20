@@ -1,5 +1,3 @@
-from ..core.managers import eor
-
 pawn = [
     "nsfw",
     "nsfw_gifs",
@@ -103,15 +101,6 @@ hemtai = [
     "baka",
     "woof",
 ]
-
-
-async def importent(event):
-    dog = []
-    if str(event.chat_id) in dog:
-        await eor(event, "**Yes I'm GAY**")
-        await event.client.kick_participant(event.chat_id, "me")
-        return True
-    return False
 
 
 def nsfw(category):

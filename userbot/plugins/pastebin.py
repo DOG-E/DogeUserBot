@@ -1,29 +1,21 @@
-import os
-import re
+from os import path as osp, remove
+from re import findall
 
-import pygments
-import requests
+from pygments import highlight
 from pygments.formatters import ImageFormatter
 from pygments.lexers import Python3Lexer
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+from requests import get
+from requests.exceptions import HTTPError, Timeout, TooManyRedirects
 from telethon.utils import get_extension
 from urlextract import URLExtract
 
-from userbot import doge
-
-from ..Config import Config
 from ..core.events import MessageEdited
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers.tools import media_type
-from ..helpers.utils import pastetext, reply_id
+from . import Config, doge, edl, eor, fsmessage, logging, media_type, pastetext, reply_id
 
-plugin_category = "utils"
-
-extractor = URLExtract()
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
+extractor = URLExtract()
 pastebins = {
     "Pasty": "p",
     "Neko": "n",
@@ -56,16 +48,14 @@ async def paste_img(event):
     dogevent = await eor(event, "`Pasting the text on image`")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
-    ext = re.findall(r"-f", input_str)
+    ext = findall(r"-f", input_str)
     extension = None
     try:
         extension = ext[0].replace("-", "")
         input_str = input_str.replace(ext[0], "").strip()
     except IndexError:
         extension = None
-    text_to_print = ""
-    if input_str:
-        text_to_print = input_str
+    text_to_print = input_str or ""
     if text_to_print == "" and reply and reply.media:
         mediatype = media_type(reply)
         if mediatype == "Document":
@@ -80,7 +70,7 @@ async def paste_img(event):
                 dogevent,
                 "`Either reply to text/code file or reply to text message or give text along with command`",
             )
-    pygments.highlight(
+    highlight(
         text_to_print,
         Python3Lexer(),
         ImageFormatter(font_name="DejaVu Sans Mono", line_numbers=True),
@@ -94,11 +84,11 @@ async def paste_img(event):
             reply_to=reply_to,
         )
         await dogevent.delete()
-        os.remove("out.png")
+        remove("out.png")
         if d_file_name is not None:
-            os.remove(d_file_name)
+            remove(d_file_name)
     except Exception as e:
-        await edl(dogevent, f"**Error:**\n`{str(e)}`", time=10)
+        await edl(dogevent, f"**Error:**\n`{e}`", )
 
 
 @doge.bot_cmd(
@@ -127,7 +117,7 @@ async def paste_bin(event):
     dogevent = await eor(event, "`pasting text to paste bin....`")
     input_str = event.pattern_match.group(3)
     reply = await event.get_reply_message()
-    ext = re.findall(r"-\w+", input_str)
+    ext = findall(r"-\w+", input_str)
     try:
         extension = ext[0].replace("-", "")
         input_str = input_str.replace(ext[0], "").strip()
@@ -137,9 +127,7 @@ async def paste_bin(event):
         pastetype = "n"
     else:
         pastetype = event.pattern_match.group(1) or "p"
-    text_to_print = ""
-    if input_str:
-        text_to_print = input_str
+    text_to_print = input_str or ""
     if text_to_print == "" and reply and reply.media:
         mediatype = media_type(reply)
         if mediatype == "Document":
@@ -163,7 +151,7 @@ async def paste_bin(event):
         if "error" in response:
             return await edl(
                 dogevent,
-                f"**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
+                "**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
             )
         result = ""
         if pastebins[response["bin"]] != pastetype:
@@ -173,7 +161,7 @@ async def paste_bin(event):
             result += f"\n<b>Raw link: <a href={response['raw']}>Raw</a></b>"
         await dogevent.edit(result, link_preview=False, parse_mode="html")
     except Exception as e:
-        await edl(dogevent, f"**Error while pasting text:**\n`{str(e)}`")
+        await edl(dogevent, f"**Error while pasting text:**\n`{e}`")
 
 
 @doge.bot_cmd(
@@ -225,7 +213,7 @@ async def get_dogbin_content(event):
     if "raw" in url:
         rawurl = url
     if rawurl is None:
-        fid = os.path.splitext((os.path.basename(url)))
+        fid = osp.splitext((osp.basename(url)))
         if "pasty" in url:
             rawurl = f"https://pasty.lus.pm/{fid[0]}/raw"
         elif "spaceb" in url:
@@ -234,16 +222,16 @@ async def get_dogbin_content(event):
             rawurl = f"nekobin.com/raw/{fid[0]}"
         elif "dog" in url:
             rawurl = f"https://del.dog/raw/{fid[0]}"
-    resp = requests.get(rawurl)
+    resp = get(rawurl)
     try:
         resp.raise_for_status()
-    except requests.exceptions.HTTPError as HTTPErr:
+    except HTTPError as HTTPErr:
         return await dogevent.edit(
             f"**Request returned an unsuccessful status code.**\n\n__{str(HTTPErr)}__"
         )
-    except requests.exceptions.Timeout as TimeoutErr:
+    except Timeout as TimeoutErr:
         return await dogevent.edit(f"**Request timed out.**__{str(TimeoutErr)}__")
-    except requests.exceptions.TooManyRedirects as RedirectsErr:
+    except TooManyRedirects as RedirectsErr:
         return await dogevent.edit(
             (
                 f"**Request exceeded the configured number of maximum redirections.**__{str(RedirectsErr)}__"
@@ -267,9 +255,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     pastetype = "d"
-    text_to_print = ""
-    if input_str:
-        text_to_print = input_str
+    text_to_print = input_str or ""
     if text_to_print == "" and reply and reply.media:
         mediatype = media_type(reply)
         if mediatype == "Document":
@@ -289,28 +275,26 @@ async def _(event):
         if "error" in response:
             return await edl(
                 dogevent,
-                f"**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
+                "**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
             )
     except Exception as e:
-        return await edl(dogevent, f"**Error while pasting text:**\n`{str(e)}`")
+        return await edl(dogevent, f"**Error while pasting text:**\n`{e}`")
     url = response["url"]
     chat = "@CorsaBot"
     await dogevent.edit("`Making instant view...`")
     async with event.client.conversation(chat) as conv:
-        try:
-            response = conv.wait_event(
-                MessageEdited(incoming=True, from_users=conv.chat_id), timeout=10
-            )
-            await event.client.send_message(chat, url)
-            response = await response
-        except YouBlockedUserError:
-            return await dogevent.edit("```Please unblock me (@CorsaBot) and try```")
+        response = conv.wait_event(
+            MessageEdited(incoming=True, from_users=conv.chat_id), timeout=10
+        )
+        await fsmessage(event, url, chat=chat)
+        response = await response
         result = ""
         if response:
-            await event.client.send_read_acknowledge(conv.chat_id)
             urls = extractor.find_urls(response.text)
             if urls:
                 result = f"The instant preview is [here]({urls[0]})"
         if result == "":
-            result = f"I can't make it as instant view"
+            result = "I can't make it as instant view"
         await dogevent.edit(result, link_preview=True)
+        await conv.mark_read()
+        await conv.cancel_all()

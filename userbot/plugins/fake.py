@@ -1,15 +1,11 @@
-import asyncio
+from asyncio import sleep
 from random import choice, randint
 
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers.utils import get_user_from_event
-from . import ALIVE_NAME
+from . import ALIVE_NAME, doge, edl, eor, get_user_from_event
 
 plugin_category = "fun"
 
@@ -73,20 +69,20 @@ async def _(event):
         if scam_time > 0:
             await event.delete()
             async with event.client.action(event.chat_id, scam_action):
-                await asyncio.sleep(scam_time)
+                await sleep(scam_time)
     except BaseException:
         return
 
 
 @doge.bot_cmd(
-    pattern="prankpromote(?:\s|$)([\s\S]*)",
-    command=("prankpromote", plugin_category),
+    pattern="ppromote(?:\s|$)([\s\S]*)",
+    command=("ppromote", plugin_category),
     info={
         "header": "To promote a person without admin rights",
         "note": "You need proper rights for this",
         "usage": [
-            "{tr}prankpromote <userid/username/reply>",
-            "{tr}prankpromote <userid/username/reply> <custom title>",
+            "{tr}ppromote <userid/username/reply>",
+            "{tr}ppromote <userid/username/reply> <custom title>",
         ],
     },
     groups_only=True,
@@ -104,9 +100,9 @@ async def _(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await dogevent.edit(NO_PERM)
+        return await dogevent.edit("I don't have sufficient permissions! This is so sed. Alexa play despacito")
     except Exception as e:
-        return await edl(dogevent, f"__{str(e)}__", time=10)
+        return await edl(dogevent, f"__{e}__")
     await dogevent.edit("`Promoted Successfully! Now gib Party`")
 
 
@@ -148,5 +144,5 @@ async def _(event):
         f"**pRoMooTeD SuCcEsSfUlLy bY: {ALIVE_NAME}**",
     ]
     for i in animation_ttl:
-        await asyncio.sleep(animation_interval)
+        await sleep(animation_interval)
         await event.edit(animation_chars[i % 20])

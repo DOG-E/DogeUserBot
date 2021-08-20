@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 from markdown import markdown
@@ -33,10 +33,7 @@ def htmlmentionuser(name, userid):
     return f"<a href='tg://user?id={userid}'>{name}</a>"
 
 
-# kanged from uniborg @spechide
-# https://github.com/SpEcHiDe/UniBorg/blob/d8b852ee9c29315a53fb27055e54df90d0197f0b/uniborg/utils.py#L250
-
-
+# kanged from uniborg @spechide ~ https://github.com/SpEcHiDe/UniBorg/blob/d8b852ee9c29315a53fb27055e54df90d0197f0b/uniborg/utils.py#L250
 def reformattext(text):
     return text.replace("~", "").replace("_", "").replace("*", "").replace("`", "")
 
@@ -117,7 +114,7 @@ def yaml_format(obj, indent=0, max_str_len=256, max_byte_len=64):
         if all(0x20 <= c < 0x7F for c in obj):
             return repr(obj)
         return "<…>" if len(obj) > max_byte_len else " ".join(f"{b:02X}" for b in obj)
-    elif isinstance(obj, datetime.datetime):
+    elif isinstance(obj, datetime):
         # ISO-8601 without timezone offset (telethon dates are always UTC)
         return utc_to_local(obj).strftime("%Y-%m-%d %H:%M:%S")
     elif hasattr(obj, "__iter__"):

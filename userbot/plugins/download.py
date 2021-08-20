@@ -1,30 +1,24 @@
-import asyncio
-import io
-import math
-import os
-import pathlib
-import time
+from asyncio import get_event_loop, sleep
 from datetime import datetime
+from io import FileIO
+from math import floor
+from os import getcwd, makedirs, path as osp
+from pathlib import Path
+from time import time
 
 from pySmartDL import SmartDL
-from telethon.tl import types
+from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from userbot import doge
-
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers import humanbytes, progress
-from ..helpers.utils import _format
+from . import _format, Config, doge, edl, eor, humanbytes, progress
 
 plugin_category = "misc"
 
 NAME = "untitled"
+downloads = Path(osp.join(getcwd(), Config.TMP_DOWNLOAD_DIRECTORY))
 
-downloads = pathlib.Path(os.path.join(os.getcwd(), Config.TMP_DOWNLOAD_DIRECTORY))
 
-
-async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
+async def _get_file_name(path: Path, full: bool = True) -> str:
     return str(path.absolute()) if full else path.stem + path.suffix
 
 
@@ -48,18 +42,18 @@ async def _(event):  # sourcery no-metrics
     input_str = event.pattern_match.group(3)
     name = NAME
     path = None
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if not osp.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     reply = await event.get_reply_message()
     if reply:
         start = datetime.now()
         for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
+            if isinstance(attr, DocumentAttributeFilename):
                 name = attr.file_name
         if input_str:
-            path = pathlib.Path(os.path.join(downloads, input_str.strip()))
+            path = Path(osp.join(downloads, input_str.strip()))
         else:
-            path = pathlib.Path(os.path.join(downloads, name))
+            path = Path(osp.join(downloads, name))
         ext = get_extension(reply.document)
         if path and not path.suffix and ext:
             path = path.with_suffix(ext)
@@ -79,7 +73,7 @@ async def _(event):  # sourcery no-metrics
         else:
             file_name = downloads / name
         file_name.parent.mkdir(parents=True, exist_ok=True)
-        c_time = time.time()
+        c_time = time()
         if (
             not reply.document
             and reply.photo
@@ -90,23 +84,23 @@ async def _(event):  # sourcery no-metrics
         ):
             await reply.download_media(
                 file=file_name.absolute(),
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 ),
             )
         elif not reply.document:
             file_name = await reply.download_media(
                 file=downloads,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 ),
             )
         else:
-            dl = io.FileIO(file_name.absolute(), "a")
+            dl = FileIO(file_name.absolute(), "a")
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress_callback=lambda d, t: get_event_loop().create_task(
                     progress(d, t, mone, c_time, "trying to download")
                 ),
             )
@@ -114,7 +108,7 @@ async def _(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
+            f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{osp.relpath(file_name,getcwd())}`\n   "
         )
     elif input_str:
         start = datetime.now()
@@ -124,26 +118,26 @@ async def _(event):  # sourcery no-metrics
             url = input_str
             file_name = None
         url = url.strip()
-        file_name = os.path.basename(url) if file_name is None else file_name.strip()
-        downloaded_file_name = pathlib.Path(os.path.join(downloads, file_name))
+        file_name = osp.basename(url) if file_name is None else file_name.strip()
+        downloaded_file_name = Path(osp.join(downloads, file_name))
         if not downloaded_file_name.suffix:
-            ext = os.path.splitext(url)[1]
+            ext = osp.splitext(url)[1]
             downloaded_file_name = downloaded_file_name.with_suffix(ext)
         downloader = SmartDL(url, str(downloaded_file_name), progress_bar=False)
         downloader.start(blocking=False)
-        c_time = time.time()
+        c_time = time()
         delay = 0
         oldmsg = ""
         while not downloader.isFinished():
             total_length = downloader.filesize or None
             downloaded = downloader.get_dl_size()
-            now = time.time()
+            now = time()
             delay = now - c_time
             percentage = downloader.get_progress() * 100
             dspeed = downloader.get_speed()
             progress_str = "`{0}{1} {2}`%".format(
-                "".join("▰" for i in range(math.floor(percentage / 5))),
-                "".join("▱" for i in range(20 - math.floor(percentage / 5))),
+                "".join("▰" for i in range(floor(percentage / 5))),
+                "".join("▱" for i in range(20 - floor(percentage / 5))),
                 round(percentage, 2),
             )
             estimated_total_time = downloader.get_eta(human=True)
@@ -156,14 +150,14 @@ async def _(event):  # sourcery no-metrics
             if oldmsg != current_message and delay > 5:
                 await mone.edit(current_message)
                 delay = 0
-                c_time = time.time()
+                c_time = time()
                 oldmsg = current_message
-            await asyncio.sleep(1)
+            await sleep(1)
         end = datetime.now()
         ms = (end - start).seconds
         if downloader.isSuccessful():
             await mone.edit(
-                f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded file location :- ** `{os.path.relpath(downloaded_file_name,os.getcwd())}`"
+                f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded file location :- ** `{osp.relpath(downloaded_file_name,getcwd())}`"
             )
         else:
             await mone.edit("Incorrect URL\n {}".format(input_str))
@@ -185,7 +179,7 @@ async def _(event):  # sourcery no-metrics
     },
 )
 async def _(event):  # sourcery no-metrics
-    pwd = os.getcwd()
+    pwd = getcwd()
     input_str = event.pattern_match.group(3)
     if not input_str:
         return await edl(
@@ -194,9 +188,9 @@ async def _(event):  # sourcery no-metrics
             parse_mode=_format.parse_pre,
         )
 
-    location = os.path.join(pwd, input_str)
-    if not os.path.isdir(location):
-        os.makedirs(location)
+    location = osp.join(pwd, input_str)
+    if not osp.isdir(location):
+        makedirs(location)
     reply = await event.get_reply_message()
     if not reply:
         return await edl(
@@ -207,12 +201,12 @@ async def _(event):  # sourcery no-metrics
     mone = await eor(event, "Downloading the file ...", parse_mode=_format.parse_pre)
     start = datetime.now()
     for attr in getattr(reply.document, "attributes", []):
-        if isinstance(attr, types.DocumentAttributeFilename):
+        if isinstance(attr, DocumentAttributeFilename):
             name = attr.file_name
     if input_str:
-        path = pathlib.Path(os.path.join(location, input_str.strip()))
+        path = Path(osp.join(location, input_str.strip()))
     else:
-        path = pathlib.Path(os.path.join(location, name))
+        path = Path(osp.join(location, name))
     ext = get_extension(reply.document)
     if path and not path.suffix and ext:
         path = path.with_suffix(ext)
@@ -232,7 +226,7 @@ async def _(event):  # sourcery no-metrics
     else:
         file_name = location / name
     file_name.parent.mkdir(parents=True, exist_ok=True)
-    c_time = time.time()
+    c_time = time()
     if (
         not reply.document
         and reply.photo
@@ -243,23 +237,23 @@ async def _(event):  # sourcery no-metrics
     ):
         await reply.download_media(
             file=file_name.absolute(),
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: get_event_loop().create_task(
                 progress(d, t, mone, c_time, "trying to download")
             ),
         )
     elif not reply.document:
         file_name = await reply.download_media(
             file=location,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: get_event_loop().create_task(
                 progress(d, t, mone, c_time, "trying to download")
             ),
         )
     else:
-        dl = io.FileIO(file_name.absolute(), "a")
+        dl = FileIO(file_name.absolute(), "a")
         await event.client.fast_download_file(
             location=reply.document,
             out=dl,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress_callback=lambda d, t: get_event_loop().create_task(
                 progress(d, t, mone, c_time, "trying to download")
             ),
         )
@@ -267,5 +261,5 @@ async def _(event):  # sourcery no-metrics
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
+        f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{osp.relpath(file_name,getcwd())}`\n   "
     )

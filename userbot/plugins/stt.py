@@ -1,63 +1,56 @@
 # speech to text module for catuserbot by uniborg (@spechide)
-import os
+from os import makedirs, path, remove
 from datetime import datetime
 
-import requests
-from telethon import events
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.contacts import UnblockRequest
+from requests import post
+from telethon.events import MessageEdited
 
-from userbot import doge
+from . import Config, doge, edl, eor, fsmessage, lan, media_type
 
-from ..Config import Config
-from ..core.managers import edl, eor
-from ..helpers import media_type
+plugin_category = "tool"
 
-plugin_category = "utils"
+chat = "@VoicyBot"
 
 
 @doge.bot_cmd(
-    pattern="stt$",
+    pattern="(stt|voicy)$",
     command=("stt", plugin_category),
     info={
         "header": "Speech to text module.",
-        "usage": "{tr}stt",
+        "usage": ["{tr}stt", "{tr}voicy"],
     },
 )
 async def _(event):
-    "speech to text."
+    "Speech to text."
     try:
         reply = await event.get_reply_message()
         mediatype = media_type(reply)
         if not reply or (mediatype and mediatype not in ["Voice", "Audio"]):
             return await edl(
                 event,
-                "`Reply to a voice message or Audio, to get the relevant transcript.`",
+                "`Reply to a voice message or audio, to get the relevant transcript.`",
             )
-        chat = "@Voicybot"
         dogevent = await eor(event, "`I'm listening to voice...`")
         async with doge.conversation(chat) as conv:
-            try:
-                await doge.forward_messages(chat, reply)
-            except YouBlockedUserError:
-                doge(UnblockRequest(chat))
-                await doge.forward_messages(chat, reply)
-
             response = conv.wait_event(
-                events.MessageEdited(incoming=True, from_users=chat)
+                MessageEdited(incoming=True, from_users=chat)
             )
+            await fsmessage(event, reply, forward=True, chat=chat)
             response = await response
             if response.text.startswith("👋"):
                 await eor(
                     dogevent,
-                    "**You need to start the @VoicyBot \n& choose your language.**",
+                    "**You need to start the @VoicyBot\n& write /language\n& choose your language.**",
                 )
             elif response.text.startswith("__👮"):
                 await edl(
                     dogevent, "**The sound is broken.\nI didn't understand what said.**"
                 )
             else:
-                await dogevent.edit(f"**I hear something: **\n\n`{response.text}`")
+                res = response.text.replace("Powered by [Todorant](https://todorant.com/?utm_source=voicy)","`\n🧡 Doɢᴇ UsᴇʀBoᴛ 🐾")
+                await dogevent.edit(f"**I heard something: **\n\n`{res}`")
+            await conv.mark_read()
+            await conv.cancel_all()
 
     except:
         if (
@@ -69,15 +62,15 @@ async def _(event):
                 "`You need to set the required ENV variables for this module. \nModule stopping`",
             )
         start = datetime.now()
-        lan = "en"
-        if not os.path.isdir(Config.TEMP_DIR):
-            os.makedirs(Config.TEMP_DIR)
+        langu = "en"
+        if not path.isdir(Config.TEMP_DIR):
+            makedirs(Config.TEMP_DIR)
         reply = await event.get_reply_message()
         mediatype = media_type(reply)
         if not reply or (mediatype and mediatype not in ["Voice", "Audio"]):
             return await edl(
                 event,
-                "`Reply to a voice message or Audio, to get the relevant transcript.`",
+                "`Reply to a voice message or audio, to get the relevant transcript.`",
             )
         dogevent = await eor(event, "`Downloading to my local, for analysis  🙇`")
         required_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
@@ -86,7 +79,7 @@ async def _(event):
             "Content-Type": reply.media.document.mime_type,
         }
         data = open(required_file_name, "rb").read()
-        response = requests.post(
+        response = post(
             Config.IBM_WATSON_CRED_URL + "/v1/recognize",
             headers=headers,
             data=data,
@@ -106,13 +99,44 @@ async def _(event):
         end = datetime.now()
         ms = (end - start).seconds
         if transcript_response == "":
-            string_to_show = "**Language : **`{}`\n**Time Taken : **`{} seconds`\n**No Results Found**".format(
-                lan, ms
+            string_to_show = "**Language: **`{}`\n**Time Taken: **`{} seconds`\n**No Results Found**".format(
+                langu, ms
             )
         else:
-            string_to_show = "**Language : **`{}`\n**Transcript : **`{}`\n**Time Taken : **`{} seconds`\n**Confidence : **`{}`".format(
-                lan, transcript_response, ms, transcript_confidence
+            string_to_show = "**Language: **`{}`\n**Transcript: **`{}`\n**Time Taken: **`{} seconds`\n**Confidence: **`{}`".format(
+                langu, transcript_response, ms, transcript_confidence
             )
         await dogevent.edit(string_to_show)
         # now, remove the temporary file
-        os.remove(required_file_name)
+        remove(required_file_name)
+
+
+@doge.bot_cmd(
+    pattern="voicya$",
+    command=("voicya", plugin_category),
+    info={
+        "header": "Sets whether the Voicy bot recognizes all audio files.",
+        "usage": "{tr}voicya",
+        "note": "The setting is turned on or off each time you write the {tr}`voicya` command.",
+    },
+)
+async def _(event):
+    dogevent = await eor(event, lan("processing"))
+    async with doge.conversation(chat) as conv:
+        await fsmessage(event=event, text="/files", chat=chat)
+        response = conv.wait_event(
+            NewMessage(incoming=True, from_users=chat)
+        )
+        response = await response
+        if response.text.startswith("📁"):
+            await eor(
+                dogevent,
+                f"**Changed the setting:\n\n{response.text}**",
+            )
+        else:
+            await edl(
+                dogevent,
+                "**Voicy not working!**"
+            )
+        await conv.mark_read()
+        await conv.cancel_all()

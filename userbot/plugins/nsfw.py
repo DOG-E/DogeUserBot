@@ -5,30 +5,27 @@ This module can search images in danbooru and send in to the chat!
 ──「 **Danbooru Search** 」──
 """
 
-import os
-import urllib
+from os import remove
+from urllib.request import urlretrieve
 
-import requests
+from requests import get
 
-from userbot import doge
+from . import PMSGTEXT, age_verification, doge, edl, eor, lan, reply_id, wowmygroup
 
-from ..helpers.functions import age_verification
-from . import edl, eor, reply_id, useless
-
-plugin_category = "useless"
+plugin_category = "hub"
 
 
 @doge.bot_cmd(
-    pattern="ani(mu|nsfw) ?([\s\S]*)",
+    pattern="ani(m|nsfw) ?([\s\S]*)",
     command=("ani", plugin_category),
     info={
         "header": "Contains NSFW 🔞.\nTo search images in danbooru!",
         "usage": [
-            "{tr}animu <query>",
+            "{tr}anim <query>",
             "{tr}aninsfw <nsfw query>",
         ],
         "examples": [
-            "{tr}animu naruto",
+            "{tr}anim naruto",
             "{tr}aninsfw naruto",
         ],
     },
@@ -38,8 +35,8 @@ async def danbooru(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    await eor(event, "`Processing…`")
-    flag = await useless.importent(event)
+    dogevent=await eor(event, lan("processing"))
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     rating = "Explicit" if "nsfw" in event.pattern_match.group(1) else "Safe"
@@ -49,18 +46,18 @@ async def danbooru(event):
         "random": "true",
         "tags": f"Rating:{rating} {search_query}".strip(),
     }
-    with requests.get(
+    with get(
         "http://danbooru.donmai.us/posts.json", params=params
     ) as response:
         if response.status_code == 200:
             response = response.json()
         else:
             return await edl(
-                event, f"**An error occurred, response code: **`{response.status_code}`"
+                dogevent, f"**An error occurred, response code: **`{response.status_code}`"
             )
 
     if not response:
-        return await edl(event, f"**No results for query:** __{search_query}__")
+        return await edl(dogevent, f"**No results for query:** __{search_query}__")
     valid_urls = [
         response[0][url]
         for url in ["file_url", "large_file_url", "source"]
@@ -68,16 +65,16 @@ async def danbooru(event):
     ]
     if not valid_urls:
         return await edl(
-            event, f"**Failed to find URLs for query:** __{search_query}__"
+            dogevent, f"**Failed to find URLs for query:** __{search_query}__"
         )
     for image_url in valid_urls:
         try:
             await event.client.send_file(event.chat_id, image_url, reply_to=reply_to)
-            await event.delete()
+            await dogevent.delete()
             return
         except Exception as e:
-            await eor(event, f"{e}")
-    await edl(event, f"**Failed to fetch media for query:** __{search_query}__")
+            await edl(dogevent, f"{e}")
+    await edl(dogevent, f"**Failed to fetch media for query:** __{search_query}__")
 
 
 @doge.bot_cmd(
@@ -95,13 +92,13 @@ async def boobs(e):
     if await age_verification(e, reply_to):
         return
     a = await eor(e, "`Sending boobs...`")
-    flag = await useless.importent(e)
+    flag = await wowmygroup(e, PMSGTEXT)
     if flag:
         return
-    nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["preview"]
-    urllib.request.urlretrieve(f"http://media.oboobs.ru/{nsfw}", "boobs.jpg")
+    nsfw = get("http://api.oboobs.ru/noise/1").json()[0]["preview"]
+    urlretrieve(f"http://media.oboobs.ru/{nsfw}", "boobs.jpg")
     await e.client.send_file(e.chat_id, "boobs.jpg", reply_to=reply_to)
-    os.remove("boobs.jpg")
+    remove("boobs.jpg")
     await a.delete()
 
 
@@ -120,11 +117,11 @@ async def butts(e):
     if await age_verification(e, reply_to):
         return
     a = await eor(e, "`Sending beautiful butts...`")
-    flag = await useless.importent(e)
+    flag = await wowmygroup(e, PMSGTEXT)
     if flag:
         return
-    nsfw = requests.get("http://api.obutts.ru/butts/10/1/random").json()[0]["preview"]
-    urllib.request.urlretrieve(f"http://media.obutts.ru/{nsfw}", "butts.jpg")
+    nsfw = get("http://api.obutts.ru/butts/10/1/random").json()[0]["preview"]
+    urlretrieve(f"http://media.obutts.ru/{nsfw}", "butts.jpg")
     await e.client.send_file(e.chat_id, "butts.jpg", reply_to=reply_to)
-    os.remove("butts.jpg")
+    remove("butts.jpg")
     await a.delete()

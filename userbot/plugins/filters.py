@@ -1,18 +1,17 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
-import re
+from re import IGNORECASE, escape, search
 
-from userbot import doge
+from telethon.utils import get_display_name
 
-from ..core.managers import eor
 from ..sql_helper.filter_sql import (
     add_filter,
     get_filters,
     remove_all_filters,
     remove_filter,
 )
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, FMSGTEXT, doge, eor, edl
 
-plugin_category = "utils"
+plugin_category = "misc"
 
 
 @doge.bot_cmd(incoming=True)
@@ -26,7 +25,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
     a_user = await event.get_sender()
     chat = await event.get_chat()
     me = await event.client.get_me()
-    title = chat.title or "this chat"
+    title = get_display_name(await event.get_chat()) or "this chat"
     participants = await event.client.get_participants(chat)
     count = len(participants)
     mention = f"[{a_user.first_name}](tg://user?id={a_user.id})"
@@ -41,48 +40,39 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{me.username}" if me.username else my_mention
     for trigger in filters:
-        pattern = r"( |^|[^\w])" + re.escape(trigger.keyword) + r"( |$|[^\w])"
-        if re.search(pattern, name, flags=re.IGNORECASE):
+        pattern = r"( |^|[^\w])" + escape(trigger.keyword) + r"( |$|[^\w])"
+        if search(pattern, name, flags=IGNORECASE):
+            file_media = None
+            filter_msg = None
             if trigger.f_mesg_id:
                 msg_o = await event.client.get_messages(
                     entity=BOTLOG_CHATID, ids=int(trigger.f_mesg_id)
                 )
-                await event.reply(
-                    msg_o.message.format(
-                        mention=mention,
-                        title=title,
-                        count=count,
-                        first=first,
-                        last=last,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                        my_first=my_first,
-                        my_last=my_last,
-                        my_fullname=my_fullname,
-                        my_username=my_username,
-                        my_mention=my_mention,
-                    ),
-                    file=msg_o.media,
-                )
+                file_media = msg_o.media
+                filter_msg = msg_o.message
+                link_preview = True
             elif trigger.reply:
-                await event.reply(
-                    trigger.reply.format(
-                        mention=mention,
-                        title=title,
-                        count=count,
-                        first=first,
-                        last=last,
-                        fullname=fullname,
-                        username=username,
-                        userid=userid,
-                        my_first=my_first,
-                        my_last=my_last,
-                        my_fullname=my_fullname,
-                        my_username=my_username,
-                        my_mention=my_mention,
-                    ),
-                )
+                filter_msg = trigger.reply
+                link_preview = False
+            await event.reply(
+                filter_msg.format(
+                    mention=mention,
+                    title=title,
+                    count=count,
+                    first=first,
+                    last=last,
+                    fullname=fullname,
+                    username=username,
+                    userid=userid,
+                    my_first=my_first,
+                    my_last=my_last,
+                    my_fullname=my_fullname,
+                    my_username=my_username,
+                    my_mention=my_mention,
+                ),
+                file=file_media,
+                link_preview=link_preview,
+            )
 
 
 @doge.bot_cmd(
@@ -113,6 +103,13 @@ async def add_new_filter(event):
     "To save the filter"
     keyword = event.pattern_match.group(1)
     string = event.text.partition(keyword)[2]
+    if event.chat_id in -1001310554327:
+        return await edl(
+            event,
+            FMSGTEXT,
+            15,
+        )
+
     msg = await event.get_reply_message()
     msg_id = None
     if msg and msg.media and not string:
@@ -120,9 +117,9 @@ async def add_new_filter(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#FILTER\
-            \nCHAT ID: {event.chat_id}\
-            \nTRIGGER: {keyword}\
-            \n\nThe following message is saved as the filter's reply data for the chat, please do NOT delete it !!",
+                    \nCHAT ID: {event.chat_id}\
+                    \nTRIGGER: {keyword}\
+                    \n\nThe following message is saved as the filter's reply data for the chat, please DON'T delete it !!",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID,
@@ -132,11 +129,11 @@ async def add_new_filter(event):
             )
             msg_id = msg_o.id
         else:
-            await eor(
+            return await eor(
                 event,
                 "__Saving media as reply to the filter requires the__ `PRIVATE_GROUP_BOT_API_ID` __to be set.__",
             )
-            return
+
     elif msg and msg.text and not string:
         string = msg.text
     elif not string:
@@ -205,6 +202,6 @@ async def on_all_snip_delete(event):
     filters = get_filters(event.chat_id)
     if filters:
         remove_all_filters(event.chat_id)
-        await eor(event, f"filters in current chat deleted successfully")
+        await eor(event, "Filters in current chat deleted successfully")
     else:
-        await eor(event, f"There are no filters in this group")
+        await eor(event, "There are no filters in this group")

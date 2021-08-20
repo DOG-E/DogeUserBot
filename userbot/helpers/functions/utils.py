@@ -1,4 +1,4 @@
-import time
+from time import time
 from datetime import datetime
 
 from emoji import get_emoji_regexp
@@ -14,7 +14,7 @@ async def get_message_link(channelid, msgid):
 
 
 def utc_to_local(utc_datetime):
-    now_timestamp = time.time()
+    now_timestamp = time()
     offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(
         now_timestamp
     )
@@ -44,8 +44,6 @@ async def get_readable_time(seconds: int) -> str:
 
 
 # gban
-
-
 async def admin_groups(doge):
     doggroups = []
     async for dialog in doge.iter_dialogs():
@@ -60,8 +58,6 @@ async def admin_groups(doge):
 
 
 # https://github.com/pokurt/LyndaRobot/blob/7556ca0efafd357008131fa88401a8bb8057006f/lynda/modules/helper_funcs/string_handling.py#L238
-
-
 async def extract_time(dog, time_val):
     if any(time_val.endswith(unit) for unit in ("s", "m", "h", "d", "w")):
         unit = time_val[-1]
@@ -70,15 +66,15 @@ async def extract_time(dog, time_val):
             await dog.edit("Invalid time amount specified.")
             return None
         if unit == "s":
-            bantime = int(time.time() + int(time_num) * 1)
+            bantime = int(time() + int(time_num) * 1)
         elif unit == "m":
-            bantime = int(time.time() + int(time_num) * 60)
+            bantime = int(time() + int(time_num) * 60)
         elif unit == "h":
-            bantime = int(time.time() + int(time_num) * 60 * 60)
+            bantime = int(time() + int(time_num) * 60 * 60)
         elif unit == "d":
-            bantime = int(time.time() + int(time_num) * 24 * 60 * 60)
+            bantime = int(time() + int(time_num) * 24 * 60 * 60)
         elif unit == "w":
-            bantime = int(time.time() + int(time_num) * 7 * 24 * 60 * 60)
+            bantime = int(time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             # how even...?
             await dog.edit(

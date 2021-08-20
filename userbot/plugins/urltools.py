@@ -1,11 +1,9 @@
-import requests
+from requests import get
 from validators.url import url
 
-from userbot import doge
+from . import doge, edl, eor
 
-from ..core.managers import edl, eor
-
-plugin_category = "utils"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -34,7 +32,7 @@ async def _(event):
     if not check:
         return await edl(event, "`the given link is not supported`", 5)
     sample_url = f"https://da.gd/dns/{input_str}"
-    response_api = requests.get(sample_url).text
+    response_api = get(sample_url).text
     if response_api:
         await eor(event, f"DNS records of {input_str} are \n{response_api}")
     else:
@@ -69,7 +67,7 @@ async def _(event):
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     sample_url = f"https://da.gd/s?url={input_str}"
-    response_api = requests.get(sample_url).text
+    response_api = get(sample_url).text
     if response_api:
         await eor(
             event, f"Generated {response_api} for {input_str}.", link_preview=False
@@ -84,7 +82,7 @@ async def _(event):
     info={
         "header": "To unshort the given dagb shorten url.",
         "usage": "{tr}unshort <url/reply to url>",
-        "examples": "{tr}unshort https://da.gd/rm6qri",
+        "examples": "{tr}unshort https://da.gd/Doge",
     },
 )
 async def _(event):
@@ -105,7 +103,7 @@ async def _(event):
         return await edl(event, "`the given link is not supported`", 5)
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
-    r = requests.get(input_str, allow_redirects=False)
+    r = get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
         await eor(
             event,
@@ -126,7 +124,7 @@ async def _(event):
     info={
         "header": "To hide the url with white spaces using hyperlink.",
         "usage": "{tr}hl <url/reply to url>",
-        "examples": "{tr}hl https://da.gd/rm6qri",
+        "examples": "{tr}hl https://da.gd/Doge",
     },
 )
 async def _(event):

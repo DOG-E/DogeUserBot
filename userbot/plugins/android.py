@@ -1,12 +1,12 @@
-import json
-import re
+from json import loads
+from re import findall
 
 from bs4 import BeautifulSoup
 from requests import get
 
-from . import doge, edl, eor
+from . import doge, edl, eor, tr
 
-plugin_category = "extra"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -52,8 +52,8 @@ async def device_info(event):
         if textx:
             codename = textx.text
         else:
-            return await edl(event, "`Usage: .device <codename> / <model>`")
-    data = json.loads(
+            return await edl(event, f"`Usage: {tr}device <codename> or <model>`")
+    data = loads(
         get(
             "https://raw.githubusercontent.com/androidtrackers/"
             "certified-android-devices/master/by_device.json"
@@ -74,12 +74,12 @@ async def device_info(event):
 
 
 @doge.bot_cmd(
-    pattern="codename(?: |)([\S]*)(?: |)([\s\S]*)",
-    command=("codename", plugin_category),
+    pattern="dcname(?: |)([\S]*)(?: |)([\s\S]*)",
+    command=("dcname", plugin_category),
     info={
         "header": "To Search for android device codename",
-        "usage": "{tr}codename <brand> <device>",
-        "examples": "{tr}codename Xiaomi Redmi Note 5 Pro",
+        "usage": "{tr}dcname <brand> <device>",
+        "examples": "{tr}dcname Xiaomi Redmi Note 5 Pro",
     },
 )
 async def codename_info(event):
@@ -93,9 +93,9 @@ async def codename_info(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, "`Usage: .codename <brand> <device>`")
+        return await edl(event, f"`Usage: {tr}dcname <brand> <device>`")
 
-    data = json.loads(
+    data = loads(
         get(
             "https://raw.githubusercontent.com/androidtrackers/"
             "certified-android-devices/master/by_brand.json"
@@ -145,7 +145,7 @@ async def devices_specifications(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, "`Usage: .specs <brand> <device>`")
+        return await edl(event, f"`Usage: {tr}specs <brand> <device>`")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -171,7 +171,7 @@ async def devices_specifications(event):
             if device in i.text.strip().lower()
         ]
     except IndexError:
-        return await edl(event, f"`can't find {device}!`")
+        return await edl(event, f"`Can't find {device}!`")
     if len(device_page_url) > 2:
         device_page_url = device_page_url[:2]
     reply = ""
@@ -179,11 +179,11 @@ async def devices_specifications(event):
         info = BeautifulSoup(get(url).content, "lxml")
         reply = "\n" + info.title.text.split("-")[0].strip() + "\n"
         info = info.find("div", {"id": "model-brief-specifications"})
-        specifications = re.findall(r"<b>.*?<br/>", str(info))
+        specifications = findall(r"<b>.*?<br/>", str(info))
         for item in specifications:
-            title = re.findall(r"<b>(.*?)</b>", item)[0].strip()
+            title = findall(r"<b>(.*?)</b>", item)[0].strip()
             data = (
-                re.findall(r"</b>: (.*?)<br/>", item)[0]
+                findall(r"</b>: (.*?)<br/>", item)[0]
                 .replace("<b>", "")
                 .replace("</b>", "")
                 .strip()
@@ -197,7 +197,7 @@ async def devices_specifications(event):
     command=("twrp", plugin_category),
     info={
         "header": "To Get latest twrp download links for android device.",
-        "usage": "{tr}twrp <codename>",
+        "usage": "{tr}twrp <devicecodename>",
         "examples": "{tr}twrp whyred",
     },
 )
@@ -210,7 +210,7 @@ async def twrp(event):
     elif textx:
         device = textx.text.split(" ")[0]
     else:
-        return await edl(event, "`Usage: .twrp <codename>`")
+        return await edl(event, f"`Usage: {tr}twrp <devicecodename>`")
     url = get(f"https://dl.twrp.me/{device}/")
     if url.status_code == 404:
         reply = f"`Couldn't find twrp downloads for {device}!`\n"

@@ -1,14 +1,13 @@
 """
 Thenks goes to Emily ( The creater of Poto cmd) from ftg userbot
 """
+from PIL import UnidentifiedImageError
+from PIL.Image import open as Imopen, UnidentifiedImageError
+from PIL.ImageFilter import GaussianBlur
 
-from PIL import Image, ImageFilter, UnidentifiedImageError
+from . import doge, edl, eor, reply_id
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-
-plugin_category = "extra"
+plugin_category = "misc"
 
 name = "Profile Photos"
 
@@ -34,7 +33,7 @@ async def potocmd(event):
     uid = "".join(event.raw_text.split(maxsplit=1)[1:])
     user = await event.get_reply_message()
     chat = event.input_chat
-    if user:
+    if user and user.sender:
         photos = await event.client.get_profile_photos(user.sender)
         u = True
     else:
@@ -70,7 +69,7 @@ async def potocmd(event):
             await eor(event, "`Are you comedy me ?`")
             return
         if int(uid) > (len(photos)):
-            return await edit_delere(
+            return await edl(
                 event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
             )
 
@@ -107,8 +106,8 @@ async def potocmd(event):
     except AttributeError:
         return await edl(event, "`Replay to a user message... `")
     try:
-        im1 = Image.open(pic_name)
-        im2 = im1.filter(ImageFilter.GaussianBlur(radius=red))
+        im1 = Imopen(pic_name)
+        im2 = im1.filter(GaussianBlur(radius=red))
         im2.save(pic_name)
     except UnidentifiedImageError:
         return await edl(event, "`Replay to a picture or user message... `")

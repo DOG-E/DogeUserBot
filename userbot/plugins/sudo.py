@@ -2,20 +2,13 @@ from datetime import datetime
 
 from telethon.utils import get_display_name
 
-from userbot import doge
-from userbot.core.logger import logging
-
-from ..Config import Config
+from . import Config, addgvar, delgvar, doge, edl, eor, get_user_from_event, gvarstatus, logging, mentionuser
 from ..core import CMD_INFO, PLG_INFO
 from ..core.data import _sudousers_list, sudo_enabled_cmds
-from ..core.managers import edl, eor
-from ..helpers.utils import get_user_from_event, mentionuser
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
-plugin_category = "tools"
-
+plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 
@@ -39,7 +32,7 @@ def get_key(val):
     command=("sudo", plugin_category),
     info={
         "header": "To enable or disable sudo of your DogeUserBot.",
-        "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}help .c addscmd`",
+        "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}doge .c addscmd`",
         "usage": "{tr}sudo <on/off>",
     },
 )
@@ -174,12 +167,12 @@ async def _(event):
         sudousers = {}
     if len(sudochats) == 0:
         return await edl(event, "__There are no sudo users for your DogeUserBot.__")
-    result = "**The list of sudo users for your DogeUserBot are :**\n\n"
+    result = "**The list of sudo users for your DogeUserBot are:**\n\n"
     for chat in sudochats:
         result += f"☞ **Name:** {mentionuser(sudousers[str(chat)]['chat_name'],sudousers[str(chat)]['chat_id'])}\n"
-        result += f"**Chat Id :** `{chat}`\n"
+        result += f"**Chat Id:** `{chat}`\n"
         username = f"@{sudousers[str(chat)]['chat_username']}" or "__None__"
-        result += f"**Username :** {username}\n"
+        result += f"**Username:** {username}\n"
         result += f"Added on {sudousers[str(chat)]['date']}\n\n"
     await eor(event, result)
 
@@ -383,7 +376,7 @@ async def _(event):  # sourcery no-metrics
     clist = {}
     error = ""
     if not input_str:
-        text = "**The list of sudo enabled commands are :**"
+        text = "**The list of sudo enabled commands are:**"
         result = "**SUDO ENABLED COMMANDS**"
         if len(sudocmds) > 0:
             for cmd in sudocmds:
@@ -396,7 +389,7 @@ async def _(event):  # sourcery no-metrics
             error += "__You haven't enabled any sudo cmd for sudo users.__"
         count = len(sudocmds)
     else:
-        text = "**The list of sudo disabled commands are :**"
+        text = "**The list of sudo disabled commands are:**"
         result = "**SUDO DISABLED COMMANDS**"
         totalcmds = CMD_INFO.keys()
         cmdlist = list(set(totalcmds) - set(sudocmds))
@@ -411,7 +404,7 @@ async def _(event):  # sourcery no-metrics
             error += "__You have enabled every cmd as sudo for sudo users.__"
         count = len(cmdlist)
     if error != "":
-        return await edl(event, error, 10)
+        return await edl(event, error)
     pkeys = clist.keys()
     n_pkeys = [i for i in pkeys if i is not None]
     pkeys = sorted(n_pkeys)
@@ -423,7 +416,7 @@ async def _(event):  # sourcery no-metrics
         output += "\n\n"
     finalstr = (
         result
-        + f"\n\n**SUDO TRIGGER: **`{Config.SUDO_COMMAND_HAND_LER}`\n**Commands:** {count}\n\n"
+        + f"\n\n**SUDO TRIGGER: **`{Config.SUDO_CMDSET}`\n**Commands:** {count}\n\n"
         + output
     )
     await eor(event, finalstr, aslink=True, linktext=text)

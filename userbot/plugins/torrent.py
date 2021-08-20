@@ -1,23 +1,22 @@
-# torrent module for catuserbot
+
 from asyncio import sleep
+from re import findall
 
-from userbot import doge
+from bs4 import BeautifulSoup
+from requests import get
 
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers.torrentutils import (
-    aria2,
-    check_metadata,
-    check_progress_for_dl,
-    subprocess_run,
-)
+from . import edl, eor, doge, logging, lan, aria2, check_metadata, check_progress_for_dl, subprocess_run, paste_links
 
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-plugin_category = "misc"
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
+}
 
 
 @doge.bot_cmd(
-    pattern="fromurl(?: |$)(.*)",
+    pattern="fromurl(?:\s|$)([\s\S]*)",
     command=("fromurl", plugin_category),
     info={
         "header": "To get random quotes on given topic.",
@@ -34,7 +33,7 @@ async def aurl_download(event):
         LOGS.info(str(e))
         return await edl(event, f"**Error :**\n`{str(e)}`", time=15)
     gid = download.gid
-    dogevent = await eor(event, "`Processing......`")
+    dogevent = await eor(event, lan("processing"))
     await check_progress_for_dl(gid=gid, event=dogevent, previous=None)
     t_file = aria2.get_download(gid)
     if t_file.followed_by_ids:
@@ -43,7 +42,7 @@ async def aurl_download(event):
 
 
 @doge.bot_cmd(
-    pattern="amag(?: |$)(.*)",
+    pattern="amag(?:\s|$)([\s\S]*)",
     command=("amag", plugin_category),
     info={
         "header": "Add Magnet URI Into Queue",
@@ -60,7 +59,7 @@ async def magnet_download(event):
         LOGS.info(str(e))
         return await edl(event, f"**Error :**\n`{str(e)}`", time=15)
     gid = download.gid
-    dogevent = await eor(event, "`Processing......`")
+    dogevent = await eor(event, lan("processing"))
     await check_progress_for_dl(gid=gid, event=dogevent, previous=None)
     await sleep(5)
     new_gid = await check_metadata(gid)
@@ -68,7 +67,7 @@ async def magnet_download(event):
 
 
 @doge.bot_cmd(
-    pattern="ator(?: |$)(.*)",
+    pattern="ator(?:\s|$)([\s\S]*)",
     command=("ator", plugin_category),
     info={
         "header": "Add Torrent Into Queue",
@@ -79,14 +78,20 @@ async def magnet_download(event):
 async def torrent_download(event):
     "Add Torrent Into Queue"
     torrent_file_path = event.pattern_match.group(1)
+    reply = await event.get_reply_message()
+    if not torrent_file_path and reply and reply.media:
+        torrent_file_path = await reply.download_media()
+    if not torrent_file_path:
+        return await edl(event,"__Provide either path of file or reply to .torrent files.__")
     try:
+        print(torrent_file_path)
         download = aria2.add_torrent(
             torrent_file_path, uris=None, options=None, position=None
         )
     except Exception as e:
         return await edl(event, f"**Error :**\n`{str(e)}`", time=15)
     gid = download.gid
-    dogevent = await eor(event, "`Processing......`")
+    dogevent = await eor(event, lan("processing"))
     await check_progress_for_dl(gid=gid, event=dogevent, previous=None)
 
 
@@ -109,9 +114,9 @@ async def remove_all(event):
         await sleep(5)
     if not removed:  # If API returns False Try to Remove Through System Call.
         subprocess_run("aria2p remove-all")
-    await eor(event, "`Clearing on-going downloads... `")
+    await eor(event,"`Clearing on-going downloads... `")
     await sleep(2.5)
-    await eor(event, "`Successfully cleared all downloads.`")
+    await eor(event,"`Successfully cleared all downloads.`")
 
 
 @doge.bot_cmd(
@@ -180,3 +185,91 @@ async def show_all(event):
             + "\n\n"
         )
     await eor(event, "**On-going Downloads: **\n" + msg)
+
+
+@doge.bot_cmd(
+    pattern="tsearch(?:\s|$)([\s\S]*)",
+    command=("tsearch", plugin_category),
+    info={
+        "header": "To search torrents.",
+        "flags": {".l": "for number of search results to check."},
+        "usage": "{tr}tsearch <query>",
+        "examples": ["{tr}tsearch avatar", "{tr}tsearch .l5 avatar"],
+    },
+)
+async def tor_search(event):  # sourcery no-metrics
+    """
+    To search torrents
+    """
+    search_str = event.pattern_match.group(1)
+    lim = findall(r".l\d+", search_str)
+    try:
+        lim = lim[0]
+        lim = lim.replace(".l", "")
+        search_str = search_str.replace(".l" + lim, "")
+        lim = int(lim)
+        if lim < 1 or lim > 20:
+            lim = 10
+    except IndexError:
+        lim = 10
+    dogevent = await eor(
+        event, f"`Searching torrents for " + search_str + ".....`"
+    )
+    if " " in search_str:
+        search_str = search_str.replace(" ", "+")
+        res = get(
+            "https://www.torrentdownloads.me/search/?new=1&s_doge=0&search="
+            + search_str,
+            headers,
+        )
+    else:
+        res = get(
+            "https://www.torrentdownloads.me/search/?search=" + search_str, headers
+        )
+    source = BeautifulSoup(res.text, "lxml")
+    urls = []
+    magnets = []
+    titles = []
+    counter = 0
+    lim = lim+2
+    for div in source.find_all("div", {"class": "grey_bar3 back_none"}):
+        try:
+            title = div.p.a["title"]
+            title = title[20:]
+            titles.append(title)
+            urls.append("https://www.torrentdownloads.me" + div.p.a["href"])
+        except (KeyError, TypeError, AttributeError):
+            pass
+        except Exception as e:
+            return await edl(
+                dogevent, f"**Error while doing torrent search:**\n{str(e)}"
+            )
+        if counter == lim:
+            break
+        counter += 1
+    if not urls:
+        return await edl(
+            dogevent, "__Either the query was restricted or not found..__"
+        )
+    for url in urls:
+        res = get(url, headers)
+        source = BeautifulSoup(res.text, "lxml")
+        for div in source.find_all("div", {"class": "grey_bar1 back_none"}):
+            try:
+                mg = div.p.a["href"]
+                magnets.append(mg)
+            except TypeError:
+                pass
+            except Exception as e:
+                LOGS.info(str(e))
+    if not magnets:
+        return await edl(dogevent, "__Unable to fetch magnets.__")
+    shorted_links = await paste_links(magnets)
+    if shorted_links is None:
+        return await edl(dogevent, "__Unable to fetch results.__")
+    msg = f"**Torrent Search Query**\n`{search_str.replace('+', ' ')}`\n**Results**\n"
+    counter = 0
+    while counter != len(shorted_links):
+        msg += f"⁍ [{titles[counter]}]({shorted_links[counter]})\n\n"
+        counter += 1
+    await dogevent.edit(msg, link_preview=False)

@@ -4,15 +4,12 @@ usage: .geta channel_username [will  get all media from channel, tho there is li
        .getc number_of_messsages channel_username
 By: @Zero_cool7870
 """
+from os import makedirs, path
+from subprocess import check_output, PIPE, Popen
 
+from . import Config, doge, eor, media_type
 
-import os
-import subprocess
-
-from ..Config import Config
-from . import doge, eor
-
-plugin_category = "tools"
+plugin_category = "tool"
 
 
 @doge.bot_cmd(
@@ -30,9 +27,9 @@ async def get_media(event):
     dogty = event.pattern_match.group(1)
     limit = int(dogty.split(" ")[0])
     channel_username = str(dogty.split(" ")[1])
-    tempdir = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, channel_username)
+    tempdir = path.join(Config.TMP_DOWNLOAD_DIRECTORY, channel_username)
     try:
-        os.makedirs(tempdir)
+        makedirs(tempdir)
     except BaseException:
         pass
     event = await eor(event, "`Downloading Media From this Channel.`")
@@ -46,8 +43,8 @@ async def get_media(event):
             await event.edit(
                 f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
             )
-    ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
-    output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
+    ps = Popen(("ls", tempdir), stdout=PIPE)
+    output = check_output(("wc", "-l"), stdin=ps.stdout)
     ps.wait()
     output = str(output)
     output = output.replace("b'", " ")
@@ -70,9 +67,9 @@ async def get_media(event):
 )
 async def get_media(event):
     channel_username = event.pattern_match.group(1)
-    tempdir = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, channel_username)
+    tempdir = path.join(Config.TMP_DOWNLOAD_DIRECTORY, channel_username)
     try:
-        os.makedirs(tempdir)
+        makedirs(tempdir)
     except BaseException:
         pass
     event = await eor(event, "`Downloading All Media From this Channel.`")
@@ -86,8 +83,8 @@ async def get_media(event):
             await event.edit(
                 f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
             )
-    ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
-    output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
+    ps = Popen(("ls", tempdir), stdout=PIPE)
+    output = check_output(("wc", "-l"), stdin=ps.stdout)
     ps.wait()
     output = str(output)
     output = output.replace("b'", "")

@@ -1,11 +1,18 @@
-import base64
+from base64 import b64decode
 
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.errors import (
+    ChannelInvalidError,
+    ChannelPrivateError,
+    ChannelPublicGroupNaError,
+)
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.messages import GetFullChatRequest, ImportChatInviteRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from ...Config import Config
 from ...core.logger import logging
 from ...core.managers import edl
+from ... import DCH_TS, G_YS, M_STERS
 
 LOGS = logging.getLogger(__name__)
 
@@ -61,7 +68,7 @@ async def get_user_from_event(
             previous_message = await event.get_reply_message()
             if previous_message.from_id is None:
                 if not noedits:
-                    await edl(dogevent, "`Well that's an anonymous admin !`")
+                    await edl(dogevent, "`Well that's an anonymous admin!`")
                 return None, None
             user_obj = await event.client.get_entity(previous_message.sender_id)
             return user_obj, extra
@@ -76,10 +83,93 @@ async def get_user_from_event(
     return None, None
 
 
+def inline_mention(user):
+    full_name = user_full_name(user) or "No Name"
+    return f"[{full_name}](tg://user?id={user.id})"
+
+
+def user_full_name(user):
+    names = [user.first_name, user.last_name]
+    names = [i for i in list(names) if i]
+    return " ".join(names)
+
+
 async def checking(doge):
-    dog_c = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    doge_c = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     try:
-        dog_channel = Get(dog_c)
-        await doge(dog_channel)
+        doge_channel = ImportChatInviteRequest(doge_c)
+        await doge(doge_channel)
     except BaseException:
         pass
+
+
+async def wowmygroup(event, msg):
+    if str(event.chat_id) in DCH_TS:
+        await edl(
+            event,
+            msg,
+            300,
+        )
+        return True
+    return False
+
+
+async def wowmydev(user, event):
+    if str(user) in M_STERS:
+        await edl(
+            event,
+            f"**🐕‍🦺 Sorry dude.\
+            \n🐾 Don't ask me to do this!\
+            \n🐾 I won't do this to my developer.**",
+            30,
+        )
+        return True
+    return False
+
+
+async def wowcmydev(user):
+    if user in M_STERS:
+        return "\n\n<b>🧡 This user is my developer!</b>"
+
+
+async def wowcg_y(user):
+    if user in G_YS:
+        return "\n\n<b>🤡 This user has been banned from using Doge.</b>"
+
+
+async def get_chatinfo(event, dogevent):
+    chat = event.pattern_match.group(1)
+    chat_info = None
+    if chat:
+        try:
+            chat = int(chat)
+        except ValueError:
+            pass
+    if not chat:
+        if event.reply_to_msg_id:
+            replied_msg = await event.get_reply_message()
+            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
+                chat = replied_msg.fwd_from.channel_id
+        else:
+            chat = event.chat_id
+    try:
+        chat_info = await event.client(GetFullChatRequest(chat))
+    except BaseException:
+        try:
+            chat_info = await event.client(GetFullChannelRequest(chat))
+        except ChannelInvalidError:
+            await dogevent.edit("`Invalid channel/group`")
+            return None
+        except ChannelPrivateError:
+            await dogevent.edit(
+                "`This is a private channel/group or I am banned from there`"
+            )
+            return None
+        except ChannelPublicGroupNaError:
+            await dogevent.edit("`Channel or supergroup doesn't exist`")
+            return None
+        except (TypeError, ValueError) as err:
+            LOGS.info(err)
+            await edl(dogevent, "**Error:**\n__Can't fetch the chat__")
+            return None
+    return chat_info

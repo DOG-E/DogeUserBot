@@ -1,7 +1,29 @@
-import typing
+from typing import Optional, Union, List, Sequence
 
-from telethon import events, functions, hints, types
-from telethon.tl.types import InputPeerChannel, InputPeerChat, InputPeerUser
+from telethon import events
+from telethon.hints import (
+    EntityLike,
+    MessageLike,
+    FileLike,
+    MarkupLike,
+    DateLike,
+    MessageIDLike,
+    ProgressCallback,
+)
+from telethon.tl.types import (
+    InputPeerChannel,
+    InputPeerChat,
+    InputPeerUser,
+    MessageMediaWebPage,
+    PeerUser,
+    ChannelParticipantCreator,
+    ChannelParticipantAdmin,
+    UpdateEditMessage,
+    UpdateEditChannelMessage,
+    TypeMessageEntity,
+    TypeDocumentAttribute,
+    Message,
+)
 
 from ..Config import Config
 from .managers import eor
@@ -25,36 +47,39 @@ class NewMessage(events.NewMessage):
         ):
             return
 
-        if self.require_admin and not isinstance(event._chat_peer, types.PeerUser):
+        if self.require_admin and not isinstance(event._chat_peer, PeerUser):
             is_creator = False
             is_admin = False
             creator = hasattr(event.chat, "creator")
             admin_rights = hasattr(event.chat, "admin_rights")
+            flag = None
             if not creator and not admin_rights:
-                event.chat = event._client.loop.create_task(event.get_chat())
+                try:
+                    event.chat = event._client.loop.create_task(event.get_chat())
+                except AttributeError:
+                    flag = "Null"
 
             if self.incoming:
                 try:
                     p = event._client.loop.create_task(
-                        event._client(
-                            functions.channels.GetParticipantRequest(
-                                event.chat_id, event.sender_id
-                            )
-                        )
+                        event._client.get_permissions(event.chat_id, event.sender_id)
                     )
                     participant = p.participant
                 except Exception:
                     participant = None
-                if isinstance(participant, types.ChannelParticipantCreator):
+                if isinstance(participant, ChannelParticipantCreator):
                     is_creator = True
-                if isinstance(participant, types.ChannelParticipantAdmin):
+                if isinstance(participant, ChannelParticipantAdmin):
                     is_admin = True
+            elif flag:
+                is_admin = True
+                is_creator = False
             else:
                 is_creator = event.chat.creator
                 is_admin = event.chat.admin_rights
 
             if not is_creator and not is_admin:
-                text = "`I need admin rights to be able to use this command!`"
+                text = "**🚨 I need admin rights to be able to use this command!**"
 
                 event._client.loop.create_task(eor(event, text))
                 return
@@ -65,9 +90,9 @@ class NewMessage(events.NewMessage):
 class MessageEdited(NewMessage):
     @classmethod
     def build(cls, update, others=None, self_id=None):
-        if isinstance(update, types.UpdateEditMessage):
+        if isinstance(update, UpdateEditMessage):
             return cls.Event(update.message)
-        if isinstance(update, types.UpdateEditChannelMessage):
+        if isinstance(update, UpdateEditChannelMessage):
             if (
                 update.message.edit_date
                 and update.message.is_channel
@@ -87,61 +112,57 @@ async def safe_check_text(msg):  # sourcery no-metrics
     return bool(
         (
             (Config.STRING_SESSION in msg)
-            or (str(Config.APP_ID) in msg)
             or (Config.API_HASH in msg)
-            or (Config.TG_BOT_TOKEN in msg)
+            or (Config.BOT_TOKEN in msg)
             or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-            or (Config.OPEN_WEATHER_MAP_APPID and Config.OPEN_WEATHER_MAP_APPID in msg)
-            or (Config.IBM_WATSON_CRED_URL and Config.IBM_WATSON_CRED_URL in msg)
-            or (Config.OCR_SPACE_API_KEY and Config.OCR_SPACE_API_KEY in msg)
-            or (Config.GENIUS_API_TOKEN and Config.GENIUS_API_TOKEN in msg)
-            or (Config.REM_BG_API_KEY and Config.REM_BG_API_KEY in msg)
             or (Config.CURRENCY_API and Config.CURRENCY_API in msg)
+            or (Config.DEEP_AI and Config.DEEP_AI in msg)
             or (Config.G_DRIVE_CLIENT_ID and Config.G_DRIVE_CLIENT_ID in msg)
             or (Config.G_DRIVE_CLIENT_SECRET and Config.G_DRIVE_CLIENT_SECRET in msg)
             or (Config.G_DRIVE_DATA and Config.G_DRIVE_DATA in msg)
-            or (Config.LASTFM_API and Config.LASTFM_API in msg)
-            or (Config.LASTFM_SECRET and Config.LASTFM_SECRET in msg)
-            or (Config.LASTFM_PASSWORD_PLAIN and Config.LASTFM_PASSWORD_PLAIN in msg)
-            or (Config.SPAMWATCH_API and Config.SPAMWATCH_API in msg)
-            or (Config.RANDOM_STUFF_API_KEY and Config.RANDOM_STUFF_API_KEY in msg)
+            or (Config.GENIUS_API and Config.GENIUS_API in msg)
             or (Config.GITHUB_ACCESS_TOKEN and Config.GITHUB_ACCESS_TOKEN in msg)
-            or (Config.DEEP_AI and Config.DEEP_AI in msg)
-            or (
-                Config.SCREEN_SHOT_LAYER_ACCESS_KEY
-                and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg
-            )
-            or (
-                Config.IBM_WATSON_CRED_PASSWORD
-                and Config.IBM_WATSON_CRED_PASSWORD in msg
-            )
-            or (
-                Config.TG_2STEP_VERIFICATION_CODE
-                and Config.TG_2STEP_VERIFICATION_CODE in msg
-            )
+            or (Config.IBM_WATSON_CRED_PASSWORD and Config.IBM_WATSON_CRED_PASSWORD in msg)
+            or (Config.IBM_WATSON_CRED_URL and Config.IBM_WATSON_CRED_URL in msg)
+            or (Config.IPDATA_API and Config.IPDATA_API in msg)
+            or (Config.LASTFM_API and Config.LASTFM_API in msg)
+            or (Config.LASTFM_PASSWORD_PLAIN and Config.LASTFM_PASSWORD_PLAIN in msg)
+            or (Config.LASTFM_SECRET and Config.LASTFM_SECRET in msg)
+            or (Config.OCRSPACE_API and Config.OCRSPACE_API in msg)
+            or (Config.OPEN_WEATHER_MAP_APPID and Config.OPEN_WEATHER_MAP_APPID in msg)
+            or (Config.RANDOM_STUFF_API_KEY and Config.RANDOM_STUFF_API_KEY in msg)
+            or (Config.RMBG_API and Config.RMBG_API in msg)
+            or (Config.SCREEN_SHOT_LAYER_ACCESS_KEY and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg)
+            or (Config.SP_DC and Config.SP_DC in msg)
+            or (Config.SP_KEY and Config.SP_KEY in msg)
+            or (Config.SPAMWATCH_API and Config.SPAMWATCH_API in msg)
+            or (Config.TG_2STEP_VERIFICATION_CODE and Config.TG_2STEP_VERIFICATION_CODE in msg)
         )
     )
 
 
 async def send_message(
     client,
-    entity: "hints.EntityLike",
-    message: "hints.MessageLike" = "",
+    entity: "EntityLike",
+    message: "MessageLike" = "",
     *,
-    reply_to: "typing.Union[int, types.Message]" = None,
-    parse_mode: typing.Optional[str] = (),
-    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
-    link_preview: bool = True,
-    file: "typing.Union[hints.FileLike, typing.Sequence[hints.FileLike]]" = None,
+    reply_to: "Union[int, Message]" = None,
+    parse_mode: Optional[str] = (),
+    formatting_entities: Optional[List[TypeMessageEntity]] = None,
+    link_preview: bool = False,
+    file: "Union[FileLike, Sequence[FileLike]]" = None,
     force_document: bool = False,
     clear_draft: bool = False,
-    buttons: "hints.MarkupLike" = None,
+    buttons: "MarkupLike" = None,
     silent: bool = None,
-    schedule: "hints.DateLike" = None,
-    comment_to: "typing.Union[int, types.Message]" = None,
+    schedule: "DateLike" = None,
+    comment_to: "Union[int, Message]" = None,
 ):
     chatid = entity
-    if str(chatid) == str(Config.BOTLOG_CHATID):
+    if str(chatid) in [
+        str(Config.BOTLOG_CHATID),
+        str(Config.PM_LOGGER_GROUP_ID),
+    ]:
         return await client.sendmessage(
             entity=chatid,
             message=message,
@@ -177,7 +198,7 @@ async def send_message(
                 comment_to=comment_to,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__Sorry I can't send this message in public chats it may have some sensitive data So check in __[Bot log group]({msglink})."
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -212,29 +233,42 @@ async def send_message(
 
 async def send_file(
     client,
-    entity: "hints.EntityLike",
-    file: "typing.Union[hints.FileLike, typing.Sequence[hints.FileLike]]",
+    entity: "EntityLike",
+    file: "Union[FileLike, Sequence[FileLike]]",
     *,
-    caption: typing.Union[str, typing.Sequence[str]] = None,
+    caption: Union[str, Sequence[str]] = None,
     force_document: bool = False,
     file_size: int = None,
     clear_draft: bool = False,
-    progress_callback: "hints.ProgressCallback" = None,
-    reply_to: "hints.MessageIDLike" = None,
-    attributes: "typing.Sequence[types.TypeDocumentAttribute]" = None,
-    thumb: "hints.FileLike" = None,
+    progress_callback: "ProgressCallback" = None,
+    reply_to: "MessageIDLike" = None,
+    attributes: "Sequence[TypeDocumentAttribute]" = None,
+    thumb: "FileLike" = None,
     allow_cache: bool = True,
     parse_mode: str = (),
-    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
+    formatting_entities: Optional[List[TypeMessageEntity]] = None,
     voice_note: bool = False,
     video_note: bool = False,
-    buttons: "hints.MarkupLike" = None,
+    buttons: "MarkupLike" = None,
     silent: bool = None,
     supports_streaming: bool = False,
-    schedule: "hints.DateLike" = None,
-    comment_to: "typing.Union[int, types.Message]" = None,
+    schedule: "DateLike" = None,
+    comment_to: "Union[int, Message]" = None,
     **kwargs,
 ):
+    if isinstance(file, MessageMediaWebPage):
+        return await client.send_message(
+            entity=entity,
+            message=caption,
+            reply_to=reply_to,
+            parse_mode=parse_mode,
+            formatting_entities=formatting_entities,
+            link_preview=True,
+            buttons=buttons,
+            silent=silent,
+            schedule=schedule,
+            comment_to=comment_to,
+        )
     chatid = entity
     if str(chatid) == str(Config.BOTLOG_CHATID):
         return await client.sendfile(
@@ -295,7 +329,7 @@ async def send_file(
                 **kwargs,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__Sorry I can't send this message in public chats it may have some sensitive data So check in __[Bot log group]({msglink})."
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -332,17 +366,17 @@ async def send_file(
 
 async def edit_message(
     client,
-    entity: "typing.Union[hints.EntityLike, types.Message]",
-    message: "hints.MessageLike" = None,
+    entity: "Union[EntityLike, Message]",
+    message: "MessageLike" = None,
     text: str = None,
     *,
     parse_mode: str = (),
-    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
+    formatting_entities: Optional[List[TypeMessageEntity]] = None,
     link_preview: bool = True,
-    file: "hints.FileLike" = None,
+    file: "FileLike" = None,
     force_document: bool = False,
-    buttons: "hints.MarkupLike" = None,
-    schedule: "hints.DateLike" = None,
+    buttons: "MarkupLike" = None,
+    schedule: "DateLike" = None,
 ):
     chatid = entity
     if isinstance(chatid, InputPeerChannel):
@@ -382,7 +416,7 @@ async def edit_message(
                 schedule=schedule,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__Sorry I can't send this message in public chats it may have some sensitive data So check in __[Bot log group]({msglink})."
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.editmessage(
             entity=chatid,
             message=message,

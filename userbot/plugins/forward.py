@@ -1,15 +1,10 @@
-import string
+from string import ascii_lowercase
 
 from telethon.tl.types import Channel, MessageMediaWebPage
 
-from userbot import doge
-from userbot.core.logger import logging
+from . import Config, doge, eor, logging
 
-from ..Config import Config
-from ..core.managers import eor
-
-plugin_category = "extra"
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
 
@@ -100,7 +95,7 @@ async def _(event):
     if len(FPOST_.GROUPSID) == 0:
         FPOST_.GROUPSID = await all_groups_id(event)
     for c in text.lower():
-        if c not in string.ascii_lowercase:
+        if c not in ascii_lowercase:
             continue
         if c not in FPOST_.MSG_CACHE:
             async for msg in event.client.iter_messages(event.chat_id, search=c):
@@ -111,6 +106,6 @@ async def _(event):
             for i in FPOST_.GROUPSID:
                 async for msg in event.client.iter_messages(event.chat_id, search=c):
                     if msg.raw_text.lower() == c and msg.media is None:
-                        MSG_CACHE[c] = msg
+                        FPOST_.MSG_CACHE[c] = msg
                         break
         await event.client.forward_messages(destination, FPOST_.MSG_CACHE[c])

@@ -2,21 +2,17 @@
 Plugin Made by [NIKITA](https://t.me/kirito6969)
 **DON'T EVEN TRY TO CHANGE CREDITS**'
 """
+from os import remove
 
-import os
-
-import nekos
-import requests
+from nekos import img as nimg
+from requests import get
 from fake_useragent import UserAgent
-from PIL import Image
+from PIL.Image import open as Imopen
 from simplejson.errors import JSONDecodeError
 
-from ..core.managers import edl, eor
-from ..helpers.functions import age_verification
-from ..helpers.utils import _dogeutils, reply_id
-from . import doge, useless
+from . import PMSGTEXT, _dogeutils, age_verification, doge, edl, eor, lan, hub, reply_id, wowmygroup
 
-plugin_category = "useless"
+plugin_category = "hub"
 
 
 def user_agent():
@@ -30,26 +26,26 @@ def user_agent():
         "header": "Contains NSFW \nSearch images from nekos",
         "usage": "{tr}nn <argument from choice>",
         "examples": "{tr}nn neko",
-        "Choice": useless.nsfw(useless.hemtai),
+        "Choice": hub.nsfw(hub.hemtai),
     },
 )
 async def _(event):
     "Search images from nekos"
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
-    if choose not in useless.hemtai:
+    if choose not in hub.hemtai:
         return await edl(
             event,
-            f"**Wrong category!! Choose from here:**\n\n{useless.nsfw(useless.hemtai)}",
+            f"**Wrong category!! Choose from here:**\n\n{hub.nsfw(hub.hemtai)}",
             60,
         )
     if await age_verification(event, reply_to):
         return
-    dogevent = await eor(event, "`Processing Nekos...`")
-    flag = await useless.importent(event)
+    dogevent = await eor(event, lan("processing"))
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
-    target = nekos.img(f"{choose}")
+    target = nimg(f"{choose}")
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
@@ -71,7 +67,7 @@ async def dva(event):
     if await age_verification(event, reply_to):
         return
     try:
-        nsfw = requests.get(
+        nsfw = get(
             "https://api.computerfreaker.cf/v1/dva",
             headers={"User-Agent": user_agent()},
         ).json()
@@ -97,18 +93,18 @@ async def avatarlewd(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     with open("temp.png", "wb") as f:
         target = "nsfw_avatar"
-        f.write(requests.get(nekos.img(target)).content)
-    img = Image.open("temp.png")
+        f.write(get(nimg(target)).content)
+    img = Imopen("temp.png")
     img.save("temp.webp", "webp")
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
-    os.remove("temp.webp")
+    remove("temp.webp")
     await event.delete()
 
 
@@ -125,10 +121,10 @@ async def lewdn(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
-    nsfw = requests.get("https://nekos.life/api/lewd/neko").json()
+    nsfw = get("https://nekos.life/api/lewd/neko").json()
     url = nsfw.get("neko")
     if not url:
         return await edl(event, "`Uff.. No NEKO found from the API`")
@@ -149,18 +145,18 @@ async def gasm(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    flag = await useless.importent(event)
+    flag = await wowmygroup(event, PMSGTEXT)
     if flag:
         return
     with open("temp.png", "wb") as f:
         target = "gasm"
-        f.write(requests.get(nekos.img(target)).content)
-    img = Image.open("temp.png")
+        f.write(get(nimg(target)).content)
+    img = Imopen("temp.png")
     img.save("temp.webp", "webp")
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
-    os.remove("temp.webp")
+    remove("temp.webp")
     await event.delete()
 
 
@@ -177,11 +173,11 @@ async def waifu(event):
     reply_to = await reply_id(event)
     with open("temp.png", "wb") as f:
         target = "waifu"
-        f.write(requests.get(nekos.img(target)).content)
-    img = Image.open("temp.png")
+        f.write(get(nimg(target)).content)
+    img = Imopen("temp.png")
     img.save("temp.webp", "webp")
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
-    os.remove("temp.webp")
+    remove("temp.webp")
     await event.delete()

@@ -1,10 +1,11 @@
-import os
-import re
-import urllib.request
+from os import path
+from re import compile, findall
+from urllib.request import urlopen
+from urllib.parse import quote
 from collections import defaultdict
 
-import ujson
-import youtube_dl
+from ujson import load, dump
+from youtube_dl import YoutubeDL
 from telethon import Button
 from youtube_dl.utils import DownloadError, ExtractorError, GeoRestrictedError
 from youtubesearchpython import VideosSearch
@@ -18,14 +19,14 @@ from .functions import sublists
 
 LOGS = logging.getLogger(__name__)
 BASE_YT_URL = "https://www.youtube.com/watch?v="
-YOUTUBE_REGEX = re.compile(
+YOUTUBE_REGEX = compile(
     r"(?:youtube\.com|youtu\.be)/(?:[\w-]+\?v=|embed/|v/|shorts/)?([\w-]{11})"
 )
 PATH = "./userbot/cache/ytsearch.json"
 
-song_dl = "youtube-dl --force-ipv4 --write-thumbnail -o './temp/%(title)s.%(ext)s' --extract-audio --audio-format mp3 --audio-quality {QUALITY} {video_link}"
+song_dl = "youtube-dl --force-ipv4 --write-thumbnail --add-metadata --embed-thumbnail -o './temp/%(title)s.%(ext)s' --extract-audio --audio-format mp3 --audio-quality {QUALITY} {video_link}"
 thumb_dl = "youtube-dl --force-ipv4 -o './temp/%(title)s.%(ext)s' --write-thumbnail --skip-download {video_link}"
-video_dl = "youtube-dl --force-ipv4 --write-thumbnail  -o './temp/%(title)s.%(ext)s' -f '[filesize<20M]' {video_link}"
+video_dl = "youtube-dl --force-ipv4 --write-thumbnail --add-metadata --embed-thumbnail -o './temp/%(title)s.%(ext)s' -f '[filesize<20M]' {video_link}"
 name_dl = (
     "youtube-dl --force-ipv4 --get-filename -o './temp/%(title)s.%(ext)s' {video_link}"
 )
@@ -33,11 +34,11 @@ name_dl = (
 
 async def yt_search(dog):
     try:
-        dog = urllib.parse.quote(dog)
-        html = urllib.request.urlopen(
+        dog = quote(dog)
+        html = urlopen(
             "https://www.youtube.com/results?search_query=" + dog
         )
-        user_data = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+        user_data = findall(r"watch\?v=(\S{11})", html.read().decode())
         video_link = []
         k = 0
         for i in user_data:
@@ -69,11 +70,11 @@ async def ytsearch(query, limit):
 
 class YT_Search_X:
     def __init__(self):
-        if not os.path.exists(PATH):
+        if not path.exists(PATH):
             with open(PATH, "w") as f_x:
-                ujson.dump({}, f_x)
+                dump({}, f_x)
         with open(PATH) as yt_db:
-            self.db = ujson.load(yt_db)
+            self.db = load(yt_db)
 
     def store_(self, rnd_id: str, results: dict):
         self.db[rnd_id] = results
@@ -81,7 +82,7 @@ class YT_Search_X:
 
     def save(self):
         with open(PATH, "w") as outfile:
-            ujson.dump(self.db, outfile, indent=4)
+            dump(self.db, outfile, indent=4)
 
 
 ytsearch_data = YT_Search_X()
@@ -198,7 +199,7 @@ def yt_search_btns(
 @pool.run_in_thread
 def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     try:
-        vid_data = youtube_dl.YoutubeDL({"no-playlist": True}).extract_info(
+        vid_data = YoutubeDL({"no-playlist": True}).extract_info(
             BASE_YT_URL + vid, download=False
         )
     except ExtractorError:
@@ -268,10 +269,10 @@ def _tubeDl(url: str, starttime, uid: str):
         "addmetadata": True,
         "geo_bypass": True,
         "nocheckcertificate": True,
-        "outtmpl": os.path.join(
+        "outtmpl": path.join(
             Config.TEMP_DIR, str(starttime), "%(title)s-%(format)s.%(ext)s"
         ),
-        "logger": LOGS,
+        #     "logger": LOGS,
         "format": uid,
         "writethumbnail": True,
         "prefer_ffmpeg": True,
@@ -283,7 +284,7 @@ def _tubeDl(url: str, starttime, uid: str):
         "quiet": True,
     }
     try:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        with YoutubeDL(ydl_opts) as ydl:
             x = ydl.download([url])
     except DownloadError as e:
         LOGS.error(e)
@@ -298,8 +299,8 @@ def _tubeDl(url: str, starttime, uid: str):
 @pool.run_in_thread
 def _mp3Dl(url: str, starttime, uid: str):
     _opts = {
-        "outtmpl": os.path.join(Config.TEMP_DIR, str(starttime), "%(title)s.%(ext)s"),
-        "logger": LOGS,
+        "outtmpl": path.join(Config.TEMP_DIR, str(starttime), "%(title)s.%(ext)s"),
+        #     "logger": LOGS,
         "writethumbnail": True,
         "prefer_ffmpeg": True,
         "format": "bestaudio/best",
@@ -317,7 +318,7 @@ def _mp3Dl(url: str, starttime, uid: str):
         "quiet": True,
     }
     try:
-        with youtube_dl.YoutubeDL(_opts) as ytdl:
+        with YoutubeDL(_opts) as ytdl:
             dloader = ytdl.download([url])
     except Exception as y_e:
         LOGS.exception(y_e)

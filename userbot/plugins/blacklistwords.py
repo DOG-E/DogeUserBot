@@ -1,13 +1,10 @@
-import re
+from re import IGNORECASE, escape, search
 
 from telethon.utils import get_display_name
 
-from userbot import doge
-
-from ..core.managers import eor
 from ..sql_helper import blacklist_sql as sql
 from ..utils import is_admin
-from . import BOTLOG_CHATID
+from . import BOTLOG_CHATID, doge, eor
 
 plugin_category = "admin"
 
@@ -20,8 +17,8 @@ async def on_new_message(event):
     if not dogadmin:
         return
     for snip in snips:
-        pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
-        if re.search(pattern, name, flags=re.IGNORECASE):
+        pattern = r"( |^|[^\w])" + escape(snip) + r"( |$|[^\w])"
+        if search(pattern, name, flags=IGNORECASE):
             try:
                 await event.delete()
             except Exception:

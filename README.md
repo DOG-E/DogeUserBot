@@ -16,21 +16,21 @@ align="center">
 <h3
 align="center">
 
-❤️ Hᴀᴠᴇ ᴀ Dᴏɢ ɪɴ Tᴇʟᴇɢʀᴀᴍ! ❤️
+❤️ Hᴀᴠᴇ ᴀ Doɢ ɪɴ Tᴇʟᴇɢʀᴀᴍ! ❤️
 <br>
 <br>
 ❤️ Tᴇʟᴇɢʀᴀᴍ'ᴅᴀ Biʀ Köᴘᴇɢ̆iɴiᴢ Oʟsᴜɴ! ❤️
 <br>
 <br>
 <a
-href="https://bit.do/DogeUserBot">
+href="https://t.me/DogeUserBot">
 📣 Uᴘᴅᴀᴛᴇs ~ Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ  📣
 </a>
 <br>
 <br>
 <a
 href="https://t.me/DogeSup">
-💬 Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ~ Dᴇsᴛᴇᴋ Gʀᴜʙᴜ 💬
+💬 Sᴜᴘᴘoʀᴛ Gʀoᴜᴘ ~ Dᴇsᴛᴇᴋ Gʀᴜʙᴜ 💬
 </a>
 <br>
 <br>
@@ -42,7 +42,7 @@ href="https://t.me/DogePlugin">
 <br>
 <a
 href="https://github.com/DOG-E/DogeUserBot/wiki">
-⚡ Iɴsᴛᴀʟʟᴀᴛɪᴏɴs ~ Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
+⚡ Iɴsᴛᴀʟʟᴀᴛɪoɴs ~ Kᴜʀᴜʟᴜᴍʟᴀʀ ⚡
 </a>
 </h3>
 <br>
@@ -52,13 +52,13 @@ href="https://github.com/DOG-E/DogeUserBot/wiki">
 
 <br>
 
-## **🔗 Aᴜᴛᴏᴍᴀᴛɪᴄ Sᴇᴛᴜᴘs ~ Oᴛᴏᴍᴀᴛɪᴋ Kᴜʀᴜʟᴜᴍʟᴀʀ**
+## **🔗 Aᴜᴛoᴍᴀᴛɪᴄ Sᴇᴛᴜᴘs ~ Oᴛoᴍᴀᴛɪᴋ Kᴜʀᴜʟᴜᴍʟᴀʀ**
 
 <br>
 <p
 align="center">
 <a
-href="https://">
+href="https:// # TODO">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Replit.png">
 </a>
@@ -68,7 +68,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Replit.png">
 ---
 <br>
 
-## **🤖 Aɴᴅʀᴏɪᴅ**
+## **🤖 Aɴᴅʀoɪᴅ**
 
 📲 **Download Termux from the button below**
 
@@ -94,9 +94,9 @@ alt="Termux on F-Droid"
 width="235">
 </a>
 
-📋 **Then paste the code below into Termux**
+📋 **Then paste the code below into Termux and follow the steps.**
 
-📋 **Daha sonra aşağıdaki kodu Termux'a yapıştırın**
+📋 **Daha sonra aşağıdaki kodu Termux'a yapıştırın ve adımları takip edin.**
 
 ```sh
 # TODO
@@ -131,9 +131,9 @@ alt="iSH Shell on the App Store"
 width="200">
 </a>
 
-📋 **Then copy all of the code below and paste it into iSH**
+📋 **Then copy all of the code below and paste it into iSH and follow the steps.**
 
-📋 **Daha sonra aşağıdaki kodun hepsini kopyalayın ve iSH'a yapıştırın**
+📋 **Daha sonra aşağıdaki kodun hepsini kopyalayın ve iSH'a yapıştırın ve adımları takip edin.**
 
 ```sh
 # TODO
@@ -143,14 +143,14 @@ width="200">
 ---
 <br>
 
-## **💻 Wɪɴᴅᴏᴡs 10 & 11**
+## **💻 Wɪɴᴅoᴡs 10 & 11**
 
 🖥️ **Download Python 3.9 from the button below**
 
 🖥️ **Python 3.9'u aşağıdaki butondan indirin**
 
 <a
-href='//www.microsoft.com/store/apps/9p7qfqmjrfp7?cid=storebadge&ocid=badge'>
+href='https://www.microsoft.com/store/apps/9p7qfqmjrfp7?cid=storebadge&ocid=badge'>
 <img
 src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png'
 alt='Python on the Microsoft Store'
@@ -169,7 +169,7 @@ width='185'/>
 ---
 <br>
 
-## **⏳ Mᴀɴᴜᴇʟ Sᴇᴛᴜᴘ ~ Mᴀɴᴜᴇʟ Kᴜʀᴜʟᴜᴍ**
+## **📥 Mᴀɴᴜᴇʟ Sᴇᴛᴜᴘ ~ Mᴀɴᴜᴇʟ Kᴜʀᴜʟᴜᴍ**
 
 <br>
 <p
@@ -195,7 +195,7 @@ src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png">
 ---
 <br>
 
-## **💠 Iɴғᴏ**
+## **💠 Iɴғo**
 
 ```
 🐾 Doge UserBot,

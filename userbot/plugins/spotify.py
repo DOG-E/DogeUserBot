@@ -9,24 +9,20 @@ from json.decoder import JSONDecodeError
 from os import environ, path, remove
 from sys import setrecursionlimit
 
-import spotify_token as st
 from requests import get, post
+from spotify_token import start_session
 from telegraph import Telegraph
-from telethon import events
+from telethon.events import NewMessage
 from telethon.errors import AboutTooLongError
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.contacts import UnblockRequest
 
-from . import *
+from . import BIO_PREFIX, BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, Config, doge, edl, eor, fsmessage
 
-plugin_category = "extra"
-
+plugin_category = "misc"
 
 telegraph = Telegraph()
-
-SPOTIFY_USERNAME = Config.SPOTIFY_USERNAME
-SPOTIFY_PASSWORD = Config.SPOTIFY_PASSWORD
+SP_DC = Config.SP_DC
+SP_KEY = Config.SP_KEY
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
@@ -51,7 +47,7 @@ SPOTIFY_ = SPOTIFY()
 
 
 async def get_spotify_token():
-    sptoken = st.start_session(SPOTIFY_USERNAME, SPOTIFY_PASSWORD)
+    sptoken = start_session(SP_DC, SP_KEY)
     access_token = sptoken[0]
     environ["spftoken"] = access_token
 
@@ -112,7 +108,7 @@ async def update_spotify_info():  # sourcery no-metrics
 
 
 async def update_token():
-    sptoken = st.start_session(SPOTIFY_USERNAME, SPOTIFY_PASSWORD)
+    sptoken = start_session(SP_DC, SP_KEY)
     access_token = sptoken[0]
     environ["spftoken"] = access_token
     environ["errorcheck"] = "1"
@@ -224,16 +220,16 @@ def get_spotify_info(TIME=5):
         return arr
     except KeyError:
         print(2)
-        return "Error! Could not fetch the song playing on Spotify!"
+        return "Error! Couldn't fetch the song playing on Spotify!"
     except JSONDecodeError:
         print(3)
         return "I'm not listening to anything on Spotify right now."
     except TypeError:
         print(4)
-        return "Error! Could not fetch the song playing on Spotify!"
+        return "Error! Couldn't fetch the song playing on Spotify!"
     except Exception as e:
         print(e)
-        return "Error! Could not fetch the song playing on Spotify!"
+        return "Error! Couldn't fetch the song playing on Spotify!"
 
 
 @doge.bot_cmd(
@@ -282,7 +278,7 @@ async def getmp3(event):
     except Exception:
         return await edl(
             dogevent,
-            "__You haven't set the api value. Set Api var __`SPOTIFY_USERNAME` __and__ `SPOTIFY_PASSWORD` __in Heroku get value.",
+            "__You haven't set the api value. Set Api var __`SP_DC` __and__ `SP_KEY` __in Heroku get value.",
         )
     info = get_spotify_info()
     if isinstance(info, list) is False:
@@ -294,15 +290,10 @@ async def getmp3(event):
         chat = "@DeezerMusicBot"
         try:
             async with doge.conversation(chat) as conv:
-                try:
-                    await conv.send_message(songinfo)
-                except YouBlockedUserError:
-                    doge(UnblockRequest(chat))
-                    await conv.send_message(songinfo)
-
                 musics = await conv.wait_event(
-                    events.NewMessage(incoming=True, from_users=chat)
+                    NewMessage(incoming=True, from_users=chat)
                 )
+                await fsmessage(event, text=songinfo, chat=chat)
                 await event.client.send_read_acknowledge(conv.chat_id)
 
                 if musics.audio:
@@ -319,7 +310,7 @@ async def getmp3(event):
                 else:
                     await musics.click(0)
                     songgg = await conv.wait_event(
-                        events.NewMessage(incoming=True, from_users=chat)
+                        NewMessage(incoming=True, from_users=chat)
                     )
                     await event.client.send_read_acknowledge(conv.chat_id)
                     await event.client.send_message(

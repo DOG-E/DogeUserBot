@@ -1,17 +1,11 @@
 # file summary plugin for catuserbot  by @mrconfused
-import time
+from time import monotonic
 
 from prettytable import PrettyTable
 
-from userbot import doge
+from . import _format, doge, edl, eor, humanbytes, media_type
 
-from ..core.managers import edl, eor
-from ..helpers.tools import media_type
-from ..helpers.utils import _format
-from . import humanbytes
-
-plugin_category = "utils"
-
+plugin_category = "tool"
 
 TYPES = [
     "Photo",
@@ -48,7 +42,7 @@ async def _(event):  # sourcery no-metrics
             entity = int(input_str)
         except ValueError:
             entity = input_str
-    starttime = int(time.monotonic())
+    starttime = int(monotonic())
     x = PrettyTable()
     totalcount = totalsize = msg_count = 0
     x.title = "File Summary"
@@ -58,7 +52,7 @@ async def _(event):  # sourcery no-metrics
         chatdata = await event.client.get_entity(entity)
     except Exception as e:
         return await edl(
-            event, f"<b>Error : </b><code>{str(e)}</code>", time=5, parse_mode="HTML"
+            event, f"<b>Error : </b><code>{e}</code>", time=5, parse_mode="HTML"
         )
     if type(chatdata).__name__ == "Channel":
         if chatdata.username:
@@ -104,7 +98,7 @@ async def _(event):  # sourcery no-metrics
         )
         if media_dict[mediax]["count"] != 0:
             largest += f"  •  <b><a href='{media_dict[mediax]['max_file_link']}'>{mediax}</a>  : </b><code>{humanbytes(media_dict[mediax]['max_size'])}</code>\n"
-    endtime = int(time.monotonic())
+    endtime = int(monotonic())
     if endtime - starttime >= 120:
         runtime = str(round(((endtime - starttime) / 60), 2)) + " minutes"
     else:
@@ -125,7 +119,7 @@ async def _(event):  # sourcery no-metrics
     result = f"<b>Group : {link}</b>\n\n"
     result += f"<code>Total Messages: {msg_count}</code>\n"
     result += "<b>File Summary : </b>\n"
-    result += f"<code>{str(x)}</code>\n"
+    result += f"<code>{x}</code>\n"
     result += f"{largest}"
     result += line + totalstring + line + runtimestring + line
     await dogevent.edit(result, parse_mode="HTML", link_preview=False)
@@ -163,7 +157,7 @@ async def _(event):  # sourcery no-metrics
     else:
         entity = event.chat_id
         userentity = event.sender_id
-    starttime = int(time.monotonic())
+    starttime = int(monotonic())
     x = PrettyTable()
     totalcount = totalsize = msg_count = 0
     x.title = "File Summary"
@@ -173,13 +167,13 @@ async def _(event):  # sourcery no-metrics
         chatdata = await event.client.get_entity(entity)
     except Exception as e:
         return await edl(
-            event, f"<b>Error : </b><code>{str(e)}</code>", 5, parse_mode="HTML"
+            event, f"<b>Error : </b><code>{e}</code>", 5, parse_mode="HTML"
         )
     try:
         userdata = await event.client.get_entity(userentity)
     except Exception as e:
         return await edl(
-            event, f"<b>Error : </b><code>{str(e)}</code>", time=5, parse_mode="HTML"
+            event, f"<b>Error : </b><code>{e}</code>", time=5, parse_mode="HTML"
         )
     if type(chatdata).__name__ == "Channel":
         if chatdata.username:
@@ -228,7 +222,7 @@ async def _(event):  # sourcery no-metrics
         )
         if media_dict[mediax]["count"] != 0:
             largest += f"  •  <b><a href='{media_dict[mediax]['max_file_link']}'>{mediax}</a>  : </b><code>{humanbytes(media_dict[mediax]['max_size'])}</code>\n"
-    endtime = int(time.monotonic())
+    endtime = int(monotonic())
     if endtime - starttime >= 120:
         runtime = str(round(((endtime - starttime) / 60), 2)) + " minutes"
     else:
@@ -249,7 +243,7 @@ async def _(event):  # sourcery no-metrics
     result = f"<b>Group : {link}\nUser : {_format.htmlmentionuser(userdata.first_name,userdata.id)}\n\n"
     result += f"<code>Total Messages: {msg_count}</code>\n"
     result += "<b>File Summary : </b>\n"
-    result += f"<code>{str(x)}</code>\n"
+    result += f"<code>{x}</code>\n"
     result += f"{largest}"
     result += line + totalstring + line + runtimestring + line
     await dogevent.edit(result, parse_mode="HTML", link_preview=False)

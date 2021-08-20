@@ -18,31 +18,23 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import asyncio
-import errno
-import json
-import math
-import multiprocessing
-import os
-import re
-import time
-from asyncio import create_subprocess_shell as asyncSubprocess
+from asyncio import create_subprocess_shell as asyncSubprocess, sleep
 from asyncio.subprocess import PIPE as asyncPIPE
+from errno import EEXIST, ENOENT
+from json import JSONDecodeError, loads
+from math import floor
+from multiprocessing import Process
+from os import makedirs, path, remove, strerror
+from re import findall
+from time import time
 from urllib.error import HTTPError
 
 from pySmartDL import SmartDL
 
-from userbot import doge
-from userbot.core.logger import logging
+from . import Config, doge, eor, humanbytes, logging, time_formatter
 
-from ..Config import Config
-from ..core.managers import eor
-from . import humanbytes, time_formatter
-
+plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-
-plugin_category = "misc"
-
 
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
 
@@ -67,15 +59,15 @@ async def subprocess_run(megadl, cmd):
     command=("mega", plugin_category),
     info={
         "header": "Downloads mega files from it links.",
-        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .help .c upload. Folder is not supported currently and only mega file links are supported.",
+        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .doge .c upload. Folder is not supported currently and only mega file links are supported.",
         "usage": "{tr}mega <mega.nz link>",
     },
 )
 async def mega_downloader(megadl):  # sourcery no-metrics
     "To download mega files from mega.nz links."
     dogevent = await eor(megadl, "`Collecting information...`")
-    if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+    if not path.isdir(TMP_DOWNLOAD_DIRECTORY):
+        makedirs(TMP_DOWNLOAD_DIRECTORY)
     msg_link = await megadl.get_reply_message()
     link = megadl.pattern_match.group(1)
     if link:
@@ -85,7 +77,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     else:
         return await dogevent.edit("Usage: `.mega` **<MEGA.nz link>**")
     try:
-        link = re.findall(r"\bhttps?://.*mega.*\.nz\S+", link)[0]
+        link = findall(r"\bhttps?://.*mega.*\.nz\S+", link)[0]
         # - Mega changed their URL again -
         if "file" in link:
             link = link.replace("#", "!").replace("file/", "#!")
@@ -98,8 +90,8 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     cmd = f"bin/megadown -q -m {link}"
     result = await subprocess_run(dogevent, cmd)
     try:
-        data = json.loads(result[0])
-    except json.JSONDecodeError:
+        data = loads(result[0])
+    except JSONDecodeError:
         await dogevent.edit("**JSONDecodeError**: `failed to extract link...`")
         return None
     except (IndexError, TypeError):
@@ -109,11 +101,11 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     hex_key = data["hex_key"]
     hex_raw_key = data["hex_raw_key"]
     temp_file_name = file_name + ".temp"
-    temp_file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, temp_file_name)
-    file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, file_name)
-    if os.path.isfile(file_path):
+    temp_file_path = path.join(TMP_DOWNLOAD_DIRECTORY, temp_file_name)
+    file_path = path.join(TMP_DOWNLOAD_DIRECTORY, file_name)
+    if path.isfile(file_path):
         try:
-            raise FileExistsError(errno.EEXIST, os.strerror(errno.EEXIST), file_path)
+            raise FileExistsError(EEXIST, strerror(EEXIST), file_path)
         except FileExistsError as e:
             await dogevent.edit(f"`{str(e)}`")
             return None
@@ -124,7 +116,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     except HTTPError as e:
         await dogevent.edit(f"**HTTPError**: `{str(e)}`")
         return None
-    start = time.time()
+    start = time()
     while not downloader.isFinished():
         status = downloader.get_status().capitalize()
         total_length = downloader.filesize or None
@@ -134,12 +126,12 @@ async def mega_downloader(megadl):  # sourcery no-metrics
         estimated_total_time = round(downloader.get_eta())
         progress_str = "`{0}` | [{1}{2}] `{3}%`".format(
             status,
-            "".join("▰" for i in range(math.floor(percentage / 10))),
-            "".join("▱" for i in range(10 - math.floor(percentage / 10))),
+            "".join("▰" for i in range(floor(percentage / 10))),
+            "".join("▱" for i in range(10 - floor(percentage / 10))),
             round(percentage, 2),
         )
 
-        diff = time.time() - start
+        diff = time() - start
         try:
             current_message = (
                 f"**➥file name : **`{file_name}`\n\n"
@@ -154,18 +146,18 @@ async def mega_downloader(megadl):  # sourcery no-metrics
                 display_message != current_message or total_length == downloaded
             ):
                 await dogevent.edit(current_message)
-                await asyncio.sleep(1)
+                await sleep(1)
                 display_message = current_message
         except Exception as e:
             LOGS.info(str(e))
         finally:
             if status == "Combining":
                 wait = round(downloader.get_eta())
-                await asyncio.sleep(wait)
+                await sleep(wait)
     if downloader.isSuccessful():
         download_time = round(downloader.get_dl_time() + wait)
         try:
-            P = multiprocessing.Process(
+            P = Process(
                 target=await decrypt_file(
                     dogevent, file_path, temp_file_path, hex_key, hex_raw_key
                 ),
@@ -197,7 +189,7 @@ async def decrypt_file(megadl, file_path, temp_file_path, hex_key, hex_raw_key):
         temp_file_path, hex_key, hex_raw_key, file_path
     )
     if await subprocess_run(megadl, cmd):
-        os.remove(temp_file_path)
+        remove(temp_file_path)
     else:
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), file_path)
+        raise FileNotFoundError(ENOENT, strerror(ENOENT), file_path)
     return

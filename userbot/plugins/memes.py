@@ -2,21 +2,17 @@
 # Licensed under the Raphielscape Public License, Version 1.b (the "License");
 # you may not use this file except in compliance with the License.
 # catUserbot module for having some fun with people.
-import asyncio
-import random
-import re
+from asyncio import sleep
+from random import choice, randint
+from re import sub 
 
-import requests
-from cowpy import cow
+from cowpy.cow import COWACTERS, get_cow
+from nekos import fact, textcat, why
+from requests import get
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins, MessageEntityMentionName
 
-from userbot import doge
-
-from ..core.managers import edl, eor
-from ..helpers import dogememes
-from ..helpers.utils import _dogeutils, parse_pre
-from . import BOTLOG, BOTLOG_CHATID, mention
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id, dogememes, _dogeutils, parse_pre, mention, mememaker, reply_id
 
 plugin_category = "fun"
 
@@ -123,9 +119,9 @@ async def univsaye(cowmsg):
     text = cowmsg.pattern_match.group(2)
     if arg == "cow":
         arg = "default"
-    if arg not in cow.COWACTERS:
-        return await edl(cowmsg, "check help menu to know the correct options.")
-    cheese = cow.get_cow(arg)
+    if arg not in COWACTERS:
+        return await edl(cowmsg, "check doge menu to know the correct options.")
+    cheese = get_cow(arg)
     cheese = cheese()
     await eor(cowmsg, f"`{cheese.milk(text).replace('`', '´')}`")
 
@@ -143,7 +139,7 @@ async def univsaye(cowmsg):
 )
 async def _(event):
     "flips a coin."
-    r = random.randint(1, 100)
+    r = randint(1, 100)
     input_str = event.pattern_match.group(1)
     if input_str:
         input_str = input_str.lower()
@@ -211,9 +207,9 @@ async def decide(event):
     decision = event.pattern_match.group(1).lower()
     message_id = event.reply_to_msg_id or None
     if decision != "decide":
-        r = requests.get(f"https://yesno.wtf/api?force={decision}").json()
+        r = get(f"https://yesno.wtf/api?force={decision}").json()
     else:
-        r = requests.get(f"https://yesno.wtf/api").json()
+        r = get("https://yesno.wtf/api").json()
     await event.delete()
     teledoge = await event.client.send_message(
         event.chat_id, str(r["answer"]).upper(), reply_to=message_id, file=r["image"]
@@ -272,13 +268,13 @@ async def faces(owo):
         message = textx.text
     else:
         return await eor(owo, "` UwU no text given! `")
-    reply_text = re.sub(r"(r|l)", "w", message)
-    reply_text = re.sub(r"(R|L)", "W", reply_text)
-    reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
-    reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
-    reply_text = re.sub(r"\!+", " " + random.choice(dogememes.UWUS), reply_text)
+    reply_text = sub(r"(r|l)", "w", message)
+    reply_text = sub(r"(R|L)", "W", reply_text)
+    reply_text = sub(r"n([aeiou])", r"ny\1", reply_text)
+    reply_text = sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
+    reply_text = sub(r"\!+", " " + choice(dogememes.UWUS), reply_text)
     reply_text = reply_text.replace("ove", "uv")
-    reply_text += " " + random.choice(dogememes.UWUS)
+    reply_text += " " + choice(dogememes.UWUS)
     await eor(owo, reply_text)
 
 
@@ -379,7 +375,7 @@ async def payf(event):
 async def wish_check(event):
     "Shows the chance of your success."
     wishtxt = event.pattern_match.group(1)
-    chance = random.randint(0, 100)
+    chance = randint(0, 100)
     if wishtxt:
         reslt = f"**Your wish **__{wishtxt}__ **has been cast.** ✨\
               \n\n__Chance of success :__ **{chance}%**"
@@ -387,7 +383,7 @@ async def wish_check(event):
         reslt = f"**Your wish has been cast. **✨\
                   \n\n__Chance of success :__ **{chance}%**"
     else:
-        reslt = f"What's your Wish? Should I consider you as Idiot by default ? 😜"
+        reslt = "What's your Wish? Should I consider you as Idiot by default ? 😜"
     await eor(event, reslt)
 
 
@@ -412,7 +408,7 @@ async def _(event):
             event, "`either reply to text message or give input to search`", 5
         )
     sample_url = f"https://da.gd/s?url=https://lmgtfy.com/?q={input_str.replace(' ', '+')}%26iie=1"
-    response_api = requests.get(sample_url).text
+    response_api = get(sample_url).text
     if response_api:
         await eor(event, f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` ")
     else:
@@ -438,7 +434,7 @@ async def gbun(event):
     gbunVar = gbunVar[6:]
     mentions = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\n`"
     dogevent = await eor(event, "**Summoning out le Gungnir ❗️⚜️☠️**")
-    await asyncio.sleep(3.5)
+    await sleep(3.5)
     chat = await event.get_input_chat()
     async for _ in event.client.iter_participants(
         chat, filter=ChannelParticipantsAdmins
@@ -467,7 +463,7 @@ async def gbun(event):
             if usname is None:
                 jnl += "**Victim Nigga's username: ** `Doesn't own a username!`\n"
             else:
-                jnl += "**Victim Nigga's username** : @{}\n".format(usname)
+                jnl += "**Victim Nigga's username:** @{}\n".format(usname)
             if len(gbunVar) > 0:
                 gbunm = "`{}`".format(gbunVar)
                 gbunr = "**Reason: **" + gbunm
@@ -479,3 +475,753 @@ async def gbun(event):
     else:
         mention = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\nReason: Potential spammer. `"
         await dogevent.edit(mention)
+
+
+@doge.bot_cmd(
+    pattern="congo$",
+    command=("congo", plugin_category),
+    info={
+        "header": " Congratulate the people..",
+        "usage": "{tr}congo",
+    },
+)
+async def _(e):
+    "Congratulate the people."
+    txt = choice(dogememes.CONGOREACTS)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="shg$",
+    command=("shg", plugin_category),
+    info={
+        "header": "Shrug at it !!",
+        "usage": "{tr}shg",
+    },
+)
+async def shrugger(e):
+    "Shrug at it !!"
+    txt = choice(dogememes.SHGS)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="runs$",
+    command=("runs", plugin_category),
+    info={
+        "header": "Run, run, RUNNN!.",
+        "usage": "{tr}runs",
+    },
+)
+async def runner_lol(e):
+    "Run, run, RUNNN!"
+    txt = choice(dogememes.RUNSREACTS)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="noob$",
+    command=("noob", plugin_category),
+    info={
+        "header": "Whadya want to know? Are you a NOOB?",
+        "usage": "{tr}noob",
+    },
+)
+async def metoo(e):
+    "Whadya want to know? Are you a NOOB?"
+    txt = choice(dogememes.NOOBSTR)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="insult$",
+    command=("insult", plugin_category),
+    info={
+        "header": "insult someone.",
+        "usage": "{tr}insult",
+    },
+)
+async def insult(e):
+    "insult someone."
+    txt = choice(dogememes.INSULT_STRINGS)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="love$",
+    command=("love", plugin_category),
+    info={
+        "header": "Chutiyappa suru",
+        "usage": "{tr}love",
+    },
+)
+async def suru(chutiyappa):
+    "Chutiyappa suru"
+    txt = choice(dogememes.LOVESTR)
+    await eor(chutiyappa, txt)
+
+
+@doge.bot_cmd(
+    pattern="dhoka$",
+    command=("dhoka", plugin_category),
+    info={
+        "header": "Dhokha kha gya",
+        "usage": "{tr}dhoka",
+    },
+)
+async def katgya(chutiya):
+    "Dhokha kha gya"
+    txt = choice(dogememes.DHOKA)
+    await eor(chutiya, txt)
+
+
+@doge.bot_cmd(
+    pattern="hey$",
+    command=("hey", plugin_category),
+    info={
+        "header": "start a conversation with people",
+        "usage": "{tr}hey",
+    },
+)
+async def hoi(e):
+    "start a conversation with people."
+    txt = choice(dogememes.HELLOSTR)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="pro$",
+    command=("pro", plugin_category),
+    info={
+        "header": "If you think you're pro, try this.",
+        "usage": "{tr}pro",
+    },
+)
+async def proo(e):
+    "If you think you're pro, try this."
+    txt = choice(dogememes.PRO_STRINGS)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="react ?([\s\S]*)",
+    command=("react", plugin_category),
+    info={
+        "header": "Make your userbot react",
+        "types": [
+            "happy",
+            "think",
+            "wave",
+            "wtf",
+            "love",
+            "teledoge",
+            "dead",
+            "sad",
+            "dog",
+        ],
+        "usage": ["{tr}react <type>", "{tr}react"],
+    },
+)
+async def _(e):
+    "Make your userbot react."
+    input_str = e.pattern_match.group(1)
+    if input_str in "happy":
+        emoticons = dogememes.FACEREACTS[0]
+    elif input_str in "think":
+        emoticons = dogememes.FACEREACTS[1]
+    elif input_str in "wave":
+        emoticons = dogememes.FACEREACTS[2]
+    elif input_str in "wtf":
+        emoticons = dogememes.FACEREACTS[3]
+    elif input_str in "love":
+        emoticons = dogememes.FACEREACTS[4]
+    elif input_str in "teledoge":
+        emoticons = dogememes.FACEREACTS[5]
+    elif input_str in "dead":
+        emoticons = dogememes.FACEREACTS[6]
+    elif input_str in "sad":
+        emoticons = dogememes.FACEREACTS[7]
+    elif input_str in "dog":
+        emoticons = dogememes.FACEREACTS[8]
+    else:
+        emoticons = dogememes.FACEREACTS[9]
+    txt = choice(emoticons)
+    await eor(e, txt)
+
+
+@doge.bot_cmd(
+    pattern="10iq$",
+    command=("10iq", plugin_category),
+    info={
+        "header": "You retard !!",
+        "usage": "{tr}10iq",
+    },
+)
+async def iqless(e):
+    "You retard !!"
+    await eor(e, "♿")
+
+
+@doge.bot_cmd(
+    pattern="fp$",
+    command=("fp", plugin_category),
+    info={
+        "header": "send you face pam emoji!",
+        "usage": "{tr}fp",
+    },
+)
+async def facepalm(e):
+    "send you face pam emoji!"
+    await eor(e, "🤦‍♂")
+
+
+@doge.bot_cmd(
+    pattern="bt$",
+    command=("bt", plugin_category),
+    info={
+        "header": "Believe me, you will find this useful.",
+        "usage": "{tr}bt",
+    },
+    groups_only=True,
+)
+async def bluetext(e):
+    """Believe me, you will find this useful."""
+    await eor(
+        e,
+        "/BLUETEXT /MUST /CLICK.\n"
+        "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS?",
+    )
+
+
+@doge.bot_cmd(
+    pattern="session$",
+    command=("session", plugin_category),
+    info={
+        "header": "telethon session error code(fun)",
+        "usage": "{tr}session",
+    },
+)
+async def _(event):
+    "telethon session error code(fun)."
+    mentions = "**telethon.errors.rpcerrorlist.AuthKeyDuplicatedError: \
+        The authorization key (session file) was used under two different IP addresses simultaneously, \
+        and can no longer be used. Use the same session exclusively, \
+        or use different sessions (caused by GetMessagesRequest)**"
+    await eor(event, mentions)
+
+
+@doge.bot_cmd(
+    pattern="tcat$",
+    command=("tcat", plugin_category),
+    info={
+        "header": "Some random cat facial text art",
+        "usage": "{tr}tcat",
+    },
+)
+async def hmm(c):
+    "Some random cat facial text art"
+    await eor(c, textcat())
+
+
+@doge.bot_cmd(
+    pattern="why$",
+    command=("why", plugin_category),
+    info={
+        "header": "Sends you some random Funny questions",
+        "usage": "{tr}why",
+    },
+)
+async def hmm(dog):
+    "Some random Funny questions"
+    await eor(dog, why())
+
+
+@doge.bot_cmd(
+    pattern="fact$",
+    command=("fact", plugin_category),
+    info={
+        "header": "Sends you some random facts",
+        "usage": "{tr}fact",
+    },
+)
+async def hmm(dog):
+    "Some random facts"
+    await eor(dog, fact())
+
+
+@doge.bot_cmd(
+    pattern="^\:/$",
+    command=("\:", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": "\:",
+    },
+)
+async def kek(keks):
+    "Animation command"
+    keks = await eor(keks, ":\\")
+    uio = ["/", "\\"]
+    for i in range(5):
+        await sleep(0.5)
+        txt = ":" + uio[i % 2]
+        await keks.edit(txt)
+
+
+@doge.bot_cmd(
+    pattern="^\-_-$",
+    command=("-_-", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": "-_-",
+    },
+)
+async def lol(lel):
+    "Animation command"
+    lel = await eor(lel, "-__-")
+    okay = "-__-"
+    for _ in range(15):
+        await sleep(0.5)
+        okay = okay[:-1] + "_-"
+        await lel.edit(okay)
+
+
+@doge.bot_cmd(
+    pattern="^\;_;$",
+    command=(";_;", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": ";_;",
+    },
+)
+async def fun(e):
+    "Animation command"
+    e = await eor(e, ";__;")
+    t = ";__;"
+    for _ in range(15):
+        await sleep(0.5)
+        t = t[:-1] + "_;"
+        await e.edit(t)
+
+
+@doge.bot_cmd(
+    pattern="oof$",
+    command=("oof", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": "{tr}oof",
+    },
+)
+async def Oof(e):
+    "Animation command."
+    t = "Oof"
+    dogevent = await eor(e, t)
+    for _ in range(15):
+        await sleep(0.5)
+        t = t[:-1] + "of"
+        await dogevent.edit(t)
+
+
+@doge.bot_cmd(
+    pattern="type ([\s\S]*)",
+    command=("type", plugin_category),
+    info={
+        "header": "Type writter animation.",
+        "usage": "{tr}type text",
+    },
+)
+async def typewriter(typew):
+    "Type writter animation."
+    message = typew.pattern_match.group(1)
+    sleep_time = 0.2
+    typing_symbol = "|"
+    old_text = ""
+    typew = await eor(typew, typing_symbol)
+    await sleep(sleep_time)
+    for character in message:
+        old_text = old_text + "" + character
+        typing_text = old_text + "" + typing_symbol
+        await typew.edit(typing_text)
+        await sleep(sleep_time)
+        await typew.edit(old_text)
+        await sleep(sleep_time)
+
+
+@doge.bot_cmd(
+    pattern="repeat (\d*) ([\s\S]*)",
+    command=("repeat", plugin_category),
+    info={
+        "header": "repeats the given text with given no of times.",
+        "usage": "{tr}repeat <count> <text>",
+        "examples": "{tr}repeat 10 DogeUserBot",
+    },
+)
+async def _(event):
+    "To repeat the given text."
+    dog = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
+    message = dog[1]
+    count = int(dog[0])
+    repsmessage = (f"{message} ") * count
+    await eor(event, repsmessage)
+
+
+@doge.bot_cmd(
+    pattern="meme",
+    command=("meme", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": [
+            "{tr}meme <emoji/text>",
+            "{tr}meme",
+        ],
+    },
+)
+async def meme(event):
+    "Animation command."
+    memeVar = event.text
+    sleepValue = 0.5
+    memeVar = memeVar[6:]
+    if not memeVar:
+        memeVar = "✈️"
+    event = await eor(event, "-------------" + memeVar)
+    await sleep(sleepValue)
+    await event.edit("------------" + memeVar + "-")
+    await sleep(sleepValue)
+    await event.edit("-----------" + memeVar + "--")
+    await sleep(sleepValue)
+    await event.edit("----------" + memeVar + "---")
+    await sleep(sleepValue)
+    await event.edit("---------" + memeVar + "----")
+    await sleep(sleepValue)
+    await event.edit("--------" + memeVar + "-----")
+    await sleep(sleepValue)
+    await event.edit("-------" + memeVar + "------")
+    await sleep(sleepValue)
+    await event.edit("------" + memeVar + "-------")
+    await sleep(sleepValue)
+    await event.edit("-----" + memeVar + "--------")
+    await sleep(sleepValue)
+    await event.edit("----" + memeVar + "---------")
+    await sleep(sleepValue)
+    await event.edit("---" + memeVar + "----------")
+    await sleep(sleepValue)
+    await event.edit("--" + memeVar + "-----------")
+    await sleep(sleepValue)
+    await event.edit("-" + memeVar + "------------")
+    await sleep(sleepValue)
+    await event.edit(memeVar + "-------------")
+    await sleep(sleepValue)
+    await event.edit("-------------" + memeVar)
+    await sleep(sleepValue)
+    await event.edit("------------" + memeVar + "-")
+    await sleep(sleepValue)
+    await event.edit("-----------" + memeVar + "--")
+    await sleep(sleepValue)
+    await event.edit("----------" + memeVar + "---")
+    await sleep(sleepValue)
+    await event.edit("---------" + memeVar + "----")
+    await sleep(sleepValue)
+    await event.edit("--------" + memeVar + "-----")
+    await sleep(sleepValue)
+    await event.edit("-------" + memeVar + "------")
+    await sleep(sleepValue)
+    await event.edit("------" + memeVar + "-------")
+    await sleep(sleepValue)
+    await event.edit("-----" + memeVar + "--------")
+    await sleep(sleepValue)
+    await event.edit("----" + memeVar + "---------")
+    await sleep(sleepValue)
+    await event.edit("---" + memeVar + "----------")
+    await sleep(sleepValue)
+    await event.edit("--" + memeVar + "-----------")
+    await sleep(sleepValue)
+    await event.edit("-" + memeVar + "------------")
+    await sleep(sleepValue)
+    await event.edit(memeVar + "-------------")
+    await sleep(sleepValue)
+    await event.edit(memeVar)
+
+
+@doge.bot_cmd(
+    pattern="give",
+    command=("give", plugin_category),
+    info={
+        "header": "Animation command",
+        "usage": [
+            "{tr}give <emoji/text>",
+            "{tr}give",
+        ],
+    },
+)
+async def give(event):
+    "Animation command."
+    giveVar = event.text
+    sleepValue = 0.5
+    lp = giveVar[6:]
+    if not lp:
+        lp = " 🍭"
+    event = await eor(event, lp + "        ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + "       ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + "      ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + "     ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + "    ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + "   ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + "  ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + " ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
+    await sleep(sleepValue)
+    await event.edit(lp + "        ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + "       ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + "      ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + "     ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + "    ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + "   ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + "  ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + " ")
+    await sleep(sleepValue)
+    await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
+
+
+@doge.bot_cmd(
+    pattern="sadmin$",
+    command=("sadmin", plugin_category),
+    info={
+        "header": "Shouts Admin Animation command",
+        "usage": "{tr}sadmin",
+    },
+)
+async def _(event):
+    "Shouts Admin Animation command."
+    animation_ttl = range(13)
+    event = await eor(event, "sadmin")
+    animation_chars = [
+        "@aaaaaaaaaaaaadddddddddddddmmmmmmmmmmmmmiiiiiiiiiiiiinnnnnnnnnnnnn",
+        "@aaaaaaaaaaaaddddddddddddmmmmmmmmmmmmiiiiiiiiiiiinnnnnnnnn",
+        "@aaaaaaaaaaddddddddddmmmmmmmmmmiiiiiiiiiinnnnnnnnnn",
+        "@aaaaaaaaddddddddmmmmmmmmiiiiiiiinnnnnnnn",
+        "@aaaaaaddddddmmmmmmiiiiiinnnnnn",
+        "@aaaaddddmmmmiiiinnnn",
+        "@aaadddmmmiiinnn",
+        "@admin",
+    ]
+    for i in animation_ttl:
+        await sleep(1)
+        await event.edit(animation_chars[i % 13])
+
+
+# Template by @Infinity20998, modified by @o_s_h_o_r_a_j
+@doge.bot_cmd(
+    pattern="pf ?(.*)",
+    command=("pf", plugin_category),
+    info={
+        "header": "Pay tribute to victim by pressing F(s)",
+        "usage": [
+            "{tr}pf <text>",
+        ],
+    },
+)
+async def payF(event):
+    "Bullies the victim"
+    await event.delete()
+    bot = "@FsInChatBot"
+    hidetxt = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    if not hidetxt:
+        return await edl(event, "__How can I bulli without text.__")
+    results = await event.client.inline_query(bot, hidetxt)
+    await results[0].click(event.chat_id, reply_to=reply_to_id)
+
+
+# Created by @Jisan7509
+@doge.bot_cmd(
+    pattern="fox ?([\s\S]*)",
+    command=("fox", plugin_category),
+    info={
+        "header": "fox meme",
+        "description": "Send sneeky fox troll",
+        "usage": "{tr}fox <text>",
+    },
+)
+async def dog(event):
+    "sneeky fox troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "`Give me some text to process...`")
+    msg = f"/sf {input_text}"
+    dog = await eor(event, "```Fox is on your way...```")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="talkme ?([\s\S]*)",
+    command=("talkme", plugin_category),
+    info={
+        "header": "talk to me meme",
+        "description": "Send talk to me troll",
+        "usage": "{tr}talkme <text>",
+    },
+)
+async def dog(event):
+    "talk to me troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "`Give me some text to process...`")
+    msg = f"/ttm {input_text}"
+    dog = await eor(event, "```Wait making your hardcore meme...```")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="sbrain ?([\s\S]*)",
+    command=("sbrain", plugin_category),
+    info={
+        "header": "brain say meme",
+        "description": "Send you a sleeping brain meme.",
+        "usage": "{tr}sbrain <text>",
+    },
+)
+async def dog(event):
+    "Sleeping brain meme."
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "`Give me some text to process...`")
+    msg = f"/bbn {input_text}"
+    dog = await eor(event, "```You can't sleep...```")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="sbob ?([\s\S]*)",
+    command=("sbob", plugin_category),
+    info={
+        "header": "spongebob meme",
+        "description": "Send you spongebob meme.",
+        "usage": "{tr}sbob <text>",
+    },
+)
+async def dog(event):
+    "spongebob troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "`Give me some text to process...`")
+    msg = f"/sp {input_text}"
+    dog = await eor(event, "```Yaah wait for spongebob...```")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="child ?([\s\S]*)",
+    command=("child", plugin_category),
+    info={
+        "header": "child meme",
+        "description": "Send you child in trash meme.",
+        "usage": "{tr}child <text>",
+    },
+)
+async def dog(event):
+    "child troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "`Give me some text to process...`")
+    msg = f"/love {input_text}"
+    dog = await eor(event, "```Wait for your son......```")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="toy ?([\s\S]*)",
+    command=("toy", plugin_category),
+    info={
+        "header": "toy meme",
+        "description": "Send soft toy troll",
+        "usage": "{tr}toy <text>",
+    },
+)
+async def dog(event):
+    "toy troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "Give me some text to process...")
+    msg = f"/sdp {input_text}"
+    dog = await eor(event, " toy is on your way...")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="bt ?([\s\S]*)",
+    command=("bt", plugin_category),
+    info={
+        "header": "brain meme",
+        "description": "Send brain troll",
+        "usage": "{tr}bt <text>",
+    },
+)
+async def dog(event):
+    "brain troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "Give me some text to process...")
+    msg = f"/bbs {input_text}"
+    dog = await eor(event, "Brain is on your way...")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="sbb ?([\s\S]*)",
+    command=("sbb", plugin_category),
+    info={
+        "header": "spongebob meme",
+        "description": "Send spongebob troll",
+        "usage": "{tr}sbb <text>",
+    },
+)
+async def dog(event):
+    "spongebob troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "Give me some text to process...")
+    msg = f"/iiho {input_text}"
+    dog = await eor(event, " spongebob is on your way...")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
+
+
+@doge.bot_cmd(
+    pattern="att ?([\s\S]*)",
+    command=("att", plugin_category),
+    info={
+        "header": "animation meme",
+        "description": "Send animation troll",
+        "usage": "{tr}att <text>",
+    },
+)
+async def dog(event):
+    "animation troll"
+    reply_to_id = await reply_id(event)
+    input_text = event.pattern_match.group(1)
+    if not input_text:
+        return await edl(event, "Give me some text to process...")
+    msg = f"/f {input_text}"
+    dog = await eor(event, "Animation is on your way...")
+    await mememaker(event, msg, dog, event.chat_id, reply_to_id)
