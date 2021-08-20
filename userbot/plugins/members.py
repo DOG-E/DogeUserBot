@@ -154,7 +154,7 @@ async def addmembers(event):
     if not creator:
         return await edl(event, "`I am not owner here!`", 5)
 
-    xedoc = await eor(event, "`The process of adding members, starting from 0`")
+    await eor(event, "`The process of adding members, starting from 0`")
     user_to_add = None
     saint = event.client
     x = []

@@ -110,7 +110,7 @@ async def dlive(event):
     if user.id == event.client.uid:
         return await edl(event, "Only Doge admins can use, dude!__")
     start = datetime.now()
-    ppingx = await event.reply("ㅤ")
+    await event.reply("ㅤ")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     uptime = await get_readable_time((time() - StartTime))
