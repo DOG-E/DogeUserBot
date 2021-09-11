@@ -203,10 +203,6 @@ btnmenucmdhelp: |
 linkheremsg: 👀 Message was to big so pasted to bin
 
 
-# SQL_HELPER #
-errrdburl: 🚨 DB_URI isn't configured. Features depending on the database might have issues.
-
-
 # UTILS #
 # pluginmanager;
 succ_imported: "✅ Successfully imported "

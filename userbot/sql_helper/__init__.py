@@ -12,7 +12,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from ..Config import Config
 from ..core.logger import logging
-from ..languages import lan
 
 LOGS = logging.getLogger(__name__)
 
@@ -31,5 +30,5 @@ try:
     BASE = declarative_base()
     SESSION = start()
 except AttributeError as e:
-    LOGS.error(lan("errrdburl"))
+    LOGS.error("🚨 DB_URI isn't configured. Features depending on the database might have issues.")
     LOGS.error(str(e))
