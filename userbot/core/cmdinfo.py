@@ -41,9 +41,7 @@ def _format_about(
         del about["header"]
 
     if "description" in about and isinstance(about["description"], str):
-        tmp_chelp += (
-            f"\n\n**🐾 Description:**\n" f"__{get_data(about, 'description')}__"
-        )
+        tmp_chelp += f"\n\n**🐾 Description:**\n" f"__{get_data(about, 'description')}__"
         del about["description"]
 
     if "flags" in about:
