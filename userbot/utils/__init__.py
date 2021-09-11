@@ -7,7 +7,6 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ..helpers.progress import *
-from ..languages import lan
 from .checks import *
 from .decorators import *
 from .pluginmanager import *

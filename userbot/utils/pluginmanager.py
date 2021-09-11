@@ -18,7 +18,7 @@ from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers.tools import media_type
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
-from . import lan
+from ..languages import lan
 from .decorators import admin_cmd, sudo_cmd
 
 LOGS = logging.getLogger("DogeUserBot")
@@ -110,5 +110,3 @@ def checkplugins(filename):
     filedata = filedata.replace("editmessage", "edit_message")
     with open(filename, "w") as f:
         f.write(filedata)
-    if filedata.find("DeleteAccountRequest"):
-        remove_plugin(filename)

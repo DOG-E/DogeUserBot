@@ -27,10 +27,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.events import NewMessage
 from telethon.tl.functions.contacts import UnblockRequest
 
-from ...core.logger import logging
 from ...languages import lan
-
-LOGS = logging.getLogger(__name__)
 
 
 imdb = IMDb()

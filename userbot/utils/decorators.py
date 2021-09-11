@@ -21,7 +21,7 @@ from ..core.logger import logging
 from ..core.session import doge
 from ..helpers.utils.format import paste_message
 from ..sql_helper.globals import gvar
-from . import lan
+from ..languages import lan
 
 LOGS = logging.getLogger(__name__)
 
