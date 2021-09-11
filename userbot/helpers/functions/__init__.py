@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from .calculate import *
+# from .calculate import *
 from .functions import *
 from .ialivetext import *
 from .imgtools import *
