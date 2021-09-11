@@ -34,7 +34,7 @@ def load_module(shortname, plugin_path=None):
         spec = spec_from_file_location(name, path)
         mod = module_from_spec(spec)
         spec.loader.exec_module(mod)
-        LOGS.info(f"{lan('succ_imported')} {shortname}")
+        LOGS.info(f"✅ {shortname} {lan('succ_imported')}")
     else:
         if plugin_path is None:
             path = Path(f"userbot/plugins/{shortname}.py")
@@ -68,7 +68,7 @@ def load_module(shortname, plugin_path=None):
         spec.loader.exec_module(mod)
         # For imports;
         modules["userbot.plugins." + shortname] = mod
-        LOGS.info(f"{lan('succ_imported')} {shortname}")
+        LOGS.info(f"✅ {shortname} {lan('succ_imported')}")
 
 
 def remove_plugin(shortname):

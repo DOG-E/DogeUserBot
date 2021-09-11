@@ -122,18 +122,19 @@ class DogeUserBotClient(TelegramClient):
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
                         ftext = lan("errrlogdisclaimer").format(
-                            date,
-                            str(check.chat_id),
-                            str(check.sender_id),
-                            await check.client.get_msg_link(check),
-                            str(check.text),
-                            str(format_exc()),
-                            str(exc_info()[1]),
+                            d=date,
+                            cid=str(check.chat_id),
+                            sid=str(check.sender_id),
+                            msg=await check.client.get_msg_link(check),
+                            t=str(check.text),
+                            f=str(format_exc()),
+                            e=str(exc_info()[1]),
                         )
                         new = {
                             "error": str(exc_info()[1]),
                             "date": datetime.now(),
                         }
+                        ftext += "\n\n"
                         ftext += lan("errrlogend")
                         pastelink = await paste_message(
                             ftext,
@@ -238,18 +239,19 @@ class DogeUserBotClient(TelegramClient):
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
                         ftext = lan("errrlogdisclaimer").format(
-                            date,
-                            str(check.chat_id),
-                            str(check.sender_id),
-                            await check.client.get_msg_link(check),
-                            str(check.text),
-                            str(format_exc()),
-                            str(exc_info()[1]),
+                            d=date,
+                            cid=str(check.chat_id),
+                            sid=str(check.sender_id),
+                            msg=await check.client.get_msg_link(check),
+                            t=str(check.text),
+                            f=str(format_exc()),
+                            e=str(exc_info()[1]),
                         )
                         new = {
                             "error": str(exc_info()[1]),
                             "date": datetime.now(),
                         }
+                        ftext += "\n\n"
                         ftext += lan("errrlogend")
                         pastelink = await paste_message(
                             ftext,

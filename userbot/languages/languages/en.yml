@@ -96,22 +96,20 @@ errrlogdisclaimer: |-
 
   --------BEGIN-DOGE-USERBOT-ERROR-LOG--------
 
-  📅 Date: {}
-  👥 Group ID: {}
-  👤 Sender ID: {}
-  🔗 Message Link: {}
+  📅 Date: {d}
+  👥 Group ID: {cid}
+  👤 Sender ID: {sid}
+  🔗 Message Link: {msg}
 
   ➡️ Event Trigger:
-  {}
+  {t}
 
   ℹ️ Traceback Info:
-  {}
+  {f}
 
   🚨 Error Text:
-  {}
-errrlogend: |-
-
-  --------END-DOGE-USERBOT-ERROR-LOG--------
+  {e}
+errrlogend: --------END-DOGE-USERBOT-ERROR-LOG--------
 errrlogtext1: "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
 errrlogtext2: __💬 If you wanna you can report it.__
 errrlogtext3: "🐾 Forward this message {}."

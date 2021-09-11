@@ -48,6 +48,7 @@ from . import (
 
 plugin_category = "misc"
 
+stickersbot = "@Stickers"
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
 EMOJI_SEN = [
     "Можно отправить несколько смайлов в одном сообщении, однако мы рекомендуем использовать не больше одного или двух на каждый стикер.",
@@ -330,7 +331,7 @@ async def kang(args):  # sourcery no-metrics
             "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
             not in htmlstr
         ):
-            async with args.client.conversation("Stickers") as conv:
+            async with args.client.conversation(stickersbot) as conv:
                 packname, emoji = await add_to_pack(
                     dogevent,
                     conv,
@@ -353,7 +354,7 @@ async def kang(args):  # sourcery no-metrics
             )
         else:
             await dogevent.edit("`Brewing a new Pack...`")
-            async with args.client.conversation("Stickers") as conv:
+            async with args.client.conversation(stickersbot) as conv:
                 otherpack, packname, emoji = await newpacksticker(
                     dogevent,
                     conv,
@@ -508,7 +509,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
                 in htmlstr
             ):
-                async with event.client.conversation("Stickers") as conv:
+                async with event.client.conversation(stickersbot) as conv:
                     pack, dogpackname = await newpacksticker(
                         dogevent,
                         conv,
@@ -523,7 +524,7 @@ async def pack_kang(event):  # sourcery no-metrics
                         pkang=True,
                     )
             else:
-                async with event.client.conversation("Stickers") as conv:
+                async with event.client.conversation(stickersbot) as conv:
                     pack, dogpackname = await add_to_pack(
                         dogevent,
                         conv,
