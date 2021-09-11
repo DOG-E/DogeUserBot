@@ -1,0 +1,1 @@
+# **[🐶 @DogeUserBot](https://t.me/DogeUserBot)_'s cache files are stored here!_**

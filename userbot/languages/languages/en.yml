@@ -1,0 +1,720 @@
+# @DogeUserBot - < https://t.me/DogeUserBot >
+# Copyright (C) 2021 - DOG-E
+# All rights reserved.
+#
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
+# < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
+# ================================================================
+---
+name: English
+natively: 🇬🇧 English
+
+authors:
+  - mutlcc
+
+
+# BASIS #
+# everwhere;
+processing: "**⏳ Processing...**"
+finalprocess: "**⌛ Finalizing process...**"
+uploading: "**📤 Uploading...**"
+downloading: "**📥 Downloading...**"
+success: "**✅ Sᴜccᴇss:**"
+succ_: ✅ Success!
+result: Result
+unknown: "**📍 Unknown!**"
+unknwn: Unknown
+none: None
+errr: "**🚨 Eʀʀoʀ:**"
+errr_: 🚨 Error
+failed: "**❌ Fᴀɪʟᴇᴅ:**"
+noresult: ❌ No result
+invalid: INVALID
+link: Link
+here: HERE
+note: Noᴛᴇ
+cmd: Cᴍᴅ
+info: Iɴꜰo
+text: text
+replymsg: reply to user message
+or: or
+reason: reason
+support: Support
+category: Category
+
+# user;
+namex: Name
+fnamex: First Name
+userx: User
+username: username
+user_name: User name
+
+# times;
+s: s
+seconds: second(s)
+m: m
+minutes: minute(s)
+h: h
+hours: hour(s)
+days: day(s)
+year: year
+date: "**📅 Date:**"
+
+# months;
+jan: January
+feb: February
+mar: March
+apr: April
+may: May
+jun: June
+jul: July
+aug: August
+sep: September
+oct: October
+nov: November
+dec: December
+
+# html;
+html_filename: File Name
+
+
+# CORE #
+# client;
+errrnotgroup: "`🐾 I don't think this is a group.`"
+errrnotpm: "`🐾 I don't think this is a personal chat.`"
+errrmsgnotmodified: 🚨 Message was same as previous message
+errrmsgidinvalid: 🚨 Message was deleted or can't be found
+errrlogdisclaimer: |
+  ℹ️ DISCLAIMER:
+  This file is pasted ONLY here,
+  we logged only fact of error and date,
+  we respect your privacy,
+  if you've any confidential data here,
+  you may not report this error.
+  No one won't see your data.
+
+  --------BEGIN-DOGE-USERBOT-ERROR-LOG--------
+
+  📅 Date: {}
+  👥 Group ID: {}
+  👤 Sender ID: {}
+  🔗 Message Link: {}
+
+  ➡️ Event Trigger:
+  {}
+
+  ℹ️ Traceback Info:
+  {}
+
+  🚨 Error Text:
+  {}
+errrlogend: |
+
+  --------END-DOGE-USERBOT-ERROR-LOG--------
+errrlogtext1: "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+errrlogtext2: __💬 If you wanna you can report it.__
+errrlogtext3: "🐾 Forward this message {}."
+errrlogtext4: __**🦴 Nothing is logged except of error and date!**__
+errrlogtext5: Event Trigger
+errrlogtext6: Error Report
+dbugkilledprocess: Killed %d which was still running.
+
+# cmdinfo;
+description: Description
+aflags: Available Flags
+aoptions: Available Options
+stypes: Supported Types
+usage: Usage
+examples: Examples
+others: Others
+
+# decorators;
+help_text: |
+  🐶 Doɢᴇ UsᴇʀBoᴛ
+
+  🐾 wow! You aren't my master.
+
+  🐕‍🦺 Adopt a @DogeUserBot too!
+
+# events;
+needadmin: I need admin rights to be able to use this command!
+errrsecuritymsg: |
+  Sorry! I can't send this message in public chats,
+  it may have some sensitive data,
+  so [check in your Bot Log group]({}).
+
+# fasttelethon;
+dbugftelethon1: "Sending file part {}/{}"
+dbugftelethon2: " with {} bytes"
+dbugftelethon3: "Exporting auth to DC {}"
+dbugftelethon4: "Starting parallel download: "
+dbugftelethon5: "Part {} downloaded"
+dbugftelethon6: Parallel download finished, cleaning up connections...
+
+# inlinebot;
+menutext: |
+  🐾 Hᴇʟᴘᴇʀ
+
+  ◽ Doɢᴇ oғ {}
+btnhelp: Hᴇʟᴘ
+btnmenu: Mᴇɴᴜ
+btnback: Bᴀcᴋ
+btnadmin: Aᴅᴍɪɴ
+btnfun: Fᴜɴ
+btnmisc: Mɪsc
+btntool: Tooʟ
+btnclose: CLOSE
+btnclse: Cʟosᴇ
+btnurlchannel: Cʜᴀɴɴᴇʟ
+btnurlsup: Sᴜᴘᴘoʀᴛ
+btnurlplugin: Pʟᴜɢɪɴ
+btnshowmsg: Sʜoᴡ Mᴇssᴀɢᴇ
+btnshowoptions: Sʜoᴡ Oᴘᴛɪoɴs
+notownermsg: |
+  ❤ Doge is an advanced dog that makes using Telegram easy and fun.
+
+  **🐕‍🦺 If you want to have a Doge on Telegram,
+  🐾 Come to the [support group]({})!**
+btnadoptdesc: 🐕‍🦺 Adopt a @DogeUserBot too!
+btninfohelp: |
+  🧩 Pʟᴜɢɪɴs: {}
+  ⌨️ Coᴍᴍᴀɴᴅs: {}
+
+  {}doge .c <command>: For any command info.
+  {}s <query>: To search any commands.
+btnmenuhelp: |
+  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
+  **🧩 Pʟᴜɢɪɴs:** {}
+  **⌨️ Coᴍᴍᴀɴᴅs:** {}
+btnmenuhelpb: |
+  **🧩 Pʟᴜɢɪɴ:** {}
+  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
+  **⌨️ Coᴍᴍᴀɴᴅs:** {}
+btnmenucmdhelp: |
+  **⌨️ Coᴍᴍᴀɴᴅ:** `{}{}`
+  **🧩 Pʟᴜɢɪɴ:** {}
+  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
+
+  **ℹ️ Iɴғo:**
+  {}
+
+# managers;
+linkheremsg: 👀 Message was to big so pasted to bin
+
+
+# SQL_HELPER #
+errrdburl: 🚨 DB_URI isn't configured. Features depending on the database might have issues.
+
+
+# UTILS #
+# pluginmanager;
+succ_imported: "✅ Successfully imported "
+
+# startup;
+wrnnfixdcid: |
+  Fixed DC ID in session from {}
+   to {}
+sendmsgg_ys: |
+  **🦮 SORRY DUDE!
+  💔 I won't work with you.
+  🐶 My admins have banned you from using @DogeUserBot!
+
+  💡 To find out why,
+  🤡 Check out @DogeGays
+
+  🌪 To appeal,
+  💬 You can write to my @DogeSup group.**
+errrg_ysuse: |
+  🐶 My admins have banned you from using @DogeUserBot!
+  🐾 Check your saved messages in Telegram.
+creatingabot: 🦴 I'm creating your Telegram assistant bot with @BotFather!
+_abotname: "'s Assɪsᴛᴀɴᴛ Boᴛ"
+abotname: 🐶 Mʏ Doɢᴇ Assɪsᴛᴀɴᴛ Boᴛ
+abotinline: 🐶 Search...
+errrcreateabot: 🚨 Create a bot with @BotFather and set it's token to BOT_TOKEN variable and restart me.
+succ_createabot: "✅ DONE! @{} I'm created your Telegram assistant bot successfully!"
+errrmostbot: 🚨 Please delete some of your Telegram bots at @Botfather or set variable BOT_TOKEN with token of a bot.
+ipchanged: 🔄 IP change detected!
+errrlplugin: "🚨 Unable to load {} because of error {}"
+errrglogsendmp: "🚨 Permissions missing to send messages for the specified {}."
+errrglogaddup: "🚨 Permissions missing to addusers for the specified {}."
+errrglogid: "🚨 I couldn't find {}. Make sure it's correct."
+errrglogunsup: "🚨 {} is unsupported. Make sure it's correct."
+errrglog: "🚨 An exception occured upon trying to verify the {}."
+_log: Loɢ
+dontdelgroup: "🚧 DON'T DELETE THIS GROUP!\n\n"
+ifdel: "🗑 If you delete,\n"
+ifdelbotlog: "🐾 Doge maybe won't live.\n\n"
+dontdelgroupmsg: |
+  **🚧 DON'T LEAVE OR
+  🚧 DON'T DELETE OR
+  🚧 DON'T CHANGE THIS GROUP!**
+succ_cglog: "✅ Private group for {} is created successfully and added variable."
+ifdelpmlog: "🚫 PM Logger won't work.\n\n"
+ifdelgorc: |
+  **🦴 IF YOU WANT TO DELETE,
+  🔅 MUST FIRST WRITE:**
+_extraplugins: Exᴛʀᴀ Pʟᴜɢɪɴs
+ifdelextrap: "🧩 all installed extra plugins will be lost.\n\n"
+succ_cextrap: ✅ Private channel for PLUGIN_CHANNEL is created successfully and added variable.
+dogereadyuse: "**🧡 Doɢᴇ UsᴇʀBoᴛ Rᴇᴀᴅʏ To Usᴇ 🧡**"
+dogebackalive: is back and alive.
+customizeabot: 🥏 I'm customizing your Telegram assistant bot with @BotFather!
+abotabout: |
+  🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {}
+
+  🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾
+abotdesc: |
+  🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ
+  🧡 Mᴀsᴛᴇʀ: {}
+
+  🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾
+customizedabot: "✅ DONE! @{} I'm customized your Telegram assistant bot successfully!"
+startingdoge: STARTING DOGE USERBOT
+startupdoge: STARTUP COMPLETED
+wowialiveready: |
+  🐶 wow! Doge is alive!
+  🐾 Doge UserBot is ready to use.
+writealivetc: |
+  Write {}alive to check.
+  Learn the commands by writing {}doge
+visitoursup: Visit our Telegram group for help
+
+
+# HELPERS #
+# memeshelper;
+slap1: "{u} {h} {v} with a {i}."
+slap2: "{u} {h} {v} in the face with a {i}."
+slap3: "{u} {h} {v} around a bit with a {i}."
+slap4: "{u} {t} a {i} at {v}."
+slap5: "{u} grabs a {i} and {t} it at {v}'s face."
+slap6: "{u} {h} a {i} at {v}."
+slap7: "{t} a few {i} at {v}."
+slap8: "{u} put {v} in the friendzone."
+slap9: "{u} slaps {v} with a DMCA takedown request!"
+slap10: "{u} sits on {v}'s face while slamming a {i} {w}."
+slap11: "{u} starts slapping {v} silly with a {i}."
+slap12: "{u} pins {v} down and repeatedly {h} them with a {i}."
+slap13: "{u} RSA-encrypted {v} and deleted the private key."
+slap14: "put {v} in check-mate."
+slap15: "{u} hit {v} with a small, interstellar spaceship."
+slap16: "{u} quickscoped {v}."
+slap17: "{u} picks up a {i} and {h} {v} with it."
+slap18: "made {v} a knuckle sandwich."
+slap19: "{u} {h} {v} {w} with a {i}."
+slap20: "{u} slapped {v} with pure nothing."
+slap21: "{u} gave a friendly push to help {v} learn to swim in lava."
+slap22: "sent {v} down the memory hole."
+slap23: "threw {v} off a building."
+slap24: "{u} spammed {v}'s email."
+sitem1: cast iron skillet
+sitem2: large trout
+sitem3: baseball bat
+sitem4: cricket bat
+sitem5: wooden cane
+sitem6: nail
+sitem7: printer
+sitem8: shovel
+sitem9: pair of trousers
+sitem10: CRT monitor
+sitem11: diamond sword
+sitem12: baguette
+sitem13: physics textbook
+sitem14: toaster
+sitem15: portrait of Richard Stallman
+sitem16: television
+sitem17: tea
+sitem18: five ton truck
+sitem19: roll of duct tape
+sitem20: book
+sitem21: laptop
+sitem22: old television
+sitem23: sack of rocks
+sitem24: rainbow trout
+sitem25: cobblestone block
+sitem26: lava bucket
+sitem27: rubber chicken
+sitem28: spiked bat
+sitem29: gold block
+sitem30: fire extinguisher
+sitem31: heavy rock
+sitem32: chunk of dirt
+sitem33: beehive
+sitem34: piece of rotten meat
+sitem35: bear
+sitem36: ton of bricks
+sthrow1: throws
+sthrow2: flings
+sthrow3: chucks
+sthrow4: hurls
+shit1: hits
+shit2: whacks
+shit3: fatality hits
+shit4: slaps
+shit5: smacks
+shit6: bashes
+swhere1: in the chest
+swhere2: on the head
+swhere3: on the butt
+swhere4: on the crotch
+
+# progress;
+eta: "**⏲ Eᴛᴀ:**"
+eduration: "**⏱ Dᴜʀᴀᴛɪoɴ:**"
+filename: "**📋 Fɪʟᴇ Nᴀᴍᴇ:**"
+estatus: "**📊 Sᴛᴀᴛᴜs:**"
+
+# FUNCTIONS;
+# functions;
+notdata: Not data
+
+# ialivetext;
+notsetdb: 🚨 Noᴛ Sᴇᴛ Dᴀᴛᴀʙᴀsᴇ
+running: Rᴜɴɴɪɴɢ
+ialivetext: |
+  🐶 Doɢᴇ UsᴇʀBoᴛ
+  🐾 Iɴғo
+
+  🔹 To check it's working:
+  {}alive
+
+  🔹 To get help:
+  {}doge
+
+# jikan;
+scheduledanimes: "Scheduled animes for {} are:"
+type: Type
+genres: Genres
+status: Status
+episode: Episode
+score: Score
+readmore: Read More
+animestats: Anime Stats
+totalanimew: Total Anime Watched
+totalepisodew: Total Episode Watched
+totaltimespent: Total Time Spent
+avaragescore: Average Score
+mangastats: Manga Stats
+totalmangar: Total Manga Read
+totalchapterr: Total Chapters Read
+totalvolumer: Total Volumes Read
+trailer: Trailer
+notrailer: No Trailer Available
+alsoknownas: Also known as
+character: Character
+acharacterrole: About Character and Role
+synopsis: Synopsis
+maincharacters: Main Characters
+moreinfo: More Info
+studios: Studios
+viewonmal: View on MAL
+viewonanilist: View on anilist.co
+aired: Aired
+episodes: Episodes
+rating: Rating
+premiered: Premiered
+duration: Duration
+producers: Producers
+volumes: Volumes
+chapters: Chapters
+rank: Rank
+
+# utils;
+errrinvalidtime: Invalid time amount specified.
+errrexpectedtime: Expected s, m, h, d or w but got
+
+# utube;
+errrfetchresult: Couldn't fetch results
+edescription: "**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:**"
+eviews: "**◾ Vɪᴇᴡs:**"
+views: Views
+uploaddate: Upload Date
+uploader: Uploader
+btnbest: Bᴇsᴛ
+errrvideocountry: The uploader hasn't made this video available in your country.
+
+# UTILS;
+# events;
+anonadmin: "`🐾 Well that's an anonymous admin!`"
+errrneeduid: "`ℹ️ Pass the user's username, ID or reply!`"
+errrfetchuser: "__Couldn't fetch user to proceed further.__"
+no_name: No name
+errrinvalidcg: "`🚨 Invalid channel/group!`"
+errrporbancg: "`🚨 This is a private channel/group or I'm banned from there.`"
+errrnocg: "`🚨 Channel or supergroup doesn't exist!`"
+errrfetchchat: "`ℹ️ Couldn't fetch the chat!`"
+
+# format;
+errrpastingtext: While pasting text to site
+
+# paste;
+p_pasteblmsg: "**You have created a new paste in pasty bin.**\n\nLink to pasty is [HERE]({}).\n\nYou can delete that paste by using this token `{}`"
+errrpaste: "`🚨 Unable to reach {}!`"
+errrpastetext: "`🚨 Something went wrong!`"
+t_pasteblmsg: "Created new Telegraph account {} for the current session.\n\n**Don't give this URL to anyone, even if they say they are from Telegram!**"
+
+# tools;
+mediatopicmsg: "**Transfiguration time! Converting to...**"
+
+
+# ASSISTANT #
+# basis;
+errrnoservermsg: This message no longer exists in Doge server.
+
+# bot_pms;
+botstartedme: has started me
+botrestartedme: has restarted me
+botodefstartmsg: |
+  **🐶 wow!**
+  🐾 Hi {}!
+
+  **🐶 I am {}'s loyal dog.**
+  💭 You can contact to my master from here.
+botdefstartmsg: |
+  **🐶 wow!
+  🐾 Hey {}!
+
+  💬 How can I help you?**
+errrstartbot: There was a error while user starting your bot
+errrstoringmsg: While storing messages details in database
+editedbotmsgbyuser: "**⬆️ This message was edited by the user** {} **as:**\n"
+deletedbotmsgbyuser: "**⬆️ This message was deleted by the user** {}."
+replymsginfo: "**ℹ️ Reply to a message to get message info.**"
+search_db: "`🔎 Searching my database for: this user...`"
+errrfinduserdb: Sorry! I couldn't find this user in my database
+sentmsgby: This message was sent by
+btnban: Bᴀɴ
+btnafloodoff: Boᴛ AɴᴛɪFʟooᴅ Oғғ
+errrupdateflood: While updating flood count
+wrnnspammingbot: "is spamming your {}! -> [ Flood rate ({}) ]"
+botquickaction: Quick Action
+botquickaction_: Ignored from bot for a while
+wrnnfloodingbot: "is flooding your {}!"
+infomsgrmsudo: "Check `{}doge rmsudo` to remove the user from Sudo."
+banuserfbot: "Auto banned flooding from {} [exceeded flood rate of ({})]"
+wrnnfloodwbot: flood warning!
+banning: is banning
+banned: Banned!
+
+# botcontrols;
+botcmdhead: The commands in the bot are
+botcmdnote: This commands work only in this bot
+botcmdinfo1: You have noticed that forwarded stickers/emoji doesn't have forward tag so you can identify the user who sent thoose messages by this cmd.
+botcmdnote1: It works for all forwarded messages. Even for users who's permission forward message nobody.
+botcmdinfo2: Reply to a user message with reason so he will be notified as you banned from the bot and his messages won't be forwarded to you further.
+botcmdnote2: Reason is must. Without reason it won't work.
+botcmdinfo3: Reply to user message or provide username/userid to unban from the bot.
+botcmdnote3: To check banned users list use.
+botcmdinfo4: Reply to a message to get broadcasted to every user who started your bot. To get list of users use.
+botcmdnote4: If user stoped/blocked the bot then he will be removed from your database that is he will erased from the bot_starters list.
+shldreplymsg: "**ℹ️ Reply to a message for broadcasting first!**"
+broadcasting: "**🔊 Broadcasting...**"
+nostartedbc: "**ℹ️ No one started your {} yet.**"
+errrfetchusers: While fetching users list.
+notifbc: "**🔊 You received a new broadcast.**"
+errrbcing: While broadcasting.
+succ_bc: "🔊 Successfully broadcasted message to ➡️ <b>{} users.</b>"
+blockedbc: "<b>{} users</b> blocked your {} recently, so have been removed."
+bcprocesstook: |
+  ⏱ <code>Process took: {}</code>.
+head_botusers: To get users list who started bot.
+desc_botusers: To get compelete list of users who started your bot.
+nostartedbot: "**ℹ️ No one started your {} yet.**"
+liststartedbotu: "The list of users who started your {} are:"
+errrfinduser: "**🚨 I couldn't find user."
+shldreasontoban: "**🚨 To ban the user provide reason first!**"
+errrbanmaster: "**🚨 I can't ban you master.**"
+alreadybanned: User already exists in my banned users list.
+unotbanned: "{} doesn't exist in my banned users list."
+head_botbans: To get users list who are banned in bot.
+desc_botbans: To get list of users who are banned in bot.
+nobannedbot: "**ℹ️ No one is banned in your {BOT_USERNAME} yet.**"
+listbannedbotu: "The list of users who are banned in your {} are:"
+head_botantif: To enable or disable bot antiflood.
+desc_botantif: "If it was turned on then after 10 messages or 10 edits of same messages in less time then your bot auto locks them."
+alreadyafloodenb: "**ℹ️ Bot AntiFlood was already enabled.**"
+afloodenabled: "**ℹ️ Bot AntiFlood enabled.**"
+alreadyaflooddsb: "**ℹ️ Bot AntiFlood was already disabled.**"
+aflooddisabled: "**ℹ️ Bot AntiFlood disabled.**"
+
+# botlanguages;
+doges_languages: Doɢᴇ's Lᴀɴɢᴜᴀɢᴇs
+changed_dogelang: "**🌍 From now on, I will speak in {}.**"
+btnchooselang: Cʜoosᴇ ᴀ Lᴀɴɢᴜᴀɢᴇ
+
+# botmanagers;
+progress: Progress
+foreverbannedbot: You have been banned forever from using this bot.
+unbannedbot: You have been unbanned from this bot.
+nowsendmsgbot: From now on you can send messages here to contact my master.
+
+# buttonmaker;
+head_bbutton: To create button posts.
+note_bbutton: "For working of this you need your bot ({}) in the group/channel where you're using and Markdown is default to HTML."
+use_button: "[Name on button](link you want to open)"
+shldwrite_button: "`🔲 What text should I use in button post?`"
+head_button: To create button posts via inline.
+note_button: Markdown is default to HTML.
+option_button: If you button to be in same row as other button then follow this (link:same) in 2nd button.
+custombtns: Custom Buttons
+
+# calculator;
+icalctext: Doɢᴇ Cᴀʟcᴜʟᴀᴛoʀ
+icalcopen: Oᴘᴇɴ Cᴀʟcᴜʟᴀᴛoʀ
+icalcclear: Cleared
+
+# hide;
+hidemsg: Hidden Message
+
+# secret;
+secretmsg: Secret Message
+secrettext: "🔒 A whisper message to {}, only {} can see."
+
+# troll;
+trollmsg: Troll Message
+trolltext: "🤡 Only {} can't access this message!"
+
+# youtube;
+head_iyt: Video downloader from YouTube with inline buttons.
+desc_iyt: To search and download YouTube videos by inline buttons.
+use_iyt: Link or text or with reply
+shldwrite_yt: Give input or reply to a valid YouTube URL!
+search_yt: "**🔎 Searching YouTube for:** `{}`..."
+errranyresult: Sorry! I can't find any results.
+downloadingyt: "**📥 Please wait, {} downloading...**"
+formatcode: Format Code
+downloading_yt: Downloading
+tryingupload: "**📤 Trying to upload...**"
+errrsearchdata: |
+  🚨 Search data doesn't exists anymore.
+
+  🔁 Please perform search again.
+errrlostinfo: |
+  🚨 Your bot lost the information about this.
+
+  🔁 Please search again.
+thatsall: 🔔 That's all!
+viewchangedto: View Changed to
+viewchangedtolist: List
+allvideostitle: "ℹ️ Showing {} YouTube video results for the given query..."
+btnurlopen: Cʟɪcᴋ ᴛo oᴘᴇɴ
+btndetailedview: Dᴇᴛᴀɪʟᴇᴅ ᴠɪᴇᴡ
+viewchangedtodetailed: Detailed
+btnlistall: Lɪsᴛ Aʟʟ
+btndownload: Doᴡɴʟoᴀᴅ
+errrnofind: 🙁 I couldn't find this.
+errrnofinddesc: "🚨 No results found for `{}`"
+
+
+# LANGUAGES #
+# CONSTANTS;
+# afk;
+def_afk1: |
+  🪐 I have a rush job right now,
+  can you send message later?
+  🙃 Don't worry, I will come again...
+def_afk2: |
+  📴 The person you're calling cannot answer the phone at the moment.
+  🔈 After the signal tone, you can leave your message on your own tariff.
+  💸 The message fee is 69¢.
+  🔉 beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeep!
+def_afk3: |
+  ✨ I'll be back in a few minutes.
+  💨 If I don't come, you read this message again.
+def_afk4: |
+  🎈 Sometimes the best things in life are worth waiting for...
+  💫 I'll be right back.
+def_afk5: |
+  🪐 I'm far from 7 seas & 7 countries,
+  🏝 7 waters & 7 continents,
+  ⛰ 7 mountains & 7 hills,
+  🏕 7 plains & 7 mounds,
+  🌊 7 pools & 7 lakes,
+  🌿 7 springs & 7 meadows,
+  🏙 7 cities & 7 neighborhoods,
+  🏘 7 blocks & 7 houses...
+
+  📵 A place where even messages can't reach me!
+def_afk6: |
+  ⌨️ I'm away from the keyboard right now,
+  but if you shout loud enough at the screen,
+  👂 I can hear you.
+def_afk7: |
+  🔮 If I were here,
+  I'd tell you where I am.
+
+  🍁 But I'm not the one who wrote this message,
+  Ask me when I get back...
+def_afk8: |
+  ⛅ I'm far away!
+  ☁ I don't know when I'll be back!
+  🌬 Hopefully in a few minutes!
+def_afk9: |
+  ☄ You don't know if I'm good or bad,
+  🌠 but I can tell that I'm away from the keyboard.
+def_afk10: 🧑‍💻 🪐 Busy learning HTML to hack NASA.
+def_afk11: 🕳 I went to the void.
+def_afk12: 😪 I'm not in the mood to be alive.
+def_afk13: 🗺 Busy proving the flat earth theory.
+
+# kickme;
+def_kickme1: 👋🏻 Bye bye I'm leaving from here!
+def_kickme2: |
+  You'll notice that I'm not in the group the day I left unannounced...
+  That's why I'm leaving this message.
+def_kickme3: |
+  🪐 I'm far from 7 seas & 7 countries,
+  🏝 7 waters & 7 continents,
+  ⛰ 7 mountains & 7 hills,
+  🏕 7 plains & 7 mounds,
+  🌊 7 pools & 7 lakes,
+  🌿 7 springs & 7 meadows,
+  🏙 7 cities & 7 neighborhoods,
+  🏘 7 blocks & 7 houses...
+
+  🤡 In short, to the furthest place from this group..!
+
+# kang;
+def_kang1: 🤪 I'm stealing your sticker...
+def_kang2: 😈 Long live theft..!
+def_kang3: 🎫 I'm inviting this sticker to my own pack...
+def_kang4: 🐾 I have to steal this..!
+def_kang5: 💫 I'm imprisoning your sticker..!
+def_kang6: 🪐 Why not this nice sticker in my package?
+def_kang7: 👁‍🗨 Why shouldn't I have this nice sticker on my package as well?
+def_kang8: 👀 Mr.Steal your sticker is stealing this sticker...
+def_kang9: 🔮 I'm using witchery to kang this sticker...
+
+
+# PLUGINS #
+# ADMIN;
+noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+
+
+# FILTERS;
+fmsgtext: |
+  **⛔ FILTER USE NOT ALLOWED HERE!**
+  🎈 You can use filters in the @SohbetDoge group.
+
+
+# OTHERS;
+cmsgtext: |
+  **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
+
+  💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**
+mmsgtext: |
+  **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
+
+  💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**
+pmsgtext: |
+  **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
+
+  💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**
+wowmydev: |
+  **🐕‍🦺 Sorry dude.
+  🐾 Don't ask me to do this!
+  🐾 I won't do this to my developer.**
+wowcmydev: This user is my developer!
+wowcg_y: This user has been banned from using Doge.
+...
