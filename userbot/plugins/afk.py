@@ -16,9 +16,9 @@ from telethon.tl.types import InputPrivacyKeyStatusTimestamp, PrivacyValueAllowA
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    DOGEAFK,
     PM_LOGGER_GROUP_ID,
     _format,
+    constants,
     doge,
     edl,
     gvar,
@@ -292,9 +292,9 @@ async def on_afk(event):  # sourcery no-metrics
                 )
         else:
             if AFK_.reason:
-                dogerafk = DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                dogerafk = constants.DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
             else:
-                dogeafk = DOGEAFK
+                dogeafk = constants.DOGEAFK
 
         if AFK_.afk_type == "media":
             if AFK_.reason:

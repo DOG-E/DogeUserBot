@@ -21,8 +21,7 @@ from ..core.managers import edl, eor
 from ..core.session import doge, tgbot
 from ..helpers import *
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
-from ..languages import lan
-from ..languages.constants import *
+from ..languages import constants, lan
 
 LOGS = logging.getLogger(__name__)
 bot = doge

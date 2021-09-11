@@ -6,10 +6,10 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from ... import tr
 from ...Config import Config
 from ...languages import lan
 
+tr = Config.CMDSET
 
 def check_data_base_heal_th():
     # https://stackoverflow.com/a/41961968

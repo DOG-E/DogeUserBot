@@ -33,8 +33,8 @@ from telethon.tl.types import (
 )
 
 from . import (
-    DOGEKANG,
     _dogetools,
+    constants,
     crop_and_divide,
     doge,
     edl,
@@ -260,11 +260,11 @@ async def kang(args):  # sourcery no-metrics
     userid = user.id
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
-            dogevent = await eor(args, DOGEKANG)
+            dogevent = await eor(args, constants.DOGEKANG)
             photo = BytesIO()
             photo = await args.client.download_media(message.photo, photo)
         elif "image" in message.media.document.mime_type.split("/"):
-            dogevent = await eor(args, DOGEKANG)
+            dogevent = await eor(args, constants.DOGEKANG)
             photo = BytesIO()
             await args.client.download_file(message.media.document, photo)
             if (
@@ -274,7 +274,7 @@ async def kang(args):  # sourcery no-metrics
                 emoji = message.media.document.attributes[1].alt
                 emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
-            dogevent = await eor(args, DOGEKANG)
+            dogevent = await eor(args, constants.DOGEKANG)
             await args.client.download_file(
                 message.media.document, "AnimatedSticker.tgs"
             )
