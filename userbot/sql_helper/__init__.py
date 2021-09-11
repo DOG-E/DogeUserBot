@@ -30,5 +30,7 @@ try:
     BASE = declarative_base()
     SESSION = start()
 except AttributeError as e:
-    LOGS.error("🚨 DB_URI isn't configured. Features depending on the database might have issues.")
+    LOGS.error(
+        "🚨 DB_URI isn't configured. Features depending on the database might have issues."
+    )
     LOGS.error(str(e))
