@@ -12,8 +12,9 @@ from . import memeshelper as dogememes
 from .aiohttp_helper import AioHttp
 from .utils import *
 
+flag = True
 check = 0
-while True:
+while flag:
     try:
         from . import nsfw as hub
         from .functions import *

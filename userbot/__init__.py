@@ -18,7 +18,7 @@ from .sql_helper.globals import dgvar, gvar, sgvar
 __version__ = "1.0"
 __license__ = "GNU Affero General Public License v3.0"
 __author__ = "DogeUserBot < https://github.com/DOG-E/DogeUserBot >"
-__copyright__ = "© Copyright 2021, " + __author__
+__copyright__ = "©️ Copyright 2021, " + __author__
 
 doge.version = __version__
 if gvar("BOT_TOKEN"):

@@ -84,9 +84,10 @@ async def yt_inline(event):
         return await edl(event, f"**📺 {lan('shldwrite_yt')}**")
 
     dogevent = await eor(event, lan("search_yt").format(input_url))
+    flag = True
     cout = 0
     results = None
-    while True:
+    while flag:
         try:
             results = await event.client.inline_query(BOT_USERNAME, f"yt {input_url}")
             break

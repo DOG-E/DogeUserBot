@@ -31,9 +31,6 @@ def check_owner(func):
 
         else:
             HELP_TEXT = gvar("HELP_TEXT") or lan("help_text")
-            await c_q.answer(
-                HELP_TEXT,
-                alert=True,
-            )
+            await c_q.answer(HELP_TEXT, alert=True)
 
     return wrapper

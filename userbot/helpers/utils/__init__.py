@@ -9,8 +9,9 @@
 from .extdl import *
 from .paste import *
 
+flag = True
 check = 0
-while True:
+while flag:
     try:
         from . import format as _format
         from . import tools as _dogetools

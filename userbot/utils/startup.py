@@ -231,8 +231,9 @@ async def load_plugins(folder):
             shortname = path1.stem
             try:
                 if shortname.replace(".py", "") not in Config.NO_LOAD:
+                    flag = True
                     check = 0
-                    while True:
+                    while flag:
                         try:
                             load_module(
                                 shortname.replace(".py", ""),
