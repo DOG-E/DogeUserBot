@@ -203,7 +203,7 @@ linkheremsg: 👀 Message was to big so pasted to bin
 
 # UTILS #
 # pluginmanager;
-succ_imported: "✅ Successfully imported "
+succ_imported: imported!
 
 # startup;
 wrnnfixdcid: |-
