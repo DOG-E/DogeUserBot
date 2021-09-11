@@ -29,7 +29,6 @@ from telethon.tl.functions.contacts import UnblockRequest
 
 from ...languages import lan
 
-
 imdb = IMDb()
 mov_titles = [
     "long imdb title",
