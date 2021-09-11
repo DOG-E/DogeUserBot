@@ -147,7 +147,10 @@ class DogeUserBotClient(TelegramClient):
                         }
                         ftext += "\n\n--------END DOGE USERBOT ERROR LOG--------"
                         pastelink = await paste_message(
-                            ftext, pastetype="t", markdown=False, title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾"
+                            ftext,
+                            pastetype="t",
+                            markdown=False,
+                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
                         )
                         text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**\n\n"
                         link = "[here](https://t.me/DogeSup)"
@@ -269,7 +272,10 @@ class DogeUserBotClient(TelegramClient):
                         }
                         ftext += "\n\n--------END DOGE USERBOT ERROR LOG--------"
                         pastelink = await paste_message(
-                            ftext, pastetype="t", markdown=False, title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾"
+                            ftext,
+                            pastetype="t",
+                            markdown=False,
+                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
                         )
                         text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**\n\n"
                         link = "[here](https://t.me/DogeSup)"
