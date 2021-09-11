@@ -10,13 +10,12 @@
 FROM sandy1709/catuserbot:slim-buster
 
 # Clone Doge repository + work directory + minor adjustment
-RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/DogeUserBot
-WORKDIR /root/DogeUserBot
-ENV PATH="/root/DogeUserBot/bin:$PATH"
+RUN git clone https://github.com/DOG-E/DogeUserBot.git /root/userbot
+WORKDIR /root/userbot
+ENV PATH="/home/userbot/bin:$PATH"
 
 # Install requirements
 RUN pip3 install --no-cache-dir -U -r requirements.txt
 
 # Run Doge
-RUN chmod a+x doger
-CMD ["./doger"]
+CMD ["python3", "-m", "userbot"]

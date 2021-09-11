@@ -48,12 +48,12 @@ def _format_about(
         del about["description"]
 
     if "flags" in about:
-        tmp_chelp += f"\n\n**🐾 {lan('flags')}:**"
+        tmp_chelp += f"\n\n**🐾 {lan('aflags')}:**"
         if isinstance(about["flags"], dict):
             for f_n, f_d in about["flags"].items():
                 tmp_chelp += f"\n    ▫️ `{f_n}`: __{f_d.lower()}__"
         else:
-            tmp_chelp += f"\n    {about['aflags']}"
+            tmp_chelp += f"\n    {about['flags']}"
         del about["flags"]
 
     if "options" in about:

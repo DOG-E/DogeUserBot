@@ -85,7 +85,7 @@ errrnotgroup: "`🐾 I don't think this is a group.`"
 errrnotpm: "`🐾 I don't think this is a personal chat.`"
 errrmsgnotmodified: 🚨 Message was same as previous message
 errrmsgidinvalid: 🚨 Message was deleted or can't be found
-errrlogdisclaimer: |
+errrlogdisclaimer: |-
   ℹ️ DISCLAIMER:
   This file is pasted ONLY here,
   we logged only fact of error and date,
@@ -109,7 +109,7 @@ errrlogdisclaimer: |
 
   🚨 Error Text:
   {}
-errrlogend: |
+errrlogend: |-
 
   --------END-DOGE-USERBOT-ERROR-LOG--------
 errrlogtext1: "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
@@ -130,7 +130,7 @@ examples: Examples
 others: Others
 
 # decorators;
-help_text: |
+help_text: |-
   🐶 Doɢᴇ UsᴇʀBoᴛ
 
   🐾 wow! You aren't my master.
@@ -139,7 +139,7 @@ help_text: |
 
 # events;
 needadmin: I need admin rights to be able to use this command!
-errrsecuritymsg: |
+errrsecuritymsg: |-
   Sorry! I can't send this message in public chats,
   it may have some sensitive data,
   so [check in your Bot Log group]({}).
@@ -153,7 +153,7 @@ dbugftelethon5: "Part {} downloaded"
 dbugftelethon6: Parallel download finished, cleaning up connections...
 
 # inlinebot;
-menutext: |
+menutext: |-
   🐾 Hᴇʟᴘᴇʀ
 
   ◽ Doɢᴇ oғ {}
@@ -171,27 +171,27 @@ btnurlsup: Sᴜᴘᴘoʀᴛ
 btnurlplugin: Pʟᴜɢɪɴ
 btnshowmsg: Sʜoᴡ Mᴇssᴀɢᴇ
 btnshowoptions: Sʜoᴡ Oᴘᴛɪoɴs
-notownermsg: |
+notownermsg: |-
   ❤ Doge is an advanced dog that makes using Telegram easy and fun.
 
   **🐕‍🦺 If you want to have a Doge on Telegram,
   🐾 Come to the [support group]({})!**
 btnadoptdesc: 🐕‍🦺 Adopt a @DogeUserBot too!
-btninfohelp: |
+btninfohelp: |-
   🧩 Pʟᴜɢɪɴs: {}
   ⌨️ Coᴍᴍᴀɴᴅs: {}
 
   {}doge .c <command>: For any command info.
   {}s <query>: To search any commands.
-btnmenuhelp: |
+btnmenuhelp: |-
   **🗃 Cᴀᴛᴇɢoʀʏ:** {}
   **🧩 Pʟᴜɢɪɴs:** {}
   **⌨️ Coᴍᴍᴀɴᴅs:** {}
-btnmenuhelpb: |
+btnmenuhelpb: |-
   **🧩 Pʟᴜɢɪɴ:** {}
   **🗃 Cᴀᴛᴇɢoʀʏ:** {}
   **⌨️ Coᴍᴍᴀɴᴅs:** {}
-btnmenucmdhelp: |
+btnmenucmdhelp: |-
   **⌨️ Coᴍᴍᴀɴᴅ:** `{}{}`
   **🧩 Pʟᴜɢɪɴ:** {}
   **🗃 Cᴀᴛᴇɢoʀʏ:** {}
@@ -208,10 +208,10 @@ linkheremsg: 👀 Message was to big so pasted to bin
 succ_imported: "✅ Successfully imported "
 
 # startup;
-wrnnfixdcid: |
+wrnnfixdcid: |-
   Fixed DC ID in session from {}
    to {}
-sendmsgg_ys: |
+sendmsgg_ys: |-
   **🦮 SORRY DUDE!
   💔 I won't work with you.
   🐶 My admins have banned you from using @DogeUserBot!
@@ -221,7 +221,7 @@ sendmsgg_ys: |
 
   🌪 To appeal,
   💬 You can write to my @DogeSup group.**
-errrg_ysuse: |
+errrg_ysuse: |-
   🐶 My admins have banned you from using @DogeUserBot!
   🐾 Check your saved messages in Telegram.
 creatingabot: 🦴 I'm creating your Telegram assistant bot with @BotFather!
@@ -242,13 +242,13 @@ _log: Loɢ
 dontdelgroup: "🚧 DON'T DELETE THIS GROUP!\n\n"
 ifdel: "🗑 If you delete,\n"
 ifdelbotlog: "🐾 Doge maybe won't live.\n\n"
-dontdelgroupmsg: |
+dontdelgroupmsg: |-
   **🚧 DON'T LEAVE OR
   🚧 DON'T DELETE OR
   🚧 DON'T CHANGE THIS GROUP!**
 succ_cglog: "✅ Private group for {} is created successfully and added variable."
 ifdelpmlog: "🚫 PM Logger won't work.\n\n"
-ifdelgorc: |
+ifdelgorc: |-
   **🦴 IF YOU WANT TO DELETE,
   🔅 MUST FIRST WRITE:**
 _extraplugins: Exᴛʀᴀ Pʟᴜɢɪɴs
@@ -257,11 +257,11 @@ succ_cextrap: ✅ Private channel for PLUGIN_CHANNEL is created successfully and
 dogereadyuse: "**🧡 Doɢᴇ UsᴇʀBoᴛ Rᴇᴀᴅʏ To Usᴇ 🧡**"
 dogebackalive: is back and alive.
 customizeabot: 🥏 I'm customizing your Telegram assistant bot with @BotFather!
-abotabout: |
+abotabout: |-
   🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {}
 
   🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾
-abotdesc: |
+abotdesc: |-
   🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ
   🧡 Mᴀsᴛᴇʀ: {}
 
@@ -269,10 +269,10 @@ abotdesc: |
 customizedabot: "✅ DONE! @{} I'm customized your Telegram assistant bot successfully!"
 startingdoge: STARTING DOGE USERBOT
 startupdoge: STARTUP COMPLETED
-wowialiveready: |
+wowialiveready: |-
   🐶 wow! Doge is alive!
   🐾 Doge UserBot is ready to use.
-writealivetc: |
+writealivetc: |-
   Write {}alive to check.
   Learn the commands by writing {}doge
 visitoursup: Visit our Telegram group for help
@@ -368,7 +368,7 @@ notdata: Not data
 # ialivetext;
 notsetdb: 🚨 Noᴛ Sᴇᴛ Dᴀᴛᴀʙᴀsᴇ
 running: Rᴜɴɴɪɴɢ
-ialivetext: |
+ialivetext: |-
   🐶 Doɢᴇ UsᴇʀBoᴛ
   🐾 Iɴғo
 
@@ -461,13 +461,13 @@ errrnoservermsg: This message no longer exists in Doge server.
 # bot_pms;
 botstartedme: has started me
 botrestartedme: has restarted me
-botodefstartmsg: |
+botodefstartmsg: |-
   **🐶 wow!**
   🐾 Hi {}!
 
   **🐶 I am {}'s loyal dog.**
   💭 You can contact to my master from here.
-botdefstartmsg: |
+botdefstartmsg: |-
   **🐶 wow!
   🐾 Hey {}!
 
@@ -581,11 +581,11 @@ downloadingyt: "**📥 Please wait, {} downloading...**"
 formatcode: Format Code
 downloading_yt: Downloading
 tryingupload: "**📤 Trying to upload...**"
-errrsearchdata: |
+errrsearchdata: |-
   🚨 Search data doesn't exists anymore.
 
   🔁 Please perform search again.
-errrlostinfo: |
+errrlostinfo: |-
   🚨 Your bot lost the information about this.
 
   🔁 Please search again.
@@ -605,22 +605,22 @@ errrnofinddesc: "🚨 No results found for `{}`"
 # LANGUAGES #
 # CONSTANTS;
 # afk;
-def_afk1: |
+def_afk1: |-
   🪐 I have a rush job right now,
   can you send message later?
   🙃 Don't worry, I will come again...
-def_afk2: |
+def_afk2: |-
   📴 The person you're calling cannot answer the phone at the moment.
   🔈 After the signal tone, you can leave your message on your own tariff.
   💸 The message fee is 69¢.
   🔉 beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeep!
-def_afk3: |
+def_afk3: |-
   ✨ I'll be back in a few minutes.
   💨 If I don't come, you read this message again.
-def_afk4: |
+def_afk4: |-
   🎈 Sometimes the best things in life are worth waiting for...
   💫 I'll be right back.
-def_afk5: |
+def_afk5: |-
   🪐 I'm far from 7 seas & 7 countries,
   🏝 7 waters & 7 continents,
   ⛰ 7 mountains & 7 hills,
@@ -631,21 +631,21 @@ def_afk5: |
   🏘 7 blocks & 7 houses...
 
   📵 A place where even messages can't reach me!
-def_afk6: |
+def_afk6: |-
   ⌨️ I'm away from the keyboard right now,
   but if you shout loud enough at the screen,
   👂 I can hear you.
-def_afk7: |
+def_afk7: |-
   🔮 If I were here,
   I'd tell you where I am.
 
   🍁 But I'm not the one who wrote this message,
   Ask me when I get back...
-def_afk8: |
+def_afk8: |-
   ⛅ I'm far away!
   ☁ I don't know when I'll be back!
   🌬 Hopefully in a few minutes!
-def_afk9: |
+def_afk9: |-
   ☄ You don't know if I'm good or bad,
   🌠 but I can tell that I'm away from the keyboard.
 def_afk10: 🧑‍💻 🪐 Busy learning HTML to hack NASA.
@@ -655,10 +655,10 @@ def_afk13: 🗺 Busy proving the flat earth theory.
 
 # kickme;
 def_kickme1: 👋🏻 Bye bye I'm leaving from here!
-def_kickme2: |
+def_kickme2: |-
   You'll notice that I'm not in the group the day I left unannounced...
   That's why I'm leaving this message.
-def_kickme3: |
+def_kickme3: |-
   🪐 I'm far from 7 seas & 7 countries,
   🏝 7 waters & 7 continents,
   ⛰ 7 mountains & 7 hills,
@@ -688,25 +688,25 @@ noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despac
 
 
 # FILTERS;
-fmsgtext: |
+fmsgtext: |-
   **⛔ FILTER USE NOT ALLOWED HERE!**
   🎈 You can use filters in the @SohbetDoge group.
 
 
 # OTHERS;
-cmsgtext: |
+cmsgtext: |-
   **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
 
   💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**
-mmsgtext: |
+mmsgtext: |-
   **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
 
   💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**
-pmsgtext: |
+pmsgtext: |-
   **🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!
 
   💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**
-wowmydev: |
+wowmydev: |-
   **🐕‍🦺 Sorry dude.
   🐾 Don't ask me to do this!
   🐾 I won't do this to my developer.**
