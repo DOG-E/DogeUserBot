@@ -11,7 +11,6 @@ from json import dumps
 from requests import post
 from telegraph import Telegraph
 
-from ... import BOTLOG_CHATID
 from ...Config import Config
 from ...core.logger import logging
 from ...languages import lan
@@ -42,7 +41,7 @@ async def t_paste(msg, title=None):
             from ...core.session import doge
 
             await doge.send_message(
-                BOTLOG_CHATID,
+                Config.BOTLOG_CHATID,
                 lan("t_pasteblmsg").format(auth_url),
             )
         except Exception as e:
@@ -77,7 +76,7 @@ async def p_paste(message, extension=None):
             from ...core.session import doge
 
             await doge.send_message(
-                BOTLOG_CHATID,
+                Config.BOTLOG_CHATID,
                 lan("p_pasteblmsg").format(purl, response["deletionToken"]),
             )
         except Exception as e:
