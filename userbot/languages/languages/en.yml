@@ -516,8 +516,7 @@ notifbc: "**🔊 You received a new broadcast.**"
 errrbcing: While broadcasting.
 succ_bc: "🔊 Successfully broadcasted message to ➡️ <b>{} users.</b>"
 blockedbc: "<b>{} users</b> blocked your {} recently, so have been removed."
-bcprocesstook: |
-  ⏱ <code>Process took: {}</code>.
+bcprocesstook: "⏱ <code>Process took: {}</code>."
 head_botusers: To get users list who started bot.
 desc_botusers: To get compelete list of users who started your bot.
 nostartedbot: "**ℹ️ No one started your {} yet.**"
