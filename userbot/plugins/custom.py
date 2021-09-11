@@ -7,7 +7,7 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from googletrans import LANGUAGES
-from telegraph import Telegraph, resize_image, upload_file
+from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto, PeerUser
 
@@ -25,6 +25,7 @@ from . import (
     lan,
     logging,
     newmsgres,
+    resize_image,
     sgvar,
 )
 

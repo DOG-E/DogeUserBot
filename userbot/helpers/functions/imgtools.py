@@ -34,6 +34,11 @@ from wand.image import Image as wandimage
 from wordcloud import ImageColorGenerator, WordCloud
 
 
+def resize_image(image):
+    im = Image.open(image)
+    im.save(image, "PNG")
+
+
 def get_warp_length(width):
     return int((20.0 / 1024.0) * (width + 0.0))
 

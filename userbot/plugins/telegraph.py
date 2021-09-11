@@ -11,7 +11,6 @@ from os import remove
 from random import choice
 from string import ascii_lowercase, ascii_uppercase
 
-from PIL.Image import open as Imopen
 from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.utils import get_display_name
@@ -29,6 +28,7 @@ from . import (
     logging,
     mention,
     newmsgres,
+    resize_image,
 )
 
 plugin_category = "tool"
@@ -37,11 +37,6 @@ LOGS = logging.getLogger(__name__)
 telegraph = Telegraph()
 r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
-
-
-def resize_image(image):
-    im = Imopen(image)
-    im.save(image, "PNG")
 
 
 @doge.bot_cmd(
