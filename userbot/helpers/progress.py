@@ -65,10 +65,10 @@ def time_formatter(seconds: int) -> str:
     days, hours = divmod(hours, 24)
     seconds = round(seconds, 2)
     tmp = (
-        ((str(days) + " " + lan("days") + ", ") if days else "")
-        + ((str(hours) + " " + lan("hours") + ", ") if hours else "")
-        + ((str(minutes) + " " + lan("minutes") + ", ") if minutes else "")
-        + ((str(seconds) + " " + lan("seconds") + ", ") if seconds else "")
+        ((str(days) + f" {lan('days')}, ") if days else "")
+        + ((str(hours) + f" {lan('hours')}, ") if hours else "")
+        + ((str(minutes) + f" {lan('minutes')}, ") if minutes else "")
+        + ((str(seconds) + f" {lan('seconds')}, ") if seconds else "")
     )
     return tmp[:-2]
 
@@ -78,7 +78,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     return (
-        ((str(int(days)) + " " + lan("days") + ", ") if days else "")
+        ((str(int(days)) + f" {lan('days')}, ") if days else "")
         + ((str(int(hours)) + ":") if hours else "00:")
         + ((str(int(minutes)) + ":") if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")

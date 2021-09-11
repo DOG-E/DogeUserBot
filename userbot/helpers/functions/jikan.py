@@ -200,7 +200,7 @@ query ($search: String) {
 async def get_anime_schedule(weekid):
     "Get anime schedule"
     dayname = get_weekday(weekid)
-    result = f"✙ **" + lan("scheduledanimes").format(dayname.title()) + "**\n\n"
+    result = f"✙ **{lan('scheduledanimes').format(dayname.title())}**\n\n"
     async with AioJikan() as animesession:
         scheduled_list = (await animesession.schedule(day=dayname)).get(dayname)
         for a_name in scheduled_list:
@@ -213,7 +213,7 @@ async def formatJSON(outData):
     jsonData = loads(outData)
     res = list(jsonData.keys())
     if "errors" in res:
-        msg += lan("errr") + f" `{jsonData['errors'][0]['message']}`"
+        msg += f"{lan('errr')} `{jsonData['errors'][0]['message']}`"
         return msg
     jsonData = jsonData["data"]["Media"]
     if "bannerImage" in jsonData.keys():

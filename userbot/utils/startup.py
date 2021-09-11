@@ -110,7 +110,7 @@ async def setup_assistantbot():
         return
     LOGS.info(lan("creatingabot"))
     my = await doge.get_me()
-    botname = "🐶 " + my.first_name + lan("_abotname")
+    botname = f"🐶 {my.first_name}{lan('_abotname')}"
     if my.username:
         botusername = my.username + "_Bot"
     else:
@@ -271,20 +271,15 @@ async def verifyLoggerGroup():
         except TypeError:
             LOGS.error(lan("errrglogunsup").format(vinfo))
         except Exception as e:
-            LOGS.error(lan("errrglog").format(vinfo) + "\n" + str(e))
+            LOGS.error(f"{lan('errrglog').format(vinfo)}\n{str(e)}")
     else:
-        descript = lan("dontdelgroup") + lan("ifdel") + lan("ifdelbotlog") + odogeubc
+        descript = f"{lan('dontdelgroup')}{lan('ifdel')}{lan('ifdelbotlog')}{odogeubc}"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         _, groupid = await create_supergroup(
-            ("🐾 Doɢᴇ Boᴛ " + lan("_log")), doge, Config.BOT_USERNAME, descript, gphoto
+            f"🐾 Doɢᴇ Boᴛ {lan('_log')}", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = (
-            lan("dontdelgroupmsg")
-            + "\n\n"
-            + lan("ifdel")
-            + lan("ifdelbotlog")
-            + f"**{odogeubc}**"
-        )
+        descmsg = f"{lan('dontdelgroupmsg')}\n\
+        \n{lan('ifdel')}{lan('ifdelbotlog')}**{odogeubc}**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
@@ -295,20 +290,15 @@ async def verifyLoggerGroup():
     if Config.PMLOGGER:
         if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
             return
-        descript = lan("dontdelgroup") + lan("ifdel") + lan("ifdelpmlog") + odogeubc
+        descript = f"{lan('dontdelgroup')}{lan('ifdel')}{lan('ifdelpmlog')}{odogeubc}"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
         _, groupid = await create_supergroup(
-            ("🐾 Doɢᴇ Pᴍ " + lan("_log")), doge, Config.BOT_USERNAME, descript, gphoto
+            f"🐾 Doɢᴇ Pᴍ {lan('_log')}", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = (
-            lan("dontdelgroupmsg")
-            + "\n\n"
-            + lan("ifdel")
-            + lan("ifdelpmlog")
-            + lan("ifdelgorc")
-            + "\n`.setvar PMLOGGER False`\n\n"
-            + f"**{odogeubc}**"
-        )
+        descmsg = f"{lan('dontdelgroupmsg')}\n\
+        \n{lan('ifdel')}{lan('ifdelpmlog')}{lan('ifdelgorc')}\
+        \n`.setvar PMLOGGER False`\n\
+        \n**{odogeubc}**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PM_LOGGER_GROUP_ID", groupid)
@@ -330,27 +320,22 @@ async def verifyLoggerGroup():
         except TypeError:
             LOGS.error(lan("errrglogunsup").format(vinfo))
         except Exception as e:
-            LOGS.error(lan("errrglog").format(vinfo) + "\n" + str(e))
+            LOGS.error(f"{lan('errrglog').format(vinfo)}\n{str(e)}")
 
     if Config.PLUGINS:
         if PLUGIN_CHANNEL or gvar("PLUGIN_CHANNEL"):
             return
-        descript = lan("dontdelgroup") + lan("ifdel") + lan("ifdelextrap") + odogeubc
+        descript = f"{lan('dontdelgroup')}{lan('ifdel')}{lan('ifdelextrap')}{odogeubc}"
         cphoto = await doge.upload_file(
             file="userbot/helpers/resources/DogeExtraPlugin.jpg"
         )
         _, channelid = await create_channel(
-            ("🐾 Doɢᴇ " + lan("_extraplugins")), doge, descript, cphoto
+            f"🐾 Doɢᴇ {lan('_extraplugins')}", doge, descript, cphoto
         )
-        descmsg = (
-            lan("dontdelgroupmsg")
-            + "\n\n"
-            + lan("ifdel")
-            + lan("ifdelextrap")
-            + lan("ifdelgorc")
-            + "\n`.setvar PLUGINS False`\n\n"
-            + f"**{odogeubc}**"
-        )
+        descmsg = f"{lan('dontdelgroupmsg')}\n\
+        \n{lan('ifdel')}{lan('ifdelextrap')}{lan('ifdelgorc')}\
+        \n`.setvar PLUGINS False`\n\
+        \n**{odogeubc}**"
         msg = await doge.send_message(channelid, descmsg)
         await msg.pin()
         sgvar("PLUGIN_CHANNEL", channelid)

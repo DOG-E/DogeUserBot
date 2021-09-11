@@ -175,6 +175,6 @@ async def get_chatinfo(event, dogevent):
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edl(dogevent, (lan("errr") + "\n" + lan("errrfetchchat")))
+            await edl(dogevent, f"{lan('errr')}\n{lan('errrfetchchat')}")
             return None
     return chat_info

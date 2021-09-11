@@ -14,7 +14,7 @@ from telethon.sessions import StringSession
 from ..Config import Config
 from .client import DogeUserBotClient
 
-__version__ = "Beta"
+__version__ = "1.0.0"
 loop = None
 
 

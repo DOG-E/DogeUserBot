@@ -29,7 +29,7 @@ async def paste_message(text, pastetype="p", extension=None, markdown=True, titl
         response = await pastetext(text, pastetype, extension)
         if "url" in response:
             return response["url"]
-        return lan("errr") + " " + lan("errrpastingtext")
+        return f"{lan('errr')} {lan('errrpastingtext')}"
 
 
 def md_to_text(md):

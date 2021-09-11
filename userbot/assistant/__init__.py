@@ -16,7 +16,7 @@ from ..core.decorators import check_owner
 from ..core.inlinebot import *
 from ..core.logger import logging
 from ..core.managers import edl, eor
-from ..core.session import doge, tgbot
+from ..core.session import doge
 from ..helpers import *
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
 from ..languages import lan, lngs

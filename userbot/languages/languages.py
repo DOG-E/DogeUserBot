@@ -30,13 +30,12 @@ for file in listdir(languages_folder):
 
 
 def lan(key: str) -> Any:
-    DOGELANG = gvar("DOGELANG")
     try:
-        return languages[(DOGELANG or "en")][key]
+        return languages[(gvar("DOGELANG") or "en")][key]
 
     except KeyError:
         try:
-            return Translate.translate(languages["__"][key], dest=DOGELANG).text
+            return Translate.translate(languages["__"][key], dest=gvar("DOGELANG")).text
 
         except KeyError:
             return f"🚧 WARNING: Couldn't load any language with the key {key}"

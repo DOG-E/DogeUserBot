@@ -300,7 +300,7 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(e)
     except GeoRestrictedError:
-        LOGS.error(lan("errr_").upper() + ": " + lan("errrvideocountry"))
+        LOGS.error(f"{lan('errr_').upper()}: {lan('errrvideocountry')}")
     else:
         return x
 

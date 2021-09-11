@@ -69,7 +69,7 @@ async def calculator(e):
         )
     elif x == "C":
         dgvar("calc")
-        await e.answer("🗑" + lan("icalcclear"))
+        await e.answer(f"🗑 {lan('icalcclear')}")
     elif x == "⫷":
         get = gvar("calc")
         if get:
