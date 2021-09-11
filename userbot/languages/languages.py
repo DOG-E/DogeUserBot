@@ -35,7 +35,7 @@ def lan(key: str) -> Any:
 
     except KeyError:
         try:
-            return Translate.translate(languages["en"][key], dest=gvar("DOGELANG")).text
+            return Translate.translate(languages["__"][key], dest=gvar("DOGELANG")).text
 
         except KeyError:
             return f"🚧 WARNING: Couldn't load any language with the key {key}"

@@ -7,14 +7,10 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
-from os import path, remove
+from os import remove
 
-from ..Config import Config
 from ..helpers.utils.format import md_to_text, paste_message
-from . import lan
 from .data import _sudousers_list
-
-thumb_image_path = path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 async def eor(
@@ -55,9 +51,9 @@ async def eor(
     if not noformat:
         text = md_to_text(text)
     if aslink or deflink:
-        linktext = linktext or lan("linkheremsg")
-        response = await paste_message(text, pastetype="t")
-        text = linktext + f" [{lan('here')}]({response})"
+        linktext = linktext or "Message was to big so pasted to bin"
+        response = await paste_message(text, pastetype="s")
+        text = linktext + f" [here]({response})"
         if event.sender_id in sudo_users:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)
@@ -66,22 +62,20 @@ async def eor(
         return event
     file_name = file_name or "@DogeUserBot.txt"
     caption = caption or None
-    thumb = thumb_image_path if path.exists(thumb_image_path) else None
     with open(file_name, "w+") as output:
         output.write(text)
     if reply_to:
-        await reply_to.reply(caption, file=file_name, thumb=thumb)
+        await reply_to.reply(caption, file=file_name)
         await event.delete()
         return remove(file_name)
     if event.sender_id in sudo_users:
-        await event.reply(caption, file=file_name, thumb=thumb)
+        await event.reply(caption, file=file_name)
         await event.delete()
         return remove(file_name)
     await event.client.send_file(
         event.chat_id,
         file_name,
         caption=caption,
-        thumb=thumb,
     )
     await event.delete()
     remove(file_name)

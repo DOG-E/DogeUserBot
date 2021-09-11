@@ -35,7 +35,6 @@ from telethon.tl.types import (
 
 from ..Config import Config
 from ..sql_helper.globals import gvar
-from . import lan
 from .managers import eor
 
 
@@ -89,8 +88,7 @@ class NewMessage(events.NewMessage):
                 is_admin = event.chat.admin_rights
 
             if not is_creator and not is_admin:
-                text = f"**🚨 {lan('needadmin')}**"
-
+                text = "**🚨 I need admin rights to be able to use this command!**"
                 event._client.loop.create_task(eor(event, text))
                 return
 
@@ -264,7 +262,7 @@ async def send_message(
                 comment_to=comment_to,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -395,7 +393,7 @@ async def send_file(
                 **kwargs,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -482,7 +480,7 @@ async def edit_message(
                 schedule=schedule,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry I can't send this message in public chats it may have some sensitive data So check in __[your BotLog group]({msglink})."
         return await client.editmessage(
             entity=chatid,
             message=message,

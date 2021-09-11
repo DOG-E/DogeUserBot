@@ -156,12 +156,13 @@ menutext: |-
 
   ◽ Doɢᴇ of {}
 btnhelp: Help
-btnmenu: Menü
+btnmenu: Menu
 btnback: Back
 btnadmin: Admin
 btnfun: Fun
 btnmisc: Misc
 btntool: Tool
+btncalc: Calculator
 btnclose: CLOSE
 btnclse: Close
 btnurlchannel: Channel

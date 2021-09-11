@@ -64,11 +64,14 @@ def main_menu():
                 f"ℹ️️ {lan('info')}",
                 data="check",
             ),
-            Button.inline(f"🧮 Calculator", data="recalc"),
+            Button.inline(
+                f"🧮 {lan('btncalc')}",
+                data="recalc",
+            ),
         ),
         (
             Button.inline(
-                f"👮‍♂️ {lan('btndmin')} ({len(GRP_INFO['admin'])})",
+                f"👮‍♂️ {lan('btnadmin')} ({len(GRP_INFO['admin'])})",
                 data="admin_menu",
             ),
             Button.inline(
