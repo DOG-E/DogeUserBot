@@ -19,7 +19,7 @@ from . import BOT_USERNAME, doge, edl, ibuild_keyboard, lan, reply_id, tr
 
 plugin_category = "tool"
 # Regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
-BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\((?:/{0,2})(.+?)(:same)?\))")
+BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 
 
 @doge.bot_cmd(
@@ -30,7 +30,7 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\((?:/{0,2})(.+?)(:same)?\))")
         "note": lan("note_bbutton").format(BOT_USERNAME),
         "options": lan("option_button"),
         "usage": f"{tr}bbutton <{lan('text')}> {lan('use_button')}",
-        "examples": f"{tr}bbutton Test [🔎 Google](https://www.google.com) [🐶 Doge UserBot](https://t.me/DogeUserBot:same) [🐾 {lan('support')}](https://t.me/DogeSup)",
+        "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 {lan('support')}]<https://t.me/DogeSup>",
     },
 )
 async def bbutton(event):
@@ -91,7 +91,7 @@ async def bbutton(event):
         "note": lan("note_button"),
         "options": lan("option_button"),
         "usage": f"{tr}button <{lan('text')}> {lan('use_button')}",
-        "examples": f"{tr}button Test [🔎 Google](https://www.google.com) [🐶 Doge UserBot](https://t.me/DogeUserBot:same) [🐾 {lan('support')}](https://t.me/DogeSup)",
+        "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 {lan('support')}]<https://t.me/DogeSup>",
     },
 )
 async def button(event):

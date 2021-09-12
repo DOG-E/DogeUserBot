@@ -54,6 +54,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_appropriated_part_size, get_input_location
 
+from . import lan
 from .logger import logging
 
 LOGS = logging.getLogger("fasttelethon")
@@ -148,8 +149,8 @@ class UploadSender:
     async def _next(self, data: bytes) -> None:
         self.request.bytes = data
         LOGS.debug(
-            f"Sending file part {self.request.file_part}/{self.part_count}"
-            f" with {len(data)} bytes"
+            f"{lan('dbugftelethon1').format(self.request.file_part, self.part_count)}"
+            f"{lan('dbugftelethon2').format(len(data))}"
         )
         await self.client._call(self.sender, self.request)
         self.request.file_part += self.stride
@@ -276,7 +277,7 @@ class ParallelTransferrer:
             )
         )
         if not self.auth_key:
-            LOGS.debug(f"Exporting auth to DC {self.dc_id}")
+            LOGS.debug(lan("dbugftelethon3").format(self.dc_id))
             auth = await self.client(ExportAuthorizationRequest(self.dc_id))
             self.client._init_request.query = ImportAuthorizationRequest(
                 id=auth.id, bytes=auth.bytes
@@ -318,7 +319,7 @@ class ParallelTransferrer:
         part_size = (part_size_kb or get_appropriated_part_size(file_size)) * 1024
         part_count = ceil(file_size / part_size)
         LOGS.debug(
-            "Starting parallel download: "
+            f"{lan('dbugftelethon4')}"
             f"{connection_count} {part_size} {part_count} {file!s}"
         )
         await self._init_download(connection_count, file, part_count, part_size)
@@ -332,9 +333,9 @@ class ParallelTransferrer:
                     break
                 yield data
                 part += 1
-                LOGS.debug(f"Part {part} downloaded")
+                LOGS.debug(lan("dbugftelethon5").format(part))
 
-        LOGS.debug("Parallel download finished, cleaning up connections")
+        LOGS.debug(lan("dbugftelethon6"))
         await self._cleanup()
 
 

@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from ..assistant.calculator import lst
+from ..assistant.icalculator import lst
 from . import BOT_USERNAME, calcc, dgvar, doge, eor, lan
 
 plugin_category = "tool"

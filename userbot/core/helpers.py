@@ -14,13 +14,13 @@ from telethon.utils import get_display_name
 
 from .events import NewMessage
 
-LOGGER = getLogger("userbot")
+LOGS = getLogger("userbot")
 
 
 def printUser(entity: User) -> None:
     """Print the user's first name + last name upon start"""
     user = get_display_name(entity)
-    LOGGER.warning("Successfully logged in as {0}".format(user))
+    LOGS.warning("Successfully logged in as {0}".format(user))
 
 
 async def get_chat_link(

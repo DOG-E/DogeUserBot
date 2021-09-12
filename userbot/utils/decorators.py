@@ -20,7 +20,6 @@ from ..core.events import MessageEdited, NewMessage
 from ..core.logger import logging
 from ..core.session import doge
 from ..helpers.utils.format import paste_message
-from ..languages import lan
 from ..sql_helper.globals import gvar
 
 LOGS = logging.getLogger(__name__)
@@ -135,36 +134,44 @@ def errors_handler(func):
             if Config.PRIVATE_GROUP_BOT_API_ID != 0:
                 return
             date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-            ftext = lan("errrlogdisclaimer").format(
-                d=date,
-                cid=str(check.chat_id),
-                sid=str(check.sender_id),
-                msg=await check.client.get_msg_link(check),
-                t=str(check.text),
-                f=str(format_exc()),
-                e=str(exc_info()[1]),
-            )
+            ftext = f"\nℹ️ DISCLAIMER:\
+                        \nThis file is pasted ONLY here,\
+                        \nwe logged only fact of error and date,\
+                        \nwe respect your privacy,\
+                        \nif you've any confidential data here,\
+                        \nyou may not report this error.\
+                        \nNo one will see your data.\
+                        \n\
+                        \n--------BEGIN DOGE USERBOT ERROR LOG--------\
+                        \n\
+                        \n📅 Date: {date}\
+                        \n👥 Group ID: {str(check.chat_id)}\
+                        \n👤 Sender ID: {str(check.sender_id)}\
+                        \n\
+                        \n➡️ Event Trigger:\n{str(check.text)}\
+                        \n\
+                        \nℹ️ Traceback Info:\n{str(format_exc())}\
+                        \n\
+                        \n🚨 Error Text:\n{str(exc_info()[1])}"
             new = {
                 "error": str(exc_info()[1]),
                 "date": datetime.now(),
             }
             ftext += "\n\n"
-            ftext += lan("errrlogend")
-            pastelink = await paste_message(
-                ftext, pastetype="t", markdown=False, title=lan("errrlogtext1")
-            )
-            text = lan("errrlogtext1")
+            ftext += "--------END DOGE USERBOT ERROR LOG--------"
+            pastelink = await paste_message(ftext, markdown=False)
+            text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+            link = "[here](https://t.me/DogeSup)"
             text += "\n\n"
-            link = f"[{lan('here')}](https://t.me/DogeSup)"
-            text += lan("errrlogtext2")
+            text += "__💬 If you wanna you can report it.__"
             text += "\n\n"
-            text += lan("errrlogtext3").format(link)
+            text += f"🐾 Forward this message {link}."
             text += "\n\n"
-            text += lan("errrlogtext4")
+            text += "__**🦴 Nothing is logged except of error and date!**__"
             text += "\n\n"
-            text += f"**▫️ {lan('errrlogtext5')}:** `{str(check.text)}`"
+            text += f"**▫️ Event Trigger:** `{str(check.text)}`"
             text += "\n\n"
-            text += f"**🚨 {lan('errrlogtext6')}:** [{new['error']}]({pastelink})"
+            text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
             await check.client.send_message(
                 Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
             )

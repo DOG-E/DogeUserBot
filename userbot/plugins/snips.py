@@ -13,7 +13,7 @@ from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, get_message_link, gvar, rep
 
 plugin_category = "misc"
 
-SNIP_CMDSET = gvar("SNIP_CMDSET") if gvar("SNIP_CMDSET") is not None else "$"
+SNIP_CMDSET = gvar("SNIP_CMDSET") or "&"
 
 
 @doge.bot_cmd(pattern=f"^\{SNIP_CMDSET}(\S+)")

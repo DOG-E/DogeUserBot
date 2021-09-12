@@ -52,7 +52,7 @@ from .logger import logging
 
 LOGS = logging.getLogger(__name__)
 
-BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\((?:/{0,2})(.+?)(:same)?\))")
+BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 
 
 def main_menu():
