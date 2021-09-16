@@ -54,7 +54,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_appropriated_part_size, get_input_location
 
-from . import lan
+from ..languages import lan
 from .logger import logging
 
 LOGS = logging.getLogger("fasttelethon")

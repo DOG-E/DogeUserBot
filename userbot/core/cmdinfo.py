@@ -17,7 +17,7 @@ except ModuleNotFoundError:
     from urlextract import URLExtract
 
 from ..Config import Config
-from . import lan
+from ..languages import lan
 
 extractor = URLExtract()
 

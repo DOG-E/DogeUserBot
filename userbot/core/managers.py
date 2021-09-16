@@ -7,14 +7,15 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
-from os import path, remove
+from os import remove
+from os.path import exists, join
 
 from ..Config import Config
 from ..helpers.utils.format import md_to_text, paste_message
-from . import lan
+from ..languages import lan
 from .data import _sudousers_list
 
-thumb_image_path = path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+thumb_image_path = join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 async def eor(
@@ -66,7 +67,7 @@ async def eor(
         return event
     file_name = file_name or "@DogeUserBot.txt"
     caption = caption or None
-    thumb = thumb_image_path if path.exists(thumb_image_path) else None
+    thumb = thumb_image_path if exists(thumb_image_path) else None
     with open(file_name, "w+") as output:
         output.write(text)
     if reply_to:

@@ -12,8 +12,8 @@ from telethon.errors import FloodWaitError, MessageNotModifiedError
 from telethon.events import CallbackQuery
 
 from ..Config import Config
+from ..languages import lan
 from ..sql_helper.globals import gvar
-from . import lan
 
 
 def check_owner(func):

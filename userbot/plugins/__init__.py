@@ -115,10 +115,10 @@ PMMENU = "pmpermit_menu" not in Config.NO_LOAD
 
 
 # HEROKU:
-Heroku = from_key(Config.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
 HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
+Heroku = from_key(HEROKU_API_KEY)
 
 
 # DIRECTORIES:

@@ -129,7 +129,7 @@ async def bot_start(event):
                 my_mention=my_mention,
             )
         else:
-            start_msg = lan("botodefstartmsg").format(mention, my_mention)
+            start_msg = str(lan("botodefstartmsg").format(mention, my_mention))
         buttons = [
             (Button.url(f"📣 {lan('btnurlchannel')}", "https://t.me/DogeUserBot"),),
             (

@@ -249,7 +249,7 @@ async def load_plugins(folder):
                     remove(Path(f"userbot/{folder}/{shortname}.py"))
             except Exception as e:
                 remove(Path(f"userbot/{folder}/{shortname}.py"))
-                LOGS.error(lan("errrlplugin").format(shortname, e))
+                LOGS.error(str(lan("errrlplugin").format(shortname, e)))
 
 
 async def verifyLoggerGroup():
@@ -389,9 +389,13 @@ async def startupmessage():
                     (Button.inline(f"🐕‍🦺 {lan('btnhelp')}", data="mainmenu")),
                     (Button.inline(f"🌍 {lan('btnchooselang')}", data="lang_menu")),
                     (
-                        Button.url(f"💬 {lan('btnurlsup')}", "https://t.me/DogeSup"),
                         Button.url(
-                            f"🧩 {lan('btnurlplugin')}", "https://t.me/DogePlugin"
+                            f"💬 {lan('btnurlsup')}",
+                            "https://t.me/DogeSup",
+                        ),
+                        Button.url(
+                            f"🧩 {lan('btnurlplugin')}",
+                            "https://t.me/DogePlugin",
                         ),
                     ),
                 ],

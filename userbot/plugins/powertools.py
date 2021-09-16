@@ -7,8 +7,9 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio.exceptions import CancelledError
-from os import _exit
+from os import _exit, execle, environ
 from time import sleep
+from sys import executable as sysexecutable
 
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
@@ -19,6 +20,8 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     HEROKU_APP,
+    HEROKU_APP_NAME,
+    Heroku,
     dgvar,
     doge,
     edl,
@@ -60,13 +63,31 @@ async def _(event):
         add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
         LOGS.error(e)
-    try:
-        dgvar("ipaddress")
-        await doge.disconnect()
-    except CancelledError:
-        pass
-    except Exception as e:
-        LOGS.error(e)
+    if HEROKU_APP is not None:
+        try:
+            app = Heroku.apps()[HEROKU_APP_NAME]
+            dgvar("ipaddress")
+            app.restart()
+        except BaseException:
+            try:
+                dgvar("ipaddress")
+                executable = sysexecutable.replace(" ", "\\ ")
+                args = [executable, "-m", "userbot"]
+                execle(executable, *args, environ)
+            except CancelledError:
+                pass
+            except Exception as e:
+                LOGS.error(e)
+    else:
+        try:
+            dgvar("ipaddress")
+            executable = sysexecutable.replace(" ", "\\ ")
+            args = [executable, "-m", "userbot"]
+            execle(executable, *args, environ)
+        except CancelledError:
+            pass
+        except Exception as e:
+            LOGS.error(e)
 
 
 @doge.bot_cmd(
@@ -84,7 +105,10 @@ async def _(event):
         await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n" "Bot shut down")
     await eor(event, "`Turning off bot now ...Manually turn me on later`")
     if HEROKU_APP is not None:
-        HEROKU_APP.process_formation()["doger"].scale(0)
+        try:
+            HEROKU_APP.process_formation()["doger"].scale(0)
+        except Exception:
+            _exit(143)
     else:
         _exit(143)
 
@@ -108,7 +132,7 @@ async def _(event):
             BOTLOG_CHATID,
             "You put the bot to sleep for " + str(counter) + " seconds",
         )
-    event = await eor(event, f"`ok, let me sleep for {counter} seconds`")
+    event = await eor(event, f"`Okay, let me sleep for {counter} seconds`")
     sleep(counter)
     await event.edit("`OK, I'm awake now.`")
 
@@ -125,7 +149,7 @@ async def _(event):
     },
 )
 async def set_pmlog(event):
-    "To update the your chat after restart or reload ."
+    "To update the your chat after restart or reload."
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         if gvar("restartupdate") is None:

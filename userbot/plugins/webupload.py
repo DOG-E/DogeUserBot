@@ -17,7 +17,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from requests import post
 
-from . import TMP_DOWNLOAD_DIRECTORY, doge, eor, lan, logging
+from . import TMP_DOWNLOAD_DIRECTORY, _dogeutils, doge, eor, lan, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -123,7 +123,6 @@ async def _(event):
             reply.media, TMP_DOWNLOAD_DIRECTORY
         )
         dogecheck = True
-    # a dictionary containing the shell commands
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
         "oload": 'curl -F "file=@{full_file_path}" https://api.openload.cc/upload',
@@ -143,16 +142,11 @@ async def _(event):
     except KeyError:
         return await editor.edit("Invalid selected Transfer")
     cmd = selected_one
-    # start the subprocess $SHELL
-    process = await create_subprocess_shell(cmd, stdout=PIPE, stderr=PIPE)
-    stdout, stderr = await process.communicate()
-    error = stderr.decode().strip()
-    t_response = stdout.decode().strip()
+    t_response, err = _dogeutils.cmdrun(cmd)
     if t_response:
         try:
             t_response = dumps(loads(t_response), sort_keys=True, indent=4)
         except Exception as e:
-            # some sites don't return valid JSONs
             LOGS.info(str(e))
         urls = links = findall(link_regex, t_response)
         result = ""
@@ -162,6 +156,6 @@ async def _(event):
             result += f"\n{i[0]}"
         await editor.edit(result)
     else:
-        await editor.edit(error)
+        await editor.edit(err)
     if dogecheck:
         remove(file_name)

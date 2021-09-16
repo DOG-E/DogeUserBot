@@ -128,8 +128,7 @@ def ibuild_keyboard(buttons):
 
 
 def get_back_button(name):
-    button = [Button.inline(f"⬅️️ {lan('btnback')}", data=f"{name}")]
-    return button
+    return [Button.inline(f"⬅️️ {lan('btnback')}", data=f"{name}")]
 
 
 def command_in_category(cname):

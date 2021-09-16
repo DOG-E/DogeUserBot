@@ -18,7 +18,6 @@ from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers.tools import media_type
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
-from ..languages import lan
 from .decorators import admin_cmd, sudo_cmd
 
 LOGS = logging.getLogger("DogeUserBot")
@@ -29,12 +28,11 @@ def load_module(shortname, plugin_path=None):
         pass
     elif shortname.endswith("_"):
         path = Path(f"userbot/plugins/{shortname}.py")
-        checkplugins(path)
         name = "userbot.plugins.{}".format(shortname)
         spec = spec_from_file_location(name, path)
         mod = module_from_spec(spec)
         spec.loader.exec_module(mod)
-        LOGS.info(f"✅ {shortname} {lan('succ_imported')}")
+        LOGS.info("✅ " + shortname + " imported!")
     else:
         if plugin_path is None:
             path = Path(f"userbot/plugins/{shortname}.py")
@@ -42,7 +40,6 @@ def load_module(shortname, plugin_path=None):
         else:
             path = Path((f"{plugin_path}/{shortname}.py"))
             name = f"{plugin_path}/{shortname}".replace("/", ".")
-        checkplugins(path)
         spec = spec_from_file_location(name, path)
         mod = module_from_spec(spec)
         mod.bot = doge
@@ -60,15 +57,17 @@ def load_module(shortname, plugin_path=None):
         mod.install_pip = install_pip
         mod.parse_pre = _format.parse_pre
         mod.edl = edl
-        mod.eor = eor
         mod.edit_delete = edl
+        mod.eor = eor
         mod.edit_or_reply = eor
         mod.logger = logging.getLogger(shortname)
         mod.borg = doge
+        mod.catub = doge
+        mod.cat_cmd = bot_cmd
         spec.loader.exec_module(mod)
         # For imports;
         modules["userbot.plugins." + shortname] = mod
-        LOGS.info(f"✅ {shortname} {lan('succ_imported')}")
+        LOGS.info("✅ " + shortname + " imported!")
 
 
 def remove_plugin(shortname):
@@ -100,13 +99,3 @@ def remove_plugin(shortname):
                 del doge._event_builders[i]
     except BaseException:
         raise ValueError
-
-
-def checkplugins(filename):
-    with open(filename, "r") as f:
-        filedata = f.read()
-    filedata = filedata.replace("sendmessage", "send_message")
-    filedata = filedata.replace("sendfile", "send_file")
-    filedata = filedata.replace("editmessage", "edit_message")
-    with open(filename, "w") as f:
-        f.write(filedata)

@@ -8,7 +8,7 @@
 # ================================================================
 from random import choice
 
-from . import lan
+from ..languages import lan
 
 SLAP_TEMPLATES = [
     lan("slap1"),

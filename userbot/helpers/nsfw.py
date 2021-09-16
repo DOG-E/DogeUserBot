@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import lan
+from ..languages import lan
 
 pawn = [
     "nsfw",

@@ -34,8 +34,8 @@ from telethon.tl.types import (
 )
 
 from ..Config import Config
+from ..languages import lan
 from ..sql_helper.globals import gvar
-from . import lan
 from .managers import eor
 
 

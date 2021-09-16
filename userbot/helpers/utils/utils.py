@@ -6,7 +6,12 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from asyncio import create_subprocess_exec, get_event_loop, run_coroutine_threadsafe
+from asyncio import (
+    create_subprocess_exec,
+    create_subprocess_shell,
+    get_event_loop,
+    run_coroutine_threadsafe
+)
 from asyncio.subprocess import PIPE
 from functools import partial
 from shlex import split
@@ -20,9 +25,25 @@ from ...core.logger import logging
 LOGS = logging.getLogger(__name__)
 
 
+async def cmdrun(cmd):
+    process = await create_subprocess_shell(
+        cmd,
+        stdout=PIPE,
+        stderr=PIPE,
+    )
+    stdout, stderr = await process.communicate()
+    err = stderr.decode().strip()
+    out = stdout.decode().strip()
+    return out, err
+
+
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     args = split(cmd)
-    process = await create_subprocess_exec(*args, stdout=PIPE, stderr=PIPE)
+    process = await create_subprocess_exec(
+        *args,
+        stdout=PIPE,
+        stderr=PIPE,
+    )
     stdout, stderr = await process.communicate()
     return (
         stdout.decode("utf-8", "replace").strip(),

@@ -7,13 +7,11 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 import sys
-from asyncio import create_subprocess_shell
-from asyncio.subprocess import PIPE
 from io import StringIO
 from os import geteuid
 from traceback import format_exc
 
-from . import BOTLOG, BOTLOG_CHATID, _format, doge, edl, eor
+from . import BOTLOG, BOTLOG_CHATID, _dogeutils, _format, doge, edl, eor
 
 plugin_category = "tool"
 
@@ -33,9 +31,8 @@ async def _(event):
     if not cmd:
         return await edl(event, "`What should I execute?..`")
     dogevent = await eor(event, "`Executing.....`")
-    process = await create_subprocess_shell(cmd, stdout=PIPE, stderr=PIPE)
-    stdout, stderr = await process.communicate()
-    result = str(stdout.decode().strip()) + str(stderr.decode().strip())
+    out, err = await _dogeutils.cmdrun(cmd)
+    result = str(out) + str(err)
     doguser = await event.client.get_me()
     curruser = doguser.username or "DogeUserBot"
     uid = geteuid()
