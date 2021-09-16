@@ -10,7 +10,7 @@ from asyncio import (
     create_subprocess_exec,
     create_subprocess_shell,
     get_event_loop,
-    run_coroutine_threadsafe
+    run_coroutine_threadsafe,
 )
 from asyncio.subprocess import PIPE
 from functools import partial

@@ -8,8 +8,6 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from asyncio import create_subprocess_shell
-from asyncio.subprocess import PIPE
 from json import dumps, loads
 from os import path, remove
 from re import DOTALL, compile, findall

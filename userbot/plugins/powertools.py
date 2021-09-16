@@ -7,9 +7,9 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio.exceptions import CancelledError
-from os import _exit, execle, environ
-from time import sleep
+from os import _exit, environ, execle
 from sys import executable as sysexecutable
+from time import sleep
 
 from ..sql_helper.global_collection import (
     add_to_collectionlist,
