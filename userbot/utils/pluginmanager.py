@@ -6,9 +6,9 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from importlib.util import module_from_spec, spec_from_file_location
+import importlib
+import sys
 from pathlib import Path
-from sys import modules
 
 from .. import CMD_HELP, LOAD_PLUG
 from ..Config import Config
@@ -29,8 +29,8 @@ def load_module(shortname, plugin_path=None):
     elif shortname.endswith("_"):
         path = Path(f"userbot/plugins/{shortname}.py")
         name = "userbot.plugins.{}".format(shortname)
-        spec = spec_from_file_location(name, path)
-        mod = module_from_spec(spec)
+        spec = importlib.util.spec_from_file_location(name, path)
+        mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         LOGS.info("✅ " + shortname + " imported!")
     else:
@@ -40,8 +40,8 @@ def load_module(shortname, plugin_path=None):
         else:
             path = Path((f"{plugin_path}/{shortname}.py"))
             name = f"{plugin_path}/{shortname}".replace("/", ".")
-        spec = spec_from_file_location(name, path)
-        mod = module_from_spec(spec)
+        spec = importlib.util.spec_from_file_location(name, path)
+        mod = importlib.util.module_from_spec(spec)
         mod.bot = doge
         mod.LOGS = LOGS
         mod.Config = Config
@@ -63,10 +63,9 @@ def load_module(shortname, plugin_path=None):
         mod.logger = logging.getLogger(shortname)
         mod.borg = doge
         mod.catub = doge
-        mod.cat_cmd = bot_cmd
         spec.loader.exec_module(mod)
         # For imports;
-        modules["userbot.plugins." + shortname] = mod
+        sys.modules["userbot.plugins." + shortname] = mod
         LOGS.info("✅ " + shortname + " imported!")
 
 
