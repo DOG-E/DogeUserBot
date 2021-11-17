@@ -6,7 +6,7 @@ cairosvg==2.5.2
 cloudscraper==1.2.58
 colour==0.1.5
 countryinfo==0.1.2
-cowpy==1.1.2
+cowpy
 dataclasses==0.8
 datetime==4.3
 emoji==1.6.1
