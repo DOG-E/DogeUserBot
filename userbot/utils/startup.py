@@ -340,7 +340,7 @@ async def verifyLoggerGroup():
         msg = await doge.send_message(channelid, descmsg)
         await msg.pin()
         sgvar("PLUGIN_CHANNEL", channelid)
-        LOGS.info(lan("succ_extrap"))
+        LOGS.info(lan("succ_cextrap"))
         flag = True
 
     if flag:

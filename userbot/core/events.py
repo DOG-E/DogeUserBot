@@ -6,31 +6,14 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from typing import List, Optional, Sequence, Union
+import typing
 
-from telethon import events
-from telethon.hints import (
-    DateLike,
-    EntityLike,
-    FileLike,
-    MarkupLike,
-    MessageIDLike,
-    MessageLike,
-    ProgressCallback,
-)
+from telethon import events, hints, types
 from telethon.tl.types import (
-    ChannelParticipantAdmin,
-    ChannelParticipantCreator,
     InputPeerChannel,
     InputPeerChat,
     InputPeerUser,
-    Message,
     MessageMediaWebPage,
-    PeerUser,
-    TypeDocumentAttribute,
-    TypeMessageEntity,
-    UpdateEditChannelMessage,
-    UpdateEditMessage,
 )
 
 from ..Config import Config
@@ -57,7 +40,7 @@ class NewMessage(events.NewMessage):
         ):
             return
 
-        if self.require_admin and not isinstance(event._chat_peer, PeerUser):
+        if self.require_admin and not isinstance(event._chat_peer, types.PeerUser):
             is_creator = False
             is_admin = False
             creator = hasattr(event.chat, "creator")
@@ -77,9 +60,9 @@ class NewMessage(events.NewMessage):
                     participant = p.participant
                 except Exception:
                     participant = None
-                if isinstance(participant, ChannelParticipantCreator):
+                if isinstance(participant, types.ChannelParticipantCreator):
                     is_creator = True
-                if isinstance(participant, ChannelParticipantAdmin):
+                if isinstance(participant, types.ChannelParticipantAdmin):
                     is_admin = True
             elif flag:
                 is_admin = True
@@ -93,7 +76,6 @@ class NewMessage(events.NewMessage):
 
                 event._client.loop.create_task(eor(event, text))
                 return
-
         return event
 
 
@@ -101,9 +83,9 @@ class NewMessage(events.NewMessage):
 class MessageEdited(NewMessage):
     @classmethod
     def build(cls, update, others=None, self_id=None):
-        if isinstance(update, UpdateEditMessage):
+        if isinstance(update, types.UpdateEditMessage):
             return cls.Event(update.message)
-        if isinstance(update, UpdateEditChannelMessage):
+        if isinstance(update, types.UpdateEditChannelMessage):
             if (
                 update.message.edit_date
                 and update.message.is_channel
@@ -209,20 +191,20 @@ async def safe_check_text(msg):  # sourcery no-metrics
 
 async def send_message(
     client,
-    entity: "EntityLike",
-    message: "MessageLike" = "",
+    entity: "hints.EntityLike",
+    message: "hints.MessageLike" = "",
     *,
-    reply_to: "Union[int, Message]" = None,
-    parse_mode: Optional[str] = (),
-    formatting_entities: Optional[List[TypeMessageEntity]] = None,
+    reply_to: "typing.Union[int, types.Message]" = None,
+    parse_mode: typing.Optional[str] = (),
+    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
     link_preview: bool = False,
-    file: "Union[FileLike, Sequence[FileLike]]" = None,
+    file: "typing.Union[hints.FileLike, typing.Sequence[hints.FileLike]]" = None,
     force_document: bool = False,
     clear_draft: bool = False,
-    buttons: "MarkupLike" = None,
+    buttons: "hints.MarkupLike" = None,
     silent: bool = None,
-    schedule: "DateLike" = None,
-    comment_to: "Union[int, Message]" = None,
+    schedule: "hints.DateLike" = None,
+    comment_to: "typing.Union[int, types.Message]" = None,
 ):
     chatid = entity
     if str(chatid) in [
@@ -299,27 +281,27 @@ async def send_message(
 
 async def send_file(
     client,
-    entity: "EntityLike",
-    file: "Union[FileLike, Sequence[FileLike]]",
+    entity: "hints.EntityLike",
+    file: "typing.Union[hints.FileLike, typing.Sequence[hints.FileLike]]",
     *,
-    caption: Union[str, Sequence[str]] = None,
+    caption: typing.Union[str, typing.Sequence[str]] = None,
     force_document: bool = False,
     file_size: int = None,
     clear_draft: bool = False,
-    progress_callback: "ProgressCallback" = None,
-    reply_to: "MessageIDLike" = None,
-    attributes: "Sequence[TypeDocumentAttribute]" = None,
-    thumb: "FileLike" = None,
+    progress_callback: "hints.ProgressCallback" = None,
+    reply_to: "hints.MessageIDLike" = None,
+    attributes: "typing.Sequence[types.TypeDocumentAttribute]" = None,
+    thumb: "hints.FileLike" = None,
     allow_cache: bool = True,
     parse_mode: str = (),
-    formatting_entities: Optional[List[TypeMessageEntity]] = None,
+    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
     voice_note: bool = False,
     video_note: bool = False,
-    buttons: "MarkupLike" = None,
+    buttons: "hints.MarkupLike" = None,
     silent: bool = None,
     supports_streaming: bool = False,
-    schedule: "DateLike" = None,
-    comment_to: "Union[int, Message]" = None,
+    schedule: "hints.DateLike" = None,
+    comment_to: "typing.Union[int, types.Message]" = None,
     **kwargs,
 ):
     if isinstance(file, MessageMediaWebPage):
@@ -432,17 +414,17 @@ async def send_file(
 
 async def edit_message(
     client,
-    entity: "Union[EntityLike, Message]",
-    message: "MessageLike" = None,
+    entity: "typing.Union[hints.EntityLike, types.Message]",
+    message: "hints.MessageLike" = None,
     text: str = None,
     *,
     parse_mode: str = (),
-    formatting_entities: Optional[List[TypeMessageEntity]] = None,
+    formatting_entities: typing.Optional[typing.List[types.TypeMessageEntity]] = None,
     link_preview: bool = True,
-    file: "FileLike" = None,
+    file: "hints.FileLike" = None,
     force_document: bool = False,
-    buttons: "MarkupLike" = None,
-    schedule: "DateLike" = None,
+    buttons: "hints.MarkupLike" = None,
+    schedule: "hints.DateLike" = None,
 ):
     chatid = entity
     if isinstance(chatid, InputPeerChannel):

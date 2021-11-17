@@ -148,12 +148,12 @@ apk update && apk add bash && apk add curl && curl -L -o dogesetup.sh https://bi
 
 ## **💻 Wɪɴᴅoᴡs 10 & 11**
 
-🖥️ **Download Python 3.9 from the button below**
+🖥️ **Download Python 3.10 from the button below**
 
-🖥️ **Python 3.9'u aşağıdaki butondan indirin**
+🖥️ **Python 3.10'u aşağıdaki butondan indirin**
 
 <a
-href="https://www.microsoft.com/store/apps/9p7qfqmjrfp7?cid=storebadge&ocid=badge">
+href="https://www.microsoft.com/tr-tr/p/python-310/9pjpw5ldxlz5?cid=storebadge&ocid=badge">
 <img
 src="https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png"
 alt="Python on the Microsoft Store"
@@ -178,21 +178,10 @@ Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://bit.
 <p
 align="center">
 <a
-href="https://heroku.com/deploy?template=https://github.com/DOG-E/DogeUserBot">
+href="https://heroku.com/deploy?template=https://github.com/DOG-E/DogeStarter">
 <img
 src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Heroku.png"
 alt="Deploy to Heroku!">
-</a>
-<br>
-
-<br>
-<p
-align="center">
-<a
-href="https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2FDOG-E%2FDogeUserBot&plugins=postgresql&envs=APP_ID%2CAPI_HASH%2CSTRING_SESSION%2CDOGELANG%2CBOT_TOKEN%2CALIVE_NAME%2CPMLOGGER%2CENV&optionalEnvs=BOT_TOKEN%2CALIVE_NAME%2CPMLOGGER&APP_IDDesc=Get+this+value+from+https%3A%2F%2Fmy.telegram.org%2Fapps+Please+don%27t+steal%21&API_HASHDesc=Get+this+value+from+https%3A%2F%2Fmy.telegram.org%2Fapps+Please+don%27t+steal%21&STRING_SESSIONDesc=Go+to+https%3A%2F%2Fbit.do%2FDogessRepl+and+paste+the+code+you+get+here.&DOGELANGDesc=Doge+should+talk+in+which+language%3F%3A+Available+languages%3A+en%2C+tr&BOT_TOKENDesc=Create+a+bot+at+https%3A%2F%2Ft.me%2FBotFather+and+get+the+token+of+your+bot.&PMLOGGERDesc=Do+you+want+me+to+automatically+save+PM+and+group-tagged+messages%3F+As+long+as+I%27m+working%2C+you+can+see+deleted+and+edited+messages+with+this+feature.+Write%3B+True+or+False&ENVDesc=Setting+this+to+ANYTHING+will+enable+Railway.&DOGELANGDefault=en&PMLOGGERDefault=False&ENVDefault=ANYTHING&referralCode=Happy">
-<img
-src="https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/Railway.png"
-alt="Deploy to Railway!">
 </a>
 <br>
 <br>
@@ -295,6 +284,8 @@ align="center">
 [🐺 Asena Dev](https://github.com/AsenaDev)
 
 [👾 Team Ultroid](https://github.com/TeamUltroid)
+
+[👩 Seden UserBot](https://github.com/TeamUntergang/Telegram-UserBot)
 
 <br>
 
