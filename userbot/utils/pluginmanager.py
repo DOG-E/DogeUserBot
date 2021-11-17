@@ -110,4 +110,3 @@ def checkplugins(filename):
     filedata = filedata.replace("editmessage", "edit_message")
     with open(filename, "w") as f:
         f.write(filedata)
-
