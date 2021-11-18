@@ -22,9 +22,8 @@ from re import compile
 from time import time
 
 from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
-from telethon.utils import get_display_name
 from telethon.errors import BotResponseTimeoutError
+from telethon.events import CallbackQuery
 from telethon.tl.types import InputMediaUploadedDocument
 from telethon.utils import get_attributes
 from ujson import load

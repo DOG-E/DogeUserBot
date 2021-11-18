@@ -13,9 +13,8 @@ from json import load
 from os import path
 from re import compile
 
-from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
-from telethon.utils import get_display_name
+from telethon.events import CallbackQuery
+
 from . import doge, lan
 
 

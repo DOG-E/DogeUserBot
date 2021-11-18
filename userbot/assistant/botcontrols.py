@@ -17,9 +17,6 @@
 from asyncio import sleep
 from datetime import datetime
 
-from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
-from telethon.utils import get_display_name
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users

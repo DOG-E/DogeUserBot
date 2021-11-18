@@ -9,21 +9,11 @@
 from datetime import datetime
 from math import floor
 
-from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
 from telethon.utils import get_display_name
+
 from ..sql_helper.bot_blacklists import add_user_to_bl, rem_user_from_bl
 from ..sql_helper.bot_pms_sql import get_user_id
-from . import (
-    BOTLOG,
-    BOTLOG_CHATID,
-    Config,
-    _format,
-    doge,
-    lan,
-    logging,
-    reply_id,
-)
+from . import BOTLOG, BOTLOG_CHATID, Config, _format, doge, lan, logging, reply_id
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)

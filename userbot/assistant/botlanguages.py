@@ -15,18 +15,9 @@
 from re import compile
 
 from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
-from telethon.utils import get_display_name
-from . import (
-    check_owner,
-    doge,
-    get_back_button,
-    lan,
-    lngs,
-    logging,
-    mention,
-    sgvar,
-)
+from telethon.events import CallbackQuery
+
+from . import check_owner, doge, get_back_button, lan, lngs, logging, mention, sgvar
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
