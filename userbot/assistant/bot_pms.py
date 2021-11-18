@@ -19,11 +19,10 @@ from re import compile
 from typing import Optional, Union
 
 from telethon import Button
-from telethon.events import CallbackQuery, InlineQuery
-from telethon.utils import get_display_name
 from telethon.errors import UserIsBlockedError
-from telethon.events import MessageDeleted, StopPropagation
+from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
 from telethon.tl.functions.contacts import UnblockRequest
+from telethon.utils import get_display_name
 
 from ..core import pool
 from ..sql_helper.bot_blacklists import check_is_black_list
