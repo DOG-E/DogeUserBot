@@ -21,6 +21,9 @@ from pathlib import Path
 from re import compile
 from time import time
 
+from telethon import Button
+from telethon.events import CallbackQuery, InlineQuery
+from telethon.utils import get_display_name
 from telethon.errors import BotResponseTimeoutError
 from telethon.tl.types import InputMediaUploadedDocument
 from telethon.utils import get_attributes
@@ -33,8 +36,6 @@ from . import (
     BOT_USERNAME,
     BOTLOG_CHATID,
     TEMP_DIR,
-    Button,
-    CallbackQuery,
     check_owner,
     doge,
     download_button,

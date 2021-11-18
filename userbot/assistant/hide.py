@@ -13,7 +13,10 @@ from json import load
 from os import path
 from re import compile
 
-from . import CallbackQuery, doge, lan
+from telethon import Button
+from telethon.events import CallbackQuery, InlineQuery
+from telethon.utils import get_display_name
+from . import doge, lan
 
 
 @doge.tgbot.on(CallbackQuery(data=compile(b"hide_(.*)")))

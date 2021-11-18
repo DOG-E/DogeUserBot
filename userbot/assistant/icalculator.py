@@ -10,10 +10,10 @@
 # ================================================================
 from re import compile
 
+from telethon import Button
+from telethon.events import CallbackQuery, InlineQuery
+from telethon.utils import get_display_name
 from . import (
-    Button,
-    CallbackQuery,
-    InlineQuery,
     calcc,
     check_owner,
     dgvar,
