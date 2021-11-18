@@ -36,7 +36,7 @@ try:
     doge.loop.run_until_complete(setup_bot())
     LOGS.info(f"✅ {lan('startupdoge')} 🐾")
 except Exception as e:
-    LOGS.error(f"{e}")
+    LOGS.error(f"🚨 {e}")
     exit()
 
 
