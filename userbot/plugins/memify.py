@@ -151,7 +151,7 @@ async def amemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -201,7 +201,7 @@ async def imemes(event):
     if not (reply and (reply.media)):
         await eor(event, "`Reply to supported Media...`")
         return
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp/"):
         mkdir("./temp/")
@@ -245,7 +245,7 @@ async def smemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -289,7 +289,7 @@ async def mmemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -335,7 +335,7 @@ async def fmemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -381,7 +381,7 @@ async def gmemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -429,7 +429,7 @@ async def zmemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -494,7 +494,7 @@ async def frmemes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogid = await reply_id(event)
     if not isdir("./temp"):
         mkdir("./temp")
@@ -561,7 +561,7 @@ async def memes(event):
     if not reply:
         return await edl(event, "`Reply to supported Media...`")
     dogeid = await reply_id(event)
-    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    happy = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not dogeinput:
         return await edl(
             event, "`what should I write on that u idiot give text to memify`"

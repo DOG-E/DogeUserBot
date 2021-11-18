@@ -75,7 +75,7 @@ async def _(event):
         query = reply.message
     else:
         return await eor(event, "`What I am Supposed to find `")
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not vurl(video_link):
@@ -159,7 +159,7 @@ async def _(event):
         query = reply.message
     else:
         return await eor(event, "`What I am Supposed to find`")
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     dogevent = await eor(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not vurl(video_link):

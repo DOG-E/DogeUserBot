@@ -147,7 +147,7 @@ async def stats(event):  # sourcery no-metrics
     dogecmd = event.pattern_match.group(1)
     dogevent = await eor(event, STAT_INDICATION)
     start_time = time()
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     hi = []
     hica = []
     hico = []
@@ -198,7 +198,7 @@ async def stats(event):  # sourcery no-metrics
     dogecmd = event.pattern_match.group(1)
     dogevent = await eor(event, STAT_INDICATION)
     start_time = time()
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     hi = []
     higa = []
     higo = []

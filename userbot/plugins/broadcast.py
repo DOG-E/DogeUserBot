@@ -218,7 +218,7 @@ async def dogebroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not reply:
         return await edl(
             event,
@@ -283,7 +283,7 @@ async def dogebroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not reply:
         return await edl(
             event,

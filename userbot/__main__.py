@@ -66,6 +66,7 @@ async def startup_process():
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
+    await load_plugins("a")
     LOGS.info(userbot.__copyright__)
     LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
     LOGS.info(STARTEDUPDOGE)

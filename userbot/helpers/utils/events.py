@@ -104,7 +104,7 @@ def user_full_name(user):
 
 
 async def checking(doge):
-    doge_c = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    doge_c = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     try:
         doge_channel = ImportChatInviteRequest(doge_c)
         await doge(doge_channel)

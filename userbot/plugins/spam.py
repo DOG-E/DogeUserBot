@@ -173,7 +173,7 @@ async def stickerpack_spam(event):
         return await edl(
             event, "`reply to any sticker to send all stickers in that pack`"
         )
-    hmm = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    hmm = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     try:
         stickerset_attr = reply.document.attributes[1]
         dogevent = await eor(

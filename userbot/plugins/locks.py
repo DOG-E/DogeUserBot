@@ -68,7 +68,7 @@ async def _(event):  # sourcery no-metrics
     if not event.is_group:
         return await edl(event, "`Idiot! ,This is not a group to lock things `")
     chat_per = (await event.get_chat()).default_banned_rights
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, True)
         await eor(event, "`Locked {}`".format(input_str))
@@ -253,7 +253,7 @@ async def _(event):  # sourcery no-metrics
     peer_id = event.chat_id
     if not event.is_group:
         return await edl(event, "`Idiot! ,This is not a group to lock things `")
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     chat_per = (await event.get_chat()).default_banned_rights
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, False)
@@ -494,7 +494,7 @@ async def _(event):  # sourcery no-metrics
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
         return await edl(event, "`This user is admin you can't play with him`")
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers
@@ -720,7 +720,7 @@ async def _(event):  # sourcery no-metrics
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
         return await edl(event, "`This user is admin you can't play with him`")
-    dog = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers

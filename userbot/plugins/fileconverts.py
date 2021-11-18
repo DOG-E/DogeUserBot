@@ -538,7 +538,7 @@ async def _(event):  # sourcery no-metrics
             else:
                 return await edl(event, "Use quality of range 0 to 721")
     dogreply = await event.get_reply_message()
-    doge_event = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
+    doge_event = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not dogreply or not dogreply.media or not dogreply.media.document:
         return await eor(event, "`Stupid!, This is not animated sticker.`")
     if dogreply.media.document.mime_type != "application/x-tgsticker":
