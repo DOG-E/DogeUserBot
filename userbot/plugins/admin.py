@@ -240,19 +240,19 @@ async def demote(event):
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
-        "header": "Will ban the guy in the group where you used this command.",
-        "description": "Permanently will remove him from this group and he can't join back\
-            \nNote: You need proper rights for this.",
+        "header": lan("ban1"),
+        "description": lan("ban2"),
         "usage": [
-            "{tr}ban <userid/username/reply>",
-            "{tr}ban <userid/username/reply> <reason>",
+            f"{tr}ban lan('usrreply')",
+            f"{tr}ban lan('usrreply') lan('reason')",
         ],
+        "note": lan("ban4"),
     },
     groups_only=True,
     require_admin=True,
 )
 async def _ban_person(event):
-    "To ban a person in group"
+    lan("ban5")
     user, reason = await get_user_from_event(event)
     if not user:
         return
