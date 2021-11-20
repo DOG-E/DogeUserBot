@@ -33,4 +33,4 @@ def check_data_base_heal_th():
 
 
 async def dogealive():
-    return lan("ialivetext").format(tr)
+    return lan("ialivetext").format(tr, tr)
