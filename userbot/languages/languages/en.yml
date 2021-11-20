@@ -38,10 +38,12 @@ cmd: Cᴍᴅ
 info: Iɴꜰo
 text: text
 replymsg: reply to user message
+replyimg: <reply to image>
 or: or
 reason: reason
 support: Support
 category: Category
+usrreply: <userid/username/reply>
 
 # user;
 namex: Name
@@ -49,7 +51,7 @@ fnamex: First Name
 userx: User
 username: username
 user_name: User name
-
+chat: Chat
 # times;
 s: s
 seconds: second(s)
@@ -682,7 +684,144 @@ def_kang9: 🔮 I'm using witchery to kang this sticker...
 
 
 # PLUGINS #
+
 # ADMIN;
+# gpic
+gpic1: For changing group display pic or deleting display pic
+gpic2: Reply to Image for changing display picture
+gpic3: To delete group pic
+gpic4: For changing Group dp
+gpic5: Successfully group profile pic deleted.
+gpic6: "```Group profile pic {} successfully```"
+
+# promote 
+pro1: "To give admin rights for a person"
+pro2: "Provides admin rights to the person in the chat."
+pro3: <custom title>
+pro4: "Note: You need proper rights for this."
+pro5: "To promote a person in chat"
+pro6: "`Promoting...`"
+pro7: "`Promoted Successfully! Now gib Party`"
+
+# demote 
+
+demo1: To remove a person from admin list
+demo2: Removes all admin rights for that peron in that chat
+demo3: <custom title>
+demo4: "Note: You need proper rights for this and also u must be owner or admin who promoted that guy"
+demo5: To demote a person in group
+demo6: "`Demoting...`"
+demo7: "`Demoted Successfully! Betterluck next time`"
+
+# ban
+ban1: Will ban the guy in the group where you used this command.
+ban2: Permanently will remove him from this group and he can't join back
+ban3: <custom title>
+ban4: You need proper rights for this
+ban5:
+ban6:
+ban7:
+ban8:
+ban9:
+ban10:
+ban11:
+
+# unban 
+unban1:
+unban2:
+unban3:
+unban4:
+unban5:
+unban6:
+unban7:
+unban8:
+unban9:
+
+# mute 
+mute1:
+mute2:
+mute3:
+mute4:
+mute5:
+mute6:
+mute7:
+mute8:
+mute9:
+mute10:
+mute11:
+mute12:
+mute13:
+mute14:
+mute15:
+mute16:
+
+# unmute
+unmute1:
+unmute2:
+unmute3:
+unmute4:
+unmute5:
+unmute6:
+unmute7:
+unmute8:
+unmute9:
+unmute10:
+unmute11:
+unmute12:
+
+# kick 
+kick1:
+kick2:
+kick3:
+kick4:
+kick5:
+kick6:
+kick7:
+kick8:
+
+# pin 
+pin1:
+pin2:
+pin3:
+pin4:
+pin5:
+pin6:
+pin7:
+pin8:
+
+# unpin
+unpin1:
+unpin2:
+unpin3:
+unpin4:
+unpin5:
+unpin6:
+unpin7:
+unpin8:
+unpin9:
+unpin10:
+
+# undlt
+undlt1:
+undlt2:
+undlt3:
+undlt4:
+undlt5:
+undlt6:
+undlt7:
+undlt8:
+undlt9:
+undlt10:
+undlt11:
+undlt12:
+undlt13:
+undlt14:
+
+
+pptoosmol: "`The image is too small`"
+pmerror: "`Failure while processing the image`"
+chatppchanged: "`Chat Picture Changed`"
+invalidmedia: "`Invalid Extension`"
 noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
 
 
