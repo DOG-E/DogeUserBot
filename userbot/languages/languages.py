@@ -41,7 +41,7 @@ def lan(key: str) -> Any:
             if listlangs.get(lang):
                 listlangs[lang][key] = trt
             else:
-                listlangs.update({lang:{key:trt}})
+                listlangs.update({lang: {key: trt}})
             return trt
         except KeyError:
             return f"🚧 WARNING: Couldn't load any language with the key `{key}`"
