@@ -8,7 +8,6 @@
 # ================================================================
 from random import choice
 
-from .. import tr
 from .languages import lan
 
 # BASIS:
