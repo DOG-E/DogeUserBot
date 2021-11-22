@@ -19,6 +19,7 @@ glitch_this
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
+google_trans_new
 googletrans==4.0.0-rc1
 gtts
 hachoir
