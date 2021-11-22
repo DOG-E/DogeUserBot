@@ -270,9 +270,7 @@ abotdesc: |-
 customizedabot: "✅ DONE! @{} I'm customized your Telegram assistant bot successfully!"
 startingdoge: STARTING DOGE USERBOT
 startupdoge: STARTUP COMPLETED
-wowialiveready: |-
-  🐶 wow! Doge is alive!
-  🐾 Doge UserBot is ready to use.
+wowialiveready: "🐶 wow! Doge is alive!\n🐾 Doge UserBot is ready to use."
 writealivetc: |-
   🔅 Write {}alive to check.
   🔅 Learn the commands by writing {}doge
