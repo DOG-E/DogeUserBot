@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import doge, tr, edl, eor, parse_pre
+from . import doge, edl, eor, parse_pre, tr
 
 plugin_category = "tool"
 

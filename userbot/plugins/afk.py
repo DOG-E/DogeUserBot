@@ -22,10 +22,10 @@ from . import (
     doge,
     edl,
     gvar,
+    lan,
     logging,
     media_type,
     tr,
-    lan,
 )
 
 plugin_category = "misc"
@@ -117,7 +117,7 @@ async def afksetter(event):
         if not BOTLOG:
             return await edl(
                 event,
-               lan("afk11"),
+                lan("afk11"),
             )
 
         AFK_.media_afk = None
@@ -179,7 +179,11 @@ async def set_not_afk(event):
         elif h > 0:
             endtime += f"{h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         else:
-            endtime += f"{m}{lan('minutes')} {s}{lan('seconds')}" if m > 0 else f"{s}{lan('seconds')}"
+            endtime += (
+                f"{m}{lan('minutes')} {s}{lan('seconds')}"
+                if m > 0
+                else f"{s}{lan('seconds')}"
+            )
     current_message = event.message.message
     if (("afk" not in current_message) or ("#afk" not in current_message)) and (
         "on" in AFK_.USERAFK_ON
@@ -201,11 +205,7 @@ async def set_not_afk(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#AFKFALSE \n{lan('afk13')}\n"
-                + lan("afk14")
-                + "`"
-                + endtime
-                + "`",
+                f"#AFKFALSE \n{lan('afk13')}\n" + lan("afk14") + "`" + endtime + "`",
             )
 
 
@@ -233,7 +233,11 @@ async def on_afk(event):  # sourcery no-metrics
         elif h > 0:
             endtime += f"{h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         else:
-            endtime += f"{m}{lan('minutes')} {s}{lan('seconds')}" if m > 0 else f"{s}{lan('seconds')}"
+            endtime += (
+                f"{m}{lan('minutes')} {s}{lan('seconds')}"
+                if m > 0
+                else f"{s}{lan('seconds')}"
+            )
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text or "#afk" in current_message_text:
         return False
@@ -330,15 +334,17 @@ async def on_afk(event):  # sourcery no-metrics
         messaget = media_type(event)
         resalt = f"💤 #TAG_AFK\n<b>{lan('afk15')} </b><code>{hmm.title}</code>"
         if full is not None:
-            resalt += (
-                f"\n<b>{lan('afk16')} </b>{_format.htmlmentionuser(full.first_name, full.id)}"
-            )
+            resalt += f"\n<b>{lan('afk16')} </b>{_format.htmlmentionuser(full.first_name, full.id)}"
         if messaget is not None:
             resalt += f"\n<b>{lan('afk17')} </b><code>{messaget}</code>"
         else:
             resalt += f"\n<b>{lan('afk18')} </b>{event.message.message}"
         button = [
-            (Button.url(f"{lan('afk19')}", f"https://t.me/c/{hmm.id}/{event.message.id}"))
+            (
+                Button.url(
+                    f"{lan('afk19')}", f"https://t.me/c/{hmm.id}/{event.message.id}"
+                )
+            )
         ]
         if not event.is_private:
             await event.client.send_message(
@@ -352,6 +358,7 @@ async def on_afk(event):  # sourcery no-metrics
                 await event.client.forward_messages(
                     PM_LOGGER_GROUP_ID, event.message, silent=True
                 )
+
 
 # Lang By Aylak
 # Copyright (C) 2021 - DOG-E - MutlCC

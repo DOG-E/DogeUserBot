@@ -50,9 +50,7 @@ async def _(event):
             reply_to=event.message.id,
         )
         await sleep(4)
-        await no_admin_privilege_message.edit(
-            lan("antiflood1")
-        )
+        await no_admin_privilege_message.edit(lan("antiflood1"))
     else:
         await event.client.send_message(
             entity=event.chat_id,
@@ -88,6 +86,7 @@ async def _(event):
         await event.edit(lan("antiflood6").format(input_str))
     except Exception as e:
         await event.edit(str(e))
+
 
 # Lang By Aylak - @atayist
 # Copyright (C) 2021 - DOG-E

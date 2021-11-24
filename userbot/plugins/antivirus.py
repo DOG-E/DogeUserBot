@@ -79,9 +79,7 @@ async def vscan(event):
             response = await newmsgres(conv, chat)
             await event.client.forward_messages(chat, reply_message)
             response = await newmsgres(conv, chat)
-            await dogevent.edit(
-                f"**{lan('vscan6')}** {response.message.message}"
-            )
+            await dogevent.edit(f"**{lan('vscan6')}** {response.message.message}")
         elif response.text.startswith("No threats"):
             await event.edit(lan("vscan8"))
         elif response.text.startswith("Still"):
@@ -90,8 +88,6 @@ async def vscan(event):
             if response.text.startswith("No threats"):
                 await event.edit(lan("vscan8"))
             else:
-                await event.edit(
-                    lan("vscan9").format(response.message.message)
-                )
+                await event.edit(lan("vscan9").format(response.message.message))
         await conv.mark_read()
         await conv.cancel_all()

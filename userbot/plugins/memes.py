@@ -28,12 +28,12 @@ from . import (
     dogememes,
     edl,
     eor,
+    lan,
     mememaker,
     mention,
     parse_pre,
     reply_id,
     tr,
-    lan,
 )
 
 plugin_category = "fun"

@@ -19,7 +19,17 @@ from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from . import TMP_DOWNLOAD_DIRECTORY, tr, lan, _format, doge, edl, eor, humanbytes, progress
+from . import (
+    TMP_DOWNLOAD_DIRECTORY,
+    _format,
+    doge,
+    edl,
+    eor,
+    humanbytes,
+    lan,
+    progress,
+    tr,
+)
 
 plugin_category = "misc"
 

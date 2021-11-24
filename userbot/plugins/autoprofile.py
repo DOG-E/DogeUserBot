@@ -45,10 +45,9 @@ from . import (
     doge,
     edl,
     gvar,
+    lan,
     logging,
     sgvar,
-    lan,
-    tr,
 )
 
 plugin_category = "misc"

@@ -23,7 +23,7 @@ from telethon.tl.types import (
     InputMessagesFilterVoice,
 )
 
-from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id, tr, lan
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, lan, reply_id, tr
 
 plugin_category = "tool"
 

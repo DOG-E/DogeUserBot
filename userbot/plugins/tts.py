@@ -12,7 +12,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from gtts import gTTS
 
-from . import tr, deEmojify, doge, edl, eor, gvar, reply_id
+from . import deEmojify, doge, edl, eor, gvar, reply_id, tr
 
 plugin_category = "tool"
 

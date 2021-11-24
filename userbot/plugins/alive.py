@@ -30,10 +30,10 @@ from . import (
     eor,
     get_readable_time,
     gvar,
+    lan,
     mention,
     reply_id,
     tr,
-    lan,
 )
 
 plugin_category = "bot"

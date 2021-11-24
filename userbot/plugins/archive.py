@@ -21,7 +21,9 @@ from zipfile import ZipFile, is_zipfile
 from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from . import TMP_DOWNLOAD_DIRECTORY, doge, edl, eor, progress, tr, lan as l
+from . import TMP_DOWNLOAD_DIRECTORY, doge, edl, eor
+from . import lan as l
+from . import progress, tr
 
 plugin_category = "tool"
 
@@ -71,9 +73,7 @@ async def zip_file(event):
             zip_file.write(file)
     end = datetime.now()
     ms = (end - start).seconds
-    await mone.edit(
-        l("zip10").format(input_str, filepath+'.zip', ms)
-    )
+    await mone.edit(l("zip10").format(input_str, filepath + ".zip", ms))
 
 
 @doge.bot_cmd(
@@ -111,9 +111,7 @@ async def tar_file(event):
             zip_file.add(file)
     end = datetime.now()
     ms = (end - start).seconds
-    await mone.edit(
-        l("tar8").format(input_str, destination, ms)
-    )
+    await mone.edit(l("tar8").format(input_str, destination, ms))
 
 
 @doge.bot_cmd(
@@ -135,9 +133,7 @@ async def zip_file(event):  # sourcery no-metrics
         if osp.exists(path):
             start = datetime.now()
             if not is_zipfile(path):
-                return await edl(
-                    event, l("unzip5").format(path)
-                )
+                return await edl(event, l("unzip5").format(path))
 
             mone = await eor(event, l("unzip6"))
             destination = osp.join(
@@ -148,9 +144,7 @@ async def zip_file(event):  # sourcery no-metrics
                 zip_ref.extractall(destination)
             end = datetime.now()
             ms = (end - start).seconds
-            await mone.edit(
-                l("unzip7").format(destination, ms)
-            )
+            await mone.edit(l("unzip7").format(destination, ms))
         else:
             await edl(event, l("unzip8").format(input_str))
     elif event.reply_to_msg_id:
@@ -190,9 +184,7 @@ async def zip_file(event):  # sourcery no-metrics
             zip_ref.extractall(destination)
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-            l("unzip12").format(destination, ms)
-        )
+        await mone.edit(l("unzip12").format(destination, ms))
         remove(filename)
     else:
         await edl(
@@ -220,9 +212,7 @@ async def untar_file(event):  # sourcery no-metrics
         if osp.exists(path):
             start = datetime.now()
             if not is_tarfile(path):
-                return await edl(
-                    event, l("untar6").format(path)
-                )
+                return await edl(event, l("untar6").format(path))
 
             mone = await eor(event, l("untar6"))
             destination = osp.join(
@@ -236,9 +226,7 @@ async def untar_file(event):  # sourcery no-metrics
             file.close()
             end = datetime.now()
             ms = (end - start).seconds
-            await mone.edit(
-                l("untar7").format(ms, input_str, destination)
-            )
+            await mone.edit(l("untar7").format(ms, input_str, destination))
         else:
             await edl(event, l("untar8").format(input_str))
     elif event.reply_to_msg_id:
@@ -264,9 +252,7 @@ async def untar_file(event):  # sourcery no-metrics
             return await edl(mone, f"{l('errr')}\n__{e}__")
 
         if not is_tarfile(filename):
-            return await edl(
-                mone, l("untar9")
-            )
+            return await edl(mone, l("untar9"))
 
         await mone.edit(l("untar10"))
         destination = osp.join(
@@ -281,9 +267,7 @@ async def untar_file(event):  # sourcery no-metrics
         file.close()
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-            l("untar11").format(ms, destination)
-        )
+        await mone.edit(l("untar11").format(ms, destination))
         remove(filename)
     else:
         await edl(

@@ -20,7 +20,7 @@ from ..sql_helper.echo_sql import (
     remove_echo,
     remove_echos,
 )
-from . import doge, edl, eor, lan, tr, get_user_from_event, wowmydev
+from . import doge, edl, eor, get_user_from_event, lan, tr, wowmydev
 
 plugin_category = "fun"
 

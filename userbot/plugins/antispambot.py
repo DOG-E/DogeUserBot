@@ -16,7 +16,7 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import ANTISPAMBOT_BAN, BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, lan, logging, tr
+from . import ANTISPAMBOT_BAN, BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, lan, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ if ANTISPAMBOT_BAN == True:
             ban = SPAMWATCH.get_ban(user.id)
             if ban:
                 hmm = await event.reply(
-                lan("antispam3").format(user.first_name, user.id, ban.reason)    
+                    lan("antispam3").format(user.first_name, user.id, ban.reason)
                 )
                 try:
                     await event.client.edit_permissions(
@@ -86,9 +86,7 @@ if ANTISPAMBOT_BAN == True:
                 LOGS.info(e)
                 data = None
             if data and data["ok"]:
-                reason = (
-                    lan("antispam4").format(user.id)
-                )
+                reason = lan("antispam4").format(user.id)
                 hmm = await event.reply(
                     lan("antispam5").format(user.first_name, user.id, reason)
                 )
@@ -141,9 +139,7 @@ async def caschecker(event):
                 else:
                     banned_users += f"{lan('casc5')}`{user.id}`\n"
             members_count += 1
-        text = lan("casc6").format(
-            cas_count, members_count
-        )
+        text = lan("casc6").format(cas_count, members_count)
         text += banned_users
         if not cas_count:
             text = lan("casc7")
@@ -189,9 +185,7 @@ async def caschecker(event):
                 else:
                     banned_users += f"{lan('casc5')} `{user.id}`\n"
             members_count += 1
-        text = lan("spam5").format(
-            cas_count, members_count
-        )
+        text = lan("spam5").format(cas_count, members_count)
         text += banned_users
         if not cas_count:
             text = lan("spam6")

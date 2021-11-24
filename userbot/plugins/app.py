@@ -80,7 +80,9 @@ async def app_search(event):
             "five", "5"
         )
         app_details += (
-            f"\n<code>{lan('app8')}:</code> <a href='" + app_link + f"'>{lan('app9')}</a>"
+            f"\n<code>{lan('app8')}:</code> <a href='"
+            + app_link
+            + f"'>{lan('app9')}</a>"
         )
         app_details += f"\n\n===> {ALIVE_NAME} <==="
         await event.edit(app_details, link_preview=True, parse_mode="HTML")

@@ -212,7 +212,7 @@ async def demote(event):
     flag = await wowmydev(user_id, event)
     if flag:
         return
-    dogevent = await eor(event, lan('demo6'))
+    dogevent = await eor(event, lan("demo6"))
     newrights = ChatAdminRights(
         add_admins=None,
         invite_users=None,
@@ -246,7 +246,7 @@ async def demote(event):
             f"{tr}ban {lan('ban3')}",
             f"{tr}ban {lan('usrreply')} {lan('reason')}",
         ],
-        "note": lan('ban4'),
+        "note": lan("ban4"),
     },
     groups_only=True,
     require_admin=True,
@@ -272,9 +272,7 @@ async def _ban_person(event):
         if reply:
             await reply.delete()
     except BadRequestError:
-        return await dogevent.edit(
-            lan("ban8")
-        )
+        return await dogevent.edit(lan("ban8"))
     if reason:
         await dogevent.edit(
             f"{_format.mentionuser(user.first_name ,user_id)}{lan('ban9')}\n**{lan('reason')}:** `{reason}`"
@@ -311,7 +309,7 @@ async def _ban_person(event):
             f"{tr}unban {lan('usrreply')}",
             f"{tr}unban {lan('usrreply')} {lan('reason')}",
         ],
-        "note": lan("unban3")
+        "note": lan("unban3"),
     },
     groups_only=True,
     require_admin=True,
@@ -359,7 +357,7 @@ async def watcher(event):
             f"{tr}mute {lan('usrreply')}",
             f"{tr}mute {lan('usrreply')} {lan('reason')}",
         ],
-        "note": lan("mute3")
+        "note": lan("mute3"),
     },  # sourcery no-metrics
 )
 async def startmute(event):
@@ -370,9 +368,7 @@ async def startmute(event):
         await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                lan("mute6")
-            )
+            return await event.edit(lan("mute6"))
         if event.chat_id == doge.uid:
             return await edl(event, lan("mute7"))
         flag = await wowmydev(replied_user, event)
@@ -395,9 +391,7 @@ async def startmute(event):
         admin = chat.admin_rights
         creator = chat.creator
         if not admin and not creator:
-            return await eor(
-                event, lan("mute9")
-            )
+            return await eor(event, lan("mute9"))
         user, reason = await get_user_from_event(event)
         if not user:
             return
@@ -408,9 +402,7 @@ async def startmute(event):
         if flag:
             return
         if is_muted(user_id, event.chat_id):
-            return await eor(
-                event, lan("mute11")
-            )
+            return await eor(event, lan("mute11"))
         result = await event.client.get_permissions(event.chat_id, user.id)
         try:
             if result.participant.banned_rights.send_messages:
@@ -432,9 +424,7 @@ async def startmute(event):
                         lan("mute13"),
                     )
             elif "creator" not in vars(chat):
-                return await eor(
-                    event, lan("mute14")
-                )
+                return await eor(event, lan("mute14"))
             mute(user_id, event.chat_id)
         except Exception as e:
             return await eor(event, f"{lan('errr')} `{e}`")
@@ -468,7 +458,7 @@ async def startmute(event):
             f"{tr}unmute {lan('usrreply')}",
             f"{tr}unmute {lan('usrreply')} {lan('reason')}",
         ],
-        "note": lan("unmute3")
+        "note": lan("unmute3"),
     },
 )
 async def endmute(event):
@@ -478,17 +468,13 @@ async def endmute(event):
         await sleep(1)
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if not is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                lan("unmute6")
-            )
+            return await event.edit(lan("unmute6"))
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
             await event.edit(f"{lan('errr')}\n`{e}`")
         else:
-            await event.edit(
-                lan("unmute7")
-            )
+            await event.edit(lan("unmute7"))
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -538,7 +524,7 @@ async def endmute(event):
             f"{tr}kick {lan('usrreply')}",
             f"{tr}kick {lan('usrreply')} {lan('reason')}",
         ],
-        "note": lan("kick3")
+        "note": lan("kick3"),
     },
     groups_only=True,
     require_admin=True,
@@ -562,7 +548,9 @@ async def endmute(event):
             f" {lan('kick6')} [{user.first_name}](tg://user?id={user_id})`!`\n**{lan('reason')}** `{reason}`"
         )
     else:
-        await dogevent.edit(f"{lan('kick6')} [{user.first_name}](tg://user?id={user_id})`!`")
+        await dogevent.edit(
+            f"{lan('kick6')} [{user.first_name}](tg://user?id={user_id})`!`"
+        )
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -583,7 +571,7 @@ async def endmute(event):
             f"{tr}pin {lan('replymsg')}",
             f"{tr}pin l {lan('replymsg')}",
         ],
-        "note": lan("pin3")
+        "note": lan("pin3"),
     },
 )
 async def pin(event):
@@ -621,7 +609,7 @@ async def pin(event):
             f"{tr}unpin {lan('replymsg')}",
             "{tr}unpinall",
         ],
-        "note": lan("unpin3")
+        "note": lan("unpin3"),
     },
 )
 async def pin(event):
@@ -640,9 +628,7 @@ async def pin(event):
         elif options == "all":
             await event.client.unpin_message(event.chat_id)
         else:
-            return await edl(
-                event, lan("unpin7").format(tr), 5
-            )
+            return await edl(event, lan("unpin7").format(tr), 5)
     except BadRequestError:
         return await edl(event, NO_PERM, 5)
     except Exception as e:
@@ -663,9 +649,7 @@ async def pin(event):
     info={
         "header": lan("undlt1"),
         "description": lan("undlt2"),
-        "flags": {
-            "m": lan("undlt3")
-        },
+        "flags": {"m": lan("undlt3")},
         "usage": [
             f"{tr}undlt {lan('count')}",
             f"{tr}undlt .m {lan('count')}",
@@ -721,6 +705,7 @@ async def _iundlt(event):  # sourcery no-metrics
                     f"{lan('undlt8').format(msg.old.message, _format.mentionuser(ruser.first_name, ruser.id))}",
                     file=msg.old.media,
                 )
+
 
 # aylak
 # MutlCC
