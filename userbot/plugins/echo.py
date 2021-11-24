@@ -20,7 +20,7 @@ from ..sql_helper.echo_sql import (
     remove_echo,
     remove_echos,
 )
-from . import doge, edl, eor, get_user_from_event, wowmydev
+from . import doge, edl, eor, lan, tr, get_user_from_event, wowmydev
 
 plugin_category = "fun"
 
@@ -31,7 +31,7 @@ plugin_category = "fun"
     info={
         "header": "To repeat messages sent by the user.",
         "description": "Reply to user with this cmd so from then his every text and sticker messages will be repeated back to him.",
-        "usage": "{tr}addecho <reply>",
+        "usage": f"{tr}addecho {lan('replymsg')}",
     },
 )
 async def echo(event):
@@ -73,7 +73,7 @@ async def echo(event):
     info={
         "header": "To stop repeating paticular user messages.",
         "description": "Reply to user with this cmd to stop repeating his messages back.",
-        "usage": "{tr}rmecho <reply>",
+        "usage": f"{tr}rmecho {lan('replymsg')}",
     },
 )
 async def echo(event):

@@ -22,6 +22,7 @@ from . import (
     doge,
     edl,
     eor,
+    lan,
     media_type,
     progress,
     reply_id,
@@ -76,7 +77,7 @@ async def cult_small_video(
     info={
         "header": "Saves the media file in bot to trim mutliple times",
         "description": "Will download the replied media into the bot so that you an trim it as your needs.",
-        "usage": "{tr}ffmpegsave <reply>",
+        "usage": f"{tr}ffmpegsave {lan('replymsg')}",
     },
 )
 async def ff_mpeg_trim_cmd(event):

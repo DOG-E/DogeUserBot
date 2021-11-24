@@ -33,56 +33,25 @@ from . import (
     mention,
     reply_id,
     tr,
+    lan,
 )
 
 plugin_category = "bot"
-
-temp = "{msg}\n\
-\n\
-┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ oғ - {mention}\n\
-┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
-\n\
-┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}\n\
-┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}\n\
-┃ ꜱᴛᴀᴛᴜꜱ - {db}\n\
-┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}\n\
-┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}\n\
-┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
-\n\
-┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴘɪɴɢ - {ping} ms\n\
-┗━━━━━━✦❘༻༺❘✦━━━━━━┛"
-
-itemp = "{msg}\n\
-\n\
-┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ oғ - {mention}\n\
-┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
-\n\
-┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}\n\
-┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}\n\
-┃ ꜱᴛᴀᴛᴜꜱ - {db}\n\
-┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}\n\
-┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}\n\
-┗━━━━━━✦❘༻༺❘✦━━━━━━┛"
 
 
 @doge.bot_cmd(
     pattern="alive$",
     command=("alive", plugin_category),
     info={
-        "header": "To check bot's alive status",
-        "options": "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by {tr}tgm",
+        "header": lan("alive8"),
+        "options": lan("alive9").format(tr),
         "usage": [
             "{tr}alive",
         ],
     },
 )
 async def thisalive(event):
-    "A kind of showing bot details"
+    lan("alive10")
     start = datetime.now()
     await event.edit("ㅤ")
     end = datetime.now()
@@ -90,10 +59,10 @@ async def thisalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
-    ALIVE_TEXT = gvar("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
+    ALIVE_TEXT = gvar("ALIVE_TEXT") or lan("dogeemoji")
     try:
         fixialive = "ㅤ\n"
-        doge_caption = gvar("ALIVE") or itemp
+        doge_caption = gvar("ALIVE") or lan("ialive")
         caption = fixialive + doge_caption.format(
             msg=ALIVE_TEXT,
             mention=mention,
@@ -112,7 +81,7 @@ async def thisalive(event):
         DOG_IMG = (
             gvar("ALIVE_PIC") or "https://telegra.ph/file/4d498bf8dfc83a93f418b.png"
         )
-        doge_caption = gvar("ALIVE") or temp
+        doge_caption = gvar("ALIVE") or lan("aalive")
         caption = doge_caption.format(
             msg=ALIVE_TEXT,
             mention=mention,
@@ -134,7 +103,7 @@ async def thisalive(event):
             except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
                 return await eor(
                     event,
-                    f"**Media Value Error!!**\n__Change the link by __`{tr}setdog`\n\n**__Can't get media from this link:**__ `{PIC}`",
+                    f"**{lan('mediavalueerror')}**\n{lan('alive11')}`{tr}setdog`\n\n{lan('alive12')} `{PIC}`",
                 )
         else:
             await eor(event, caption)

@@ -23,7 +23,7 @@ from telethon.tl.types import (
     InputMessagesFilterVoice,
 )
 
-from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, reply_id, tr, lan
 
 plugin_category = "tool"
 
@@ -227,7 +227,7 @@ async def purgeme(event):
             "s": "To search paticular message and delete",
         },
         "usage": [
-            "{tr}purge <flag(optional)> <count(x)> <reply> - to delete x flagged messages after reply",
+            f"{tr}purge <flag(optional)> <count(x)> {lan('replymsg')} - to delete x flagged messages after reply",
             "{tr}purge <flag> <count(x)> - to delete recent x messages",
         ],
         "examples": [
@@ -469,9 +469,9 @@ async def fastpurger(event):  # sourcery no-metrics
             "s": "To delete all messages of replied user with the given query.",
         },
         "usage": [
-            "{tr}upurge <count> <reply>",
-            "{tr}upurge -a <count(optional)> <reply>",
-            "{tr}upurge -s <query> <reply>",
+            f"{tr}upurge <count> {lan('replymsg')}",
+            f"{tr}upurge -a <count(optional)> {lan('replymsg')}",
+            f"{tr}upurge -s <query> {lan('replymsg')}",
         ],
         "examples": [
             "{tr}upurge 10",

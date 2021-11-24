@@ -25,10 +25,12 @@ from . import (
     edl,
     eor,
     fsmessage,
+    lan,
     logging,
     media_type,
     pastetext,
     reply_id,
+    tr,
 )
 
 plugin_category = "tool"
@@ -57,7 +59,7 @@ def get_key(val):
         "flags": {
             "f": "Use this flag to send it as file rather than image",
         },
-        "usage": ["{tr}pcode <reply>", "{tr}pcode text"],
+        "usage": [f"{tr}pcode {lan('replymsg')}", "{tr}pcode text"],
     },
 )
 async def paste_img(event):
@@ -268,7 +270,7 @@ async def get_dogbin_content(event):
     command=("paster", plugin_category),
     info={
         "header": "Create a instant view or a paste it in telegraph file.",
-        "usage": ["{tr}paster <reply>", "{tr}paster text"],
+        "usage": [f"{tr}paster {lan('replymsg')}", "{tr}paster text"],
     },
 )
 async def _(event):

@@ -344,7 +344,7 @@ async def _(event):
     command=("creation", plugin_category),
     info={
         "header": "Learn about your account's creation date.",
-        "usage": "{tr}creation <reply>",
+        "usage": f"{tr}creation {lan('replymsg')}",
     },
 )
 async def creationdate(event):
@@ -667,7 +667,7 @@ async def permalink(mention):
     command=("when", plugin_category),
     info={
         "header": "To get date and time of message when it posted.",
-        "usage": "{tr}when <reply>",
+        "usage": f"{tr}when {lan('replymsg')}",
     },
 )
 async def _(event):
@@ -688,7 +688,7 @@ async def _(event):
     command=("chain", plugin_category),
     info={
         "header": "Reply this command to any converstion(or message) and it will find the chain length of that message",
-        "usage": "{tr}chain <reply>",
+        "usage": f"{tr}chain {lan('replymsg')}",
     },
 )
 async def _(event):

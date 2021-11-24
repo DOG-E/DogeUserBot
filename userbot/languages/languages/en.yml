@@ -12,10 +12,12 @@ natively: 🇬🇧 English
 
 authors:
   - mutlcc
+  - aylak - @atayist
 
 
 # BASIS #
 # everwhere;
+dogeemoji: 🐶 Doɢᴇ UsᴇʀBoᴛ 🐾
 processing: "**⏳ Processing...**"
 finalprocess: "**⌛ Finalizing process...**"
 uploading: "**📤 Uploading...**"
@@ -28,6 +30,7 @@ unknwn: Unknown
 none: None
 errr: "**🚨 Eʀʀoʀ:**"
 errr_: 🚨 Error
+mediavalueerror: Media Value Error!
 failed: "**❌ Fᴀɪʟᴇᴅ:**"
 noresult: ❌ No result
 invalid: INVALID
@@ -44,6 +47,9 @@ reason: reason
 support: Support
 category: Category
 usrreply: <userid/username/reply>
+loud: Loud
+count: <count>
+usage: Usage
 
 # user;
 namex: Name
@@ -59,7 +65,9 @@ m: m
 minutes: minute(s)
 h: h
 hours: hour(s)
+d: d
 days: day(s)
+y: "y"
 year: year
 date: "**📅 Date:**"
 
@@ -683,9 +691,16 @@ def_kang8: 👀 Mr.Steal your sticker is stealing this sticker...
 def_kang9: 🔮 I'm using witchery to kang this sticker...
 
 
-# PLUGINS #
+########################## PLUGINS ###############################
 
-# ADMIN;
+pptoosmol: "`The image is too small`"
+pmerror: "`Failure while processing the image`"
+chatppchanged: "`Chat Picture Changed`"
+invalidmedia: "`Invalid Extension`"
+noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+
+# ADMIN MODUL;
+
 # gpic
 gpic1: For changing group display pic or deleting display pic
 gpic2: Reply to Image for changing display picture
@@ -719,111 +734,346 @@ ban2: Permanently will remove him from this group and he can't join back
 ban3: <custom title>
 ban4: You need proper rights for this
 ban5: To ban a person in group
-ban6:
-ban7:
-ban8:
-ban9:
-ban10:
-ban11:
+ban6: "__You can't ban yourself.__"
+ban7: "`Whacking the pest!`"
+ban8: "`I don't have message nuking rights! But still he is banned!`"
+ban9: "` is banned !!`"
 
 # unban 
-unban1:
-unban2:
-unban3:
-unban4:
-unban5:
-unban6:
-unban7:
-unban8:
-unban9:
+unban1: "Will unban the guy in the group where you used this command."
+unban2: "Removes the user account from the banned list of the group"
+unban3: You need proper rights for this.
+unban4: "To unban a person"
+unban5: "`Unbanning...`"
+unban6: "`is Unbanned Successfully. Granting another chance.`"
+unban7: "`Uh oh my unban logic broke!`"
+
 
 # mute 
-mute1:
-mute2:
-mute3:
-mute4:
-mute5:
-mute6:
-mute7:
-mute8:
-mute9:
-mute10:
-mute11:
-mute12:
-mute13:
-mute14:
-mute15:
-mute16:
+mute1: "To stop sending messages from that user"
+mute2: "If is is not admin then changes his permission in group, if he is admin or if you try in personal chat then his messages will be deleted."
+mute3: You need proper rights for this.
+mute4: "To mute a person in that paticular chat"
+mute5: "`Unexpected issues or ugly errors may occur!`"
+mute6: "`This user is already muted in this chat ~~lmfao sed rip~~`"
+mute7: "`You can't mute yourself`"
+mute8: "`Successfully muted that person.\n**｀-´)⊃━☆ﾟ.*･｡ﾟ **`"
+mute9: "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
+mute10: "`Sorry, I can't mute myself`"
+mute11: "`This user is already muted in this chat ~~lmfao sed rip~~`"
+mute12: "`This user is already muted in this chat ~~lmfao sed rip~~`"
+mute13: "`You can't mute a person if you don't have delete messages permission. ಥ﹏ಥ`"
+mute14: "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
+mute15: "{} is muted in {}"
 
 # unmute
-unmute1:
-unmute2:
-unmute3:
-unmute4:
-unmute5:
-unmute6:
-unmute7:
-unmute8:
-unmute9:
-unmute10:
-unmute11:
-unmute12:
+unmute1: "To allow user to send messages again"
+unmute2: "Will change user permissions ingroup to send messages again."
+unmute3: You need proper rights for this.
+unmute4: "To mute a person in that paticular chat"
+unmute5: "`Unexpected issues or ugly errors may occur!`"
+unmute6: "__This user is not muted in this chat__\n`（ ^_^）o自自o（^_^ ）`"
+unmute7:  "`Successfully unmuted that person\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`"
+unmute8: "`This user can already speak freely in this chat ~~lmfao sed rip~~`"
+unmute9: "{} is unmuted in {}"
 
 # kick 
-kick1:
-kick2:
-kick3:
-kick4:
-kick5:
-kick6:
-kick7:
-kick8:
+kick1: "To kick a person from the group"
+kick2: "Will kick the user from the group so he can join back."
+kick3: You need proper rights for this.
+kick4: "use this to kick a user from chat"
+kick5: "`Kicking...`"
+kick6: "`Kicked`"
 
 # pin 
-pin1:
-pin2:
-pin3:
-pin4:
-pin5:
-pin6:
-pin7:
-pin8:
+pin1: "For pining messages in chat"
+pin2: "To notify everyone without this.it will pin silently"
+pin3: You need proper rights for this if you want to use in group.
+pin4: "Reply to a message to pin it in that in chat."
+pin5: "To pin a message in chat"
+pin6: "`Reply to a message to pin it.`"
+pin7: "`Pinned Successfully!`"
+pin8: "__Successfully pinned a message in chat__"
 
 # unpin
-unpin1:
-unpin2:
-unpin3:
-unpin4:
-unpin5:
-unpin6:
-unpin7:
-unpin8:
-unpin9:
-unpin10:
+unpin1: "For unpining messages in chat"
+unpin2: "Reply to a message to unpin it in that in chat"
+unpin3: You need proper rights for this if you want to use in group.
+unpin4: "To unpin all messages in the chat"
+unpin5: "To unpin message(s) in the group"
+unpin6: "__Reply to a message to unpin it or use __`{}unpin all`__ to unpin all__"
+unpin7: "__Reply to a message to unpin it or use__ `{}unpinall`"
+unpin8: "`Unpinned successfully!`"
+unpin9: "__Successfully unpinned message(s) in chat__"
 
 # undlt
-undlt1:
-undlt2:
-undlt3:
-undlt4:
-undlt5:
-undlt6:
-undlt7:
-undlt8:
-undlt9:
-undlt10:
-undlt11:
-undlt12:
-undlt13:
-undlt14:
+undlt1: "To get recent deleted messages in group"
+undlt2: "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages."
+undlt3: "use this flag to upload media to chat else will just show as media." # this must lower letter
+undlt4: this will reply all 7 messages to this message  # this must lower letter
+undlt5: "To check recent deleted messages in group"
+undlt6: "`Searching recent actions .....`"
+undlt7: "**Recent {} Deleted message(s) in this group are:**"
+undlt8: "__{}__ **Sent by** {}"
+undlt9: "__{}__ **Sent by {}"
 
 
-pptoosmol: "`The image is too small`"
-pmerror: "`Failure while processing the image`"
-chatppchanged: "`Chat Picture Changed`"
-invalidmedia: "`Invalid Extension`"
-noperm: "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+# AFK MODUL;
 
+#afk
+afk1: "Enables afk for your account"
+afk2: "When you're in afk if any one tags you then your bot will reply as he is offline. AFK mean away from keyboard."
+afk3: "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link."
+afk4: Let Me Sleep
+afk5: "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it"
+afk6: "To mark yourself as afk i.e. Away from keyboard"
+afk7: "`I'm going afk! because ~`"
+afk8: "`I'm going afk! `"
+afk9: Set AFK mode to True, and Reason is
+afk10: Set AFK mode to True, and Reason is Not Mentioned
+afk11:  "`To use media afk you need to set PRIVATE_GROUP_BOT_API_ID config`"
+afk12: "__Back alive! No Longer afk.__\n**Was afk for**"
+afk13: "__Set AFK mode to False__"
+afk14: "Back alive! No Longer afk.\nWas afk for "
+afk15: "👥 Group:"
+afk16: "👤 From:"
+afk17: "🔅 Message Type:"
+afk18: "🔹 Message:"
+afk19: 👁‍🗨 Mᴇssᴀɢᴇ
+afkreason: "**🐾 Reason:**"
+
+
+# ALIVE MODUL
+
+#alive
+aalive: |-
+  {msg}
+
+  ┏━━━━━━✦❘༻༺❘✦━━━━━━┓
+  ┃ ᴅoɢᴇ oғ - {mention}
+  ┗━━━━━━✦❘༻༺❘✦━━━━━━┛
+
+  ┏━━━━━━✦❘༻༺❘✦━━━━━━┓
+  ┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}
+  ┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}
+  ┃ ꜱᴛᴀᴛᴜꜱ - {db}
+  ┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}
+  ┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}
+  ┗━━━━━━✦❘༻༺❘✦━━━━━━┛
+
+  ┏━━━━━━✦❘༻༺❘✦━━━━━━┓
+  ┃ ᴘɪɴɢ - {ping} ms
+  ┗━━━━━━✦❘༻༺❘✦━━━━━━┛
+
+ialive: |-
+  {msg}
+
+  ┏━━━━━━✦❘༻༺❘✦━━━━━━┓
+  ┃ ᴅoɢᴇ oғ - {mention}
+  ┗━━━━━━✦❘༻༺❘✦━━━━━━┛
+
+  ┏━━━━━━✦❘༻༺❘✦━━━━━━┓
+  ┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}
+  ┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}
+  ┃ ꜱᴛᴀᴛᴜꜱ - {db}
+  ┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}
+  ┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}
+  ┗━━━━━━✦❘༻༺❘✦━━━━━━┛
+
+alive8: "To check bot's alive status"
+alive9: "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by `{}tgm`"
+alive10: "A kind of showing bot details"
+alive11: "__Change the link by __"
+alive12: "**__Can't get media from this link:__**"
+
+
+# ANDROID MODUL
+
+#magisk
+magisk1: "To Get latest Magisk releases"
+magisk2: "Get latest Magisk releases"
+magisk3: Stable
+magisk4: Beta
+magisk5: Canary
+magisk6: "**Latest Magisk Releases**"
+magisk7: Changelog
+
+#device
+device1: "To get android device name/model from its codename"
+device2: <codename>
+device3: whyred
+device4: "get android device name from its codename"
+device5: <codename> or <model>
+device6: "**Search results for {} \n\n**" 
+device7: "Brand:"
+device8: "Name:"
+device9: "Model:"
+device10: "Couldn't find info about {}!`\n"
+
+#dcname
+dcname1: "To Search for android device codename"
+dcname2: <brand> <device>
+dcname3: "__I couldn't find `{}`.__"
+dcname4: "**Search results for** `{} {}`:\n\n"
+dcname5: "Device"
+dcname6: "**Couldn't find `{}` codename!**\n"
+
+#specs
+specs1: "To Get info about android device ."
+specs2: "Mobile devices specifications"
+specs3: <brand> <device>
+specs4: "`{}` **is unknown brand!**"
+specs5: "__Can't find__ `{}`!"
+
+#twrp
+twrp1: "To Get latest twrp download links for android device."
+twrp2: <devicecodename>
+twrp3: "get android device twrp"
+twrp4: "**Couldn't find twrp downloads for** `{}!`\n"
+twrp5: "**Latest TWRP for {}:**\n"
+twrp6: "Updated:"
+
+
+# ANTIFLOOD MODUL
+autoantiflood: Automatic AntiFlooder
+adminreport: is flooding this chat. #Ex.: @adnin MutlCC is flooding this chat
+antiflood1: "This is odd SPAM dude. Stop this, enjoy the chat buddy"
+antiflood2: has been automatically restricted because he reached the defined flood limit. #Ex.: MutlCC has been automatically restricted because he reached the defined flood limit.
+
+#setflood
+setflood1: "To setup antiflood in a group"
+setflood2: "It warns the user if he spams the chat and if you're an admin with proper rights then it mutes him in that group."
+setflood3: "To stop antiflood setflood with high value like 999999"
+setflood4: "To setup antiflood in a group to prevent spam"
+setflood5: "`updating flood settings!`"
+setflood6: "Antiflood updated to {} in the current chat"
+
+# ANTISPAMBOT
+antispam1: "[{}](tg://user?id={}) was gbanned by you for the reason `{}`"
+antispam2: "[{}](tg://user?id={}) was gbanned by you"
+antispam3: "[{}](tg://user?id={}) was banned by spamwatch for the reason `{}`"
+antispam4: "[Banned by Combot Anti Spam](https://cas.chat/query?u={})"
+antispam5: f"[{}](tg://user?id={}) was banned by Combat anti-spam service(CAS) for the reason check {}
+
+#casc
+casc1: "To check the users who are banned in cas"
+casc2: "When you use this cmd it will check every user in the group where you used whether he is banned in cas (combat antispam service) and will show there names if they are flagged in cas"
+casc3: "Searches for cas(combot antispam service) banned users in group and shows you the list"
+casc4: "`checking any cas(combot antispam service) banned users here, this may take several minutes too......`"
+casc5: Deleted Account
+casc6: "**Warning!** Found `{}` of `{}` users are CAS Banned:\n"
+casc7: "No CAS Banned users found!"
+casc8: "`CAS check failed: Admin privileges are required`"
+casc9: "`CAS check failed`"
+
+#spam
+spam1: "To check the users who are banned in spamwatch"
+spam2: "When you use this command it will check every user in the group where you used whether he is banned in spamwatch federation and will show there names if they are banned in spamwatch federation"
+spam3: "Searches for spamwatch federation banned users in group and shows you the list"
+spam4: "`checking any spamwatch banned users here, this may take several minutes too......`"
+spam5: "**Warning! **Found `{}` of `{}` users are spamwatch Banned:\n"
+spam6: "No spamwatch Banned users found!"
+spam7: "`spamwatch check failed: Admin privileges are required`"
+spam8: "`spamwatch check failed`"
+
+
+# ANTIVIRUS MODUL
+#scan
+scan1: "To scan the replied file for virus."
+scan2: "to get output as image."
+scan3: "```Reply to any user message.```"
+scan4: "```Reply to a media message```"
+scan5: "`Sliding my tip, of fingers over it`"
+
+#vscan
+vscan1: "To scan with @DrWebBot the replied file for virus."
+vscan2: "```Reply to any user message.```"
+vscan3: "```Reply to a media message```"
+vscan4: "`Sliding my tip, of fingers over it`"
+vscan5: "`Can you kindly disable your forward privacy settings for good?`"
+vscan6: "Virus scan ended.\nResults:"
+vscan7: "File is scanning..."
+vscan8: "Virus scan ended. This file is clean. Go on!"
+vscan9: "**The virus scan is ended. Whopsie! This case is dangerous. Don't download!**\nInfo: {}"
+
+
+# APP MODUL
+#app
+app1: "To search any app in playstore"
+app2: "Searches the app in the playstore and provides the link to the app in playstore and fetchs app details"
+app3: <name>
+app4: "To search any app in playstore."
+app5: "`Searching!..`"
+app6: Developer
+app7: Rating
+app8: Features
+app9: View in Play Store
+app10: "No result found in search. Please enter **Valid app name**"
+app11: "Exception Occured"
+
+
+# ARCHIVE MODUL
+#zip
+zip1: "To compress the file/folders"
+zip2: "Will create a zip file for the given file path or folder path"
+zip3: <file/folder path>
+zip4: downloads
+zip5: "To create zip file"
+zip6: "`Provide file path to zip`"
+zip7: "There is no such directory or file with the name `{}` check again"
+zip8: "`File compressing is not implemented yet`"
+zip9: "`Zipping in progress...`"
+zip10: "Zipped the path `{}` into `{}` in __{}__ Seconds"
+
+#tar
+tar1: "To compress the file/folders to tar file"
+tar2: "Will create a tar file for the given file path or folder path"
+tar3: <file/folder path>
+tar4: "`Provide file path to compress`"
+tar5: "There is no such directory or file with the name `{}` check again"
+tar6: "`File compressing is not implemented yet`"
+tar7: "`Tar creation in progress...`"
+tar8: "Created a tar file for the given path {} as `{}` in __{}__ Seconds"
+
+#unzip
+unzip1: "To unpack the given zip file"
+unzip2: "Reply to a zip file or provide zip file path with command to unzip the given file"
+unzip3: <reply/file path>
+unzip4: "To unpack the zip file"
+unzip5: "`The Given path {} is not zip file to unpack`"
+unzip6: "`Unpacking...`"
+unzip7: "unzipped and stored to `{}` \n**Time Taken:** `{} seconds`"
+unzip8: "I can't find that path `{}`"
+unzip9: "`The replied file is not a zip file recheck the replied message`"
+unzip10: "trying to download"
+unzip11: "`Download finished Unpacking now`"
+unzip12: "unzipped and stored to `{}` \n**Time Taken:** `{} seconds`"
+unzip13: "`Either reply to the zipfile or provide path of zip file along with command`"
+
+#untar
+untar1: "To unpack the given tar file"
+untar2: "Reply to a tar file or provide tar file path with command to unpack the given tar file"
+untar3: <reply/file path>
+untar4: "To unpack the tar file"
+untar5: "`The Given path {} is not tar file to unpack`"
+untar6: "`Unpacking...`"
+untar7: "**Time Taken:** `{} seconds`\nUnpacked the input path `{}` and stored to `{}`"
+untar8: "I can't find that path `{}`"
+untar9: "`The replied file is not tar file to unpack it recheck it`"
+untar10: "`Download finished Unpacking now`"
+untar11: "**Time Taken:** `{ms} seconds`nUnpacked the replied file and stored to `{destination}`"
+untar12: "`Either reply to the tarfile or provide path of tarfile along with command`"
+
+# AUTOPROFILE MODUL    
+#autopic
+autopic1:
+autopic2:
+autopic3:
+autopic4:
+autopic5:
+autopic6:
+autopic7:
+autopic8:
 
 # FILTERS;
 fmsgtext: |-

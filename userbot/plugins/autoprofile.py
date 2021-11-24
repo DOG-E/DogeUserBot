@@ -47,6 +47,8 @@ from . import (
     gvar,
     logging,
     sgvar,
+    lan,
+    tr,
 )
 
 plugin_category = "misc"
@@ -82,7 +84,7 @@ async def autopicloop():
         if BOTLOG:
             return await doge.send_message(
                 BOTLOG_CHATID,
-                "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var`",
+                f"{lan('errr')}\n`For functing of autopic you need to set DEFAULT_PIC var`",
             )
         return
     if gvar("autopic") is not None:

@@ -32,6 +32,8 @@ from . import (
     mention,
     parse_pre,
     reply_id,
+    tr,
+    lan,
 )
 
 plugin_category = "fun"
@@ -386,7 +388,7 @@ async def payf(event):
     info={
         "header": "Shows the chance of your success.",
         "usage": [
-            "{tr}wish <reply>",
+            f"{tr}wish {lan('replymsg')}",
             "{tr}wish <your wish>",
         ],
     },

@@ -24,6 +24,8 @@ from . import (
     gvar,
     logging,
     media_type,
+    tr,
+    lan,
 )
 
 plugin_category = "misc"
@@ -51,21 +53,20 @@ AFK_ = AFK()
     pattern="afk(?:\s|$)([\s\S]*)",
     command=("afk", plugin_category),
     info={
-        "header": "Enables afk for your account",
-        "description": "When you're in afk if any one tags you then your bot will reply as he is offline.\
-        AFK mean away from keyboard.",
-        "options": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
+        "header": lan("afk1"),
+        "description": lan("afk2"),
+        "options": lan("afk3"),
         "usage": [
-            "{tr}afk <reason>",
-            "{tr}afk <reason> ; <link>",
-            "{tr}afk <reply>",
+            f"{tr}afk {lan('reason')}",
+            f"{tr}afk {lan('reason')} ; <link>",
+            f"{tr}afk {lan('replymsg')}",
         ],
-        "examples": "{tr}afk Let Me Sleep",
-        "note": "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it",
+        "examples": f"{tr}afk {lan('afk4')}",
+        "note": lan("afk5"),
     },
 )
 async def afksetter(event):
-    "To mark yourself as afk i.e. Away from keyboard"
+    lan("afk6")
     reply = await event.get_reply_message()
     media_t = media_type(reply)
     AFK_.USERAFK_ON = {}
@@ -98,25 +99,25 @@ async def afksetter(event):
                 except BaseException:
                     pass
             if AFK_.reason:
-                await edl(event, f"`I'm going afk! because ~` {AFK_.reason}", 5)
+                await edl(event, f"{lan('afk7')} {AFK_.reason}", 5)
             else:
-                await edl(event, "`I'm going afk! `", 5)
+                await edl(event, lan("afk8"), 5)
             if BOTLOG:
                 if AFK_.reason:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
+                        f"#AFKTRUE \n{lan('afk9')} {AFK_.reason}",
                     )
                 else:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
+                        f"#AFKTRUE \n{lan('afk10')}",
                     )
     elif media_t != "Sticker" and media_t:
         if not BOTLOG:
             return await edl(
                 event,
-                "`To use media afk you need to set PRIVATE_GROUP_BOT_API_ID config`",
+               lan("afk11"),
             )
 
         AFK_.media_afk = None
@@ -136,19 +137,19 @@ async def afksetter(event):
                 except BaseException:
                     pass
             if AFK_.reason:
-                await edl(event, f"`I'm going afk! because ~` {AFK_.reason}", 5)
+                await edl(event, f"{lan('afk7')} {AFK_.reason}", 5)
             else:
-                await edl(event, "`I'm going afk! `", 5)
+                await edl(event, lan("afk8"), 5)
             AFK_.media_afk = await reply.forward_to(BOTLOG_CHATID)
             if AFK_.reason:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
+                    f"#AFKTRUE \n{lan('afk9')} {AFK_.reason}",
                 )
             else:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
+                    f"#AFKTRUE \n{lan('afk10')}",
                 )
 
 
@@ -174,11 +175,11 @@ async def set_not_afk(event):
         s = time
         endtime = ""
         if d > 0:
-            endtime += f"{d}d {h}h {m}m {s}s"
+            endtime += f"{d}{lan('days')} {h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         elif h > 0:
-            endtime += f"{h}h {m}m {s}s"
+            endtime += f"{h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         else:
-            endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
+            endtime += f"{m}{lan('minutes')} {s}{lan('seconds')}" if m > 0 else f"{s}{lan('seconds')}"
     current_message = event.message.message
     if (("afk" not in current_message) or ("#afk" not in current_message)) and (
         "on" in AFK_.USERAFK_ON
@@ -190,7 +191,7 @@ async def set_not_afk(event):
                 pass
         shite = await event.client.send_message(
             event.chat_id,
-            "`Back alive! No Longer afk.\nWas afk for " + endtime + "`",
+            lan("afk12") + "`" + endtime + "`",
         )
         AFK_.USERAFK_ON = {}
         AFK_.afk_time = None
@@ -200,8 +201,9 @@ async def set_not_afk(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#AFKFALSE \n`Set AFK mode to False\n"
-                + "Back alive! No Longer afk.\nWas afk for "
+                f"#AFKFALSE \n{lan('afk13')}\n"
+                + lan("afk14")
+                + "`"
                 + endtime
                 + "`",
             )
@@ -227,11 +229,11 @@ async def on_afk(event):  # sourcery no-metrics
         s = time
         endtime = ""
         if d > 0:
-            endtime += f"{d}d {h}h {m}m {s}s"
+            endtime += f"{d}{lan('days')} {h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         elif h > 0:
-            endtime += f"{h}h {m}m {s}s"
+            endtime += f"{h}{lan('hours')} {m}{lan('minutes')} {s}{lan('seconds')}"
         else:
-            endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
+            endtime += f"{m}{lan('minutes')} {s}{lan('seconds')}" if m > 0 else f"{s}{lan('seconds')}"
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text or "#afk" in current_message_text:
         return False
@@ -274,7 +276,7 @@ async def on_afk(event):  # sourcery no-metrics
                         my_username=my_username,
                         afktime=endtime,
                     )
-                    + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                    + f"\n\n{lan('afkreason')} {AFK_.reason}"
                 )
             else:
                 dogeafk = customafkmsg.format(
@@ -292,7 +294,7 @@ async def on_afk(event):  # sourcery no-metrics
                 )
         else:
             if AFK_.reason:
-                dogerafk = constants.DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                dogerafk = constants.DOGEAFK + f"\n\n{lan('afkreason')} {AFK_.reason}"
             else:
                 dogeafk = constants.DOGEAFK
 
@@ -326,17 +328,17 @@ async def on_afk(event):  # sourcery no-metrics
         except Exception as e:
             LOGS.info(str(e))
         messaget = media_type(event)
-        resalt = f"💤 #TAG_AFK\n<b>👥 Group: </b><code>{hmm.title}</code>"
+        resalt = f"💤 #TAG_AFK\n<b>{lan('afk15')} </b><code>{hmm.title}</code>"
         if full is not None:
             resalt += (
-                f"\n<b>👤 From: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
+                f"\n<b>{lan('afk16')} </b>{_format.htmlmentionuser(full.first_name, full.id)}"
             )
         if messaget is not None:
-            resalt += f"\n<b>🔅 Message Type: </b><code>{messaget}</code>"
+            resalt += f"\n<b>{lan('afk17')} </b><code>{messaget}</code>"
         else:
-            resalt += f"\n<b>🔹 Message: </b>{event.message.message}"
+            resalt += f"\n<b>{lan('afk18')} </b>{event.message.message}"
         button = [
-            (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
+            (Button.url(f"{lan('afk19')}", f"https://t.me/c/{hmm.id}/{event.message.id}"))
         ]
         if not event.is_private:
             await event.client.send_message(
@@ -350,3 +352,6 @@ async def on_afk(event):  # sourcery no-metrics
                 await event.client.forward_messages(
                     PM_LOGGER_GROUP_ID, event.message, silent=True
                 )
+
+# Lang By Aylak
+# Copyright (C) 2021 - DOG-E - MutlCC
