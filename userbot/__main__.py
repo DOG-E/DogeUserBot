@@ -14,7 +14,6 @@ from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
 from .core.logger import logging
 from .core.session import doge
 from .languages import lan
-from .languages.constants import STARTEDUPDOGE
 from .sql_helper.globals import gvar
 from .utils import (
     add_bot_to_logger_group,
@@ -66,10 +65,8 @@ async def startup_process():
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    await load_plugins("a")
     LOGS.info(userbot.__copyright__)
     LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
-    LOGS.info(STARTEDUPDOGE)
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:

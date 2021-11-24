@@ -8,20 +8,9 @@
 # ================================================================
 from random import choice
 
-from .. import tr
 from .languages import lan
 
 # BASIS:
-__emoji_split__ = "➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
-STARTEDUPDOGE = f"\
-\n{__emoji_split__}\
-\n{lan('wowialiveready')}\
-\n{__emoji_split__}\
-\n{lan('writealivetc').format(tr, tr)}\
-\n{__emoji_split__}\
-\n{lan('visitoursup')}: t.me/DogeSup\
-\n{__emoji_split__}\
-"
 
 MONTHS = {
     "Jan": lan("jan"),
