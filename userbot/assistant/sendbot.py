@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, edl, reply_id
@@ -15,13 +15,13 @@ plugin_category = "bot"
     pattern="bot(?:\s|$)([\s\S]*)",
     command=("bot", plugin_category),
     info={
-        "header": "Send any text through your assistant bot if the bot is in the chat",
-        "usage": "{tr}bot <text/reply>",
-        "examples": "{tr}bot Hello everyone",
+        "header": "Bot sohbetteyse, yardımcı botunuzdan herhangi bir metni gönderin.",
+        "usage": "{tr}bot <yazı/yanıtlanmış mesaj>",
+        "examples": "{tr}bot Herkese Merhaba!",
     },
 )
 async def botmsg(event):
-    "Send your text through your bot."
+    "Bot sohbetteyse, yardımcı botunuzdan herhangi bir metni gönderin."
     text = event.pattern_match.group(1)
     chat = event.chat_id
     reply_message = await event.get_reply_message()
@@ -38,7 +38,7 @@ async def botmsg(event):
         else:
             return await edl(
                 event,
-                "__What should I send through bot? Give some text or give media with reply.__",
+                "__Bot üzerinden ne göndermeliyim? Bana bir metin verin ya da mesajı yanıtlayın.__",
             )
 
     await doge.tgbot.send_message(chat, text, reply_to=reply_to_id)

@@ -45,7 +45,7 @@ pyfiglet
 pygithub
 pygments
 pylast
-pylists==0.0.1.1
+pylists==0.0.1.2
 pymediainfo
 pymupdf
 pysmartdl

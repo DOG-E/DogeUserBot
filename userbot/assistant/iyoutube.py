@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop, sleep
@@ -59,13 +59,13 @@ PATH = "./userbot/cache/ytsearch.json"
     pattern="yt(?:\s|$)([\s\S]*)",
     command=("yt", plugin_category),
     info={
-        "header": "Video downloader from YouTube with inline buttons.",
-        "description": "To search and download YouTube videos by inline buttons.",
-        "usage": f"{tr}yt link or text or with reply",
+        "header": "Satır içi düğmelerle YouTube'dan videolar indirin.",
+        "description": "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için.",
+        "usage": f"{tr}yt yazı ya da yanıtlanmış ya da yazılmış link",
     },
 )
 async def yt_inline(event):
-    "Video downloader from YouTube with inline buttons."
+    "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için."
     reply = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
@@ -75,10 +75,10 @@ async def yt_inline(event):
     elif reply and reply.text:
         input_url = (reply.text).strip()
     if not input_url:
-        return await edl(event, f"**📺 Give input or reply to a valid YouTube URL!**")
+        return await edl(event, f"**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**")
 
     dogevent = await eor(
-        event, "**🔎 Searching YouTube for:** `{}`...".format(input_url)
+        event, "**🔎 Şunun için YouTube'da arama yapıyorm:** `{}`...".format(input_url)
     )
     flag = True
     cout = 0
@@ -96,7 +96,7 @@ async def yt_inline(event):
         await dogevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await dogevent.edit(f"**🚨 Sorry! I can't find any results.**")
+        await dogevent.edit(f"**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
 
 
 @doge.tgbot.on(
@@ -122,19 +122,19 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     if str(choice_id).isdigit():
         choice_id = int(choice_id)
         if choice_id == 0:
-            await c_q.answer("**⏳ Processing...**", alert=False)
+            await c_q.answer("**⏳ İşleniyor...**", alert=False)
             await c_q.edit(buttons=(await download_button(yt_code)))
             return
     startTime = time()
     choice_str, disp_str = get_choice_by_id(choice_id, downtype)
     media_type = "Video" if downtype == "v" else "Audio"
-    callback_continue = "**📥 Please wait, {} downloading...**".format(media_type)
-    callback_continue += f"\n\n**🆔 Format Code:** {disp_str}"
+    callback_continue = "**📥 Lütfen bekleyin, {} indiriyorum...**".format(media_type)
+    callback_continue += f"\n\n**🆔 Format Kodu:** {disp_str}"
     await c_q.answer(callback_continue, alert=True)
-    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**📤 Uploading...**")
+    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**📤 Yükleniyor...**")
     yt_url = BASE_YT_URL + yt_code
     await c_q.edit(
-        f"<b>⬇️ Downloading {media_type}...</b>\n\n<a href={yt_url}> <b>🔗 Link</b></a>\n🆔 <b>Format Code:</b> {disp_str}",
+        f"<b>⬇️ İndiriliyor {media_type}...</b>\n\n<a href={yt_url}> <b>🔗 Bağlantı</b></a>\n🆔 <b>Format Kodu:</b> {disp_str}",
         parse_mode="html",
     )
     if downtype == "v":
@@ -152,7 +152,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
         else:
             _fpath = _path
     if not _fpath:
-        return await edl(upload_msg, "**🚨 Sorry! I can't find any results.**")
+        return await edl(upload_msg, "**🚨 Üzgünüm! Siçbir sonuç bulamadım.**")
 
     if not thumb_pic:
         thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))
@@ -166,7 +166,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
                 t,
                 c_q,
                 startTime,
-                "**📤 Trying to upload...**",
+                "**📤 Yüklemeyi Deniyorum...**",
                 file_name=path.basename(Path(_fpath)),
             )
         ),
@@ -182,7 +182,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     uploaded_media = await c_q.client.send_file(
         BOTLOG_CHATID,
         file=media,
-        caption=f"<b>ℹ️ File Name:</b> <code>{path.basename(Path(_fpath))}</code>",
+        caption=f"<b>ℹ️ Dosya Adı:</b> <code>{path.basename(Path(_fpath))}</code>",
         parse_mode="html",
     )
     await upload_msg.delete()
@@ -215,9 +215,9 @@ async def ytdl_callback(c_q: CallbackQuery):
     )
     if not path.exists(PATH):
         return await c_q.answer(
-            "🚨 Search data doesn't exists anymore.\
+            "🚨 Arama verileri artık mevcut değil.\
             \n\
-            \n🔁 Please perform search again.",
+            \n🔁 Lütfen tekrar arama yapın.",
             alert=True,
         )
 
@@ -227,9 +227,9 @@ async def ytdl_callback(c_q: CallbackQuery):
     total = len(search_data) if search_data is not None else 0
     if total == 0:
         return await c_q.answer(
-            "🚨 Your bot lost the information about this.\
+            "🚨 Botun bu konuda bilgileri kaybetti.\
             \n\
-            \n🔁 Please search again.",
+            \n🔁 Lütfen tekrar arayın.",
             alert=True,
         )
 
@@ -253,7 +253,7 @@ async def ytdl_callback(c_q: CallbackQuery):
     elif choosen_btn == "next":
         index = int(page) + 1
         if index > total:
-            return await c_q.answer("🔔 That's all!", alert=True)
+            return await c_q.answer("🔔 Hepsi bu kadar!", alert=True)
 
         await c_q.answer()
         front_vid = search_data.get(str(index))
@@ -269,13 +269,13 @@ async def ytdl_callback(c_q: CallbackQuery):
             parse_mode="html",
         )
     elif choosen_btn == "listall":
-        await c_q.answer(f"➡️ View Changed to: 📜 List", alert=False)
+        await c_q.answer(f"➡️ Görünüm olarak şu değiştirildi: 📜 Liste", alert=False)
         list_res = "".join(
             search_data.get(vid_s).get("list_view") for vid_s in search_data
         )
 
         telegraph = await post_to_telegraph(
-            "ℹ️ Showing {} YouTube video results for the given query...".format(total),
+            "ℹ️ Verilen sorgu:{} için  YouTube video sonuçları gösteriliyor...".format(total),
             list_res,
         )
         await c_q.edit(
@@ -283,13 +283,13 @@ async def ytdl_callback(c_q: CallbackQuery):
             buttons=[
                 (
                     Button.url(
-                        f"↗️ Cʟɪcᴋ ᴛo oᴘᴇɴ",
+                        f"↗️ Aᴄᴍᴀᴋ Iᴄɪɴ Tıᴋʟᴀʏıɴ",
                         url=telegraph,
                     )
                 ),
                 (
                     Button.inline(
-                        f"📊 Dᴇᴛᴀɪʟᴇᴅ ᴠɪᴇᴡ",
+                        f"📊 Dᴇᴛᴀʏʟᴀʀı Göʀ",
                         data=f"ytdl_detail_{data_key}_{page}",
                     )
                 ),
@@ -297,7 +297,7 @@ async def ytdl_callback(c_q: CallbackQuery):
         )
     else:  # Detailed
         index = 1
-        await c_q.answer(f"➡️ View Changed to: 📊 Detailed", alert=False)
+        await c_q.answer(f"➡️ Görünüm şu olarak değiştirildi: 📊 Detaylı", alert=False)
         first = search_data.get(str(index))
         await c_q.edit(
             text=first.get("message"),

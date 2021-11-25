@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import load
@@ -23,7 +23,7 @@ async def on_plug_in_callback_query_handler(event):
         try:
             reply_pop_up_alert = jsondata[f"{timestamp}"]["text"]
         except KeyError:
-            reply_pop_up_alert = f"🚨 This message no longer exists in Doge server."
+            reply_pop_up_alert = f"🚨 Bu mesaj artık Doge sunucusunda yok."
     else:
-        reply_pop_up_alert = f"🚨 This message no longer exists in Doge server."
+        reply_pop_up_alert = f"🚨 Bu mesaj artık Doge sunucusunda yok."
     await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
