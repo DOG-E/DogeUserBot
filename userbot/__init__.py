@@ -31,7 +31,7 @@ StartTime = time()
 dogeversion = "1.0"
 
 
-if Config.UPSTREAM_REPO == "DogeUserBot":
+if Config.UPSTREAM_REPO == "DOGE-EN":
     UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO

@@ -291,4 +291,4 @@ async def variable(var):
         )
     heroku_var = app.config()
     await eor(var, f"`Switch... Wait for 2-3 minutes.`")
-    heroku_var["UPSTREAM_REPO"] = "DogeUserBot"
+    heroku_var["UPSTREAM_REPO"] = "DOGE-TR"

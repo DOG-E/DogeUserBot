@@ -275,22 +275,18 @@ async def verifyLoggerGroup():
             if not isinstance(entity, User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.error(
-                        "🚨 Permissions missing to send messages for the specified {}.".format(
-                            vinfo
-                        )
+                        f"🚨 Permissions missing to send messages for the specified {vinfo}."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.error(
-                        "🚨 Permissions missing to addusers for the specified {}.".format(
-                            vinfo
-                        )
+                        f"🚨 Permissions missing to addusers for the specified {vinfo}."
                     )
         except ValueError:
-            LOGS.error("🚨 I couldn't find {}. Make sure it's correct.".format(vinfo))
+            LOGS.error(f"🚨 I couldn't find {vinfo}. Make sure it's correct.")
         except TypeError:
-            LOGS.error("🚨 {} is unsupported. Make sure it's correct.".format(vinfo))
+            LOGS.error(f"🚨 {vinfo} is unsupported. Make sure it's correct.")
         except Exception as e:
-            LOGS.error(f"🚨 An exception occured upon trying to verify the {str(e)}\n")
+            LOGS.error(f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}")
     else:
         descript = f"🚧 DON'T DELETE THIS GROUP!\n\
         \n🗑 If you delete,\
@@ -311,9 +307,7 @@ async def verifyLoggerGroup():
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         vinfo = "PRIVATE_GROUP_BOT_API_ID"
         LOGS.info(
-            "✅ Private group for {} is created successfully and added variable.".format(
-                vinfo
-            )
+            f"✅ Private group for {vinfo} is created successfully and added variable."
         )
         flag = True
 
@@ -342,9 +336,7 @@ async def verifyLoggerGroup():
         sgvar("PM_LOGGER_GROUP_ID", groupid)
         vinfo = "PM_LOGGER_GROUP_ID"
         LOGS.info(
-            "✅ Private group for {} is created successfully and added variable.".format(
-                vinfo
-            )
+            f"✅ Private group for {vinfo} is created successfully and added variable."
         )
         flag = True
 
@@ -355,20 +347,16 @@ async def verifyLoggerGroup():
             if not isinstance(entity, User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.error(
-                        "🚨 Permissions missing to send messages for the specified {}.".format(
-                            vinfo
-                        )
+                        f"🚨 Permissions missing to send messages for the specified {vinfo}."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.error(
-                        "🚨 Permissions missing to addusers for the specified {}.".format(
-                            vinfo
-                        )
+                        f"🚨 Permissions missing to addusers for the specified {vinfo}."
                     )
         except ValueError:
-            LOGS.error("🚨 I couldn't find {}. Make sure it's correct.".format(vinfo))
+            LOGS.error(f"🚨 I couldn't find {vinfo}. Make sure it's correct.")
         except TypeError:
-            LOGS.error("🚨 {} is unsupported. Make sure it's correct.".format(vinfo))
+            LOGS.error(f"🚨 {vinfo} is unsupported. Make sure it's correct.")
         except Exception as e:
             LOGS.error(
                 f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}"
@@ -520,10 +508,8 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(
                 bf,
-                "🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {}\n\
-                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾".format(
-                    master
-                ),
+                f"🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {master}\n\
+                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
             )
             await sleep(1.5)
             await doge.send_message(bf, "/setdescription")
@@ -532,11 +518,9 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(
                 bf,
-                "🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ\
-                \n🧡 Mᴀsᴛᴇʀ: {}\n\
-                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾".format(
-                    master
-                ),
+                f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ\
+                \n🧡 Mᴀsᴛᴇʀ: {master}\n\
+                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
             )
             await sleep(1.5)
             await doge.send_message(bf, "/setcommands")
@@ -553,9 +537,7 @@ async def customize_assistantbot():
                 \nbroadcast - 📣 Broadcast to bot users",
             )
             LOGS.info(
-                "✅ DONE! @{} I'm customized your Telegram assistant bot successfully!".format(
-                    botusername
-                )
+                f"✅ DONE! @{botusername} I'm customized your Telegram assistant bot successfully!"
             )
     except Exception as e:
         LOGS.info(str(e))

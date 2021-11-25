@@ -36,7 +36,7 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
     BOT_USERNAME = None
     # Set this with required Doge repository link
-    UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DogeUserBot")
+    UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DOGE-EN")
 
     # BASIC & MAIN CONFIG VARS
     # Set this value with group ID of private group(can be found this value by .id)
