@@ -8,7 +8,6 @@
 # ================================================================
 from random import choice
 
-
 SLAP_TEMPLATES = [
     "{u} {h} {v} with a {i}.",
     "{u} {h} {v} in the face with a {i}.",

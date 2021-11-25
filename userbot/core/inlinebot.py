@@ -418,9 +418,7 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newtroll = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [
-                Button.inline(f"🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"troll_{timestamp}")
-            ]
+            buttons = [Button.inline(f"🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"troll_{timestamp}")]
             result = builder.article(
                 title=f"🐶 Doge UserBot Troll Message",
                 text=f"🤡 Only {teledoge} can't access this message!",
@@ -492,9 +490,7 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newhide = {str(timestamp): {"text": query}}
 
-            buttons = [
-                Button.inline(f"🔏 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"hide_{timestamp}")
-            ]
+            buttons = [Button.inline(f"🔏 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"hide_{timestamp}")]
             result = builder.article(
                 title=f"🐶 Doge UserBot Hidden Message",
                 text="ㅤ",
@@ -612,9 +608,7 @@ async def inline_handler(event):  # sourcery no-metrics
 
         elif string == "pmpermit":
             buttons = [
-                Button.inline(
-                    text=f"🪐 Sʜoᴡ Oᴘᴛɪoɴs", data="show_pmpermit_options"
-                ),
+                Button.inline(text=f"🪐 Sʜoᴡ Oᴘᴛɪoɴs", data="show_pmpermit_options"),
             ]
             PM_PIC = gvar("PM_PIC")
             if PM_PIC:
