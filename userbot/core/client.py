@@ -6,6 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
+from asyncio import sleep
 from datetime import datetime
 from inspect import stack as stacck
 from pathlib import Path
@@ -15,7 +16,17 @@ from traceback import format_exc, format_exception
 from typing import Dict, List, Union
 
 from telethon import TelegramClient, events
-from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
+from telethon.errors import (
+    AlreadyInConversationError,
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+    ChatSendStickersForbiddenError,
+    FloodWaitError,
+    MessageIdInvalidError,
+    MessageNotModifiedError,
+)
 
 from ..Config import Config
 from ..helpers.utils.events import checking
@@ -115,6 +126,33 @@ class DogeUserBotClient(TelegramClient):
                     LOGS.error("🚨 Message was same as previous message")
                 except MessageIdInvalidError:
                     LOGS.error("🚨 Message was deleted or can't be found")
+                except BotInlineDisabledError:
+                    await edl(check, "`🚨 Turn on Inline mode for our bot`")
+                except ChatSendStickersForbiddenError:
+                    await edl(
+                        check, "`🚨 I guess i can't send stickers in this chat`",
+                    )
+                except BotResponseTimeoutError:
+                    await edl(
+                        check, "`🚨 The bot didnt answer to your query in time`",
+                    )
+                except ChatSendMediaForbiddenError:
+                    await edl(check, "`🚨 You can't send media in this chat`",)
+                except AlreadyInConversationError:
+                    await edl(
+                        check,
+                        "`🚨 A conversation is already happening with the given chat. 🔃 Try again after some time.`",
+                    )
+                except ChatSendInlineForbiddenError:
+                    await edl(
+                        check, "`🚨 You can't send inline messages in this chat.`",
+                    )
+                except FloodWaitError as e:
+                    LOGS.error(
+                        f"🚨 A flood wait of {e.seconds} occured. wait for {e.seconds} seconds and try"
+                    )
+                    await check.delete()
+                    await sleep(e.seconds + 5)
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
@@ -267,7 +305,7 @@ class DogeUserBotClient(TelegramClient):
                         \nyou may not report this error.\
                         \nNo one will see your data.\
                         \n\
-                        \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
+                        \n--------BEGIN-DOGE-ASISTAN-ERROR-LOG--------\
                         \n📅 Date: {d}\
                         \n👥 Group ID: {cid}\
                         \n👤 Sender ID: {sid}\
@@ -294,14 +332,14 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
+                        ftext += "--------END-DOGE-ASISTAN-ERROR-LOG--------"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
                             markdown=False,
-                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
+                            title="🐶 Doɢᴇ Asɪsᴛᴀɴ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
                         )
-                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+                        text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
                         text += "\n\n"
                         link = f"[HERE](https://t.me/DogeSup)"
                         text += "__💬 If you wanna you can report it.__"

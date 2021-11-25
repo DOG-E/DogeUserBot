@@ -17,7 +17,7 @@ from requests import get
 from selenium.webdriver import Chrome, ChromeOptions
 from validators.url import url
 
-from . import SS_API, Config, doge, eor, lan, reply_id
+from . import SS_API, Config, doge, eor, reply_id
 
 plugin_category = "tool"
 

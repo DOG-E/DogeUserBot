@@ -31,7 +31,7 @@ from telethon.tl.types import (
 from telethon.utils import get_display_name
 
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, constants, doge, edl, eor, logging, readable_time
+from . import BOTLOG, BOTLOG_CHATID, DOGEKICKME, doge, edl, eor, logging, readable_time
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
@@ -70,7 +70,7 @@ async def ban_user(chat_id, i, rights):
 )
 async def kickme(leave):
     "to leave the group."
-    await leave.edit(constants.DOGEKICKME)
+    await leave.edit(DOGEKICKME)
     await leave.client.kick_participant(leave.chat_id, "me")
 
 

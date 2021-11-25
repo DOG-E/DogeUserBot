@@ -26,7 +26,7 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
         "header": "To create button posts.",
         "note": f"For working of this you need your bot ({BOT_USERNAME}) in the group/channel where you're using and Markdown is default to HTML.",
         "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
-        "usage": f"{tr}bbutton <text> [Name on button](link you want to open",
+        "usage": f"{tr}bbutton <text> [Name on button](link you want to open)",
         "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
@@ -87,7 +87,7 @@ async def bbutton(event):
         "header": "To create button posts via inline.",
         "note": "Markdown is default to HTML.",
         "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
-        "usage": f"{tr}button <text> [Name on button](link you want to open",
+        "usage": f"{tr}button <text> [Name on button](link you want to open)",
         "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )

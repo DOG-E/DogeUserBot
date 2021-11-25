@@ -37,7 +37,6 @@ from . import (
     edl,
     eor,
     get_user_from_event,
-    lan,
     logging,
     media_type,
     tr,
@@ -50,7 +49,7 @@ LOGS = logging.getLogger(__name__)
 
 PP_TOO_SMOL = "`The image is too small`"
 PP_ERROR = "`Failure while processing the image`"
-NO_PERM = lan("noperm")
+NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
 CHAT_PP_CHANGED = "`Chat Picture Changed`"
 INVALID_MEDIA = "`Invalid Extension`"
 

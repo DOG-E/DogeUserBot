@@ -67,15 +67,15 @@ async def startup_process():
     LOGS.info(userbot.__copyright__)
     LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
     LOGS.info(f"\
-\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-\n🐶 wow! Doge is alive!\
-\n🐾 Doge UserBot is ready to use.\
-\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-\n🔅 Write {tr}alive to check.\
-\n🔅 Learn the commands by writing {tr}doge\
-\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-\n💬 Visit our Telegram group for help: t.me/DogeSup\
-\n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+    \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+    \n🐶 wow! Doge is alive!\
+    \n🐾 Doge UserBot is ready to use.\
+    \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+    \n🔅 Write {tr}alive to check.\
+    \n🔅 Learn the commands by writing {tr}doge\
+    \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+    \n💬 Visit our Telegram group for help: t.me/DogeSup\
+    \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
 ")
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)

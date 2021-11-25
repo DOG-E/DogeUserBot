@@ -35,8 +35,6 @@ class Config(object):
     # Telegram Bot Token and Bot Username from @BotFather ( https://t.me/BotFather )
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
     BOT_USERNAME = None
-    # Doge of language
-    DOGELANG = os.environ.get("DOGELANG", "en")
     # Set this with required Doge repository link
     UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DogeUserBot")
 

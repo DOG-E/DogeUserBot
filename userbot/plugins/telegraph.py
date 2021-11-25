@@ -24,7 +24,6 @@ from . import (
     edl,
     eor,
     fsmessage,
-    lan,
     logging,
     mention,
     newmsgres,

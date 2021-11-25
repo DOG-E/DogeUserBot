@@ -29,7 +29,6 @@ from . import (
     hide_inlinebot,
     hide_inlinebot_point,
     higlighted_text,
-    lan,
     media_type,
     reply_id,
     waifutxt,

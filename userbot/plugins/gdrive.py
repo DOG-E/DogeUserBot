@@ -50,7 +50,6 @@ from . import (
     edl,
     eor,
     humanbytes,
-    lan,
     logging,
     progress,
     time_formatter,

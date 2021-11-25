@@ -12,7 +12,7 @@ from flag import flag
 from pytz import country_names
 from requests import get
 
-from . import doge, edl, eor, lan
+from . import doge, edl, eor
 
 plugin_category = "tool"
 

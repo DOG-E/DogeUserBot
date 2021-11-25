@@ -15,7 +15,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
-from . import Config, deEmojify, doge, eor, lan
+from . import Config, deEmojify, doge, eor
 
 plugin_category = "misc"
 CARBONLANG = "auto"

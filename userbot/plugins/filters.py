@@ -18,7 +18,7 @@ from ..sql_helper.filter_sql import (
     remove_all_filters,
     remove_filter,
 )
-from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor, lan
+from . import BOTLOG, BOTLOG_CHATID, doge, edl, eor
 
 plugin_category = "misc"
 
@@ -115,7 +115,8 @@ async def add_new_filter(event):
     if event.chat_id == -1001310554327:
         return await edl(
             event,
-            lan("fmsgtext"),
+            "**⛔ FILTER USE NOT ALLOWED HERE!**\n\
+            \n🎈 You can use filters in the @SohbetDoge group.",
             15,
         )
 

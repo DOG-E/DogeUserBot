@@ -22,7 +22,6 @@ from . import (
     eor,
     fsmessage,
     iphonex,
-    lan,
     lolice,
     newmsgres,
 )

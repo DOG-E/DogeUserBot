@@ -27,7 +27,6 @@ from . import (
     doge,
     edl,
     eor,
-    lan,
     reply_id,
 )
 

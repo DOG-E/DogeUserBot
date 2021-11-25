@@ -18,7 +18,6 @@ from . import (
     _dogeutils,
     doge,
     edl,
-    lan,
     logging,
     reply_id,
     wowmygroup,
@@ -78,7 +77,8 @@ async def reddit_fetch(event):
             captionx += "⚠️️ Post marked as SPOILER\n"
         if r["nsfw"]:
             captionx += "🔞 Post marked Adult \n"
-            flag = await wowmygroup(event, lan("pmsgtext"))
+            flag = await wowmygroup(event, "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
+                \n💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**")
             if flag:
                 return
 

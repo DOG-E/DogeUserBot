@@ -22,7 +22,7 @@ from . import Config, doge, edl, eor
 
 plugin_category = "misc"
 
-HEADER = ""
+HEADER = "ㅤ"
 KNOWN_RE_BOTS = compile(Config.GROUP_REG_SED_EX_BOT_S, flags=IGNORECASE)
 last_msgs = defaultdict(lambda: deque(maxlen=10))
 

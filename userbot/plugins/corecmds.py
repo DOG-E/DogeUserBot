@@ -26,7 +26,6 @@ from . import (
     eor,
     hmention,
     install_pip,
-    lan,
     reply_id,
     tr,
 )
@@ -80,7 +79,7 @@ async def install(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -151,7 +150,7 @@ async def finstall(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -393,7 +392,7 @@ async def plist(event):
                 \n**➡️ To list externally installed plugins, you must first set a PLUGIN_CHANNEL.\
                 \n\
                 \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                \n🦴 Write** `{tr}setvar PLUGINS True`",
+                \n🦴 Write** `{tr}set var PLUGINS True`",
             )
 
 

@@ -334,8 +334,7 @@ async def _(event):
         raw_html = response_api.content
         soup = BeautifulSoup(raw_html, "html.parser")
         ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        DOGELANG = gvar("DOGELANG") or "en"
-        translated = await getTranslate(deEmojify(ext_details), dest=DOGELANG)
+        translated = await getTranslate(deEmojify(ext_details), dest="en")
         await eor(
             event,
             f"**File Extension:** `{input_str}`\n**Description:**\n{translated.text}",

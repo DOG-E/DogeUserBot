@@ -8,7 +8,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import doge, edl, eor, fsmessage, lan, newmsgres
+from . import doge, edl, eor, fsmessage, newmsgres
 
 plugin_category = "misc"
 
