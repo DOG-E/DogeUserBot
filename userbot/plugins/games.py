@@ -12,7 +12,7 @@ from random import choice
 
 from requests import post
 
-from . import doge, edl, eor, gvar, reply_id
+from . import doge, edl, eor, reply_id
 
 plugin_category = "fun"
 
@@ -36,7 +36,7 @@ async def get_task(mode, cchoice):
     url = "https://psycatgames.com/api/tod-v2/"
     data = {
         "id": "truth-or-dare",
-        "language": gvar("DOGELANG"),
+        "language": "en",
         "category": category[cchoice],
         "type": mode,
     }

@@ -14,7 +14,6 @@ from telethon.tl.tlobject import TLObject
 from telethon.tl.types import MessageEntityPre
 from telethon.utils import add_surrogate
 
-from ...languages import lan
 from ..functions.utils import utc_to_local
 from .paste import pastetext
 
@@ -29,7 +28,7 @@ async def paste_message(text, pastetype="p", extension=None, markdown=True, titl
         response = await pastetext(text, pastetype, extension)
         if "url" in response:
             return response["url"]
-        return f"{lan('errr')} {lan('errrpastingtext')}"
+        return f"**🚨 Eʀʀoʀ:** While pasting text to site"
 
 
 def md_to_text(md):

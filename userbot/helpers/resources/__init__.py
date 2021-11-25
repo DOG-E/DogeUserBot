@@ -1,5 +1,3 @@
-# Credits: TeamUltroid - github.com/teamultroid
-#
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
 # All rights reserved.
@@ -8,4 +6,4 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from .languages import lan, lngs
+from constants import *

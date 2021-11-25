@@ -18,7 +18,7 @@ from requests import get
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, Heroku, doge, edl, eor, heroku_api, lan
+from . import HEROKU_API_KEY, HEROKU_APP_NAME, Heroku, doge, edl, eor, heroku_api
 
 plugin_category = "bot"
 
@@ -26,7 +26,7 @@ disable_warnings(InsecureRequestWarning)
 
 
 @doge.bot_cmd(
-    pattern="([Ss]et|[Gg]et|[Dd]el) [Vv]ar ([\s\S]*)",
+    pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
         "header": "To manage heroku vars.",
@@ -36,12 +36,12 @@ disable_warnings(InsecureRequestWarning)
             "del": "To delete the existing value",
         },
         "usage": [
-            "{tr}setvar <var name> <var value>",
-            "{tr}getvar <var name>",
-            "{tr}delvar <var name>",
+            "{tr}set var <var name> <var value>",
+            "{tr}get var <var name>",
+            "{tr}del var <var name>",
         ],
         "examples": [
-            "{tr}getvar ALIVE_NAME",
+            "{tr}get var ALIVE_NAME",
         ],
     },
 )
@@ -87,11 +87,11 @@ async def variable(var):  # sourcery no-metrics
         variable = "".join(var.text.split(maxsplit=2)[2:])
         dog = await eor(var, "`Setting information...`")
         if not variable:
-            return await dog.edit("`.setvar <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         value = "".join(variable.split(maxsplit=1)[1:])
         variable = "".join(variable.split(maxsplit=1)[0])
         if not value:
-            return await dog.edit("`.setvar <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         await sleep(1.5)
         if variable in heroku_var:
             await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
@@ -131,7 +131,7 @@ async def dyno_usage(dyno):
             dyno,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
-    dyno = await eor(dyno, lan("processing"))
+    dyno = await eor(dyno, "**⏳ Processing...**")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "

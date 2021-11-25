@@ -12,7 +12,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from gtts import gTTS
 
-from . import deEmojify, doge, edl, eor, gvar, reply_id, tr
+from . import deEmojify, doge, edl, eor, gvar, reply_id
 
 plugin_category = "tool"
 
@@ -24,7 +24,7 @@ plugin_category = "tool"
         "header": "Text to speech command.",
         "usage": [
             "{tr}tts <text>",
-            f"{tr}tts {lan('replymsg')}",
+            "{tr}tts <reply>",
             "{tr}tts <language code> ; <text>",
         ],
     },

@@ -26,7 +26,6 @@ from . import (
     eor,
     hmention,
     install_pip,
-    lan,
     reply_id,
     tr,
 )
@@ -63,7 +62,7 @@ async def install(event):
                     remove(downloaded_file_name)
                     return await edl(
                         event,
-                        f"{lan('errr')}\
+                        f"**🚨 Eʀʀoʀ:**\
                         \n➡️ `{mnfe}`\
                         \n\
                         \n**🦴 Try to write** `{tr}finstall` **& reply.**",
@@ -76,11 +75,11 @@ async def install(event):
                     remove(downloaded_file_name)
                     return await edl(
                         event,
-                        f"{lan('errr')}\
+                        f"**🚨 Eʀʀoʀ:**\
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -98,14 +97,14 @@ async def install(event):
                 remove(downloaded_file_name)
                 return await edl(
                     event,
-                    f"{lan('errr')}\
+                    f"**🚨 Eʀʀoʀ:**\
                     \n`👀 This plugin is already installed.`\
                     \n\n🐾 If you want to learn about {reply_message.file.name.replace('.py', '')} you have installed, write:**\
                     \n\n`{tr}doge .p {reply_message.file.name.replace('.py', '')}`",
                     15,
                 )
         except Exception as e:
-            await edl(event, f"{lan('errr')}\n`{e}`")
+            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
             try:
                 remove(downloaded_file_name)
             except Exception:
@@ -147,11 +146,11 @@ async def finstall(event):
                     remove(downloaded_file_name)
                     return await edl(
                         event,
-                        f"{lan('errr')}\
+                        f"**🚨 Eʀʀoʀ:**\
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -169,14 +168,14 @@ async def finstall(event):
                 remove(downloaded_file_name)
                 return await edl(
                     event,
-                    f"{lan('errr')}\
+                    f"**🚨 Eʀʀoʀ:**\
                     \n`👀 This plugin is already installed.`\
                     \n\n🐾 If you want to learn about {reply_message.file.name.replace('.py', '')} you have installed, write:**\
                     \n\n`{tr}doge .p {reply_message.file.name.replace('.py', '')}`",
                     15,
                 )
         except Exception as e:
-            await edl(event, f"{lan('errr')}\n`{e}`")
+            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
             try:
                 remove(downloaded_file_name)
             except Exception:
@@ -220,7 +219,7 @@ async def ptest(event):
                 45,
             )
         except Exception as e:
-            await edl(event, f"{lan('errr')}\n`{e}`")
+            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
             try:
                 remove(downloaded_file_name)
             except Exception:
@@ -288,7 +287,7 @@ async def send(event):
             parse_mode="html",
         )
     else:
-        await edl(event, f"{lan('errr')} File not found!")
+        await edl(event, f"**🚨 Eʀʀoʀ:** File not found!")
 
 
 @doge.bot_cmd(
@@ -389,11 +388,11 @@ async def plist(event):
         else:
             await edl(
                 event,
-                f"{lan('errr')}\
+                f"**🚨 Eʀʀoʀ:**\
                 \n**➡️ To list externally installed plugins, you must first set a PLUGIN_CHANNEL.\
                 \n\
                 \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                \n🦴 Write** `{tr}setvar PLUGINS True`",
+                \n🦴 Write** `{tr}set var PLUGINS True`",
             )
 
 

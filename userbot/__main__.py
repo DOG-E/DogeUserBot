@@ -9,11 +9,10 @@
 from sys import argv, exit
 
 import userbot
-from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
+from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 
 from .core.logger import logging
 from .core.session import doge
-from .languages import lan
 from .sql_helper.globals import gvar
 from .utils import (
     add_bot_to_logger_group,
@@ -31,9 +30,9 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info(f"⏳ {lan('startingdoge')} 🐾")
+    LOGS.info(f"⏳ STARTING DOGE USERBOT 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info(f"✅ {lan('startupdoge')} 🐾")
+    LOGS.info(f"✅ STARTUP COMPLETED 🐾")
 except Exception as e:
     LOGS.error(f"🚨 {e}")
     exit()
@@ -67,6 +66,18 @@ async def startup_process():
     await load_plugins("assistant")
     LOGS.info(userbot.__copyright__)
     LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
+    LOGS.info(
+        f"\
+        \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+        \n🐶 wow! Doge is alive!\
+        \n🐾 Doge UserBot is ready to use.\
+        \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+        \n🔅 Write {tr}alive to check.\
+        \n🔅 Learn the commands by writing {tr}doge\
+        \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
+        \n💬 Visit our Telegram group for help: t.me/DogeSup\
+        \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
+    )
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:

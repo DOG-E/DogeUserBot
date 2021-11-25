@@ -17,7 +17,6 @@ from telethon.tl.types import (
 )
 
 from ..Config import Config
-from ..languages import lan
 from ..sql_helper.globals import gvar
 from .managers import eor
 
@@ -72,7 +71,7 @@ class NewMessage(events.NewMessage):
                 is_admin = event.chat.admin_rights
 
             if not is_creator and not is_admin:
-                text = f"**🚨 {lan('needadmin')}**"
+                text = f"**🚨 I need admin rights to be able to use this command!**"
 
                 event._client.loop.create_task(eor(event, text))
                 return
@@ -102,91 +101,43 @@ async def safe_check_text(msg):  # sourcery no-metrics
     if not msg:
         return False
     msg = str(msg)
-    if gvar("BOT_TOKEN") is None:
-        return bool(
-            (
-                (Config.STRING_SESSION in msg)
-                or (Config.API_HASH in msg)
-                or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-                or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
-                or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
-                or (gvar("G_DRIVE_CLIENT_ID") and gvar("G_DRIVE_CLIENT_ID") in msg)
-                or (
-                    gvar("G_DRIVE_CLIENT_SECRET")
-                    and gvar("G_DRIVE_CLIENT_SECRET") in msg
-                )
-                or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
-                or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
-                or (gvar("GITHUB_ACCESS_TOKEN") and gvar("GITHUB_ACCESS_TOKEN") in msg)
-                or (
-                    gvar("IBM_WATSON_CRED_PASSWORD")
-                    and gvar("IBM_WATSON_CRED_PASSWORD") in msg
-                )
-                or (gvar("IBM_WATSON_CRED_URL") and gvar("IBM_WATSON_CRED_URL") in msg)
-                or (gvar("IPDATA_API") and gvar("IPDATA_API") in msg)
-                or (gvar("LASTFM_API") and gvar("LASTFM_API") in msg)
-                or (
-                    gvar("LASTFM_PASSWORD_PLAIN")
-                    and gvar("LASTFM_PASSWORD_PLAIN") in msg
-                )
-                or (gvar("LASTFM_SECRET") and gvar("LASTFM_SECRET") in msg)
-                or (gvar("OCRSPACE_API") and gvar("OCRSPACE_API") in msg)
-                or (gvar("RANDOMSTUFF_API") and gvar("RANDOMSTUFF_API") in msg)
-                or (gvar("REMOVEBG_API") and gvar("REMOVEBG_API") in msg)
-                or (gvar("SPAMWATCH_API") and gvar("SPAMWATCH_API") in msg)
-                or (gvar("SPOTIFY_DC") and gvar("SPOTIFY_DC") in msg)
-                or (gvar("SPOTIFY_KEY") and gvar("SPOTIFY_KEY") in msg)
-                or (gvar("SS_API") and gvar("SS_API") in msg)
-                or (
-                    gvar("TG_2STEP_VERIFICATION_CODE")
-                    and gvar("TG_2STEP_VERIFICATION_CODE") in msg
-                )
-                or (gvar("WEATHER_API") and gvar("WEATHER_API") in msg)
+    if gvar("BOT_TOKEN"):
+        return bool(((gvar("BOT_TOKEN") in msg)))
+    return bool(
+        (
+            (Config.STRING_SESSION in msg)
+            or (Config.API_HASH in msg)
+            or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
+            or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
+            or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
+            or (gvar("G_DRIVE_CLIENT_ID") and gvar("G_DRIVE_CLIENT_ID") in msg)
+            or (gvar("G_DRIVE_CLIENT_SECRET") and gvar("G_DRIVE_CLIENT_SECRET") in msg)
+            or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
+            or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
+            or (gvar("GITHUB_ACCESS_TOKEN") and gvar("GITHUB_ACCESS_TOKEN") in msg)
+            or (
+                gvar("IBM_WATSON_CRED_PASSWORD")
+                and gvar("IBM_WATSON_CRED_PASSWORD") in msg
             )
-        )
-    else:
-        return bool(
-            (
-                (Config.STRING_SESSION in msg)
-                or (Config.API_HASH in msg)
-                or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-                or (gvar("BOT_TOKEN") in msg)
-                or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
-                or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
-                or (gvar("G_DRIVE_CLIENT_ID") and gvar("G_DRIVE_CLIENT_ID") in msg)
-                or (
-                    gvar("G_DRIVE_CLIENT_SECRET")
-                    and gvar("G_DRIVE_CLIENT_SECRET") in msg
-                )
-                or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
-                or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
-                or (gvar("GITHUB_ACCESS_TOKEN") and gvar("GITHUB_ACCESS_TOKEN") in msg)
-                or (
-                    gvar("IBM_WATSON_CRED_PASSWORD")
-                    and gvar("IBM_WATSON_CRED_PASSWORD") in msg
-                )
-                or (gvar("IBM_WATSON_CRED_URL") and gvar("IBM_WATSON_CRED_URL") in msg)
-                or (gvar("IPDATA_API") and gvar("IPDATA_API") in msg)
-                or (gvar("LASTFM_API") and gvar("LASTFM_API") in msg)
-                or (
-                    gvar("LASTFM_PASSWORD_PLAIN")
-                    and gvar("LASTFM_PASSWORD_PLAIN") in msg
-                )
-                or (gvar("LASTFM_SECRET") and gvar("LASTFM_SECRET") in msg)
-                or (gvar("OCRSPACE_API") and gvar("OCRSPACE_API") in msg)
-                or (gvar("RANDOMSTUFF_API") and gvar("RANDOMSTUFF_API") in msg)
-                or (gvar("REMOVEBG_API") and gvar("REMOVEBG_API") in msg)
-                or (gvar("SPAMWATCH_API") and gvar("SPAMWATCH_API") in msg)
-                or (gvar("SPOTIFY_DC") and gvar("SPOTIFY_DC") in msg)
-                or (gvar("SPOTIFY_KEY") and gvar("SPOTIFY_KEY") in msg)
-                or (gvar("SS_API") and gvar("SS_API") in msg)
-                or (
-                    gvar("TG_2STEP_VERIFICATION_CODE")
-                    and gvar("TG_2STEP_VERIFICATION_CODE") in msg
-                )
-                or (gvar("WEATHER_API") and gvar("WEATHER_API") in msg)
+            or (gvar("IBM_WATSON_CRED_URL") and gvar("IBM_WATSON_CRED_URL") in msg)
+            or (gvar("IPDATA_API") and gvar("IPDATA_API") in msg)
+            or (gvar("LASTFM_API") and gvar("LASTFM_API") in msg)
+            or (gvar("LASTFM_PASSWORD_PLAIN") and gvar("LASTFM_PASSWORD_PLAIN") in msg)
+            or (gvar("LASTFM_SECRET") and gvar("LASTFM_SECRET") in msg)
+            or (gvar("OCRSPACE_API") and gvar("OCRSPACE_API") in msg)
+            or (gvar("RANDOMSTUFF_API") and gvar("RANDOMSTUFF_API") in msg)
+            or (gvar("REMOVEBG_API") and gvar("REMOVEBG_API") in msg)
+            or (gvar("SPAMWATCH_API") and gvar("SPAMWATCH_API") in msg)
+            or (gvar("SPOTIFY_DC") and gvar("SPOTIFY_DC") in msg)
+            or (gvar("SPOTIFY_KEY") and gvar("SPOTIFY_KEY") in msg)
+            or (gvar("SS_API") and gvar("SS_API") in msg)
+            or (
+                gvar("TG_2STEP_VERIFICATION_CODE")
+                and gvar("TG_2STEP_VERIFICATION_CODE") in msg
             )
+            or (gvar("WEATHER_API") and gvar("WEATHER_API") in msg)
         )
+    )
 
 
 async def send_message(
@@ -246,7 +197,7 @@ async def send_message(
                 comment_to=comment_to,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry! I can't send this message in public chats,\nit may have some sensitive data,\nso [check in your Bot Log group.]({msglink})__"
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -377,7 +328,7 @@ async def send_file(
                 **kwargs,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry! I can't send this message in public chats,\nit may have some sensitive data,\nso [check in your Bot Log group.]({msglink})__"
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -464,7 +415,7 @@ async def edit_message(
                 schedule=schedule,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 {lan('errrsecuritymsg').format(msglink)}__"
+        msg = f"__🚨 Sorry! I can't send this message in public chats,\nit may have some sensitive data,\nso [check in your Bot Log group.]({msglink})__"
         return await client.editmessage(
             entity=chatid,
             message=message,

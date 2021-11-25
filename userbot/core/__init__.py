@@ -6,7 +6,6 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from ..languages import lan
 from .decorators import check_owner
 
 CMD_INFO = {}

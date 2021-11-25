@@ -50,7 +50,6 @@ from . import (
     edl,
     eor,
     humanbytes,
-    lan,
     logging,
     progress,
     time_formatter,
@@ -615,7 +614,7 @@ async def create_dir(service, folder_name, dir_id=None):
 
 async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
     try:
-        await gdrive.edit(lan("processing"))
+        await gdrive.edit("**⏳ Processing...**")
     except Exception:
         pass
     body = {

@@ -17,8 +17,8 @@ from telethon.utils import get_display_name
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
+    MONTHS,
     _dogeutils,
-    constants,
     doge,
     edl,
     eor,
@@ -381,7 +381,7 @@ async def limitchecker(event):
             gstatus = lstatus.text.split("until ")[1].split(", ")[0]
             ldays, lmonths, lyears = (
                 gstatus.split(" ")[0],
-                constants.MONTHS[gstatus.split(" ")[1]],
+                MONTHS[gstatus.split(" ")[1]],
                 gstatus.split(" ")[2],
             )
             lhours = (

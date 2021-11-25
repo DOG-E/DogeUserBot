@@ -16,7 +16,6 @@ from PIL import Image
 
 from ...core.logger import logging
 from ...core.managers import eor
-from ...languages import lan
 from ..tools import media_type
 from .utils import run_sync, runcmd
 
@@ -37,7 +36,7 @@ async def media_to_pic(event, reply, noedits=False):  # sourcery no-metrics
     ]:
         return event, None
     if not noedits:
-        dogevent = await eor(event, lan("mediatopicmsg"))
+        dogevent = await eor(event, "**Transfiguration time! Converting to...**")
     else:
         dogevent = event
     dogmedia = None

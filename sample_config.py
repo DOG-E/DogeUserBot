@@ -35,10 +35,8 @@ class Config(object):
     # Telegram Bot Token and Bot Username from @BotFather ( https://t.me/BotFather )
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
     BOT_USERNAME = None
-    # Doge of language
-    DOGELANG = os.environ.get("DOGELANG", "en")
     # Set this with required Doge repository link
-    UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DogeUserBot")
+    UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DOGE-EN")
 
     # BASIC & MAIN CONFIG VARS
     # Set this value with group ID of private group(can be found this value by .id)
@@ -103,7 +101,7 @@ class Config(object):
     TZ = os.environ.get("TZ", "Europe/Istanbul")
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
     # For updater plugin
-    UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE")
+    UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE-EN")
     # DON'T TOUCH THIS AT ALL
     SUDO_USERS: Set[int] = set()
     DOGELOGO = None

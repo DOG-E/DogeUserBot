@@ -6,13 +6,6 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# /start
-# /uinfo
-#
-# Callback:
-# bot_pm_ban_([0-9]+)
-# toggle_bot-antiflood_off$
-# ================================================================
 from collections import defaultdict
 from datetime import datetime
 from re import compile
@@ -45,7 +38,6 @@ from . import (
     dgvar,
     doge,
     gvar,
-    lan,
     logging,
     reply_id,
     tr,
@@ -71,14 +63,14 @@ async def check_bot_started_users(user, event):
     check = get_starter_details(user.id)
     if check is None:
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **{lan('botstartedme')}.**\
-                \n**🆔 {lan('userx')} ID:** `{user.id}`\
-                \n**ℹ️ {lan('namex')}:** {get_display_name(user)}"
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **has started me.**\
+                \n**🆔  ID:** `{user.id}`\
+                \n**ℹ️ Name:** {get_display_name(user)}"
     else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **{lan('botrestartedme')}.**\
-                \n**🆔 {lan('userx')} ID:** `{user.id}`\
-                \n**ℹ️ {lan('namex')}:** {get_display_name(user)}"
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **has restarted me.**\
+                \n**🆔 User ID:** `{user.id}`\
+                \n**ℹ️ Name:** {get_display_name(user)}"
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
@@ -128,18 +120,29 @@ async def bot_start(event):
                 my_mention=my_mention,
             )
         else:
-            start_msg = str(lan("botodefstartmsg").format(mention, my_mention))
+            start_msg = str(
+                "**🐶 wow!**\
+                \n🐾 Hi {}!\n\
+                \n**🐶 I am {}'s loyal dog.**\
+                \n💭 You can contact to my master from here.".format(
+                    mention, my_mention
+                )
+            )
         buttons = [
-            (Button.url(f"📣 {lan('btnurlchannel')}", "https://t.me/DogeUserBot"),),
+            (Button.url(f"📣 Cʜᴀɴɴᴇʟ", "https://t.me/DogeUserBot"),),
             (
-                Button.url(f"💬 {lan('btnurlsup')}", "https://t.me/DogeSup"),
-                Button.url(f"🧩 {lan('btnurlplugin')}", "https://t.me/DogePlugin"),
+                Button.url(f"💬 Sᴜᴘᴘoʀᴛ", "https://t.me/DogeSup"),
+                Button.url(f"🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
             ),
         ]
     else:
-        start_msg = lan("botdefstartmsg").format(my_mention)
+        start_msg = "**🐶 wow!\
+        \n🐾 Hey {}!\n\
+        \n💬 How can I help you?**".format(
+            my_mention
+        )
         buttons = [
-            (Button.inline(f"🐕‍🦺 {lan('btnhelp')}", data="mainmenu"),),
+            (Button.inline(f"🐕‍🦺 Hᴇʟᴘ", data="mainmenu"),),
         ]
     try:
         await event.client.send_message(
@@ -153,7 +156,7 @@ async def bot_start(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"{lan('errr')}\n`ℹ️ {lan('errrstartbot')}.`\
+                f"**🚨 Eʀʀoʀ:**\n`ℹ️ There was a error while user starting your bot.`\
                 \n➡️ `{e}`",
             )
     else:
@@ -174,7 +177,7 @@ async def bot_pms(event):  # sourcery no-metrics
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"{lan('errr')}\n`ℹ️ {lan('errrstoringmsg')}`\
+                    f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
                     \n➡️ `{str(e)}`",
                 )
     else:
@@ -212,7 +215,7 @@ async def bot_pms(event):  # sourcery no-metrics
                         user_id, event.text, reply_to=reply_msg, link_preview=False
                     )
             except Exception as e:
-                return await event.reply(f"{lan('errr')}\n➡️ `{e}`")
+                return await event.reply(f"**🚨 Eʀʀoʀ:**\n➡️ `{e}`")
             try:
                 add_user_to_db(
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
@@ -222,7 +225,7 @@ async def bot_pms(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"{lan('errr')}\n`ℹ️ {lan('errrstoringmsg')}`\
+                        f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
                         \n➡️ `{e}`",
                     )
 
@@ -244,7 +247,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         if reply_msg:
             await event.client.send_message(
                 OWNER_ID,
-                lan("editedbotmsgbyuser").format(
+                "**⬆️ This message was edited by the user** {} **as:**\n".format(
                     _format.mentionuser(get_display_name(chat), chat.id)
                 ),
                 reply_to=reply_msg,
@@ -257,7 +260,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"{lan('errr')}\n`ℹ️ {lan('errrstoringmsg')}`\
+                        f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
                         \n➡️ `{e}`",
                     )
     else:
@@ -316,7 +319,7 @@ async def handler(event):
                         return
                     await event.client.send_message(
                         OWNER_ID,
-                        lan("deletedbotmsgbyuser").format(
+                        "**⬆️ This message was deleted by the user** {}.".format(
                             _format.mentionuser(user_name, user_id)
                         ),
                         reply_to=reply_msg,
@@ -329,24 +332,28 @@ async def handler(event):
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply(lan("replymsginfo"))
+        return await event.reply("**ℹ️ Reply to a message to get message info.**")
     info_msg = await event.client.send_message(
         event.chat_id,
-        lan("search_db"),
+        "`🔎 Searching my database for: this user...`",
         reply_to=reply_to,
     )
     users = get_user_id(reply_to)
     if users is None:
-        return await info_msg.edit(f"{lan('errr')}\n🙁 `{lan('errrfinduserdb')}.`")
+        return await info_msg.edit(
+            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+        )
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
-        return await info_msg.edit(f"{lan('errr')}\n🙁 `{lan('errrfinduserdb')}.`")
-    uinfo = f"**👤 {lan('sentmsgby')}** {_format.mentionuser(user_name, user_id)}\
-            \n**ℹ️ {lan('fnamex')}:** {user_name}\
-            \n**🆔 {lan('userx')} ID:** `{user_id}`"
+        return await info_msg.edit(
+            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+        )
+    uinfo = f"**👤 This message was sent by** {_format.mentionuser(user_name, user_id)}\
+            \n**ℹ️ First Name:** {user_name}\
+            \n**🆔 User ID:** `{user_id}`"
     await info_msg.edit(uinfo)
 
 
@@ -354,9 +361,9 @@ async def send_flood_alert(user_) -> None:
     # sourcery no-metrics
     buttons = [
         (
-            Button.inline(f"🚫 {lan('btnban')}", data=f"bot_pm_ban_{user_.id}"),
+            Button.inline(f"🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                f"➖ {lan('btnafloodoff')}",
+                f"➖ Boᴛ AɴᴛɪFʟooᴅ Oғғ",
                 data="toggle_bot-antiflood_off",
             ),
         )
@@ -373,7 +380,7 @@ async def send_flood_alert(user_) -> None:
             if BOTLOG:
                 await doge.tgbot.send_message(
                     BOTLOG_CHATID,
-                    f"{lan('errr')}\nℹ️ {lan('errrupdateflood')}.\
+                    f"**🚨 Eʀʀoʀ:**\nℹ️ While updating flood count.\
                     \n➡️ `{e}`",
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
@@ -383,28 +390,28 @@ async def send_flood_alert(user_) -> None:
     flood_msg = (
         r"**⚠️️ #FLOOD_WARNING**"
         "\n\n"
-        f"**🆔 {lan('userx')} ID:** `{user_.id}`\n"
-        f"**ℹ️ {lan('namex')}:** {get_display_name(user_)}\n"
-        f"**👤 {lan('userx')}:** {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**🐾 {lan('wrnnspammingbot').format(BOT_USERNAME, flood_count)}**\n"
-        f"__💡 {lan('botquickaction')}__: {lan('botquickaction_')}."
+        f"**🆔 User ID:** `{user_.id}`\n"
+        f"**ℹ️ Name:** {get_display_name(user_)}\n"
+        f"**👤 User:** {_format.mentionuser(get_display_name(user_), user_.id)}"
+        f"\n\n**🐾 is spamming your {BOT_USERNAME}! -> [ Flood rate ({flood_count}) ]**\n"
+        f"__💡 Quick Action__: Ignored from bot for a while."
     )
 
     if found:
         if flood_count >= FloodConfig.AUTOBAN:
             if user_.id in Config.SUDO_USERS:
                 sudo_spam = (
-                    f"**👤 Sudo {lan('userx')}** {_format.mentionuser(user_.first_name, user_.id)}\
-                    \n**🆔 {lan('userx')} ID:** `{user_.id}`\n\n"
-                    f"**🐾 {lan('wrnnfloodingbot').format(BOT_USERNAME)}**\
-                    \n\nℹ️ {lan('infomsgrmsudo').format(tr)}"
+                    f"**👤 Sudo User** {_format.mentionuser(user_.first_name, user_.id)}\
+                    \n**🆔 User ID:** `{user_.id}`\n\n"
+                    f"**🐾 is flooding your {BOT_USERNAME}!**\
+                    \n\nℹ️ Check `{tr}doge rmsudo` to remove the user from Sudo."
                 )
                 if BOTLOG:
                     await doge.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
-                    f"**⛔ {lan('banuserfbot').format(BOT_USERNAME, FloodConfig.AUTOBAN)}**",
+                    f"**⛔Auto banned flooding from {BOT_USERNAME} [exceeded flood rate of ({FloodConfig.AUTOBAN})]**",
                 )
                 FloodConfig.USERS[user_.id].clear()
                 FloodConfig.ALERT[user_.id].clear()
@@ -431,14 +438,14 @@ async def send_flood_alert(user_) -> None:
             chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
             await doge.tgbot.send_message(
                 OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} {lan('wrnnfloodwbot')}](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"**⚠️️ [{BOT_USERNAME} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             await doge(UnblockRequest(BOT_USERNAME))
             chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
             await doge.tgbot.send_message(
                 OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} {lan('wrnnfloodwbot')}](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"**⚠️️ [{BOT_USERNAME} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
@@ -451,14 +458,14 @@ async def bot_pm_ban_cb(c_q: CallbackQuery):
     try:
         user = await doge.get_entity(user_id)
     except Exception as e:
-        await c_q.answer(f"{lan('errr')}\n➡️ `{e}`")
+        await c_q.answer(f"**🚨 Eʀʀoʀ:**\n➡️ `{e}`")
     else:
         await c_q.answer(
-            f"**⏳ {lan('userx')} ID {lan('banning')} ->** `{user_id}`**...**",
+            f"**⏳ User ID is banning ->** `{user_id}`**...**",
             alert=False,
         )
         await ban_user_from_bot(user, "Spamming Bot")
-        await c_q.edit(f"**✅ {lan('banned')}\n🆔 {lan('userx')} ID:** `{user_id}`")
+        await c_q.edit(f"**✅ Banned!\n🆔 User ID:** `{user_id}`")
 
 
 def time_now() -> Union[float, int]:
@@ -493,10 +500,12 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvar("bot_antif") is None:
-        return await c_q.answer(lan("alreadyaflooddsb"), alert=False)
+        return await c_q.answer(
+            "**ℹ️ Bot AntiFlood was already disabled.**", alert=False
+        )
     dgvar("bot_antif")
-    await c_q.answer(lan("aflooddisabled"), alert=False)
-    await c_q.edit(lan("aflooddisabled"))
+    await c_q.answer("**ℹ️ Bot AntiFlood disabled.**", alert=False)
+    await c_q.edit("**ℹ️ Bot AntiFlood disabled.**")
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)

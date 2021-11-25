@@ -19,7 +19,6 @@ glitch_this
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
-google_trans_new
 googletrans==4.0.0-rc1
 gtts
 hachoir
@@ -46,7 +45,7 @@ pyfiglet
 pygithub
 pygments
 pylast
-pylists==0.0.1.1
+pylists==0.0.1.2
 pymediainfo
 pymupdf
 pysmartdl

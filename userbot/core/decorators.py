@@ -12,7 +12,6 @@ from telethon.errors import FloodWaitError, MessageNotModifiedError
 from telethon.events import CallbackQuery
 
 from ..Config import Config
-from ..languages import lan
 from ..sql_helper.globals import gvar
 
 
@@ -30,7 +29,10 @@ def check_owner(func):
                 pass
 
         else:
-            HELP_TEXT = gvar("HELP_TEXT") or lan("help_text")
+            HELP_TEXT = (
+                gvar("HELP_TEXT")
+                or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 wow! You aren't my master.\n\n🐕‍🦺 Adopt a @DogeUserBot too!"
+            )
             await c_q.answer(HELP_TEXT, alert=True)
 
     return wrapper

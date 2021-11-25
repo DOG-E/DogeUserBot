@@ -9,13 +9,10 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# bbutton
-# button
-# ================================================================
 from os import remove
 from re import compile
 
-from . import BOT_USERNAME, doge, edl, ibuild_keyboard, lan, reply_id, tr
+from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id, tr
 
 plugin_category = "tool"
 # Regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
@@ -26,22 +23,22 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
     pattern="bbutton(?:\s|$)([\s\S]*)",
     command=("bbutton", plugin_category),
     info={
-        "header": lan("head_bbutton"),
-        "note": lan("note_bbutton").format(BOT_USERNAME),
-        "options": lan("option_button"),
-        "usage": f"{tr}bbutton <{lan('text')}> {lan('use_button')}",
-        "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 {lan('support')}]<https://t.me/DogeSup>",
+        "header": "To create button posts.",
+        "note": f"For working of this you need your bot ({BOT_USERNAME}) in the group/channel where you're using and Markdown is default to HTML.",
+        "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
+        "usage": f"{tr}bbutton <text> [Name on button](link you want to open)",
+        "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def bbutton(event):
-    f"{lan('head_bbutton')}"
+    "To create button posts."
     reply_message = await event.get_reply_message()
     if reply_message:
         markdown_note = reply_message.text
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edl(event, lan("shldwrite_button"))
+        return await edl(event, "`🔲 What text should I use in button post?`")
 
     prev = 0
     note_data = ""
@@ -87,15 +84,15 @@ async def bbutton(event):
     pattern="button(?:\s|$)([\s\S]*)",
     command=("button", plugin_category),
     info={
-        "header": lan("head_button"),
-        "note": lan("note_button"),
-        "options": lan("option_button"),
-        "usage": f"{tr}button <{lan('text')}> {lan('use_button')}",
-        "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 {lan('support')}]<https://t.me/DogeSup>",
+        "header": "To create button posts via inline.",
+        "note": "Markdown is default to HTML.",
+        "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
+        "usage": f"{tr}button <text> [Name on button](link you want to open)",
+        "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def button(event):
-    f"{lan('head_button')}"
+    "To create button posts via inline."
     reply_to_id = await reply_id(event)
     reply_message = await event.get_reply_message()
     if reply_message:
@@ -103,7 +100,7 @@ async def button(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edl(event, lan("shldwrite_button"))
+        return await edl(event, "`🔲 What text should I use in button post?`")
 
     doginput = "Inline buttons " + markdown_note
     results = await event.client.inline_query(BOT_USERNAME, doginput)

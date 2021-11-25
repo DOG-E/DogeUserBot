@@ -21,24 +21,24 @@ plugin_category = "tool"
     pattern="magisk$",
     command=("magisk", plugin_category),
     info={
-        "header": lan("magisk1"),
+        "header": "To Get latest Magisk releases",
         "usage": "{tr}magisk",
     },
 )
 async def kakashi(event):
-    lan("magisk2")
+    "Get latest Magisk releases"
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
-        f"⦁ **{lan('magisk3')}**": magisk_repo + "master/stable.json",
-        f"⦁ **{lan('magisk4')}**": magisk_repo + "master/beta.json",
-        f"⦁ **{lan('magisk5')}**": magisk_repo + "master/canary.json",
+        "⦁ **Stable**": magisk_repo + "master/stable.json",
+        "⦁ **Beta**": magisk_repo + "master/beta.json",
+        "⦁ **Canary**": magisk_repo + "master/canary.json",
     }
-    releases = f"{lan('magisk6')}\n\n"
+    releases = "**Latest Magisk Releases**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
         releases += (
             f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
-            f'[{lan("magisk7")}]({data["magisk"]["note"]})\n'
+            f'[Changelog]({data["magisk"]["note"]})\n'
         )
     await eor(event, releases)
 
@@ -47,20 +47,20 @@ async def kakashi(event):
     pattern="device(?: |$)(\S*)",
     command=("device", plugin_category),
     info={
-        "header": lan("device1"),
-        "usage": f"{tr}device {lan('device2')}",
-        "examples": f"{tr}device {lan('device3')}",
+        "header": "To get android device name/model from its codename",
+        "usage": "{tr}device <codename>",
+        "examples": "{tr}device whyred",
     },
 )
 async def device_info(event):
-    lan("device4")
+    "get android device name from its codename"
     textx = await event.get_reply_message()
     codename = event.pattern_match.group(1)
     if not codename:
         if textx:
             codename = textx.text
         else:
-            return await edl(event, f"**{lan('usage')}:** {tr}device {lan('device5')}`")
+            return await edl(event, f"`Usage: {tr}device <codename> or <model>`")
     data = loads(
         get(
             "https://raw.githubusercontent.com/androidtrackers/"
@@ -69,15 +69,15 @@ async def device_info(event):
     )
     results = data.get(codename)
     if results:
-        reply = lan("device6").format(codename)
+        reply = f"**Search results for {codename}:**\n\n"
         for item in results:
             reply += (
-                f"**{lan('device7')}** {item['brand']}\n"
-                f"**{lan('device8')}** {item['name']}\n"
-                f"**{lan('device9')}** {item['model']}\n\n"
+                f"**Brand:** {item['brand']}\n"
+                f"**Name:** {item['name']}\n"
+                f"**Model:** {item['model']}\n\n"
             )
     else:
-        reply = lan("device10").format(codename)
+        reply = f"`Couldn't find info about {codename}!`\n"
     await eor(event, reply)
 
 
@@ -85,8 +85,8 @@ async def device_info(event):
     pattern="dcname(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("dcname", plugin_category),
     info={
-        "header": lan("dcname1"),
-        "usage": f"{tr}dcname {lan('dcname2')}",
+        "header": "To Search for android device codename",
+        "usage": "{tr}dcname <brand> <device>",
         "examples": "{tr}dcname Xiaomi Redmi Note 5 Pro",
     },
 )
@@ -101,7 +101,7 @@ async def codename_info(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"**{lan('usage')}**: `{tr}dcname {lan('dcname2')}`")
+        return await edl(event, f"`Usage: {tr}dcname <brand> <device>`")
 
     data = loads(
         get(
@@ -112,24 +112,24 @@ async def codename_info(event):
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     if not devices:
-        return await eor(event, lan("dcname").format(brand))
+        return await eor(event, f"__I couldn't find {brand}.__")
     results = [
         i
         for i in devices
         if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
     ]
     if results:
-        reply = lan("dcname4").format(brand, device)
+        reply = f"**Search results for {brand} {device}:**\n\n"
         if len(results) > 8:
             results = results[:8]
         for item in results:
             reply += (
-                f"**{lan('dcname5')}:** {item['device']}\n"
-                f"**{lan('device8')}:** {item['name']}\n"
-                f"**{lan('device9')}:** {item['model']}\n\n"
+                f"**Device:** {item['device']}\n"
+                f"**Name:** {item['name']}\n"
+                f"**Model:** {item['model']}\n\n"
             )
     else:
-        reply = lan("dcname6").format(device)
+        reply = f"`Couldn't find {device} codename!`\n"
     await eor(event, reply)
 
 
@@ -137,13 +137,13 @@ async def codename_info(event):
     pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("specs", plugin_category),
     info={
-        "header": lan("specs1"),
+        "header": "To Get info about android device .",
         "usage": "{tr}specs",
         "examples": "{tr}specs Xiaomi Redmi Note 5 Pro",
     },
 )
 async def devices_specifications(event):
-    lan("specs2")
+    "Mobile devices specifications"
     textx = await event.get_reply_message()
     brand = event.pattern_match.group(1).lower()
     device = event.pattern_match.group(2).lower()
@@ -153,7 +153,7 @@ async def devices_specifications(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"**{lan('usage')}** `{tr}specs` {lan('specs3')}")
+        return await edl(event, f"`Usage: {tr}specs <brand> <device>`")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -167,7 +167,7 @@ async def devices_specifications(event):
             i["href"] for i in all_brands if brand == i.text.strip().lower()
         ][0]
     except IndexError:
-        return await edl(event, lan("specs4").format(brand))
+        return await edl(event, f"`{brand} is unknown brand!`")
     devices = BeautifulSoup(get(brand_page_url).content, "lxml").findAll(
         "div", {"class": "model-listing-container-80"}
     )
@@ -179,7 +179,7 @@ async def devices_specifications(event):
             if device in i.text.strip().lower()
         ]
     except IndexError:
-        return await edl(event, lan("specs5").format(device))
+        return await edl(event, f"`Can't find {device}!`")
     if len(device_page_url) > 2:
         device_page_url = device_page_url[:2]
     reply = ""
@@ -204,13 +204,13 @@ async def devices_specifications(event):
     pattern="twrp(?: |$)(\S*)",
     command=("twrp", plugin_category),
     info={
-        "header": lan("twrp1"),
-        "usage": f"{tr}twrp {lan('twrp2')}",
-        "examples": f"{tr}twrp {lan('device3')}",
+        "header": "To Get latest twrp download links for android device.",
+        "usage": "{tr}twrp <devicecodename>",
+        "examples": "{tr}twrp whyred",
     },
 )
 async def twrp(event):
-    lan("twrp3")
+    "get android device twrp"
     textx = await event.get_reply_message()
     device = event.pattern_match.group(1)
     if device:
@@ -218,10 +218,10 @@ async def twrp(event):
     elif textx:
         device = textx.text.split(" ")[0]
     else:
-        return await edl(event, f"**{lan('usage')}:** `{tr}twrp {lan('twrp2')}`")
+        return await edl(event, f"`Usage: {tr}twrp <devicecodename>`")
     url = get(f"https://dl.twrp.me/{device}/")
     if url.status_code == 404:
-        reply = lan("twrp4").format(device)
+        reply = f"`Couldn't find twrp downloads for {device}!`\n"
         return await edl(event, reply)
     page = BeautifulSoup(url.content, "lxml")
     download = page.find("table").find("tr").find("a")
@@ -230,12 +230,8 @@ async def twrp(event):
     size = page.find("span", {"class": "filesize"}).text
     date = page.find("em").text.strip()
     reply = (
-        f'{lan("twrp5").forma(device)}'
+        f"**Latest TWRP for {device}:**\n"
         f"[{dl_file}]({dl_link}) - __{size}__\n"
-        f"**{lan('twrp6')}** __{date}__\n"
+        f"**Updated:** __{date}__\n"
     )
     await eor(event, reply)
-
-
-# Lang By Aylak - @atayist
-# Copyright (C) 2021 - DOG-E

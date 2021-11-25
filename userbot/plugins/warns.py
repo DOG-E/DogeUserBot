@@ -60,7 +60,7 @@ async def _(event):
     command=("warns", plugin_category),
     info={
         "header": "To get users warns list.",
-        "usage": f"{tr}warns {lan('replymsg')}",
+        "usage": "{tr}warns <reply>",
     },
 )
 async def _(event):

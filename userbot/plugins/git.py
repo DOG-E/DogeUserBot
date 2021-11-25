@@ -15,7 +15,7 @@ from github import Github
 from pySmartDL import SmartDL
 from requests import get
 
-from . import GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, doge, edl, eor, lan, logging, reply_id
+from . import GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, doge, edl, eor, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(basename(__name__))
@@ -129,7 +129,7 @@ async def download(event):
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5
         )
 
-    mone = await eor(event, lan("processing"))
+    mone = await eor(event, "**⏳ Processing...**")
     if not isdir(GIT_TEMP_DIR):
         makedirs(GIT_TEMP_DIR)
     start = datetime.now()

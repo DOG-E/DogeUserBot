@@ -32,7 +32,6 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from ..Config import Config
 from ..core.logger import logging
-from ..languages import lan
 
 LOGS = logging.getLogger(__name__)
 _TASKS: Dict[str, Tuple[int, int]] = {}
@@ -65,10 +64,10 @@ def time_formatter(seconds: int) -> str:
     days, hours = divmod(hours, 24)
     seconds = round(seconds, 2)
     tmp = (
-        ((str(days) + f" {lan('days')}, ") if days else "")
-        + ((str(hours) + f" {lan('hours')}, ") if hours else "")
-        + ((str(minutes) + f" {lan('minutes')}, ") if minutes else "")
-        + ((str(seconds) + f" {lan('seconds')}, ") if seconds else "")
+        ((str(days) + f" day(s), ") if days else "")
+        + ((str(hours) + f" hour(s), ") if hours else "")
+        + ((str(minutes) + f" minute(s), ") if minutes else "")
+        + ((str(seconds) + f" second(s), ") if seconds else "")
     )
     return tmp[:-2]
 
@@ -78,7 +77,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     return (
-        ((str(int(days)) + f" {lan('days')}, ") if days else "")
+        ((str(int(days)) + f" day(s), ") if days else "")
         + ((str(int(hours)) + ":") if hours else "00:")
         + ((str(int(minutes)) + ":") if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")
@@ -120,7 +119,7 @@ async def progress(
             return
         del _TASKS[task_id]
         try:
-            await gdrive.edit(lan("finalprocess"))
+            await gdrive.edit("**⌛ Finalizing process...**")
         except MessageNotModifiedError:
             pass
         except Exception as e:
@@ -139,11 +138,11 @@ async def progress(
         eta = round((total - current) / speed)
         elapsed_time = round(elapsed_time)
         if "upload" in prog_type.lower():
-            status = lan("uploading")
+            status = "**📤 Uploading...**"
         elif "download" in prog_type.lower():
-            status = lan("downloading")
+            status = "**📥 Downloading...**"
         else:
-            status = lan("unknown")
+            status = "Unknown"
         progress_str = "{0}\n`[{1}{2}] {3}%`".format(
             status,
             "".join(Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))),
@@ -157,17 +156,17 @@ async def progress(
             f"{progress_str}\n"
             f"`💾 {humanbytes(current)}/{humanbytes(total)}"
             f"🚀 {humanbytes(speed)}`\n"
-            f"{lan('eta')} `{time_formatter(eta)}`\n"
-            f"{lan('eduration')} `{time_formatter(elapsed_time)}`"
+            f"**⏲ Eᴛᴀ:** `{time_formatter(eta)}`\n"
+            f"**⏱ Dᴜʀᴀᴛɪoɴ:** `{time_formatter(elapsed_time)}`"
         )
         if tmp != oldtmp:
             if file_name:
                 await gdrive.edit(
                     f"**{prog_type}**\n\n"
-                    f"{lan('filename')} `{file_name}`\n{lan('estatus')} {tmp}"
+                    f"**📋 Fɪʟᴇ Nᴀᴍᴇ:** `{file_name}`\n**📊 Sᴛᴀᴛᴜs:** {tmp}"
                 )
             else:
-                await gdrive.edit(f"**{prog_type}**\n\n" f"{lan('estatus')} {tmp}")
+                await gdrive.edit(f"**{prog_type}**\n\n" f"**📊 Sᴛᴀᴛᴜs:** {tmp}")
             oldtmp = tmp
 
 

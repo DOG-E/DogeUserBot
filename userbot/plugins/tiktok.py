@@ -8,7 +8,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import doge, edl, eor, fsmessage, lan, newmsgres
+from . import doge, edl, eor, fsmessage, newmsgres
 
 plugin_category = "misc"
 
@@ -33,7 +33,7 @@ async def _(event):
             15,
         )
     else:
-        await eor(event, lan("processing"))
+        await eor(event, "**⏳ Processing...**")
     chat = "@TTSaveBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, d_link, chat=chat)

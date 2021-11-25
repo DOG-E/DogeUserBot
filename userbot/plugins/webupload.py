@@ -15,7 +15,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from requests import post
 
-from . import TMP_DOWNLOAD_DIRECTORY, _dogeutils, doge, eor, lan, logging
+from . import TMP_DOWNLOAD_DIRECTORY, _dogeutils, doge, eor, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ link_regex = compile(
 )
 async def labstack(event):
     "to upload media to labstack"
-    editor = await eor(event, lan("processing"))
+    editor = await eor(event, "**⏳ Processing...**")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if input_str:
@@ -109,7 +109,7 @@ async def labstack(event):
 )
 async def _(event):
     "To upload media to some online media sharing platforms"
-    editor = await eor(event, lan("processing"))
+    editor = await eor(event, "**⏳ Processing...**")
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
     dogecheck = None

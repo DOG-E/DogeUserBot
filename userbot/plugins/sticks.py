@@ -29,7 +29,6 @@ from . import (
     hide_inlinebot,
     hide_inlinebot_point,
     higlighted_text,
-    lan,
     media_type,
     reply_id,
     waifutxt,
@@ -65,7 +64,7 @@ async def quby(event):
         text = (await event.get_reply_message()).message
     if not text:
         return await edl(event, "__What is quby supposed to say? Give some text.__")
-    await edl(event, lan("processing"))
+    await edl(event, "**⏳ Processing...**")
     if not path.isdir("./temp"):
         mkdir("./temp")
     temp_name = "./temp/quby_temp.png"
@@ -131,7 +130,7 @@ async def knife(event):
         text = (await event.get_reply_message()).message
     if not text:
         return await edl(event, "__What is knife supposed to say? Give some text.__")
-    await edl(event, lan("processing"))
+    await edl(event, "**⏳ Processing...**")
     if not path.isdir("./temp"):
         mkdir("./temp")
     temp_name = "./temp/knife_temp.png"
@@ -198,7 +197,7 @@ async def dogesticker(event):
         text = (await event.get_reply_message()).message
     if not text:
         return await edl(event, "__What is doge supposed to say? Give some text.__")
-    await edl(event, lan("processing"))
+    await edl(event, "**⏳ Processing...**")
     if not path.isdir("./temp"):
         mkdir("./temp")
     temp_name = "./temp/doge_temp.jpg"

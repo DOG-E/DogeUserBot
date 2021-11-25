@@ -13,7 +13,7 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.bot_blacklists import add_user_to_bl, rem_user_from_bl
 from ..sql_helper.bot_pms_sql import get_user_id
-from . import BOTLOG, BOTLOG_CHATID, Config, _format, doge, lan, logging, reply_id
+from . import BOTLOG, BOTLOG_CHATID, Config, _format, doge, logging, reply_id
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def progress_str(total: int, current: int) -> str:
     percentage = current * 100 / total
     prog_arg = "**ℹ️ {}:** `{}%`\n" "```[{}{}]```"
     return prog_arg.format(
-        lan("progress"),
+        "Progress",
         percentage,
         "".join((Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5)))),
         "".join(
@@ -63,14 +63,14 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         add_user_to_bl(user.id, get_display_name(user), user.username, reason, date)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = f"**🚫 {lan('foreverbannedbot')}\
-        \n⛓ {lan('reason').title()}:** {reason}"
+    banned_msg = f"**🚫 You have been banned forever from using this bot.\
+        \n⛓ Reason:** {reason}"
     await doge.tgbot.send_message(user.id, banned_msg)
     info = f"**⚠️ #BANNED_BOT_PM_USER**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
-            \n**ℹ️ {lan('fnamex')}:** {user.first_name}\
-            \n**🆔 {lan('userx')} ID:** `{user.id}`\
-            \n**⛓ {lan('reason').title()}:** `{reason}`"
+            \n**ℹ️ First Name:** {user.first_name}\
+            \n**🆔 User ID:** `{user.id}`\
+            \n**⛓ Reason:** `{reason}`"
     if BOTLOG:
         await doge.send_message(BOTLOG_CHATID, info)
     return info
@@ -81,15 +81,15 @@ async def unban_user_from_bot(user, reason, reply_to=None):
         rem_user_from_bl(user.id)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = f"**👀 {lan('unbannedbot')}\
-        \nℹ️ {lan('nowsendmsgbot')}**"
+    banned_msg = f"**👀 You have been unbanned from this bot.\
+        \nℹ️ From now on you can send messages here to contact my master.**"
     if reason is not None:
-        banned_msg += f"\n**⛓ {lan('reason').title()}:** `{reason}`"
+        banned_msg += f"\n**⛓ Reason:** `{reason}`"
     await doge.tgbot.send_message(user.id, banned_msg)
     info = f"**⚠️ #UNBANNED_BOT_PM_USER**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
-            \n**ℹ️ {lan('fnamex')}:** {user.first_name}\
-            \n**🆔 {lan('userx')} ID:** `{user.id}`"
+            \n**ℹ️ First Name:** {user.first_name}\
+            \n**🆔 User ID:** `{user.id}`"
     if BOTLOG:
         await doge.send_message(BOTLOG_CHATID, info)
     return info
