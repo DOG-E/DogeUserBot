@@ -12,7 +12,7 @@ from random import choice
 
 from requests import post
 
-from . import doge, edl, eor, gvar, reply_id
+from . import doge, edl, eor, reply_id
 
 plugin_category = "fun"
 

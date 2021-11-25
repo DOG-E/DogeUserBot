@@ -132,14 +132,19 @@ class DogeUserBotClient(TelegramClient):
                     await edl(check, "`🚨 Turn on Inline mode for our bot`")
                 except ChatSendStickersForbiddenError:
                     await edl(
-                        check, "`🚨 I guess i can't send stickers in this chat`",
+                        check,
+                        "`🚨 I guess i can't send stickers in this chat`",
                     )
                 except BotResponseTimeoutError:
                     await edl(
-                        check, "`🚨 The bot didnt answer to your query in time`",
+                        check,
+                        "`🚨 The bot didnt answer to your query in time`",
                     )
                 except ChatSendMediaForbiddenError:
-                    await edl(check, "`🚨 You can't send media in this chat`",)
+                    await edl(
+                        check,
+                        "`🚨 You can't send media in this chat`",
+                    )
                 except AlreadyInConversationError:
                     await edl(
                         check,
@@ -147,7 +152,8 @@ class DogeUserBotClient(TelegramClient):
                     )
                 except ChatSendInlineForbiddenError:
                     await edl(
-                        check, "`🚨 You can't send inline messages in this chat.`",
+                        check,
+                        "`🚨 You can't send inline messages in this chat.`",
                     )
                 except FloodWaitError as e:
                     LOGS.error(

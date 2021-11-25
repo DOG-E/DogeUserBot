@@ -168,7 +168,9 @@ async def tban(event):  # sourcery no-metrics
             "`Either you're not an admin or you tried to ban an admin that you didn't promote`"
         )
     except BadRequestError:
-        return await dogevent.edit("`I don't have sufficient permissions! This is so sed. Alexa play despacito`")
+        return await dogevent.edit(
+            "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
+        )
     # Helps ban group join spammers more easily
     try:
         reply = await event.get_reply_message()

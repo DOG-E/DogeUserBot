@@ -66,7 +66,8 @@ async def startup_process():
     await load_plugins("assistant")
     LOGS.info(userbot.__copyright__)
     LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
-    LOGS.info(f"\
+    LOGS.info(
+        f"\
     \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
     \n🐶 wow! Doge is alive!\
     \n🐾 Doge UserBot is ready to use.\
@@ -76,7 +77,8 @@ async def startup_process():
     \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
     \n💬 Visit our Telegram group for help: t.me/DogeSup\
     \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-    ")
+    "
+    )
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:

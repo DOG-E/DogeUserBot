@@ -27,7 +27,6 @@ from . import (
     edl,
     eor,
     getTranslate,
-    gvar,
     humanbytes,
 )
 

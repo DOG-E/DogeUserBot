@@ -77,7 +77,7 @@ async def contactsaddto(event):
     flag = await wowmygroup(
         event,
         "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
-        \n💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+        \n💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**",
     )
     if flag:
         return
