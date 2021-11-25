@@ -211,9 +211,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
         vid_data = {"formats": []}
     buttons = [
         [
-            Button.inline(
-                f"🌟 Bᴇsᴛ - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"
-            ),
+            Button.inline(f"🌟 Bᴇsᴛ - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"),
             Button.inline(
                 f"🌟 Bᴇsᴛ - 🎞 ᴡᴇʙᴍ/ᴍᴘ4",
                 data=f"ytdl_download_{vid}_mp4_v",
@@ -299,7 +297,9 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(e)
     except GeoRestrictedError:
-        LOGS.error(f"**🚨 Eʀʀoʀ:** The uploader hasn't made this video available in your country.")
+        LOGS.error(
+            f"**🚨 Eʀʀoʀ:** The uploader hasn't made this video available in your country."
+        )
     else:
         return x
 

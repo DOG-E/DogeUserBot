@@ -13,7 +13,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL.Image import open as Imopen
 
-from . import TMP_DOWNLOAD_DIRECTORY, _dogetools, doge, eor, lan
+from . import TMP_DOWNLOAD_DIRECTORY, _dogetools, doge, eor
 
 plugin_category = "tool"
 

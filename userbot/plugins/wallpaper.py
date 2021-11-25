@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 from requests import get, post
 
 from ..helpers.google_image_download import googleimagesdownload
-from . import doge, edl, eor, lan, logging, reply_id
+from . import doge, edl, eor, logging, reply_id
 
 plugin_category = "misc"
 LOGS = logging.getLogger(path.basename(__name__))

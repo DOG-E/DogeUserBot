@@ -23,7 +23,6 @@ from . import (
     eor,
     fakegs,
     kannagen,
-    lan,
     magik,
     reply_id,
     trumptweet,

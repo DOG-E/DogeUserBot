@@ -30,7 +30,6 @@ from . import (
     eor,
     fsfile,
     fsmessage,
-    lan,
     media_type,
     mediatoarttext,
     newmsgres,

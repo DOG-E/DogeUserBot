@@ -26,7 +26,6 @@ from . import (
     eor,
     hmention,
     install_pip,
-    lan,
     reply_id,
     tr,
 )

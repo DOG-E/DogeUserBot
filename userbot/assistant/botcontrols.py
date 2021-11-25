@@ -78,7 +78,9 @@ async def bot_broadcast(event):
     count = 0
     bot_users_count = len(get_all_starters())
     if bot_users_count == 0:
-        return await event.reply("**ℹ️ No one started your {} yet.**".format(BOT_USERNAME))
+        return await event.reply(
+            "**ℹ️ No one started your {} yet.**".format(BOT_USERNAME)
+        )
 
     users = get_all_starters()
     if users is None:
@@ -86,7 +88,9 @@ async def bot_broadcast(event):
 
     for user in users:
         try:
-            await event.client.send_message(int(user.user_id), "**🔊 You received a new broadcast.**")
+            await event.client.send_message(
+                int(user.user_id), "**🔊 You received a new broadcast.**"
+            )
             await event.client.send_message(int(user.user_id), replied)
             await sleep(0.8)
         except FloodWaitError as e:
@@ -119,7 +123,9 @@ async def bot_broadcast(event):
     b_info = "🔊 Successfully broadcasted message to ➡️ <b>{} users.</b>".format(count)
     if len(blocked_users) != 0:
         b_info += f"\n🚫 <b>{len(blocked_users)} users</b> blocked your {BOT_USERNAME} recently, so have been removed."
-    b_info += "⏱ <code>Process took: {}</code>.".format(time_formatter((end_ - start_).seconds))
+    b_info += "⏱ <code>Process took: {}</code>.".format(
+        time_formatter((end_ - start_).seconds)
+    )
     await br_cast.edit(b_info, parse_mode="html")
 
 
@@ -136,7 +142,9 @@ async def ban_starters(event):
     "To get users list who started bot."
     ulist = get_all_starters()
     if len(ulist) == 0:
-        return await edl(event, "**ℹ️ No one started your {} yet.**".format(BOT_USERNAME))
+        return await edl(
+            event, "**ℹ️ No one started your {} yet.**".format(BOT_USERNAME)
+        )
 
     msg = f"**🐾 The list of users who started your {BOT_USERNAME} are:\n\n**"
     for user in ulist:
@@ -153,7 +161,9 @@ async def ban_botpms(event):
     reply_to = await reply_id(event)
     if not user_id:
         return await event.client.send_message(
-            event.chat_id, "Sorry! I couldn't find this user in my database", reply_to=reply_to
+            event.chat_id,
+            "Sorry! I couldn't find this user in my database",
+            reply_to=reply_to,
         )
 
     if not reason:

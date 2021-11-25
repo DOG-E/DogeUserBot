@@ -34,7 +34,6 @@ from . import (
     edl,
     eor,
     gvar,
-    lan,
     media_type,
     reply_id,
     sgvar,

@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 from requests import Session, get
 
-from . import doge, edl, eor, lan, logging
+from . import doge, edl, eor, logging
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)

@@ -34,7 +34,6 @@ from . import (
     get_user_from_event,
     humanbytes,
     inline_mention,
-    lan,
     logging,
     newmsgres,
     parse_pre,

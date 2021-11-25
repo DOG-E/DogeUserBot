@@ -103,7 +103,9 @@ class DogeUserBotClient(TelegramClient):
                     return await edl(check, "`🐾 I don't think this is a group.`")
 
                 if private_only and not check.is_private:
-                    return await edl(check, "`🐾 I don't think this is a personal chat.`")
+                    return await edl(
+                        check, "`🐾 I don't think this is a personal chat.`"
+                    )
 
                 try:
                     await func(check)

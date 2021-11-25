@@ -15,7 +15,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from requests import post
 
-from . import TMP_DOWNLOAD_DIRECTORY, _dogeutils, doge, eor, lan, logging
+from . import TMP_DOWNLOAD_DIRECTORY, _dogeutils, doge, eor, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)

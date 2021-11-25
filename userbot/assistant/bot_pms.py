@@ -120,10 +120,14 @@ async def bot_start(event):
                 my_mention=my_mention,
             )
         else:
-            start_msg = str("**🐶 wow!**\
+            start_msg = str(
+                "**🐶 wow!**\
             \n🐾 Hi {}!\n\
             \n**🐶 I am {}'s loyal dog.**\
-            \n💭 You can contact to my master from here.".format(mention, my_mention))
+            \n💭 You can contact to my master from here.".format(
+                    mention, my_mention
+                )
+            )
         buttons = [
             (Button.url(f"📣 Cʜᴀɴɴᴇʟ", "https://t.me/DogeUserBot"),),
             (
@@ -134,7 +138,9 @@ async def bot_start(event):
     else:
         start_msg = "**🐶 wow!\
         \n🐾 Hey {}!\n\
-        \n💬 How can I help you?**".format(my_mention)
+        \n💬 How can I help you?**".format(
+            my_mention
+        )
         buttons = [
             (Button.inline(f"🐕‍🦺 Hᴇʟᴘ", data="mainmenu"),),
         ]
@@ -334,13 +340,17 @@ async def bot_start(event):
     )
     users = get_user_id(reply_to)
     if users is None:
-        return await info_msg.edit(f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`")
+        return await info_msg.edit(
+            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+        )
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
-        return await info_msg.edit(f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`")
+        return await info_msg.edit(
+            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+        )
     uinfo = f"**👤 This message was sent by** {_format.mentionuser(user_name, user_id)}\
             \n**ℹ️ First Name:** {user_name}\
             \n**🆔 User ID:** `{user_id}`"
@@ -490,7 +500,9 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvar("bot_antif") is None:
-        return await c_q.answer("**ℹ️ Bot AntiFlood was already disabled.**", alert=False)
+        return await c_q.answer(
+            "**ℹ️ Bot AntiFlood was already disabled.**", alert=False
+        )
     dgvar("bot_antif")
     await c_q.answer("**ℹ️ Bot AntiFlood disabled.**", alert=False)
     await c_q.edit("**ℹ️ Bot AntiFlood disabled.**")

@@ -169,7 +169,9 @@ async def get_chatinfo(event, dogevent):
             await dogevent.edit("`🚨 Invalid channel/group!`")
             return None
         except ChannelPrivateError:
-            await dogevent.edit("`🚨 This is a private channel/group or I'm banned from there.`")
+            await dogevent.edit(
+                "`🚨 This is a private channel/group or I'm banned from there.`"
+            )
             return None
         except ChannelPublicGroupNaError:
             await dogevent.edit("`🚨 Channel or supergroup doesn't exist!`")

@@ -22,7 +22,6 @@ from . import (
     eor,
     fsmessage,
     gvar,
-    lan,
     logging,
     newmsgres,
     resize_image,

@@ -156,14 +156,14 @@ def errors_handler(func):
                     \n\
                     \n🚨 Error Text:\
                     \n{e}".format(
-                        d=date,
-                        cid=str(check.chat_id),
-                        sid=str(check.sender_id),
-                        msg=await check.client.get_msg_link(check),
-                        t=str(check.text),
-                        f=str(format_exc()),
-                        e=str(exc_info()[1]),
-                    )
+                d=date,
+                cid=str(check.chat_id),
+                sid=str(check.sender_id),
+                msg=await check.client.get_msg_link(check),
+                t=str(check.text),
+                f=str(format_exc()),
+                e=str(exc_info()[1]),
+            )
             new = {
                 "error": str(exc_info()[1]),
                 "date": datetime.now(),

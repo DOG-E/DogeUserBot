@@ -29,7 +29,10 @@ def check_owner(func):
                 pass
 
         else:
-            HELP_TEXT = gvar("HELP_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 wow! You aren't my master.\n\n🐕‍🦺 Adopt a @DogeUserBot too!"
+            HELP_TEXT = (
+                gvar("HELP_TEXT")
+                or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 wow! You aren't my master.\n\n🐕‍🦺 Adopt a @DogeUserBot too!"
+            )
             await c_q.answer(HELP_TEXT, alert=True)
 
     return wrapper

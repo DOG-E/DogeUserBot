@@ -35,7 +35,6 @@ from . import (
     deEmojify,
     doge,
     hide_inlinebot,
-    lan,
     logging,
     reply_id,
 )

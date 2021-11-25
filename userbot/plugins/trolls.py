@@ -22,7 +22,6 @@ from . import (
     doge,
     edl,
     eor,
-    lan,
     phcomment,
     reply_id,
     threats,

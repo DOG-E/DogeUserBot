@@ -8,7 +8,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import doge, eor, lan, xiaomeme
+from . import doge, eor, xiaomeme
 
 plugin_category = "tool"
 

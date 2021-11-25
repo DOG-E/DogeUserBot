@@ -22,7 +22,6 @@ from . import (
     edl,
     eor,
     fsmessage,
-    lan,
     media_type,
     newmsgres,
 )
