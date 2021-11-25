@@ -75,7 +75,9 @@ async def yt_inline(event):
     elif reply and reply.text:
         input_url = (reply.text).strip()
     if not input_url:
-        return await edl(event, f"**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**")
+        return await edl(
+            event, f"**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**"
+        )
 
     dogevent = await eor(
         event, "**🔎 Şunun için YouTube'da arama yapıyorm:** `{}`...".format(input_url)
@@ -275,7 +277,9 @@ async def ytdl_callback(c_q: CallbackQuery):
         )
 
         telegraph = await post_to_telegraph(
-            "ℹ️ Verilen sorgu:{} için  YouTube video sonuçları gösteriliyor...".format(total),
+            "ℹ️ Verilen sorgu:{} için  YouTube video sonuçları gösteriliyor...".format(
+                total
+            ),
             list_res,
         )
         await c_q.edit(

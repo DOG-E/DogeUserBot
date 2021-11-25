@@ -84,7 +84,9 @@ async def bot_broadcast(event):
 
     users = get_all_starters()
     if users is None:
-        return await event.reply(f"**ℹ️ Henüz kimse {BOT_USERNAME} botunu başlatmamış!**")
+        return await event.reply(
+            f"**ℹ️ Henüz kimse {BOT_USERNAME} botunu başlatmamış!**"
+        )
 
     for user in users:
         try:
@@ -101,7 +103,8 @@ async def bot_broadcast(event):
             LOGS.error(str(e))
             if BOTLOG:
                 await event.client.send_message(
-                    BOTLOG_CHATID, f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Yayın Yaparken bir hata oluştu.__\n➡️ `{e}`"
+                    BOTLOG_CHATID,
+                    f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Yayın Yaparken bir hata oluştu.__\n➡️ `{e}`",
                 )
         else:
             count += 1
@@ -120,7 +123,9 @@ async def bot_broadcast(event):
                 except FloodWaitError as e:
                     await sleep(e.seconds)
     end_ = datetime.now()
-    b_info = "🔊 ➡️ <b> {} tane kullanıcı </b> için mesajı başarıyla yayınladı.".format(count)
+    b_info = "🔊 ➡️ <b> {} tane kullanıcı </b> için mesajı başarıyla yayınladı.".format(
+        count
+    )
     if len(blocked_users) != 0:
         b_info += f"\n🚫 <b>{len(blocked_users)} tane kullanıcı</b> {BOT_USERNAME} botunu engellemiş ya da botla olan mesajları silmiş. Bu yüzden bot kullanıcıları listesinden silindi."
     b_info += "⏱ Tamamlanma Süresi:<code> {}</code>.".format(
@@ -135,7 +140,7 @@ async def bot_broadcast(event):
     info={
         "header": "Botu başlatan kullanıcıların listesini almak için.",
         "description": "Botunu başlatan kullanıcıların tam listesini almak için kullanılır.",
-        "usage": ["{tr}botusers", "{tr}kullanıcılar"]
+        "usage": ["{tr}botusers", "{tr}kullanıcılar"],
     },
 )
 async def ban_starters(event):
@@ -236,7 +241,9 @@ async def ban_starters(event):
     "Bottan yasaklanan kullanıcılar listesini almak için."
     ulist = get_all_bl_users()
     if len(ulist) == 0:
-        return await edl(event, f"**ℹ️ {BOT_USERNAME } botunda henüz kimse yasaklanmadı.**")
+        return await edl(
+            event, f"**ℹ️ {BOT_USERNAME } botunda henüz kimse yasaklanmadı.**"
+        )
 
     msg = f"**🐾 {BOT_USERNAME } botunda yasaklanan kullanıcıların listesi:\n\n**"
     for user in ulist:

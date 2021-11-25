@@ -127,10 +127,14 @@ async def bot_start(event):
                 my_mention=my_mention,
             )
         else:
-            start_msg = str("**🐶 Wow!**\
+            start_msg = str(
+                "**🐶 Wow!**\
             \n🐾 Selam {}!\n\
             \n**🐶 Ben {}'in sadık köpeğiyim.**\
-            \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(mention, my_mention))
+            \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
+                    mention, my_mention
+                )
+            )
         buttons = [
             (Button.url(f"📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
             (
@@ -141,7 +145,9 @@ async def bot_start(event):
     else:
         start_msg = "**🐶 Wow!\
         \n🐾 Merhaba {}!\n\
-        \n💬 Sana nasıl yardımcı olabilirim?**".format(my_mention)
+        \n💬 Sana nasıl yardımcı olabilirim?**".format(
+            my_mention
+        )
         buttons = [
             (Button.inline(f"🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
         ]
@@ -333,7 +339,9 @@ async def handler(event):
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply("**ℹ️ Mesaj bilgisi almak için bir mesajı yanıtlayın.**")
+        return await event.reply(
+            "**ℹ️ Mesaj bilgisi almak için bir mesajı yanıtlayın.**"
+        )
     info_msg = await event.client.send_message(
         event.chat_id,
         "`🔎 Bu kullanıcıyı veritabanımda arıyorum...`",
@@ -341,13 +349,17 @@ async def bot_start(event):
     )
     users = get_user_id(reply_to)
     if users is None:
-        return await info_msg.edit(f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`")
+        return await info_msg.edit(
+            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+        )
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
-        return await info_msg.edit(f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`")
+        return await info_msg.edit(
+            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+        )
     uinfo = f"**👤 Bu mesaj şu kişi tarafından gönderildi:** {_format.mentionuser(user_name, user_id)}\
             \n**ℹ️ Kullanıcı İsmi:** {user_name}\
             \n**🆔 Kullanıcı ID'si:** `{user_id}`"
