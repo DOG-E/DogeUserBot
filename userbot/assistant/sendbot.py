@@ -6,8 +6,6 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# bot
-# ================================================================
 from . import doge, edl, reply_id
 
 plugin_category = "bot"

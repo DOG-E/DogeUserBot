@@ -11,7 +11,7 @@
 from bs4 import BeautifulSoup
 from requests import get
 
-from . import ALIVE_NAME, doge, eor, lan, tr
+from . import ALIVE_NAME, doge, eor
 
 plugin_category = "tool"
 
@@ -20,15 +20,15 @@ plugin_category = "tool"
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={
-        "header": lan("app1"),
-        "description": lan("app2"),
-        "usage": f"{tr}app {lan('app3')}",
+        "header": "To search any app in playstore",
+        "description": "Searches the app in the playstore and provides the link to the app in playstore and fetchs app details",
+        "usage": "{tr}app <name>",
     },
 )
 async def app_search(event):
-    lan("app4")
+    "To search any app in playstore."
     app_name = event.pattern_match.group(1)
-    event = await eor(event, lan("app5"))
+    event = await eor(event, "`Searching!..`")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
@@ -66,13 +66,13 @@ async def app_search(event):
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
         app_details += " <b>" + app_name + "</b>"
         app_details += (
-            f"\n\n<code>{lan('app6')}:</code> <a href='"
+            "\n\n<code>Developer:</code> <a href='"
             + app_dev_link
             + "'>"
             + app_dev
             + "</a>"
         )
-        app_details += f"\n<code>{lan('app7')}:</code> " + app_rating.replace(
+        app_details += "\n<code>Rating:</code> " + app_rating.replace(
             "Rated ", "⭐ "
         ).replace(" out of ", "/").replace(" stars", "", 1).replace(
             " stars", "⭐ "
@@ -80,13 +80,11 @@ async def app_search(event):
             "five", "5"
         )
         app_details += (
-            f"\n<code>{lan('app8')}:</code> <a href='"
-            + app_link
-            + f"'>{lan('app9')}</a>"
+            "\n<code>Features:</code> <a href='" + app_link + "'>View in Play Store</a>"
         )
         app_details += f"\n\n===> {ALIVE_NAME} <==="
         await event.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit(lan("app10"))
+        await event.edit("No result found in search. Please enter **Valid app name**")
     except Exception as err:
-        await event.edit(f"{lan('app11')}: " + str(err))
+        await event.edit("Exception Occured: " + str(err))

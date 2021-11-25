@@ -28,12 +28,10 @@ from . import (
     dogememes,
     edl,
     eor,
-    lan,
     mememaker,
     mention,
     parse_pre,
     reply_id,
-    tr,
 )
 
 plugin_category = "fun"
@@ -388,7 +386,7 @@ async def payf(event):
     info={
         "header": "Shows the chance of your success.",
         "usage": [
-            f"{tr}wish {lan('replymsg')}",
+            "{tr}wish <reply>",
             "{tr}wish <your wish>",
         ],
     },

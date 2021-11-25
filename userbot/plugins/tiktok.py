@@ -33,7 +33,7 @@ async def _(event):
             15,
         )
     else:
-        await eor(event, lan("processing"))
+        await eor(event, "**⏳ Processing...**")
     chat = "@TTSaveBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, d_link, chat=chat)

@@ -21,7 +21,7 @@ from ..Config import Config
 from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..sql_helper.globals import gvar
-from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO, lan
+from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
 from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
@@ -100,10 +100,10 @@ class DogeUserBotClient(TelegramClient):
         def decorator(func):  # sourcery no-metrics
             async def wrapper(check):
                 if groups_only and not check.is_group:
-                    return await edl(check, lan("errrnotgroup"))
+                    return await edl(check, "`🐾 I don't think this is a group.`")
 
                 if private_only and not check.is_private:
-                    return await edl(check, lan("errrnotpm"))
+                    return await edl(check, "`🐾 I don't think this is a personal chat.`")
 
                 try:
                     await func(check)
@@ -112,16 +112,37 @@ class DogeUserBotClient(TelegramClient):
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error(lan("errrmsgnotmodified"))
+                    LOGS.error("🚨 Message was same as previous message")
                 except MessageIdInvalidError:
-                    LOGS.error(lan("errrmsgidinvalid"))
+                    LOGS.error("🚨 Message was deleted or can't be found")
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = lan("errrlogdisclaimer").format(
+                        ftext = "ℹ️ DISCLAIMER:\
+                        \nThis file is pasted ONLY here,\
+                        \nwe logged only fact of error and date,\
+                        \nwe respect your privacy,\
+                        \nif you've any confidential data here,\
+                        \nyou may not report this error.\
+                        \nNo one will see your data.\
+                        \n\
+                        \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
+                        \n📅 Date: {d}\
+                        \n👥 Group ID: {cid}\
+                        \n👤 Sender ID: {sid}\
+                        \n🔗 Message Link: {msg}\
+                        \n\
+                        \n➡️ Event Trigger:\
+                        \n{t}\
+                        \n\
+                        \nℹ️ Traceback Info:\
+                        \n{f}\
+                        \n\
+                        \n🚨 Error Text:\
+                        \n{e}".format(
                             d=date,
                             cid=str(check.chat_id),
                             sid=str(check.sender_id),
@@ -135,25 +156,25 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += lan("errrlogend")
+                        ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
                             markdown=False,
-                            title=lan("errrlogtext1"),
+                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
                         )
-                        text = lan("errrlogtext1")
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
                         text += "\n\n"
-                        link = f"[{lan('here')}](https://t.me/DogeSup)"
-                        text += lan("errrlogtext2")
+                        link = f"[HERE](https://t.me/DogeSup)"
+                        text += "__💬 If you wanna you can report it.__"
                         text += "\n\n"
-                        text += lan("errrlogtext3").format(link)
+                        text += "🐾 Forward this message {}.".format(link)
                         text += "\n\n"
-                        text += lan("errrlogtext4")
+                        text += "__**🦴 Nothing is logged except of error and date!**__"
                         text += "\n\n"
-                        text += f"**▫️ {lan('errrlogtext5')}:** `{str(check.text)}`"
+                        text += f"**▫️ Event Trigger:** `{str(check.text)}`"
                         text += "\n\n"
-                        text += f"**🚨 {lan('errrlogtext6')}:** [{new['error']}]({pastelink})"
+                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
@@ -229,16 +250,37 @@ class DogeUserBotClient(TelegramClient):
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error(lan("errrmsgnotmodified"))
+                    LOGS.error("🚨 Message was same as previous message")
                 except MessageIdInvalidError:
-                    LOGS.error(lan("errrmsgidinvalid"))
+                    LOGS.error("🚨 Message was deleted or can't be found")
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = lan("errrlogdisclaimer").format(
+                        ftext = "ℹ️ DISCLAIMER:\
+                        \nThis file is pasted ONLY here,\
+                        \nwe logged only fact of error and date,\
+                        \nwe respect your privacy,\
+                        \nif you've any confidential data here,\
+                        \nyou may not report this error.\
+                        \nNo one will see your data.\
+                        \n\
+                        \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
+                        \n📅 Date: {d}\
+                        \n👥 Group ID: {cid}\
+                        \n👤 Sender ID: {sid}\
+                        \n🔗 Message Link: {msg}\
+                        \n\
+                        \n➡️ Event Trigger:\
+                        \n{t}\
+                        \n\
+                        \nℹ️ Traceback Info:\
+                        \n{f}\
+                        \n\
+                        \n🚨 Error Text:\
+                        \n{e}".format(
                             d=date,
                             cid=str(check.chat_id),
                             sid=str(check.sender_id),
@@ -252,25 +294,25 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += lan("errrlogend")
+                        ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
                             markdown=False,
-                            title=lan("errrlogtext1"),
+                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
                         )
-                        text = lan("errrlogtext1")
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
                         text += "\n\n"
-                        link = f"[{lan('here')}](https://t.me/DogeSup)"
-                        text += lan("errrlogtext2")
+                        link = f"[HERE](https://t.me/DogeSup)"
+                        text += "__💬 If you wanna you can report it.__"
                         text += "\n\n"
-                        text += lan("errrlogtext3").format(link)
+                        text += "🐾 Forward this message {}.".format(link)
                         text += "\n\n"
-                        text += lan("errrlogtext4")
+                        text += "__**🦴 Nothing is logged except of error and date!**__"
                         text += "\n\n"
-                        text += f"**▫️ {lan('errrlogtext5')}:** `{str(check.text)}`"
+                        text += f"**▫️ Event Trigger:** `{str(check.text)}`"
                         text += "\n\n"
-                        text += f"**🚨 {lan('errrlogtext6')}:** [{new['error']}]({pastelink})"
+                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
@@ -296,7 +338,7 @@ class DogeUserBotClient(TelegramClient):
         for _, process in self.running_processes.items():
             try:
                 process.kill()
-                LOGS.debug(lan("dbugkilledprocess"), process.pid)
+                LOGS.debug("Killed %d which was still running.", process.pid)
             except Exception as e:
                 LOGS.debug(e)
         self.running_processes.clear()

@@ -262,7 +262,7 @@ async def _(img):
         await eor(img, "`Reply to photo or sticker nigger.`")
         return
     if photo:
-        dogevent = await eor(img, lan("processing"))
+        dogevent = await eor(img, "**⏳ Processing...**")
         try:
             image = Image.open(photo)
         except OSError:

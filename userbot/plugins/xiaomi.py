@@ -27,7 +27,7 @@ async def _(event):
     "To get lastest Firmware."
     link = event.pattern_match.group(1)
     msg = f"/firmware {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -45,7 +45,7 @@ async def _(event):
     "To get lastest Vendor."
     link = event.pattern_match.group(1)
     msg = f"/vendor {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -63,7 +63,7 @@ async def _(event):
     "To get quick spec information about device"
     link = event.pattern_match.group(1)
     msg = f"/specs {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -81,7 +81,7 @@ async def _(event):
     "To get latest fastboot MIUI."
     link = event.pattern_match.group(1)
     msg = f"/fastboot {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -99,7 +99,7 @@ async def _(event):
     "To get latest recovery MIUI."
     link = event.pattern_match.group(1)
     msg = f"/recovery {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -117,7 +117,7 @@ async def _(event):
     "To get latest PBRP."
     link = event.pattern_match.group(1)
     msg = f"/pb {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -135,5 +135,5 @@ async def _(event):
     "To get latest OrangeFox Recovery."
     link = event.pattern_match.group(1)
     msg = f"/of {link}"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     await xiaomeme(event, msg, dogevent)

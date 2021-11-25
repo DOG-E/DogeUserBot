@@ -51,7 +51,7 @@ async def direct_link_generator(event):
             message = textx.text
         else:
             return await edl(event, "`Usage: .direct <url>`")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     reply = ""
     links = findall(r"\bhttps?://.*\.\S+", message)
     if not links:

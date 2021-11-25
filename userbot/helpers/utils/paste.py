@@ -13,7 +13,6 @@ from telegraph import Telegraph
 
 from ...Config import Config
 from ...core.logger import logging
-from ...languages import lan
 from ..tools import post_to_telegraph
 
 LOGS = logging.getLogger("DogeUserBot")
@@ -42,7 +41,7 @@ async def t_paste(msg, title=None):
 
             await doge.send_message(
                 Config.BOTLOG_CHATID,
-                lan("t_pasteblmsg").format(auth_url),
+                f"Created new Telegraph account {auth_url} for the current session.\n\n**Don't give this URL to anyone, even if they say they are from Telegram!**",
             )
         except Exception as e:
             LOGS.info(str(e))
@@ -77,7 +76,7 @@ async def p_paste(message, extension=None):
 
             await doge.send_message(
                 Config.BOTLOG_CHATID,
-                lan("p_pasteblmsg").format(purl, response["deletionToken"]),
+                f"**You have created a new paste in pasty bin.**\n\nLink to pasty is [HERE]({purl}).\n\nYou can delete that paste by using this token `{response['deletionToken']}`",
             )
         except Exception as e:
             LOGS.info(str(e))
@@ -87,7 +86,7 @@ async def p_paste(message, extension=None):
             "bin": "Pasty",
         }
     er = "pasty.lus.pm"
-    return {"error": lan("errrpaste").format(er)}
+    return {"error": f"`🚨 Unable to reach {er}!`"}
 
 
 async def s_paste(message, extension="txt"):
@@ -109,7 +108,7 @@ async def s_paste(message, extension="txt"):
             "bin": "Spacebin",
         }
     er = "spacebin"
-    return {"error": lan("errrpaste").format(er)}
+    return {"error": f"`🚨 Unable to reach {er}!`"}
 
 
 async def n_paste(message, extension=None):
@@ -135,7 +134,7 @@ async def n_paste(message, extension=None):
             "bin": "Neko",
         }
     er = "nekobin"
-    return {"error": lan("errrpaste").format(er)}
+    return {"error": f"`🚨 Unable to reach {er}!`"}
 
 
 async def d_paste(message, extension=None):
@@ -161,11 +160,11 @@ async def d_paste(message, extension=None):
             "bin": "Dog",
         }
     er = "catbin"
-    return {"error": lan("errrpaste").format(er)}
+    return {"error": f"`🚨 Unable to reach {er}!`"}
 
 
 async def pastetext(text_to_print, pastetype=None, extension=None, title=None):
-    response = {"error": lan("errrpastetext")}
+    response = {"error": "`🚨 Something went wrong!`"}
     if pastetype is not None:
         if pastetype == "p":
             response = await p_paste(text_to_print, extension)

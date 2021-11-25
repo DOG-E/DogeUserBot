@@ -21,7 +21,6 @@ from youtubesearchpython import VideosSearch
 from ...Config import Config
 from ...core import pool
 from ...core.logger import logging
-from ...languages import lan
 from ..aiohttp_helper import AioHttp
 from ..progress import humanbytes
 from .functions import sublists
@@ -57,9 +56,9 @@ async def yt_search(dog):
                 break
         if video_link:
             return video_link[0]
-        return lan("errrfetchresult")
+        return "Couldn't fetch results"
     except Exception:
-        return lan("errrfetchresult")
+        return "Couldn't fetch results"
 
 
 async def ytsearch(query, limit):
@@ -69,11 +68,11 @@ async def ytsearch(query, limit):
         textresult = f"[{v['title']}](https://www.youtube.com/watch?v={v['id']})\n"
         try:
             textresult += (
-                f"{lan('edescription')} `{v['descriptionSnippet'][-1]['text']}`\n"
+                f"**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:** `{v['descriptionSnippet'][-1]['text']}`\n"
             )
         except Exception:
-            textresult += f"{lan('edescription')} `{lan('none')}`\n"
-        textresult += f"{lan('eduration')} __{v['duration']}__   {lan('eviews')} __{v['viewCount']['short']}__\n"
+            textresult += f"**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:** `None`\n"
+        textresult += f"**⏱ Dᴜʀᴀᴛɪoɴ:** __{v['duration']}__   **◾ Vɪᴇᴡs:** __{v['viewCount']['short']}__\n"
         result += f"📺 {textresult}\n"
     return result
 
@@ -154,12 +153,12 @@ async def result_formatter(results: list):
             out += "<code>{}</code>\n\n".format(
                 "".join(x.get("text") for x in r.get("descriptionSnippet"))
             )
-        out += f'<b>❯ {lan("duration")}:</b> {r.get("accessibility").get("duration")}\n'
-        views = f'<b>❯ {lan("views")}:</b> {r.get("viewCount").get("short")}\n'
+        out += f'<b>❯ Duration:</b> {r.get("accessibility").get("duration")}\n'
+        views = f'<b>❯ Views:</b> {r.get("viewCount").get("short")}\n'
         out += views
-        out += f'<b>❯ {lan("uploaddate")}:</b> {r.get("publishedTime")}\n'
+        out += f'<b>❯ Upload Date:</b> {r.get("publishedTime")}\n'
         if upld:
-            out += f"<b>❯ {lan('uploader')}:</b> "
+            out += f"<b>❯ Uploader:</b> "
             out += f'<a href={upld.get("link")}>{upld.get("name")}</a>'
 
         output[index] = dict(
@@ -178,7 +177,7 @@ def yt_search_btns(
     buttons = [
         [
             Button.inline(
-                text=f"⬅️️ {lan('btnback')}",
+                text=f"⬅️️ Bᴀcᴋ",
                 data=f"ytdl_back_{data_key}_{page}",
             ),
             Button.inline(
@@ -188,11 +187,11 @@ def yt_search_btns(
         ],
         [
             Button.inline(
-                text=f"📜 {lan('btnlistall')}",
+                text=f"📜 Lɪsᴛ Aʟʟ",
                 data=f"ytdl_listall_{data_key}_{page}",
             ),
             Button.inline(
-                text=f"📥 {lan('btndownload')}",
+                text=f"📥 Doᴡɴʟoᴀᴅ",
                 data=f"ytdl_download_{vid}_0",
             ),
         ],
@@ -213,10 +212,10 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     buttons = [
         [
             Button.inline(
-                f"🌟 {lan('btnbest')} - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"
+                f"🌟 Bᴇsᴛ - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"
             ),
             Button.inline(
-                f"🌟 {lan('btnbest')} - 🎞 ᴡᴇʙᴍ/ᴍᴘ4",
+                f"🌟 Bᴇsᴛ - 🎞 ᴡᴇʙᴍ/ᴍᴘ4",
                 data=f"ytdl_download_{vid}_mp4_v",
             ),
         ]
@@ -256,7 +255,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     buttons += [
         [
             Button.inline(
-                f"🌟 {lan('btnbest')} - 🎵 ᴍᴘ3 - 320ᴋʙᴘs",
+                f"🌟 Bᴇsᴛ - 🎵 ᴍᴘ3 - 320ᴋʙᴘs",
                 data=f"ytdl_download_{vid}_mp3_a",
             )
         ]
@@ -300,7 +299,7 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(e)
     except GeoRestrictedError:
-        LOGS.error(f"{lan('errr_').upper()}: {lan('errrvideocountry')}")
+        LOGS.error(f"**🚨 Eʀʀoʀ:** The uploader hasn't made this video available in your country.")
     else:
         return x
 

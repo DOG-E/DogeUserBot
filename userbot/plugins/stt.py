@@ -138,7 +138,7 @@ async def _(event):
     },
 )
 async def _(event):
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with doge.conversation(chat) as conv:
         await fsmessage(event, text="/files", chat=chat)
         response = await newmsgres(conv, chat)

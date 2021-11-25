@@ -7,8 +7,8 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 ---
-name: English
-natively: 🇬🇧 English
+name: Source English
+natively: 🇬🇧 Source English
 
 authors:
   - mutlcc
@@ -20,22 +20,22 @@ processing: "**⏳ Processing...**"
 finalprocess: "**⌛ Finalizing process...**"
 uploading: "**📤 Uploading...**"
 downloading: "**📥 Downloading...**"
-success: "**✅ Sᴜccᴇss:**"
+success: "**✅ Success:**"
 succ_: ✅ Success!
 result: Result
 unknown: "**📍 Unknown!**"
 unknwn: Unknown
 none: None
-errr: "**🚨 Eʀʀoʀ:**"
+errr: "**🚨 ERROR:**"
 errr_: 🚨 Error
-failed: "**❌ Fᴀɪʟᴇᴅ:**"
+failed: "**❌ Failed:**"
 noresult: ❌ No result
 invalid: INVALID
 link: Link
 here: HERE
-note: Noᴛᴇ
-cmd: Cᴍᴅ
-info: Iɴꜰo
+note: Note
+cmd: Cmd
+info: Info
 text: text
 replymsg: reply to user message
 or: or
@@ -110,7 +110,7 @@ errrlogdisclaimer: |-
   🚨 Error Text:
   {e}
 errrlogend: --------END-DOGE-USERBOT-ERROR-LOG--------
-errrlogtext1: "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+errrlogtext1: "**🐶 Doɢᴇ UsᴇʀBoᴛ Error Report 🐾**"
 errrlogtext2: __💬 If you wanna you can report it.__
 errrlogtext3: "🐾 Forward this message {}."
 errrlogtext4: __**🦴 Nothing is logged except of error and date!**__
@@ -147,29 +147,29 @@ dbugftelethon1: "Sending file part {}/{}"
 dbugftelethon2: " with {} bytes"
 dbugftelethon3: "Exporting auth to DC {}"
 dbugftelethon4: "Starting parallel download: "
-dbugftelethon5: f"Part {} downloaded"
+dbugftelethon5: "Part {} downloaded"
 dbugftelethon6: Parallel download finished, cleaning up connections...
 
 # inlinebot;
 menutext: |-
-  🐾 Hᴇʟᴘᴇʀ
+  🐾 Helper
 
-  ◽ Doɢᴇ oғ {}
-btnhelp: Hᴇʟᴘ
-btnmenu: Mᴇɴᴜ
-btnback: Bᴀcᴋ
-btnadmin: Aᴅᴍɪɴ
-btnfun: Fᴜɴ
-btnmisc: Mɪsc
-btntool: Tooʟ
-btncalc: Cᴀʟᴄᴜʟᴀᴛᴏʀ
+  ◽ Doɢᴇ of {}
+btnhelp: Help
+btnmenu: Menu
+btnback: Back
+btnadmin: Admin
+btnfun: Fun
+btnmisc: Misc
+btntool: Tool
+btncalc: Calculator
 btnclose: CLOSE
-btnclse: Cʟosᴇ
-btnurlchannel: Cʜᴀɴɴᴇʟ
-btnurlsup: Sᴜᴘᴘoʀᴛ
-btnurlplugin: Pʟᴜɢɪɴ
-btnshowmsg: Sʜoᴡ Mᴇssᴀɢᴇ
-btnshowoptions: Sʜoᴡ Oᴘᴛɪoɴs
+btnclse: Close
+btnurlchannel: Channel
+btnurlsup: Support
+btnurlplugin: Plugin
+btnshowmsg: Show Message
+btnshowoptions: Show Options
 notownermsg: |-
   ❤ Doge is an advanced dog that makes using Telegram easy and fun.
 
@@ -177,25 +177,25 @@ notownermsg: |-
   🐾 Come to the [support group]({})!**
 btnadoptdesc: 🐕‍🦺 Adopt a @DogeUserBot too!
 btninfohelp: |-
-  🧩 Pʟᴜɢɪɴs: {}
-  ⌨️ Coᴍᴍᴀɴᴅs: {}
+  🧩 Plugins: {}
+  ⌨️ Commands: {}
 
   {}doge .c <command>: For any command info.
   {}s <query>: To search any commands.
 btnmenuhelp: |-
-  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
-  **🧩 Pʟᴜɢɪɴs:** {}
-  **⌨️ Coᴍᴍᴀɴᴅs:** {}
+  **🗃 Category:** {}
+  **🧩 Plugins:** {}
+  **⌨️ Commands:** {}
 btnmenuhelpb: |-
-  **🧩 Pʟᴜɢɪɴ:** {}
-  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
-  **⌨️ Coᴍᴍᴀɴᴅs:** {}
+  **🧩 Plugin:** {}
+  **🗃 Category:** {}
+  **⌨️ Commands:** {}
 btnmenucmdhelp: |-
-  **⌨️ Coᴍᴍᴀɴᴅ:** `{}{}`
-  **🧩 Pʟᴜɢɪɴ:** {}
-  **🗃 Cᴀᴛᴇɢoʀʏ:** {}
+  **⌨️ Command:** `{}{}`
+  **🧩 Plugin:** {}
+  **🗃 Category:** {}
 
-  **ℹ️ Iɴғo:**
+  **ℹ️ Info:**
   {}
 
 # managers;
@@ -224,8 +224,8 @@ errrg_ysuse: |-
   🐶 My admins have banned you from using @DogeUserBot!
   🐾 Check your saved messages in Telegram.
 creatingabot: 🦴 I'm creating your Telegram assistant bot with @BotFather!
-_abotname: "'s Assɪsᴛᴀɴᴛ Boᴛ"
-abotname: 🐶 Mʏ Doɢᴇ Assɪsᴛᴀɴᴛ Boᴛ
+_abotname: "'s Assistant Boᴛ"
+abotname: 🐶 My Doɢᴇ Assistant Boᴛ
 abotinline: 🐶 Search...
 errrcreateabot: 🚨 Create a bot with @BotFather and set it's token to BOT_TOKEN variable and restart me.
 succ_createabot: "✅ DONE! @{} I'm created your Telegram assistant bot successfully!"
@@ -237,7 +237,7 @@ errrglogaddup: "🚨 Permissions missing to addusers for the specified {}."
 errrglogid: "🚨 I couldn't find {}. Make sure it's correct."
 errrglogunsup: "🚨 {} is unsupported. Make sure it's correct."
 errrglog: "🚨 An exception occured upon trying to verify the {}."
-_log: Loɢ
+_log: Log
 dontdelgroup: "🚧 DON'T DELETE THIS GROUP!\n\n"
 ifdel: "🗑 If you delete,\n"
 ifdelbotlog: "🐾 Doge maybe won't live.\n\n"
@@ -250,29 +250,31 @@ ifdelpmlog: "🚫 PM Logger won't work.\n\n"
 ifdelgorc: |-
   **🦴 IF YOU WANT TO DELETE,
   🔅 MUST FIRST WRITE:**
-_extraplugins: Exᴛʀᴀ Pʟᴜɢɪɴs
+_extraplugins: Extra Plugins
 ifdelextrap: "🧩 all installed extra plugins will be lost.\n\n"
 succ_cextrap: ✅ Private channel for PLUGIN_CHANNEL is created successfully and added variable.
-dogereadyuse: "**🧡 Doɢᴇ UsᴇʀBoᴛ Rᴇᴀᴅʏ To Usᴇ 🧡**"
+dogereadyuse: "**🧡 Doɢᴇ UsᴇʀBoᴛ ready to use 🧡**"
 dogebackalive: is back and alive.
 customizeabot: 🥏 I'm customizing your Telegram assistant bot with @BotFather!
 abotabout: |-
-  🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {}
+  🧡 I'm Assistant Boᴛ of {}
 
-  🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾
+  🐶 Made with ❤️ by @DogeUserBot 🐾
 abotdesc: |-
-  🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ
-  🧡 Mᴀsᴛᴇʀ: {}
+  🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assistant Boᴛ
+  🧡 Master: {}
 
-  🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾
+  🐶 Made with ❤️ by @DogeUserBot 🐾
 customizedabot: "✅ DONE! @{} I'm customized your Telegram assistant bot successfully!"
-startingdoge: 
-startupdoge: 
+startingdoge: STARTING DOGE USERBOT
+startupdoge: STARTUP COMPLETED
 wowialiveready: |-
-  
+  🐶 wow! Doge is alive!
+  🐾 Doge UserBot is ready to use.
 writealivetc: |-
-  
-visitoursup: 
+  🔅 Write {}alive to check.
+  🔅 Learn the commands by writing {}doge
+visitoursup: 💬 Visit our Telegram group for help
 
 
 # HELPERS #
@@ -353,21 +355,21 @@ swhere3: on the butt
 swhere4: on the crotch
 
 # progress;
-eta: "**⏲ Eᴛᴀ:**"
-eduration: "**⏱ Dᴜʀᴀᴛɪoɴ:**"
-filename: "**📋 Fɪʟᴇ Nᴀᴍᴇ:**"
-estatus: "**📊 Sᴛᴀᴛᴜs:**"
+eta: "**⏲ Eta:**"
+eduration: "**⏱ Duration:**"
+filename: "**📋 File Name:**"
+estatus: "**📊 Status:**"
 
 # FUNCTIONS;
 # functions;
 notdata: Not data
 
 # ialivetext;
-notsetdb: 🚨 Noᴛ Sᴇᴛ Dᴀᴛᴀʙᴀsᴇ
-running: Rᴜɴɴɪɴɢ
+notsetdb: 🚨 Not set database
+running: Running
 ialivetext: |-
   🐶 Doɢᴇ UsᴇʀBoᴛ
-  🐾 Iɴғo
+  🐾 Info
 
   🔹 To check it's working:
   {}alive
@@ -419,12 +421,12 @@ errrexpectedtime: Expected s, m, h, d or w but got
 
 # utube;
 errrfetchresult: Couldn't fetch results
-edescription: "**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:**"
-eviews: "**◾ Vɪᴇᴡs:**"
+edescription: "**◽ Description:**"
+eviews: "**◾ Views:**"
 views: Views
 uploaddate: Upload Date
 uploader: Uploader
-btnbest: Bᴇsᴛ
+btnbest: Best
 errrvideocountry: The uploader hasn't made this video available in your country.
 
 # UTILS;
@@ -477,8 +479,8 @@ replymsginfo: "**ℹ️ Reply to a message to get message info.**"
 search_db: "`🔎 Searching my database for: this user...`"
 errrfinduserdb: Sorry! I couldn't find this user in my database
 sentmsgby: This message was sent by
-btnban: Bᴀɴ
-btnafloodoff: Boᴛ AɴᴛɪFʟooᴅ Oғғ
+btnban: Ban
+btnafloodoff: Boᴛ AntiFlood Off
 errrupdateflood: While updating flood count
 wrnnspammingbot: "is spamming your {}! -> [ Flood rate ({}) ]"
 botquickaction: Quick Action
@@ -531,9 +533,9 @@ alreadyaflooddsb: "**ℹ️ Bot AntiFlood was already disabled.**"
 aflooddisabled: "**ℹ️ Bot AntiFlood disabled.**"
 
 # botlanguages;
-doges_languages: Doɢᴇ's Lᴀɴɢᴜᴀɢᴇs
+doges_languages: Doɢᴇ's Languages
 changed_dogelang: "**🌍 From now on, I will speak in {}.**"
-btnchooselang: Cʜoosᴇ ᴀ Lᴀɴɢᴜᴀɢᴇ
+btnchooselang: Choose a Language
 
 # botmanagers;
 progress: Progress
@@ -552,8 +554,8 @@ option_button: If you button to be in same row as other button then follow this 
 custombtns: Custom Buttons
 
 # calculator;
-icalctext: Doɢᴇ Cᴀʟcᴜʟᴀᴛoʀ
-icalcopen: Oᴘᴇɴ Cᴀʟcᴜʟᴀᴛoʀ
+icalctext: Doɢᴇ Calculator
+icalcopen: Oᴘᴇɴ Calculator
 icalcclear: Cleared
 
 # hide;
@@ -590,11 +592,11 @@ thatsall: 🔔 That's all!
 viewchangedto: View Changed to
 viewchangedtolist: List
 allvideostitle: "ℹ️ Showing {} YouTube video results for the given query..."
-btnurlopen: Cʟɪcᴋ ᴛo oᴘᴇɴ
-btndetailedview: Dᴇᴛᴀɪʟᴇᴅ ᴠɪᴇᴡ
+btnurlopen: Click to open
+btndetailedview: Detailed view
 viewchangedtodetailed: Detailed
-btnlistall: Lɪsᴛ Aʟʟ
-btndownload: Doᴡɴʟoᴀᴅ
+btnlistall: List All
+btndownload: Download
 errrnofind: 🙁 I couldn't find this.
 errrnofinddesc: "🚨 No results found for `{}`"
 

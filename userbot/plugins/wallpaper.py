@@ -68,7 +68,7 @@ async def noods(event):
     piclist = []
     piclinks = []
     captionlist = []
-    await eor(dogevent, lan("processing"))
+    await eor(dogevent, "**⏳ Processing...**")
     url2 = "https://api.alphacoders.com/content/get-download-link"
     for x in walls:
         wall = choice(walls)["src"][8:-4]

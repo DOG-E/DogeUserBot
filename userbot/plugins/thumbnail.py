@@ -30,7 +30,7 @@ thumb_image_path = TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 )
 async def _(event):
     "To save replied image as temporary thumb."
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     if not event.reply_to_msg_id:
         return await dogevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(

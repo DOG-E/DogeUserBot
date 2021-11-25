@@ -134,34 +134,45 @@ def errors_handler(func):
             if Config.PRIVATE_GROUP_BOT_API_ID != 0:
                 return
             date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-            ftext = f"\nℹ️ DISCLAIMER:\
-                        \nThis file is pasted ONLY here,\
-                        \nwe logged only fact of error and date,\
-                        \nwe respect your privacy,\
-                        \nif you've any confidential data here,\
-                        \nyou may not report this error.\
-                        \nNo one will see your data.\
-                        \n\
-                        \n--------BEGIN DOGE USERBOT ERROR LOG--------\
-                        \n\
-                        \n📅 Date: {date}\
-                        \n👥 Group ID: {str(check.chat_id)}\
-                        \n👤 Sender ID: {str(check.sender_id)}\
-                        \n\
-                        \n➡️ Event Trigger:\n{str(check.text)}\
-                        \n\
-                        \nℹ️ Traceback Info:\n{str(format_exc())}\
-                        \n\
-                        \n🚨 Error Text:\n{str(exc_info()[1])}"
+            ftext = "ℹ️ DISCLAIMER:\
+                    \nThis file is pasted ONLY here,\
+                    \nwe logged only fact of error and date,\
+                    \nwe respect your privacy,\
+                    \nif you've any confidential data here,\
+                    \nyou may not report this error.\
+                    \nNo one will see your data.\
+                    \n\
+                    \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
+                    \n📅 Date: {d}\
+                    \n👥 Group ID: {cid}\
+                    \n👤 Sender ID: {sid}\
+                    \n🔗 Message Link: {msg}\
+                    \n\
+                    \n➡️ Event Trigger:\
+                    \n{t}\
+                    \n\
+                    \nℹ️ Traceback Info:\
+                    \n{f}\
+                    \n\
+                    \n🚨 Error Text:\
+                    \n{e}".format(
+                        d=date,
+                        cid=str(check.chat_id),
+                        sid=str(check.sender_id),
+                        msg=await check.client.get_msg_link(check),
+                        t=str(check.text),
+                        f=str(format_exc()),
+                        e=str(exc_info()[1]),
+                    )
             new = {
                 "error": str(exc_info()[1]),
                 "date": datetime.now(),
             }
             ftext += "\n\n"
-            ftext += "--------END DOGE USERBOT ERROR LOG--------"
+            ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
             pastelink = await paste_message(ftext, markdown=False)
-            text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
-            link = "[here](https://t.me/DogeSup)"
+            text = "🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾"
+            link = "[HERE](https://t.me/DogeSup)"
             text += "\n\n"
             text += "__💬 If you wanna you can report it.__"
             text += "\n\n"

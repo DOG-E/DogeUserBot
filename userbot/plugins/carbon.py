@@ -34,7 +34,7 @@ CARBONLANG = "auto"
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    await event.edit(lan("processing"))
+    await event.edit("**⏳ Processing...**")
     CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text
@@ -103,7 +103,7 @@ async def carbon_api(event):
 )
 async def carbon_api(event):
     """A Wrapper for carbon.now.sh"""
-    dog = await eor(event, lan("processing"))
+    dog = await eor(event, "**⏳ Processing...**")
     CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     textx = await event.get_reply_message()
     pcode = event.text

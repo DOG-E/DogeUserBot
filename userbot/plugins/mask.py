@@ -46,7 +46,7 @@ async def _(dogbot):
     chat = "@Hazmat_Suit_Bot"
     if reply_message.sender.bot:
         return await eor(dogbot, "```Reply to actual users message.```")
-    event = await dogbot.edit(lan("processing"))
+    event = await dogbot.edit("**⏳ Processing...**")
     async with dogbot.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await newmsgres(conv, chat)

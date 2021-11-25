@@ -19,17 +19,7 @@ from pySmartDL import SmartDL
 from telethon.tl.types import DocumentAttributeFilename
 from telethon.utils import get_extension
 
-from . import (
-    TMP_DOWNLOAD_DIRECTORY,
-    _format,
-    doge,
-    edl,
-    eor,
-    humanbytes,
-    lan,
-    progress,
-    tr,
-)
+from . import TMP_DOWNLOAD_DIRECTORY, _format, doge, edl, eor, humanbytes, progress
 
 plugin_category = "misc"
 
@@ -49,9 +39,9 @@ async def _get_file_name(path: Path, full: bool = True) -> str:
         "description": "Will download the replied telegram file to server .",
         "note": "The downloaded files will auto delete if you restart heroku.",
         "usage": [
-            f"{tr}download {lan('replymsg')}",
-            f"{tr}dl {lan('replymsg')}",
-            f"{tr}download custom name{lan('replymsg')}",
+            "{tr}download <reply>",
+            "{tr}dl <reply>",
+            "{tr}download custom name<reply>",
         ],
     },
 )

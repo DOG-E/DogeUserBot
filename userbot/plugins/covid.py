@@ -35,7 +35,7 @@ async def corona(event):
             country = "TR"
         else:
             country = event.pattern_match.group(1)
-        dogevent = await eor(event, lan("processing"))
+        dogevent = await eor(event, "**⏳ Processing...**")
         fl = flag(country)
         worldData = get("https://coronavirus-19-api.herokuapp.com/all").json()
         countryData = get(

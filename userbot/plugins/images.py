@@ -64,7 +64,7 @@ async def img_sampler(event):
         query = str(event.pattern_match.group(2))
     if not query:
         return await eor(event, "Reply to a message or pass a query to search!")
-    dog = await eor(event, lan("processing"))
+    dog = await eor(event, "**⏳ Processing...**")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))
         if lim > 10:
@@ -339,7 +339,7 @@ async def clipartx(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edl(event, "`Reply to a media file!`")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     c_id = await reply_id(event)
     if not path.isdir("./temp"):
         mkdir("./temp")
@@ -369,7 +369,7 @@ async def colorizer(event):
         return await edl(event, "`Reply to a media file!`")
 
     chat = "@PhotoColorizerBot"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await newmsgres(conv, chat)
@@ -410,7 +410,7 @@ async def picture(event):
         return await edl(event, "`Reply to a media file!`")
 
     chat = "@PixelatorBot"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await newmsgres(conv, chat)
@@ -585,7 +585,7 @@ async def asciiartx(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edl(event, "```Reply to a media file...```")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     c_id = await reply_id(event)
     if not path.isdir("./temp"):
         mkdir("./temp")
@@ -630,7 +630,7 @@ async def lineartx(event):
     reply_message = await event.get_reply_message()
     if not event.reply_to_msg_id or not reply_message.media:
         return await edl(event, "```Reply to a media file...```")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     c_id = await reply_id(event)
     if not path.isdir("./temp"):
         mkdir("./temp")
@@ -677,7 +677,7 @@ async def _(event):
     if reply.sender.bot:
         event = await eor(event, "Reply to actual users message.")
         return
-    event = await eor(event, lan("processing"))
+    event = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply, forward=True, chat=chat)
         response = await newmsgres(conv, chat)

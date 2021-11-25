@@ -8,11 +8,6 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# yt
-# Callback:
-# ^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?
-# ^ytdl_(listall|back|next|detail)_([a-z0-9]+)_(.*)
-# ================================================================
 from asyncio import get_event_loop, sleep
 from glob import glob
 from io import open as iopen
@@ -42,7 +37,6 @@ from . import (
     eor,
     get_choice_by_id,
     get_ytthumb,
-    lan,
     logging,
     post_to_telegraph,
     progress,
@@ -65,13 +59,13 @@ PATH = "./userbot/cache/ytsearch.json"
     pattern="yt(?:\s|$)([\s\S]*)",
     command=("yt", plugin_category),
     info={
-        "header": lan("head_iyt"),
-        "description": lan("desc_iyt"),
-        "usage": f"{tr}yt {lan('use_iyt')}",
+        "header": "Video downloader from YouTube with inline buttons.",
+        "description": "To search and download YouTube videos by inline buttons.",
+        "usage": f"{tr}yt link or text or with reply",
     },
 )
 async def yt_inline(event):
-    f"{lan('head_iyt')}"
+    "Video downloader from YouTube with inline buttons."
     reply = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
@@ -81,9 +75,9 @@ async def yt_inline(event):
     elif reply and reply.text:
         input_url = (reply.text).strip()
     if not input_url:
-        return await edl(event, f"**📺 {lan('shldwrite_yt')}**")
+        return await edl(event, f"**📺 Give input or reply to a valid YouTube URL!**")
 
-    dogevent = await eor(event, lan("search_yt").format(input_url))
+    dogevent = await eor(event, "**🔎 Searching YouTube for:** `{}`...".format(input_url))
     flag = True
     cout = 0
     results = None
@@ -100,7 +94,7 @@ async def yt_inline(event):
         await dogevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await dogevent.edit(f"**🚨 {lan('errranyresult')}**")
+        await dogevent.edit(f"**🚨 Sorry! I can't find any results.**")
 
 
 @doge.tgbot.on(
@@ -126,19 +120,19 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     if str(choice_id).isdigit():
         choice_id = int(choice_id)
         if choice_id == 0:
-            await c_q.answer(lan("processing"), alert=False)
+            await c_q.answer("**⏳ Processing...**", alert=False)
             await c_q.edit(buttons=(await download_button(yt_code)))
             return
     startTime = time()
     choice_str, disp_str = get_choice_by_id(choice_id, downtype)
     media_type = "Video" if downtype == "v" else "Audio"
-    callback_continue = lan("downloadingyt").format(media_type)
-    callback_continue += f"\n\n**🆔 {lan('formatcode')}:** {disp_str}"
+    callback_continue = "**📥 Please wait, {} downloading...**".format(media_type)
+    callback_continue += f"\n\n**🆔 Format Code:** {disp_str}"
     await c_q.answer(callback_continue, alert=True)
-    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, lan("uploading"))
+    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**📤 Uploading...**")
     yt_url = BASE_YT_URL + yt_code
     await c_q.edit(
-        f"<b>⬇️ {lan('downloading_yt')} {media_type}...</b>\n\n<a href={yt_url}> <b>🔗 {lan('link')}</b></a>\n🆔 <b>{lan('formatcode')}:</b> {disp_str}",
+        f"<b>⬇️ Downloading {media_type}...</b>\n\n<a href={yt_url}> <b>🔗 Link</b></a>\n🆔 <b>Format Code:</b> {disp_str}",
         parse_mode="html",
     )
     if downtype == "v":
@@ -156,7 +150,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
         else:
             _fpath = _path
     if not _fpath:
-        return await edl(upload_msg, lan("errranyresult"))
+        return await edl(upload_msg, "**🚨 Sorry! I can't find any results.**")
 
     if not thumb_pic:
         thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))
@@ -170,7 +164,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
                 t,
                 c_q,
                 startTime,
-                lan("tryingupload"),
+                "**📤 Trying to upload...**",
                 file_name=path.basename(Path(_fpath)),
             )
         ),
@@ -186,7 +180,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     uploaded_media = await c_q.client.send_file(
         BOTLOG_CHATID,
         file=media,
-        caption=f"<b>ℹ️ {lan('html_filename')}:</b> <code>{path.basename(Path(_fpath))}</code>",
+        caption=f"<b>ℹ️ File Name:</b> <code>{path.basename(Path(_fpath))}</code>",
         parse_mode="html",
     )
     await upload_msg.delete()
@@ -219,7 +213,9 @@ async def ytdl_callback(c_q: CallbackQuery):
     )
     if not path.exists(PATH):
         return await c_q.answer(
-            lan("errrsearchdata"),
+            "🚨 Search data doesn't exists anymore.\
+            \n\
+            \n🔁 Please perform search again.",
             alert=True,
         )
 
@@ -229,7 +225,9 @@ async def ytdl_callback(c_q: CallbackQuery):
     total = len(search_data) if search_data is not None else 0
     if total == 0:
         return await c_q.answer(
-            lan("errrlostinfo"),
+            "🚨 Your bot lost the information about this.\
+            \n\
+            \n🔁 Please search again.",
             alert=True,
         )
 
@@ -253,7 +251,7 @@ async def ytdl_callback(c_q: CallbackQuery):
     elif choosen_btn == "next":
         index = int(page) + 1
         if index > total:
-            return await c_q.answer(lan("thatsall"), alert=True)
+            return await c_q.answer("🔔 That's all!", alert=True)
 
         await c_q.answer()
         front_vid = search_data.get(str(index))
@@ -270,14 +268,14 @@ async def ytdl_callback(c_q: CallbackQuery):
         )
     elif choosen_btn == "listall":
         await c_q.answer(
-            f"➡️ {lan('viewchangedto')}: 📜 {lan('viewchangedtolist')}", alert=False
+            f"➡️ View Changed to: 📜 List", alert=False
         )
         list_res = "".join(
             search_data.get(vid_s).get("list_view") for vid_s in search_data
         )
 
         telegraph = await post_to_telegraph(
-            lan("allvideostitle").format(total),
+            "ℹ️ Showing {} YouTube video results for the given query...".format(total),
             list_res,
         )
         await c_q.edit(
@@ -285,13 +283,13 @@ async def ytdl_callback(c_q: CallbackQuery):
             buttons=[
                 (
                     Button.url(
-                        f"↗️ {lan('btnurlopen')}",
+                        f"↗️ Cʟɪcᴋ ᴛo oᴘᴇɴ",
                         url=telegraph,
                     )
                 ),
                 (
                     Button.inline(
-                        f"📊 {lan('btndetailedview')}",
+                        f"📊 Dᴇᴛᴀɪʟᴇᴅ ᴠɪᴇᴡ",
                         data=f"ytdl_detail_{data_key}_{page}",
                     )
                 ),
@@ -300,7 +298,7 @@ async def ytdl_callback(c_q: CallbackQuery):
     else:  # Detailed
         index = 1
         await c_q.answer(
-            f"➡️ {lan('viewchangedto')}: 📊 {lan('viewchangedtodetailed')}", alert=False
+            f"➡️ View Changed to: 📊 Detailed", alert=False
         )
         first = search_data.get(str(index))
         await c_q.edit(

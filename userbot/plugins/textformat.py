@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from . import doge, edl, eor, parse_pre, tr
+from . import doge, edl, eor, parse_pre
 
 plugin_category = "tool"
 
@@ -121,7 +121,7 @@ async def here(event):
     command=("noformat", plugin_category),
     info={
         "header": "To get replied message without markdown formating.",
-        "usage": f"{tr}noformat {lan('replymsg')}",
+        "usage": "{tr}noformat <reply>",
     },
 )
 async def _(event):

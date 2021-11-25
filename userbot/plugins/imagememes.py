@@ -223,7 +223,7 @@ async def magiker(event):
     if not event.reply_to_msg_id or not reply_message.photo:
         return await edl(event, "`Reply to a photo!`")
 
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     teledoge = await magik(reply_message)
     await event.client.send_file(event.chat_id, teledoge, reply_to=reply_message)
     await dogevent.delete()

@@ -217,7 +217,7 @@ async def dogbot(event):
             response = upload_file(download_location)
         except TelegraphException as exc:
             remove(download_location)
-            return await output[0].edit(f"{lan('errr')}\n`{exc}`")
+            return await output[0].edit(f"**🚨 Eʀʀoʀ:**\n`{exc}`")
 
         dog = f"https://telegra.ph{response[0]}"
     else:
