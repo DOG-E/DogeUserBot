@@ -286,7 +286,9 @@ async def verifyLoggerGroup():
         except TypeError:
             LOGS.error(f"🚨 {vinfo} is unsupported. Make sure it's correct.")
         except Exception as e:
-            LOGS.error(f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}")
+            LOGS.error(
+                f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}"
+            )
     else:
         descript = f"🚧 DON'T DELETE THIS GROUP!\n\
         \n🗑 If you delete,\
