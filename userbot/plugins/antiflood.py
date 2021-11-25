@@ -13,7 +13,7 @@ from telethon.tl.types import ChatBannedRights
 
 from ..sql_helper import antiflood_sql as sql
 from ..utils import is_admin
-from . import doge, eor, lan, tr
+from . import doge, eor
 
 plugin_category = "admin"
 
@@ -44,18 +44,21 @@ async def _(event):
     except Exception as e:
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
-            message=f"**{lan('autoantiflood')}**\
-                \n@admin [{lan('userx')}](tg://user?id={event.message.sender_id}) {lan('adminreport')}\
+            message=f"**Automatic AntiFlooder**\
+                \n@admin [User](tg://user?id={event.message.sender_id}) is flooding this chat.\
                 \n`{e}`",
             reply_to=event.message.id,
         )
         await sleep(4)
-        await no_admin_privilege_message.edit(lan("antiflood1"))
+        await no_admin_privilege_message.edit(
+            "This is odd SPAM dude. Stop this, enjoy the chat buddy "
+        )
     else:
         await event.client.send_message(
             entity=event.chat_id,
-            message=f"""**{lan('autoantiflood')}**
-[{lan('userx')}](tg://user?id={event.message.sender_id}) {lan('antiflood2')}""",
+            message=f"""**Automatic AntiFlooder**
+[User](tg://user?id={event.message.sender_id}) has been automatically restricted
+because he reached the defined flood limit.""",
             reply_to=event.message.id,
         )
 
@@ -64,10 +67,10 @@ async def _(event):
     pattern="setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
-        "header": lan("setfood1"),
-        "description": lan("antiflood2"),
-        "note": lan("antiflood3"),
-        "usage": f"{tr}setflood {lan('count')}",
+        "header": "To setup antiflood in a group",
+        "description": "It warns the user if he spams the chat and if you're an admin with proper rights then it mutes him in that group.",
+        "note": "To stop antiflood setflood with high value like 999999",
+        "usage": "{tr}setflood <count>",
         "examples": [
             "{tr}setflood 10",
         ],
@@ -76,17 +79,13 @@ async def _(event):
     require_admin=True,
 )
 async def _(event):
-    lan("setflood4")
+    "To setup antiflood in a group to prevent spam"
     input_str = event.pattern_match.group(1)
-    event = await eor(event, lan("antiflood5"))
+    event = await eor(event, "`updating flood settings!`")
     await sleep(2)
     try:
         sql.set_flood(event.chat_id, input_str)
         sql.__load_flood_settings()
-        await event.edit(lan("antiflood6").format(input_str))
+        await event.edit(f"Antiflood updated to {input_str} in the current chat")
     except Exception as e:
         await event.edit(str(e))
-
-
-# Lang By Aylak - @atayist
-# Copyright (C) 2021 - DOG-E

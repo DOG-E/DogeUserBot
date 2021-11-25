@@ -24,7 +24,6 @@ from . import (
     edl,
     eor,
     fsmessage,
-    lan,
     logging,
     mention,
     newmsgres,
@@ -60,7 +59,7 @@ auth_url = r["auth_url"]
 )  # sourcery no-metrics
 async def _(event):
     "To get telegraph link."
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -151,7 +150,7 @@ async def _(event):
     if not input_str:
         return await edl(event, "Give me a link.")
     chat = "@ChotamReaderBot"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, input_str, chat=chat)
         response = await newmsgres(conv, chat)

@@ -103,7 +103,7 @@ class Config(object):
     TZ = os.environ.get("TZ", "Europe/Istanbul")
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
     # For updater plugin
-    UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE")
+    UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "DOGE-EN")
     # DON'T TOUCH THIS AT ALL
     SUDO_USERS: Set[int] = set()
     DOGELOGO = None

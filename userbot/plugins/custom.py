@@ -22,7 +22,6 @@ from . import (
     eor,
     fsmessage,
     gvar,
-    lan,
     logging,
     newmsgres,
     resize_image,
@@ -189,10 +188,10 @@ async def dbsetter(event):  # sourcery no-metrics
                     vinfo = f"https://telegra.ph{media_urls[0]}"
 
                 except AttributeError:
-                    return await eor(event, f"{lan('errr')} `While making link.`")
+                    return await eor(event, f"**🚨 Eʀʀoʀ:** `While making link.`")
 
                 except TelegraphException as exc:
-                    return await eor(event, f"{lan('errr')}\n➡️ `{str(exc)}`")
+                    return await eor(event, f"**🚨 Eʀʀoʀ:**\n➡️ `{str(exc)}`")
 
         except AttributeError:
             vinfo = reply.text
@@ -397,7 +396,7 @@ async def lang_set(value):
         sgvar("AI_LANG", arg)
         await eor(value, f"**🌐 Language for AI ChatBot changed to {LANG.title()}.**")
     elif input_str == "xg":
-        dogevent = await eor(value, lan("processing"))
+        dogevent = await eor(value, "**⏳ Processing...**")
         chat = "@XiaomiGeeksBot"
         async with doge.conversation(chat) as conv:
             if arg == "ar":

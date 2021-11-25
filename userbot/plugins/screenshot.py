@@ -17,7 +17,7 @@ from requests import get
 from selenium.webdriver import Chrome, ChromeOptions
 from validators.url import url
 
-from . import SS_API, Config, doge, eor, lan, reply_id
+from . import SS_API, Config, doge, eor, reply_id
 
 plugin_category = "tool"
 
@@ -35,7 +35,7 @@ async def _(event):
     "To Take a screenshot of a website."
     if Config.CHROME_BIN is None:
         return await eor(event, "Need to install Google Chrome. Module Stopping.")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     start = datetime.now()
     try:
         chrome_options = ChromeOptions()
@@ -114,7 +114,7 @@ async def _(event):
             event,
             "`Need to get an API key from https://screenshotlayer.com/product and need to set it SS_API !`",
         )
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
     input_str = event.pattern_match.group(1)
     inputstr = input_str

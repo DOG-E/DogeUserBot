@@ -21,7 +21,6 @@ from telethon.tl.types import MessageEntityMentionName
 from ...Config import Config
 from ...core.logger import logging
 from ...core.managers import edl
-from ...languages import lan
 
 LOGS = logging.getLogger(__name__)
 
@@ -77,23 +76,23 @@ async def get_user_from_event(
             previous_message = await event.get_reply_message()
             if previous_message.from_id is None:
                 if not noedits:
-                    await edl(dogevent, lan("anonadmin"))
+                    await edl(dogevent, "`🐾 Well that's an anonymous admin!`")
                 return None, None
             user_obj = await event.client.get_entity(previous_message.sender_id)
             return user_obj, extra
         if not args:
             if not noedits:
-                await edl(dogevent, lan("errrneeduid"), 5)
+                await edl(dogevent, "`ℹ️ Pass the user's username, ID or reply!`", 5)
             return None, None
     except Exception as e:
         LOGS.error(str(e))
     if not noedits:
-        await edl(dogevent, lan("errrfetchuser"))
+        await edl(dogevent, "__Couldn't fetch user to proceed further.__")
     return None, None
 
 
 def inline_mention(user):
-    full_name = user_full_name(user) or lan("no_name")
+    full_name = user_full_name(user) or "No name"
     return f"[{full_name}](tg://user?id={user.id})"
 
 
@@ -127,7 +126,9 @@ async def wowmydev(user, event):
     if str(user) in M_ST_RS:
         await edl(
             event,
-            lan("wowmydev"),
+            "**🐕‍🦺 Sorry dude.\
+            \n🐾 Don't ask me to do this!\
+            \n🐾 I won't do this to my developer.**",
             30,
         )
         return True
@@ -136,12 +137,12 @@ async def wowmydev(user, event):
 
 async def wowcmydev(user):
     if user in M_ST_RS:
-        return f"\n\n<b>🧡 {lan('wowcmydev')}</b>"
+        return f"\n\n<b>🧡 This user is my developer!</b>"
 
 
 async def wowcg_y(user):
     if user in G_YS:
-        return f"\n\n<b>🤡 {lan('wowcg_y')}</b>"
+        return f"\n\n<b>🤡 This user has been banned from using Doge.</b>"
 
 
 async def get_chatinfo(event, dogevent):
@@ -165,16 +166,18 @@ async def get_chatinfo(event, dogevent):
         try:
             chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await dogevent.edit(lan("errrinvalidcg"))
+            await dogevent.edit("`🚨 Invalid channel/group!`")
             return None
         except ChannelPrivateError:
-            await dogevent.edit(lan("errrporbancg"))
+            await dogevent.edit(
+                "`🚨 This is a private channel/group or I'm banned from there.`"
+            )
             return None
         except ChannelPublicGroupNaError:
-            await dogevent.edit(lan("errrnocg"))
+            await dogevent.edit("`🚨 Channel or supergroup doesn't exist!`")
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edl(dogevent, f"{lan('errr')}\n{lan('errrfetchchat')}")
+            await edl(dogevent, f"**🚨 Eʀʀoʀ:**\n`ℹ️ Couldn't fetch the chat!`")
             return None
     return chat_info

@@ -18,7 +18,7 @@ from requests import get
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, Heroku, doge, edl, eor, heroku_api, lan
+from . import HEROKU_API_KEY, HEROKU_APP_NAME, Heroku, doge, edl, eor, heroku_api
 
 plugin_category = "bot"
 
@@ -26,7 +26,7 @@ disable_warnings(InsecureRequestWarning)
 
 
 @doge.bot_cmd(
-    pattern="([Ss]et|[Gg]et|[Dd]el) [Vv]ar ([\s\S]*)",
+    pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
         "header": "To manage heroku vars.",
@@ -131,7 +131,7 @@ async def dyno_usage(dyno):
             dyno,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
-    dyno = await eor(dyno, lan("processing"))
+    dyno = await eor(dyno, "**⏳ Processing...**")
     useragent = (
         "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "

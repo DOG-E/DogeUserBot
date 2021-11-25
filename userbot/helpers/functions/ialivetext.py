@@ -7,15 +7,12 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ...Config import Config
-from ...languages import lan
-
-tr = Config.CMDSET
 
 
 def check_data_base_heal_th():
     # https://stackoverflow.com/a/41961968
     is_database_working = False
-    output = lan("notsetdb")
+    output = "🚨 Noᴛ Sᴇᴛ Dᴀᴛᴀʙᴀsᴇ"
     if not Config.DB_URI:
         return is_database_working, output
 
@@ -27,10 +24,15 @@ def check_data_base_heal_th():
         output = f"🚨 `{e}`"
         is_database_working = False
     else:
-        output = lan("running")
+        output = "Rᴜɴɴɪɴɢ"
         is_database_working = True
     return is_database_working, output
 
 
 async def dogealive():
-    return lan("ialivetext").format(tr, tr)
+    return f"🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n🐾 Iɴғo\n\
+            \n🔹 To check it's working:\
+            \n{Config.CMDSET}alive\n\
+            \n🔹 To get help:\
+            \n{Config.CMDSET}doge"

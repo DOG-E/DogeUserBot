@@ -6,16 +6,13 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# Callback:
-# hide_(.*)
-# ================================================================
 from json import load
 from os import path
 from re import compile
 
 from telethon.events import CallbackQuery
 
-from . import doge, lan
+from . import doge
 
 
 @doge.tgbot.on(CallbackQuery(data=compile(b"hide_(.*)")))
@@ -26,7 +23,7 @@ async def on_plug_in_callback_query_handler(event):
         try:
             reply_pop_up_alert = jsondata[f"{timestamp}"]["text"]
         except KeyError:
-            reply_pop_up_alert = f"🚨 {lan('errrnoservermsg')}"
+            reply_pop_up_alert = f"🚨 This message no longer exists in Doge server."
     else:
-        reply_pop_up_alert = f"🚨 {lan('errrnoservermsg')}"
+        reply_pop_up_alert = f"🚨 This message no longer exists in Doge server."
     await event.answer(reply_pop_up_alert, cache_time=0, alert=True)

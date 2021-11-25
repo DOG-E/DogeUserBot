@@ -34,7 +34,6 @@ from . import (
     get_user_from_event,
     humanbytes,
     inline_mention,
-    lan,
     logging,
     newmsgres,
     parse_pre,
@@ -266,7 +265,7 @@ async def count(event):
     bc = 0
     b = 0
     result = ""
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     dialogs = await event.client.get_dialogs(limit=None, ignore_migrated=True)
     for d in dialogs:
         currrent_entity = d.entity
@@ -323,7 +322,7 @@ async def _(event):
     else:
         uid = reply_message.sender_id
     chat = "@TGScanRobot"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, text=f"{uid}", chat=chat)
         response = await newmsgres(conv, chat)
@@ -344,7 +343,7 @@ async def _(event):
     command=("creation", plugin_category),
     info={
         "header": "Learn about your account's creation date.",
-        "usage": f"{tr}creation {lan('replymsg')}",
+        "usage": "{tr}creation <reply>",
     },
 )
 async def creationdate(event):
@@ -353,7 +352,7 @@ async def creationdate(event):
     reply_message = await event.get_reply_message()
     if reply_message.sender.bot:
         return await edl(event, "`Actually need to reply to a user.`")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     chat = "@CreationDateBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
@@ -615,7 +614,7 @@ async def _(event):  # sourcery no-metrics
         return
     uid = user.id
     chat = "@SangMataInfo_bot"
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, text=f"/search_id {uid}", chat=chat)
         responses = []
@@ -667,7 +666,7 @@ async def permalink(mention):
     command=("when", plugin_category),
     info={
         "header": "To get date and time of message when it posted.",
-        "usage": f"{tr}when {lan('replymsg')}",
+        "usage": "{tr}when <reply>",
     },
 )
 async def _(event):
@@ -688,7 +687,7 @@ async def _(event):
     command=("chain", plugin_category),
     info={
         "header": "Reply this command to any converstion(or message) and it will find the chain length of that message",
-        "usage": f"{tr}chain {lan('replymsg')}",
+        "usage": "{tr}chain <reply>",
     },
 )
 async def _(event):

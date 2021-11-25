@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 from requests import Session, get
 
-from . import doge, edl, eor, lan, logging
+from . import doge, edl, eor, logging
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ async def direct_link_generator(event):
             message = textx.text
         else:
             return await edl(event, "`Usage: .direct <url>`")
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     reply = ""
     links = findall(r"\bhttps?://.*\.\S+", message)
     if not links:

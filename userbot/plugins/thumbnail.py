@@ -13,7 +13,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL.Image import open as Imopen
 
-from . import TMP_DOWNLOAD_DIRECTORY, _dogetools, doge, eor, lan
+from . import TMP_DOWNLOAD_DIRECTORY, _dogetools, doge, eor
 
 plugin_category = "tool"
 
@@ -30,7 +30,7 @@ thumb_image_path = TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 )
 async def _(event):
     "To save replied image as temporary thumb."
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     if not event.reply_to_msg_id:
         return await dogevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(

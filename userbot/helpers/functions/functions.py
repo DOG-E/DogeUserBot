@@ -27,8 +27,6 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.events import NewMessage
 from telethon.tl.functions.contacts import UnblockRequest
 
-from ...languages import lan
-
 imdb = IMDb()
 mov_titles = [
     "long imdb title",
@@ -71,7 +69,7 @@ async def get_cast(casttype, movie):
                 break
             i += 1
     else:
-        mov_casttype += lan("notdata")
+        mov_casttype += "Not data"
     return mov_casttype
 
 
@@ -81,7 +79,7 @@ async def get_moviecollections(movie):
         for i in movie["box office"].keys():
             result += f"\n• <b>{i}:</b> <code>{movie['box office'][i]}</code>"
     else:
-        result = f"<code>{lan('notdata')}</code>"
+        result = f"<code>Not data</code>"
     return result
 
 

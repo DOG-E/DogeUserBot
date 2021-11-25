@@ -34,7 +34,6 @@ from . import (
     edl,
     eor,
     gvar,
-    lan,
     media_type,
     reply_id,
     sgvar,
@@ -82,7 +81,7 @@ async def very(event):
     if not text:
         return await edl(event, "**ಠ∀ಠ Gimmi text to make logo**")
     reply_to_id = await reply_id(event)
-    dogevent = await eor(event, lan("processing"))
+    dogevent = await eor(event, "**⏳ Processing...**")
     LOGO_FONT_SIZE = gvar("LOGO_FONT_SIZE") or 220
     LOGO_FONT_WIDTH = gvar("LOGO_FONT_WIDTH") or 2
     LOGO_FONT_HEIGHT = gvar("LOGO_FONT_HEIGHT") or 2

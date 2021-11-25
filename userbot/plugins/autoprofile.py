@@ -45,7 +45,6 @@ from . import (
     doge,
     edl,
     gvar,
-    lan,
     logging,
     sgvar,
 )
@@ -83,7 +82,7 @@ async def autopicloop():
         if BOTLOG:
             return await doge.send_message(
                 BOTLOG_CHATID,
-                f"{lan('errr')}\n`For functing of autopic you need to set DEFAULT_PIC var`",
+                "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var`",
             )
         return
     if gvar("autopic") is not None:

@@ -12,7 +12,6 @@ from os.path import exists, join
 
 from ..Config import Config
 from ..helpers.utils.format import md_to_text, paste_message
-from ..languages import lan
 from .data import _sudousers_list
 
 thumb_image_path = join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
@@ -56,9 +55,9 @@ async def eor(
     if not noformat:
         text = md_to_text(text)
     if aslink or deflink:
-        linktext = linktext or lan("linkheremsg")
+        linktext = linktext or "👀 Message was to big so pasted to bin"
         response = await paste_message(text, pastetype="t")
-        text = linktext + f" [{lan('here')}]({response})"
+        text = linktext + f" [HERE]({response})"
         if event.sender_id in sudo_users:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)

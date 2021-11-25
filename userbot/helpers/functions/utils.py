@@ -12,8 +12,6 @@ from time import time
 from emoji import get_emoji_regexp
 from telethon.tl.types import Channel, PollAnswer
 
-from ...languages import lan
-
 
 async def get_message_link(channelid, msgid):
     if str(channelid).startswith("-"):
@@ -35,7 +33,7 @@ async def get_readable_time(seconds: int) -> str:
     count = 0
     up_time = ""
     time_list = []
-    time_suffix_list = [lan("s"), lan("m"), lan("h"), lan("days")]
+    time_suffix_list = ["s", "m", "h", "days"]
     while count < 4:
         count += 1
         remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
@@ -72,7 +70,7 @@ async def extract_time(dog, time_val):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            await dog.edit(lan("errrinvalidtime"))
+            await dog.edit("🚨 Invalid time amount specified.")
             return None
         if unit == "s":
             bantime = int(time() + int(time_num) * 1)
@@ -86,12 +84,12 @@ async def extract_time(dog, time_val):
             bantime = int(time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             await dog.edit(
-                f"`🚨 {lan('errrinvalidtime')}\n⏰ {lan('errrexpectedtime')}:` `{time_val[-1]}`"
+                f"`🚨 Invalid time amount specified.\n⏰ Expected s, m, h, d or w but got:` `{time_val[-1]}`"
             )
             return None
         return bantime
     await dog.edit(
-        f"`🚨 {lan('errrinvalidtime')}\n⏰ {lan('errrexpectedtime')}:` `{time_val[-1]}`"
+        f"`🚨 Invalid time amount specified.\n⏰ Expected s, m, h, d or w but got:` `{time_val[-1]}`"
     )
     return None
 

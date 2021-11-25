@@ -120,7 +120,7 @@ async def progress(
             return
         del _TASKS[task_id]
         try:
-            await gdrive.edit(lan("finalprocess"))
+            await gdrive.edit("**⌛ Finalizing process...**")
         except MessageNotModifiedError:
             pass
         except Exception as e:
@@ -139,9 +139,9 @@ async def progress(
         eta = round((total - current) / speed)
         elapsed_time = round(elapsed_time)
         if "upload" in prog_type.lower():
-            status = lan("uploading")
+            status = "**📤 Uploading...**"
         elif "download" in prog_type.lower():
-            status = lan("downloading")
+            status = "**📥 Downloading...**"
         else:
             status = lan("unknown")
         progress_str = "{0}\n`[{1}{2}] {3}%`".format(
