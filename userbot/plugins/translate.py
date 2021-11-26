@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from googletrans import LANGUAGES
@@ -17,13 +17,13 @@ plugin_category = "tool"
     pattern="tl ([\s\S]*)",
     command=("tl", plugin_category),
     info={
-        "header": "To translate the text to required language.",
+        "h": "To translate the text to required language.",
         "note": "For langugage codes check [this link](https://bit.ly/2SRQ6WU)",
-        "usage": [
+        "u": [
             "{tr}tl <language code> ; <text>",
             "{tr}tl <language codes>",
         ],
-        "examples": "{tr}tl tr ; DogeUserBot is one of the popular bot",
+        "e": "{tr}tl tr ; DogeUserBot is one of the popular bot",
     },
 )
 async def _(event):
@@ -54,9 +54,9 @@ async def _(event):
     pattern="trt(?: |$)([\s\S]*)",
     command=("trt", plugin_category),
     info={
-        "header": "To translate the text to required language.",
+        "h": "To translate the text to required language.",
         "note": "for this command set lanuage by `{tr}lang trt` command.",
-        "usage": [
+        "u": [
             "{tr}trt",
             "{tr}trt <text>",
         ],

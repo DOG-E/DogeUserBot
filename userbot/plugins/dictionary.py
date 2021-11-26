@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from bs4 import BeautifulSoup
@@ -22,8 +22,8 @@ LOGS = logging.getLogger(__name__)
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from Urban dictionary.",
-        "usage": "{tr}ud <word>",
+        "h": "To fetch meaning of the given word from Urban dictionary.",
+        "u": "{tr}ud <word>",
     },
 )
 async def ud(event):
@@ -54,8 +54,8 @@ async def ud(event):
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from dictionary.",
-        "usage": "{tr}meaning <word>",
+        "h": "To fetch meaning of the given word from dictionary.",
+        "u": "{tr}meaning <word>",
     },
 )
 async def meaning(event):
@@ -79,8 +79,8 @@ async def meaning(event):
     pattern="tdk ?([\s\S]*)",
     command=("tdk", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from Turkish dictionary. Only Turkish.",
-        "usage": "{tr}tdk <word>",
+        "h": "To fetch meaning of the given word from Turkish dictionary. Only Turkish.",
+        "u": "{tr}tdk <word>",
     },
 )
 async def tdk(event):
@@ -132,8 +132,8 @@ async def tdk(event):
     pattern="tureng ?([\s\S]*)",
     command=("tureng", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from Tureng dictionary. Only Turkish.",
-        "usage": "{tr}tureng <word>",
+        "h": "To fetch meaning of the given word from Tureng dictionary. Only Turkish.",
+        "u": "{tr}tureng <word>",
     },
 )
 async def tureng(event):

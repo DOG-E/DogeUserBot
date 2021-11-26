@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop
@@ -22,10 +22,10 @@ thumb_image_path = path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
     pattern="rename ?(-f)? ([\s\S]*)",
     command=("rename", plugin_category),
     info={
-        "header": "To rename and upload the replied file.",
-        "flags": {"f": "will upload as file that is document not streamable."},
-        "description": "If flag is not used then will upload as steamable file",
-        "usage": [
+        "h": "To rename and upload the replied file.",
+        "f": {"f": "will upload as file that is document not streamable."},
+        "d": "If flag is not used then will upload as steamable file",
+        "u": [
             "{tr}rename <new file name>",
             "{tr}rename -f <new file name>",
         ],

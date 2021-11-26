@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import TimeoutError
@@ -62,9 +62,9 @@ GROUPS_OWNERSTR = "**The list of groups in which you're owner are here **\n\n"
     pattern="stat$",
     command=("stat", plugin_category),
     info={
-        "header": "To get statistics of your telegram account.",
-        "description": "Shows you the count of  your groups, channels, private chats...etc if no input is given.",
-        "flags": {
+        "h": "To get statistics of your telegram account.",
+        "d": "Shows you the count of  your groups, channels, private chats...etc if no input is given.",
+        "f": {
             "g": "To get list of all group you in",
             "ga": "To get list of all groups where you're admin",
             "go": "To get list of all groups where you're owner/creator.",
@@ -72,8 +72,8 @@ GROUPS_OWNERSTR = "**The list of groups in which you're owner are here **\n\n"
             "ca": "To get list of all channels where you're admin",
             "co": "To get list of all channels where you're owner/creator.",
         },
-        "usage": ["{tr}stat", "{tr}stat <flag>"],
-        "examples": ["{tr}stat g", "{tr}stat ca"],
+        "u": ["{tr}stat", "{tr}stat <flag>"],
+        "e": ["{tr}stat g", "{tr}stat ca"],
     },
 )
 async def stats(event):  # sourcery no-metrics
@@ -253,8 +253,8 @@ async def stats(event):  # sourcery no-metrics
     pattern="count$",
     command=("count", plugin_category),
     info={
-        "header": "To get your profile stats for this account.",
-        "usage": "{tr}count",
+        "h": "To get your profile stats for this account.",
+        "u": "{tr}count",
     },
 )
 async def count(event):
@@ -297,8 +297,8 @@ async def count(event):
     pattern="ustat(?:\s|$)([\s\S]*)",
     command=("ustat", plugin_category),
     info={
-        "header": "To get list of public groups of repled person or mentioned person.",
-        "usage": "{tr}ustat <reply/userid/username>",
+        "h": "To get list of public groups of repled person or mentioned person.",
+        "u": "{tr}ustat <reply/userid/username>",
     },
 )
 async def _(event):
@@ -342,8 +342,8 @@ async def _(event):
     pattern="creation$",
     command=("creation", plugin_category),
     info={
-        "header": "Learn about your account's creation date.",
-        "usage": "{tr}creation <reply>",
+        "h": "Learn about your account's creation date.",
+        "u": "{tr}creation <reply>",
     },
 )
 async def creationdate(event):
@@ -372,9 +372,9 @@ async def creationdate(event):
     pattern="userinfo(?:\s|$)([\s\S]*)",
     command=("userinfo", plugin_category),
     info={
-        "header": "Gets information of an user such as restrictions ban by spamwatch or cas.",
-        "description": "That is like whether he banned is spamwatch or cas and small info like groups in common, dc ..etc.",
-        "usage": "{tr}userinfo <username/userid/reply>",
+        "h": "Gets information of an user such as restrictions ban by spamwatch or cas.",
+        "d": "That is like whether he banned is spamwatch or cas and small info like groups in common, dc ..etc.",
+        "u": "{tr}userinfo <username/userid/reply>",
     },
 )
 async def _(event):
@@ -502,9 +502,9 @@ async def fetch_info(replied_user, event):
     pattern="whois(?:\s|$)([\s\S]*)",
     command=("whois", plugin_category),
     info={
-        "header": "Gets info of an user.",
-        "description": "User compelete details.",
-        "usage": "{tr}whois <username/userid/reply>",
+        "h": "Gets info of an user.",
+        "d": "User compelete details.",
+        "u": "{tr}whois <username/userid/reply>",
     },
 )
 async def who(event):
@@ -542,10 +542,10 @@ async def who(event):
     pattern="(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={
-        "header": "To get ID of the group or user.",
-        "description": "if given input then shows ID of that given chat/channel/user else if you reply to user then shows ID of the replied user \
+        "h": "To get ID of the group or user.",
+        "d": "if given input then shows ID of that given chat/channel/user else if you reply to user then shows ID of the replied user \
     along with current chat ID and if not replied to user or given input then just show ID of the chat where you used the command",
-        "usage": "{tr}id <reply/username>",
+        "u": "{tr}id <reply/username>",
     },
 )
 async def _(event):
@@ -589,15 +589,15 @@ async def _(event):
     pattern="sm(u)?(?:\s|$)([\s\S]*)",
     command=("sm", plugin_category),
     info={
-        "header": "To get name history of the user.",
-        "flags": {
+        "h": "To get name history of the user.",
+        "f": {
             "u": "That is {tr}smu to get username history.",
         },
-        "usage": [
+        "u": [
             "{tr}sm <username/userid/reply>",
             "{tr}smu <username/userid/reply>",
         ],
-        "examples": "{tr}sm @DogeGroupBot",
+        "e": "{tr}sm @DogeGroupBot",
     },
 )
 async def _(event):  # sourcery no-metrics
@@ -646,8 +646,8 @@ async def _(event):  # sourcery no-metrics
     pattern="link(?:\s|$)([\s\S]*)",
     command=("link", plugin_category),
     info={
-        "header": "Generates a link to the user's PM.",
-        "usage": "{tr}link <username/userid/reply>",
+        "h": "Generates a link to the user's PM.",
+        "u": "{tr}link <username/userid/reply>",
     },
 )
 async def permalink(mention):
@@ -665,8 +665,8 @@ async def permalink(mention):
     pattern="when$",
     command=("when", plugin_category),
     info={
-        "header": "To get date and time of message when it posted.",
-        "usage": "{tr}when <reply>",
+        "h": "To get date and time of message when it posted.",
+        "u": "{tr}when <reply>",
     },
 )
 async def _(event):
@@ -686,8 +686,8 @@ async def _(event):
     pattern="chain$",
     command=("chain", plugin_category),
     info={
-        "header": "Reply this command to any converstion(or message) and it will find the chain length of that message",
-        "usage": "{tr}chain <reply>",
+        "h": "Reply this command to any converstion(or message) and it will find the chain length of that message",
+        "u": "{tr}chain <reply>",
     },
 )
 async def _(event):
@@ -712,9 +712,9 @@ async def _(event):
     pattern="dc$",
     command=("dc", plugin_category),
     info={
-        "header": "To show dc of your account.",
-        "description": "Dc of your account and list of dc's will be showed",
-        "usage": "{tr}dc",
+        "h": "To show dc of your account.",
+        "d": "Dc of your account and list of dc's will be showed",
+        "u": "{tr}dc",
     },
 )
 async def _(event):
@@ -738,8 +738,8 @@ async def _(event):
     pattern="json$",
     command=("json", plugin_category),
     info={
-        "header": "To get details of that message in json format.",
-        "usage": "{tr}json reply to message",
+        "h": "To get details of that message in json format.",
+        "u": "{tr}json reply to message",
     },
 )
 async def _(event):
@@ -753,8 +753,8 @@ async def _(event):
     pattern="yaml$",
     command=("yaml", plugin_category),
     info={
-        "header": "To get details of that message in yaml format.",
-        "usage": "{tr}yaml reply to message",
+        "h": "To get details of that message in yaml format.",
+        "u": "{tr}yaml reply to message",
     },
 )
 async def _(event):
@@ -769,9 +769,9 @@ async def _(event):
     pattern="recognize ?([\s\S]*)",
     command=("recognize", plugin_category),
     info={
-        "header": "To recognize a image",
-        "description": "Get information about an image using AWS Rekognition. Find out information including detected labels, faces. text and moderation tags",
-        "usage": "{tr}recognize",
+        "h": "To recognize a image",
+        "d": "Get information about an image using AWS Rekognition. Find out information including detected labels, faces. text and moderation tags",
+        "u": "{tr}recognize",
     },
 )
 async def _(event):
@@ -802,9 +802,9 @@ async def _(event):
     pattern="minfo$",
     command=("minfo", plugin_category),
     info={
-        "header": "To get media information.",
-        "description": "reply to media to get information about it",
-        "usage": "{tr}minfo",
+        "h": "To get media information.",
+        "d": "reply to media to get information about it",
+        "u": "{tr}minfo",
     },
 )
 async def mediainfo(event):
@@ -886,10 +886,10 @@ async def file_data(reply):
     pattern="ip(?:\s|$)([\s\S]*)",
     command=("ip", plugin_category),
     info={
-        "header": "Find details of an IP address",
-        "description": "To check detailed info of provided ip address.",
-        "usage": "{tr}ip <mine/ip address>",
-        "examples": [
+        "h": "Find details of an IP address",
+        "d": "To check detailed info of provided ip address.",
+        "u": "{tr}ip <mine/ip address>",
+        "e": [
             "{tr}ip mine",
             "{tr}ip 13.106.3.255",
         ],

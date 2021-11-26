@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop
@@ -138,10 +138,10 @@ async def upload(path, event, udir_event, dogflag=None):  # sourcery no-metrics
     pattern="upload( -f)? ([\s\S]*)",
     command=("upload", plugin_category),
     info={
-        "header": "To upload files from server to telegram",
-        "description": "To upload files which are downloaded in your bot.",
-        "flags": {"f": "Use this to make upload files as documents."},
-        "examples": [
+        "h": "To upload files from server to telegram",
+        "d": "To upload files which are downloaded in your bot.",
+        "f": {"f": "Use this to make upload files as documents."},
+        "e": [
             "{tr}upload <file/folder path>",
             "{tr}upload -f <file/folder path>",
         ],

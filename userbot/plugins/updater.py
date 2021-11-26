@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import create_subprocess_shell
@@ -171,14 +171,14 @@ async def push(event, repo, ups_rem, ac_br, txt):
     pattern="update( pull| push|$)",
     command=("update", plugin_category),
     info={
-        "header": "To update DogeUserbot.",
-        "description": "I recommend you to do update push atlest once a week.",
-        "options": {
+        "h": "To update DogeUserbot.",
+        "d": "I recommend you to do update push atlest once a week.",
+        "o": {
             "pull": "Will update bot but requirements doesnt update.",
             "push": "Bot will update completly with requirements also.",
             "updoge": "to update to the original repository, if you fork.",
         },
-        "usage": [
+        "u": [
             "{tr}update",
             "{tr}update pull",
             "{tr}update push",
@@ -265,12 +265,12 @@ async def upstream(event):
     pattern="updoge$",
     command=("updoge", plugin_category),
     info={
-        "header": "To update to Doge.",
-        "description": "I recommend you to do update push atlest once a week.",
-        "options": {
+        "h": "To update to Doge.",
+        "d": "I recommend you to do update push atlest once a week.",
+        "o": {
             "updoge": "To update to the original repository, if you fork.",
         },
-        "usage": [
+        "u": [
             "{tr}updoge",
         ],
     },
@@ -291,4 +291,4 @@ async def variable(var):
         )
     heroku_var = app.config()
     await eor(var, f"`Switch... Wait for 2-3 minutes.`")
-    heroku_var["UPSTREAM_REPO"] = "DogeUserBot"
+    heroku_var["UPSTREAM_REPO"] = "DOGE-EN"

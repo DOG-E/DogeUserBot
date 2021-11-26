@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -33,8 +33,8 @@ from telethon.tl.types import (
 )
 
 from . import (
+    DOGEKANG,
     _dogetools,
-    constants,
     crop_and_divide,
     doge,
     edl,
@@ -237,9 +237,9 @@ async def add_to_pack(
     pattern="(kang|d[ıi]zla)(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
-        "header": "To kang a sticker.",
-        "description": "Kang's the sticker/image to the specified pack and uses the emoji('s) you picked",
-        "usage": ["{tr}kang <emoji('s)> <number>", "{tr}dızla <emoji('s)> <number>"],
+        "h": "To kang a sticker.",
+        "d": "Kang's the sticker/image to the specified pack and uses the emoji('s) you picked",
+        "u": ["{tr}kang <emoji('s)> <number>", "{tr}dızla <emoji('s)> <number>"],
     },
 )
 async def kang(args):  # sourcery no-metrics
@@ -261,11 +261,11 @@ async def kang(args):  # sourcery no-metrics
     userid = user.id
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
-            dogevent = await eor(args, constants.DOGEKANG)
+            dogevent = await eor(args, DOGEKANG)
             photo = BytesIO()
             photo = await args.client.download_media(message.photo, photo)
         elif "image" in message.media.document.mime_type.split("/"):
-            dogevent = await eor(args, constants.DOGEKANG)
+            dogevent = await eor(args, DOGEKANG)
             photo = BytesIO()
             await args.client.download_file(message.media.document, photo)
             if (
@@ -275,7 +275,7 @@ async def kang(args):  # sourcery no-metrics
                 emoji = message.media.document.attributes[1].alt
                 emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
-            dogevent = await eor(args, constants.DOGEKANG)
+            dogevent = await eor(args, DOGEKANG)
             await args.client.download_file(
                 message.media.document, "AnimatedSticker.tgs"
             )
@@ -389,9 +389,9 @@ async def kang(args):  # sourcery no-metrics
     pattern="(pkang|pd[iı]zla)(?:\s|$)([\s\S]*)",
     command=("pkang", plugin_category),
     info={
-        "header": "To kang entire sticker sticker.",
-        "description": "Kang's the entire sticker pack of replied sticker to the specified pack",
-        "usage": ["{tr}pkang <number>", "{tr}pdızla <number>"],
+        "h": "To kang entire sticker sticker.",
+        "d": "Kang's the entire sticker pack of replied sticker to the specified pack",
+        "u": ["{tr}pkang <number>", "{tr}pdızla <number>"],
     },
 )
 async def pack_kang(event):  # sourcery no-metrics
@@ -556,15 +556,15 @@ async def pack_kang(event):  # sourcery no-metrics
     pattern="gridpack(?:\s|$)([\s\S]*)",
     command=("gridpack", plugin_category),
     info={
-        "header": "To split the replied image and make sticker pack.",
-        "flags": {
+        "h": "To split the replied image and make sticker pack.",
+        "f": {
             ".e": "to use custom emoji by default ▫️️ is emoji.",
         },
-        "usage": [
+        "u": [
             "{tr}gridpack <packname>",
             "{tr}gridpack .e👌 <packname>",
         ],
-        "examples": [
+        "e": [
             "{tr}gridpack .e👌 DogeUserBot",
         ],
     },
@@ -653,9 +653,9 @@ async def pic2packcmd(event):
     pattern="stkrinfo$",
     command=("stkrinfo", plugin_category),
     info={
-        "header": "To get information about a sticker pick.",
-        "description": "Gets info about the sticker packk",
-        "usage": "{tr}stkrinfo",
+        "h": "To get information about a sticker pick.",
+        "d": "Gets info about the sticker packk",
+        "u": "{tr}stkrinfo",
     },
 )
 async def get_pack_info(event):
@@ -701,9 +701,9 @@ async def get_pack_info(event):
     pattern="stickers ?([\s\S]*)",
     command=("stickers", plugin_category),
     info={
-        "header": "To get list of sticker packs with given name.",
-        "description": "shows you the list of non-animated sticker packs with that name.",
-        "usage": "{tr}stickers <query>",
+        "h": "To get list of sticker packs with given name.",
+        "d": "shows you the list of non-animated sticker packs with that name.",
+        "u": "{tr}stickers <query>",
     },
 )
 async def cb_sticker(event):

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from io import BytesIO
@@ -16,6 +16,7 @@ from PIL.Image import open as Imopen
 from PIL.ImageColor import getrgb
 from PIL.ImageFilter import GaussianBlur
 from PIL.ImageOps import flip, mirror
+from telethon.errors.rpcerrorlist import MediaEmptyError
 
 from ..helpers.google_image_download import googleimagesdownload
 from . import (
@@ -43,10 +44,10 @@ plugin_category = "misc"
     pattern="img(?: |$)(\d*)? ?([\s\S]*)",
     command=("img", plugin_category),
     info={
-        "header": "Google image search.",
-        "description": "To search images in google. By default will send 3 images.you can get more images(upto 10 only by changing limit value as shown in usage and examples.",
-        "usage": ["{tr}img <1-10> <query>", "{tr}img <query>"],
-        "examples": [
+        "h": "Google image search.",
+        "d": "To search images in google. By default will send 3 images.you can get more images(upto 10 only by changing limit value as shown in usage and examples.",
+        "u": ["{tr}img <1-10> <query>", "{tr}img <query>"],
+        "e": [
             "{tr}img 10 DogeUserBot",
             "{tr}img DogeUserBot",
             "{tr}img 7 DogeUserBot",
@@ -84,7 +85,14 @@ async def img_sampler(event):
     except Exception as e:
         return await dog.edit(f"Error: \n`{e}`")
     lst = paths[0][query.replace(",", " ")]
-    await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
+    try:
+        await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
+    except MediaEmptyError:
+        for i in lst:
+            try:
+                await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
+            except MediaEmptyError:
+                pass
     rmtree(path.dirname(path.abspath(lst[0])))
     await dog.delete()
 
@@ -93,19 +101,19 @@ async def img_sampler(event):
     pattern="imirror(s)? ?(.)?(l|r|u|b)?$",
     command=("imirror", plugin_category),
     info={
-        "header": "Gives to reflected  image of one part on other part.",
-        "description": "Additionaly use along with cmd i.e, imirrors to gib out put as sticker.",
-        "flags": {
+        "h": "Gives to reflected  image of one part on other part.",
+        "d": "Additionaly use along with cmd i.e, imirrors to gib out put as sticker.",
+        "f": {
             ".l": "Right half will be reflection of left half.",
             ".r": "Left half will be reflection of right half.",
             ".u": "bottom half will be reflection of upper half.",
             ".b": "upper half will be reflection of bottom half.",
         },
-        "usage": [
+        "u": [
             "{tr}imirror <flag> - gives output as image",
             "{tr}imirrors <flag> - gives output as sticker",
         ],
-        "examples": [
+        "e": [
             "{tr}imirror .l",
             "{tr}imirrors .u",
         ],
@@ -182,8 +190,8 @@ async def imirror(event):  # sourcery no-metrics
     pattern="irotate(?: |$)(\d+)$",
     command=("irotate", plugin_category),
     info={
-        "header": "To rotate the replied image or sticker",
-        "usage": [
+        "h": "To rotate the replied image or sticker",
+        "u": [
             "{tr}irotate <angel>",
         ],
     },
@@ -226,12 +234,12 @@ async def irotate(event):
     pattern="iresize(?:\s|$)([\s\S]*)$",
     command=("iresize", plugin_category),
     info={
-        "header": "To resize the replied image/sticker",
-        "usage": [
+        "h": "To resize the replied image/sticker",
+        "u": [
             "{tr}iresize <dimension> will send square image of that dimension",
             "{tr}iresize <width> <height> will send square image of that dimension",
         ],
-        "examples": ["{tr}iresize 250", "{tr}iresize 500 250"],
+        "e": ["{tr}iresize 250", "{tr}iresize 500 250"],
     },
 )
 async def iresize(event):
@@ -286,8 +294,8 @@ async def iresize(event):
     pattern="square$",
     command=("square", plugin_category),
     info={
-        "header": "Converts replied image to square image.",
-        "usage": "{tr}square",
+        "h": "Converts replied image to square image.",
+        "u": "{tr}square",
     },
 )
 async def square_cmd(event):
@@ -326,9 +334,9 @@ async def square_cmd(event):
     pattern="clip ?([\s\S]*)",
     command=("clip", plugin_category),
     info={
-        "header": "Convert media to sticker by clippy",
-        "description": "Reply to any media files like pic, gif, sticker, video and it will convert into sticker by clippy.",
-        "usage": [
+        "h": "Convert media to sticker by clippy",
+        "d": "Reply to any media files like pic, gif, sticker, video and it will convert into sticker by clippy.",
+        "u": [
             "{tr}clip <reply to a media>",
         ],
     },
@@ -355,9 +363,9 @@ async def clipartx(event):
     pattern="icolor ?([\s\S]*)",
     command=("icolor", plugin_category),
     info={
-        "header": "Make color media",
-        "description": "Reply to any media files like pic, gif, sticker, video and it will make colored image.",
-        "usage": [
+        "h": "Make color media",
+        "d": "Reply to any media files like pic, gif, sticker, video and it will make colored image.",
+        "u": [
             "{tr}icolor <reply to a media>",
         ],
     },
@@ -396,9 +404,9 @@ async def colorizer(event):
     pattern="ipixel ?([\s\S]*)",
     command=("ipixel", plugin_category),
     info={
-        "header": "Make pixel media",
-        "description": "Reply to any media files like pic, gif, sticker, video and it will make pixelled image.",
-        "usage": [
+        "h": "Make pixel media",
+        "d": "Reply to any media files like pic, gif, sticker, video and it will make pixelled image.",
+        "u": [
             "{tr}ipixel <reply to a media>",
         ],
     },
@@ -432,8 +440,8 @@ async def picture(event):
     pattern="dotify(?: |$)(\d+)?$",
     command=("dotify", plugin_category),
     info={
-        "header": "To convert image into doted with black & white color image.",
-        "usage": [
+        "h": "To convert image into doted with black & white color image.",
+        "u": [
             "{tr}dotify <number>",
         ],
     },
@@ -473,8 +481,8 @@ async def pic_gifcmd(event):
     pattern="dotif(?: |$)(\d+)?$",
     command=("dotif", plugin_category),
     info={
-        "header": "To convert image into doted with RGB color image.",
-        "usage": [
+        "h": "To convert image into doted with RGB color image.",
+        "u": [
             "{tr}dotif <number>",
         ],
     },
@@ -514,14 +522,14 @@ async def pic_gifcmd(event):
     pattern="glitch(s)?(?: |$)([1-8])?",
     command=("glitch", plugin_category),
     info={
-        "header": "Glitches the given Image.",
-        "description": "Glitches the given mediafile (gif, stickers, image, videos) to a sticker/image and glitch range is from 1 to 8.\
+        "h": "Glitches the given Image.",
+        "d": "Glitches the given mediafile (gif, stickers, image, videos) to a sticker/image and glitch range is from 1 to 8.\
                     If nothing is mentioned then by default it is 2",
-        "options": {
+        "o": {
             "glitch": "To output result as gif.",
             "glitchs": "To output result as sticker.",
         },
-        "usage": ["{tr}glitch <1-8>", "{tr}glitch", "{tr}glitchs", "{tr}glitchs <1-8>"],
+        "u": ["{tr}glitch <1-8>", "{tr}glitch", "{tr}glitchs", "{tr}glitchs <1-8>"],
     },
 )
 async def glitch(event):
@@ -572,9 +580,9 @@ async def glitch(event):
     pattern="iascii ?([\s\S]*)",
     command=("iascii", plugin_category),
     info={
-        "header": "Convert media to ascii art.",
-        "description": "Reply to any media files like pic, gif, sticker, video and it will convert into ascii.",
-        "usage": [
+        "h": "Convert media to ascii art.",
+        "d": "Reply to any media files like pic, gif, sticker, video and it will convert into ascii.",
+        "u": [
             "{tr}iascii <reply to a media>",
         ],
     },
@@ -617,9 +625,9 @@ async def asciiartx(event):
     pattern="line ?([\s\S]*)",
     command=("line", plugin_category),
     info={
-        "header": "Convert media to line image.",
-        "description": "Reply to any media files like pic, gif, sticker, video and it will convert into line image.",
-        "usage": [
+        "h": "Convert media to line image.",
+        "d": "Reply to any media files like pic, gif, sticker, video and it will convert into line image.",
+        "u": [
             "{tr}line <reply to a media>",
         ],
     },
@@ -656,8 +664,8 @@ async def lineartx(event):
     pattern="frybot",
     command=("frybot", plugin_category),
     info={
-        "header": "Fries the given sticker or image.",
-        "usage": "{tr}frybot",
+        "h": "Fries the given sticker or image.",
+        "u": "{tr}frybot",
     },
 )
 async def _(event):
@@ -697,9 +705,9 @@ async def _(event):
     pattern="deepfry(?: |$)([1-9])?",
     command=("deepfry", plugin_category),
     info={
-        "header": "image fryer",
-        "description": "Fries the given sticker or image based on level if you don't give anything then it is default to 1",
-        "usage": [
+        "h": "image fryer",
+        "d": "Fries the given sticker or image based on level if you don't give anything then it is default to 1",
+        "u": [
             "{tr}deepfry <1 to 9>",
             "{tr}deepfry",
         ],
@@ -740,9 +748,9 @@ async def deepfryer(event):
     pattern="txtart$",
     command=("txtart", plugin_category),
     info={
-        "header": "Make replied image into textart.",
-        "description": "Reply to any sticker or image to convert it into text art.",
-        "usage": "{tr}txtart reply to image/sticker",
+        "h": "Make replied image into textart.",
+        "d": "Reply to any sticker or image to convert it into text art.",
+        "u": "{tr}txtart reply to image/sticker",
     },
 )
 async def txt_art(event):
@@ -775,9 +783,9 @@ async def txt_art(event):
     pattern="color ([\s\S]*)",
     command=("color", plugin_category),
     info={
-        "header": "To get color pic of given hexa color code.",
-        "usage": "{tr}color <colour code>",
-        "examples": "{tr}color #ff0000",
+        "h": "To get color pic of given hexa color code.",
+        "u": "{tr}color <colour code>",
+        "e": "{tr}color #ff0000",
     },
 )
 async def _(event):

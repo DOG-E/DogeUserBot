@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -296,11 +296,11 @@ async def autopfp_start():
     pattern="bpp$",
     command=("bpp", plugin_category),
     info={
-        "header": "Changes profile pic with random batman pics every 1 minute",
-        "description": "Changes your profile pic every 1 minute with random batman pics.\
+        "h": "Changes profile pic with random batman pics every 1 minute",
+        "d": "Changes your profile pic every 1 minute with random batman pics.\
         If you like to change the time then set CHANGE_TIME var with time (in seconds) between each change of profilepic.",
         "note": "To stop this do '{tr}end bpp'",
-        "usage": "{tr}bpp",
+        "u": "{tr}bpp",
     },
 )
 async def _(event):
@@ -317,11 +317,11 @@ async def _(event):
     pattern="tpp$",
     command=("tpp", plugin_category),
     info={
-        "header": "Changes profile pic with random thor pics every 1 minute",
-        "description": "Changes your profile pic every 1 minute with random thor pics.\
+        "h": "Changes profile pic with random thor pics every 1 minute",
+        "d": "Changes your profile pic every 1 minute with random thor pics.\
         If you like to change the time then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
         "note": "To stop this do '{tr}end tpp'",
-        "usage": "{tr}tpp",
+        "u": "{tr}tpp",
     },
 )
 async def _(event):
@@ -338,14 +338,14 @@ async def _(event):
     pattern="autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
-        "header": "Changes profile pic every 1 minute with the custom pic with time",
-        "description": "If you like to change the time interval for every new pic change \
+        "h": "Changes profile pic every 1 minute with the custom pic with time",
+        "d": "If you like to change the time interval for every new pic change \
             then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
-        "options": "you can give integer input with cmd like 40,55,75 ..etc.\
+        "o": "you can give integer input with cmd like 40,55,75 ..etc.\
              So that your profile pic will rotate with that specific angle",
         "note": "For functioning of this cmd you need to set DEFAULT_PIC var. \
             To stop this do '{tr}end autopic'",
-        "usage": [
+        "u": [
             "{tr}autopic",
             "{tr}autopic <any integer>",
         ],
@@ -383,11 +383,11 @@ async def _(event):
     pattern="dpp$",
     command=("dpp", plugin_category),
     info={
-        "header": "Updates your profile pic every 1 minute with time on it",
-        "description": "Deletes old profile pic and Update profile pic with new image with time on it.\
+        "h": "Updates your profile pic every 1 minute with time on it",
+        "d": "Deletes old profile pic and Update profile pic with new image with time on it.\
              You can change this image by setting DIGITAL_PIC var with telegraph image link",
         "note": "To stop this do '{tr}end dpp'",
-        "usage": "{tr}dpp",
+        "u": "{tr}dpp",
     },
 )
 async def _(event):
@@ -407,12 +407,12 @@ async def _(event):
     pattern="bloom$",
     command=("bloom", plugin_category),
     info={
-        "header": "Changes profile pic every 1 minute with the random colour pic with time on it",
-        "description": "If you like to change the time interval for every new pic chnage \
+        "h": "Changes profile pic every 1 minute with the random colour pic with time on it",
+        "d": "If you like to change the time interval for every new pic chnage \
             then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
         "note": "For functioning of this cmd you need to set DEFAULT_PIC var. \
             To stop this do '{tr}end bloom'",
-        "usage": "{tr}bloom",
+        "u": "{tr}bloom",
     },
 )
 async def _(event):
@@ -437,19 +437,19 @@ async def _(event):
     pattern="c(ustom)?pp(?: |$)([\s\S]*)",
     command=("custompp", plugin_category),
     info={
-        "header": "Set Your Custom pps",
-        "description": "Set links of pic to use them as auto profile. You can use {tr}cpp or {tr}custompp as command",
-        "flags": {
+        "h": "Set Your Custom pps",
+        "d": "Set links of pic to use them as auto profile. You can use {tr}cpp or {tr}custompp as command",
+        "f": {
             "a": "To add links for custom pp",
             "r": "To remove links for custom pp",
             "l": "To get links of custom pp",
             "s": "To stop custom pp",
         },
-        "usage": [
+        "u": [
             "{tr}cpp or {tr}custompp <to start>",
             "{tr}cpp <flags> <links(optional)>",
         ],
-        "examples": [
+        "e": [
             "{tr}cpp",
             "{tr}cpp .l",
             "{tr}cpp .s",
@@ -526,10 +526,10 @@ async def useless(event):  # sourcery no-metrics
     pattern="autoname$",
     command=("autoname", plugin_category),
     info={
-        "header": "Changes your name with time",
-        "description": "Updates your profile name along with time. Set AUTONAME var with your profile name,",
+        "h": "Changes your name with time",
+        "d": "Updates your profile name along with time. Set AUTONAME var with your profile name,",
         "note": "To stop this do '{tr}end autoname'",
-        "usage": "{tr}autoname",
+        "u": "{tr}autoname",
     },
 )
 async def _(event):
@@ -545,10 +545,10 @@ async def _(event):
     pattern="autobio$",
     command=("autobio", plugin_category),
     info={
-        "header": "Changes your bio with time",
-        "description": "Updates your profile bio along with time. Set DEFAULT_BIO var with your fav bio,",
+        "h": "Changes your bio with time",
+        "d": "Updates your profile bio along with time. Set DEFAULT_BIO var with your fav bio,",
         "note": "To stop this do '{tr}end autobio'",
-        "usage": "{tr}autobio",
+        "u": "{tr}autobio",
     },
 )
 async def _(event):
@@ -564,9 +564,9 @@ async def _(event):
     pattern="end ([\s\S]*)",
     command=("end", plugin_category),
     info={
-        "header": "To stop the functions of autoprofile",
-        "description": "If you want to stop autoprofile functions then use this cmd.",
-        "options": {
+        "h": "To stop the functions of autoprofile",
+        "d": "If you want to stop autoprofile functions then use this cmd.",
+        "o": {
             "autopic": "To stop autopic",
             "dpp": "To stop difitalpp",
             "bloom": "To stop bloom",
@@ -576,8 +576,8 @@ async def _(event):
             "bpp": "To stop batmanpp",
             "spam": "To stop spam",
         },
-        "usage": "{tr}end <option>",
-        "examples": ["{tr}end autopic"],
+        "u": "{tr}end <option>",
+        "e": ["{tr}end autopic"],
     },
 )
 async def _(event):  # sourcery no-metrics

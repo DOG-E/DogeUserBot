@@ -37,7 +37,6 @@ from . import (
     edl,
     eor,
     get_user_from_event,
-    lan,
     logging,
     media_type,
     tr,
@@ -50,7 +49,7 @@ LOGS = logging.getLogger(__name__)
 
 PP_TOO_SMOL = "`The image is too small`"
 PP_ERROR = "`Failure while processing the image`"
-NO_PERM = lan("noperm")
+NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
 CHAT_PP_CHANGED = "`Chat Picture Changed`"
 INVALID_MEDIA = "`Invalid Extension`"
 
@@ -86,12 +85,12 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
     pattern="(d|)gpic$",
     command=("gpic", plugin_category),
     info={
-        "header": "For changing group display pic or deleting display pic",
-        "description": "Reply to Image for changing display picture",
-        "flags": {
+        "h": "For changing group display pic or deleting display pic",
+        "d": "Reply to Image for changing display picture",
+        "f": {
             "d": "To delete group pic",
         },
-        "usage": [
+        "u": [
             "{tr}gpic <reply to image>",
             "{tr}dgpic",
         ],
@@ -147,10 +146,10 @@ async def set_group_photo(event):  # sourcery no-metrics
     pattern="promote(?:\s|$)([\s\S]*)",
     command=("promote", plugin_category),
     info={
-        "header": "To give admin rights for a person",
-        "description": "Provides admin rights to the person in the chat\
+        "h": "To give admin rights for a person",
+        "d": "Provides admin rights to the person in the chat\
             \nNote: You need proper rights for this",
-        "usage": [
+        "u": [
             "{tr}promote <userid/username/reply>",
             "{tr}promote <userid/username/reply> <custom title>",
         ],
@@ -192,10 +191,10 @@ async def promote(event):
     pattern="demote(?:\s|$)([\s\S]*)",
     command=("demote", plugin_category),
     info={
-        "header": "To remove a person from admin list",
-        "description": "Removes all admin rights for that peron in that chat\
+        "h": "To remove a person from admin list",
+        "d": "Removes all admin rights for that peron in that chat\
             \nNote: You need proper rights for this and also u must be owner or admin who promoted that guy",
-        "usage": [
+        "u": [
             "{tr}demote <userid/username/reply>",
             "{tr}demote <userid/username/reply> <custom title>",
         ],
@@ -240,10 +239,10 @@ async def demote(event):
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
-        "header": "Will ban the guy in the group where you used this command.",
-        "description": "Permanently will remove him from this group and he can't join back\
+        "h": "Will ban the guy in the group where you used this command.",
+        "d": "Permanently will remove him from this group and he can't join back\
             \nNote: You need proper rights for this.",
-        "usage": [
+        "u": [
             "{tr}ban <userid/username/reply>",
             "{tr}ban <userid/username/reply> <reason>",
         ],
@@ -305,10 +304,10 @@ async def _ban_person(event):
     pattern="unban(?:\s|$)([\s\S]*)",
     command=("unban", plugin_category),
     info={
-        "header": "Will unban the guy in the group where you used this command.",
-        "description": "Removes the user account from the banned list of the group\
+        "h": "Will unban the guy in the group where you used this command.",
+        "d": "Removes the user account from the banned list of the group\
             \nNote: You need proper rights for this.",
-        "usage": [
+        "u": [
             "{tr}unban <userid/username/reply>",
             "{tr}unban <userid/username/reply> <reason>",
         ],
@@ -353,11 +352,11 @@ async def watcher(event):
     pattern="mute(?:\s|$)([\s\S]*)",
     command=("mute", plugin_category),
     info={
-        "header": "To stop sending messages from that user",
-        "description": "If is is not admin then changes his permission in group,\
+        "h": "To stop sending messages from that user",
+        "d": "If is is not admin then changes his permission in group,\
             if he is admin or if you try in personal chat then his messages will be deleted\
             \nNote: You need proper rights for this.",
-        "usage": [
+        "u": [
             "{tr}mute <userid/username/reply>",
             "{tr}mute <userid/username/reply> <reason>",
         ],
@@ -463,10 +462,10 @@ async def startmute(event):
     pattern="unmute(?:\s|$)([\s\S]*)",
     command=("unmute", plugin_category),
     info={
-        "header": "To allow user to send messages again",
-        "description": "Will change user permissions ingroup to send messages again.\
+        "h": "To allow user to send messages again",
+        "d": "Will change user permissions ingroup to send messages again.\
         \nNote: You need proper rights for this.",
-        "usage": [
+        "u": [
             "{tr}unmute <userid/username/reply>",
             "{tr}unmute <userid/username/reply> <reason>",
         ],
@@ -533,10 +532,10 @@ async def endmute(event):
     pattern="kick(?:\s|$)([\s\S]*)",
     command=("kick", plugin_category),
     info={
-        "header": "To kick a person from the group",
-        "description": "Will kick the user from the group so he can join back.\
+        "h": "To kick a person from the group",
+        "d": "Will kick the user from the group so he can join back.\
         \nNote: You need proper rights for this.",
-        "usage": [
+        "u": [
             "{tr}kick <userid/username/reply>",
             "{tr}kick <userid/username/reply> <reason>",
         ],
@@ -577,11 +576,11 @@ async def endmute(event):
     pattern="pin( l|$)",
     command=("pin", plugin_category),
     info={
-        "header": "For pining messages in chat",
-        "description": "reply to a message to pin it in that in chat\
+        "h": "For pining messages in chat",
+        "d": "reply to a message to pin it in that in chat\
         \nNote: You need proper rights for this if you want to use in group.",
-        "options": {"l": "To notify everyone without this.it will pin silently"},
-        "usage": [
+        "o": {"l": "To notify everyone without this.it will pin silently"},
+        "u": [
             "{tr}pin <reply>",
             "{tr}pin l <reply>",
         ],
@@ -615,11 +614,11 @@ async def pin(event):
     pattern="unpin(all|$)",
     command=("unpin", plugin_category),
     info={
-        "header": "For unpining messages in chat",
-        "description": "reply to a message to unpin it in that in chat\
+        "h": "For unpining messages in chat",
+        "d": "reply to a message to unpin it in that in chat\
         \nNote: You need proper rights for this if you want to use in group.",
-        "options": {"all": "To unpin all messages in the chat"},
-        "usage": [
+        "o": {"all": "To unpin all messages in the chat"},
+        "u": [
             "{tr}unpin <reply>",
             "{tr}unpinall",
         ],
@@ -659,19 +658,19 @@ async def pin(event):
 
 
 @doge.bot_cmd(
-    pattern="undlt( .m)?(?: |$)(\d*)?",
+    pattern="undlt( .u)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
-        "header": "To get recent deleted messages in group",
-        "description": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
-        "flags": {
+        "h": "To get recent deleted messages in group",
+        "d": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
+        "f": {
             "m": "use this flag to upload media to chat else will just show as media."
         },
-        "usage": [
+        "u": [
             "{tr}undlt <count>",
             "{tr}undlt .m <count>",
         ],
-        "examples": [
+        "e": [
             "{tr}undlt 7",
             "{tr}undlt .m 7 (this will reply all 7 messages to this message",
         ],

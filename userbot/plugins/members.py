@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -19,7 +19,8 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import InputPeerUser
 
-from . import doge, edl, eor, get_chatinfo, lan, wowmygroup
+from ..helpers.resources import constants
+from . import doge, edl, eor, get_chatinfo, wowmygroup
 
 plugin_category = "tool"
 
@@ -28,10 +29,10 @@ plugin_category = "tool"
     pattern="(invite|ekle) ([\s\S]*)",
     command=("invite", plugin_category),
     info={
-        "header": "Add the given user/users to the group where u used the command.",
-        "description": "Adds only mentioned person or bot not all members",
-        "usage": "{tr}invite <username(s)/userid(s)>",
-        "examples": "{tr}invite @mutlcc @MissRose_bot",
+        "h": "Add the given user/users to the group where u used the command.",
+        "d": "Adds only mentioned person or bot not all members",
+        "u": "{tr}invite <username(s)/userid(s)>",
+        "e": "{tr}invite @mutlcc @MissRose_bot",
     },
 )
 async def _(event):
@@ -66,9 +67,9 @@ async def _(event):
     pattern="inviteall ([\s\S]*)",
     command=("inviteall", plugin_category),
     info={
-        "header": "Dredge up members from other groups by using the group username",
-        "usage": "{tr}inviteall <group_username>",
-        "example": "{tr}inviteall @DogeSup",
+        "h": "Dredge up members from other groups by using the group username",
+        "u": "{tr}inviteall <group_username>",
+        "e": "{tr}inviteall @DogeSup",
     },
 )
 async def get_users(event):
@@ -112,9 +113,9 @@ async def get_users(event):
     pattern="getmember(s)$",
     command=("getmembers", plugin_category),
     info={
-        "header": "Collect members data from the group.",
-        "description": "This plugin is done before using the add member plugin.",
-        "usage": "{tr}getmember",
+        "h": "Collect members data from the group.",
+        "d": "This plugin is done before using the add member plugin.",
+        "u": "{tr}getmember",
     },
     groups_only=True,
 )
@@ -123,7 +124,10 @@ async def getmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(event, lan("mmsgtext"))
+    flag = await wowmygroup(
+        event,
+        constants.sc_nf_rm_dg_y,
+    )
     if flag:
         return
 
@@ -145,9 +149,9 @@ async def getmembers(event):
     pattern="addmember(s)$",
     command=("addmembers", plugin_category),
     info={
-        "header": "Add your group members. (there's a limit)",
-        "description": "This plugin is done after using the get member plugin.",
-        "usage": "{tr}addmember",
+        "h": "Add your group members. (there's a limit)",
+        "d": "This plugin is done after using the get member plugin.",
+        "u": "{tr}addmember",
     },
     groups_only=True,
 )
@@ -155,7 +159,11 @@ async def addmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(event, lan("mmsgtext"))
+    flag = await wowmygroup(
+        event,
+        "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
+        \n💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**",
+    )
     if flag:
         return
 

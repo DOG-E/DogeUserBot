@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -75,16 +75,16 @@ async def scam(results, lim):
     pattern="gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
-        "header": "Google search command.",
-        "flags": {
+        "h": "Google search command.",
+        "f": {
             ".l": "for number of search results.",
             ".p": "for choosing which page results should be showed.",
         },
-        "usage": [
+        "u": [
             "{tr}gs <flags> <query>",
             "{tr}gs <query>",
         ],
-        "examples": [
+        "e": [
             "{tr}gs DogeUserBot",
             "{tr}gs .l6 DogeUserBot",
             "{tr}gs .p2 DogeUserBot",
@@ -158,9 +158,9 @@ async def gsearch(q_event):
     pattern="gis ([\s\S]*)",
     command=("gis", plugin_category),
     info={
-        "header": "Google search in image format",
-        "usage": "{tr}gis <query>",
-        "examples": "{tr}gis doge",
+        "h": "Google search in image format",
+        "u": "{tr}gis <query>",
+        "e": "{tr}gis doge",
     },
 )
 async def _(event):
@@ -171,9 +171,9 @@ async def _(event):
     pattern="grs$",
     command=("grs", plugin_category),
     info={
-        "header": "Google reverse search command.",
-        "description": "reverse search replied image or sticker in google and shows results.",
-        "usage": "{tr}grs",
+        "h": "Google reverse search command.",
+        "d": "reverse search replied image or sticker in google and shows results.",
+        "u": "{tr}grs",
     },
 )
 async def _(event):
@@ -243,9 +243,9 @@ async def _(event):
     pattern="reverse(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
-        "header": "Google reverse search command.",
-        "description": "reverse search replied image or sticker in google and shows results. if count is not used then it send 1 image by default.",
-        "usage": "{tr}reverse <count>",
+        "h": "Google reverse search command.",
+        "d": "reverse search replied image or sticker in google and shows results. if count is not used then it send 1 image by default.",
+        "u": "{tr}reverse <count>",
     },
 )
 async def _(img):
@@ -312,9 +312,9 @@ async def _(img):
     pattern="google(?:\s|$)([\s\S]*)",
     command=("google", plugin_category),
     info={
-        "header": "To get link for google search",
-        "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
-        "usage": ["{tr}google query", "{tr}google reply a message"],
+        "h": "To get link for google search",
+        "d": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
+        "u": ["{tr}google query", "{tr}google reply a message"],
     },
 )
 async def google_search(event):

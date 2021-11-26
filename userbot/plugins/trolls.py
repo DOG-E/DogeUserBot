@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import remove, stat
@@ -37,8 +37,8 @@ plugin_category = "fun"
     pattern="trash$",
     command=("trash", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
-        "usage": "{tr}trash",
+        "h": "Reply to image/sticker to get meme on that image.",
+        "u": "{tr}trash",
     },
 )
 async def dogbot(event):
@@ -76,8 +76,8 @@ async def dogbot(event):
     pattern="threats$",
     command=("threats", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
-        "usage": "{tr}threats",
+        "h": "Reply to image/sticker to get meme on that image.",
+        "u": "{tr}threats",
     },
 )
 async def dogbot(event):
@@ -115,9 +115,9 @@ async def dogbot(event):
     pattern="trap(?:\s|$)([\s\S]*)",
     command=("trap", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
-        "Description": "creates a trap card",
-        "usage": "{tr}trap (name of the person to trap) ; (trapper name)",
+        "h": "Reply to image/sticker to get meme on that image.",
+        "d": "creates a trap card",
+        "u": "{tr}trap (name of the person to trap) ; (trapper name)",
     },
 )
 async def dogbot(event):
@@ -164,9 +164,9 @@ async def dogbot(event):
     pattern="phub(?:\s|$)([\s\S]*)",
     command=("phub", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
-        "description": "P*rnhub comment creator.",
-        "usage": [
+        "h": "Reply to image/sticker to get meme on that image.",
+        "d": "P*rnhub comment creator.",
+        "u": [
             "{tr}phub <username>;<text in comment> <reply a pic>",
         ],
     },

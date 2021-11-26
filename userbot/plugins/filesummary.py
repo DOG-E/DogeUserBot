@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from time import monotonic
@@ -36,10 +36,10 @@ def weird_division(n, d):
     pattern="chatfs(?:\s|$)([\s\S]*)",
     command=("chatfs", plugin_category),
     info={
-        "header": "Shows you the complete media/file summary of the that group.",
-        "description": "As of now limited to last 10000 in the group u used",
-        "usage": "{tr}chatfs <Username/id>",
-        "examples": "{tr}chatfs @DogeSup",
+        "h": "Shows you the complete media/file summary of the that group.",
+        "d": "As of now limited to last 10000 in the group u used",
+        "u": "{tr}chatfs <Username/id>",
+        "e": "{tr}chatfs @DogeSup",
     },
 )
 async def _(event):  # sourcery no-metrics
@@ -138,10 +138,10 @@ async def _(event):  # sourcery no-metrics
     pattern="userfs(?:\s|$)([\s\S]*)",
     command=("userfs", plugin_category),
     info={
-        "header": "Shows you the complete media/file summary of the that user in that group.",
-        "description": "As of now limited to last 10000 messages of that person in the group u used",
-        "usage": "{tr}userfs <reply/username/id>",
-        "examples": "{tr}userfs @MissRose_bot",
+        "h": "Shows you the complete media/file summary of the that user in that group.",
+        "d": "As of now limited to last 10000 messages of that person in the group u used",
+        "u": "{tr}userfs <reply/username/id>",
+        "e": "{tr}userfs @MissRose_bot",
     },
 )
 async def _(event):  # sourcery no-metrics

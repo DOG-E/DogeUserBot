@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from telethon.tl.functions.channels import CreateChannelRequest
@@ -19,15 +19,15 @@ plugin_category = "tool"
     pattern="create (b|g|c) ([\s\S]*)",
     command=("create", plugin_category),
     info={
-        "header": "To create a private group/channel with userbot.",
-        "description": "Use this cmd to create super group, normal group or channel.",
-        "flags": {
+        "h": "To create a private group/channel with userbot.",
+        "d": "Use this cmd to create super group, normal group or channel.",
+        "f": {
             "b": "to create a private super group",
             "g": "To create a private basic group.",
             "c": "to create a private channel",
         },
-        "usage": "{tr}create (b|g|c) <name of group/channel>",
-        "examples": "{tr}create b DogeUserBot",
+        "u": "{tr}create (b|g|c) <name of group/channel>",
+        "e": "{tr}create b DogeUserBot",
     },
 )
 async def _(event):

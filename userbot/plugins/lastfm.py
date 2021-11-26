@@ -5,10 +5,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -17,7 +17,7 @@ from re import sub
 from sys import setrecursionlimit
 from urllib.parse import quote
 
-from pylast import LastFMNetwork, User, WSError, md5
+from pylast import LastFMNetwork, MalformedResponseError, User, WSError, md5
 from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
@@ -157,10 +157,12 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     await doge.send_message(
                         BOTLOG_CHATID, f"Error changing bio:\n{err}"
                     )
-        except FloodWaitError as err:
-            if BOTLOG and LASTFM_.LastLog:
-                await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
-        except WSError as err:
+        except (
+            FloodWaitError,
+            WSError,
+            MalformedResponseError,
+            AboutTooLongError,
+        ) as err:
             if BOTLOG and LASTFM_.LastLog:
                 await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         await sleep(2)
@@ -171,9 +173,9 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
     pattern="lastfm$",
     command=("lastfm", plugin_category),
     info={
-        "header": "To fetch scrobble data from last.fm",
-        "description": "Shows currently scrobbling track or most recent scrobbles if nothing is playing.",
-        "usage": "{tr}lastfm",
+        "h": "To fetch scrobble data from last.fm",
+        "d": "Shows currently scrobbling track or most recent scrobbles if nothing is playing.",
+        "u": "{tr}lastfm",
     },
 )
 async def last_fm(lastFM):
@@ -218,8 +220,8 @@ async def last_fm(lastFM):
     pattern="now$",
     command=("now", plugin_category),
     info={
-        "header": "Send your current listening song from Lastfm/Spotify/Deezer.",
-        "usage": "{tr}now",
+        "h": "Send your current listening song from Lastfm/Spotify/Deezer.",
+        "u": "{tr}now",
         "note": "For working of this command, you need to authorize @NowPlayBot.",
     },
 )
@@ -237,8 +239,8 @@ async def now(event):
     pattern="inow$",
     command=("inow", plugin_category),
     info={
-        "header": "Show your current listening song in the form of a cool image.",
-        "usage": "{tr}inow",
+        "h": "Show your current listening song in the form of a cool image.",
+        "u": "{tr}inow",
         "note": "For working of this command, you need to authorize @SpotiPieBot.",
     },
 )
@@ -256,8 +258,8 @@ async def nowimg(event):
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
-        "header": "To Enable or Disable the last.fm current playing to bio",
-        "usage": [
+        "h": "To Enable or Disable the last.fm current playing to bio",
+        "u": [
             "{tr}lastbio on",
             "{tr}lastbio off",
         ],
@@ -289,8 +291,8 @@ async def lastbio(lfmbio):
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={
-        "header": "To Enable or Disable the last.fm current playing to bot log group",
-        "usage": [
+        "h": "To Enable or Disable the last.fm current playing to bot log group",
+        "u": [
             "{tr}lastlog on",
             "{tr}lastlog off",
         ],

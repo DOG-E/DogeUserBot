@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop
@@ -41,12 +41,12 @@ def zipdir(dirName):
     pattern="zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
-        "header": "To compress the file/folders",
-        "description": "Will create a zip file for the given file path or folder path",
-        "usage": [
+        "h": "To compress the file/folders",
+        "d": "Will create a zip file for the given file path or folder path",
+        "u": [
             "{tr}zip <file/folder path>",
         ],
-        "examples": ["{tr}zip downloads", "{tr}zip sample_config.py"],
+        "e": ["{tr}zip downloads", "{tr}zip sample_config.py"],
     },
 )
 async def zip_file(event):
@@ -80,12 +80,12 @@ async def zip_file(event):
     pattern="tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
-        "header": "To compress the file/folders to tar file",
-        "description": "Will create a tar file for the given file path or folder path",
-        "usage": [
+        "h": "To compress the file/folders to tar file",
+        "d": "Will create a tar file for the given file path or folder path",
+        "u": [
             "{tr}tar <file/folder path>",
         ],
-        "examples": ["{tr}tar downloads", "{tr}tar sample_config.py"],
+        "e": ["{tr}tar downloads", "{tr}tar sample_config.py"],
     },
 )
 async def tar_file(event):
@@ -120,9 +120,9 @@ async def tar_file(event):
     pattern="unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
-        "header": "To unpack the given zip file",
-        "description": "Reply to a zip file or provide zip file path with command to unzip the given file",
-        "usage": [
+        "h": "To unpack the given zip file",
+        "d": "Reply to a zip file or provide zip file path with command to unzip the given file",
+        "u": [
             "{tr}unzip <reply/file path>",
         ],
     },
@@ -205,9 +205,9 @@ async def zip_file(event):  # sourcery no-metrics
     pattern="untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={
-        "header": "To unpack the given tar file",
-        "description": "Reply to a tar file or provide tar file path with command to unpack the given tar file",
-        "usage": [
+        "h": "To unpack the given tar file",
+        "d": "Reply to a tar file or provide tar file path with command to unpack the given tar file",
+        "u": [
             "{tr}untar <reply/file path>",
         ],
     },

@@ -21,6 +21,7 @@ from telethon.tl.types import MessageEntityMentionName
 from ...Config import Config
 from ...core.logger import logging
 from ...core.managers import edl
+from ..resources.constants import *
 
 LOGS = logging.getLogger(__name__)
 
@@ -126,9 +127,7 @@ async def wowmydev(user, event):
     if str(user) in M_ST_RS:
         await edl(
             event,
-            "**🐕‍🦺 Sorry dude.\
-            \n🐾 Don't ask me to do this!\
-            \n🐾 I won't do this to my developer.**",
+            hm_st_rd_v,
             30,
         )
         return True
@@ -137,12 +136,12 @@ async def wowmydev(user, event):
 
 async def wowcmydev(user):
     if user in M_ST_RS:
-        return f"\n\n<b>🧡 This user is my developer!</b>"
+        return m_st_rd_v
 
 
 async def wowcg_y(user):
     if user in G_YS:
-        return f"\n\n<b>🤡 This user has been banned from using Doge.</b>"
+        return b_ng_y
 
 
 async def get_chatinfo(event, dogevent):

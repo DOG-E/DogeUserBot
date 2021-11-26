@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -26,11 +26,11 @@ LOGS = logging.getLogger(__name__)
     pattern="chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
-        "header": "To enable and disable chats blacklist.",
-        "description": "If you turn this on, then your userbot won't work on the chats stored\
+        "h": "To enable and disable chats blacklist.",
+        "d": "If you turn this on, then your userbot won't work on the chats stored\
          in database by addblkchat cmd. If you turn it off even though you added chats to database\
          userbot won't stop working in that chat.",
-        "usage": "{tr}chatblacklist <on/off>",
+        "u": "{tr}chatblacklist <on/off>",
     },
 )
 async def chat_blacklist(event):
@@ -80,11 +80,11 @@ async def chat_blacklist(event):
     pattern="addblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
-        "header": "To add chats to blacklist.",
-        "description": "to add the chats to database so your bot doesn't work in\
+        "h": "To add chats to blacklist.",
+        "d": "to add the chats to database so your bot doesn't work in\
          thoose chats. Either give chatids as input or do this cmd in the chat\
          which you want to add to db.",
-        "usage": [
+        "u": [
             "{tr}addblkchat <chat ids>",
             "{tr}addblkchat in the chat which you want to add",
         ],
@@ -159,11 +159,11 @@ async def add_blacklist_chat(event):
     pattern="rmblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
-        "header": "To remove chats to blacklist.",
-        "description": "to remove the chats from database so your bot will work in\
+        "h": "To remove chats to blacklist.",
+        "d": "to remove the chats from database so your bot will work in\
          those chats. Either give chatids as input or do this cmd in the chat\
          which you want to remove from db.",
-        "usage": [
+        "u": [
             "{tr}rmblkchat <chat ids>",
             "{tr}rmblkchat in the chat which you want to add",
         ],
@@ -223,9 +223,9 @@ async def add_blacklist_chat(event):
     pattern="listblkchats$",
     command=("listblkchats", plugin_category),
     info={
-        "header": "To list all blacklisted chats.",
-        "description": "Will show you the list of all blacklisted chats",
-        "usage": [
+        "h": "To list all blacklisted chats.",
+        "d": "Will show you the list of all blacklisted chats",
+        "u": [
             "{tr}listblkchat",
         ],
     },

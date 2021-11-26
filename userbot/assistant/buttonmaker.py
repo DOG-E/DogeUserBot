@@ -12,7 +12,7 @@
 from os import remove
 from re import compile
 
-from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id, tr
+from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id
 
 plugin_category = "tool"
 # Regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
@@ -23,11 +23,11 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
     pattern="bbutton(?:\s|$)([\s\S]*)",
     command=("bbutton", plugin_category),
     info={
-        "header": "Botonlarla(düğme) mesaj oluşturmak için",
+        "h": "Botonlarla(düğme) mesaj oluşturmak için",
         "note": f"Bunun çalışması için, kullandığınız grup ya da kanalda botunuza ({BOT_USERNAME}) ihtiyacınız var. Varsayılan yazı tipi HTML'dir.",
-        "options": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
-        "usage": f"{tr}bbutton <yazı> [Butonun Adı](açmak istediğiniz bağlantı)",
-        "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
+        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "u": "{tr}bbutton <yazı> [Butonun Adı](açmak istediğiniz bağlantı)",
+        "e": "{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def bbutton(event):
@@ -84,11 +84,11 @@ async def bbutton(event):
     pattern="button(?:\s|$)([\s\S]*)",
     command=("button", plugin_category),
     info={
-        "header": "Satır içi ile düğme gönderileri oluşturmak için.",
+        "h": "Satır içi ile düğme gönderileri oluşturmak için.",
         "note": "Markdown, HTML'ye varsayılandır.",
-        "options": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
-        "usage": f"{tr}button <yazı> [Butonun adı](açmak istediğiniz bağlantı)",
-        "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
+        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "u": "{tr}button <yazı> [Butonun adı](açmak istediğiniz bağlantı)",
+        "e": "{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def button(event):

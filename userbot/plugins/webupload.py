@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import dumps, loads
@@ -29,9 +29,9 @@ link_regex = compile(
     pattern="labstack(?:\s|$)([\s\S]*)",
     command=("labstack", plugin_category),
     info={
-        "header": "To upload media to labstack.",
-        "description": "Will upload media to labstack and shares you link so that you can share with friends and it expires automatically after 7 days",
-        "usage": "{tr}labstack <reply to media or provide path of media>",
+        "h": "To upload media to labstack.",
+        "d": "Will upload media to labstack and shares you link so that you can share with friends and it expires automatically after 7 days",
+        "u": "{tr}labstack <reply to media or provide path of media>",
     },
 )
 async def labstack(event):
@@ -90,9 +90,9 @@ async def labstack(event):
     pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
     command=("webupload", plugin_category),
     info={
-        "header": "To upload media to some online media sharing platforms.",
-        "description": "you can upload media to any of the sites mentioned. so you can share link to others.",
-        "options": {
+        "h": "To upload media to some online media sharing platforms.",
+        "d": "you can upload media to any of the sites mentioned. so you can share link to others.",
+        "o": {
             "fileio": "to file.io site",
             "anonfiles": "to anonfiles site",
             "transfer": "to transfer.sh site",
@@ -100,11 +100,11 @@ async def labstack(event):
             "anonymousfiles": "to anonymousfiles site",
             "bayfiles": "to bayfiles site",
         },
-        "usage": [
+        "u": [
             "{tr}webupload --option",
             "{tr}webupload path --option",
         ],
-        "examples": "{tr}.webupload --fileio reply this to media file.",
+        "e": "{tr}.webupload --fileio reply this to media file.",
     },
 )
 async def _(event):

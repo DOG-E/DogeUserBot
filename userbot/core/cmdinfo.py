@@ -36,62 +36,62 @@ def _format_about(
         return about
 
     tmp_chelp = ""
-    if "header" in about and isinstance(about["header"], str):
-        tmp_chelp += f"__{about['header'].title()}__"
-        del about["header"]
+    if "h" in about and isinstance(about["h"], str):
+        tmp_chelp += f"__{about['h'].title()}__"
+        del about["h"]
 
-    if "description" in about and isinstance(about["description"], str):
-        tmp_chelp += f"\n\n**🐾 Açıᴋʟᴀᴍᴀ:**\n" f"__{get_data(about, 'description')}__"
-        del about["description"]
+    if "d" in about and isinstance(about["d"], str):
+        tmp_chelp += f"\n\n**🐾 Açıᴋʟᴀᴍᴀ:**\n" f"__{get_data(about, 'd')}__"
+        del about["d"]
 
-    if "flags" in about:
-        tmp_chelp += f"\n\n**🐾 Aʏᴀʀ.:**"
-        if isinstance(about["flags"], dict):
-            for f_n, f_d in about["flags"].items():
+    if "f" in about:
+        tmp_chelp += f"\n\n**🐾 Aʏᴀʀ:**"
+        if isinstance(about["f"], dict):
+            for f_n, f_d in about["f"].items():
                 tmp_chelp += f"\n    ▫️ `{f_n}`: __{f_d.lower()}__"
         else:
-            tmp_chelp += f"\n    {about['flags']}"
-        del about["flags"]
+            tmp_chelp += f"\n    {about['f']}"
+        del about["f"]
 
-    if "options" in about:
-        tmp_chelp += f"\n\n**🐾 Sᴇcᴇɴᴇᴋʟᴇʀ:**"
-        if isinstance(about["options"], dict):
-            for o_n, o_d in about["options"].items():
+    if "o" in about:
+        tmp_chelp += f"\n\n**🐾 Sᴇçᴇɴᴇᴋʟᴇʀ:**"
+        if isinstance(about["o"], dict):
+            for o_n, o_d in about["o"].items():
                 tmp_chelp += f"\n    ▫️ `{o_n}`: __{o_d.lower()}__"
         else:
-            tmp_chelp += f"\n    __{about['options']}__"
-        del about["options"]
+            tmp_chelp += f"\n    __{about['o']}__"
+        del about["o"]
 
-    if "types" in about:
-        tmp_chelp += f"\n\n**🐾 Sᴜᴘᴘᴏʀᴛᴇᴅ Tʏᴘᴇs:**"
-        if isinstance(about["types"], list):
-            for _opt in about["types"]:
+    if "t" in about:
+        tmp_chelp += f"\n\n**🐾 Dᴇsᴛᴇᴋʟᴇɴᴇɴ Tüʀʟᴇʀ:**"
+        if isinstance(about["t"], list):
+            for _opt in about["t"]:
                 tmp_chelp += f"\n    `{_opt}` ,"
         else:
-            tmp_chelp += f"\n    __{about['types']}__"
-        del about["types"]
+            tmp_chelp += f"\n    __{about['t']}__"
+        del about["t"]
 
-    if "usage" in about:
-        tmp_chelp += f"\n\n**🐾 Usᴀɢᴇ:**"
-        if isinstance(about["usage"], list):
-            for ex_ in about["usage"]:
+    if "u" in about:
+        tmp_chelp += f"\n\n**🐾 Kᴜʟʟᴀɴıᴍ:**"
+        if isinstance(about["u"], list):
+            for ex_ in about["u"]:
                 tmp_chelp += f"\n    `{ex_}`"
         else:
-            tmp_chelp += f"\n    `{about['usage']}`"
-        del about["usage"]
+            tmp_chelp += f"\n    `{about['u']}`"
+        del about["u"]
 
-    if "examples" in about:
-        tmp_chelp += f"\n\n**🐾 Exᴀᴍᴘʟᴇs:**"
-        if isinstance(about["examples"], list):
-            for ex_ in about["examples"]:
+    if "e" in about:
+        tmp_chelp += f"\n\n**🐾 Öʀɴᴇᴋʟᴇʀ:**"
+        if isinstance(about["e"], list):
+            for ex_ in about["e"]:
                 tmp_chelp += f"\n    `{ex_}`"
         else:
-            tmp_chelp += f"\n    `{about['examples']}`"
-        del about["examples"]
+            tmp_chelp += f"\n    `{about['e']}`"
+        del about["e"]
 
-    if "others" in about:
-        tmp_chelp += f"\n\n**🐾 Oᴛʜᴇʀs:**\n__{get_data(about, 'others')}__"
-        del about["others"]
+    if "ot" in about:
+        tmp_chelp += f"\n\n**🐾 Dɪɢ̆ᴇʀ:**\n__{get_data(about, 'ot')}__"
+        del about["ot"]
 
     if about:
         for t_n, t_d in about.items():

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -616,8 +616,8 @@ async def on_plug_in_callback_query_handler(event):
     pattern="pmguard (on|off)$",
     command=("pmguard", plugin_category),
     info={
-        "header": "To turn on or turn off pmpermit.",
-        "usage": "{tr}pmguard on/off",
+        "h": "To turn on or turn off pmpermit.",
+        "u": "{tr}pmguard on/off",
     },
 )
 async def pmpermit_on(event):
@@ -642,8 +642,8 @@ async def pmpermit_on(event):
     pattern="pmmenu (on|off)$",
     command=("pmmenu", plugin_category),
     info={
-        "header": "To turn on or turn off pmmenu.",
-        "usage": "{tr}pmmenu on/off",
+        "h": "To turn on or turn off pmmenu.",
+        "u": "{tr}pmmenu on/off",
     },
 )
 async def pmpermit_on(event):
@@ -671,8 +671,8 @@ async def pmpermit_on(event):
     pattern="(a|approve)(?:\s|$)([\s\S]*)",
     command=("approve", plugin_category),
     info={
-        "header": "To approve user to direct message you.",
-        "usage": [
+        "h": "To approve user to direct message you.",
+        "u": [
             "{tr}a/approve <username/reply reason> in group",
             "{tr}a/approve <reason> in pm",
         ],
@@ -747,10 +747,10 @@ async def approve_p_m(event):  # sourcery no-metrics
     pattern="(da|disapprove)(?:\s|$)([\s\S]*)",
     command=("disapprove", plugin_category),
     info={
-        "header": "To disapprove user to direct message you.",
+        "h": "To disapprove user to direct message you.",
         "note": "This command works only for approved users",
-        "options": {"all": "To disapprove all approved users"},
-        "usage": [
+        "o": {"all": "To disapprove all approved users"},
+        "u": [
             "{tr}da/disapprove <username/reply> in group",
             "{tr}da/disapprove in pm",
             "{tr}da/disapprove all - To disapprove all users.",
@@ -796,8 +796,8 @@ async def disapprove_p_m(event):
     pattern="block(?:\s|$)([\s\S]*)",
     command=("block", plugin_category),
     info={
-        "header": "To block user to direct message you.",
-        "usage": [
+        "h": "To block user to direct message you.",
+        "u": [
             "{tr}block <username/reply reason> in group",
             "{tr}block <reason> in pm",
         ],
@@ -852,8 +852,8 @@ async def block_p_m(event):
     pattern="unblock(?:\s|$)([\s\S]*)",
     command=("unblock", plugin_category),
     info={
-        "header": "To unblock a user.",
-        "usage": [
+        "h": "To unblock a user.",
+        "u": [
             "{tr}unblock <username/reply reason> in group",
             "{tr}unblock <reason> in pm",
         ],
@@ -885,8 +885,8 @@ async def unblock_pm(event):
     pattern="l(ist)?a(pproved)?$",
     command=("listapproved", plugin_category),
     info={
-        "header": "To see list of approved users.",
-        "usage": [
+        "h": "To see list of approved users.",
+        "u": [
             "{tr}listapproved",
         ],
     },

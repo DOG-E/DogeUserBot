@@ -9,11 +9,11 @@
 from collections import defaultdict
 from os import path
 from re import compile, findall
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from urllib.request import urlopen
 
 from telethon import Button
-from ujson import dump, load
+from ujson import dump, load, loads
 from youtube_dl import YoutubeDL
 from youtube_dl.utils import DownloadError, ExtractorError, GeoRestrictedError
 from youtubesearchpython import VideosSearch
@@ -95,6 +95,17 @@ class YT_Search_X:
 
 
 ytsearch_data = YT_Search_X()
+
+
+async def yt_data(dog):
+    params = {"format": "json", "url": dog}
+    url = "https://www.youtube.com/oembed"  # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
+    query_string = urlencode(params)
+    url = url + "?" + query_string
+    with urlopen(url) as response:
+        response_text = response.read()
+        data = loads(response_text.decode())
+    return data
 
 
 async def get_ytthumb(videoid: str):

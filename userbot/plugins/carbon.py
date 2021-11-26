@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -25,8 +25,8 @@ CARBONLANG = "auto"
     pattern="carbon(?:\s|$)([\s\S]*)",
     command=("carbon", plugin_category),
     info={
-        "header": "Carbon generators for given text (Fixed style)",
-        "usage": [
+        "h": "Carbon generators for given text (Fixed style)",
+        "u": [
             "{tr}carbon <text>",
             "{tr}carbon <reply to text>",
         ],
@@ -93,8 +93,8 @@ async def carbon_api(event):
     pattern="krb(?:\s|$)([\s\S]*)",
     command=("krb", plugin_category),
     info={
-        "header": "Carbon generators for given text. each time gives  random style. You can also use patcicular style by using semicolon after text and name",
-        "usage": [
+        "h": "Carbon generators for given text. each time gives  random style. You can also use patcicular style by using semicolon after text and name",
+        "u": [
             "{tr}krb <text>",
             "{tr}krb <reply to text>",
             "{tr}krb <text> ; <style name>",
@@ -186,8 +186,8 @@ async def carbon_api(event):
     pattern="kar1(?:\s|$)([\s\S]*)",
     command=("kar1", plugin_category),
     info={
-        "header": "Carbon generators for given text (Fixed style)",
-        "usage": [
+        "h": "Carbon generators for given text (Fixed style)",
+        "u": [
             "{tr}kar1 <text>",
             "{tr}kar1 <reply to text>",
         ],
@@ -251,8 +251,8 @@ async def carbon_api(event):
     pattern="kar2(?:\s|$)([\s\S]*)",
     command=("kar2", plugin_category),
     info={
-        "header": "Carbon generators for given text (Fixed style)",
-        "usage": [
+        "h": "Carbon generators for given text (Fixed style)",
+        "u": [
             "{tr}kar2 <text>",
             "{tr}kar2 <reply to text>",
         ],
@@ -316,8 +316,8 @@ async def carbon_api(event):
     pattern="kar3(?:\s|$)([\s\S]*)",
     command=("kar3", plugin_category),
     info={
-        "header": "Carbon generators for given text (Fixed style)",
-        "usage": [
+        "h": "Carbon generators for given text (Fixed style)",
+        "u": [
             "{tr}kar3 <text>",
             "{tr}kar3 <reply to text>",
         ],
@@ -381,8 +381,8 @@ async def carbon_api(event):
     pattern="kar4(?:\s|$)([\s\S]*)",
     command=("kar4", plugin_category),
     info={
-        "header": "Carbon generators for given text (Fixed style)",
-        "usage": [
+        "h": "Carbon generators for given text (Fixed style)",
+        "u": [
             "{tr}kar4 <text>",
             "{tr}kar4 <reply to text>",
         ],
@@ -444,8 +444,8 @@ async def carbon_api(event):
     pattern="kargb(?:\s|$)([\s\S]*)",
     command=("kargb", plugin_category),
     info={
-        "header": "Carbon generators for given text (random from some selected themes)",
-        "usage": [
+        "h": "Carbon generators for given text (random from some selected themes)",
+        "u": [
             "{tr}kargb <text>",
             "{tr}kargb <reply to text>",
         ],

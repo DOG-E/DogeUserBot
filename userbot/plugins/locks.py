@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from base64 import b64decode
@@ -33,8 +33,8 @@ LOGS = logging.getLogger(__name__)
     pattern="lock ([\s\S]*)",
     command=("lock", plugin_category),
     info={
-        "header": "To lock the given permission for entire group.",
-        "description": "Db options will lock for admins also,",
+        "h": "To lock the given permission for entire group.",
+        "d": "Db options will lock for admins also,",
         "api options": {
             "msg": "To lock messages",
             "media": "To lock media like videos/photo",
@@ -56,7 +56,7 @@ LOGS = logging.getLogger(__name__)
             "forward": "To lock forwording messages for group",
             "url": "To lock sending links to group",
         },
-        "usage": "{tr}lock <permission>",
+        "u": "{tr}lock <permission>",
     },
     groups_only=True,
     require_admin=True,
@@ -219,8 +219,8 @@ async def _(event):  # sourcery no-metrics
     pattern="unlock ([\s\S]*)",
     command=("unlock", plugin_category),
     info={
-        "header": "To unlock the given permission for entire group.",
-        "description": "Db options/api options will unlock only if they are locked.",
+        "h": "To unlock the given permission for entire group.",
+        "d": "Db options/api options will unlock only if they are locked.",
         "api options": {
             "msg": "To unlock messages",
             "media": "To unlock media like videos/photo",
@@ -242,7 +242,7 @@ async def _(event):  # sourcery no-metrics
             "forward": "To unlock forwording messages for group",
             "url": "To unlock sending links to group",
         },
-        "usage": "{tr}unlock <permission>",
+        "u": "{tr}unlock <permission>",
     },
     groups_only=True,
     require_admin=True,
@@ -405,8 +405,8 @@ async def _(event):  # sourcery no-metrics
     pattern="locks$",
     command=("locks", plugin_category),
     info={
-        "header": "To see the active locks in the current group",
-        "usage": "{tr}locks",
+        "h": "To see the active locks in the current group",
+        "u": "{tr}locks",
     },
     groups_only=True,
 )
@@ -464,7 +464,7 @@ async def _(event):  # sourcery no-metrics
     pattern="plock ([\s\S]*)",
     command=("plock", plugin_category),
     info={
-        "header": "To lock the given permission for replied person only.",
+        "h": "To lock the given permission for replied person only.",
         "api options": {
             "msg": "To lock messages",
             "media": "To lock media like videos/photo",
@@ -479,7 +479,7 @@ async def _(event):  # sourcery no-metrics
             "info": "To lock changing group description",
             "all": "To lock all above permissions",
         },
-        "usage": "{tr}plock <api option>",
+        "u": "{tr}plock <api option>",
     },
     groups_only=True,
     require_admin=True,
@@ -689,7 +689,7 @@ async def _(event):  # sourcery no-metrics
     pattern="punlock ([\s\S]*)",
     command=("punlock", plugin_category),
     info={
-        "header": "To unlock the given permission for replied person only.",
+        "h": "To unlock the given permission for replied person only.",
         "note": "If entire group is locked with that permission then you can't unlock that permission only for him.",
         "api options": {
             "msg": "To unlock messages",
@@ -705,7 +705,7 @@ async def _(event):  # sourcery no-metrics
             "info": "To unlock changing group description",
             "all": "To unlock all above permissions",
         },
-        "usage": "{tr}punlock <api option>",
+        "u": "{tr}punlock <api option>",
     },
     groups_only=True,
     require_admin=True,
@@ -922,8 +922,8 @@ async def _(event):  # sourcery no-metrics
     pattern="uperm(?:\s|$)([\s\S]*)",
     command=("uperm", plugin_category),
     info={
-        "header": "To get permissions of replied user or mentioned user in that group.",
-        "usage": "{tr}uperm <reply/username>",
+        "h": "To get permissions of replied user or mentioned user in that group.",
+        "u": "{tr}uperm <reply/username>",
     },
     groups_only=True,
 )

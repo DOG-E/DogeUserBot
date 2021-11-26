@@ -15,9 +15,9 @@ plugin_category = "bot"
     pattern="bot(?:\s|$)([\s\S]*)",
     command=("bot", plugin_category),
     info={
-        "header": "Bot sohbetteyse, yardımcı botunuzdan herhangi bir metni gönderin.",
-        "usage": "{tr}bot <yazı/yanıtlanmış mesaj>",
-        "examples": "{tr}bot Herkese Merhaba!",
+        "h": "Bot sohbetteyse, yardımcı botunuzdan herhangi bir metni gönderin.",
+        "u": "{tr}bot <yazı/yanıtlanmış mesaj>",
+        "e": "{tr}bot Herkese Merhaba!",
     },
 )
 async def botmsg(event):

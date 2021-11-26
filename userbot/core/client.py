@@ -6,6 +6,7 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
+from asyncio import sleep
 from datetime import datetime
 from inspect import stack as stacck
 from pathlib import Path
@@ -15,7 +16,17 @@ from traceback import format_exc, format_exception
 from typing import Dict, List, Union
 
 from telethon import TelegramClient, events
-from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
+from telethon.errors import (
+    AlreadyInConversationError,
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+    ChatSendStickersForbiddenError,
+    FloodWaitError,
+    MessageIdInvalidError,
+    MessageNotModifiedError,
+)
 
 from ..Config import Config
 from ..helpers.utils.events import checking
@@ -114,9 +125,42 @@ class DogeUserBotClient(TelegramClient):
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error("🚨 Mesaj önceki mesajla aynı")
+                    LOGS.error("🚨 Mesaj önceki mesajla aynı.")
                 except MessageIdInvalidError:
-                    LOGS.error("🚨 Mesaj silindi ya da bulunamadı")
+                    LOGS.error("🚨 Mesaj silindi ya da bulunamadı.")
+                except BotInlineDisabledError:
+                    await edl(check, "`🚨 Botunuzun satır içi modu kapalı.`")
+                except ChatSendStickersForbiddenError:
+                    await edl(
+                        check,
+                        "`🚨 Bu sohbette çıkartma gönderemiyorum.`",
+                    )
+                except BotResponseTimeoutError:
+                    await edl(
+                        check,
+                        "`🚨 Bottan yanıt alamadım.`",
+                    )
+                except ChatSendMediaForbiddenError:
+                    await edl(
+                        check,
+                        "`🚨 Bu sohbette medya gönderemiyorum.`",
+                    )
+                except AlreadyInConversationError:
+                    await edl(
+                        check,
+                        "`🚨 Mevcut sohbetle zaten bir konuşma gerçekleşiyor. 🔃 Bir süre sonra tekrar deneyin.`",
+                    )
+                except ChatSendInlineForbiddenError:
+                    await edl(
+                        check,
+                        "`🚨 Bu sohbette satır içi mesajlar gönderemiyorum.`",
+                    )
+                except FloodWaitError as e:
+                    LOGS.error(
+                        f"🚨 {e.seconds} saniye flood wait nedeniyle engellendi. Lütfen {e.seconds} saniye bekleyin ve tekrar deneyin."
+                    )
+                    await check.delete()
+                    await sleep(e.seconds + 5)
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
@@ -124,14 +168,14 @@ class DogeUserBotClient(TelegramClient):
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
                         ftext = "💥💥💥💥 UYARI 💥💥💥💥\
-                        \n💠 Bu dosya sadece buraya yapıştırıldı,\
-                        \n💠 Yalnızca hatanın gerçekleştiği tarih ve saati kaydettik,\
+                        \n💠 Bu metin sadece buraya yazıldı,\
+                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
                         \n💠 Gizliliğinize saygı duyuyoruz,\
                         \n💠 Burada herhangi bir gizli veri varsa,\
                         \n💠 Bu hatayı bildirmeyebilirsiniz.\
                         \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n⚠️⚠️⚠️USERBOT-HATA-RAPORU-BAŞLANGICI⚠️⚠️⚠️\
+                        \n⚠️⚠️⚠️ USERBOT-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
                         \n📅 Tarih: {d}\
                         \n👥 Grup ID'si: {cid}\
                         \n👤 Gönderici ID: {sid}\
@@ -158,7 +202,7 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "⚠️⚠️⚠️USERBOT-HATA-RAPORU-SONU⚠️⚠️⚠️"
+                        ftext += "⚠️⚠️⚠️ USERBOT-HATA-RAPORU-SONU ⚠️⚠️⚠️"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
@@ -167,18 +211,16 @@ class DogeUserBotClient(TelegramClient):
                         )
                         text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
                         text += "\n\n"
-                        link = f"[Burada](https://t.me/DogeSup)"
+                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
+                        text += "\n\n"
+                        link = f"[BURAYA](https://t.me/DogeSup)"
                         text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "🐾 Bu mesajı şuraya ilet {}.".format(link)
+                        text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += (
-                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
-                        )
+                        text += "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
-                        text += "\n\n"
-                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
@@ -264,14 +306,14 @@ class DogeUserBotClient(TelegramClient):
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
                         ftext = "💥💥💥💥 UYARI 💥💥💥💥\
-                        \n💠 Bu dosya sadece buraya yapıştırıldı,\
-                        \n💠 Yalnızca hatanın gerçekleştiği tarih ve saati kaydettik,\
+                        \n💠 Bu metin sadece buraya yazıldı,\
+                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
                         \n💠 Gizliliğinize saygı duyuyoruz,\
                         \n💠 Burada herhangi bir gizli veri varsa,\
                         \n💠 Bu hatayı bildirmeyebilirsiniz.\
                         \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n⚠️⚠️⚠️ASİSTAN-HATA-RAPORU-BAŞLANGICI⚠️⚠️⚠️\
+                        \n⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
                         \n📅 Tarih: {d}\
                         \n👥 Grup ID'si: {cid}\
                         \n👤 Gönderici ID: {sid}\
@@ -298,7 +340,7 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "⚠️⚠️⚠️ASİSTAN-HATA-RAPORU-SONU⚠️⚠️⚠️"
+                        ftext += "⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-SONU ⚠️⚠️⚠️"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
@@ -307,18 +349,16 @@ class DogeUserBotClient(TelegramClient):
                         )
                         text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
                         text += "\n\n"
-                        link = f"[Burada](https://t.me/DogeSup)"
+                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
+                        text += "\n\n"
+                        link = f"[BURAYA](https://t.me/DogeSup)"
                         text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "🐾 Bu mesajı şuraya ilet {}.".format(link)
+                        text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += (
-                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
-                        )
+                        text += "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
-                        text += "\n\n"
-                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )

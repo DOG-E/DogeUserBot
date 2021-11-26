@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ..sql_helper.notes_sql import add_note, del_note, get_note, get_notes
@@ -54,9 +54,9 @@ async def incom_note(event):
     pattern="note (\w*)",
     command=("note", plugin_category),
     info={
-        "header": "To save notes to the bot.",
-        "description": "Saves the replied message as a note with the notename. (Works with pics, docs, and stickers too!. and get them by using #notename",
-        "usage": "{tr}note <keyword>",
+        "h": "To save notes to the bot.",
+        "d": "Saves the replied message as a note with the notename. (Works with pics, docs, and stickers too!. and get them by using #notename",
+        "u": "{tr}note <keyword>",
     },
 )
 async def add_noter(event):
@@ -112,8 +112,8 @@ async def add_noter(event):
     pattern="notes$",
     command=("notes", plugin_category),
     info={
-        "header": "To list all notes in bot.",
-        "usage": "{tr}notes",
+        "h": "To list all notes in bot.",
+        "u": "{tr}notes",
     },
 )
 async def on_note_list(event):
@@ -140,8 +140,8 @@ async def on_note_list(event):
     pattern="dnote (\S+)",
     command=("dnote", plugin_category),
     info={
-        "header": "To delete paticular note in bot.",
-        "usage": "{tr}dnote <keyword>",
+        "h": "To delete paticular note in bot.",
+        "u": "{tr}dnote <keyword>",
     },
 )
 async def on_note_delete(event):

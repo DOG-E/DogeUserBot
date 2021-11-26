@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from collections import defaultdict, deque
@@ -22,7 +22,7 @@ from . import Config, doge, edl, eor
 
 plugin_category = "misc"
 
-HEADER = ""
+HEADER = "ㅤ"
 KNOWN_RE_BOTS = compile(Config.GROUP_REG_SED_EX_BOT_S, flags=IGNORECASE)
 last_msgs = defaultdict(lambda: deque(maxlen=10))
 
@@ -100,11 +100,11 @@ async def on_edit(event):
     pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
     command=("sed", plugin_category),
     info={
-        "header": "Replaces a word or words with other words.",
-        "description": "Tag any sentence and type s/a/b. where is required word to replace and b is correct word.",
-        "usage": "s<delimiter><old word(s)><delimiter><new word(s)>",
+        "h": "Replaces a word or words with other words.",
+        "d": "Tag any sentence and type s/a/b. where is required word to replace and b is correct word.",
+        "u": "s<delimiter><old word(s)><delimiter><new word(s)>",
         "delimiters": ["/", ":", "|", "_"],
-        "examples": "s/shibadog/doge - replace this command to this message",
+        "e": "s/shibadog/doge - replace this command to this message",
     },
 )
 async def on_regex(event):

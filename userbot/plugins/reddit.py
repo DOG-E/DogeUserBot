@@ -4,21 +4,21 @@
 # All rights reserved.
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from requests import get
 
+from ..helpers.resources import constants
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
     _dogeutils,
     doge,
     edl,
-    lan,
     logging,
     reply_id,
     wowmygroup,
@@ -34,9 +34,9 @@ API = "https://meme-api.herokuapp.com/gimme"
     pattern="reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
-        "header": "get a random reddit post.",
-        "usage": "{tr}reddit <subreddit>",
-        "examples": "{tr}reddit dankmemes",
+        "h": "get a random reddit post.",
+        "u": "{tr}reddit <subreddit>",
+        "e": "{tr}reddit dankmemes",
     },
 )
 async def reddit_fetch(event):
@@ -78,7 +78,10 @@ async def reddit_fetch(event):
             captionx += "⚠️️ Post marked as SPOILER\n"
         if r["nsfw"]:
             captionx += "🔞 Post marked Adult \n"
-            flag = await wowmygroup(event, lan("pmsgtext"))
+            flag = await wowmygroup(
+                event,
+                constants.pc_nf_rm_dg_y,
+            )
             if flag:
                 return
 

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -50,9 +50,9 @@ def get_key(val):
     pattern="sudo (on|off)$",
     command=("sudo", plugin_category),
     info={
-        "header": "To enable or disable sudo of your DogeUserBot.",
-        "description": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}doge .c addscmd`",
-        "usage": "{tr}sudo <on/off>",
+        "h": "To enable or disable sudo of your DogeUserBot.",
+        "d": "Initially all sudo commands are disabled, you need to enable them by addscmd\n Check `{tr}doge .c addscmd`",
+        "u": "{tr}sudo <on/off>",
     },
 )
 async def chat_blacklist(event):
@@ -102,8 +102,8 @@ async def chat_blacklist(event):
     pattern="addsudo(?:\s|$)([\s\S]*)",
     command=("addsudo", plugin_category),
     info={
-        "header": "To add user as your sudo.",
-        "usage": "{tr}addsudo <username/reply/mention>",
+        "h": "To add user as your sudo.",
+        "u": "{tr}addsudo <username/reply/mention>",
     },
 )
 async def add_sudo_user(event):
@@ -142,8 +142,8 @@ async def add_sudo_user(event):
     pattern="rmsudo(?:\s|$)([\s\S]*)",
     command=("rmsudo", plugin_category),
     info={
-        "header": "To remove user from your sudo.",
-        "usage": "{tr}rmsudo <username/reply/mention>",
+        "h": "To remove user from your sudo.",
+        "u": "{tr}rmsudo <username/reply/mention>",
     },
 )
 async def _(event):
@@ -173,8 +173,8 @@ async def _(event):
     pattern="vsudo$",
     command=("vsudo", plugin_category),
     info={
-        "header": "To list users for whom you're sudo.",
-        "usage": "{tr}vsudo",
+        "h": "To list users for whom you're sudo.",
+        "u": "{tr}vsudo",
     },
 )
 async def _(event):
@@ -200,19 +200,19 @@ async def _(event):
     pattern="addscmd(s)?(?:\s|$)([\s\S]*)",
     command=("addscmd", plugin_category),
     info={
-        "header": "To enable cmds for sudo users.",
-        "flags": {
+        "h": "To enable cmds for sudo users.",
+        "f": {
             ".all": "Will enable all cmds for sudo users. (except few like eval, exec, profile).",
             ".full": "Will add all cmds including eval,exec...etc. compelete sudo.",
             ".p": "Will add all cmds from the given plugin names.",
         },
-        "usage": [
+        "u": [
             "{tr}addscmd .all",
             "{tr}addscmd .full",
             "{tr}addscmd .p <plugin names>",
             "{tr}addscmd <commands>",
         ],
-        "examples": [
+        "e": [
             "{tr}addscmd .p autoprofile botcontrols i.e, for multiple names use space between each name",
             "{tr}addscmd ping alive i.e, for multiple names use space between each name",
         ],
@@ -291,19 +291,19 @@ async def _(event):  # sourcery no-metrics
     pattern="rmscmd(s)?(?:\s|$)([\s\S]*)?",
     command=("rmscmd", plugin_category),
     info={
-        "header": "To disable given cmds for sudo.",
-        "flags": {
+        "h": "To disable given cmds for sudo.",
+        "f": {
             ".all": "Will disable all enabled cmds for sudo users.",
             ".flag": "Will disable all flaged cmds like eval, exec...etc.",
             ".p": "Will disable all cmds from the given plugin names.",
         },
-        "usage": [
+        "u": [
             "{tr}rmscmd .all",
             "{tr}rmscmd .flag",
             "{tr}rmscmd .p <plugin names>",
             "{tr}rmscmd <commands>",
         ],
-        "examples": [
+        "e": [
             "{tr}rmscmd .p autoprofile botcontrols i.e, for multiple names use space between each name",
             "{tr}rmscmd ping alive i.e, for multiple commands use space between each name",
         ],
@@ -379,10 +379,10 @@ async def _(event):  # sourcery no-metrics
     pattern="vscmds( .d)?$",
     command=("vscmds", plugin_category),
     info={
-        "header": "To show list of enabled cmds for sudo.",
-        "description": "will show you the list of all enabled commands",
-        "flags": {".d": "To show disabled cmds instead of enabled cmds."},
-        "usage": [
+        "h": "To show list of enabled cmds for sudo.",
+        "d": "will show you the list of all enabled commands",
+        "f": {".d": "To show disabled cmds instead of enabled cmds."},
+        "u": [
             "{tr}vscmds",
             "{tr}vscmds .d",
         ],

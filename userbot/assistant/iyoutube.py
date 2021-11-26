@@ -41,7 +41,6 @@ from . import (
     post_to_telegraph,
     progress,
     reply_id,
-    tr,
     yt_search_btns,
 )
 
@@ -59,9 +58,9 @@ PATH = "./userbot/cache/ytsearch.json"
     pattern="yt(?:\s|$)([\s\S]*)",
     command=("yt", plugin_category),
     info={
-        "header": "Satır içi düğmelerle YouTube'dan videolar indirin.",
-        "description": "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için.",
-        "usage": f"{tr}yt yazı ya da yanıtlanmış ya da yazılmış link",
+        "h": "Satır içi düğmelerle YouTube'dan videolar indirin.",
+        "d": "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için.",
+        "u": "{tr}yt yazı ya da yanıtlanmış ya da yazılmış link",
     },
 )
 async def yt_inline(event):
@@ -287,7 +286,7 @@ async def ytdl_callback(c_q: CallbackQuery):
             buttons=[
                 (
                     Button.url(
-                        f"↗️ Aᴄᴍᴀᴋ Iᴄɪɴ Tıᴋʟᴀʏıɴ",
+                        f"↗️ Açᴍᴀᴋ Içɪɴ Tıᴋʟᴀʏıɴ",
                         url=telegraph,
                     )
                 ),

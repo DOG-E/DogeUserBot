@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -19,8 +19,8 @@ plugin_category = "misc"
     pattern="lmg ([\s\S]*)",
     command=("lmg", plugin_category),
     info={
-        "header": "Searches the given query in Google and shows you the link of that query.",
-        "usage": "{tr}lmg <Query>",
+        "h": "Searches the given query in Google and shows you the link of that query.",
+        "u": "{tr}lmg <Query>",
     },
 )
 async def _(event):
@@ -44,8 +44,8 @@ async def _(event):
     pattern="lmy ([\s\S]*)",
     command=("lmy", plugin_category),
     info={
-        "header": "Searches the given query in youtube and shows you the link of that query.",
-        "usage": "{tr}lmy <Query>",
+        "h": "Searches the given query in youtube and shows you the link of that query.",
+        "u": "{tr}lmy <Query>",
     },
 )
 async def _(event):
@@ -67,8 +67,8 @@ async def _(event):
     pattern="ddg ([\s\S]*)",
     command=("ddg", plugin_category),
     info={
-        "header": "Searches the given query in Duck duck go and shows you the link of that query.",
-        "usage": "{tr}ddg <Query>",
+        "h": "Searches the given query in Duck duck go and shows you the link of that query.",
+        "u": "{tr}ddg <Query>",
     },
 )
 async def _(event):
@@ -90,8 +90,8 @@ async def _(event):
     pattern="lmvar ([\s\S]*)",
     command=("lmvar", plugin_category),
     info={
-        "header": "Searches the given app name in heroku and show that app vars page link .",
-        "usage": ["{tr}lmvar <app name>", "{tr}lmvar"],
+        "h": "Searches the given app name in heroku and show that app vars page link .",
+        "u": ["{tr}lmvar <app name>", "{tr}lmvar"],
     },
 )
 async def lmvar(event):
@@ -117,8 +117,8 @@ async def lmvar(event):
     pattern="lmdyno ([\s\S]*)",
     command=("lmdyno", plugin_category),
     info={
-        "header": "Searches the given app name in heroku and shows you dyno page link of that app.",
-        "usage": ["{tr}lmdyno <query>", "{tr}lmdyno"],
+        "h": "Searches the given app name in heroku and shows you dyno page link of that app.",
+        "u": ["{tr}lmdyno <query>", "{tr}lmdyno"],
     },
 )
 async def lmdyno(event):
@@ -149,8 +149,8 @@ async def lmdyno(event):
     pattern="archive ([\s\S]*)",
     command=("archive", plugin_category),
     info={
-        "header": "Searches the given query in web archive and shows you the link of that query.",
-        "usage": "{tr}archive <Query>",
+        "h": "Searches the given query in web archive and shows you the link of that query.",
+        "u": "{tr}archive <Query>",
     },
 )
 async def _(event):

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -17,9 +17,9 @@ plugin_category = "misc"
     pattern="schd (\d*) ([\s\S]*)",
     command=("schd", plugin_category),
     info={
-        "header": "To schedule a message after given time(in seconds).",
-        "usage": "{tr}schd <time_in_seconds>  <message to send>",
-        "examples": "{tr}schd 120 hello",
+        "h": "To schedule a message after given time(in seconds).",
+        "u": "{tr}schd <time_in_seconds>  <message to send>",
+        "e": "{tr}schd 120 hello",
     },
 )
 async def _(event):

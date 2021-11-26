@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -92,9 +92,9 @@ async def _(event):  # sourcery no-metrics
     pattern="savepwel(?:\s|$)([\s\S]*)",
     command=("savepwel", plugin_category),
     info={
-        "header": "To welcome user(sends welcome message to here private messages).",
-        "description": "Saves the message as a welcome note in the chat. And will send welcome message to every new user who ever joins newly in group.",
-        "option": {
+        "h": "To welcome user(sends welcome message to here private messages).",
+        "d": "Saves the message as a welcome note in the chat. And will send welcome message to every new user who ever joins newly in group.",
+        "o": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
             "{count}": "To get group members",
@@ -109,11 +109,11 @@ async def _(event):  # sourcery no-metrics
             "{my_mention}": "To mention myself",
             "{my_username}": "To use my username.",
         },
-        "usage": [
+        "u": [
             "{tr}savepwel <welcome message>",
             "reply {tr}savepwel to text message or supported media with text as media caption",
         ],
-        "examples": "{tr}savepwel Hi {mention}, Welcome to {title} chat",
+        "e": "{tr}savepwel Hi {mention}, Welcome to {title} chat",
     },
 )
 async def save_welcome(event):
@@ -155,9 +155,9 @@ async def save_welcome(event):
     pattern="clearpwel$",
     command=("clearpwel", plugin_category),
     info={
-        "header": "To turn off private welcome message.",
-        "description": "Deletes the private welcome note for the current chat.",
-        "usage": "{tr}clearpwel",
+        "h": "To turn off private welcome message.",
+        "d": "Deletes the private welcome note for the current chat.",
+        "u": "{tr}clearpwel",
     },
 )
 async def del_welcome(event):
@@ -172,8 +172,8 @@ async def del_welcome(event):
     pattern="listpwel$",
     command=("listpwel", plugin_category),
     info={
-        "header": "To check current private welcome message in group.",
-        "usage": "{tr}listpwel",
+        "h": "To check current private welcome message in group.",
+        "u": "{tr}listpwel",
     },
 )
 async def show_welcome(event):

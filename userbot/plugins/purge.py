@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -47,10 +47,10 @@ purgetype = {
     pattern="del(\s*| \d+)$",
     command=("del", plugin_category),
     info={
-        "header": "To delete replied message.",
-        "description": "Deletes the message you replied to in x(count) seconds if count is not used then deletes immediately",
-        "usage": ["{tr}del <time in seconds>", "{tr}del"],
-        "examples": "{tr}del 2",
+        "h": "To delete replied message.",
+        "d": "Deletes the message you replied to in x(count) seconds if count is not used then deletes immediately",
+        "u": ["{tr}del <time in seconds>", "{tr}del"],
+        "e": "{tr}del 2",
     },
 )
 async def delete_it(event):
@@ -94,9 +94,9 @@ async def delete_it(event):
     pattern="purgefrom$",
     command=("purgefrom", plugin_category),
     info={
-        "header": "To mark the replied message as starting message of purge list.",
-        "description": "After using this u must use purgeto command also so that the messages in between this will delete.",
-        "usage": "{tr}purgefrom",
+        "h": "To mark the replied message as starting message of purge list.",
+        "d": "After using this u must use purgeto command also so that the messages in between this will delete.",
+        "u": "{tr}purgefrom",
     },
 )
 async def purge_from(event):
@@ -117,9 +117,9 @@ async def purge_from(event):
     pattern="purgeto$",
     command=("purgeto", plugin_category),
     info={
-        "header": "To mark the replied message as end message of purge list.",
-        "description": "U need to use purgefrom command before using this command to function this.",
-        "usage": "{tr}purgeto",
+        "h": "To mark the replied message as end message of purge list.",
+        "d": "U need to use purgefrom command before using this command to function this.",
+        "u": "{tr}purgeto",
     },
 )
 async def purge_to(event):
@@ -170,10 +170,10 @@ async def purge_to(event):
     pattern="purgeme",
     command=("purgeme", plugin_category),
     info={
-        "header": "To purge your latest messages.",
-        "description": "Deletes x(count) amount of your latest messages.",
-        "usage": "{tr}purgeme <count>",
-        "examples": "{tr}purgeme 2",
+        "h": "To purge your latest messages.",
+        "d": "Deletes x(count) amount of your latest messages.",
+        "u": "{tr}purgeme <count>",
+        "e": "{tr}purgeme 2",
     },
 )
 async def purgeme(event):
@@ -205,15 +205,15 @@ async def purgeme(event):
     pattern="purge(?:\s|$)([\s\S]*)",
     command=("purge", plugin_category),
     info={
-        "header": "To purge messages from the replied message.",
-        "description": "•  Deletes the x(count) amount of messages from the replied message\
+        "h": "To purge messages from the replied message.",
+        "d": "•  Deletes the x(count) amount of messages from the replied message\
         \n•  If you don't use count then deletes all messages from the replied messages\
         \n•  If you haven't replied to any message and used count then deletes recent x messages.\
         \n•  If you haven't replied to any message or haven't mentioned any flag or count then doesnt do anything\
         \n•  If flag is used then selects that type of messages else will select all types\
         \n•  You can use multiple flags like -gi 10 (It will delete 10 images and 10 gifs but not 10 messages of combination images and gifs.)\
         ",
-        "flags": {
+        "f": {
             "a": "To delete Voice messages.",
             "f": "To delete documents.",
             "g": "To delete gif's.",
@@ -226,11 +226,11 @@ async def purgeme(event):
             "v": "To delete Video messages.",
             "s": "To search paticular message and delete",
         },
-        "usage": [
+        "u": [
             "{tr}purge <flag(optional)> <count(x)> <reply> - to delete x flagged messages after reply",
             "{tr}purge <flag> <count(x)> - to delete recent x messages",
         ],
-        "examples": [
+        "e": [
             "{tr}purge 10",
             "{tr}purge .f 10",
             "{tr}purge .gi 10",
@@ -457,23 +457,23 @@ async def fastpurger(event):  # sourcery no-metrics
     pattern="upurge( -a)?(?:\s|$)([\s\S]*)",
     command=("upurge", plugin_category),
     info={
-        "header": "To purge messages from the replied message of replied user.",
-        "description": "•  Deletes the x(count) amount of messages from the replied message of replied user\
+        "h": "To purge messages from the replied message of replied user.",
+        "d": "•  Deletes the x(count) amount of messages from the replied message of replied user\
         \n•  If you don't use count then deletes all messages from the replied messages of replied user\
         \n•  Use -a flag to delete all his messages or mention x to delete x recent messages of his\
         \n•  Use -s flag to delete all his messages which contatins given word.\
         \n•  You cann't use both flags at a time\
         ",
-        "flags": {
+        "f": {
             "a": "To delete all messages of replied user.",
             "s": "To delete all messages of replied user with the given query.",
         },
-        "usage": [
+        "u": [
             "{tr}upurge <count> <reply>",
             "{tr}upurge -a <count(optional)> <reply>",
             "{tr}upurge -s <query> <reply>",
         ],
-        "examples": [
+        "e": [
             "{tr}upurge 10",
             "{tr}upurge -s fuck",
             "{tr}upurge -a",

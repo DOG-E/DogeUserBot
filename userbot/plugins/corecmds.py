@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -38,9 +38,9 @@ thumb_image_path = path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
     pattern="install$",
     command=("install", plugin_category),
     info={
-        "header": "To install an external plugin.",
-        "description": "Reply to any external plugin(supported by Doge) to install it in your bot.",
-        "usage": "{tr}install <reply plugin>",
+        "h": "To install an external plugin.",
+        "d": "Reply to any external plugin(supported by Doge) to install it in your bot.",
+        "u": "{tr}install <reply plugin>",
     },
 )
 async def install(event):
@@ -79,7 +79,7 @@ async def install(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -115,9 +115,9 @@ async def install(event):
     pattern="finstall$",
     command=("finstall", plugin_category),
     info={
-        "header": "To force install an external plugin.",
-        "description": "Reply to any external plugin(supported by Doge) to force install it in your bot.",
-        "usage": "{tr}finstall <reply plugin>",
+        "h": "To force install an external plugin.",
+        "d": "Reply to any external plugin(supported by Doge) to force install it in your bot.",
+        "u": "{tr}finstall <reply plugin>",
     },
 )
 async def finstall(event):
@@ -150,7 +150,7 @@ async def finstall(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}setvar PLUGINS True`\
+                        \n🦴 Write** `{tr}set var PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -186,10 +186,10 @@ async def finstall(event):
     pattern="ptest$",
     command=("ptest", plugin_category),
     info={
-        "header": "To temporary install for test an external plugin.",
-        "description": "Reply to any external plugin(supported by Doge) to temporary install for test it in your bot.",
+        "h": "To temporary install for test an external plugin.",
+        "d": "Reply to any external plugin(supported by Doge) to temporary install for test it in your bot.",
         "note": "The plugin will be removed automatically when you restart Doge.",
-        "usage": "{tr}ptest <reply plugin>",
+        "u": "{tr}ptest <reply plugin>",
     },
 )
 async def ptest(event):
@@ -230,10 +230,10 @@ async def ptest(event):
     pattern="load ([\s\S]*)",
     command=("load", plugin_category),
     info={
-        "header": "To load a plugin again. if you have unloaded it",
-        "description": "To load a plugin again which you unloaded by {tr}unload",
-        "usage": "{tr}load <plugin name>",
-        "examples": "{tr}load markdown",
+        "h": "To load a plugin again. if you have unloaded it",
+        "d": "To load a plugin again which you unloaded by {tr}unload",
+        "u": "{tr}load <plugin name>",
+        "e": "{tr}load markdown",
     },
 )
 async def load(event):
@@ -258,9 +258,9 @@ async def load(event):
     pattern="send ([\s\S]*)",
     command=("send", plugin_category),
     info={
-        "header": "To upload a plugin file to telegram chat",
-        "usage": "{tr}send <plugin name>",
-        "examples": "{tr}send markdown",
+        "h": "To upload a plugin file to telegram chat",
+        "u": "{tr}send <plugin name>",
+        "e": "{tr}send markdown",
     },
 )
 async def send(event):
@@ -294,10 +294,10 @@ async def send(event):
     pattern="unload ([\s\S]*)",
     command=("unload", plugin_category),
     info={
-        "header": "To unload a plugin temporarily.",
-        "description": "You can load this unloaded plugin by restarting or using {tr}load cmd. Useful for cases like seting notes in rose bot({tr}unload markdown).",
-        "usage": "{tr}unload <plugin name>",
-        "examples": "{tr}unload markdown",
+        "h": "To unload a plugin temporarily.",
+        "d": "You can load this unloaded plugin by restarting or using {tr}load cmd. Useful for cases like seting notes in rose bot({tr}unload markdown).",
+        "u": "{tr}unload <plugin name>",
+        "e": "{tr}unload markdown",
     },
 )
 async def unload(event):
@@ -314,11 +314,11 @@ async def unload(event):
     pattern="uninstall ([\s\S]*)",
     command=("uninstall", plugin_category),
     info={
-        "header": "To uninstall a plugin temporarily.",
-        "description": "To stop functioning of that plugin and remove that plugin from bot.",
+        "h": "To uninstall a plugin temporarily.",
+        "d": "To stop functioning of that plugin and remove that plugin from bot.",
         "note": "To unload a plugin permanently from bot set NO_LOAD var in heroku with that plugin name, give space between plugin names if more than 1.",
-        "usage": "{tr}uninstall <plugin name>",
-        "examples": "{tr}uninstall markdown",
+        "u": "{tr}uninstall <plugin name>",
+        "e": "{tr}uninstall markdown",
     },
 )
 async def uninstall(event):
@@ -354,11 +354,11 @@ async def uninstall(event):
     pattern="plist( .all)$",
     command=("plist", plugin_category),
     info={
-        "header": "To list all or external plugins in userbot.",
-        "flags": {
+        "h": "To list all or external plugins in userbot.",
+        "f": {
             ".all": "List all of plugins.",
         },
-        "usage": ["{tr}plist", "{tr}plist .all"],
+        "u": ["{tr}plist", "{tr}plist .all"],
     },
 )
 async def plist(event):
@@ -392,7 +392,7 @@ async def plist(event):
                 \n**➡️ To list externally installed plugins, you must first set a PLUGIN_CHANNEL.\
                 \n\
                 \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                \n🦴 Write** `{tr}setvar PLUGINS True`",
+                \n🦴 Write** `{tr}set var PLUGINS True`",
             )
 
 
@@ -400,8 +400,8 @@ async def plist(event):
     pattern="suicide$",
     command=("suicide", plugin_category),
     info={
-        "header": "Deletes all the files and folder in the current directory.",
-        "usage": "{tr}suicide",
+        "h": "Deletes all the files and folder in the current directory.",
+        "u": "{tr}suicide",
     },
 )
 async def suicide(event):
@@ -416,9 +416,9 @@ async def suicide(event):
     pattern="env$",
     command=("env", plugin_category),
     info={
-        "header": "To list all environment values in userbot.",
-        "description": "To show all Heroku vars/Config values in your userbot",
-        "usage": "{tr}env",
+        "h": "To list all environment values in userbot.",
+        "d": "To show all Heroku vars/Config values in your userbot",
+        "u": "{tr}env",
     },
 )
 async def env(event):

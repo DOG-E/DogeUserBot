@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from re import IGNORECASE, escape, search
@@ -44,12 +44,12 @@ async def on_new_message(event):
     pattern="addblacklist ((.|\n)*)",
     command=("addblacklist", plugin_category),
     info={
-        "header": "To add blacklist words to database",
-        "description": "The given word or words will be added to blacklist in that specific chat if any user sends then the message gets deleted.",
+        "h": "To add blacklist words to database",
+        "d": "The given word or words will be added to blacklist in that specific chat if any user sends then the message gets deleted.",
         "note": "if you're adding more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
             \n[hi \n hello]",
-        "usage": "{tr}addblacklist <word(s)>",
-        "examples": ["{tr}addblacklist fuck", "{tr}addblacklist fuck\nsex"],
+        "u": "{tr}addblacklist <word(s)>",
+        "e": ["{tr}addblacklist fuck", "{tr}addblacklist fuck\nsex"],
     },
     groups_only=True,
     require_admin=True,
@@ -75,12 +75,12 @@ async def _(event):
     pattern="rmblacklist ((.|\n)*)",
     command=("rmblacklist", plugin_category),
     info={
-        "header": "To remove blacklist words from database",
-        "description": "The given word or words will be removed from blacklist in that specific chat",
+        "h": "To remove blacklist words from database",
+        "d": "The given word or words will be removed from blacklist in that specific chat",
         "note": "if you're removing more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
             \n[hi \n hello]",
-        "usage": "{tr}rmblacklist <word(s)>",
-        "examples": ["{tr}rmblacklist fuck", "{tr}rmblacklist fuck\nsex"],
+        "u": "{tr}rmblacklist <word(s)>",
+        "e": ["{tr}rmblacklist fuck", "{tr}rmblacklist fuck\nsex"],
     },
     groups_only=True,
     require_admin=True,
@@ -102,9 +102,9 @@ async def _(event):
     pattern="listblacklist$",
     command=("listblacklist", plugin_category),
     info={
-        "header": "To show the black list words",
-        "description": "Shows you the list of blacklist words in that specific chat",
-        "usage": "{tr}listblacklist",
+        "h": "To show the black list words",
+        "d": "Shows you the list of blacklist words in that specific chat",
+        "u": "{tr}listblacklist",
     },
     groups_only=True,
     require_admin=True,

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import getcwd, path, remove
@@ -101,10 +101,10 @@ def get_provider(url):
     pattern="watch ([\s\S]*)",
     command=("watch", plugin_category),
     info={
-        "header": "To search online streaming sites for that movie.",
-        "description": "Fetches the list of sites(standard) where you can watch that movie.",
-        "usage": "{tr}watch <movie name>",
-        "examples": "{tr}watch aquaman",
+        "h": "To search online streaming sites for that movie.",
+        "d": "Fetches the list of sites(standard) where you can watch that movie.",
+        "u": "{tr}watch <movie name>",
+        "e": "{tr}watch aquaman",
     },
 )
 async def _(event):
@@ -163,8 +163,8 @@ async def _(event):
     pattern="imdb ([\s\S]*)",
     command=("imdb", plugin_category),
     info={
-        "header": "To fetch imdb data about the given movie or series.",
-        "usage": "{tr}imdb <movie/series name>",
+        "h": "To fetch imdb data about the given movie or series.",
+        "u": "{tr}imdb <movie/series name>",
     },
 )
 async def imdb_query(event):  # sourcery no-metrics

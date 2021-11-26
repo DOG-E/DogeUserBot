@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import makedirs, path
@@ -20,11 +20,11 @@ plugin_category = "tool"
     pattern="getc(?:\s|$)([\s\S]*)",
     command=("getc", plugin_category),
     info={
-        "header": "To download channel media files",
-        "description": "pass username and no of latest messages to check to command \
+        "h": "To download channel media files",
+        "d": "pass username and no of latest messages to check to command \
              so the bot will download media files from that latest no of messages to server ",
-        "usage": "{tr}getc count channel_username",
-        "examples": "{tr}getc 10 @DogeUserBot",
+        "u": "{tr}getc count channel_username",
+        "e": "{tr}getc 10 @DogeUserBot",
     },
 )
 async def get_media(event):
@@ -62,11 +62,11 @@ async def get_media(event):
     pattern="geta(?:\s|$)([\s\S]*)",
     command=("geta", plugin_category),
     info={
-        "header": "To download channel all media files",
-        "description": "pass username to command so the bot will download all media files from that latest no of messages to server ",
+        "h": "To download channel all media files",
+        "d": "pass username to command so the bot will download all media files from that latest no of messages to server ",
         "note": "there is limit of 3000 messages for this process to prevent API limits. that is will download all media files from latest 3000 messages",
-        "usage": "{tr}geta channel_username",
-        "examples": "{tr}geta @DogeUserBot",
+        "u": "{tr}geta channel_username",
+        "e": "{tr}geta @DogeUserBot",
     },
 )
 async def get_media(event):

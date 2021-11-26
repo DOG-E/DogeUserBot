@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -16,9 +16,9 @@ from telethon.tl.types import InputPrivacyKeyStatusTimestamp, PrivacyValueAllowA
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
+    DOGEAFK,
     PM_LOGGER_GROUP_ID,
     _format,
-    constants,
     doge,
     edl,
     gvar,
@@ -51,16 +51,16 @@ AFK_ = AFK()
     pattern="afk(?:\s|$)([\s\S]*)",
     command=("afk", plugin_category),
     info={
-        "header": "Enables afk for your account",
-        "description": "When you're in afk if any one tags you then your bot will reply as he is offline.\
+        "h": "Enables afk for your account",
+        "d": "When you're in afk if any one tags you then your bot will reply as he is offline.\
         AFK mean away from keyboard.",
-        "options": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
-        "usage": [
+        "o": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
+        "u": [
             "{tr}afk <reason>",
             "{tr}afk <reason> ; <link>",
             "{tr}afk <reply>",
         ],
-        "examples": "{tr}afk Let Me Sleep",
+        "e": "{tr}afk Let Me Sleep",
         "note": "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it",
     },
 )
@@ -292,9 +292,9 @@ async def on_afk(event):  # sourcery no-metrics
                 )
         else:
             if AFK_.reason:
-                dogerafk = constants.DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                dogerafk = DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
             else:
-                dogeafk = constants.DOGEAFK
+                dogeafk = DOGEAFK
 
         if AFK_.afk_type == "media":
             if AFK_.reason:

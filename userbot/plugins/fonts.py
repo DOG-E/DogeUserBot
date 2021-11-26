@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, edl, eor, fonts
@@ -15,12 +15,12 @@ plugin_category = "misc"
     pattern="[Ff]1(?:\s|$)([\s\S]*)",
     command=("f1", plugin_category),
     info={
-        "header": "៣ ⩏ ន ɨ ¢ ♬ ɭ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "៣ ⩏ ន ɨ ¢ ♬ ɭ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f1 <text>",
             "{tr}f1 reply this command to text message",
         ],
-        "examples": "{tr}f1 DogeUserBot",
+        "e": "{tr}f1 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -46,12 +46,12 @@ async def stylish_generator(event):
     pattern="[Ff]2(?:\s|$)([\s\S]*)",
     command=("f2", plugin_category),
     info={
-        "header": "ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "ꍏ ꈤ ꉓ ꀤ ꍟ ꈤ ꓄ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f2 <text>",
             "{tr}f2 reply this command to text message",
         ],
-        "examples": "{tr}f2 DogeUserBot",
+        "e": "{tr}f2 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -77,9 +77,9 @@ async def stylish_generator(event):
     pattern="[Ff]3(?:\s|$)([\s\S]*)",
     command=("f3", plugin_category),
     info={
-        "header": "ｖａｐｏｒ Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f3 <text>", "{tr}f3 reply this command to text message"],
-        "examples": "{tr}f3 DogeUserBot",
+        "h": "ｖａｐｏｒ Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f3 <text>", "{tr}f3 reply this command to text message"],
+        "e": "{tr}f3 DogeUserBot",
     },
 )
 async def vapor(event):
@@ -110,12 +110,12 @@ async def vapor(event):
     pattern="[Ff]4(?:\s|$)([\s\S]*)",
     command=("f4", plugin_category),
     info={
-        "header": "sᴍᴀʟʟᴄᴀᴘs Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "sᴍᴀʟʟᴄᴀᴘs Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f4 <text>",
             "{tr}f4 reply this command to text message",
         ],
-        "examples": "{tr}f4 DogeUserBot",
+        "e": "{tr}f4 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -141,12 +141,12 @@ async def stylish_generator(event):
     pattern="[Ff]5(?:\s|$)([\s\S]*)",
     command=("f5", plugin_category),
     info={
-        "header": "🅑 🅛 🅐 🅒 🅚 🅑 🅕 Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "🅑 🅛 🅐 🅒 🅚 🅑 🅕 Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f5 <text>",
             "{tr}f5 reply this command to text message",
         ],
-        "examples": "{tr}f5 DogeUserBot",
+        "e": "{tr}f5 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -172,12 +172,12 @@ async def stylish_generator(event):
     pattern="[Ff]6(?:\s|$)([\s\S]*)",
     command=("f6", plugin_category),
     info={
-        "header": "Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "Ⓑ Ⓤ Ⓑ Ⓑ Ⓛ Ⓔ Ⓢ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f6 <text>",
             "{tr}f6 reply this command to text message",
         ],
-        "examples": "{tr}f6 DogeUserBot",
+        "e": "{tr}f6 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -203,9 +203,9 @@ async def stylish_generator(event):
     pattern="[Ff]7(?:\s|$)([\s\S]*)",
     command=("f7", plugin_category),
     info={
-        "header": "Ꮏ Ꭿ Ꮑ Ꮄ Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f7 <text>", "{tr}f7 reply this command to text message"],
-        "examples": "{tr}f7 DogeUserBot",
+        "h": "Ꮏ Ꭿ Ꮑ Ꮄ Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f7 <text>", "{tr}f7 reply this command to text message"],
+        "e": "{tr}f7 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -231,9 +231,9 @@ async def stylish_generator(event):
     pattern="[Ff]8(?:\s|$)([\s\S]*)",
     command=("f8", plugin_category),
     info={
-        "header": "🄱 🄾 🅇 🄵 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f8 <text>", "{tr}f8 reply this command to text message"],
-        "examples": "{tr}f8 DogeUserBot",
+        "h": "🄱 🄾 🅇 🄵 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f8 <text>", "{tr}f8 reply this command to text message"],
+        "e": "{tr}f8 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -259,12 +259,12 @@ async def stylish_generator(event):
     pattern="[Ff]9(?:\s|$)([\s\S]*)",
     command=("f9", plugin_category),
     info={
-        "header": "ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "ᔑ ᗰ ᝪ ᝪ Ꭲ ᕼ Ꭲ ᗴ ᙭ Ꭲ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f9 <text>",
             "{tr}f9 reply this command to text message",
         ],
-        "examples": "{tr}f9 DogeUserBot",
+        "e": "{tr}f9 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -290,9 +290,9 @@ async def stylish_generator(event):
     pattern="[Ff]10(?:\s|$)([\s\S]*)",
     command=("f10", plugin_category),
     info={
-        "header": "є ﻮ א ק t Ŧ Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f10 <text>", "{tr}f10 reply this command to text message"],
-        "examples": "{tr}f10 DogeUserBot",
+        "h": "є ﻮ א ק t Ŧ Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f10 <text>", "{tr}f10 reply this command to text message"],
+        "e": "{tr}f10 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -318,9 +318,9 @@ async def stylish_generator(event):
     pattern="[Ff]11(?:\s|$)([\s\S]*)",
     command=("f11", plugin_category),
     info={
-        "header": "𝖒𝖆𝖗𝖊𝖋 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f11 <text>", "{tr}f11 reply this command to text message"],
-        "examples": "{tr}f11 DogeUserBot",
+        "h": "𝖒𝖆𝖗𝖊𝖋 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f11 <text>", "{tr}f11 reply this command to text message"],
+        "e": "{tr}f11 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -346,9 +346,9 @@ async def stylish_generator(event):
     pattern="[Ff]12(?:\s|$)([\s\S]*)",
     command=("f12", plugin_category),
     info={
-        "header": "𝓗 𝓐 𝓝 𝓓 𝓒 𝓕 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f12 <text>", "{tr}f12 reply this command to text message"],
-        "examples": "{tr}f12 DogeUserBot",
+        "h": "𝓗 𝓐 𝓝 𝓓 𝓒 𝓕 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f12 <text>", "{tr}f12 reply this command to text message"],
+        "e": "{tr}f12 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -374,12 +374,12 @@ async def stylish_generator(event):
     pattern="[Ff]13(?:\s|$)([\s\S]*)",
     command=("f13", plugin_category),
     info={
-        "header": "ⅅ Ꮎ U ℬ ℒ ℰ ℱ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "ⅅ Ꮎ U ℬ ℒ ℰ ℱ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f13 <text>",
             "{tr}f13 reply this command to text message",
         ],
-        "examples": "{tr}f13 DogeUserBot",
+        "e": "{tr}f13 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -405,9 +405,9 @@ async def stylish_generator(event):
     pattern="[Ff]14(?:\s|$)([\s\S]*)",
     command=("f14", plugin_category),
     info={
-        "header": "𝕲 𝕳 𝕺 𝕾 𝕿 𝕱 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f14 <text>", "{tr}f14 reply this command to text message"],
-        "examples": "{tr}f14 DogeUserBot",
+        "h": "𝕲 𝕳 𝕺 𝕾 𝕿 𝕱 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f14 <text>", "{tr}f14 reply this command to text message"],
+        "e": "{tr}f14 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -433,9 +433,9 @@ async def stylish_generator(event):
     pattern="[Ff]15(?:\s|$)([\s\S]*)",
     command=("f15", plugin_category),
     info={
-        "header": "𝒽 𝒶 𝓃 𝒹 𝓈 𝒻 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f15 <text>", "{tr}f15 reply this command to text message"],
-        "examples": "{tr}f15 DogeUserBot",
+        "h": "𝒽 𝒶 𝓃 𝒹 𝓈 𝒻 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f15 <text>", "{tr}f15 reply this command to text message"],
+        "e": "{tr}f15 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -459,12 +459,12 @@ async def stylish_generator(event):
     pattern="[Ff]16(?:\s|$)([\s\S]*)",
     command=("f16", plugin_category),
     info={
-        "header": "ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ Font style command.(Changes font style of the given text)",
-        "usage": [
+        "h": "ˢ ᵘ ᵖ ᵉ ʳ ˢ ᶜ ʳ ᶦ ᵖ ᵗ Font style command.(Changes font style of the given text)",
+        "u": [
             "{tr}f16 <text>",
             "{tr}f16 reply this command to text message",
         ],
-        "examples": "{tr}f16 DogeUserBot",
+        "e": "{tr}f16 DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -490,9 +490,9 @@ async def stylish_generator(event):
     pattern="[Ff]17(?:\s|$)([\s\S]*)",
     command=("f17", plugin_category),
     info={
-        "header": "山 乇 乇 乃 Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}f17 <text>", "{tr}f17 reply this command to text message"],
-        "examples": "{tr}f17 DogeUserBot",
+        "h": "山 乇 乇 乃 Font style command.(Changes font style of the given text)",
+        "u": ["{tr}f17 <text>", "{tr}f17 reply this command to text message"],
+        "e": "{tr}f17 DogeUserBot",
     },
 )
 async def weebify(event):

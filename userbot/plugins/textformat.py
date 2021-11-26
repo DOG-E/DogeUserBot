@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, edl, eor, parse_pre
@@ -15,9 +15,9 @@ plugin_category = "tool"
     pattern="upper(?: |$)([\s\S]*)",
     command=("upper", plugin_category),
     info={
-        "header": "Text operation change to upper text",
-        "usage": "{tr}upper <input text /reply to text>",
-        "examples": "{tr}upper Reply to valid text or give valid text as input",
+        "h": "Text operation change to upper text",
+        "u": "{tr}upper <input text /reply to text>",
+        "e": "{tr}upper Reply to valid text or give valid text as input",
     },
 )
 async def some(event):
@@ -38,9 +38,9 @@ async def some(event):
     pattern="lower(?: |$)([\s\S]*)",
     command=("lower", plugin_category),
     info={
-        "header": "Text operation change to lower text",
-        "usage": "{tr}lower <input text /reply to text>",
-        "examples": "{tr}lower Reply to valid text or give valid text as input",
+        "h": "Text operation change to lower text",
+        "u": "{tr}lower <input text /reply to text>",
+        "e": "{tr}lower Reply to valid text or give valid text as input",
     },
 )
 async def good(event):
@@ -61,9 +61,9 @@ async def good(event):
     pattern="title(?: |$)([\s\S]*)",
     command=("title", plugin_category),
     info={
-        "header": "Text operation change to title text",
-        "usage": "{tr}title <input text /reply to text>",
-        "examples": "{tr}title Reply to valid text or give valid text as input",
+        "h": "Text operation change to title text",
+        "u": "{tr}title <input text /reply to text>",
+        "e": "{tr}title Reply to valid text or give valid text as input",
     },
 )
 async def stuff(event):
@@ -84,12 +84,12 @@ async def stuff(event):
     pattern="(|r)camel(?: |$)([\s\S]*)",
     command=("camel", plugin_category),
     info={
-        "header": "Text operation change to camel text",
-        "usage": [
+        "h": "Text operation change to camel text",
+        "u": [
             "{tr}camel <input text /reply to text>",
             "{tr}rcamel <input text /reply to text>",
         ],
-        "examples": [
+        "e": [
             "{tr}camel Reply to valid text or give valid text as input",
             "{tr}rcamel Reply to valid text or give valid text as input",
         ],
@@ -120,8 +120,8 @@ async def here(event):
     pattern="noformat$",
     command=("noformat", plugin_category),
     info={
-        "header": "To get replied message without markdown formating.",
-        "usage": "{tr}noformat <reply>",
+        "h": "To get replied message without markdown formating.",
+        "u": "{tr}noformat <reply>",
     },
 )
 async def _(event):

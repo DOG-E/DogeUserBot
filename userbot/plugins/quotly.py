@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from io import BytesIO
@@ -47,13 +47,13 @@ FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
     pattern="qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
     info={
-        "header": "Makes quote pic.",
-        "flags": {
+        "h": "Makes quote pic.",
+        "f": {
             "-b": "To get black and white output.",
             "-s": "To output file as sticker",
         },
-        "usage": "{tr}qpic <flag> <input/reply to text msg>",
-        "examples": ["{tr}qpic DogeUserBot.", "{tr}qpic -b DogeUserBot."],
+        "u": "{tr}qpic <flag> <input/reply to text msg>",
+        "e": ["{tr}qpic DogeUserBot.", "{tr}qpic -b DogeUserBot."],
     },
 )
 async def q_pic(event):  # sourcery no-metrics
@@ -151,8 +151,8 @@ async def q_pic(event):  # sourcery no-metrics
     pattern="qbot(?:\s|$)([\s\S]*)",
     command=("qbot", plugin_category),
     info={
-        "header": "Makes your message as sticker quote.",
-        "usage": "{tr}qbot",
+        "h": "Makes your message as sticker quote.",
+        "u": "{tr}qbot",
     },
 )
 async def stickerchat(dogquotes):
@@ -186,8 +186,8 @@ async def stickerchat(dogquotes):
     pattern="rq(?:\s|$)([\s\S]*)",
     command=("rq", plugin_category),
     info={
-        "header": "Makes your message along with the previous replied message as sticker quote",
-        "usage": "{tr}rq",
+        "h": "Makes your message along with the previous replied message as sticker quote",
+        "u": "{tr}rq",
     },
 )
 async def stickerchat(dogquotes):
@@ -221,8 +221,8 @@ async def stickerchat(dogquotes):
     pattern="q(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
     info={
-        "header": "Makes your message as sticker quote by @quotlybot",
-        "usage": "{tr}q",
+        "h": "Makes your message as sticker quote by @quotlybot",
+        "u": "{tr}q",
     },
 )
 async def _(event):

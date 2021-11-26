@@ -5,10 +5,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import mkdir, path, remove
@@ -22,9 +22,9 @@ plugin_category = "misc"
     pattern="collage(?:\s|$)([\s\S]*)",
     command=("collage", plugin_category),
     info={
-        "header": "To create collage from still images extracted from video/gif.",
-        "description": "Shows you the grid image of images extracted from video/gif. you can customize the Grid size by giving integer between 1 to 9 to cmd by default it is 3",
-        "usage": "{tr}collage <1-9>",
+        "h": "To create collage from still images extracted from video/gif.",
+        "d": "Shows you the grid image of images extracted from video/gif. you can customize the Grid size by giving integer between 1 to 9 to cmd by default it is 3",
+        "u": "{tr}collage <1-9>",
     },
 )
 async def collage(event):

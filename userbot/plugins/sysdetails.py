@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -39,8 +39,8 @@ def get_size(inputbytes, suffix="B"):
     pattern="spc$",
     command=("spc", plugin_category),
     info={
-        "header": "To show system specification.",
-        "usage": "{tr}spc",
+        "h": "To show system specification.",
+        "u": "{tr}spc",
     },
 )
 async def psu(event):
@@ -95,8 +95,8 @@ async def psu(event):
     pattern="cpu$",
     command=("cpu", plugin_category),
     info={
-        "header": "To show cpu information.",
-        "usage": "{tr}cpu",
+        "h": "To show cpu information.",
+        "u": "{tr}cpu",
     },
 )
 async def cpu(event):
@@ -110,8 +110,8 @@ async def cpu(event):
     pattern="sysd$",
     command=("sysd", plugin_category),
     info={
-        "header": "Shows system information using neofetch",
-        "usage": "{tr}cpu",
+        "h": "Shows system information using neofetch",
+        "u": "{tr}cpu",
     },
 )
 async def sysdetails(sysd):

@@ -276,7 +276,7 @@ class ParallelTransferrer:
             )
         )
         if not self.auth_key:
-            LOGS.debug(f"⏳ DC {self.dc_id} dışarı aktarııyor..")
+            LOGS.debug(f"⏳ {self.dc_id} numaralı veri merkezinden dışarı aktarılıyor..")
             auth = await self.client(ExportAuthorizationRequest(self.dc_id))
             self.client._init_request.query = ImportAuthorizationRequest(
                 id=auth.id, bytes=auth.bytes

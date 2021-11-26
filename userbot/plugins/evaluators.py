@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 import sys
@@ -20,9 +20,9 @@ plugin_category = "tool"
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
-        "header": "To Execute terminal commands in a subprocess.",
-        "usage": "{tr}exec <command>",
-        "examples": "{tr}exec python3 stringsetup.py",
+        "h": "To Execute terminal commands in a subprocess.",
+        "u": "{tr}exec <command>",
+        "e": "{tr}exec python3 stringsetup.py",
     },
 )
 async def _(event):
@@ -57,9 +57,9 @@ async def _(event):
     pattern="eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
-        "header": "To Execute python script/statements in a subprocess.",
-        "usage": "{tr}eval <command>",
-        "examples": "{tr}eval print('DogeUserBot')",
+        "h": "To Execute python script/statements in a subprocess.",
+        "u": "{tr}eval <command>",
+        "e": "{tr}eval print('DogeUserBot')",
     },
 )
 async def _(event):

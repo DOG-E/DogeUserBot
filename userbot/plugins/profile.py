@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import makedirs, path, remove, stat
@@ -39,8 +39,8 @@ USERNAME_TAKEN = "```This username is already taken.```"
     pattern="pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
-        "header": "To set bio for this account.",
-        "usage": "{tr}pbio <your bio>",
+        "h": "To set bio for this account.",
+        "u": "{tr}pbio <your bio>",
     },
 )
 async def _(event):
@@ -64,8 +64,8 @@ async def _(event):
     pattern="pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
-        "header": "To set/change name for this account.",
-        "usage": ["{tr}pname firstname ; last name", "{tr}pname firstname"],
+        "h": "To set/change name for this account.",
+        "u": ["{tr}pname firstname ; last name", "{tr}pname firstname"],
     },
 )
 async def _(event):
@@ -88,8 +88,8 @@ async def _(event):
     pattern="ppic$",
     command=("ppic", plugin_category),
     info={
-        "header": "To set profile pic for this account.",
-        "usage": "{tr}ppic <reply to image or gif>",
+        "h": "To set profile pic for this account.",
+        "u": "{tr}ppic <reply to image or gif>",
     },
 )
 async def _(event):
@@ -138,8 +138,8 @@ async def _(event):
     pattern="pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
-        "header": "To set/update username for this account.",
-        "usage": "{tr}pusername <new username>",
+        "h": "To set/update username for this account.",
+        "u": "{tr}pusername <new username>",
     },
 )
 async def update_username(event):
@@ -158,9 +158,9 @@ async def update_username(event):
     pattern="delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
-        "header": "To delete profile pic for this account.",
-        "description": "If you haven't mentioned no of profile pics then only 1 will be deleted.",
-        "usage": ["{tr}delpfp <no of pics to be deleted>", "{tr}delpfp"],
+        "h": "To delete profile pic for this account.",
+        "d": "If you haven't mentioned no of profile pics then only 1 will be deleted.",
+        "u": ["{tr}delpfp <no of pics to be deleted>", "{tr}delpfp"],
     },
 )
 async def remove_profilepic(delpfp):
@@ -191,8 +191,8 @@ async def remove_profilepic(delpfp):
     pattern="myusernames$",
     command=("myusernames", plugin_category),
     info={
-        "header": "To list public channels or groups created by this account.",
-        "usage": "{tr}myusernames",
+        "h": "To list public channels or groups created by this account.",
+        "u": "{tr}myusernames",
     },
 )
 async def _(event):

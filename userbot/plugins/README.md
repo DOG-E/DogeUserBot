@@ -26,10 +26,10 @@ plugin_category = "fun"
     pattern="hibuddy(?:\s|$)([\s\S]*)",
     command=("hibuddy", plugin_category),
     info={
-        "header": "Just to say hi to other user.",
-        "description": "input string along with cmd will be added to your hi text",
-        "usage": "{tr}hibuddy <text>",
-        "examples": "{tr}hibuddy how are you doing",
+        "h": "Just to say hi to other user.",
+        "d": "input string along with cmd will be added to your hi text",
+        "u": "{tr}hibuddy <text>",
+        "e": "{tr}hibuddy how are you doing",
     },
 )
 async def hi_buddy(event):
@@ -52,13 +52,13 @@ async def hi_buddy(event):
     pattern="Regex for command",
     command=("Just command name", plugin_category), # Use plugin_category name from predefined names (admin, bot, fun, misc, tool, hub)
     info={
-        "header": string - "intro for command",
-        "description": string - "Description for command",
-        "flags": dict or string - "Flags you're using in your plugin",
-        "options": dict or string - "Options you're using in your plugin",
-        "types": list or string - "types you're using in your plugin",
-        "usage": "Usage for your command",
-        "examples": "Example for the command",
+        "h": string - "intro for command",
+        "d": string - "Description for command",
+        "f": dict or string - "Flags you're using in your plugin",
+        "o": dict or string - "Options you're using in your plugin",
+        "t": list or string - "types you're using in your plugin",
+        "u": "Usage for your command",
+        "e": "Example for the command",
         "your custom name if you want to use other": str or list or dict - "data/information about it",
     },
 # When you assign variables to the following values, put a comma at the end.

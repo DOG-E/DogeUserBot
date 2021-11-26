@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -18,7 +18,8 @@ from telethon.tl.functions.contacts import (
 )
 from telethon.utils import get_display_name
 
-from . import doge, edl, eor, lan, wowmygroup
+from ..helpers.resources import constants
+from . import doge, edl, eor, wowmygroup
 
 plugin_category = "tool"
 
@@ -29,8 +30,8 @@ CONTACTUSERS = []
     pattern="contact(s)$",
     command=("contacts", plugin_category),
     info={
-        "header": "Find out the number of users you've added to contacts.",
-        "usage": "{tr}contact(s)",
+        "h": "Find out the number of users you've added to contacts.",
+        "u": "{tr}contact(s)",
     },
 )
 async def contactssee(event):
@@ -44,13 +45,13 @@ async def contactssee(event):
     pattern="(addcontacts|rehberekle) ?(\\w*)$",
     command=("addcontacts", plugin_category),
     info={
-        "header": "Add users from any group to contacts.",
+        "h": "Add users from any group to contacts.",
         "note": "Only administrators can use this. Add 150 or more users to contacts may cause flood wait.",
-        "usage": [
+        "u": [
             "{tr}addcontacts",
             "{tr}addcontacts <number>",
         ],
-        "examples": "{tr}addcontacts 100",
+        "e": "{tr}addcontacts 100",
     },
     groups_only=True,
 )
@@ -74,7 +75,10 @@ async def contactsaddto(event):
                     grouptitle
                 ),
             )
-    flag = await wowmygroup(event, lan("cmsgtext"))
+    flag = await wowmygroup(
+        event,
+        constants.cc_nf_rm_dg_y,
+    )
     if flag:
         return
 
@@ -119,8 +123,8 @@ async def contactsaddto(event):
     pattern="c(lean)contact(s)$",
     command=("cleancontacts", plugin_category),
     info={
-        "header": "Clean your contacts.",
-        "usage": "{tr}c(lean)contact(s)",
+        "h": "Clean your contacts.",
+        "u": "{tr}c(lean)contact(s)",
     },
 )
 async def contactsclean(event):

@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from bs4 import BeautifulSoup
@@ -20,9 +20,9 @@ plugin_category = "tool"
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={
-        "header": "To search any app in playstore",
-        "description": "Searches the app in the playstore and provides the link to the app in playstore and fetchs app details",
-        "usage": "{tr}app <name>",
+        "h": "To search any app in playstore",
+        "d": "Searches the app in the playstore and provides the link to the app in playstore and fetchs app details",
+        "u": "{tr}app <name>",
     },
 )
 async def app_search(event):

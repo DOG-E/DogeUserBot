@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -67,11 +67,11 @@ font_list = [
     pattern="pframe(f|-f)?$",
     command=("pframe", plugin_category),
     info={
-        "header": "Adds frame for the replied image.",
-        "flags": {
+        "h": "Adds frame for the replied image.",
+        "f": {
             "-f": "To send output file not as streamble image.",
         },
-        "usage": [
+        "u": [
             "{tr}pframe",
         ],
     },
@@ -112,9 +112,9 @@ async def maccmd(event):  # sourcery no-metrics
     pattern="cfont(?:\s|$)([\s\S]*)",
     command=("cfont", plugin_category),
     info={
-        "header": "Change the font style use for memify.To get font list use cfont command as it is without input.",
-        "usage": "{tr}.cfont <Font Name>",
-        "examples": "{tr}cfont modern.ttf",
+        "h": "Change the font style use for memify.To get font list use cfont command as it is without input.",
+        "u": "{tr}.cfont <Font Name>",
+        "e": "{tr}cfont modern.ttf",
     },
 )
 async def customfont(event):
@@ -137,9 +137,9 @@ async def customfont(event):
     pattern="ascii(?:\s|$)([\s\S]*)",
     command=("ascii", plugin_category),
     info={
-        "header": "To get ascii image of replied image.",
-        "description": "pass hexa colou code along with the cmd to change custom background colour",
-        "usage": [
+        "h": "To get ascii image of replied image.",
+        "d": "pass hexa colou code along with the cmd to change custom background colour",
+        "u": [
             "{tr}ascii <hexa colour code>",
             "{tr}ascii",
         ],
@@ -192,8 +192,8 @@ async def amemes(event):
     pattern="invert$",
     command=("invert", plugin_category),
     info={
-        "header": "To invert colours of given image or sticker.",
-        "usage": "{tr}invert",
+        "h": "To invert colours of given image or sticker.",
+        "u": "{tr}invert",
     },
 )
 async def imemes(event):
@@ -236,8 +236,8 @@ async def imemes(event):
     pattern="solarize$",
     command=("solarize", plugin_category),
     info={
-        "header": "To sun burn the colours of given image or sticker.",
-        "usage": "{tr}solarize",
+        "h": "To sun burn the colours of given image or sticker.",
+        "u": "{tr}solarize",
     },
 )
 async def smemes(event):
@@ -280,8 +280,8 @@ async def smemes(event):
     pattern="mirror$",
     command=("mirror", plugin_category),
     info={
-        "header": "shows you the reflection of the media file.",
-        "usage": "{tr}mirror",
+        "h": "shows you the reflection of the media file.",
+        "u": "{tr}mirror",
     },
 )
 async def mmemes(event):
@@ -326,8 +326,8 @@ async def mmemes(event):
     pattern="flip$",
     command=("flip", plugin_category),
     info={
-        "header": "shows you the upside down image of the given media file.",
-        "usage": "{tr}flip",
+        "h": "shows you the upside down image of the given media file.",
+        "u": "{tr}flip",
     },
 )
 async def fmemes(event):
@@ -372,8 +372,8 @@ async def fmemes(event):
     pattern="gray$",
     command=("gray", plugin_category),
     info={
-        "header": "makes your media file to black and white.",
-        "usage": "{tr}gray",
+        "h": "makes your media file to black and white.",
+        "u": "{tr}gray",
     },
 )
 async def gmemes(event):
@@ -418,8 +418,8 @@ async def gmemes(event):
     pattern="zoom ?([\s\S]*)",
     command=("zoom", plugin_category),
     info={
-        "header": "zooms your media file,",
-        "usage": ["{tr}zoom", "{tr}zoom range"],
+        "h": "zooms your media file,",
+        "u": ["{tr}zoom", "{tr}zoom range"],
     },
 )
 async def zmemes(event):
@@ -472,9 +472,9 @@ async def zmemes(event):
     pattern="frame ?([\s\S]*)",
     command=("frame", plugin_category),
     info={
-        "header": "make a frame for your media file.",
-        "fill": "This defines the pixel fill value or color value to be applied. The default value is 0 which means the color is black.",
-        "usage": ["{tr}frame", "{tr}frame range", "{tr}frame range ; fill"],
+        "h": "make a frame for your media file.",
+        "note": "This defines the pixel fill value or color value to be applied. The default value is 0 which means the color is black.",
+        "u": ["{tr}frame", "{tr}frame range", "{tr}frame range ; fill"],
     },
 )
 async def frmemes(event):
@@ -536,17 +536,17 @@ async def frmemes(event):
     pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
     command=("mmf", plugin_category),
     info={
-        "header": "To write text on stickers or images.",
-        "description": "To create memes.",
-        "options": {
+        "h": "To write text on stickers or images.",
+        "d": "To create memes.",
+        "o": {
             "mmf": "Output will be image.",
             "mms": "Output will be sticker.",
         },
-        "usage": [
+        "u": [
             "{tr}mmf toptext ; bottomtext",
             "{tr}mms toptext ; bottomtext",
         ],
-        "examples": [
+        "e": [
             "{tr}mmf hello (only on top)",
             "{tr}mmf ; hello (only on bottom)",
             "{tr}mmf hi ; hello (both on top and bottom)",

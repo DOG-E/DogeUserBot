@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from telethon.password import compute_check
@@ -19,9 +19,9 @@ plugin_category = "tool"
     pattern="otransfer ([\s\S]*)",
     command=("otransfer", plugin_category),
     info={
-        "header": "To transfer channel ownership.",
-        "description": "Transfers ownership to the given username for this set this var `TG_2STEP_VERIFICATION_CODE` with {tr}setdog your 2-step verification code.",
-        "usage": "{tr}otransfer <username to whom you want to transfer>",
+        "h": "To transfer channel ownership.",
+        "d": "Transfers ownership to the given username for this set this var `TG_2STEP_VERIFICATION_CODE` with {tr}setdog your 2-step verification code.",
+        "u": "{tr}otransfer <username to whom you want to transfer>",
     },
 )
 async def _(event):

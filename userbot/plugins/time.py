@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from calendar import month
@@ -52,10 +52,10 @@ async def get_tz(con):
     pattern="ctime(?:\s|$)([\s\S]*)(?<![0-9])(?: |$)([0-9]+)?",
     command=("ctime", plugin_category),
     info={
-        "header": "To get current time of a paticular country",
+        "h": "To get current time of a paticular country",
         "note": "For country names check [this link](https://telegra.ph/country-names-10-24)",  # TODO
-        "usage": "{tr}ctime <country name/code> <timezone number>",
-        "examples": "{tr}ctime Brazil 2",
+        "u": "{tr}ctime <country name/code> <timezone number>",
+        "e": "{tr}ctime Brazil 2",
     },
 )
 async def time_func(tdata):
@@ -118,9 +118,9 @@ async def time_func(tdata):
     pattern="time(?:\s|$)([\s\S]*)",
     command=("time", plugin_category),
     info={
-        "header": "To show current time.",
-        "description": "shows current default time you can change by changing TZ in heroku vars.",
-        "usage": "{tr}time",
+        "h": "To show current time.",
+        "d": "shows current default time you can change by changing TZ in heroku vars.",
+        "u": "{tr}time",
     },
 )
 async def _(event):
@@ -153,9 +153,9 @@ async def _(event):
     pattern="calendar ([\s\S]*)",
     command=("calendar", plugin_category),
     info={
-        "header": "To get calendar of given month and year.",
-        "usage": "{tr}calendar year ; month",
-        "examples": "{tr}calendar 2021 ; 5",
+        "h": "To get calendar of given month and year.",
+        "u": "{tr}calendar year ; month",
+        "e": "{tr}calendar 2021 ; 5",
     },
 )
 async def _(event):

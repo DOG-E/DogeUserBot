@@ -5,10 +5,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -257,8 +257,8 @@ def get_spotify_info(TIME=5):
     pattern="spotify (on|off)",
     command=("spotifybio", plugin_category),
     info={
-        "header": "To enable or disable the Spotify current playing to bio.",
-        "usage": [
+        "h": "To enable or disable the Spotify current playing to bio.",
+        "u": [
             "{tr}spotify on",
             "{tr}spotify off",
         ],
@@ -288,8 +288,8 @@ async def set_biostgraph(setstbio):
     pattern="spotifymp3",
     command=("spotifymp3", plugin_category),
     info={
-        "header": "Send current Spotify playing song.",
-        "usage": "{tr}spotifymp3",
+        "h": "Send current Spotify playing song.",
+        "u": "{tr}spotifymp3",
     },
 )
 async def getmp3(event):

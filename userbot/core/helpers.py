@@ -20,7 +20,7 @@ LOGS = getLogger("userbot")
 def printUser(entity: User) -> None:
     """Başlangıçta kullancının ilk adını ve soyadını yazdır"""
     user = get_display_name(entity)
-    LOGS.warning("{0} Başarıyla Giriş Yapıldı..".format(user))
+    LOGS.warning("{0} başarıyla giriş yapıldı.".format(user))
 
 
 async def get_chat_link(

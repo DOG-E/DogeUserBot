@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -12,7 +12,7 @@ from random import choice
 
 from requests import post
 
-from . import doge, edl, eor, gvar, reply_id
+from . import doge, edl, eor, reply_id
 
 plugin_category = "fun"
 
@@ -36,7 +36,7 @@ async def get_task(mode, cchoice):
     url = "https://psycatgames.com/api/tod-v2/"
     data = {
         "id": "truth-or-dare",
-        "language": gvar("DOGELANG"),
+        "language": "tr",
         "category": category[cchoice],
         "type": mode,
     }
@@ -52,10 +52,10 @@ async def get_task(mode, cchoice):
     pattern="(task|truth|dare)(?: |$)([1-5]+)?$",
     command=("task", plugin_category),
     info={
-        "header": "Get a random truth or dare task.",
-        "description": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
+        "h": "Get a random truth or dare task.",
+        "d": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
         "note": "U need to give input as 1 for classic, 2 for kids, 3 for party, 4 for hot and 5 for mixed. if you want to give multiple catgories then use numbers without space like 12",
-        "example": [
+        "e": [
             "{tr}task",
             "{tr}task 2",
             "{tr}task 123",
@@ -85,10 +85,10 @@ async def truth_dare_task(event):
 @doge.bot_cmd(
     command=("truth", plugin_category),
     info={
-        "header": "Get a random truth task.",
-        "description": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
+        "h": "Get a random truth task.",
+        "d": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
         "note": "U need to give input as 1 for classic, 2 for kids, 3 for party, 4 for hot and 5 for mixed. if you want to give multiple catgories then use numbers without space like 12",
-        "example": [
+        "e": [
             "{tr}truth",
             "{tr}truth 2",
             "{tr}truth 123",
@@ -103,10 +103,10 @@ async def truth_task(event):
 @doge.bot_cmd(
     command=("dare", plugin_category),
     info={
-        "header": "Get a random dare task.",
-        "description": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
+        "h": "Get a random dare task.",
+        "d": "if no input is given then task will be from classic or kids category. if you want specific category then give input.",
         "note": "U need to give input as 1 for classic, 2 for kids, 3 for party, 4 for hot and 5 for mixed. if you want to give multiple catgories then use numbers without space like 12",
-        "example": [
+        "e": [
             "{tr}dare",
             "{tr}dare 2",
             "{tr}dare 123",
@@ -122,11 +122,11 @@ async def dare_task(event):
     pattern="game(?:\s|$)([\s\S]*)",
     command=("game", plugin_category),
     info={
-        "header": "Play inline games",
-        "description": "Start an inline game by inlinegamebot",
+        "h": "Play inline games",
+        "d": "Start an inline game by inlinegamebot",
         "Game code & Name": game,
-        "usage": "{tr}game <game code>",
-        "examples": "{tr}game 3 ",
+        "u": "{tr}game <game code>",
+        "e": "{tr}game 3 ",
     },
 )
 async def igame(event):

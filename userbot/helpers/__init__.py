@@ -9,6 +9,7 @@
 from . import fonts
 from . import memeshelper as dogememes
 from .aiohttp_helper import AioHttp
+from .resources.constants import *
 from .utils import *
 
 flag = True

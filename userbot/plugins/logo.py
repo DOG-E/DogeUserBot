@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -56,16 +56,16 @@ vars_list = {
     pattern="(|s)logo(?: |$)([\s\S]*)",
     command=("logo", plugin_category),
     info={
-        "header": "Make a logo in image or sticker",
-        "description": "Just a fun purpose plugin to create logo in image or in sticker.",
-        "flags": {
+        "h": "Make a logo in image or sticker",
+        "d": "Just a fun purpose plugin to create logo in image or in sticker.",
+        "f": {
             "s": "To create a logo in sticker instade of image.",
         },
-        "usage": [
+        "u": [
             "{tr}logo <text>",
             "{tr}slogo <text>",
         ],
-        "examples": [
+        "e": [
             "{tr}logo Doge",
             "{tr}slogo Doge",
         ],
@@ -152,16 +152,16 @@ async def very(event):
     pattern="(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
     info={
-        "header": "Change the background of logo",
-        "description": "To change the background on which logo will created, in **bg** there few built-in backgrounds.",
-        "flags": {
+        "h": "Change the background of logo",
+        "d": "To change the background on which logo will created, in **bg** there few built-in backgrounds.",
+        "f": {
             "c": "Custom background for logo, can set by giving a telegraph link or reply to media.",
         },
-        "usage": [
+        "u": [
             "{tr}lbg <background color code>",
             "{tr}clbg <telegraph link / reply to media>",
         ],
-        "examples": [
+        "e": [
             "{tr}lbg red",
             "{tr}clbg https://telegra.ph/blablabla.jpg",
         ],
@@ -215,9 +215,9 @@ async def bad(event):
     pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
-        "header": "Change text style for logo.",
-        "description": "Customise logo font, font size, font position like text hight or width.",
-        "flags": {
+        "h": "Change text style for logo.",
+        "d": "Customise logo font, font size, font position like text hight or width.",
+        "f": {
             "c": "To change color of logo font.",
             "s": "To change size of logo font.",
             "h": "To change hight of logo font.",
@@ -225,7 +225,7 @@ async def bad(event):
             "sw": "To change stroke width of logo font.",
             "sc": "To change stroke color of logo font.",
         },
-        "usage": [
+        "u": [
             "{tr}lf <font name>",
             "{tr}lfc <logo font color>",
             "{tr}lfs <1-1000>",
@@ -234,7 +234,7 @@ async def bad(event):
             "{tr}lfsw <10-100>",
             "{tr}lfsc <logo font stroke color>",
         ],
-        "examples": [
+        "e": [
             "{tr}lf genau-font.ttf",
             "{tr}lfc white",
             "{tr}lfs 120",
@@ -362,19 +362,19 @@ async def custom_font(event):
     pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
     info={
-        "header": "Manage values which set for logo",
-        "description": "To see which value have been set, or to delete a value or to reset all values.",
-        "flags": {
+        "h": "Manage values which set for logo",
+        "d": "To see which value have been set, or to delete a value or to reset all values.",
+        "f": {
             "g": "Gets the value of the var which you set manually for logo.",
             "d": "Delete the value of the var which you set manually for logo.",
             "r": "Delete all the values of the vars which you set manually for logo & reset all changes.",
         },
-        "usage": [
+        "u": [
             "{tr}glvar <var code>",
             "{tr}dlvar <var code>",
             "{tr}rlvar",
         ],
-        "examples": [
+        "e": [
             "{tr}glvar lbg",
             "{tr}dlvar lfc",
         ],
@@ -429,10 +429,10 @@ async def dog(event):
     pattern="logoo([\s\S]*)",
     command=("logoo", plugin_category),
     info={
-        "header": "Make a random logo",
-        "description": "Generate a logo of the given text or reply to image, to write your text on it. Or reply to font file, to write with that font.",
-        "usage": "{tr}logoo <text>",
-        "examples": "{tr}logoo Doge",
+        "h": "Make a random logo",
+        "d": "Generate a logo of the given text or reply to image, to write your text on it. Or reply to font file, to write with that font.",
+        "u": "{tr}logoo <text>",
+        "e": "{tr}logoo Doge",
     },
 )
 async def logo_generate(event):

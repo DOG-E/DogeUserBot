@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import loads
@@ -18,10 +18,10 @@ plugin_category = "tool"
     pattern="cur(?:\s|$)([\s\S]*)",
     command=("cur", plugin_category),
     info={
-        "header": "To convert one currency value to other.",
-        "description": "To find exchange rates of currencies.",
-        "usage": "{tr}cur <value> <from currencyid> <to currencyid>",
-        "examples": "{tr}cur 10 USD INR",
+        "h": "To convert one currency value to other.",
+        "d": "To find exchange rates of currencies.",
+        "u": "{tr}cur <value> <from currencyid> <to currencyid>",
+        "e": "{tr}cur 10 USD INR",
         "note": "List of currency ids are [Country & Currency](https://telegra.ph/CURRENCY-DATA-06-30)",
     },
 )

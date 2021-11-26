@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from geopy.geocoders import Nominatim
@@ -20,9 +20,9 @@ plugin_category = "tool"
     pattern="gps ([\s\S]*)",
     command=("gps", plugin_category),
     info={
-        "header": "To send the map of the given location.",
-        "usage": "{tr}gps <place>",
-        "examples": "{tr}gps Hyderabad",
+        "h": "To send the map of the given location.",
+        "u": "{tr}gps <place>",
+        "e": "{tr}gps Hyderabad",
     },
 )
 async def gps(event):

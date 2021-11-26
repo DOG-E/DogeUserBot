@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import makedirs, path, remove, stat
@@ -33,8 +33,8 @@ plugin_category = "fun"
     pattern="mask$",
     command=("mask", plugin_category),
     info={
-        "header": "reply to image to get hazmat suit for that image.",
-        "usage": "{tr}mask",
+        "h": "reply to image to get hazmat suit for that image.",
+        "u": "{tr}mask",
     },
 )
 async def _(dogbot):
@@ -64,8 +64,8 @@ async def _(dogbot):
     pattern="awooify$",
     command=("awooify", plugin_category),
     info={
-        "header": "Check yourself by replying to image.",
-        "usage": "{tr}awooify",
+        "h": "Check yourself by replying to image.",
+        "u": "{tr}awooify",
     },
 )
 async def dogbot(dogememes):
@@ -111,8 +111,8 @@ async def dogbot(dogememes):
     pattern="lolice$",
     command=("lolice", plugin_category),
     info={
-        "header": "image masker check your self by replying to image.",
-        "usage": "{tr}lolice",
+        "h": "image masker check your self by replying to image.",
+        "u": "{tr}lolice",
     },
 )
 async def dogbot(dogememes):
@@ -158,8 +158,8 @@ async def dogbot(dogememes):
     pattern="bun$",
     command=("bun", plugin_category),
     info={
-        "header": "reply to image and check yourself.",
-        "usage": "{tr}bun",
+        "h": "reply to image and check yourself.",
+        "u": "{tr}bun",
     },
 )
 async def dogbot(dogememes):
@@ -205,8 +205,8 @@ async def dogbot(dogememes):
     pattern="iphx$",
     command=("iphx", plugin_category),
     info={
-        "header": "replied image as iphone x wallpaper.",
-        "usage": "{tr}iphx",
+        "h": "replied image as iphone x wallpaper.",
+        "u": "{tr}iphx",
     },
 )
 async def dogbot(dogememes):

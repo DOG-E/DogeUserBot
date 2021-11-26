@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -36,9 +36,9 @@ plugin_category = "fun"
     pattern="fakegs(?:\s|$)([\s\S]*)",
     command=("fakegs", plugin_category),
     info={
-        "header": "Fake google search meme",
-        "usage": "{tr}fakegs search query ; what you mean text",
-        "examples": "{tr}fakegs DogeUserBot ; cool bot",
+        "h": "Fake google search meme",
+        "u": "{tr}fakegs search query ; what you mean text",
+        "e": "{tr}fakegs DogeUserBot ; cool bot",
     },
 )
 async def nekobot(dog):
@@ -73,9 +73,9 @@ async def nekobot(dog):
     pattern="trump(?:\s|$)([\s\S]*)",
     command=("trump", plugin_category),
     info={
-        "header": "trump tweet sticker with given custom text",
-        "usage": "{tr}trump <text>",
-        "examples": "{tr}trump DogeUserBot is cool bot",
+        "h": "trump tweet sticker with given custom text",
+        "u": "{tr}trump <text>",
+        "e": "{tr}trump DogeUserBot is cool bot",
     },
 )
 async def nekobot(dog):
@@ -104,9 +104,9 @@ async def nekobot(dog):
     pattern="cmm(?:\s|$)([\s\S]*)",
     command=("cmm", plugin_category),
     info={
-        "header": "Change my mind banner with given custom text",
-        "usage": "{tr}cmm <text>",
-        "examples": "{tr}cmm DogeUserBot is cool bot",
+        "h": "Change my mind banner with given custom text",
+        "u": "{tr}cmm <text>",
+        "e": "{tr}cmm DogeUserBot is cool bot",
     },
 )
 async def nekobot(dog):
@@ -134,9 +134,9 @@ async def nekobot(dog):
     pattern="kanna(?:\s|$)([\s\S]*)",
     command=("kanna", plugin_category),
     info={
-        "header": "kanna chan sticker with given custom text",
-        "usage": "{tr}kanna text",
-        "examples": "{tr}kanna DogeUserBot is cool bot",
+        "h": "kanna chan sticker with given custom text",
+        "u": "{tr}kanna text",
+        "e": "{tr}kanna DogeUserBot is cool bot",
     },
 )
 async def nekobot(dog):
@@ -165,9 +165,9 @@ async def nekobot(dog):
     pattern="tweet(?:\s|$)([\s\S]*)",
     command=("tweet", plugin_category),
     info={
-        "header": "The desired person tweet sticker with given custom text",
-        "usage": ["{tr}tweet <username> ; <text>", "{tr}tweet <text>"],
-        "examples": "{tr}tweet iamsrk ; DogeUserBot is cool bot",
+        "h": "The desired person tweet sticker with given custom text",
+        "u": ["{tr}tweet <username> ; <text>", "{tr}tweet <text>"],
+        "e": "{tr}tweet iamsrk ; DogeUserBot is cool bot",
     },
 )
 async def nekobot(dog):
@@ -209,9 +209,9 @@ async def nekobot(dog):
     pattern="magik ?([\s\S]*)",
     command=("magik", plugin_category),
     info={
-        "header": "Just do magik media",
-        "description": "Reply to any picture and it will make magiked image.",
-        "usage": [
+        "h": "Just do magik media",
+        "d": "Reply to any picture and it will make magiked image.",
+        "u": [
             "{tr}magik <reply to a pic>",
         ],
     },

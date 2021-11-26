@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ..sql_helper.snip_sql import add_snip, del_snip, get_snip, get_snips
@@ -54,9 +54,9 @@ async def incom_snip(event):
     pattern="snip (\w*)",
     command=("snip", plugin_category),
     info={
-        "header": "To save snips to the bot.",
-        "description": f"Saves the replied message as a snip with the snipname. (Works with pics, docs, and stickers too!. and get them by using {SNIP_CMDSET}snipname",
-        "usage": "{tr}snip <keyword>",
+        "h": "To save snips to the bot.",
+        "d": f"Saves the replied message as a snip with the snipname. (Works with pics, docs, and stickers too!. and get them by using {SNIP_CMDSET}snipname",
+        "u": "{tr}snip <keyword>",
     },
 )
 async def add_sniper(event):
@@ -114,8 +114,8 @@ async def add_sniper(event):
     pattern="snips$",
     command=("snips", plugin_category),
     info={
-        "header": "To list all snips in bot.",
-        "usage": "{tr}snips",
+        "h": "To list all snips in bot.",
+        "u": "{tr}snips",
     },
 )
 async def on_snip_list(event):
@@ -142,8 +142,8 @@ async def on_snip_list(event):
     pattern="dsnip (\S+)",
     command=("dsnip", plugin_category),
     info={
-        "header": "To delete paticular snip in bot.",
-        "usage": "{tr}dsnip <keyword>",
+        "h": "To delete paticular snip in bot.",
+        "u": "{tr}dsnip <keyword>",
     },
 )
 async def on_snip_delete(event):

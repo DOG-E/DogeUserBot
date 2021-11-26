@@ -138,9 +138,9 @@ async def bot_broadcast(event):
     pattern="(botusers|kullan[iı]c[iı]lar)$",
     command=("botusers", plugin_category),
     info={
-        "header": "Botu başlatan kullanıcıların listesini almak için.",
-        "description": "Botunu başlatan kullanıcıların tam listesini almak için kullanılır.",
-        "usage": ["{tr}botusers", "{tr}kullanıcılar"],
+        "h": "Botu başlatan kullanıcıların listesini almak için.",
+        "d": "Botunu başlatan kullanıcıların tam listesini almak için kullanılır.",
+        "u": ["{tr}botusers", "{tr}kullanıcılar"],
     },
 )
 async def ban_starters(event):
@@ -232,9 +232,9 @@ async def ban_botpms(event):
     pattern="(botbans|yasaklilar)$",
     command=("botbans", plugin_category),
     info={
-        "header": "Bottan yasaklanan kullanıcılar listesini almak için.",
-        "description": "Bottan yasaklanan kullanıcıların listesini almak için.",
-        "usage": "{tr}botbans",
+        "h": "Bottan yasaklanan kullanıcılar listesini almak için.",
+        "d": "Bottan yasaklanan kullanıcıların listesini almak için.",
+        "u": "{tr}botbans",
     },
 )
 async def ban_starters(event):
@@ -259,9 +259,9 @@ async def ban_starters(event):
     pattern="botantif (on|off)$",
     command=("botantif", plugin_category),
     info={
-        "header": "Bot antiflood özelliğini etkinleştirmek veya devre dışı bırakmak için.",
-        "description": "Açıksa, üst üste gönderilen ya da üst üst düzenlenen 10 mesajdan sonra otomatk olarak yasaklar.",
-        "usage": [
+        "h": "Bot antiflood özelliğini etkinleştirmek veya devre dışı bırakmak için.",
+        "d": "Açıksa, üst üste gönderilen ya da üst üst düzenlenen 10 mesajdan sonra otomatk olarak yasaklar.",
+        "u": [
             "{tr}botantif on",
             "{tr}botantif off",
         ],

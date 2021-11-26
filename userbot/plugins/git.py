@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -28,8 +28,8 @@ GIT_TEMP_DIR = "./temp/"
     pattern="repo$",
     command=("repo", plugin_category),
     info={
-        "header": "Source code link of userbot",
-        "usage": [
+        "h": "Source code link of userbot",
+        "u": [
             "{tr}repo",
         ],
     },
@@ -46,10 +46,10 @@ async def source(e):
     pattern="github( .l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
-        "header": "Shows the information about an user on GitHub of given username",
-        "flags": {".l": "repo limit: default to 5"},
-        "usage": ".github [flag] [username]",
-        "examples": [".github teledoge", ".github .l5 mutlcc"],
+        "h": "Shows the information about an user on GitHub of given username",
+        "f": {".l": "repo limit: default to 5"},
+        "u": ".github [flag] [username]",
+        "e": [".github teledoge", ".github .l5 mutlcc"],
     },
 )
 async def _(event):
@@ -112,11 +112,11 @@ async def _(event):
     pattern="commit$",
     command=("commit", plugin_category),
     info={
-        "header": "To commit the replied plugin to github.",
-        "description": "It uploads the given file to your github repo in **userbot/plugins** folder\
+        "h": "To commit the replied plugin to github.",
+        "d": "It uploads the given file to your github repo in **userbot/plugins** folder\
         \nTo work commit plugin set `GITHUB_ACCESS_TOKEN` and `GIT_REPO_NAME` Variables with {tr}setdog command vars First",
         "note": "As of now not needed i will sure develop it ",
-        "usage": "{tr}commit",
+        "u": "{tr}commit",
     },
 )
 async def download(event):

@@ -6,7 +6,6 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from ..languages import lan
 
 pawn = [
     "nsfw",
@@ -117,7 +116,7 @@ API = "https://weaverbottest.herokuapp.com/gimme"
 
 def nsfw(category):
     category.sort(key=str.casefold)
-    horny = f"**{lan('category')}:** "
+    horny = f"**Category:** "
     for i in category:
         horny += f" `{i.lower()}` ||"
     return horny

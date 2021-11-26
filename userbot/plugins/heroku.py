@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -29,19 +29,19 @@ disable_warnings(InsecureRequestWarning)
     pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
-        "header": "To manage heroku vars.",
-        "flags": {
+        "h": "To manage heroku vars.",
+        "f": {
             "set": "To set new var in heroku or modify the old var",
             "get": "To show the already existing var value.",
             "del": "To delete the existing value",
         },
-        "usage": [
-            "{tr}setvar <var name> <var value>",
-            "{tr}getvar <var name>",
-            "{tr}delvar <var name>",
+        "u": [
+            "{tr}set var <var name> <var value>",
+            "{tr}get var <var name>",
+            "{tr}del var <var name>",
         ],
-        "examples": [
-            "{tr}getvar ALIVE_NAME",
+        "e": [
+            "{tr}get var ALIVE_NAME",
         ],
     },
 )
@@ -87,11 +87,11 @@ async def variable(var):  # sourcery no-metrics
         variable = "".join(var.text.split(maxsplit=2)[2:])
         dog = await eor(var, "`Setting information...`")
         if not variable:
-            return await dog.edit("`.setvar <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         value = "".join(variable.split(maxsplit=1)[1:])
         variable = "".join(variable.split(maxsplit=1)[0])
         if not value:
-            return await dog.edit("`.setvar <ConfigVars-name> <value>`")
+            return await dog.edit("`.set var <ConfigVars-name> <value>`")
         await sleep(1.5)
         if variable in heroku_var:
             await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
@@ -118,8 +118,8 @@ async def variable(var):  # sourcery no-metrics
     pattern="(usage|dyno)$",
     command=("usage", plugin_category),
     info={
-        "header": "To Check dyno usage of userbot and also to know how much left.",
-        "usage": ["{tr}usage", "{tr}dyno"],
+        "h": "To Check dyno usage of userbot and also to know how much left.",
+        "u": ["{tr}usage", "{tr}dyno"],
     },
 )
 async def dyno_usage(dyno):
@@ -192,8 +192,8 @@ async def dyno_usage(dyno):
     pattern="(logs|hlog)$",
     command=("logs", plugin_category),
     info={
-        "header": "To get recent 100 lines logs from heroku.",
-        "usage": ["{tr}logs", "{tr}hlog"],
+        "h": "To get recent 100 lines logs from heroku.",
+        "u": ["{tr}logs", "{tr}hlog"],
     },
 )
 async def _(dyno):

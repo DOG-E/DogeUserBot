@@ -71,7 +71,7 @@ class NewMessage(events.NewMessage):
                 is_admin = event.chat.admin_rights
 
             if not is_creator and not is_admin:
-                text = f"**🚨 Bu komutu kullanabilmek için admin olmalıyım!**"
+                text = f"**🚨 Bu komutu kullanabilmek için yönetici olmalıyım!**"
 
                 event._client.loop.create_task(eor(event, text))
                 return
@@ -197,7 +197,7 @@ async def send_message(
                 comment_to=comment_to,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log Grubunuzu Kontrol Edin!]({msglink})__"
+        msg = f"__🚨 Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log grubunuzu kontrol edin!]({msglink})__"
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -328,7 +328,7 @@ async def send_file(
                 **kwargs,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"__🚨 Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log Grubunuzu Kontrol Edin!]({msglink})__"
+        msg = f"__🚨 Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log grubunuzu kontrol edin!]({msglink})__"
         return await client.sendmessage(
             entity=chatid,
             message=msg,
@@ -415,7 +415,7 @@ async def edit_message(
                 schedule=schedule,
             )
         msglink = await client.get_msg_link(response)
-        msg = f"🚨 __Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log Grubunuzu Kontrol Edin!]({msglink})__"
+        msg = f"🚨 __Üzgünüm! Gizli bilgileri açık sohbetlere gönderemem.\n[Bot Log grubunuzu kontrol edin!]({msglink})__"
         return await client.editmessage(
             entity=chatid,
             message=message,

@@ -6,13 +6,6 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-# /start
-# /uinfo
-#
-# Callback:
-# bot_pm_ban_([0-9]+)
-# toggle_bot-antiflood_off$
-# ================================================================
 from collections import defaultdict
 from datetime import datetime
 from re import compile
