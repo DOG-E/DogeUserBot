@@ -87,10 +87,10 @@ async def startup_process():
     return
 
 
-doge.loop.run_until_complete(startup_process())
-
-
 doge.loop.run_until_complete(customize_assistantbot())
+
+
+doge.loop.run_until_complete(startup_process())
 
 
 if len(argv) not in (1, 3, 4):

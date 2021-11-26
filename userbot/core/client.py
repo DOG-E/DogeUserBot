@@ -222,7 +222,7 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
+                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
 
             from .session import doge
@@ -360,7 +360,7 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
+                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
 
             from .session import doge

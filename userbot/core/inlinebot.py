@@ -727,7 +727,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @doge.tgbot.on(
     CallbackQuery(
-        data=compile(b"back_([a-z]+)_([a-z1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
+        data=compile(b"back_([a-z]+)_([a-z_1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
     )
 )
 @check_owner
@@ -755,7 +755,7 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Hᴇʟᴘᴇʀ\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
@@ -785,7 +785,7 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Hᴇʟᴘᴇʀ\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
@@ -827,7 +827,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
+    CallbackQuery(data=compile(b"(.*)_cmdhelp_([a-z_1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -852,7 +852,7 @@ async def on_plug_in_callback_query_handler(event):
             ),
         ),
     ]
-    text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
+    text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
     \n🐾 Hᴇʟᴘᴇʀ\n\
     \n◽ Doɢᴇ oғ {mention}**\n\
     \n**⌨️ Coᴍᴍᴀɴᴅ:** `{tr}{cmd}`\

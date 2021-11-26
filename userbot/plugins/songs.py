@@ -34,6 +34,7 @@ from . import (
     reply_id,
     song_dl,
     video_dl,
+    yt_data,
     yt_search,
 )
 
@@ -113,7 +114,7 @@ async def _(event):
         dogthumb = Path(f"{dogname}.webp")
     elif not path.exists(dogthumb):
         dogthumb = None
-    ytdata = Video.get(video_link)
+    ytdata = await yt_data(video_link)
     await event.client.send_file(
         event.chat_id,
         song_file,

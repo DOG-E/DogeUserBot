@@ -16,6 +16,7 @@ from PIL.Image import open as Imopen
 from PIL.ImageColor import getrgb
 from PIL.ImageFilter import GaussianBlur
 from PIL.ImageOps import flip, mirror
+from telethon.errors.rpcerrorlist import MediaEmptyError
 
 from ..helpers.google_image_download import googleimagesdownload
 from . import (
@@ -84,7 +85,14 @@ async def img_sampler(event):
     except Exception as e:
         return await dog.edit(f"Error: \n`{e}`")
     lst = paths[0][query.replace(",", " ")]
-    await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
+    try:
+        await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
+    except MediaEmptyError:
+        for i in lst:
+            try:
+                await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
+            except MediaEmptyError:
+                pass
     rmtree(path.dirname(path.abspath(lst[0])))
     await dog.delete()
 

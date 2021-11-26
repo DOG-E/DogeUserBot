@@ -17,7 +17,7 @@ from re import sub
 from sys import setrecursionlimit
 from urllib.parse import quote
 
-from pylast import LastFMNetwork, User, WSError, md5
+from pylast import LastFMNetwork, MalformedResponseError, User, WSError, md5
 from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
@@ -157,10 +157,12 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     await doge.send_message(
                         BOTLOG_CHATID, f"Error changing bio:\n{err}"
                     )
-        except FloodWaitError as err:
-            if BOTLOG and LASTFM_.LastLog:
-                await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
-        except WSError as err:
+        except (
+            FloodWaitError,
+            WSError,
+            MalformedResponseError,
+            AboutTooLongError,
+        ) as err:
             if BOTLOG and LASTFM_.LastLog:
                 await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         await sleep(2)
