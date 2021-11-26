@@ -99,7 +99,7 @@ ytsearch_data = YT_Search_X()
 
 async def yt_data(dog):
     params = {"format": "json", "url": dog}
-    url = "https://www.youtube.com/oembed" # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
+    url = "https://www.youtube.com/oembed"  # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
     query_string = urlencode(params)
     url = url + "?" + query_string
     with urlopen(url) as response:
