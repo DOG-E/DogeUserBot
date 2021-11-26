@@ -218,7 +218,9 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        text += (
+                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        )
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
@@ -356,7 +358,9 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        text += (
+                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        )
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
