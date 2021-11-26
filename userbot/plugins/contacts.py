@@ -18,6 +18,7 @@ from telethon.tl.functions.contacts import (
 )
 from telethon.utils import get_display_name
 
+from ..helpers.resources import constants
 from . import doge, edl, eor, wowmygroup
 
 plugin_category = "tool"
@@ -76,8 +77,7 @@ async def contactsaddto(event):
             )
     flag = await wowmygroup(
         event,
-        "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
-        \n💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**",
+        constants.cc_nf_rm_dg_y,
     )
     if flag:
         return

@@ -12,6 +12,7 @@
 # ================================================================
 from requests import get
 
+from ..helpers.resources import constants
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
@@ -79,8 +80,7 @@ async def reddit_fetch(event):
             captionx += "🔞 Post marked Adult \n"
             flag = await wowmygroup(
                 event,
-                "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
-                \n💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**",
+                constants.pc_nf_rm_dg_y,
             )
             if flag:
                 return

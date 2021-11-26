@@ -133,3 +133,30 @@ DEF_KANGS = [
     "🔮 I'm using witchery to kang this sticker...",
 ]
 DOGEKANG = f"{str(choice(DEF_KANGS))}"
+
+
+# HMM:
+hm_st_rd_v = "**🐕‍🦺 Sorry dude.\
+    \n🐾 Don't ask me to do this!\
+    \n🐾 I won't do this to my developer.**"
+
+m_st_rd_v = "\n\n<b>🧡 This user is my developer!</b>"
+
+
+b_ng_y = "\n\n<b>🤡 This user has been banned from using Doge.</b>"
+
+c_nf_rm_dg_y = "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!**\n\n"
+
+cc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+
+pc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**"
+
+sc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**"
+
+sndmsgg_ys = "**🦮 SORRY DUDE!\
+    \n💔 I won't work with you.\
+    \n🐶 My admins have banned you from using @DogeUserBot!\n\
+    \n💡 To find out why,\
+    \n🤡 Check out @DogeGays\n\
+    \n🌪 To appeal,\
+    \n💬 You can write to my @DogeSup group.**"

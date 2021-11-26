@@ -19,6 +19,7 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import InputPeerUser
 
+from ..helpers.resources import constants
 from . import doge, edl, eor, get_chatinfo, wowmygroup
 
 plugin_category = "tool"
@@ -125,8 +126,7 @@ async def getmembers(event):
 
     flag = await wowmygroup(
         event,
-        "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
-        \n💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**",
+        constants.sc_nf_rm_dg_y,
     )
     if flag:
         return

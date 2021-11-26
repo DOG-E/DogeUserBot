@@ -31,6 +31,7 @@ from .. import BOTLOG, BOTLOG_CHATID, PLUGIN_CHANNEL, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
+from ..helpers.resources import constants
 from ..helpers.utils import install_pip
 from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
@@ -69,7 +70,7 @@ async def setup_bot():
     m_y_i_d = m_e.id
     if str(m_y_i_d) in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
-        await doge.send_message("me", sndmsgg_ys, file=f)
+        await doge.send_message("me", constants.sndmsgg_ys, file=f)
         LOGS.error(
             "🐶 My admins have banned you from using @DogeUserBot!\
                 \n🐾 Check your saved messages in Telegram."
