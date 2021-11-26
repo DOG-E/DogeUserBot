@@ -211,6 +211,8 @@ class DogeUserBotClient(TelegramClient):
                         )
                         text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
                         text += "\n\n"
+                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
+                        text += "\n\n"
                         link = f"[HERE](https://t.me/DogeSup)"
                         text += "__💬 If you wanna you can report it.__"
                         text += "\n\n"
@@ -219,8 +221,6 @@ class DogeUserBotClient(TelegramClient):
                         text += "__**🦴 Nothing is logged except of error and date!**__"
                         text += "\n\n"
                         text += f"**▫️ Event Trigger:** `{str(check.text)}`"
-                        text += "\n\n"
-                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
@@ -349,6 +349,8 @@ class DogeUserBotClient(TelegramClient):
                         )
                         text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
                         text += "\n\n"
+                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
+                        text += "\n\n"
                         link = f"[HERE](https://t.me/DogeSup)"
                         text += "__💬 If you wanna you can report it.__"
                         text += "\n\n"
@@ -357,8 +359,6 @@ class DogeUserBotClient(TelegramClient):
                         text += "__**🦴 Nothing is logged except of error and date!**__"
                         text += "\n\n"
                         text += f"**▫️ Event Trigger:** `{str(check.text)}`"
-                        text += "\n\n"
-                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
