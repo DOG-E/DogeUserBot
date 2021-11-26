@@ -147,9 +147,13 @@ b_ng_y = "\n\n<b>🤡 This user has been banned from using Doge.</b>"
 
 c_nf_rm_dg_y = "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!**\n\n"
 
-cc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+cc_nf_rm_dg_y = (
+    f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+)
 
-pc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**"
+pc_nf_rm_dg_y = (
+    f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**"
+)
 
 sc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**"
 
