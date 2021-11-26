@@ -41,11 +41,11 @@ def _format_about(
         del about["header"]
 
     if "description" in about and isinstance(about["description"], str):
-        tmp_chelp += f"\n\n**🐾 Dᴇsᴄʀɪᴘᴛɪoɴ:**\n" f"__{get_data(about, 'description')}__"
+        tmp_chelp += f"\n\n**🐾 Açıᴋʟᴀᴍᴀ:**\n" f"__{get_data(about, 'description')}__"
         del about["description"]
 
     if "flags" in about:
-        tmp_chelp += f"\n\n**🐾 Fʟᴀɢs:**"
+        tmp_chelp += f"\n\n**🐾 Aʏᴀʀ.:**"
         if isinstance(about["flags"], dict):
             for f_n, f_d in about["flags"].items():
                 tmp_chelp += f"\n    ▫️ `{f_n}`: __{f_d.lower()}__"
@@ -54,7 +54,7 @@ def _format_about(
         del about["flags"]
 
     if "options" in about:
-        tmp_chelp += f"\n\n**🐾 Oᴘᴛɪᴏɴs:**"
+        tmp_chelp += f"\n\n**🐾 Sᴇcᴇɴᴇᴋʟᴇʀ:**"
         if isinstance(about["options"], dict):
             for o_n, o_d in about["options"].items():
                 tmp_chelp += f"\n    ▫️ `{o_n}`: __{o_d.lower()}__"

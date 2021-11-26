@@ -31,7 +31,7 @@ def check_owner(func):
         else:
             HELP_TEXT = (
                 gvar("HELP_TEXT")
-                or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 wow! You aren't my master.\n\n🐕‍🦺 Adopt a @DogeUserBot too!"
+                or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 Wow! Sen benim sahibim değilsin!.\n\n🐕‍🦺 Git kendine bir @DogeUserBot sahiplen!"
             )
             await c_q.answer(HELP_TEXT, alert=True)
 

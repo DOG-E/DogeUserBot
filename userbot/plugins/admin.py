@@ -659,7 +659,7 @@ async def pin(event):
 
 
 @doge.bot_cmd(
-    pattern="undlt( .u)?(?: |$)(\d*)?",
+    pattern="undlt( .m)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
         "header": "To get recent deleted messages in group",

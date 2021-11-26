@@ -148,8 +148,8 @@ class UploadSender:
     async def _next(self, data: bytes) -> None:
         self.request.bytes = data
         LOGS.debug(
-            f"📤 Sending file part {self.request.file_part}/{self.part_count}"
-            f" with {len(data)} bytes"
+            f"📤 Dosya Kısımları Gönderiliyor {self.request.file_part}/{self.part_count}"
+            f" {len(data)} bayt ile"
         )
         await self.client._call(self.sender, self.request)
         self.request.file_part += self.stride
@@ -276,7 +276,7 @@ class ParallelTransferrer:
             )
         )
         if not self.auth_key:
-            LOGS.debug(f"⏳ Exporting auth to DC {self.dc_id}")
+            LOGS.debug(f"⏳ DC {self.dc_id} dışarı aktarııyor..")
             auth = await self.client(ExportAuthorizationRequest(self.dc_id))
             self.client._init_request.query = ImportAuthorizationRequest(
                 id=auth.id, bytes=auth.bytes
@@ -318,7 +318,7 @@ class ParallelTransferrer:
         part_size = (part_size_kb or get_appropriated_part_size(file_size)) * 1024
         part_count = ceil(file_size / part_size)
         LOGS.debug(
-            f"📥 Starting parallel download: "
+            f"📥 Paralel İndirme Başlatıldı: "
             f"{connection_count} {part_size} {part_count} {file!s}"
         )
         await self._init_download(connection_count, file, part_count, part_size)
@@ -332,9 +332,9 @@ class ParallelTransferrer:
                     break
                 yield data
                 part += 1
-                LOGS.debug(f"📥 Part {part} downloaded")
+                LOGS.debug(f"📥 {part} kısmı indirildi!")
 
-        LOGS.debug("✅ Parallel download finished, cleaning up connections...")
+        LOGS.debug("✅ Paralel indirme tamamlandı! Bağlantılar temizleniyor...")
         await self._cleanup()
 
 
