@@ -1007,6 +1007,7 @@ class googleimagesdownload:
             if e.errno != 17:
                 raise
         return
+
     # Download Image thumbnails
 
     def download_image_thumbnail(
@@ -1715,5 +1716,7 @@ def main():
             print("\nEverything downloaded!")
             print("Total errors: " + str(total_errors))
             print("Total time taken: " + str(total_time) + " Seconds")
+
+
 if __name__ == "__main__":
     main()
