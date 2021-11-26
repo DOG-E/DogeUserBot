@@ -22,6 +22,7 @@ while flag:
         from .qhelper import process
         from .tools import *
         from .utils import _dogetools, _dogeutils, _format
+
         break
     except ModuleNotFoundError as e:
         install_pip(e.name)
