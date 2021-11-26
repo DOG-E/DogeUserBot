@@ -737,7 +737,7 @@ async def on_plug_in_callback_query_handler(event):
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))
     if mtype == "plugin":
         buttons = paginate_help(pgno, GRP_INFO[category], category)
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Hᴇʟᴘᴇʀ\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category}\
