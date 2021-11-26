@@ -45,7 +45,13 @@ if gvar("BOT_TOKEN") is None:
 try:
     doge.loop.run_until_complete(setup_me_bot())
 except Exception as e:
-    LOGS.error(f"{e}")
+    LOGS.error(f"🚨 {e}")
+
+
+try:
+    doge.loop.run_until_complete(customize_assistantbot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
 
 
 class DogCheck:
@@ -85,9 +91,6 @@ async def startup_process():
     await startupmessage()
     Dogcheck.sucess = True
     return
-
-
-doge.loop.run_until_complete(customize_assistantbot())
 
 
 doge.loop.run_until_complete(startup_process())
