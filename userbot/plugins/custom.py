@@ -200,20 +200,20 @@ async def dbsetter(event):  # sourcery no-metrics
 
     if vname in vlist:
         if cmd == "s":
-            if not reply.media and not vinfo and vname == ("ALIVE" or "AFK"):
+            if not vinfo and vname == ("ALIVE" or "AFK"):
                 return await edl(
                     event,
                     "**🪐 Check @DogeTemp for templates.**",
                     45,
                 )
 
-            if not reply.media and len(vinfo) > 70 and vname == ("AFKBIO" or "AFKRBIO"):
+            if len(vinfo) > 70 and vname == ("AFKBIO" or "AFKRBIO"):
                 return await edl(
                     event,
                     "**🚧 Max bio length is 70 characters.**",
                 )
 
-            if not reply.media and not vinfo:
+            if not vinfo:
                 return await edl(
                     event,
                     f"Give some values which you want to save for **{vname}**",

@@ -515,8 +515,8 @@ async def inline_handler(event):  # sourcery no-metrics
             if HP_IMG is not None and HP_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     file=HP_IMG,
-                    title="🐶 Doɢᴇ UsᴇʀBoᴛ",
-                    description="Yᴀʀᴅıᴍ Mᴇɴüsü",
+                    # title="🐶 Doɢᴇ UsᴇʀBoᴛ",
+                    # description="Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=_result[0],
                     buttons=_result[1],
                 )
