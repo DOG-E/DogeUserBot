@@ -26,7 +26,7 @@ disable_warnings(InsecureRequestWarning)
 
 
 @doge.bot_cmd(
-    pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
+    pattern="([Ss]et|[Gg]et|[Dd]el) [Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
         "h": "To manage heroku vars.",
