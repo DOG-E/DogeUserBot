@@ -42,4 +42,3 @@ def blacklist_chats_list():
 def sudo_enabled_cmds():
     listcmds = get_collection_list("sudo_enabled_cmds")
     return list(listcmds)
-

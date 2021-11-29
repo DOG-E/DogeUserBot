@@ -50,4 +50,3 @@ doge.tgbot = tgbot = DogeUserBotClient(
     auto_reconnect=True,
     connection_retries=None,
 )
-

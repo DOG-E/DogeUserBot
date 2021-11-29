@@ -20,7 +20,11 @@ from pylists import *
 from requests import get
 from telethon import Button
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest, JoinChannelRequest
+from telethon.tl.functions.channels import (
+    EditAdminRequest,
+    InviteToChannelRequest,
+    JoinChannelRequest,
+)
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest
@@ -283,9 +287,13 @@ async def verifyLoggerGroup():
                         f"🚨 Belirtilen {vinfo} için üye ekleme izni eksik. Lütfen kontrol edin!."
                     )
         except ValueError:
-            LOGS.error(f"🚨 {vinfo} değerini bulamadım. Lütfen doğru olduğundan emin olun!")
+            LOGS.error(
+                f"🚨 {vinfo} değerini bulamadım. Lütfen doğru olduğundan emin olun!"
+            )
         except TypeError:
-            LOGS.error(f"🚨 {vinfo} desteklenmiyor/hatalı. Lütfen doğru olduğundan emin olun!")
+            LOGS.error(
+                f"🚨 {vinfo} desteklenmiyor/hatalı. Lütfen doğru olduğundan emin olun!"
+            )
         except Exception as e:
             LOGS.error(
                 f"🚨 {vinfo} değerini doğrulamaya çalışırken bir hata oluştu.\n Hata: {str(e)}"
@@ -338,9 +346,7 @@ async def verifyLoggerGroup():
         await msg.pin()
         sgvar("PM_LOGGER_GROUP_ID", groupid)
         vinfo = "PM_LOGGER_GROUP_ID"
-        LOGS.info(
-            f"✅ {vinfo} için grup başarıyla oluşturuldu ve değerler yazıldı!"
-        )
+        LOGS.info(f"✅ {vinfo} için grup başarıyla oluşturuldu ve değerler yazıldı!")
         flag = True
 
     if PM_LOGGER_GROUP_ID != -100:

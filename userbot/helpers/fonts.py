@@ -1664,4 +1664,3 @@ itachiemoji = [
     \n       {e}{e}{e}{e}\
     \n",
 ]
-
