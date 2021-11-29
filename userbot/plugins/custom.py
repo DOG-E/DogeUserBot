@@ -66,6 +66,7 @@ vlist = [
 ]
 alist = [
     "ANTISPAMBOT_BAN",
+    "BOT_TOKEN",
     "CURRENCY_API",
     "DEEPAI_API",
     "FBAN_GROUP_ID",
@@ -150,7 +151,8 @@ async def dbsetter(event):  # sourcery no-metrics
     if not vname:
         return await eor(
             event,
-            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**🔮 Give correct API name from the list:\n\n**{apilist}",
+            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\
+            \n**🔮 Give correct API name from the list:\n\n**{apilist}",
         )
 
     vinfo = None
@@ -198,25 +200,24 @@ async def dbsetter(event):  # sourcery no-metrics
 
     if vname in vlist:
         if cmd == "s":
-            if not reply.media:
-                if not vinfo and vname == ("ALIVE" or "AFK"):
-                    return await edl(
-                        event,
-                        "**🪐 Check @DogeTemp for templates.**",
-                        45,
-                    )
+            if not reply.media and not vinfo and vname == ("ALIVE" or "AFK"):
+                return await edl(
+                    event,
+                    "**🪐 Check @DogeTemp for templates.**",
+                    45,
+                )
 
-                if len(vinfo) > 70 and vname == ("AFKBIO" or "AFKRBIO"):
-                    return await edl(
-                        event,
-                        "**🚧 Max bio length is 70 characters.**",
-                    )
+            if not reply.media and len(vinfo) > 70 and vname == ("AFKBIO" or "AFKRBIO"):
+                return await edl(
+                    event,
+                    "**🚧 Max bio length is 70 characters.**",
+                )
 
-                if not vinfo:
-                    return await edl(
-                        event,
-                        f"Give some values which you want to save for **{vname}**",
-                    )
+            if not reply.media and not vinfo:
+                return await edl(
+                    event,
+                    f"Give some values which you want to save for **{vname}**",
+                )
 
             sgvar(vname, vinfo)
             if BOTLOG_CHATID:
