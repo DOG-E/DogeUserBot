@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -130,10 +130,10 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
     pattern="spam ([\s\S]*)",
     command=("spam", plugin_category),
     info={
-        "header": "Floods the text in the chat !! with given number of times,",
-        "description": "Sends the replied media/message <count> times !! in the chat",
-        "usage": ["{tr}spam <count> <text>", "{tr}spam <count> reply to message"],
-        "examples": "{tr}spam 10 hi",
+        "h": "Floods the text in the chat !! with given number of times,",
+        "d": "Sends the replied media/message <count> times !! in the chat",
+        "u": ["{tr}spam <count> <text>", "{tr}spam <count> reply to message"],
+        "e": "{tr}spam 10 hi",
     },
 )
 async def spammer(event):
@@ -161,9 +161,9 @@ async def spammer(event):
     pattern="spspam$",
     command=("spspam", plugin_category),
     info={
-        "header": "To spam the chat with stickers.",
-        "description": "To spam chat with all stickers in that replied message sticker pack.",
-        "usage": "{tr}spspam",
+        "h": "To spam the chat with stickers.",
+        "d": "To spam chat with all stickers in that replied message sticker pack.",
+        "u": "{tr}spspam",
     },
 )
 async def stickerpack_spam(event):
@@ -234,10 +234,10 @@ async def stickerpack_spam(event):
     pattern="cspam ([\s\S]*)",
     command=("cspam", plugin_category),
     info={
-        "header": "Spam the text letter by letter",
-        "description": "Spam the chat with every letter in given text as new message.",
-        "usage": "{tr}cspam <text>",
-        "examples": "{tr}cspam DogeUserBot",
+        "h": "Spam the text letter by letter",
+        "d": "Spam the chat with every letter in given text as new message.",
+        "u": "{tr}cspam <text>",
+        "e": "{tr}cspam DogeUserBot",
     },
 )
 async def tmeme(event):
@@ -269,10 +269,10 @@ async def tmeme(event):
     pattern="wspam ([\s\S]*)",
     command=("wspam", plugin_category),
     info={
-        "header": "Spam the text word by word.",
-        "description": "Spams the chat with every word in given text as new message.",
-        "usage": "{tr}wspam <text>",
-        "examples": "{tr}wspam I am using DogeUserBot",
+        "h": "Spam the text word by word.",
+        "d": "Spams the chat with every word in given text as new message.",
+        "u": "{tr}wspam <text>",
+        "e": "{tr}wspam I am using DogeUserBot",
     },
 )
 async def tmeme(event):
@@ -304,13 +304,13 @@ async def tmeme(event):
     pattern="(delayspam|dspam) ([\s\S]*)",
     command=("delayspam", plugin_category),
     info={
-        "header": "To spam the chat with count number of times with given text and given delay sleep time.",
-        "description": "For example if you see this dspam 2 10 hi. Then you will send 10 hi text messages with 2 seconds gap between each message.",
-        "usage": [
+        "h": "To spam the chat with count number of times with given text and given delay sleep time.",
+        "d": "For example if you see this dspam 2 10 hi. Then you will send 10 hi text messages with 2 seconds gap between each message.",
+        "u": [
             "{tr}delayspam <delay> <count> <text>",
             "{tr}dspam <delay> <count> <text>",
         ],
-        "examples": ["{tr}delayspam 2 10 hi", "{tr}dspam 2 10 hi"],
+        "e": ["{tr}delayspam 2 10 hi", "{tr}dspam 2 10 hi"],
     },
 )
 async def spammer(event):
@@ -340,9 +340,9 @@ async def spammer(event):
     pattern="limitc$",
     command=("limitc", plugin_category),
     info={
-        "header": "Check the limit status of your Telegram account.",
-        "description": "You shouldn't break Telegram's rules to avoid being restricted by any limit.",
-        "usage": "{tr}limitc",
+        "h": "Check the limit status of your Telegram account.",
+        "d": "You shouldn't break Telegram's rules to avoid being restricted by any limit.",
+        "u": "{tr}limitc",
     },
 )
 async def limitchecker(event):

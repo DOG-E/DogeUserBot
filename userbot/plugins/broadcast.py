@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -40,13 +40,13 @@ LOGS = logging.getLogger(__name__)
     pattern="msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
-        "header": "To message to person or to a chat.",
-        "description": "Suppose you want to message directly to a person/chat from a paticular chat. Then simply reply to a person with this cmd and text or to a text with cmd and username/userid/chatid,",
-        "usage": [
+        "h": "To message to person or to a chat.",
+        "d": "Suppose you want to message directly to a person/chat from a paticular chat. Then simply reply to a person with this cmd and text or to a text with cmd and username/userid/chatid,",
+        "u": [
             "{tr}msgto <username/userid/chatid/chatusername> reply to message",
             "{tr}msgto <username/userid/chatid/chatusername> <text>",
         ],
-        "examples": "{tr}msgto @SohbetDoge just a testmessage",
+        "e": "{tr}msgto @SohbetDoge just a testmessage",
     },
 )
 async def dogebroadcast_add(event):
@@ -83,9 +83,9 @@ async def dogebroadcast_add(event):
     pattern="addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
-        "header": "Will add the specific chat to the mentioned category",
-        "usage": "{tr}addto <category name>",
-        "examples": "{tr}addto test",
+        "h": "Will add the specific chat to the mentioned category",
+        "u": "{tr}addto <category name>",
+        "e": "{tr}addto test",
     },
 )
 async def dogebroadcast_add(event):
@@ -131,9 +131,9 @@ async def dogebroadcast_add(event):
     pattern="list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
-        "header": "will show the list of all chats in the given category",
-        "usage": "{tr}list <category name>",
-        "examples": "{tr}list test",
+        "h": "will show the list of all chats in the given category",
+        "u": "{tr}list <category name>",
+        "e": "{tr}list test",
     },
 )
 async def dogebroadcast_list(event):
@@ -180,8 +180,8 @@ async def dogebroadcast_list(event):
     pattern="listall$",
     command=("listall", plugin_category),
     info={
-        "header": "Will show the list of all category names.",
-        "usage": "{tr}listall",
+        "h": "Will show the list of all category names.",
+        "u": "{tr}listall",
     },
 )
 async def dogebroadcast_list(event):
@@ -203,9 +203,9 @@ async def dogebroadcast_list(event):
     pattern="sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
-        "header": "will send the replied message to all chats in the given category",
-        "usage": "{tr}sendto <category name>",
-        "examples": "{tr}sendto test",
+        "h": "will send the replied message to all chats in the given category",
+        "u": "{tr}sendto <category name>",
+        "e": "{tr}sendto test",
     },
 )
 async def dogebroadcast_send(event):
@@ -268,9 +268,9 @@ async def dogebroadcast_send(event):
     pattern="fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
-        "header": "Will forward the replied message to all chats in the given category",
-        "usage": "{tr}fwdto <category name>",
-        "examples": "{tr}fwdto test",
+        "h": "Will forward the replied message to all chats in the given category",
+        "u": "{tr}fwdto <category name>",
+        "e": "{tr}fwdto test",
     },
 )
 async def dogebroadcast_send(event):
@@ -333,9 +333,9 @@ async def dogebroadcast_send(event):
     pattern="rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
-        "header": "Will remove the specific chat to the mentioned category",
-        "usage": "{tr}rmfrom <category name>",
-        "examples": "{tr}rmfrom test",
+        "h": "Will remove the specific chat to the mentioned category",
+        "u": "{tr}rmfrom <category name>",
+        "e": "{tr}rmfrom test",
     },
 )
 async def dogebroadcast_remove(event):
@@ -381,10 +381,10 @@ async def dogebroadcast_remove(event):
     pattern="frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
-        "header": " To force remove the given chat from a category.",
-        "description": "Suppose if you're muted or group/channel is deleted you can't send message there so you can use this cmd to the chat from that category",
-        "usage": "{tr}frmfrom <category name> <chatid>",
-        "examples": "{tr}frmfrom test -100123456",
+        "h": " To force remove the given chat from a category.",
+        "d": "Suppose if you're muted or group/channel is deleted you can't send message there so you can use this cmd to the chat from that category",
+        "u": "{tr}frmfrom <category name> <chatid>",
+        "e": "{tr}frmfrom test -100123456",
     },
 )
 async def dogebroadcast_remove(event):
@@ -450,9 +450,9 @@ async def dogebroadcast_remove(event):
     pattern="delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
-        "header": "To Deletes the category completely from database",
-        "usage": "{tr}delc <category name>",
-        "examples": "{tr}delc test",
+        "h": "To Deletes the category completely from database",
+        "u": "{tr}delc <category name>",
+        "e": "{tr}delc test",
     },
 )
 async def dogebroadcast_delete(event):

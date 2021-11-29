@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -18,10 +18,10 @@ LOGS = logging.getLogger(__name__)
     pattern="sdm (\d*) ([\s\S]*)",
     command=("sdm", plugin_category),
     info={
-        "header": "To self destruct the message after paticualr time.",
-        "description": "Suppose if you use .sdm 10 hi then message will be immediately send new message as hi and then after 10 sec this message will auto delete.`",
-        "usage": "{tr}sdm [number] [text]",
-        "examples": "{tr}sdm 10 hi",
+        "h": "To self destruct the message after paticualr time.",
+        "d": "Suppose if you use .sdm 10 hi then message will be immediately send new message as hi and then after 10 sec this message will auto delete.`",
+        "u": "{tr}sdm [number] [text]",
+        "e": "{tr}sdm 10 hi",
     },
 )
 async def selfdestruct(destroy):
@@ -39,10 +39,10 @@ async def selfdestruct(destroy):
     pattern="selfdm (\d*) ([\s\S]*)",
     command=("selfdm", plugin_category),
     info={
-        "header": "To self destruct the message after paticualr time. and in message will show the time.",
-        "description": "Suppose if you use .sdm 10 hi then message will be immediately will send new message as hi and then after 10 sec this message will auto delete.",
-        "usage": "{tr}selfdm [number] [text]",
-        "examples": "{tr}selfdm 10 hi",
+        "h": "To self destruct the message after paticualr time. and in message will show the time.",
+        "d": "Suppose if you use .sdm 10 hi then message will be immediately will send new message as hi and then after 10 sec this message will auto delete.",
+        "u": "{tr}selfdm [number] [text]",
+        "e": "{tr}selfdm 10 hi",
     },
 )
 async def selfdestruct(destroy):

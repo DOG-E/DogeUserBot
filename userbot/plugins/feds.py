@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -44,9 +44,9 @@ unfbanresults = ["I'll give", "Un-FedBan", "un-FedBan"]
     pattern="fban(?:\s|$)([\s\S]*)",
     command=("fban", plugin_category),
     info={
-        "header": "Ban the person in your database federations",
-        "description": "Will fban the person in the all feds of given category which you stored in database.",
-        "usage": "{tr}fban <userid/username/reply> <category> <reason>",
+        "h": "Ban the person in your database federations",
+        "d": "Will fban the person in the all feds of given category which you stored in database.",
+        "u": "{tr}fban <userid/username/reply> <category> <reason>",
     },
 )
 async def group_fban(event):
@@ -133,9 +133,9 @@ async def group_fban(event):
     pattern="unfban(?:\s|$)([\s\S]*)",
     command=("unfban", plugin_category),
     info={
-        "header": "UnBan the person in your database federations",
-        "description": "Will unfban the person in the all feds of given category which you stored in database.",
-        "usage": "{tr}unfban <userid/username/reply> <category> <reason>",
+        "h": "UnBan the person in your database federations",
+        "d": "Will unfban the person in the all feds of given category which you stored in database.",
+        "u": "{tr}unfban <userid/username/reply> <category> <reason>",
     },
 )
 async def group_unfban(event):
@@ -219,12 +219,12 @@ async def group_unfban(event):
     pattern="addfed (\w+|.all) ([-\w]+)",
     command=("addfed", plugin_category),
     info={
-        "header": "Add the federation to given category in database.",
-        "description": "You can add multiple federations to one category like a group of feds under one category. And you can access all thoose feds by that name.",
-        "flags": {
+        "h": "Add the federation to given category in database.",
+        "d": "You can add multiple federations to one category like a group of feds under one category. And you can access all thoose feds by that name.",
+        "f": {
             ".all": "If you want to add all your feds to database then use this as {tr}addfed .all <category name>"
         },
-        "usage": [
+        "u": [
             "{tr}addfed <category name> <fedid>",
             "{tr}addfed .all <category name>",
         ],
@@ -329,12 +329,12 @@ async def quote_search(event):  # sourcery no-metrics
     pattern="delfed (\w+|.all) ([-\w]+)",
     command=("delfed", plugin_category),
     info={
-        "header": "Remove the federation from given category in database.",
-        "description": "To remove given fed from the given category name",
-        "flags": {
+        "h": "Remove the federation from given category in database.",
+        "d": "To remove given fed from the given category name",
+        "f": {
             ".all": "If you want to delete compelete category then use this flag as {tr}delfed .all <category name>"
         },
-        "usage": [
+        "u": [
             "{tr}delfed <category name> <fedid>",
             "{tr}delfed .all <category name>",
         ],
@@ -385,9 +385,9 @@ async def quote_search(event):
     pattern="listfed(s)?(?:\s|$)([\s\S]*)",
     command=("listfed", plugin_category),
     info={
-        "header": "To list all feds in your database.",
-        "description": "if you give input then will show only feds in that category else will show all feds in your database",
-        "usage": ["{tr}listfed", "{tr}listfed <category name>"],
+        "h": "To list all feds in your database.",
+        "d": "if you give input then will show only feds in that category else will show all feds in your database",
+        "u": ["{tr}listfed", "{tr}listfed <category name>"],
     },
 )
 async def quote_search(event):
@@ -428,9 +428,9 @@ async def quote_search(event):
     pattern="f(ed)?info(?:\s|$)([\s\S]*)",
     command=("fedinfo", plugin_category),
     info={
-        "header": "To get fedinfo from rose.",
-        "description": "If no reply is given then shows you fedinfo of which you created",
-        "usage": "{tr}fedinfo <fedid>",
+        "h": "To get fedinfo from rose.",
+        "d": "If no reply is given then shows you fedinfo of which you created",
+        "u": "{tr}fedinfo <fedid>",
     },
 )
 async def fetch_fedinfo(event):
@@ -459,9 +459,9 @@ async def fetch_fedinfo(event):
     pattern="f(ed)?admins(?:\s|$)([\s\S]*)",
     command=("fadmins", plugin_category),
     info={
-        "header": "To get fed admins from rose.",
-        "description": "If no reply is given then shows you fedinfo of which you created",
-        "usage": "{tr}fedadmins <fedid>",
+        "h": "To get fed admins from rose.",
+        "d": "If no reply is given then shows you fedinfo of which you created",
+        "u": "{tr}fedadmins <fedid>",
     },
 )
 async def fetch_fedinfo(event):
@@ -494,8 +494,8 @@ async def fetch_fedinfo(event):
     pattern="myfeds$",
     command=("myfeds", plugin_category),
     info={
-        "header": "To get all feds where you're admin.",
-        "usage": "{tr}myfeds",
+        "h": "To get all feds where you're admin.",
+        "u": "{tr}myfeds",
     },
 )
 async def myfeds_fedinfo(event):
@@ -535,9 +535,9 @@ async def myfeds_fedinfo(event):
     pattern="f(ed)?stat(?:\s|$)([\s\S]*)",
     command=("fstat", plugin_category),
     info={
-        "header": "To get fedstat data from rose.",
-        "description": "If you haven't replied to any user or mentioned any user along with command then by default you will be input else mentioned user or replied user.",
-        "usage": [
+        "h": "To get fedstat data from rose.",
+        "d": "If you haven't replied to any user or mentioned any user along with command then by default you will be input else mentioned user or replied user.",
+        "u": [
             "{tr}fstat list of all federations you're banned in.",
             "{tr}fstat <fedid> shows you info of you in the given fed."
             "{tr}fstat <userid/username/reply> list of all federations he is banned in.",

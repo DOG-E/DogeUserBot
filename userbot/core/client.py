@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -111,11 +111,11 @@ class DogeUserBotClient(TelegramClient):
         def decorator(func):  # sourcery no-metrics
             async def wrapper(check):
                 if groups_only and not check.is_group:
-                    return await edl(check, "`🐾 I don't think this is a group.`")
+                    return await edl(check, "`🐾 Bunun bir grup olduğunu sanmıyorum.`")
 
                 if private_only and not check.is_private:
                     return await edl(
-                        check, "`🐾 I don't think this is a personal chat.`"
+                        check, "`🐾 Bunun kişisel bir sohbet olduğunu sanmıyorum.`"
                     )
 
                 try:
@@ -125,39 +125,39 @@ class DogeUserBotClient(TelegramClient):
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error("🚨 Message was same as previous message")
+                    LOGS.error("🚨 Mesaj önceki mesajla aynı.")
                 except MessageIdInvalidError:
-                    LOGS.error("🚨 Message was deleted or can't be found")
+                    LOGS.error("🚨 Mesaj silindi ya da bulunamadı.")
                 except BotInlineDisabledError:
-                    await edl(check, "`🚨 Turn on Inline mode for our bot`")
+                    await edl(check, "`🚨 Botunuzun satır içi modu kapalı.`")
                 except ChatSendStickersForbiddenError:
                     await edl(
                         check,
-                        "`🚨 I guess i can't send stickers in this chat`",
+                        "`🚨 Bu sohbette çıkartma gönderemiyorum.`",
                     )
                 except BotResponseTimeoutError:
                     await edl(
                         check,
-                        "`🚨 The bot didnt answer to your query in time`",
+                        "`🚨 Bottan yanıt alamadım.`",
                     )
                 except ChatSendMediaForbiddenError:
                     await edl(
                         check,
-                        "`🚨 You can't send media in this chat`",
+                        "`🚨 Bu sohbette medya gönderemiyorum.`",
                     )
                 except AlreadyInConversationError:
                     await edl(
                         check,
-                        "`🚨 A conversation is already happening with the given chat. 🔃 Try again after some time.`",
+                        "`🚨 Mevcut sohbetle zaten bir konuşma gerçekleşiyor. 🔃 Bir süre sonra tekrar deneyin.`",
                     )
                 except ChatSendInlineForbiddenError:
                     await edl(
                         check,
-                        "`🚨 You can't send inline messages in this chat.`",
+                        "`🚨 Bu sohbette satır içi mesajlar gönderemiyorum.`",
                     )
                 except FloodWaitError as e:
                     LOGS.error(
-                        f"🚨 A flood wait of {e.seconds} occured. wait for {e.seconds} seconds and try"
+                        f"🚨 {e.seconds} saniye flood wait nedeniyle engellendi. Lütfen {e.seconds} saniye bekleyin ve tekrar deneyin."
                     )
                     await check.delete()
                     await sleep(e.seconds + 5)
@@ -167,27 +167,27 @@ class DogeUserBotClient(TelegramClient):
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = "ℹ️ DISCLAIMER:\
-                        \nThis file is pasted ONLY here,\
-                        \nwe logged only fact of error and date,\
-                        \nwe respect your privacy,\
-                        \nif you've any confidential data here,\
-                        \nyou may not report this error.\
-                        \nNo one will see your data.\
+                        ftext = "💥💥💥💥 UYARI 💥💥💥💥\
+                        \n💠 Bu metin sadece buraya yazıldı,\
+                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
+                        \n💠 Gizliliğinize saygı duyuyoruz,\
+                        \n💠 Burada herhangi bir gizli veri varsa,\
+                        \n💠 Bu hatayı bildirmeyebilirsiniz.\
+                        \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
-                        \n📅 Date: {d}\
-                        \n👥 Group ID: {cid}\
-                        \n👤 Sender ID: {sid}\
-                        \n🔗 Message Link: {msg}\
+                        \n⚠️⚠️⚠️ USERBOT-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
+                        \n📅 Tarih: {d}\
+                        \n👥 Grup ID'si: {cid}\
+                        \n👤 Gönderici ID: {sid}\
+                        \n🔗 Mesaj Linki: {msg}\
                         \n\
-                        \n➡️ Event Trigger:\
+                        \n➡️ Tetikleyici Komut:\
                         \n{t}\
                         \n\
-                        \nℹ️ Traceback Info:\
+                        \nℹ️ Geri İzleme Mekanizması:\
                         \n{f}\
                         \n\
-                        \n🚨 Error Text:\
+                        \n🚨 Hata Metni:\
                         \n{e}".format(
                             d=date,
                             cid=str(check.chat_id),
@@ -202,27 +202,29 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
+                        ftext += "⚠️⚠️⚠️ USERBOT-HATA-RAPORU-SONU ⚠️⚠️⚠️"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
                             markdown=False,
-                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
+                            title="🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾",
                         )
-                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
                         text += "\n\n"
-                        link = f"[HERE](https://t.me/DogeSup)"
-                        text += "__💬 If you wanna you can report it.__"
+                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
-                        text += "🐾 Forward this message {}.".format(link)
+                        link = f"[BURAYA](https://t.me/DogeSup)"
+                        text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "__**🦴 Nothing is logged except of error and date!**__"
+                        text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += f"**▫️ Event Trigger:** `{str(check.text)}`"
+                        text += (
+                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        )
                         text += "\n\n"
-                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
+                        text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
+                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
 
             from .session import doge
@@ -296,36 +298,36 @@ class DogeUserBotClient(TelegramClient):
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error("🚨 Message was same as previous message")
+                    LOGS.error("🚨 Mesaj önceki mesajla aynı.")
                 except MessageIdInvalidError:
-                    LOGS.error("🚨 Message was deleted or can't be found")
+                    LOGS.error("🚨 Mesaj silindi ya da bulunamadı.")
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = "ℹ️ DISCLAIMER:\
-                        \nThis file is pasted ONLY here,\
-                        \nwe logged only fact of error and date,\
-                        \nwe respect your privacy,\
-                        \nif you've any confidential data here,\
-                        \nyou may not report this error.\
-                        \nNo one will see your data.\
+                        ftext = "💥💥💥💥 UYARI 💥💥💥💥\
+                        \n💠 Bu metin sadece buraya yazıldı,\
+                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
+                        \n💠 Gizliliğinize saygı duyuyoruz,\
+                        \n💠 Burada herhangi bir gizli veri varsa,\
+                        \n💠 Bu hatayı bildirmeyebilirsiniz.\
+                        \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n--------BEGIN-DOGE-ASISTAN-ERROR-LOG--------\
-                        \n📅 Date: {d}\
-                        \n👥 Group ID: {cid}\
-                        \n👤 Sender ID: {sid}\
-                        \n🔗 Message Link: {msg}\
+                        \n⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
+                        \n📅 Tarih: {d}\
+                        \n👥 Grup ID'si: {cid}\
+                        \n👤 Gönderici ID: {sid}\
+                        \n🔗 Mesaj Linki: {msg}\
                         \n\
-                        \n➡️ Event Trigger:\
+                        \n➡️ Tetikleyici Komut:\
                         \n{t}\
                         \n\
-                        \nℹ️ Traceback Info:\
+                        \nℹ️ Geri İzleme Mekanizması:\
                         \n{f}\
                         \n\
-                        \n🚨 Error Text:\
+                        \n🚨 Hata Metni:\
                         \n{e}".format(
                             d=date,
                             cid=str(check.chat_id),
@@ -340,27 +342,29 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "--------END-DOGE-ASISTAN-ERROR-LOG--------"
+                        ftext += "⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-SONU ⚠️⚠️⚠️"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
                             markdown=False,
-                            title="🐶 Doɢᴇ Asɪsᴛᴀɴ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾",
+                            title="🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾",
                         )
-                        text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾**"
+                        text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
                         text += "\n\n"
-                        link = f"[HERE](https://t.me/DogeSup)"
-                        text += "__💬 If you wanna you can report it.__"
+                        text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
-                        text += "🐾 Forward this message {}.".format(link)
+                        link = f"[BURAYA](https://t.me/DogeSup)"
+                        text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "__**🦴 Nothing is logged except of error and date!**__"
+                        text += "🐾 Bu mesajı {} ilet.".format(link)
                         text += "\n\n"
-                        text += f"**▫️ Event Trigger:** `{str(check.text)}`"
+                        text += (
+                            "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+                        )
                         text += "\n\n"
-                        text += f"**🚨 Error Report:** [{new['error']}]({pastelink})"
+                        text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
+                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
                         )
 
             from .session import doge
@@ -380,11 +384,11 @@ class DogeUserBotClient(TelegramClient):
         )
 
     def _kill_running_processes(self) -> None:
-        """Kill all the running asyncio subprocessess"""
+        """Tüm çalışan asyncio alt işlemkerini durdurur"""
         for _, process in self.running_processes.items():
             try:
                 process.kill()
-                LOGS.debug("Killed %d which was still running.", process.pid)
+                LOGS.debug("Devam eden %d durduruldu.", process.pid)
             except Exception as e:
                 LOGS.debug(e)
         self.running_processes.clear()

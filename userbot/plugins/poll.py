@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from random import getrandbits
@@ -21,10 +21,10 @@ plugin_category = "tool"
     pattern="poll(?:\s|$)([\s\S]*)",
     command=("poll", plugin_category),
     info={
-        "header": "To create a poll.",
-        "description": "If you doesnt give any input it sends a default poll",
-        "usage": ["{tr}poll", "{tr}poll question ; option 1; option2"],
-        "examples": "{tr}poll Are you an early bird or a night owl ;Early bird ; Night owl",
+        "h": "To create a poll.",
+        "d": "If you doesnt give any input it sends a default poll",
+        "u": ["{tr}poll", "{tr}poll question ; option 1; option2"],
+        "e": "{tr}poll Are you an early bird or a night owl ;Early bird ; Night owl",
     },
 )
 async def pollcreator(dogpoll):

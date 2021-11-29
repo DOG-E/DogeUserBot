@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -52,10 +52,10 @@ def sun(unix, ctimezone):
     pattern="climate(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city. By default it is Istanbul, you can change it by {tr}setcity command.",
+        "h": "To get the weather report of a city.",
+        "d": "Shows you the weather report of a city. By default it is Istanbul, you can change it by {tr}setcity command.",
         "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
-        "usage": [
+        "u": [
             "{tr}climate",
             "{tr}climate <city name>",
         ],
@@ -139,10 +139,10 @@ async def get_weather(event):  # sourcery no-metrics
     pattern="setcity(?:\s|$)([\s\S]*)",
     command=("setcity", plugin_category),
     info={
-        "header": "To set default city for climate cmd",
-        "description": "Sets your default city so you can just use .weather or .climate when ever you neededwithout typing city name each time",
+        "h": "To set default city for climate cmd",
+        "d": "Sets your default city so you can just use .weather or .climate when ever you neededwithout typing city name each time",
         "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
-        "usage": [
+        "u": [
             "{tr}climate",
             "{tr}climate <city name>",
         ],
@@ -188,9 +188,9 @@ async def set_default_city(event):
     pattern="weather(?:\s|$)([\s\S]*)",
     command=("weather", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city . By default it is Istanbul, you can change it by {tr}setcity command.",
-        "usage": [
+        "h": "To get the weather report of a city.",
+        "d": "Shows you the weather report of a city . By default it is Istanbul, you can change it by {tr}setcity command.",
+        "u": [
             "{tr}weather",
             "{tr}weather <city name>",
         ],
@@ -209,9 +209,9 @@ async def _(event):
     pattern="wttr(?:\s|$)([\s\S]*)",
     command=("wttr", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city for next 3 days . By default it is Istanbul, you can change it by {tr}setcity command.",
-        "usage": [
+        "h": "To get the weather report of a city.",
+        "d": "Shows you the weather report of a city for next 3 days . By default it is Istanbul, you can change it by {tr}setcity command.",
+        "u": [
             "{tr}wttr",
             "{tr}wttr <city name>",
         ],

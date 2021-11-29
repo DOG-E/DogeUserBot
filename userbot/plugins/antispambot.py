@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from requests import get
@@ -113,10 +113,10 @@ if ANTISPAMBOT_BAN == True:
     pattern="casc$",
     command=("casc", plugin_category),
     info={
-        "header": "To check the users who are banned in cas",
-        "description": "When you use this cmd it will check every user in the group where you used whether \
+        "h": "To check the users who are banned in cas",
+        "d": "When you use this cmd it will check every user in the group where you used whether \
         he is banned in cas (combat antispam service) and will show there names if they are flagged in cas",
-        "usage": "{tr}casc",
+        "u": "{tr}casc",
     },
     groups_only=True,
 )
@@ -161,10 +161,10 @@ async def caschecker(event):
     pattern="spamc$",
     command=("spamc", plugin_category),
     info={
-        "header": "To check the users who are banned in spamwatch",
-        "description": "When you use this command it will check every user in the group where you used whether \
+        "h": "To check the users who are banned in spamwatch",
+        "d": "When you use this command it will check every user in the group where you used whether \
         he is banned in spamwatch federation and will show there names if they are banned in spamwatch federation",
-        "usage": "{tr}spamc",
+        "u": "{tr}spamc",
     },
     groups_only=True,
 )

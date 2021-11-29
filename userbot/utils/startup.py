@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -20,17 +20,18 @@ from pylists import *
 from requests import get
 from telethon import Button
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
+from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest, JoinChannelRequest
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest
-from telethon.tl.types import User
+from telethon.tl.types import ChatAdminRights, User
 from telethon.utils import get_peer_id
 
 from .. import BOTLOG, BOTLOG_CHATID, PLUGIN_CHANNEL, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
+from ..helpers.resources import constants
 from ..helpers.utils import install_pip
 from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
@@ -45,7 +46,7 @@ LOGS = logging.getLogger("DogeUserBot")
 
 async def setup_bot():
     """
-    To setup bot for userbot
+    DogeUserBot kurulumu
     """
     try:
         await doge.connect()
@@ -54,8 +55,8 @@ async def setup_bot():
             if option.ip_address == doge.session.server_address:
                 if doge.session.dc_id != option.id:
                     LOGS.warning(
-                        f"🛠️ Fixed DC ID in session from {doge.session.dc_id}\
-                        \n➡️ to {option.id}",
+                        f"🛠️ Oturumdaki sabit DC Kimliği {doge.session.dc_id}\
+                        \n➡️ {option.id}'a düzenlendi.",
                     )
                 doge.session.set_dc(option.id, option.ip_address, option.port)
                 doge.session.save()
@@ -69,11 +70,8 @@ async def setup_bot():
     m_y_i_d = m_e.id
     if str(m_y_i_d) in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
-        await doge.send_message("me", sndmsgg_ys, file=f)
-        LOGS.error(
-            "🐶 My admins have banned you from using @DogeUserBot!\
-                \n🐾 Check your saved messages in Telegram."
-        )
+        await doge.send_message("me", constants.sndmsgg_ys, file=f)
+        LOGS.error(constants.l_gmsgg_ys)
         await doge.disconnect()
         exit(1)
 
@@ -98,18 +96,21 @@ async def autous():
 
 async def setup_assistantbot():
     """
-    To setup assistant bot
+    Otoomatik Asistan Bot kurulumu
     """
+    if gvar("BOT_TOKEN"):
+        return
     if Config.BOT_TOKEN:
         sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
-    if gvar("BOT_TOKEN"):
-        return
-    LOGS.info("🦴 I'm creating your Telegram assistant bot with @BotFather!")
+    LOGS.info("🦴 Sizin için @BotFather'dan asistan bot oluşturuyorum.")
     my = await doge.get_me()
-    botname = f"🐶 {my.first_name}'s Assɪsᴛᴀɴᴛ Boᴛ"
+    if Config.ALIVE_NAME:
+        botname = f"🐶 {Config.ALIVE_NAME} Asɪsᴛᴀɴ Boᴛ"
+    else:
+        botname = f"🐶 {my.first_name} Asɪsᴛᴀɴ Boᴛ"
     if my.username:
-        botusername = my.username + "_Bot"
+        botusername = my.username + "Bot"
     else:
         botusername = "Doge_" + (str(my.id))[5:] + "_Bot"
     bf = "BotFather"
@@ -124,7 +125,7 @@ async def setup_assistantbot():
     is_ok = (await doge.get_messages(bf, limit=1))[0].text
     if is_ok.startswith("That I cannot do."):
         LOGS.error(
-            "🚨 Create a bot with @BotFather and set it's token to BOT_TOKEN variable and restart me."
+            "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkene ayar yapın ve beni yeniden başlatın."
         )
         exit(1)
 
@@ -132,12 +133,12 @@ async def setup_assistantbot():
     await sleep(1)
     is_ok = (await doge.get_messages(bf, limit=1))[0].text
     if not is_ok.startswith("Good."):
-        await doge.send_message(bf, "🐶 Mʏ Doɢᴇ Assɪsᴛᴀɴᴛ Boᴛ")
+        await doge.send_message(bf, "🐶 Dᴏɢᴇ Asɪsᴛᴀɴıᴍ")
         await sleep(1)
         is_ok = (await doge.get_messages(bf, limit=1))[0].text
         if not is_ok.startswith("Good."):
             LOGS.error(
-                "🚨 Create a bot with @BotFather and set it's token to BOT_TOKEN variable and restart me."
+                "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkene ayar yapın ve beni yeniden başlatın"
             )
             exit(1)
 
@@ -158,13 +159,13 @@ async def setup_assistantbot():
             await sleep(1)
             await doge.send_message(bf, f"@{botusername}")
             await sleep(1)
-            await doge.send_message(bf, "🐶 Search...")
+            await doge.send_message(bf, "🐶 Keşfet...")
             LOGS.info(
-                f"✅ DONE! @{botusername} I'm created your Telegram assistant bot successfully!"
+                f"✅ Başarılı! @{botusername} Telegram asistanı botunuzu başarıyla oluşturdum!"
             )
         else:
             LOGS.error(
-                "🚨 Please delete some of your Telegram bots at @Botfather or set variable BOT_TOKEN with token of a bot."
+                "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_token'i ayarlayın."
             )
             exit(1)
 
@@ -175,20 +176,20 @@ async def setup_assistantbot():
         await sleep(1)
         await doge.send_message(bf, f"@{botusername}")
         await sleep(1)
-        await doge.send_message(bf, "🐶 Search...")
+        await doge.send_message(bf, "🐶 keşfet...")
         LOGS.info(
-            f"✅ DONE! @{botusername} I'm created your Telegram assistant bot successfully!"
+            f"✅ Başarılı! @{botusername} Telegram asistanı botunuzu başarıyla oluşturdum!"
         )
     else:
         LOGS.error(
-            "🚨 Please delete some of your Telegram bots at @Botfather or set variable BOT_TOKEN with token of a bot."
+            "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_token'i ayarlayın."
         )
         exit(1)
 
 
 async def setup_me_bot():
     """
-    To setup some necessary data
+    Gerekli bazı verileri ayarlamak kısmı
     """
     doge.me = await doge.get_me()
     doge.uid = doge.me.id
@@ -211,7 +212,7 @@ async def setup_me_bot():
 
 async def ipchange():
     """
-    Just to check if ip change or not
+    Sadece IP'nin değişip değişmeyeceğini kontrol etmek için
     """
     newip = (get("https://httpbin.org/ip").json())["origin"]
     if gvar("ipaddress") is None:
@@ -220,7 +221,7 @@ async def ipchange():
     oldip = gvar("ipaddress")
     if oldip != newip:
         dgvar("ipaddress")
-        LOGS.info("🔄 IP change detected!")
+        LOGS.info("🔄 IP değişimi tespit edildi!")
         try:
             await doge.disconnect()
         except (ConnectionError, CancelledError):
@@ -230,7 +231,7 @@ async def ipchange():
 
 async def load_plugins(folder):
     """
-    To load plugins from the mentioned folder
+    Eklentileri belirtilen klasörden yüklemek için
     """
     path = f"userbot/{folder}/*.py"
     files = glob(path)
@@ -259,12 +260,12 @@ async def load_plugins(folder):
                     remove(Path(f"userbot/{folder}/{shortname}.py"))
             except Exception as e:
                 remove(Path(f"userbot/{folder}/{shortname}.py"))
-                LOGS.error(str(f"🚨 Unable to load {shortname} because of error {e}"))
+                LOGS.error(str(f"🚨 {e} hatası nedeniyle {shortname} yüklenemedi."))
 
 
 async def verifyLoggerGroup():
     """
-    Will verify the both loggers group
+    Her iki logger grubunu da doğrulayacak kısım
     """
     flag = False
     odogeubc = "🧡 @DogeUserBot"
@@ -275,62 +276,62 @@ async def verifyLoggerGroup():
             if not isinstance(entity, User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.error(
-                        f"🚨 Permissions missing to send messages for the specified {vinfo}."
+                        f"🚨Belirtilen {vinfo} için mesaj göndermeyi eksik olan izinler."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.error(
-                        f"🚨 Permissions missing to addusers for the specified {vinfo}."
+                        f"🚨 Belirtilen {vinfo} için üye ekleme izni eksik. Lütfen kontrol edin!."
                     )
         except ValueError:
-            LOGS.error(f"🚨 I couldn't find {vinfo}. Make sure it's correct.")
+            LOGS.error(f"🚨 {vinfo} değerini bulamadım. Lütfen doğru olduğundan emin olun!")
         except TypeError:
-            LOGS.error(f"🚨 {vinfo} is unsupported. Make sure it's correct.")
+            LOGS.error(f"🚨 {vinfo} desteklenmiyor/hatalı. Lütfen doğru olduğundan emin olun!")
         except Exception as e:
             LOGS.error(
-                f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}"
+                f"🚨 {vinfo} değerini doğrulamaya çalışırken bir hata oluştu.\n Hata: {str(e)}"
             )
     else:
-        descript = f"🚧 DON'T DELETE THIS GROUP!\n\
-        \n🗑 If you delete,\
-        \n🐾 Doge maybe won't live.\n\
+        descript = f"🚧 BU GRUBU SİLMEYİN!\n\
+        \n🗑 Eğer bu grubu silerseniz,\
+        \n🐾 Doge çalışmayacaktır!\n\
         \n{odogeubc}"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         _, groupid = await create_supergroup(
             f"🐾 Doɢᴇ Boᴛ Loɢ", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = f"**🚧 DON'T LEAVE OR\
-        \n🚧 DON'T DELETE OR\
-        \n🚧 DON'T CHANGE THIS GROUP!**\n\
-        \n🗑 If you delete,\
-        \n🐾 Doge maybe won't live.\n\
+        descmsg = f"**🚧 BU GRUPTAN AYRILMAYIN\
+        \n🚧 BU GRUBU SİLMEYİN\
+        \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+        \n🗑 Eğer bu grubu silerseniz,\
+        \n🐾 Doge çalışmayacktır!\n\
         \n**{odogeubc}**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         vinfo = "PRIVATE_GROUP_BOT_API_ID"
         LOGS.info(
-            f"✅ Private group for {vinfo} is created successfully and added variable."
+            f"✅ {vinfo} için özel grup başarıyla oluşturuldu ve değişkenler veritabanına yazıldı."
         )
         flag = True
 
     if Config.PMLOGGER:
         if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
             return
-        descript = f"🚧 DON'T DELETE THIS GROUP!\n\
-        \n🗑 If you delete,\
-        \n🚫 PM Logger won't work.\n\
+        descript = f"🚧 BU GRUBU SİMLMEYİN\n\
+        \n🗑 Eğer silerseniz,\
+        \n🚫 PM Logger çalışmayacaktır.\n\
         \n{odogeubc}"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
         _, groupid = await create_supergroup(
             f"🐾 Doɢᴇ Pᴍ Loɢ", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = f"**🚧 DON'T LEAVE OR\
-        \n🚧 DON'T DELETE OR\
-        \n🚧 DON'T CHANGE THIS GROUP!**\n\
-        \n🗑 If you delete,\
-        \n🚫 PM Logger won't work.\n\
-        \n**🦴 IF YOU WANT TO DELETE,\
-        \n🔅 MUST FIRST WRITE:**\
+        descmsg = f"**🚧 BU GRUPTAN AYRILMAYIN\
+        \n🚧 BU GRUBU SİLMEYİN\
+        \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+        \n🗑 Eğer bu grubu silerseniz,\
+        \n🚫 PM Logger özeliiği çalışmayacaktır.\n\
+        \n**🦴 AMA EĞER SİLMEK İSTERSENİZ,\
+        \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
         \n`.set var PMLOGGER False`\n\
         \n**{odogeubc}**"
         msg = await doge.send_message(groupid, descmsg)
@@ -338,7 +339,7 @@ async def verifyLoggerGroup():
         sgvar("PM_LOGGER_GROUP_ID", groupid)
         vinfo = "PM_LOGGER_GROUP_ID"
         LOGS.info(
-            f"✅ Private group for {vinfo} is created successfully and added variable."
+            f"✅ {vinfo} için grup başarıyla oluşturuldu ve değerler yazıldı!"
         )
         flag = True
 
@@ -349,48 +350,48 @@ async def verifyLoggerGroup():
             if not isinstance(entity, User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.error(
-                        f"🚨 Permissions missing to send messages for the specified {vinfo}."
+                        f"🚨 Belirlilen {vinfo} için mesaj gönderme izni eksik. Doğruluğundan emin olun!"
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.error(
-                        f"🚨 Permissions missing to addusers for the specified {vinfo}."
+                        f"🚨Belirtilen {vinfo} için üye ekleme izni eksik. Doğruluğundan emin olun!"
                     )
         except ValueError:
-            LOGS.error(f"🚨 I couldn't find {vinfo}. Make sure it's correct.")
+            LOGS.error(f"🚨 {vinfo} değerini bulamadım. Doğruluğundan emin olun.")
         except TypeError:
-            LOGS.error(f"🚨 {vinfo} is unsupported. Make sure it's correct.")
+            LOGS.error(f"🚨 {vinfo} desteklenmiyor. Doğruluğundan emin olun.")
         except Exception as e:
             LOGS.error(
-                f"🚨 An exception occured upon trying to verify the {vinfo}.\n{str(e)}"
+                f"🚨 {vinfo} doğrulanmaya çalışırken bir hata oluştu.\nHATA: {str(e)}"
             )
 
     if Config.PLUGINS:
         if PLUGIN_CHANNEL or gvar("PLUGIN_CHANNEL"):
             return
-        descript = f"🚧 DON'T DELETE THIS GROUP!\n\
-        \n🗑 If you delete,\
-        \n🧩 all installed extra plugins will be lost.\n\
+        descript = f"🚧 BU KANALI SİLMEYİN!\n\
+        \n🗑 Eğer bu kanalı silerseniz;,\
+        \n🧩 yüklenen tüm ekstra pluginler silinecektir!\n\
         \n{odogeubc}"
         cphoto = await doge.upload_file(
             file="userbot/helpers/resources/DogeExtraPlugin.jpg"
         )
         _, channelid = await create_channel(
-            f"🐾 Doɢᴇ Exᴛʀᴀ Pʟᴜɢɪɴs", doge, descript, cphoto
+            f"🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
         )
-        descmsg = f"**🚧 DON'T LEAVE OR\
-        \n🚧 DON'T DELETE OR\
-        \n🚧 DON'T CHANGE THIS GROUP!**\n\
-        \n🗑 If you delete,\
-        \n🧩 all installed extra plugins will be lost.\n\
-        \n**🦴 IF YOU WANT TO DELETE,\
-        \n🔅 MUST FIRST WRITE:**\
+        descmsg = f"**🚧 BU KANALI SİLMEYİN!\
+        \n🚧 BU KANALI SİLMEYİN!\
+        \n🚧 BU KANALDA DEĞİŞİKLİK YAPMAYIN!**\n\
+        \n🗑 Eğer silerseniz,\
+        \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
+        \n**🦴 EĞER KANALI SİLMEK İSTERSENİZ,\
+        \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
         \n`.set var PLUGINS False`\n\
         \n**{odogeubc}**"
         msg = await doge.send_message(channelid, descmsg)
         await msg.pin()
         sgvar("PLUGIN_CHANNEL", channelid)
         LOGS.info(
-            "✅ Private channel for PLUGIN_CHANNEL is created successfully and added variable."
+            "✅ PLUGIN_CAHNNEL için gizli bir kanal başarıyla oluşturuldu ve veriler veritabanına yazıldı."
         )
         flag = True
 
@@ -403,7 +404,7 @@ async def verifyLoggerGroup():
 
 async def add_bot_to_logger_group(chat_id):
     """
-    To add bot to logger groups
+    Asistan botu log gruplarına eklemek için
     """
     bot_details = await doge.tgbot.get_me()
     try:
@@ -424,24 +425,38 @@ async def add_bot_to_logger_group(chat_id):
             )
         except Exception as e:
             LOGS.error(str(e))
+    rights = ChatAdminRights(
+        add_admins=True,
+        invite_users=True,
+        change_info=True,
+        ban_users=True,
+        delete_messages=True,
+        pin_messages=True,
+        anonymous=False,
+        manage_call=True,
+    )
+    try:
+        await doge(EditAdminRequest(chat_id, bot_details.username, rights, "Doge"))
+    except Exception as e:
+        LOGS.error(str(e))
 
 
 async def startupmessage():
     """
-    Start up message in Telegram logger group
+    Telegram Log Gruplarında mesajlaşmayı başlatma
     """
     try:
         if BOTLOG:
             Config.DOGELOGO = await doge.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg",
-                caption="**🧡 Doɢᴇ UsᴇʀBoᴛ Rᴇᴀᴅʏ To Usᴇ 🧡**",
+                caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴıᴍᴀ Hᴀᴢıʀ! 🧡**",
                 buttons=[
-                    (Button.inline(f"🐕‍🦺 Hᴇʟᴘ", data="mainmenu")),
-                    (Button.inline(f"🌍 Cʜoosᴇ ᴀ Lᴀɴɢᴜᴀɢᴇ", data="lang_menu")),
+                    (Button.inline(f"🐕‍🦺 Yᴀʀᴅıᴍ", data="mainmenu")),
+                    (Button.inline(f"🌍 Bɪʀ Dɪʟ Sᴇçɪɴ", data="lang_menu")),
                     (
                         Button.url(
-                            f"💬 Sᴜᴘᴘoʀᴛ",
+                            f"💬 Dᴇsᴛᴇᴋ",
                             "https://t.me/DogeSup",
                         ),
                         Button.url(
@@ -465,9 +480,9 @@ async def startupmessage():
         if msg_details:
             await doge.check_testcases()
             message = await doge.get_messages(msg_details[0], ids=msg_details[1])
-            text = message.text + "\n\n**🐶 Doge is back and alive.**"
+            text = message.text + "\n\n**🐶 DOGE UsᴇʀBoᴛ Tüᴍ Hızıʏʟᴀ Çᴀʟışıʏoʀ! ⚡️**"
             await doge.edit_message(msg_details[0], msg_details[1], text)
-            if gvar("restartupdate") is not None:
+            if gvar("restart_update") is not None:
                 await doge.send_message(
                     msg_details[0],
                     f"{tr}ping",
@@ -482,13 +497,13 @@ async def startupmessage():
 
 async def customize_assistantbot():
     """
-    To customize assistant bot
+    Asistanın özelleştirilmesi
     """
     try:
         bot = await doge.get_entity(doge.tgbot.me.username)
         bf = "BotFather"
         if bot.photo is None:
-            LOGS.info("🥏 I'm customizing your Telegram assistant bot with @BotFather!")
+            LOGS.info("🥏 Telegram asistan botunuzu @BotFather ile özelleştiriyorum.")
             botusername = f"@{doge.tgbot.me.username}"
             if (doge.me.username) is None:
                 master = doge.me.first_name
@@ -510,8 +525,8 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(
                 bf,
-                f"🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {master}\n\
-                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
+                f"🧡 {master}'ᴜɴ Asɪsᴛᴀɴ Boᴛᴜʏᴜᴍ\n\
+                \n🐶 Tᴀʀᴀꜰıɴᴅᴀɴ ❤️ İʟᴇ Yᴀᴘıʟᴅı 🐾",
             )
             await sleep(1.5)
             await doge.send_message(bf, "/setdescription")
@@ -520,9 +535,9 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(
                 bf,
-                f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ\
-                \n🧡 Mᴀsᴛᴇʀ: {master}\n\
-                \n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
+                f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Asɪsᴛᴀɴ Boᴛᴜ\
+                \n🧡 Sᴀʜɪᴘ: {master}\n\
+                \n🐶 Tᴀʀᴀꜰıɴᴅᴀɴ ❤️ İʟᴇ Yᴀᴘıʟᴅı 🐾",
             )
             await sleep(1.5)
             await doge.send_message(bf, "/setcommands")
@@ -531,15 +546,15 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(
                 bf,
-                "start - 🐶 Start your bot\
-                \nhelp - 🐾 Info of commands\
-                \nuinfo - ℹ️ User information using the bot\
-                \nban - ⛔ Ban user from bot\
-                \nunban - 🔰 Unban user from bot\
-                \nbroadcast - 📣 Broadcast to bot users",
+                "start - 🐶 Botunuzu Başlatın\
+                \nyardim - 🐾 Yardım Menüsü\
+                \nkbilgi - ℹ️ Botu kullanan kişilerin bilgileri\
+                \nyasakla - ⛔ Kullanıcıyı bottan yasaklama\
+                \nyasakac - 🔰 Kullanıcının yasağını kaldırma\
+                \nyayin - 📣 Kullanıcılara yayın yapın",
             )
             LOGS.info(
-                f"✅ DONE! @{botusername} I'm customized your Telegram assistant bot successfully!"
+                f"✅ Başarılı! @{botusername} Telegramda asistan botunuzu özelleştirdim!"
             )
     except Exception as e:
         LOGS.info(str(e))

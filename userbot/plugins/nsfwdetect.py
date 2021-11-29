@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import remove
@@ -22,9 +22,9 @@ plugin_category = "hub"
     pattern="detect$",
     command=("detect", plugin_category),
     info={
-        "header": "To detect the nudity in reply image.",
-        "description": "Reply detect command to any image or non animated sticker to detect the nudity in that",
-        "usage": "{tr}detect",
+        "h": "To detect the nudity in reply image.",
+        "d": "Reply detect command to any image or non animated sticker to detect the nudity in that",
+        "u": "{tr}detect",
     },
 )
 async def detect(event):

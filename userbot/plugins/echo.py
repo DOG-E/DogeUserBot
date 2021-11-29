@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from telethon.utils import get_display_name
@@ -29,9 +29,9 @@ plugin_category = "fun"
     pattern="addecho$",
     command=("addecho", plugin_category),
     info={
-        "header": "To repeat messages sent by the user.",
-        "description": "Reply to user with this cmd so from then his every text and sticker messages will be repeated back to him.",
-        "usage": "{tr}addecho <reply>",
+        "h": "To repeat messages sent by the user.",
+        "d": "Reply to user with this cmd so from then his every text and sticker messages will be repeated back to him.",
+        "u": "{tr}addecho <reply>",
     },
 )
 async def echo(event):
@@ -71,9 +71,9 @@ async def echo(event):
     pattern="rmecho$",
     command=("rmecho", plugin_category),
     info={
-        "header": "To stop repeating paticular user messages.",
-        "description": "Reply to user with this cmd to stop repeating his messages back.",
-        "usage": "{tr}rmecho <reply>",
+        "h": "To stop repeating paticular user messages.",
+        "d": "Reply to user with this cmd to stop repeating his messages back.",
+        "u": "{tr}rmecho <reply>",
     },
 )
 async def echo(event):
@@ -98,10 +98,10 @@ async def echo(event):
     pattern="delecho( .a)?",
     command=("delecho", plugin_category),
     info={
-        "header": "To delete echo in this chat.",
-        "description": "To stop echoing users messages of all enabled users in the paticular chat or all chats.",
-        "flags": {"a": "To stop in all chats"},
-        "usage": [
+        "h": "To delete echo in this chat.",
+        "d": "To stop echoing users messages of all enabled users in the paticular chat or all chats.",
+        "f": {"a": "To stop in all chats"},
+        "u": [
             "{tr}delecho",
             "{tr}delecho .a",
         ],
@@ -140,11 +140,11 @@ async def echo(event):
     pattern="listecho( .a)?$",
     command=("listecho", plugin_category),
     info={
-        "header": "shows the list of users for whom you enabled echo",
-        "flags": {
+        "h": "shows the list of users for whom you enabled echo",
+        "f": {
             "a": "To list echoed users in all chats",
         },
-        "usage": [
+        "u": [
             "{tr}listecho",
             "{tr}listecho .a",
         ],

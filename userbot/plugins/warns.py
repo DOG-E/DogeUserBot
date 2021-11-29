@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from html import escape
@@ -19,9 +19,9 @@ LOGS = logging.getLogger(__name__)
     pattern="warn(?:\s|$)([\s\S]*)",
     command=("warn", plugin_category),
     info={
-        "header": "To warn a user.",
-        "description": "will warn the replied user.",
-        "usage": "{tr}warn <reason>",
+        "h": "To warn a user.",
+        "d": "will warn the replied user.",
+        "u": "{tr}warn <reason>",
     },
 )
 async def _(event):
@@ -59,8 +59,8 @@ async def _(event):
     pattern="warns",
     command=("warns", plugin_category),
     info={
-        "header": "To get users warns list.",
-        "usage": "{tr}warns <reply>",
+        "h": "To get users warns list.",
+        "u": "{tr}warns <reply>",
     },
 )
 async def _(event):
@@ -93,8 +93,8 @@ async def _(event):
     pattern="r(eset)?warns$",
     command=("resetwarns", plugin_category),
     info={
-        "header": "To reset warns of the replied user",
-        "usage": [
+        "h": "To reset warns of the replied user",
+        "u": [
             "{tr}rwarns",
             "{tr}resetwarns",
         ],

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import makedirs
@@ -61,10 +61,10 @@ async def ocr_space_file(filename, overlay=False, api_key=OCRSPACE_API, language
     pattern="(|t)ocr(?:\s|$)([\s\S]*)",
     command=("ocr", plugin_category),
     info={
-        "header": "To read text in image/gif/sticker/video and print it.",
-        "description": "Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi#language).",
-        "usage": "{tr}ocr <language code>",
-        "examples": "{tr}ocr eng",
+        "h": "To read text in image/gif/sticker/video and print it.",
+        "d": "Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi#language).",
+        "u": "{tr}ocr <language code>",
+        "e": "{tr}ocr eng",
     },
 )
 async def ocr(event):
@@ -160,11 +160,11 @@ async def ocr(event):
     pattern="tocr",
     command=("tocr", plugin_category),
     info={
-        "header": "To read text in image/gif/sticker/video and print it with its translation.",
-        "description": "Reply to an image/gif/sticker/video to extract text from it and print it with its translation.\n\nGet language codes from [here](https://ocr.space/ocrapi).",
+        "h": "To read text in image/gif/sticker/video and print it with its translation.",
+        "d": "Reply to an image/gif/sticker/video to extract text from it and print it with its translation.\n\nGet language codes from [here](https://ocr.space/ocrapi).",
         "note": "for this command transalted language set lanuage by `.lang tocr` command.",
-        "usage": "{tr}tocr <language code>",
-        "examples": "{tr}tocr en",
+        "u": "{tr}tocr <language code>",
+        "e": "{tr}tocr en",
     },
 )
 async def ocr(event):

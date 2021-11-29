@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import calcc, doge, eor
@@ -15,9 +15,9 @@ plugin_category = "tool"
     pattern="calc ([\s\S]*)",
     command=("calc", plugin_category),
     info={
-        "header": "To solve basic mathematics equations.",
-        "description": "Solves the given maths equation.",
-        "usage": ["{tr}calc", "{tr}calc 3+5+7+8+9-1"],
+        "h": "To solve basic mathematics equations.",
+        "d": "Solves the given maths equation.",
+        "u": ["{tr}calc", "{tr}calc 3+5+7+8+9-1"],
     },
 )
 async def calculator(event):

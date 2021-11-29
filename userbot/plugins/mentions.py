@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -29,8 +29,8 @@ plugin_category = "tool"
     pattern="(tagall|all)(?:\s|$)([\s\S]*)",
     command=("tagall", plugin_category),
     info={
-        "header": "tags recent 50 persons in the group may not work for all",
-        "usage": [
+        "h": "tags recent 50 persons in the group may not work for all",
+        "u": [
             "{tr}all <text>",
             "{tr}tagall",
         ],
@@ -52,8 +52,8 @@ async def _(event):
     pattern="report$",
     command=("report", plugin_category),
     info={
-        "header": "To tags admins in group.",
-        "usage": "{tr}report",
+        "h": "To tags admins in group.",
+        "u": "{tr}report",
     },
 )
 async def _(event):
@@ -74,12 +74,12 @@ async def _(event):
     pattern="men ([\s\S]*)",
     command=("mention", plugin_category),
     info={
-        "header": "Tags that person with the given custom text.",
-        "usage": [
+        "h": "Tags that person with the given custom text.",
+        "u": [
             "{tr}men username/userid text",
             "text (username/mention)[custom text] text",
         ],
-        "examples": ["{tr}men @teledoge hi", "Hi @teledoge[How are you?]"],
+        "e": ["{tr}men @teledoge hi", "Hi @teledoge[How are you?]"],
     },
 )
 async def _(event):
@@ -101,12 +101,12 @@ async def _(event):
     pattern="alltag(?:\s|$)([\s\S]*)",
     command=("alltag", plugin_category),
     info={
-        "header": "Tag all members in the group.",
-        "description": "This feature is to tag members in the group, including owner and admin. This plugins no admin title required.",
-        "usage": [
+        "h": "Tag all members in the group.",
+        "d": "This feature is to tag members in the group, including owner and admin. This plugins no admin title required.",
+        "u": [
             "{tr}alltag <text>",
         ],
-        "examples": "{tr}alltag",
+        "e": "{tr}alltag",
     },
     groups_only=True,
 )
@@ -159,12 +159,12 @@ async def alltags(event):
     pattern="etag(?:\s|$)([\s\S]*)",
     command=("etag", plugin_category),
     info={
-        "header": "Tag all with emojis members in the group.",
-        "description": "This feature is to tag with emojis members in the group. This plugins no admin title required.",
-        "usage": [
+        "h": "Tag all with emojis members in the group.",
+        "d": "This feature is to tag with emojis members in the group. This plugins no admin title required.",
+        "u": [
             "{tr}etag <text>",
         ],
-        "examples": "{tr}etag",
+        "e": "{tr}etag",
     },
     groups_only=True,
 )

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import dumps
@@ -85,8 +85,7 @@ async def p_paste(message, extension=None):
             "raw": f"https://pasty.lus.pm/{response['id']}/raw",
             "bin": "Pasty",
         }
-    er = "pasty.lus.pm"
-    return {"error": f"`🚨 Unable to reach {er}!`"}
+    return {"error": f"`🚨 Unable to reach pasty.lus.pm!`"}
 
 
 async def s_paste(message, extension="txt"):
@@ -107,8 +106,28 @@ async def s_paste(message, extension="txt"):
             "raw": f"{siteurl}{response['payload']['id']}/raw",
             "bin": "Spacebin",
         }
-    er = "spacebin"
-    return {"error": f"`🚨 Unable to reach {er}!`"}
+    return {"error": f"`🚨 Unable to reach spacebin!`"}
+
+
+def spaste(message, extension="txt"):
+    """
+    To Paste the given message/text/code to spaceb.in
+    """
+    siteurl = "https://spaceb.in/api/v1/documents/"
+    try:
+        response = post(siteurl, data={"content": message, "extension": extension})
+    except Exception as e:
+        return {"error": str(e)}
+    if response.ok:
+        response = response.json()
+        if response["error"] != "" and response["status"] < 400:
+            return {"error": response["error"]}
+        return {
+            "url": f"https://spaceb.in/{response['payload']['id']}",
+            "raw": f"{siteurl}{response['payload']['id']}/raw",
+            "bin": "Spacebin",
+        }
+    return {"error": "`🚨 Unable to reach spacebin.`"}
 
 
 async def n_paste(message, extension=None):
@@ -133,8 +152,7 @@ async def n_paste(message, extension=None):
             "raw": f"nekobin.com/raw/{response['result']['key']}",
             "bin": "Neko",
         }
-    er = "nekobin"
-    return {"error": f"`🚨 Unable to reach {er}!`"}
+    return {"error": f"`🚨 Unable to reach nekobin!`"}
 
 
 async def d_paste(message, extension=None):
@@ -159,8 +177,7 @@ async def d_paste(message, extension=None):
             "raw": f"https://catbin.up.railway.app/raw/{response['key']}",
             "bin": "Dog",
         }
-    er = "catbin"
-    return {"error": f"`🚨 Unable to reach {er}!`"}
+    return {"error": f"`🚨 Unable to reach catbin!`"}
 
 
 async def pastetext(text_to_print, pastetype=None, extension=None, title=None):

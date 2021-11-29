@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import dump, load
@@ -47,12 +47,12 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 
 def main_menu():
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-    \n🐾 Hᴇʟᴘᴇʀ\n\
+    \n🐾 Yᴀʀᴅıᴍᴄı\n\
     \n◽ Doɢᴇ oғ {mention}**"
     buttons = [
         (
             Button.inline(
-                f"ℹ️️ Iɴꜰo",
+                f"ℹ️️ Bɪʟɢɪ",
                 data="check",
             ),
         ),
@@ -68,17 +68,17 @@ def main_menu():
         ),
         (
             Button.inline(
-                f"🎈 Fᴜɴ ({len(GRP_INFO['fun'])})",
+                f"🎈 Eɢ̆ʟᴇɴᴄᴇ ({len(GRP_INFO['fun'])})",
                 data="fun_menu",
             ),
             Button.inline(
-                f"🪀 Mɪsc ({len(GRP_INFO['misc'])})",
+                f"🪀 Çᴇşɪᴛʟɪ ({len(GRP_INFO['misc'])})",
                 data="misc_menu",
             ),
         ),
         (
             Button.inline(
-                f"🧰 Tooʟ ({len(GRP_INFO['tool'])})",
+                f"🧰 Aʀᴀç ({len(GRP_INFO['tool'])})",
                 data="tool_menu",
             ),
             Button.inline(
@@ -88,7 +88,7 @@ def main_menu():
         ),
         (
             Button.inline(
-                f"⛔ CLOSE ⛔",
+                f"⛔ KAPAT ⛔",
                 data="close",
             ),
         ),
@@ -115,7 +115,7 @@ def ibuild_keyboard(buttons):
 
 
 def get_back_button(name):
-    return [Button.inline(f"⬅️️ Bᴀcᴋ", data=f"{name}")]
+    return [Button.inline(f"⬅️️ Gᴇʀɪ", data=f"{name}")]
 
 
 def command_in_category(cname):
@@ -227,7 +227,7 @@ def paginate_help(
                 ),
                 (
                     Button.inline(
-                        f"⛔ Cʟosᴇ",
+                        f"⛔ Kᴀᴘᴀᴛ",
                         data="close",
                     ),
                 ),
@@ -237,7 +237,7 @@ def paginate_help(
             pairs = pairs + [
                 (
                     Button.inline(f"🐾 Mᴇɴᴜ", data="mainmenu"),
-                    Button.inline(f"⛔ Cʟosᴇ", data="close"),
+                    Button.inline(f"⛔ Kᴀᴘᴀᴛ", data="close"),
                 ),
             ]
 
@@ -259,14 +259,14 @@ def paginate_help(
             ),
             (
                 Button.inline(
-                    f"⬅️️ Bᴀcᴋ",
+                    f"⬅️️ Gᴇʀɪ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
                     f"🐾 Mᴇɴᴜ",
                     data="mainmenu",
                 ),
-                Button.inline(f"⛔ Cʟosᴇ", data="close"),
+                Button.inline(f"⛔ Kᴀᴘᴀᴛ", data="close"),
             ),
         ]
 
@@ -276,14 +276,14 @@ def paginate_help(
         pairs = pairs + [
             (
                 Button.inline(
-                    f"⬅️️ Bᴀcᴋ",
+                    f"⬅️️ Gᴇʀɪ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
                     f"🐾 Mᴇɴᴜ",
                     data="mainmenu",
                 ),
-                Button.inline(f"⛔ Cʟosᴇ", data="close"),
+                Button.inline(f"⛔ Kᴀᴘᴀᴛ", data="close"),
             ),
         ]
     return pairs
@@ -312,7 +312,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [
                 (
                     Button.url("🐶 Doɢᴇ UsᴇʀBoᴛ", "https://t.me/DogeUserBot"),
-                    Button.inline(f"🐾 Iɴꜰo", data="infos"),
+                    Button.inline(f"🐾 Bɪʟɢɪ", data="infos"),
                 )
             ]
             ALIVE_PIC = gvar("ALIVE_PIC")
@@ -337,13 +337,13 @@ async def inline_handler(event):  # sourcery no-metrics
             elif I_IMG:
                 result = builder.document(
                     I_IMG,
-                    title="🐶 Doge UserBot Alive",
+                    title="🐶 Doge UserBot Çalışıyor ⚡",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="🐶 Doge UserBot Alive",
+                    title="🐶 Doge UserBot Çalışıyor ⚡",
                     text=query,
                     buttons=buttons,
                 )
@@ -376,7 +376,7 @@ async def inline_handler(event):  # sourcery no-metrics
             message_text = note_data.strip()
             tl_ib_buttons = ibuild_keyboard(buttons)
             result = builder.article(
-                title=f"🐶 Doge UserBot Custom Buttons",
+                title=f"🐶 Doge UserBot Buton Özelleştirme",
                 text=message_text,
                 buttons=tl_ib_buttons,
                 link_preview=False,
@@ -418,10 +418,10 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newtroll = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline(f"🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"troll_{timestamp}")]
+            buttons = [Button.inline(f"🔐 Mᴇsᴀᴊı Gösᴛᴇʀ", data=f"troll_{timestamp}")]
             result = builder.article(
-                title=f"🐶 Doge UserBot Troll Message",
-                text=f"🤡 Only {teledoge} can't access this message!",
+                title=f"🐶 Doge UserBot Trol Mesajı",
+                text=f"🤡 Bu mesaja sadece {teledoge} erişemez!",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -466,10 +466,10 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline(f"🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"s_{timestamp}")]
+            buttons = [Button.inline(f"🔐 Mᴇsᴀᴊı Gösᴛᴇʀ", data=f"s_{timestamp}")]
             result = builder.article(
-                title=f"🐶 Doge UserBot Secret Message",
-                text=f"🔒 A whisper message to {teledoge}, only {teledoge} can see.",
+                title=f"🐶 Doge UserBot Gizli Mesaj",
+                text=f"🔒 Bu {teledoge} için gizli bir nesajdır, sadece {teledoge} görebilir.",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -490,9 +490,9 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newhide = {str(timestamp): {"text": query}}
 
-            buttons = [Button.inline(f"🔏 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"hide_{timestamp}")]
+            buttons = [Button.inline(f"🔏 Mᴇsᴀᴊı Gösᴛᴇʀ", data=f"hide_{timestamp}")]
             result = builder.article(
-                title=f"🐶 Doge UserBot Hidden Message",
+                title=f"🐶 Doge UserBot Gizlenmiş Mesaj",
                 text="ㅤ",
                 buttons=buttons,
             )
@@ -503,7 +503,7 @@ async def inline_handler(event):  # sourcery no-metrics
             else:
                 dump(newhide, open(hide, "w"))
 
-        elif string == ("help" or "doge" or ""):
+        elif string == ("help" or "doge" or " "):
             HELP_PIC = gvar("HELP_PIC")
             if HELP_PIC:
                 DOG = [x for x in HELP_PIC.split()]
@@ -515,23 +515,23 @@ async def inline_handler(event):  # sourcery no-metrics
             if HP_IMG is not None and HP_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     file=HP_IMG,
-                    # title="🐶 Doge UserBot Help",
-                    # description="Help Menu",
+                    title="🐶 Doɢᴇ UsᴇʀBoᴛ",
+                    description="Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=_result[0],
                     buttons=_result[1],
                 )
             elif HP_IMG:
                 result = builder.document(
                     HP_IMG,
-                    title=f"🐶 Doge UserBot Help",
-                    description=f"Hᴇʟᴘ Mᴇɴᴜ",
+                    title=f"🐶 Doɢᴇ UsᴇʀBoᴛ",
+                    description=f"Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=query,
                     buttons=_result[1],
                 )
             else:
                 result = builder.article(
-                    title="🐶 Doge UserBot Help",
-                    description=f"Hᴇʟᴘ Mᴇɴᴜ",
+                    title="🐶 Doɢᴇ UsᴇʀBoᴛ",
+                    description=f"Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=query,
                     buttons=_result[1],
                 )
@@ -555,11 +555,11 @@ async def inline_handler(event):  # sourcery no-metrics
                             data=f"ytdl_next_{key_}_1",
                         ),
                         Button.inline(
-                            f"📜 Lɪsᴛ Aʟʟ",
+                            f"📜 Hᴇᴘsɪɴɪ Lɪsᴛᴇʟᴇ",
                             data=f"ytdl_listall_{key_}_1",
                         ),
                         Button.inline(
-                            f"📥 Doᴡɴʟoᴀᴅ",
+                            f"📥 İɴᴅɪʀ",
                             data=f'ytdl_download_{outdata[1]["video_id"]}_0',
                         ),
                     ]
@@ -580,7 +580,7 @@ async def inline_handler(event):  # sourcery no-metrics
                     id=str(uuid4()),
                     type="photo",
                     title=link,
-                    description=f"📥 Doᴡɴʟoᴀᴅ",
+                    description=f"📥 İɴᴅɪʀ",
                     thumb=photo,
                     content=photo,
                     send_message=InputBotInlineMessageMediaAuto(
@@ -589,8 +589,8 @@ async def inline_handler(event):  # sourcery no-metrics
                 )
             else:
                 result = builder.article(
-                    title="🙁 I couldn't find this.",
-                    text=f"🚨 No results found for `{str_y[1]}`",
+                    title="🙁 Bunu bulamadım.",
+                    text=f"🚨 `{str_y[1]}` için sonuç bulunamadı.",
                     description="INVALID",
                 )
             try:
@@ -599,8 +599,8 @@ async def inline_handler(event):  # sourcery no-metrics
                 await event.answer(
                     [
                         builder.article(
-                            title="🙁 I couldn't find this.",
-                            text=f"🚨 No results found for `{str_y[1]}`",
+                            title="🙁 Bunu bulamadım.",
+                            text=f"🚨 `{str_y[1]}` için sonuç bulunamadı.",
                             description="INVALID",
                         )
                     ]
@@ -608,7 +608,9 @@ async def inline_handler(event):  # sourcery no-metrics
 
         elif string == "pmpermit":
             buttons = [
-                Button.inline(text=f"🪐 Sʜoᴡ Oᴘᴛɪoɴs", data="show_pmpermit_options"),
+                Button.inline(
+                    text=f"🪐 Sᴇçᴇɴᴇᴋʟᴇʀɪ Gösᴛᴇʀ", data="show_pmpermit_options"
+                ),
             ]
             PM_PIC = gvar("PM_PIC")
             if PM_PIC:
@@ -621,20 +623,20 @@ async def inline_handler(event):  # sourcery no-metrics
             if DOG_IMG and DOG_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     DOG_IMG,
-                    # title="🐶 Doge UserBot PMPermit",
+                    title="🐶 Doge UserBot PMPermit Modülü",
                     text=query,
                     buttons=buttons,
                 )
             elif DOG_IMG:
                 result = builder.document(
                     DOG_IMG,
-                    title="🐶 Doge UserBot PMPermit",
+                    title="🐶 Doge UserBot PMPermit Modülü",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="🐶 Doge UserBot PMPermit",
+                    title="🐶 Doge UserBot PMPermit Modülü",
                     text=query,
                     buttons=buttons,
                 )
@@ -646,7 +648,7 @@ async def inline_handler(event):  # sourcery no-metrics
             (
                 Button.url("🐶 Doɢᴇ UsᴇʀBoᴛ", "https://t.me/DogeUserBot"),
                 Button.url(
-                    f"🐕‍🦺 Sᴜᴘᴘoʀᴛ",
+                    f"🐕‍🦺 Dᴇsᴛᴇᴋ Gʀᴜʙᴜ",
                     "https://t.me/DogeSup",
                 ),
             )
@@ -659,16 +661,16 @@ async def inline_handler(event):  # sourcery no-metrics
         text, msg_entities = await event.client._parse_message_text(
             f"**[🐶 Doɢᴇ UsᴇʀBoᴛ 🐾](https://t.me/DogeUserBot)**\
             \n\
-            \n❤ Doge is an advanced dog that makes using Telegram easy and fun.\n\
-            \n**🐕‍🦺 If you want to have a Doge on Telegram,\
-            \n🐾 Come to [our support group]({suplink})!**",
+            \n❤ Doge, Telegram'ı eğlenceli hale getirmek ve kullanımını kolaylaştırmak içindir.\n\
+            \n**🐕‍🦺 Siz de bir Doge sahibi olmak istiyorsanız,\
+            \n🐾 [Destek grubumuza]({suplink}) gelebilirsiniz!**",
             "md",
         )
         result = InputBotInlineResult(
             id=str(uuid4()),
             type="photo",
             title="🐶 Doge UserBot",
-            description="🐕‍🦺 Adopt a @DogeUserBot too!",
+            description="🐕‍🦺 Sen de bir @DogeUserBot sahiplen!",
             url="https://t.me/DogeUserBot",
             thumb=photo,
             content=photo,
@@ -694,7 +696,7 @@ async def on_plug_in_callback_query_handler(event):
     ]
     await event.edit(
         f"**[🐶 Doɢᴇ UsᴇʀBoᴛ 🐾](https://t.me/DogeUserBot)\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        \n🐾 Yᴀʀᴅıᴍᴄı\n\
         \n◽ Doɢᴇ oғ {mention}**",
         buttons=buttons,
         link_preview=False,
@@ -704,10 +706,10 @@ async def on_plug_in_callback_query_handler(event):
 @doge.tgbot.on(CallbackQuery(data=compile(b"check")))
 async def on_plugin_callback_query_handler(event):
     text = f"🐶 𝗗𝗢𝗚𝗘 𝗨𝗦𝗘𝗥𝗕𝗢𝗧 🐾\
-    \n🧩 Pʟᴜɢɪɴs: {len(PLG_INFO)}\
-    \n⌨️ Coᴍᴍᴀɴᴅs: {len(CMD_INFO)}\n\
-    \n{tr}doge .c <command>: For any command info.\
-    \n{tr}s <query>: To search any commands."
+    \n🧩 Pʟᴜɢɪɴʟᴇʀ: {len(PLG_INFO)}\
+    \n⌨️ Koᴍᴜᴛʟᴀʀ: {len(CMD_INFO)}\n\
+    \n{tr}doge .c <komut>: Herhangi bir komut hakkında bilgi almak için.\
+    \n{tr}s <query>: Herhangi bir komutu aramak için."
     await event.answer(text, cache_time=0, alert=True)
 
 
@@ -717,17 +719,17 @@ async def on_plug_in_callback_query_handler(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     buttons = paginate_help(0, GRP_INFO[category], category)
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-    \n🐾 Hᴇʟᴘᴇʀ\n\
+    \n🐾 Yᴀʀᴅıᴍcı\n\
     \n◽ Doɢᴇ oғ {mention}**\n\
-    \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category}\
-    \n**🧩 Pʟᴜɢɪɴs:** {len(GRP_INFO[category])}\
-    \n**⌨️ Coᴍᴍᴀɴᴅs:** {command_in_category(category)}"
+    \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
+    \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
+    \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
 @doge.tgbot.on(
     CallbackQuery(
-        data=compile(b"back_([a-z]+)_([a-z1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
+        data=compile(b"back_([a-z]+)_([a-z_1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
     )
 )
 @check_owner
@@ -737,12 +739,12 @@ async def on_plug_in_callback_query_handler(event):
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))
     if mtype == "plugin":
         buttons = paginate_help(pgno, GRP_INFO[category], category)
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category}\
-        \n**🧩 Pʟᴜɢɪɴs:** {len(GRP_INFO[category])}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {command_in_category(category)}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
+        \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
 
     else:
         category_plugins = str(event.pattern_match.group(4).decode("UTF-8"))
@@ -755,12 +757,12 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {getkey(category)}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {len(PLG_INFO[category])}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
@@ -785,12 +787,12 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {getkey(category)}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {len(PLG_INFO[category])}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
         try:
             return await event.edit(text, buttons=buttons, link_preview=False)
         except Exception as e:
@@ -827,7 +829,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @doge.tgbot.on(
-    CallbackQuery(data=compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
+    CallbackQuery(data=compile(b"(.*)_cmdhelp_([a-z_1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)"))
 )
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -839,7 +841,7 @@ async def on_plug_in_callback_query_handler(event):
     buttons = [
         (
             Button.inline(
-                f"⬅️️ Bᴀcᴋ",
+                f"⬅️️ Gᴇʀɪ",
                 data=f"back_command_{category}_{pgno}_{category_plugins}_{category_pgno}",
             ),
             Button.inline(
@@ -847,17 +849,17 @@ async def on_plug_in_callback_query_handler(event):
                 data="mainmenu",
             ),
             Button.inline(
-                f"⛔ Cʟosᴇ",
+                f"⛔ Kᴀᴘᴀᴛ",
                 data="close",
             ),
         ),
     ]
-    text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)**\
-    \n🐾 Hᴇʟᴘᴇʀ\n\
+    text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+    \n🐾 Yᴀʀᴅıᴍcı\n\
     \n◽ Doɢᴇ oғ {mention}**\n\
-    \n**⌨️ Coᴍᴍᴀɴᴅ:** `{tr}{cmd}`\
+    \n**⌨️ Koᴍᴜᴛʟᴀʀ:** `{tr}{cmd}`\
     \n**🧩 Pʟᴜɢɪɴ:** {category}\
-    \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category_plugins}\n\
-    \n**ℹ️ Iɴғo:**\
+    \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category_plugins}\n\
+    \n**ℹ️ Bɪʟɢɪ:**\
     \n{CMD_INFO[cmd][0]}"
     await event.edit(text, buttons=buttons, link_preview=False)

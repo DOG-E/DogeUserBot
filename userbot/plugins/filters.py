@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from re import IGNORECASE, escape, search
@@ -88,9 +88,9 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
     pattern="filter ([\s\S]*)",
     command=("filter", plugin_category),
     info={
-        "header": "To save filter for the given keyword.",
-        "description": "If any user sends that filter then your bot will reply.",
-        "option": {
+        "h": "To save filter for the given keyword.",
+        "d": "If any user sends that filter then your bot will reply.",
+        "o": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
             "{count}": "To get group members",
@@ -105,7 +105,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
             "{my_mention}": "To mention myself",
             "{my_username}": "To use my username.",
         },
-        "usage": "{tr}filter <keyword>",
+        "u": "{tr}filter <keyword>",
     },
 )
 async def add_new_filter(event):
@@ -161,9 +161,9 @@ async def add_new_filter(event):
     pattern="filters$",
     command=("filters", plugin_category),
     info={
-        "header": "To list all filters in that chat.",
-        "description": "Lists all active (of your userbot) filters in a chat.",
-        "usage": "{tr}filters",
+        "h": "To list all filters in that chat.",
+        "d": "Lists all active (of your userbot) filters in a chat.",
+        "u": "{tr}filters",
     },
 )
 async def on_snip_list(event):
@@ -186,8 +186,8 @@ async def on_snip_list(event):
     pattern="stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
-        "header": "To delete that filter . so if user send that keyword bot will not reply",
-        "usage": "{tr}stop <keyword>",
+        "h": "To delete that filter . so if user send that keyword bot will not reply",
+        "u": "{tr}stop <keyword>",
     },
 )
 async def remove_a_filter(event):
@@ -203,8 +203,8 @@ async def remove_a_filter(event):
     pattern="rmfilters$",
     command=("rmfilters", plugin_category),
     info={
-        "header": "To delete all filters in that group.",
-        "usage": "{tr}rmfilters",
+        "h": "To delete all filters in that group.",
+        "u": "{tr}rmfilters",
     },
 )
 async def on_all_snip_delete(event):

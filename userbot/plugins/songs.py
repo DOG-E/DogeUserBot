@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from base64 import b64decode
@@ -34,6 +34,7 @@ from . import (
     reply_id,
     song_dl,
     video_dl,
+    yt_data,
     yt_search,
 )
 
@@ -56,13 +57,13 @@ SONGBOT_BLOCKED_STRING = "<code>Please unblock @songdl_bot and try again</code>"
     pattern="song(320)?(?:\s|$)([\s\S]*)",
     command=("song", plugin_category),
     info={
-        "header": "To get songs from youtube.",
-        "description": "Basically this command searches youtube and send the first video as audio file.",
-        "flags": {
+        "h": "To get songs from youtube.",
+        "d": "Basically this command searches youtube and send the first video as audio file.",
+        "f": {
             "320": "if you use song320 then you get 320k quality else 128k quality",
         },
-        "usage": "{tr}song <song name>",
-        "examples": "{tr}song memories song",
+        "u": "{tr}song <song name>",
+        "e": "{tr}song memories song",
     },
 )
 async def _(event):
@@ -113,7 +114,7 @@ async def _(event):
         dogthumb = Path(f"{dogname}.webp")
     elif not path.exists(dogthumb):
         dogthumb = None
-    ytdata = Video.get(video_link)
+    ytdata = await yt_data(video_link)
     await event.client.send_file(
         event.chat_id,
         song_file,
@@ -143,10 +144,10 @@ async def delete_messages(event, chat, from_message):
     pattern="vsong(?:\s|$)([\s\S]*)",
     command=("vsong", plugin_category),
     info={
-        "header": "To get video songs from youtube.",
-        "description": "Basically this command searches youtube and sends the first video",
-        "usage": "{tr}vsong <song name>",
-        "examples": "{tr}vsong memories song",
+        "h": "To get video songs from youtube.",
+        "d": "Basically this command searches youtube and sends the first video",
+        "u": "{tr}vsong <song name>",
+        "e": "{tr}vsong memories song",
     },
 )
 async def _(event):
@@ -218,9 +219,9 @@ async def _(event):
     pattern="shazam$",
     command=("shazam", plugin_category),
     info={
-        "header": "To reverse search song.",
-        "description": "Reverse search audio file using shazam api",
-        "usage": "{tr}shazam <reply to voice/audio>",
+        "h": "To reverse search song.",
+        "d": "Reverse search audio file using shazam api",
+        "u": "{tr}shazam <reply to voice/audio>",
     },
 )
 async def shazamcmd(event):
@@ -262,9 +263,9 @@ async def shazamcmd(event):
     pattern="szm$",
     command=("szm", plugin_category),
     info={
-        "header": "To reverse search music file.",
-        "description": "music file lenght must be around 10 sec so use ffmpeg plugin to trim it.",
-        "usage": "{tr}szm",
+        "h": "To reverse search music file.",
+        "d": "music file lenght must be around 10 sec so use ffmpeg plugin to trim it.",
+        "u": "{tr}szm",
     },
 )
 async def _(event):
@@ -296,12 +297,12 @@ async def _(event):
     pattern="sng ?([\s\S]*)",
     command=("sng", plugin_category),
     info={
-        "header": "Get Songs from @LyBot quickly",
-        "usage": [
+        "h": "Get Songs from @LyBot quickly",
+        "u": [
             "{tr}sng <song name>",
             "{tr}sng <reply to a song name>",
         ],
-        "examples": ["{tr}sng Erik Dalı"],
+        "e": ["{tr}sng Erik Dalı"],
     },
 )
 async def lybot(event):

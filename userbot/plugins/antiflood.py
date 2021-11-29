@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -67,11 +67,11 @@ because he reached the defined flood limit.""",
     pattern="setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
-        "header": "To setup antiflood in a group",
-        "description": "It warns the user if he spams the chat and if you're an admin with proper rights then it mutes him in that group.",
+        "h": "To setup antiflood in a group",
+        "d": "It warns the user if he spams the chat and if you're an admin with proper rights then it mutes him in that group.",
         "note": "To stop antiflood setflood with high value like 999999",
-        "usage": "{tr}setflood <count>",
-        "examples": [
+        "u": "{tr}setflood <count>",
+        "e": [
             "{tr}setflood 10",
         ],
     },

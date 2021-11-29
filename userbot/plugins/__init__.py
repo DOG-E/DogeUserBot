@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import makedirs
@@ -21,7 +21,6 @@ from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers import *
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
-from ..languages import lan
 
 LOGS = logging.getLogger(__name__)
 bot = doge

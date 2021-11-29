@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, edl, eor, fsmessage, newmsgres, parse_pre, reply_id
@@ -15,9 +15,9 @@ plugin_category = "tool"
     pattern="scan(i)?$",
     command=("scan", plugin_category),
     info={
-        "header": "To scan the replied file for virus.",
-        "flag": {"i": "to get output as image."},
-        "usage": ["{tr}scan", "{tr}scani"],
+        "h": "To scan the replied file for virus.",
+        "f": {"i": "to get output as image."},
+        "u": ["{tr}scan", "{tr}scani"],
     },
 )
 async def _(event):
@@ -54,8 +54,8 @@ async def _(event):
     pattern="vscan$",
     command=("vscan", plugin_category),
     info={
-        "header": "To scan with @DrWebBot the replied file for virus.",
-        "usage": "{tr}vscan",
+        "h": "To scan with @DrWebBot the replied file for virus.",
+        "u": "{tr}vscan",
     },
 )
 async def vscan(event):

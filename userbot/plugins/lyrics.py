@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from re import findall
@@ -21,19 +21,19 @@ plugin_category = "fun"
     pattern="lyrics(?:\s|$)([\s\S]*)",
     command=("lyrics", plugin_category),
     info={
-        "header": "Song lyrics searcher using genius api.",
-        "description": "if you want to provide artist name with song name then use this format {tr}lyrics <artist name> - <song name> . if you use this format in your query then flags won't work. by default it will show first query.",
-        "flags": {
+        "h": "Song lyrics searcher using genius api.",
+        "d": "if you want to provide artist name with song name then use this format {tr}lyrics <artist name> - <song name> . if you use this format in your query then flags won't work. by default it will show first query.",
+        "f": {
             ".l": "to get list of search lists.",
             ".n": "To get paticular song lyrics.",
         },
         "note": "For functioning of this command set the GENIUS_API with {tr}setdog command. Get value from  https://genius.com/developers.",
-        "usage": [
+        "u": [
             "{tr}lyrics <artist name> - <song name>",
             "{tr}lyrics .l <song name>",
             "{tr}lyrics .n<song number> <song name>",
         ],
-        "examples": [
+        "e": [
             "{tr}lyrics Armaan Malik - butta bomma",
             "{tr}lyrics .l butta bomma",
             "{tr}lyrics .n2 butta bomma",

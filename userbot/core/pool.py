@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_running_loop
@@ -20,12 +20,12 @@ _LOG_STR = "<<< ----  %s  ---- >>>"
 
 
 def submit_thread(func: Callable[[Any], Any], *args: Any, **kwargs: Any) -> Future:
-    """Submit thread to thread pool."""
+    """Konuyu iplik Havuzuna Gönder."""
     return _EXECUTOR.submit(func, *args, **kwargs)
 
 
 def run_in_thread(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
-    """Run in a thread."""
+    """İş parçacığını çalıştırma."""
 
     @wraps(func)
     async def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -42,8 +42,8 @@ def _get() -> ThreadPoolExecutor:
 def _stop():
     _EXECUTOR.shutdown()
     # pylint: disable=protected-access
-    _LOG.info(_LOG_STR, f"Stopped Pool: {_EXECUTOR._max_workers} workers")
+    _LOG.info(_LOG_STR, f"Durdurulmuş Program: {_EXECUTOR._max_workers} çalışanı ile")
 
 
 # pylint: disable=protected-access
-_LOG.info(_LOG_STR, f"Started Pool: {_EXECUTOR._max_workers} workers")
+_LOG.info(_LOG_STR, f"Durdurulmuş Program: {_EXECUTOR._max_workers} çalışanı ile")

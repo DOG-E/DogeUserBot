@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from sys import argv, exit
@@ -45,7 +45,13 @@ if gvar("BOT_TOKEN") is None:
 try:
     doge.loop.run_until_complete(setup_me_bot())
 except Exception as e:
-    LOGS.error(f"{e}")
+    LOGS.error(f"🚨 {e}")
+
+
+try:
+    doge.loop.run_until_complete(customize_assistantbot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
 
 
 class DogCheck:
@@ -88,9 +94,6 @@ async def startup_process():
 
 
 doge.loop.run_until_complete(startup_process())
-
-
-doge.loop.run_until_complete(customize_assistantbot())
 
 
 if len(argv) not in (1, 3, 4):

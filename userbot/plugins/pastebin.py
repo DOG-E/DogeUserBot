@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import path as osp
@@ -53,11 +53,11 @@ def get_key(val):
     pattern="pcode(?:\s|$)([\s\S]*)",
     command=("pcode", plugin_category),
     info={
-        "header": "Will paste the entire text on the blank white image.",
-        "flags": {
+        "h": "Will paste the entire text on the blank white image.",
+        "f": {
             "f": "Use this flag to send it as file rather than image",
         },
-        "usage": ["{tr}pcode <reply>", "{tr}pcode text"],
+        "u": ["{tr}pcode <reply>", "{tr}pcode text"],
     },
 )
 async def paste_img(event):
@@ -117,18 +117,18 @@ async def paste_img(event):
     pattern="(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
     command=("paste", plugin_category),
     info={
-        "header": "To paste text to a paste bin.",
-        "description": "Uploads the given text to website so that you can share text/code with others easily. If no flag is used then it will use p as default",
-        "flags": {
+        "h": "To paste text to a paste bin.",
+        "d": "Uploads the given text to website so that you can share text/code with others easily. If no flag is used then it will use p as default",
+        "f": {
             "d": "Will paste text to dog.bin",
             "p": "Will paste text to pasty.lus.pm",
             "s": "Will paste text to spaceb.in (language extension not there at present.)",
         },
-        "usage": [
+        "u": [
             "{tr}{flags}paste <reply/text>",
             "{tr}{flags}paste {extension} <reply/text>",
         ],
-        "examples": [
+        "e": [
             "{tr}spaste <reply/text>",
             "{tr}ppaste -py await event.client.send_message(chat,'Hello! testing123 123')",
         ],
@@ -189,10 +189,10 @@ async def paste_bin(event):
 @doge.bot_cmd(
     command=("neko", plugin_category),
     info={
-        "header": "To paste text to a neko bin.",
-        "description": "Uploads the given text to nekobin so that you can share text/code with others easily.",
-        "usage": ["{tr}neko <reply/text>", "{tr}neko {extension} <reply/text>"],
-        "examples": [
+        "h": "To paste text to a neko bin.",
+        "d": "Uploads the given text to nekobin so that you can share text/code with others easily.",
+        "u": ["{tr}neko <reply/text>", "{tr}neko {extension} <reply/text>"],
+        "e": [
             "{tr}neko <reply/text>",
             "{tr}neko -py await event.client.send_message(chat,'Hello! testing123 123')",
         ],
@@ -207,10 +207,10 @@ async def _(event):
     pattern="g(et)?paste(?:\s|$)([\s\S]*)",
     command=("getpaste", plugin_category),
     info={
-        "header": "To paste text into telegram from pastebin link.",
-        "description": "Gets the content of a pastebin. You can provide link along with cmd or reply to link.",
-        "Support bins": ["pasty", "spacebin", "nekobin", "dogbin"],
-        "usage": ["{tr}getpaste <link>", "{tr}gpaste <link>"],
+        "h": "To paste text into telegram from pastebin link.",
+        "d": "Gets the content of a pastebin. You can provide link along with cmd or reply to link.",
+        "t": ["pasty", "spacebin", "nekobin", "dogbin"],
+        "u": ["{tr}getpaste <link>", "{tr}gpaste <link>"],
     },
 )
 async def get_dogbin_content(event):
@@ -267,8 +267,8 @@ async def get_dogbin_content(event):
     pattern="paster(?:\s|$)([\s\S]*)",
     command=("paster", plugin_category),
     info={
-        "header": "Create a instant view or a paste it in telegraph file.",
-        "usage": ["{tr}paster <reply>", "{tr}paster text"],
+        "h": "Create a instant view or a paste it in telegraph file.",
+        "u": ["{tr}paster <reply>", "{tr}paster text"],
     },
 )
 async def _(event):

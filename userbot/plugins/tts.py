@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -21,8 +21,8 @@ plugin_category = "tool"
     pattern="tts(?:\s|$)([\s\S]*)",
     command=("tts", plugin_category),
     info={
-        "header": "Text to speech command.",
-        "usage": [
+        "h": "Text to speech command.",
+        "u": [
             "{tr}tts <text>",
             "{tr}tts <reply>",
             "{tr}tts <language code> ; <text>",

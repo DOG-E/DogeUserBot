@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import create_subprocess_exec, get_event_loop
@@ -74,9 +74,9 @@ async def cult_small_video(
     pattern="ffmpegsave$",
     command=("ffmpegsave", plugin_category),
     info={
-        "header": "Saves the media file in bot to trim mutliple times",
-        "description": "Will download the replied media into the bot so that you an trim it as your needs.",
-        "usage": "{tr}ffmpegsave <reply>",
+        "h": "Saves the media file in bot to trim mutliple times",
+        "d": "Will download the replied media into the bot so that you an trim it as your needs.",
+        "u": "{tr}ffmpegsave <reply>",
     },
 )
 async def ff_mpeg_trim_cmd(event):
@@ -121,11 +121,11 @@ async def ff_mpeg_trim_cmd(event):
     pattern="vtrim(?:\s|$)([\s\S]*)",
     command=("vtrim", plugin_category),
     info={
-        "header": "Trims the saved media with specific given time internval and outputs as video if it is video",
-        "description": "Will trim the saved media with given given time interval.",
+        "h": "Trims the saved media with specific given time internval and outputs as video if it is video",
+        "d": "Will trim the saved media with given given time interval.",
         "note": "if you haven't mentioned time interval and just time then will send screenshot at that location.",
-        "usage": "{tr}vtrim <time interval>",
-        "examples": "{tr}vtrim 00:00 00:10",
+        "u": "{tr}vtrim <time interval>",
+        "e": "{tr}vtrim 00:00 00:10",
     },
 )
 async def ff_mpeg_trim_cmd(event):
@@ -203,10 +203,10 @@ async def ff_mpeg_trim_cmd(event):
     pattern="atrim(?:\s|$)([\s\S]*)",
     command=("atrim", plugin_category),
     info={
-        "header": "Trims the saved media with specific given time internval and outputs as audio",
-        "description": "Will trim the saved media with given given time interval. and output only audio part",
-        "usage": "{tr}atrim <time interval>",
-        "examples": "{tr}atrim 00:00 00:10",
+        "h": "Trims the saved media with specific given time internval and outputs as audio",
+        "d": "Will trim the saved media with given given time interval. and output only audio part",
+        "u": "{tr}atrim <time interval>",
+        "e": "{tr}atrim 00:00 00:10",
     },
 )
 async def ff_mpeg_trim_cmd(event):
@@ -263,9 +263,9 @@ async def ff_mpeg_trim_cmd(event):
     pattern="ffmpegclear$",
     command=("ffmpegclear", plugin_category),
     info={
-        "header": "Deletes the saved media so you can save new one",
-        "description": "Only after deleting the old saved file you can add new file",
-        "usage": "{tr}ffmpegclear",
+        "h": "Deletes the saved media so you can save new one",
+        "d": "Only after deleting the old saved file you can add new file",
+        "u": "{tr}ffmpegclear",
     },
 )
 async def ff_mpeg_trim_cmd(event):

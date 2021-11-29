@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import JSONDecodeError, loads
@@ -26,8 +26,8 @@ LOGS = logging.getLogger(__name__)
     pattern="direct(?: |$)([\s\S]*)",
     command=("direct", plugin_category),
     info={
-        "header": "To generate a direct download link from a URL.",
-        "description": "Reply to a link or paste a URL to generate a direct download link.",
+        "h": "To generate a direct download link from a URL.",
+        "d": "Reply to a link or paste a URL to generate a direct download link.",
         "supported links": [
             "Google Drive",
             "Cloud Mail",
@@ -39,7 +39,7 @@ LOGS = logging.getLogger(__name__)
             "OSDN",
             "GitHub",
         ],
-        "usage": "{tr}direct <url>",
+        "u": "{tr}direct <url>",
     },
 )
 async def direct_link_generator(event):

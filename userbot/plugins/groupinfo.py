@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -31,13 +31,13 @@ LOGS = logging.getLogger(__name__)
     pattern="admins(?:\s|$)([\s\S]*)",
     command=("admins", plugin_category),
     info={
-        "header": "To get list of admins.",
-        "description": "Will show you the list of admins and if you use this in group then will tag them.",
-        "usage": [
+        "h": "To get list of admins.",
+        "d": "Will show you the list of admins and if you use this in group then will tag them.",
+        "u": [
             "{tr}admins <username/userid>",
             "{tr}admins <in group where you need>",
         ],
-        "examples": "{tr}admins @DogeSup",
+        "e": "{tr}admins @DogeSup",
     },
 )
 async def _(event):
@@ -85,13 +85,13 @@ async def _(event):
     pattern="bots(?:\s|$)([\s\S]*)",
     command=("bots", plugin_category),
     info={
-        "header": "To get list of bots.",
-        "description": "Will show you the list of bots.",
-        "usage": [
+        "h": "To get list of bots.",
+        "d": "Will show you the list of bots.",
+        "u": [
             "{tr}bots <username/userid>",
             "{tr}bots <in group where you need>",
         ],
-        "examples": "{tr}bots @DogeSup",
+        "e": "{tr}bots @DogeSup",
     },
 )
 async def _(event):
@@ -127,10 +127,10 @@ async def _(event):
     pattern="users(?:\s|$)([\s\S]*)",
     command=("users", plugin_category),
     info={
-        "header": "To get list of users.",
-        "description": "Will show you the list of users.",
+        "h": "To get list of users.",
+        "d": "Will show you the list of users.",
         "note": "There was limitation in this you can't get more 10k users",
-        "usage": [
+        "u": [
             "{tr}users <username/userid>",
             "{tr}users <in group where you need>",
         ],
@@ -176,13 +176,13 @@ async def get_users(show):
     pattern="chatinfo(?:\s|$)([\s\S]*)",
     command=("chatinfo", plugin_category),
     info={
-        "header": "To get Group details.",
-        "description": "Shows you the total information of the required chat.",
-        "usage": [
+        "h": "To get Group details.",
+        "d": "Shows you the total information of the required chat.",
+        "u": [
             "{tr}chatinfo <username/userid>",
             "{tr}chatinfo <in group where you need>",
         ],
-        "examples": "{tr}chatinfo @DogeSup",
+        "e": "{tr}chatinfo @DogeSup",
     },
 )
 async def info(event):

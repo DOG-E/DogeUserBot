@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import mkdir, path, remove
@@ -23,9 +23,9 @@ OFFLINE_TAG = "[OFFLINE]"
     pattern="offline$",
     command=("offline", plugin_category),
     info={
-        "header": "To your status as offline",
-        "description": " it change your pic as offline, and add offline tag in name.",
-        "usage": "{tr}offline",
+        "h": "To your status as offline",
+        "d": " it change your pic as offline, and add offline tag in name.",
+        "u": "{tr}offline",
     },
 )
 async def off_line(event):
@@ -61,9 +61,9 @@ async def off_line(event):
     pattern="online$",
     command=("online", plugin_category),
     info={
-        "header": "To your status as online",
-        "description": " it change your pic back normal, and remove offline tag in name.",
-        "usage": "{tr}online",
+        "h": "To your status as online",
+        "d": " it change your pic back normal, and remove offline tag in name.",
+        "u": "{tr}online",
     },
 )
 async def on_line(event):

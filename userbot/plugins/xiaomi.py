@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, eor, xiaomeme
@@ -17,10 +17,10 @@ plugin_category = "tool"
     pattern="firmware ([\s\S]*)",
     command=("firmware", plugin_category),
     info={
-        "header": "To get lastest Firmware.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}firmware <codename>",
-        "examples": "{tr}firmware whyred",
+        "h": "To get lastest Firmware.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}firmware <codename>",
+        "e": "{tr}firmware whyred",
     },
 )
 async def _(event):
@@ -35,10 +35,10 @@ async def _(event):
     pattern="vendor ([\s\S]*)",
     command=("vendor", plugin_category),
     info={
-        "header": "To get lastest Vendor.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}vendor <codename>",
-        "examples": "{tr}vendor whyred",
+        "h": "To get lastest Vendor.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}vendor <codename>",
+        "e": "{tr}vendor whyred",
     },
 )
 async def _(event):
@@ -53,10 +53,10 @@ async def _(event):
     pattern="xspecs ([\s\S]*)",
     command=("xspecs", plugin_category),
     info={
-        "header": "To get quick spec information about device",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}xspecs <codename>",
-        "examples": "{tr}xspecs whyred",
+        "h": "To get quick spec information about device",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}xspecs <codename>",
+        "e": "{tr}xspecs whyred",
     },
 )
 async def _(event):
@@ -71,10 +71,10 @@ async def _(event):
     pattern="fastboot ([\s\S]*)",
     command=("fastboot", plugin_category),
     info={
-        "header": "To get latest fastboot MIUI.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}fastboot <codename>",
-        "examples": "{tr}fastboot whyred",
+        "h": "To get latest fastboot MIUI.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}fastboot <codename>",
+        "e": "{tr}fastboot whyred",
     },
 )
 async def _(event):
@@ -89,10 +89,10 @@ async def _(event):
     pattern="recovery ([\s\S]*)",
     command=("recovery", plugin_category),
     info={
-        "header": "To get latest recovery MIUI.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}recovery <codename>",
-        "examples": "{tr}recovery whyred",
+        "h": "To get latest recovery MIUI.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}recovery <codename>",
+        "e": "{tr}recovery whyred",
     },
 )
 async def _(event):
@@ -107,10 +107,10 @@ async def _(event):
     pattern="pb ([\s\S]*)",
     command=("pb", plugin_category),
     info={
-        "header": "To get latest PBRP.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}pb <codename>",
-        "examples": "{tr}pb whyred",
+        "h": "To get latest PBRP.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}pb <codename>",
+        "e": "{tr}pb whyred",
     },
 )
 async def _(event):
@@ -125,10 +125,10 @@ async def _(event):
     pattern="of ([\s\S]*)",
     command=("of", plugin_category),
     info={
-        "header": "To get latest OrangeFox Recovery.",
-        "description": "Works for Xiaomi devices only",
-        "usage": "{tr}of <codename>",
-        "examples": "{tr}of whyred",
+        "h": "To get latest OrangeFox Recovery.",
+        "d": "Works for Xiaomi devices only",
+        "u": "{tr}of <codename>",
+        "e": "{tr}of whyred",
     },
 )
 async def _(event):

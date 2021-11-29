@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from random import choice, getrandbits, randint
@@ -18,9 +18,9 @@ plugin_category = "fun"
     pattern="mock(?:\s|$)([\s\S]*)",
     command=("mock", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
-        "usage": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
-        "examples": "{tr}mock DogeUserBot",
+        "h": "Font style command.(Changes font style of the given text)",
+        "u": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
+        "e": "{tr}mock DogeUserBot",
     },
 )
 async def spongemocktext(mock):
@@ -48,9 +48,9 @@ async def spongemocktext(mock):
     pattern="str(?:\s|$)([\s\S]*)",
     command=("str", plugin_category),
     info={
-        "header": "stretches the given text",
-        "usage": ["{tr}str <text>", "{tr}str reply this command to text message"],
-        "examples": "{tr}str DogeUserBot",
+        "h": "stretches the given text",
+        "u": ["{tr}str <text>", "{tr}str reply this command to text message"],
+        "e": "{tr}str DogeUserBot",
     },
 )
 async def stretch(stret):
@@ -76,9 +76,9 @@ async def stretch(stret):
     pattern="zal(?:\s|$)([\s\S]*)",
     command=("zal", plugin_category),
     info={
-        "header": "chages given text into some funny way",
-        "usage": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
-        "examples": "{tr}zal DogeUserBot",
+        "h": "chages given text into some funny way",
+        "u": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
+        "e": "{tr}zal DogeUserBot",
     },
 )
 async def zal(zgfy):
@@ -115,9 +115,9 @@ async def zal(zgfy):
     pattern="cp(?:\s|$)([\s\S]*)",
     command=("cp", plugin_category),
     info={
-        "header": "chages given text into some funny way",
-        "usage": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
-        "examples": "{tr}cp DogeUserBot",
+        "h": "chages given text into some funny way",
+        "u": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
+        "e": "{tr}cp DogeUserBot",
     },
 )
 async def copypasta(cp_e):
@@ -153,12 +153,12 @@ async def copypasta(cp_e):
     pattern="downside(?:\s|$)([\s\S]*)",
     command=("downside", plugin_category),
     info={
-        "header": "chages given text into upside down",
-        "usage": [
+        "h": "chages given text into upside down",
+        "u": [
             "{tr}downside <text>",
             "{tr}downside reply this command to text message",
         ],
-        "examples": "{tr}downside DogeUserBot",
+        "e": "{tr}downside DogeUserBot",
     },
 )
 async def stylish_generator(event):
@@ -184,12 +184,12 @@ async def stylish_generator(event):
     pattern="subscript(?:\s|$)([\s\S]*)",
     command=("subscript", plugin_category),
     info={
-        "header": "chages given text into subscript",
-        "usage": [
+        "h": "chages given text into subscript",
+        "u": [
             "{tr}subscript <text>",
             "{tr}subscript reply this command to text message",
         ],
-        "examples": "{tr}subscript DogeUserBot",
+        "e": "{tr}subscript DogeUserBot",
     },
 )
 async def stylish_generator(event):

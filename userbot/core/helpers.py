@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from logging import getLogger
@@ -18,9 +18,9 @@ LOGS = getLogger("userbot")
 
 
 def printUser(entity: User) -> None:
-    """Print the user's first name + last name upon start"""
+    """Başlangıçta kullancının ilk adını ve soyadını yazdır"""
     user = get_display_name(entity)
-    LOGS.warning("Successfully logged in as {0}".format(user))
+    LOGS.warning("{0} başarıyla giriş yapıldı.".format(user))
 
 
 async def get_chat_link(
@@ -54,3 +54,4 @@ async def get_chat_link(
         else:
             extra = f"[{entity.title}](tg://resolve?domain={username})"
     return extra
+

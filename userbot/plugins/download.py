@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop, sleep
@@ -35,10 +35,10 @@ async def _get_file_name(path: Path, full: bool = True) -> str:
     pattern="d(own)?l(oad)?(?:\s|$)([\s\S]*)",
     command=("download", plugin_category),
     info={
-        "header": "To download the replied telegram file",
-        "description": "Will download the replied telegram file to server .",
+        "h": "To download the replied telegram file",
+        "d": "Will download the replied telegram file to server .",
         "note": "The downloaded files will auto delete if you restart heroku.",
-        "usage": [
+        "u": [
             "{tr}download <reply>",
             "{tr}dl <reply>",
             "{tr}download custom name<reply>",
@@ -178,10 +178,10 @@ async def _(event):  # sourcery no-metrics
     pattern="d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
     command=("dlto", plugin_category),
     info={
-        "header": "To download the replied telegram file to specific directory",
-        "description": "Will download the replied telegram file to server that is your custom folder.",
+        "h": "To download the replied telegram file to specific directory",
+        "d": "Will download the replied telegram file to server that is your custom folder.",
         "note": "The downloaded files will auto delete if you restart heroku.",
-        "usage": [
+        "u": [
             "{tr}downloadto <folder path>",
             "{tr}dlto <folder path>",
         ],

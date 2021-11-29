@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -51,16 +51,16 @@ AFK_ = AFK()
     pattern="afk(?:\s|$)([\s\S]*)",
     command=("afk", plugin_category),
     info={
-        "header": "Enables afk for your account",
-        "description": "When you're in afk if any one tags you then your bot will reply as he is offline.\
+        "h": "Enables afk for your account",
+        "d": "When you're in afk if any one tags you then your bot will reply as he is offline.\
         AFK mean away from keyboard.",
-        "options": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
-        "usage": [
+        "o": "If you want AFK reason with hyperlink use [ ; ] after reason, then paste the media link.",
+        "u": [
             "{tr}afk <reason>",
             "{tr}afk <reason> ; <link>",
             "{tr}afk <reply>",
         ],
-        "examples": "{tr}afk Let Me Sleep",
+        "e": "{tr}afk Let Me Sleep",
         "note": "Switches off AFK when you type back anything, anywhere. You can use #afk in message to continue in afk without breaking it",
     },
 )

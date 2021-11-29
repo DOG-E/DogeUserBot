@@ -20,10 +20,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import create_subprocess_shell as asyncSubprocess
@@ -65,9 +65,9 @@ async def subprocess_run(megadl, cmd):
     pattern="mega(?:\s|$)([\s\S]*)",
     command=("mega", plugin_category),
     info={
-        "header": "Downloads mega files from it links.",
-        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .doge .c upload. Folder is not supported currently and only mega file links are supported.",
-        "usage": "{tr}mega <mega.nz link>",
+        "h": "Downloads mega files from it links.",
+        "d": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .doge .c upload. Folder is not supported currently and only mega file links are supported.",
+        "u": "{tr}mega <mega.nz link>",
     },
 )
 async def mega_downloader(megadl):  # sourcery no-metrics

@@ -4,10 +4,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -73,8 +73,8 @@ async def get_user(event):
     pattern="(\w+)say ([\s\S]*)",
     command=("cowsay", plugin_category),
     info={
-        "header": "A fun art plugin.",
-        "types": [
+        "h": "A fun art plugin.",
+        "t": [
             "default",
             "beavis",
             "bongcow",
@@ -121,11 +121,11 @@ async def get_user(event):
             "vader",
             "www",
         ],
-        "usage": [
+        "u": [
             "{tr}cowsay <text>",
             "{tr}<type>say <text>",
         ],
-        "examples": [
+        "e": [
             "{tr}squirrelsay DogeUserBot",
             "{tr}milksay DogeUserBot",
             "{tr}ghostbustersghostbusterssay DogeUserBot",
@@ -149,8 +149,8 @@ async def univsaye(cowmsg):
     pattern="coin ?([\s\S]*)",
     command=("coin", plugin_category),
     info={
-        "header": "Coin flipper.",
-        "usage": [
+        "h": "Coin flipper.",
+        "u": [
             "{tr}coin <heads/tails>",
             "{tr}coin",
         ],
@@ -190,8 +190,8 @@ async def _(event):
     pattern="slap(?:\s|$)([\s\S]*)",
     command=("slap", plugin_category),
     info={
-        "header": "To slap a person with random objects !!",
-        "usage": "{tr}slap reply/username>",
+        "h": "To slap a person with random objects !!",
+        "u": "{tr}slap reply/username>",
     },
 )
 async def who(event):
@@ -212,8 +212,8 @@ async def who(event):
     pattern="(yes|no|maybe|decide)$",
     command=("decide", plugin_category),
     info={
-        "header": "To decide something will send gif according to given input or ouput.",
-        "usage": [
+        "h": "To decide something will send gif according to given input or ouput.",
+        "u": [
             "{tr}yes",
             "{tr}no",
             "{tr}maybe",
@@ -240,8 +240,8 @@ async def decide(event):
     pattern="shout(?:\s|$)([\s\S]*)",
     command=("shout", plugin_category),
     info={
-        "header": "shouts the text in a fun way",
-        "usage": [
+        "h": "shouts the text in a fun way",
+        "u": [
             "{tr}shout <text>",
         ],
     },
@@ -271,8 +271,8 @@ async def shout(args):
     pattern="owo ?([\s\S]*)",
     command=("owo", plugin_category),
     info={
-        "header": "check yourself.",
-        "usage": [
+        "h": "check yourself.",
+        "u": [
             "{tr}owo <text>",
         ],
     },
@@ -301,8 +301,8 @@ async def faces(owo):
     pattern="clap(?:\s|$)([\s\S]*)",
     command=("clap", plugin_category),
     info={
-        "header": "Praise people!",
-        "usage": [
+        "h": "Praise people!",
+        "u": [
             "{tr}clap <text>",
         ],
     },
@@ -326,8 +326,8 @@ async def claptext(event):
     pattern="smk(?:\s|$)([\s\S]*)",
     command=("smk", plugin_category),
     info={
-        "header": "A shit module for ツ who cares.",
-        "usage": [
+        "h": "A shit module for ツ who cares.",
+        "u": [
             "{tr}smk <text>",
         ],
     },
@@ -354,8 +354,8 @@ async def smrk(smk):
     pattern="f ([\s\S]*)",
     command=("f", plugin_category),
     info={
-        "header": "Pay Respects.",
-        "usage": [
+        "h": "Pay Respects.",
+        "u": [
             "{tr}f <emoji/character>",
         ],
     },
@@ -384,8 +384,8 @@ async def payf(event):
     pattern="wish(?:\s|$)([\s\S]*)",
     command=("wish", plugin_category),
     info={
-        "header": "Shows the chance of your success.",
-        "usage": [
+        "h": "Shows the chance of your success.",
+        "u": [
             "{tr}wish <reply>",
             "{tr}wish <your wish>",
         ],
@@ -410,8 +410,8 @@ async def wish_check(event):
     pattern="lfy(?:\s|$)([\s\S]*)",
     command=("lfy", plugin_category),
     info={
-        "header": "Let me Google that for you real quick !!",
-        "usage": [
+        "h": "Let me Google that for you real quick !!",
+        "u": [
             "{tr}lfy <query>",
         ],
     },
@@ -443,8 +443,8 @@ async def _(event):
     pattern="gbun(?:\s|$)([\s\S]*)",
     command=("gbun", plugin_category),
     info={
-        "header": "Fake gban action !!",
-        "usage": ["{tr}gbun <reason>", "{tr}gbun"],
+        "h": "Fake gban action !!",
+        "u": ["{tr}gbun <reason>", "{tr}gbun"],
     },
 )
 async def gbun(event):
@@ -500,8 +500,8 @@ async def gbun(event):
     pattern="shg$",
     command=("shg", plugin_category),
     info={
-        "header": "Shrug at it!",
-        "usage": "{tr}shg",
+        "h": "Shrug at it!",
+        "u": "{tr}shg",
     },
 )
 async def shrugger(e):
@@ -514,8 +514,8 @@ async def shrugger(e):
     pattern="cry$",
     command=("cry", plugin_category),
     info={
-        "header": "Cry!",
-        "usage": "{tr}cry",
+        "h": "Cry!",
+        "u": "{tr}cry",
     },
 )
 async def shrugger(e):
@@ -528,8 +528,8 @@ async def shrugger(e):
     pattern="react ?([\s\S]*)",
     command=("react", plugin_category),
     info={
-        "header": "Make your userbot react",
-        "types": [
+        "h": "Make your userbot react",
+        "t": [
             "happy",
             "think",
             "wave",
@@ -540,7 +540,7 @@ async def shrugger(e):
             "sad",
             "dog",
         ],
-        "usage": ["{tr}react <type>", "{tr}react"],
+        "u": ["{tr}react <type>", "{tr}react"],
     },
 )
 async def _(e):
@@ -574,8 +574,8 @@ async def _(e):
     pattern="10iq$",
     command=("10iq", plugin_category),
     info={
-        "header": "You retard !!",
-        "usage": "{tr}10iq",
+        "h": "You retard !!",
+        "u": "{tr}10iq",
     },
 )
 async def iqless(e):
@@ -587,8 +587,8 @@ async def iqless(e):
     pattern="fp$",
     command=("fp", plugin_category),
     info={
-        "header": "send you face pam emoji!",
-        "usage": "{tr}fp",
+        "h": "send you face pam emoji!",
+        "u": "{tr}fp",
     },
 )
 async def facepalm(e):
@@ -600,8 +600,8 @@ async def facepalm(e):
     pattern="bt$",
     command=("bt", plugin_category),
     info={
-        "header": "Believe me, you will find this useful.",
-        "usage": "{tr}bt",
+        "h": "Believe me, you will find this useful.",
+        "u": "{tr}bt",
     },
     groups_only=True,
 )
@@ -618,8 +618,8 @@ async def bluetext(e):
     pattern="session$",
     command=("session", plugin_category),
     info={
-        "header": "telethon session error code(fun)",
-        "usage": "{tr}session",
+        "h": "telethon session error code(fun)",
+        "u": "{tr}session",
     },
 )
 async def _(event):
@@ -635,8 +635,8 @@ async def _(event):
     pattern="tcat$",
     command=("tcat", plugin_category),
     info={
-        "header": "Some random cat facial text art",
-        "usage": "{tr}tcat",
+        "h": "Some random cat facial text art",
+        "u": "{tr}tcat",
     },
 )
 async def hmm(c):
@@ -648,8 +648,8 @@ async def hmm(c):
     pattern="why$",
     command=("why", plugin_category),
     info={
-        "header": "Sends you some random Funny questions",
-        "usage": "{tr}why",
+        "h": "Sends you some random Funny questions",
+        "u": "{tr}why",
     },
 )
 async def hmm(dog):
@@ -661,8 +661,8 @@ async def hmm(dog):
     pattern="fact$",
     command=("fact", plugin_category),
     info={
-        "header": "Sends you some random facts",
-        "usage": "{tr}fact",
+        "h": "Sends you some random facts",
+        "u": "{tr}fact",
     },
 )
 async def hmm(dog):
@@ -674,8 +674,8 @@ async def hmm(dog):
     pattern="^\:/$",
     command=(":/", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": ":/",
+        "h": "Animation command",
+        "u": ":/",
     },
 )
 async def kek(keks):
@@ -692,8 +692,8 @@ async def kek(keks):
     pattern="^\-_-$",
     command=("-_-", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": "-_-",
+        "h": "Animation command",
+        "u": "-_-",
     },
 )
 async def lol(lel):
@@ -710,8 +710,8 @@ async def lol(lel):
     pattern="^\;_;$",
     command=(";_;", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": ";_;",
+        "h": "Animation command",
+        "u": ";_;",
     },
 )
 async def fun(e):
@@ -728,8 +728,8 @@ async def fun(e):
     pattern="oof$",
     command=("oof", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": "{tr}oof",
+        "h": "Animation command",
+        "u": "{tr}oof",
     },
 )
 async def Oof(e):
@@ -746,8 +746,8 @@ async def Oof(e):
     pattern="type ([\s\S]*)",
     command=("type", plugin_category),
     info={
-        "header": "Type writter animation.",
-        "usage": "{tr}type text",
+        "h": "Type writter animation.",
+        "u": "{tr}type text",
     },
 )
 async def typewriter(typew):
@@ -771,9 +771,9 @@ async def typewriter(typew):
     pattern="repeat (\d*) ([\s\S]*)",
     command=("repeat", plugin_category),
     info={
-        "header": "repeats the given text with given no of times.",
-        "usage": "{tr}repeat <count> <text>",
-        "examples": "{tr}repeat 10 DogeUserBot",
+        "h": "repeats the given text with given no of times.",
+        "u": "{tr}repeat <count> <text>",
+        "e": "{tr}repeat 10 DogeUserBot",
     },
 )
 async def _(event):
@@ -789,8 +789,8 @@ async def _(event):
     pattern="meme",
     command=("meme", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": [
+        "h": "Animation command",
+        "u": [
             "{tr}meme <emoji/text>",
             "{tr}meme",
         ],
@@ -866,8 +866,8 @@ async def meme(event):
     pattern="give",
     command=("give", plugin_category),
     info={
-        "header": "Animation command",
-        "usage": [
+        "h": "Animation command",
+        "u": [
             "{tr}give <emoji/text>",
             "{tr}give",
         ],
@@ -921,8 +921,8 @@ async def give(event):
     pattern="sadmin$",
     command=("sadmin", plugin_category),
     info={
-        "header": "Shouts Admin Animation command",
-        "usage": "{tr}sadmin",
+        "h": "Shouts Admin Animation command",
+        "u": "{tr}sadmin",
     },
 )
 async def _(event):
@@ -949,8 +949,8 @@ async def _(event):
     pattern="pf ?([\s\S]*)",
     command=("pf", plugin_category),
     info={
-        "header": "Pay tribute to victim by pressing F(s)",
-        "usage": [
+        "h": "Pay tribute to victim by pressing F(s)",
+        "u": [
             "{tr}pf <text>",
         ],
     },
@@ -972,9 +972,9 @@ async def payF(event):
     pattern="fox ?([\s\S]*)",
     command=("fox", plugin_category),
     info={
-        "header": "fox meme",
-        "description": "Send sneeky fox troll",
-        "usage": "{tr}fox <text>",
+        "h": "fox meme",
+        "d": "Send sneeky fox troll",
+        "u": "{tr}fox <text>",
     },
 )
 async def dog(event):
@@ -992,9 +992,9 @@ async def dog(event):
     pattern="talkme ?([\s\S]*)",
     command=("talkme", plugin_category),
     info={
-        "header": "talk to me meme",
-        "description": "Send talk to me troll",
-        "usage": "{tr}talkme <text>",
+        "h": "talk to me meme",
+        "d": "Send talk to me troll",
+        "u": "{tr}talkme <text>",
     },
 )
 async def dog(event):
@@ -1012,9 +1012,9 @@ async def dog(event):
     pattern="sbob ?([\s\S]*)",
     command=("sbob", plugin_category),
     info={
-        "header": "spongebob meme",
-        "description": "Send you spongebob meme.",
-        "usage": "{tr}sbob <text>",
+        "h": "spongebob meme",
+        "d": "Send you spongebob meme.",
+        "u": "{tr}sbob <text>",
     },
 )
 async def dog(event):
@@ -1032,9 +1032,9 @@ async def dog(event):
     pattern="child ?([\s\S]*)",
     command=("child", plugin_category),
     info={
-        "header": "child meme",
-        "description": "Send you child in trash meme.",
-        "usage": "{tr}child <text>",
+        "h": "child meme",
+        "d": "Send you child in trash meme.",
+        "u": "{tr}child <text>",
     },
 )
 async def dog(event):
@@ -1052,9 +1052,9 @@ async def dog(event):
     pattern="toy ?([\s\S]*)",
     command=("toy", plugin_category),
     info={
-        "header": "toy meme",
-        "description": "Send soft toy troll",
-        "usage": "{tr}toy <text>",
+        "h": "toy meme",
+        "d": "Send soft toy troll",
+        "u": "{tr}toy <text>",
     },
 )
 async def dog(event):
@@ -1072,9 +1072,9 @@ async def dog(event):
     pattern="bt ?([\s\S]*)",
     command=("bt", plugin_category),
     info={
-        "header": "brain meme",
-        "description": "Send brain troll",
-        "usage": "{tr}bt <text>",
+        "h": "brain meme",
+        "d": "Send brain troll",
+        "u": "{tr}bt <text>",
     },
 )
 async def dog(event):
@@ -1092,9 +1092,9 @@ async def dog(event):
     pattern="sbb ?([\s\S]*)",
     command=("sbb", plugin_category),
     info={
-        "header": "spongebob meme",
-        "description": "Send spongebob troll",
-        "usage": "{tr}sbb <text>",
+        "h": "spongebob meme",
+        "d": "Send spongebob troll",
+        "u": "{tr}sbb <text>",
     },
 )
 async def dog(event):
@@ -1112,9 +1112,9 @@ async def dog(event):
     pattern="att ?([\s\S]*)",
     command=("att", plugin_category),
     info={
-        "header": "animation meme",
-        "description": "Send animation troll",
-        "usage": "{tr}att <text>",
+        "h": "animation meme",
+        "d": "Send animation troll",
+        "u": "{tr}att <text>",
     },
 )
 async def dog(event):

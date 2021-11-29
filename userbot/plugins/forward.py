@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from string import ascii_lowercase
@@ -38,8 +38,8 @@ async def all_groups_id(dog):
     pattern="frwd$",
     command=("frwd", plugin_category),
     info={
-        "header": "To get view counter for the message. that is will delete old message and send new message where you can see how any people saw your message",
-        "usage": "{tr}frwd",
+        "h": "To get view counter for the message. that is will delete old message and send new message where you can see how any people saw your message",
+        "u": "{tr}frwd",
     },
 )
 async def _(event):
@@ -68,8 +68,8 @@ async def _(event):
     pattern="resend$",
     command=("resend", plugin_category),
     info={
-        "header": "To resend the message again. Useful to remove forword tag",
-        "usage": "{tr}resend",
+        "h": "To resend the message again. Useful to remove forword tag",
+        "u": "{tr}resend",
     },
 )
 async def _(event):
@@ -90,9 +90,9 @@ async def _(event):
     pattern="fpost ([\s\S]*)",
     command=("fpost", plugin_category),
     info={
-        "header": "Split the word and forwards each letter from previous messages in that group",
-        "usage": "{tr}fpost <text>",
-        "examples": "{tr}fpost DogeUserBot",
+        "h": "Split the word and forwards each letter from previous messages in that group",
+        "u": "{tr}fpost <text>",
+        "e": "{tr}fpost DogeUserBot",
     },
 )
 async def _(event):

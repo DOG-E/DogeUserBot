@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -62,9 +62,9 @@ UNBAN_RIGHTS = ChatBannedRights(
     pattern="gban(?:\s|$)([\s\S]*)",
     command=("gban", plugin_category),
     info={
-        "header": "To ban user in every group where you're admin.",
-        "description": "Will ban the person in every group where you're admin only.",
-        "usage": "{tr}gban <username/reply/userid> <reason (optional)>",
+        "h": "To ban user in every group where you're admin.",
+        "d": "Will ban the person in every group where you're admin only.",
+        "u": "{tr}gban <username/reply/userid> <reason (optional)>",
     },
 )
 async def doggban(event):  # sourcery no-metrics
@@ -157,9 +157,9 @@ async def doggban(event):  # sourcery no-metrics
     pattern="ungban(?:\s|$)([\s\S]*)",
     command=("ungban", plugin_category),
     info={
-        "header": "To unban the person from every group where you're admin.",
-        "description": "will unban and also remove from your gbanned list.",
-        "usage": "{tr}ungban <username/reply/userid>",
+        "h": "To unban the person from every group where you're admin.",
+        "d": "will unban and also remove from your gbanned list.",
+        "u": "{tr}ungban <username/reply/userid>",
     },
 )
 async def doggban(event):
@@ -233,8 +233,8 @@ async def doggban(event):
     pattern="listgban$",
     command=("listgban", plugin_category),
     info={
-        "header": "Shows you the list of all gbanned users by you.",
-        "usage": "{tr}listgban",
+        "h": "Shows you the list of all gbanned users by you.",
+        "u": "{tr}listgban",
     },
 )
 async def gablist(event):
@@ -258,9 +258,9 @@ async def gablist(event):
     pattern="gmute(?:\s|$)([\s\S]*)",
     command=("gmute", plugin_category),
     info={
-        "header": "To mute a person in all groups where you're admin.",
-        "description": "It doesnt change user permissions but will delete all messages sent by him in the groups where you're admin including in private messages.",
-        "usage": "{tr}gmute username/reply> <reason (optional)>",
+        "h": "To mute a person in all groups where you're admin.",
+        "d": "It doesnt change user permissions but will delete all messages sent by him in the groups where you're admin including in private messages.",
+        "u": "{tr}gmute username/reply> <reason (optional)>",
     },
 )
 async def startgmute(event):
@@ -330,9 +330,9 @@ async def startgmute(event):
     pattern="ungmute(?:\s|$)([\s\S]*)",
     command=("ungmute", plugin_category),
     info={
-        "header": "To unmute the person in all groups where you were admin.",
-        "description": "This will work only if you mute that person by your gmute command.",
-        "usage": "{tr}ungmute <username/reply>",
+        "h": "To unmute the person in all groups where you were admin.",
+        "d": "This will work only if you mute that person by your gmute command.",
+        "u": "{tr}ungmute <username/reply>",
     },
 )
 async def endgmute(event):
@@ -398,8 +398,8 @@ async def watcher(event):
     pattern="gkick(?:\s|$)([\s\S]*)",
     command=("gkick", plugin_category),
     info={
-        "header": "kicks the person in all groups where you're admin.",
-        "usage": "{tr}gkick <username/reply/userid> <reason (optional)>",
+        "h": "kicks the person in all groups where you're admin.",
+        "u": "{tr}gkick <username/reply/userid> <reason (optional)>",
     },
 )
 async def doggkick(event):  # sourcery no-metrics

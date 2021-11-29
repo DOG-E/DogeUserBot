@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -42,14 +42,14 @@ auth_url = r["auth_url"]
     pattern="(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
     command=("telegraph", plugin_category),
     info={
-        "header": "To get telegraph link.",
-        "description": "Reply to text message to paste that text on telegraph you can also pass input along with command \
+        "h": "To get telegraph link.",
+        "d": "Reply to text message to paste that text on telegraph you can also pass input along with command \
             So that to customize title of that telegraph and reply to media file to get sharable link of that media(atmost 5mb is supported)",
-        "options": {
+        "o": {
             "m or media": "To get telegraph link of replied sticker/image/video/gif.",
             "t or text": "To get telegraph link of replied text you can use custom title.",
         },
-        "usage": [
+        "u": [
             "{tr}tgm",
             "{tr}tgt <title(optional)>",
             "{tr}telegraph media",
@@ -137,8 +137,8 @@ async def _(event):
     pattern="tgl(?:\s|$)([\s\S]*)",
     command=("tgl", plugin_category),
     info={
-        "header": "Reply or write link convert to Telegraph page.",
-        "usage": ["{tr}tgl <reply link>", "{tr}tgl <link>"],
+        "h": "Reply or write link convert to Telegraph page.",
+        "u": ["{tr}tgl <reply link>", "{tr}tgl <link>"],
     },
 )
 async def _(event):

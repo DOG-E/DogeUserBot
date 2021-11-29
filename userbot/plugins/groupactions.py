@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -61,8 +61,8 @@ async def ban_user(chat_id, i, rights):
     pattern="kickme$",
     command=("kickme", plugin_category),
     info={
-        "header": "To kick myself from group.",
-        "usage": [
+        "h": "To kick myself from group.",
+        "u": [
             "{tr}kickme",
         ],
     },
@@ -78,9 +78,9 @@ async def kickme(leave):
     pattern="kickall$",
     command=("kickall", plugin_category),
     info={
-        "header": "To kick everyone from group.",
-        "description": "To Kick all from the group except admins.",
-        "usage": [
+        "h": "To kick everyone from group.",
+        "d": "To Kick all from the group except admins.",
+        "u": [
             "{tr}kickall",
         ],
     },
@@ -125,9 +125,9 @@ async def _(event):
     pattern="banall$",
     command=("banall", plugin_category),
     info={
-        "header": "To ban everyone from group.",
-        "description": "To ban all from the group except admins.",
-        "usage": [
+        "h": "To ban everyone from group.",
+        "d": "To ban all from the group except admins.",
+        "u": [
             "{tr}banall",
         ],
     },
@@ -174,8 +174,8 @@ async def _(event):
     pattern="unbanall$",
     command=("unbanall", plugin_category),
     info={
-        "header": "To unban all banned users from group.",
-        "usage": [
+        "h": "To unban all banned users from group.",
+        "u": [
             "{tr}unbanall",
         ],
     },
@@ -227,10 +227,10 @@ async def _(event):
     pattern="zombies( .r| )? ?([\s\S]*)",
     command=("zombies", plugin_category),
     info={
-        "header": "To check deleted accounts and clean",
-        "description": "Searches for deleted accounts in a group. Use `.zombies clean` to remove deleted accounts from the group.",
-        "flag": {".r": "Use this for check users from banned and restricted users"},
-        "usage": [
+        "h": "To check deleted accounts and clean",
+        "d": "Searches for deleted accounts in a group. Use `.zombies clean` to remove deleted accounts from the group.",
+        "f": {".r": "Use this for check users from banned and restricted users"},
+        "u": [
             "{tr}zombies",
             "{tr}zombies clean",
             "{tr}zombies .r",
@@ -387,9 +387,9 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     pattern="ikuck ?([\s\S]*)",
     command=("ikuck", plugin_category),
     info={
-        "header": "To get breif summary of members in the group",
-        "description": "To get breif summary of members in the group . Need to add some features in future.",
-        "usage": [
+        "h": "To get breif summary of members in the group",
+        "d": "To get breif summary of members in the group . Need to add some features in future.",
+        "u": [
             "{tr}ikuck",
         ],
     },

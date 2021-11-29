@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -26,9 +26,9 @@ plugin_category = "tool"
     pattern="(ss|gis) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
-        "header": "To Take a screenshot of a website.",
-        "usage": "{tr}ss <link>",
-        "examples": "{tr}ss https://github.com/DOG-E/DogeUserBot",
+        "h": "To Take a screenshot of a website.",
+        "u": "{tr}ss <link>",
+        "e": "{tr}ss https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
@@ -99,10 +99,10 @@ async def _(event):
     pattern="scapture ([\s\S]*)",
     command=("scapture", plugin_category),
     info={
-        "header": "To Take a screenshot of a website.",
-        "description": "For functioning of this command you need to set SS_API var",
-        "usage": "{tr}scapture <link>",
-        "examples": "{tr}scapture https://github.com/DOG-E/DogeUserBot",
+        "h": "To Take a screenshot of a website.",
+        "d": "For functioning of this command you need to set SS_API var",
+        "u": "{tr}scapture <link>",
+        "e": "{tr}scapture https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):

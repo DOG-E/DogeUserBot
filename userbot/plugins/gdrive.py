@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop, sleep
@@ -217,7 +217,7 @@ async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
             new_gid = await check_metadata(gid)
             filename = await check_progress_for_dl(gdrive, new_gid, previous=None)
         try:
-            required_file_name = osp.join(TMP_DOWNLOAD_DIRECTORY, filenames)
+            required_file_name = osp.join(TMP_DOWNLOAD_DIRECTORY, filename)
         except Exception:
             required_file_name = osp.join(TMP_DOWNLOAD_DIRECTORY, filename)
     else:
@@ -924,9 +924,9 @@ async def lists(gdrive, folderlink=None):  # sourcery no-metrics
     pattern="gauth$",
     command=("gauth", plugin_category),
     info={
-        "header": "To authenciate gdrive credentials.",
-        "description": "Generate token to enable all cmd google drive service. This only need to run once in life time.",
-        "usage": "{tr}gauth",
+        "h": "To authenciate gdrive credentials.",
+        "d": "Generate token to enable all cmd google drive service. This only need to run once in life time.",
+        "u": "{tr}gauth",
     },
 )
 async def generate_credentials(gdrive):
@@ -1004,9 +1004,9 @@ async def generate_credentials(gdrive):
     pattern="greset",
     command=("greset", plugin_category),
     info={
-        "header": "To reset gdrive credentials.",
-        "description": "reset your token if something bad happened or change drive acc.",
-        "usage": "{tr}greset",
+        "h": "To reset gdrive credentials.",
+        "d": "reset your token if something bad happened or change drive acc.",
+        "u": "{tr}greset",
     },
 )
 async def reset_credentials(gdrive):
@@ -1024,15 +1024,15 @@ async def reset_credentials(gdrive):
     pattern="glist(?: |$)(-l \d+)?(?: |$)?([\s\S]*)?(?: |$)",
     command=("glist", plugin_category),
     info={
-        "header": "Get list of folders and files with default size 50",
-        "flags": {
+        "h": "Get list of folders and files with default size 50",
+        "f": {
             "l": "Use flag `-l range[1-1000]` for limit output",
             "p": "Use flag `-p parents-folder_id` for files/folder in given folder in gdrive.",
         },
         "note": "for `.glist` you can combine -l and -p flags with or without name "
         "at the same time, it must be `-l` flags first before use `-p` flags.\n"
         "And by default it lists from latest 'modifiedTime' and then folders.",
-        "usage": [
+        "u": [
             "{tr}glist -l <count>",
             "{tr}glist -l <count> -p parent_id",
             "{tr}glist -p <parent_id>",
@@ -1049,14 +1049,14 @@ async def doglists(gdrive):
     pattern="gdf (mkdir|rm|info) ([\s\S]*)",
     command=("gdf", plugin_category),
     info={
-        "header": "Google Drive folder/file management",
-        "description": "To create or delete or check folders/files in gdrive.",
-        "options": {
+        "h": "Google Drive folder/file management",
+        "d": "To create or delete or check folders/files in gdrive.",
+        "o": {
             "mkdir": "Create gdrive folder",
             "info": "to get file/folder details of our gdrive.",
             "rm": "Delete files/folders in gdrive. Can't be undone, this method skipping file trash, so be caution..",
         },
-        "usage": [
+        "u": [
             "{tr}gdf mkdir <folder name>",
             "{tr}gdf info <folder/file path>",
             "{tr}gdf rm <folder/file path>",
@@ -1217,8 +1217,8 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
     pattern="gabort$",
     command=("gabort", plugin_category),
     info={
-        "header": "Abort process uploading or downloading process.",
-        "usage": "{tr}gabort",
+        "h": "Abort process uploading or downloading process.",
+        "u": "{tr}gabort",
     },
 )
 async def cancel_process(gdrive):
@@ -1242,10 +1242,10 @@ async def cancel_process(gdrive):
     pattern="ugd(?:\s|$)([\s\S]*)",
     command=("ugd", plugin_category),
     info={
-        "header": "upload files/folders to gdrive.",
-        "description": "Upload file from local or uri/url/drivelink into google drive."
+        "h": "upload files/folders to gdrive.",
+        "d": "Upload file from local or uri/url/drivelink into google drive."
         "\nfor drivelink it's upload only if you want to",
-        "usage": "{tr}ugd <uri/url/drivelink/local file/folder path>",
+        "u": "{tr}ugd <uri/url/drivelink/local file/folder path>",
     },
 )
 async def google_drive(gdrive):  # sourcery no-metrics
@@ -1425,9 +1425,9 @@ async def google_drive(gdrive):  # sourcery no-metrics
     pattern="gclear$",
     command=("gclear", plugin_category),
     info={
-        "header": "to clear the temparary upload directory.",
-        "description": "that is directory set by command gset . when you used this command it will make your parent directory as G_DRIVE_FOLDER_ID",
-        "usage": "{tr}gclear",
+        "h": "to clear the temparary upload directory.",
+        "d": "that is directory set by command gset . when you used this command it will make your parent directory as G_DRIVE_FOLDER_ID",
+        "u": "{tr}gclear",
     },
 )
 async def set_upload_folder(gdrive):
@@ -1459,9 +1459,9 @@ async def set_upload_folder(gdrive):
     pattern="gset(?:\s|$)([\s\S]*)",
     command=("gset", plugin_category),
     info={
-        "header": "To set temparary parent id.",
-        "description": "Change upload directory in gdrive",
-        "usage": "{tr}gset  <folderURL/folderID>",
+        "h": "To set temparary parent id.",
+        "d": "Change upload directory in gdrive",
+        "u": "{tr}gset  <folderURL/folderID>",
     },
 )
 async def set_upload_folder(gdrive):
@@ -1500,12 +1500,12 @@ async def set_upload_folder(gdrive):
     pattern="gdown ?(-u)? ([\s\S]*)",
     command=("gdown", plugin_category),
     info={
-        "header": "To download files form gdrive.",
-        "description": "G-Drive File Downloader Plugin For Userbot. only gdrive files are supported now",
-        "flags": {
+        "h": "To download files form gdrive.",
+        "d": "G-Drive File Downloader Plugin For Userbot. only gdrive files are supported now",
+        "f": {
             "u": "to directly upload to telegram",
         },
-        "usage": [
+        "u": [
             "{tr}gdown <gdrive File-Link>",
             "{tr}gdown -u <gdrive File-Link>",
         ],
@@ -1550,9 +1550,9 @@ async def g_download(event):
     pattern="gshare ([\s\S]*)",
     command=("gshare", plugin_category),
     info={
-        "header": "To share the team drive files.",
-        "description": "Get sharable link for team drive files need to set G_DRIVE_INDEX_LINK",
-        "usage": "{tr}gshare <folder/file link>",
+        "h": "To share the team drive files.",
+        "d": "Get sharable link for team drive files need to set G_DRIVE_INDEX_LINK",
+        "u": "{tr}gshare <folder/file link>",
     },
 )
 async def gshare(event):

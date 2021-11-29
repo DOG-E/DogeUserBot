@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop
@@ -160,9 +160,9 @@ async def fix_attributes(
     pattern="yta(?:\s|$)([\s\S]*)",
     command=("yta", plugin_category),
     info={
-        "header": "To download audio from many sites like Youtube",
-        "description": "downloads the audio from the given link (Suports the all sites which support youtube-dl)",
-        "examples": ["{tr}yta <reply to link>", "{tr}yta <link>"],
+        "h": "To download audio from many sites like Youtube",
+        "d": "downloads the audio from the given link (Suports the all sites which support youtube-dl)",
+        "e": ["{tr}yta <reply to link>", "{tr}yta <link>"],
     },
 )
 async def download_audio(event):
@@ -241,9 +241,9 @@ async def download_audio(event):
     pattern="ytv(?:\s|$)([\s\S]*)",
     command=("ytv", plugin_category),
     info={
-        "header": "To download video from many sites like Youtube",
-        "description": "downloads the video from the given link(Suports the all sites which support youtube-dl)",
-        "examples": [
+        "h": "To download video from many sites like Youtube",
+        "d": "downloads the video from the given link(Suports the all sites which support youtube-dl)",
+        "e": [
             "{tr}ytv <reply to link>",
             "{tr}ytv <link>",
         ],
@@ -306,9 +306,9 @@ async def download_video(event):
     pattern="yts(?: |$)(\d*)? ?([\s\S]*)",
     command=("yts", plugin_category),
     info={
-        "header": "To search youtube videos",
-        "description": "Fetches youtube search results with views and duration with required no of count results by default it fetches 10 results",
-        "examples": [
+        "h": "To search youtube videos",
+        "d": "Fetches youtube search results with views and duration with required no of count results by default it fetches 10 results",
+        "e": [
             "{tr}yts <query>",
             "{tr}yts <1-9> <query>",
         ],

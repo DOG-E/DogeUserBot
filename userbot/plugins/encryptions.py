@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import get_event_loop
@@ -38,9 +38,9 @@ plugin_category = "tool"
     pattern="decode$",
     command=("decode", plugin_category),
     info={
-        "header": "To decode qrcode or barcode",
-        "description": "Reply to qrcode or barcode to decode it and get text.",
-        "usage": "{tr}decode",
+        "h": "To decode qrcode or barcode",
+        "d": "Reply to qrcode or barcode to decode it and get text.",
+        "u": "{tr}decode",
     },
 )
 async def parseqr(event):
@@ -68,9 +68,9 @@ async def parseqr(event):
     pattern="barcode ?([\s\S]*)",
     command=("barcode", plugin_category),
     info={
-        "header": "To get barcode of given text.",
-        "usage": "{tr}barcode <text>",
-        "example": "{tr}barcode www.google.com",
+        "h": "To get barcode of given text.",
+        "u": "{tr}barcode <text>",
+        "e": "{tr}barcode www.google.com",
     },
 )
 async def _(event):
@@ -120,9 +120,9 @@ async def _(event):
     pattern="makeqr(?:\s|$)([\s\S]*)",
     command=("makeqr", plugin_category),
     info={
-        "header": "To get makeqr of given text.",
-        "usage": "{tr}makeqr <text>",
-        "example": "{tr}makeqr www.google.com",
+        "h": "To get makeqr of given text.",
+        "u": "{tr}makeqr <text>",
+        "e": "{tr}makeqr www.google.com",
     },
 )
 async def make_qr(makeqr):
@@ -164,9 +164,9 @@ async def make_qr(makeqr):
     pattern="hash ([\s\S]*)",
     command=("hash", plugin_category),
     info={
-        "header": "Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
-        "usage": "{tr}hash <text>",
-        "examples": "{tr}hash DogeUserBot",
+        "h": "Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
+        "u": "{tr}hash <text>",
+        "e": "{tr}hash DogeUserBot",
     },
 )
 async def gethash(hash_q):
@@ -201,13 +201,13 @@ async def gethash(hash_q):
     pattern="hbase (en|de) ([\s\S]*)",
     command=("hbase", plugin_category),
     info={
-        "header": "Find the base64 encoding or decoding of the given string.",
-        "flags": {
+        "h": "Find the base64 encoding or decoding of the given string.",
+        "f": {
             "en": "Use this to encode the given text.",
             "de": "use this to decode the given text.",
         },
-        "usage": ["{tr}hbase en <text to encode>", "{tr}hbase de <encoded text>"],
-        "examples": ["{tr}hbase en DogeUserBot", "{tr}hbase de Q2F0dXNlcmJvdA=="],
+        "u": ["{tr}hbase en <text to encode>", "{tr}hbase de <encoded text>"],
+        "e": ["{tr}hbase en DogeUserBot", "{tr}hbase de Q2F0dXNlcmJvdA=="],
     },
 )
 async def endecrypt(event):

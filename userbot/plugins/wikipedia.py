@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from wikipedia import summary
@@ -18,8 +18,8 @@ plugin_category = "misc"
     pattern="wiki ([\s\S]*)",
     command=("wiki", plugin_category),
     info={
-        "header": "To get wikipedia data about query.",
-        "usage": "{tr}wiki <query>",
+        "h": "To get wikipedia data about query.",
+        "u": "{tr}wiki <query>",
     },
 )
 async def wiki(event):

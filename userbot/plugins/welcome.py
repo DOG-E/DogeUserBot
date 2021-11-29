@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from telethon.events import ChatAction
@@ -95,9 +95,9 @@ async def _(event):  # sourcery no-metrics
     pattern="savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
-        "header": "To welcome new users in chat.",
-        "description": "Saves the message as a welcome note in the chat. And will send welcome message to every new user in group who ever joins newly in group.",
-        "option": {
+        "h": "To welcome new users in chat.",
+        "d": "Saves the message as a welcome note in the chat. And will send welcome message to every new user in group who ever joins newly in group.",
+        "o": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
             "{count}": "To get group members",
@@ -112,11 +112,11 @@ async def _(event):  # sourcery no-metrics
             "{my_mention}": "To mention myself",
             "{my_username}": "To use my username.",
         },
-        "usage": [
+        "u": [
             "{tr}savewelcome <welcome message>",
             "reply {tr}savewelcome to text message or supported media with text as media caption",
         ],
-        "examples": "{tr}savewelcome Hi {mention}, Welcome to {title} chat",
+        "e": "{tr}savewelcome Hi {mention}, Welcome to {title} chat",
     },
 )
 async def save_welcome(event):
@@ -157,9 +157,9 @@ async def save_welcome(event):
     pattern="clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
-        "header": "To turn off welcome message in group.",
-        "description": "Deletes the welcome note for the current chat.",
-        "usage": "{tr}clearwelcome",
+        "h": "To turn off welcome message in group.",
+        "d": "Deletes the welcome note for the current chat.",
+        "u": "{tr}clearwelcome",
     },
 )
 async def del_welcome(event):
@@ -174,8 +174,8 @@ async def del_welcome(event):
     pattern="listwelcome$",
     command=("listwelcome", plugin_category),
     info={
-        "header": "To check current welcome message in group.",
-        "usage": "{tr}listwelcome",
+        "h": "To check current welcome message in group.",
+        "u": "{tr}listwelcome",
     },
 )
 async def show_welcome(event):
@@ -198,9 +198,9 @@ async def show_welcome(event):
     pattern="cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={
-        "header": "To turn off or turn on of deleting previous welcome message.",
-        "description": "if you want to delete previous welcome message and send new one turn on it by deafult it will be on. Turn it off if you need",
-        "usage": "{tr}cleanwelcome <on/off>",
+        "h": "To turn off or turn on of deleting previous welcome message.",
+        "d": "if you want to delete previous welcome message and send new one turn on it by deafult it will be on. Turn it off if you need",
+        "u": "{tr}cleanwelcome <on/off>",
     },
 )
 async def del_welcome(event):

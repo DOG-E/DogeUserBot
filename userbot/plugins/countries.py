@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from countryinfo import CountryInfo
@@ -20,9 +20,9 @@ plugin_category = "misc"
     pattern="country ?([\s\S]*)",
     command=("country", plugin_category),
     info={
-        "header": "Get information about any country",
-        "usage": "{tr}country <country name>",
-        "example": "{tr}country Turkey",
+        "h": "Get information about any country",
+        "u": "{tr}country <country name>",
+        "e": "{tr}country Turkey",
     },
 )
 async def country_(message):

@@ -3,16 +3,16 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import remove
 from re import compile
 
-from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id, tr
+from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id
 
 plugin_category = "tool"
 # Regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
@@ -23,22 +23,22 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
     pattern="bbutton(?:\s|$)([\s\S]*)",
     command=("bbutton", plugin_category),
     info={
-        "header": "To create button posts.",
-        "note": f"For working of this you need your bot ({BOT_USERNAME}) in the group/channel where you're using and Markdown is default to HTML.",
-        "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
-        "usage": f"{tr}bbutton <text> [Name on button](link you want to open)",
-        "examples": f"{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
+        "h": "Botonlarla(düğme) mesaj oluşturmak için",
+        "note": f"Bunun çalışması için, kullandığınız grup ya da kanalda botunuza ({BOT_USERNAME}) ihtiyacınız var. Varsayılan yazı tipi HTML'dir.",
+        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "u": "{tr}bbutton <yazı> [Butonun Adı](açmak istediğiniz bağlantı)",
+        "e": "{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def bbutton(event):
-    "To create button posts."
+    "Botonlarla(düğme) mesaj oluşturmak için"
     reply_message = await event.get_reply_message()
     if reply_message:
         markdown_note = reply_message.text
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edl(event, "`🔲 What text should I use in button post?`")
+        return await edl(event, "`🔲 Buton'da hangi metni kullanmalıyım?`")
 
     prev = 0
     note_data = ""
@@ -84,15 +84,15 @@ async def bbutton(event):
     pattern="button(?:\s|$)([\s\S]*)",
     command=("button", plugin_category),
     info={
-        "header": "To create button posts via inline.",
-        "note": "Markdown is default to HTML.",
-        "options": "If you button to be in same row as other button then follow this (link:same) in 2nd button.",
-        "usage": f"{tr}button <text> [Name on button](link you want to open)",
-        "examples": f"{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
+        "h": "Satır içi ile düğme gönderileri oluşturmak için.",
+        "note": "Markdown, HTML'ye varsayılandır.",
+        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "u": "{tr}button <yazı> [Butonun adı](açmak istediğiniz bağlantı)",
+        "e": "{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def button(event):
-    "To create button posts via inline."
+    "Satır içi ile düğme gönderileri oluşturmak için."
     reply_to_id = await reply_id(event)
     reply_message = await event.get_reply_message()
     if reply_message:
@@ -100,7 +100,7 @@ async def button(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edl(event, "`🔲 What text should I use in button post?`")
+        return await edl(event, "`🔲 Butonda hangi metni kullanmalıyım?`")
 
     doginput = "Inline buttons " + markdown_note
     results = await event.client.inline_query(BOT_USERNAME, doginput)

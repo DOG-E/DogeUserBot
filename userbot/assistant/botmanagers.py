@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -63,14 +63,14 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         add_user_to_bl(user.id, get_display_name(user), user.username, reason, date)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = f"**🚫 You have been banned forever from using this bot.\
-        \n⛓ Reason:** {reason}"
+    banned_msg = f"**🚫 Sonsuza kadar bu botu kullanmadan yasaklandınız.\
+        \n⛓ Sebep:** {reason}"
     await doge.tgbot.send_message(user.id, banned_msg)
-    info = f"**⚠️ #BANNED_BOT_PM_USER**\
+    info = f"**⚠️ #BOT_PM_YASAKLAMASİ**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
-            \n**ℹ️ First Name:** {user.first_name}\
-            \n**🆔 User ID:** `{user.id}`\
-            \n**⛓ Reason:** `{reason}`"
+            \n**ℹ️ İlk İsim** {user.first_name}\
+            \n**🆔 Kullanıcı ID'si:** `{user.id}`\
+            \n**⛓ Sebep:** `{reason}`"
     if BOTLOG:
         await doge.send_message(BOTLOG_CHATID, info)
     return info
@@ -81,15 +81,15 @@ async def unban_user_from_bot(user, reason, reply_to=None):
         rem_user_from_bl(user.id)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = f"**👀 You have been unbanned from this bot.\
-        \nℹ️ From now on you can send messages here to contact my master.**"
+    banned_msg = f"**👀 Bu bottan yasaklanmıştınız.\
+        /nℹ️ Şimdi sahibime mesaj göndermeye devam edebeilirsin!**"
     if reason is not None:
-        banned_msg += f"\n**⛓ Reason:** `{reason}`"
+        banned_msg += f"\n**⛓ Sebep:** `{reason}`"
     await doge.tgbot.send_message(user.id, banned_msg)
-    info = f"**⚠️ #UNBANNED_BOT_PM_USER**\
+    info = f"**⚠️ #BOT_PM_YASAK_KALDİRİLMASİ**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
-            \n**ℹ️ First Name:** {user.first_name}\
-            \n**🆔 User ID:** `{user.id}`"
+            \n**ℹ️ İlk İsim:** {user.first_name}\
+            \n**🆔 Kullanıcı ID'si:** `{user.id}`"
     if BOTLOG:
         await doge.send_message(BOTLOG_CHATID, info)
     return info

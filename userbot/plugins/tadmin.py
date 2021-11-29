@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from telethon.errors import BadRequestError
@@ -32,8 +32,8 @@ plugin_category = "admin"
     pattern="tmute(?:\s|$)([\s\S]*)",
     command=("tmute", plugin_category),
     info={
-        "header": "To stop sending messages permission for that user",
-        "description": "Temporary mutes the user for given time.",
+        "h": "To stop sending messages permission for that user",
+        "d": "Temporary mutes the user for given time.",
         "Time units": {
             "s": "seconds",
             "m": "minutes",
@@ -41,11 +41,11 @@ plugin_category = "admin"
             "d": "days",
             "w": "weeks",
         },
-        "usage": [
+        "u": [
             "{tr}tmute <userid/username/reply> <time>",
             "{tr}tmute <userid/username/reply> <time> <reason>",
         ],
-        "examples": ["{tr}tmute 2d to test muting for 2 days"],
+        "e": ["{tr}tmute 2d to test muting for 2 days"],
     },
     groups_only=True,
     require_admin=True,
@@ -119,8 +119,8 @@ async def tmuter(event):  # sourcery no-metrics
     pattern="tban(?:\s|$)([\s\S]*)",
     command=("tban", plugin_category),
     info={
-        "header": "To remove a user from the group for specified time.",
-        "description": "Temporary bans the user for given time.",
+        "h": "To remove a user from the group for specified time.",
+        "d": "Temporary bans the user for given time.",
         "Time units": {
             "s": "seconds",
             "m": "minutes",
@@ -128,11 +128,11 @@ async def tmuter(event):  # sourcery no-metrics
             "d": "days",
             "w": "weeks",
         },
-        "usage": [
+        "u": [
             "{tr}tban <userid/username/reply> <time>",
             "{tr}tban <userid/username/reply> <time> <reason>",
         ],
-        "examples": ["{tr}tban 2d to test baning for 2 days"],
+        "e": ["{tr}tban 2d to test baning for 2 days"],
     },
     groups_only=True,
     require_admin=True,

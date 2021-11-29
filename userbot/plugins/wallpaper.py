@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import listdir, mkdir, path, remove
@@ -42,9 +42,9 @@ async def wall_download(piclink, query):
     pattern="wal(?:\s|$)([\s\S]*)",
     command=("wal", plugin_category),
     info={
-        "header": "Searches and uploads wallpaper",
-        "usage": ["{tr}wal <query>", "{tr}wal <query> , <1-10>"],
-        "examples": ["{tr}wal dog", "{tr}wal dog , 2"],
+        "h": "Searches and uploads wallpaper",
+        "u": ["{tr}wal <query>", "{tr}wal <query> , <1-10>"],
+        "e": ["{tr}wal dog", "{tr}wal dog , 2"],
     },
 )
 async def noods(event):
@@ -120,9 +120,9 @@ async def noods(event):
     pattern="wall(?:\s|$)([\s\S]*)",
     command=("wall", plugin_category),
     info={
-        "header": "Searches and uploads wallpaper from google",
-        "usage": ["{tr}wall <query>", "{tr}wall <query> , <1-10>"],
-        "examples": ["{tr}wall dog", "{tr}wall dog , 2"],
+        "h": "Searches and uploads wallpaper from google",
+        "u": ["{tr}wall <query>", "{tr}wall <query> , <1-10>"],
+        "e": ["{tr}wall dog", "{tr}wall dog , 2"],
     },
 )
 async def gwallpapers(event):

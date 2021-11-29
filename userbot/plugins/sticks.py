@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from io import BytesIO
@@ -41,15 +41,15 @@ plugin_category = "fun"
     pattern="(|b)qbs(?:\s|$)([\s\S]*)",
     command=("qbs", plugin_category),
     info={
-        "header": "Make quby say anything.",
-        "flags": {
+        "h": "Make quby say anything.",
+        "f": {
             "b": "Give the sticker on background.",
         },
-        "usage": [
+        "u": [
             "{tr}qbs <text/reply to msg>",
             "{tr}bqbs <text/reply to msg>",
         ],
-        "examples": [
+        "e": [
             "{tr}qbs Gib money",
             "{tr}bqbs Gib money",
         ],
@@ -107,15 +107,15 @@ async def quby(event):
     pattern="(|b)bls(?:\s|$)([\s\S]*)",
     command=("bls", plugin_category),
     info={
-        "header": "Give the sticker on background.",
-        "flags": {
+        "h": "Give the sticker on background.",
+        "f": {
             "b": "To create knife sticker transparent.",
         },
-        "usage": [
+        "u": [
             "{tr}bls <text/reply to msg>",
             "{tr}bbls <text/reply to msg>",
         ],
-        "examples": [
+        "e": [
             "{tr}bls Gib money",
             "{tr}bbls Gib money",
         ],
@@ -174,15 +174,15 @@ async def knife(event):
     pattern="(|b)dgs(?:\s|$)([\s\S]*)",
     command=("dgs", plugin_category),
     info={
-        "header": "Make doge say anything.",
-        "flags": {
+        "h": "Make doge say anything.",
+        "f": {
             "b": "To create doge sticker with highligted text.",
         },
-        "usage": [
+        "u": [
             "{tr}dgs <text/reply to msg>",
             "{tr}bdgs <text/reply to msg>",
         ],
-        "examples": [
+        "e": [
             "{tr}dgs Gib money",
             "{tr}bdsgs Gib money",
         ],
@@ -238,11 +238,11 @@ async def dogesticker(event):
     pattern="stcr ?([\s\S]*)",
     command=("stcr", plugin_category),
     info={
-        "header": "your text as sticker.",
-        "usage": [
+        "h": "your text as sticker.",
+        "u": [
             "{tr}stcr <text>",
         ],
-        "examples": "{tr}stcr hello",
+        "e": "{tr}stcr hello",
     },
 )
 async def sticklet(event):
@@ -301,9 +301,9 @@ async def sticklet(event):
     pattern="waifu(?:\s|$)([\s\S]*)",
     command=("waifu", plugin_category),
     info={
-        "header": "Anime that makes your writing fun.",
-        "usage": "{tr}waifu <text>",
-        "examples": "{tr}waifu hello",
+        "h": "Anime that makes your writing fun.",
+        "u": "{tr}waifu <text>",
+        "e": "{tr}waifu hello",
     },
 )
 async def waifu(animu):
@@ -326,9 +326,9 @@ async def waifu(animu):
     pattern="honk(?:\s|$)([\s\S]*)",
     command=("honk", plugin_category),
     info={
-        "header": "Make honk say anything.",
-        "usage": "{tr}honk <text/reply to msg>",
-        "examples": "{tr}honk How you doing?",
+        "h": "Make honk say anything.",
+        "u": "{tr}honk <text/reply to msg>",
+        "e": "{tr}honk How you doing?",
     },
 )
 async def honk(event):
@@ -350,9 +350,9 @@ async def honk(event):
     pattern="twt(?:\s|$)([\s\S]*)",
     command=("twt", plugin_category),
     info={
-        "header": "Make a cool tweet of your account",
-        "usage": "{tr}twt <text/reply to msg>",
-        "examples": "{tr}twt DogeUserBot",
+        "h": "Make a cool tweet of your account",
+        "u": "{tr}twt <text/reply to msg>",
+        "e": "{tr}twt DogeUserBot",
     },
 )
 async def twt(event):
@@ -374,15 +374,15 @@ async def twt(event):
     pattern="glax(|r)(?:\s|$)([\s\S]*)",
     command=("glax", plugin_category),
     info={
-        "header": "Make glax the dragon scream your text.",
-        "flags": {
+        "h": "Make glax the dragon scream your text.",
+        "f": {
             "r": "Reverse the face of the dragon",
         },
-        "usage": [
+        "u": [
             "{tr}glax <text/reply to msg>",
             "{tr}glaxr <text/reply to msg>",
         ],
-        "examples": [
+        "e": [
             "{tr}glax Die you",
             "{tr}glaxr Die you",
         ],
@@ -411,9 +411,9 @@ async def glax(event):
     pattern="gogle(?:\s|$)([\s\S]*)",
     command=("gogle", plugin_category),
     info={
-        "header": "Search in google animation",
-        "usage": "{tr}gogle <text/reply to msg>",
-        "examples": "{tr}gogle DogeUserBot",
+        "h": "Search in google animation",
+        "u": "{tr}gogle <text/reply to msg>",
+        "e": "{tr}gogle DogeUserBot",
     },
 )
 async def gogle(event):
@@ -436,8 +436,8 @@ async def gogle(event):
     pattern="sround(?:\s|$)([\s\S]*)",
     command=("sround", plugin_category),
     info={
-        "header": "To convert media round square sticker.",
-        "usage": "{tr}sround <reply to a sticker>",
+        "h": "To convert media round square sticker.",
+        "u": "{tr}sround <reply to a sticker>",
     },
 )
 async def stickround(event):
@@ -482,8 +482,8 @@ async def stickround(event):
     pattern="destroy$",
     command=("destroy", plugin_category),
     info={
-        "header": "Destory a animated sticker.",
-        "usage": "{tr}destroy <reply to a animated sticker>",
+        "h": "Destory a animated sticker.",
+        "u": "{tr}destroy <reply to a animated sticker>",
     },
 )
 async def destroyasticker(event):

@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import create_subprocess_exec, get_event_loop
@@ -75,14 +75,14 @@ thumb_loc = osp.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
     pattern="spin(?: |$)((.)?(s)?)$",
     command=("spin", plugin_category),
     info={
-        "header": "To convert replied image or sticker to spining round video.",
-        "flags": {
+        "h": "To convert replied image or sticker to spining round video.",
+        "f": {
             ".s": "to save in saved gifs.",
         },
-        "usage": [
+        "u": [
             "{tr}spin <flag>",
         ],
-        "examples": ["{tr}spin", "{tr}spin .s"],
+        "e": ["{tr}spin", "{tr}spin .s"],
     },
 )
 async def pic_gifcmd(event):  # sourcery no-metrics
@@ -171,9 +171,9 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     pattern="circle ?((-)?s)?$",
     command=("circle", plugin_category),
     info={
-        "header": "To make circular video note/sticker.",
-        "description": "crcular video note supports atmost 60 sec so give appropariate video.",
-        "usage": "{tr}circle <reply to video/sticker/image>",
+        "h": "To make circular video note/sticker.",
+        "d": "crcular video note supports atmost 60 sec so give appropariate video.",
+        "u": "{tr}circle <reply to video/sticker/image>",
     },
 )
 async def video_dogfile(event):  # sourcery no-metrics
@@ -322,9 +322,9 @@ async def video_dogfile(event):  # sourcery no-metrics
     pattern="sti$",
     command=("sti", plugin_category),
     info={
-        "header": "Reply this command to a sticker to get image.",
-        "description": "This also converts every media to image. that is if video then extracts image from that video.if audio then extracts thumb.",
-        "usage": "{tr}sti",
+        "h": "Reply this command to a sticker to get image.",
+        "d": "This also converts every media to image. that is if video then extracts image from that video.if audio then extracts thumb.",
+        "u": "{tr}sti",
     },
 )
 async def _(event):
@@ -349,9 +349,9 @@ async def _(event):
     pattern="its$",
     command=("its", plugin_category),
     info={
-        "header": "Reply this command to image to get sticker.",
-        "description": "This also converts every media to sticker. that is if video then extracts image from that video. if audio then extracts thumb.",
-        "usage": "{tr}its",
+        "h": "Reply this command to image to get sticker.",
+        "d": "This also converts every media to sticker. that is if video then extracts image from that video. if audio then extracts thumb.",
+        "u": "{tr}its",
     },
 )
 async def _(event):
@@ -376,9 +376,9 @@ async def _(event):
     pattern="ttf ([\s\S]*)",
     command=("ttf", plugin_category),
     info={
-        "header": "Text to file.",
-        "description": "Reply this command to a text message to convert it into file with given name.",
-        "usage": "{tr}ttf <file name>",
+        "h": "Text to file.",
+        "d": "Reply this command to a text message to convert it into file with given name.",
+        "u": "{tr}ttf <file name>",
     },
 )
 async def get(event):
@@ -402,10 +402,10 @@ async def get(event):
     pattern="ftt$",
     command=("ftt", plugin_category),
     info={
-        "header": "File to text.",
-        "description": "Reply this command to a file to print text in that file to text message.",
-        "support types": "txt, py, pdf and many more files in text format",
-        "usage": "{tr}ftt <reply to document>",
+        "h": "File to text.",
+        "d": "Reply this command to a file to print text in that file to text message.",
+        "t": "txt, py, pdf and many more files in text format",
+        "u": "{tr}ftt <reply to document>",
     },
 )
 async def get(event):
@@ -450,8 +450,8 @@ async def get(event):
     pattern="ftoi$",
     command=("ftoi", plugin_category),
     info={
-        "header": "Reply this command to a image file to convert it to image",
-        "usage": "{tr}ftoi",
+        "h": "Reply this command to a image file to convert it to image",
+        "u": "{tr}ftoi",
     },
 )
 async def on_file_to_photo(event):
@@ -491,8 +491,8 @@ async def on_file_to_photo(event):
     pattern="gif(?:\s|$)([\s\S]*)",
     command=("gif", plugin_category),
     info={
-        "header": "Converts Given animated sticker to gif.",
-        "usage": "{tr}gif quality ; fps(frames per second)",
+        "h": "Converts Given animated sticker to gif.",
+        "u": "{tr}gif quality ; fps(frames per second)",
     },
 )
 async def _(event):  # sourcery no-metrics
@@ -574,8 +574,8 @@ async def _(event):  # sourcery no-metrics
     pattern="nfc (mp3|voice)",
     command=("nfc", plugin_category),
     info={
-        "header": "Converts the required media file to voice or mp3 file.",
-        "usage": [
+        "h": "Converts the required media file to voice or mp3 file.",
+        "u": [
             "{tr}nfc mp3",
             "{tr}nfc voice",
         ],
@@ -685,9 +685,9 @@ async def _(event):
     pattern="itog(?: |$)((-)?(r|l|u|d|s|i)?)$",
     command=("itog", plugin_category),
     info={
-        "header": "To convert replied image or sticker to gif",
-        "description": "Bt deafualt will use -i as flag",
-        "flags": {
+        "h": "To convert replied image or sticker to gif",
+        "d": "Bt deafualt will use -i as flag",
+        "f": {
             "-r": "Right rotate gif.",
             "-l": "Left rotate gif.",
             "-u": "Rotates upward gif.",
@@ -695,10 +695,10 @@ async def _(event):
             "-s": "spin the image gif.",
             "-i": "invert colurs gif.",
         },
-        "usage": [
+        "u": [
             "{tr}itog <flag>",
         ],
-        "examples": ["{tr}itog s", "{tr}itog -s"],
+        "e": ["{tr}itog s", "{tr}itog -s"],
     },
 )
 async def pic_gifcmd(event):  # sourcery no-metrics
@@ -766,9 +766,9 @@ async def pic_gifcmd(event):  # sourcery no-metrics
     pattern="vtog ?([0-9.]+)?$",
     command=("vtog", plugin_category),
     info={
-        "header": "Reply this command to a video to convert it to gif.",
-        "description": "By default speed will be 1x",
-        "usage": "{tr}vtog <speed>",
+        "h": "Reply this command to a video to convert it to gif.",
+        "d": "By default speed will be 1x",
+        "u": "{tr}vtog <speed>",
     },
 )
 async def _(event):

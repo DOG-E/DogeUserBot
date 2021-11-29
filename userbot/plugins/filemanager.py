@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -37,10 +37,10 @@ plugin_category = "bot"
     pattern="ls(?:\s|$)([\s\S]*)",
     command=("ls", plugin_category),
     info={
-        "header": "To list all files and folders.",
-        "description": "Will show all files and folders if no path is given or folder path is given else will show file details(if file path os given).",
-        "usage": "{tr}ls <path>",
-        "examples": "{tr}ls userbot",
+        "h": "To list all files and folders.",
+        "d": "Will show all files and folders if no path is given or folder path is given else will show file details(if file path os given).",
+        "u": "{tr}ls <path>",
+        "e": "{tr}ls userbot",
     },
 )
 async def lst(event):  # sourcery no-metrics
@@ -160,9 +160,9 @@ async def lst(event):  # sourcery no-metrics
     pattern="rem ([\s\S]*)",
     command=("rem", plugin_category),
     info={
-        "header": "To delete a file or folder from the server",
-        "usage": "{tr}rem <path>",
-        "examples": "{tr}rem Dockerfile",
+        "h": "To delete a file or folder from the server",
+        "u": "{tr}rem <path>",
+        "e": "{tr}rem Dockerfile",
     },
 )
 async def lst(event):
@@ -192,9 +192,9 @@ async def lst(event):
     pattern="mkdir(?:\s|$)([\s\S]*)",
     command=("mkdir", plugin_category),
     info={
-        "header": "To create a new directory.",
-        "usage": "{tr}mkdir <topic>",
-        "examples": "{tr}mkdir dog",
+        "h": "To create a new directory.",
+        "u": "{tr}mkdir <topic>",
+        "e": "{tr}mkdir dog",
     },
 )
 async def _(event):
@@ -228,9 +228,9 @@ async def _(event):
     pattern="cpto(?:\s|$)([\s\S]*)",
     command=("cpto", plugin_category),
     info={
-        "header": "To copy a file from one directory to other directory",
-        "usage": "{tr}cpto from ; to destination",
-        "examples": "{tr}cpto sample_config.py ; downloads",
+        "h": "To copy a file from one directory to other directory",
+        "u": "{tr}cpto from ; to destination",
+        "e": "{tr}cpto sample_config.py ; downloads",
     },
 )
 async def _(event):
@@ -273,9 +273,9 @@ async def _(event):
     pattern="mvto(?:\s|$)([\s\S]*)",
     command=("mvto", plugin_category),
     info={
-        "header": "To move a file from one directory to other directory.",
-        "usage": "{tr}mvto frompath ; topath",
-        "examples": "{tr}mvto stringsession.py ; downloads",
+        "h": "To move a file from one directory to other directory.",
+        "u": "{tr}mvto frompath ; topath",
+        "e": "{tr}mvto stringsession.py ; downloads",
     },
 )
 async def _(event):
@@ -318,9 +318,9 @@ async def _(event):
     pattern="filext(?:\s|$)([\s\S]*)",
     command=("filext", plugin_category),
     info={
-        "header": "Shows you the detailed information of given extension type. Only English.",
-        "usage": "{tr}filext <extension>",
-        "examples": "{tr}filext py",
+        "h": "Shows you the detailed information of given extension type. Only English.",
+        "u": "{tr}filext <extension>",
+        "e": "{tr}filext py",
     },
 )
 async def _(event):
@@ -333,7 +333,7 @@ async def _(event):
         raw_html = response_api.content
         soup = BeautifulSoup(raw_html, "html.parser")
         ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        translated = await getTranslate(deEmojify(ext_details), dest="en")
+        translated = await getTranslate(deEmojify(ext_details), dest="tr")
         await eor(
             event,
             f"**File Extension:** `{input_str}`\n**Description:**\n{translated.text}",

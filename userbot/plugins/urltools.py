@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from requests import get
@@ -18,9 +18,9 @@ plugin_category = "tool"
     pattern="dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
-        "header": "To get Domain Name System(dns) of the given link.",
-        "usage": "{tr}dns <url/reply to url>",
-        "examples": "{tr}dns google.com",
+        "h": "To get Domain Name System(dns) of the given link.",
+        "u": "{tr}dns <url/reply to url>",
+        "e": "{tr}dns google.com",
     },
 )
 async def _(event):
@@ -51,9 +51,9 @@ async def _(event):
     pattern="short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
-        "header": "To short the given url.",
-        "usage": "{tr}short <url/reply to url>",
-        "examples": "{tr}short https://github.com/DOG-E/DogeUserBot",
+        "h": "To short the given url.",
+        "u": "{tr}short <url/reply to url>",
+        "e": "{tr}short https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
@@ -88,9 +88,9 @@ async def _(event):
     pattern="unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
-        "header": "To unshort the given dagb shorten url.",
-        "usage": "{tr}unshort <url/reply to url>",
-        "examples": "{tr}unshort https://da.gd/Doge",
+        "h": "To unshort the given dagb shorten url.",
+        "u": "{tr}unshort <url/reply to url>",
+        "e": "{tr}unshort https://da.gd/Doge",
     },
 )
 async def _(event):
@@ -130,9 +130,9 @@ async def _(event):
     pattern="hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={
-        "header": "To hide the url with white spaces using hyperlink.",
-        "usage": "{tr}hl <url/reply to url>",
-        "examples": "{tr}hl https://da.gd/Doge",
+        "h": "To hide the url with white spaces using hyperlink.",
+        "u": "{tr}hl <url/reply to url>",
+        "e": "{tr}hl https://da.gd/Doge",
     },
 )
 async def _(event):

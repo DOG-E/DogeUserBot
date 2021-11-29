@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 
@@ -131,9 +131,9 @@ async def log_tagged_messages(event):
     pattern="save(?:\s|$)([\s\S]*)",
     command=("save", plugin_category),
     info={
-        "header": "To log the replied message to bot log group so you can check later.",
-        "description": "Set PRIVATE_GROUP_BOT_API_ID in vars for functioning of this",
-        "usage": [
+        "h": "To log the replied message to bot log group so you can check later.",
+        "d": "Set PRIVATE_GROUP_BOT_API_ID in vars for functioning of this",
+        "u": [
             "{tr}save <text/reply>",
         ],
     },
@@ -160,9 +160,9 @@ async def log(log_text):
     pattern="logon$",
     command=("logon", plugin_category),
     info={
-        "header": "To turn on logging of messages from that chat.",
-        "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
-        "usage": [
+        "h": "To turn on logging of messages from that chat.",
+        "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
+        "u": [
             "{tr}logon",
         ],
     },
@@ -183,9 +183,9 @@ async def set_no_log_p_m(event):
     pattern="logoff$",
     command=("logoff", plugin_category),
     info={
-        "header": "To turn off logging of messages from that chat.",
-        "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
-        "usage": [
+        "h": "To turn off logging of messages from that chat.",
+        "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
+        "u": [
             "{tr}logoff",
         ],
     },
@@ -206,9 +206,9 @@ async def set_no_log_p_m(event):
     pattern="pmlog (on|off)$",
     command=("pmlog", plugin_category),
     info={
-        "header": "To turn on or turn off logging of Private messages in pmlogger group.",
-        "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
-        "usage": [
+        "h": "To turn on or turn off logging of Private messages in pmlogger group.",
+        "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
+        "u": [
             "{tr}pmlog on",
             "{tr}pmlog off",
         ],
@@ -247,9 +247,9 @@ async def set_pmlog(event):
     pattern="grplog (on|off)$",
     command=("grplog", plugin_category),
     info={
-        "header": "To turn on or turn off group tags logging in pmlogger group.",
-        "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
-        "usage": [
+        "h": "To turn on or turn off group tags logging in pmlogger group.",
+        "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
+        "u": [
             "{tr}grplog on",
             "{tr}grplog off",
         ],

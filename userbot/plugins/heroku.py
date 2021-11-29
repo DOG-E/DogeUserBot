@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -29,18 +29,18 @@ disable_warnings(InsecureRequestWarning)
     pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
-        "header": "To manage heroku vars.",
-        "flags": {
+        "h": "To manage heroku vars.",
+        "f": {
             "set": "To set new var in heroku or modify the old var",
             "get": "To show the already existing var value.",
             "del": "To delete the existing value",
         },
-        "usage": [
+        "u": [
             "{tr}set var <var name> <var value>",
             "{tr}get var <var name>",
             "{tr}del var <var name>",
         ],
-        "examples": [
+        "e": [
             "{tr}get var ALIVE_NAME",
         ],
     },
@@ -118,8 +118,8 @@ async def variable(var):  # sourcery no-metrics
     pattern="(usage|dyno)$",
     command=("usage", plugin_category),
     info={
-        "header": "To Check dyno usage of userbot and also to know how much left.",
-        "usage": ["{tr}usage", "{tr}dyno"],
+        "h": "To Check dyno usage of userbot and also to know how much left.",
+        "u": ["{tr}usage", "{tr}dyno"],
     },
 )
 async def dyno_usage(dyno):
@@ -192,8 +192,8 @@ async def dyno_usage(dyno):
     pattern="(logs|hlog)$",
     command=("logs", plugin_category),
     info={
-        "header": "To get recent 100 lines logs from heroku.",
-        "usage": ["{tr}logs", "{tr}hlog"],
+        "h": "To get recent 100 lines logs from heroku.",
+        "u": ["{tr}logs", "{tr}hlog"],
     },
 )
 async def _(dyno):

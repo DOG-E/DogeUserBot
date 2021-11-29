@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from . import doge, edl, eor, fsmessage, newmsgres
@@ -17,9 +17,9 @@ plugin_category = "misc"
     pattern="tiktok ([\s\S]*)",
     command=("tiktok", plugin_category),
     info={
-        "header": "To download tiktok video.",
-        "description": "Download tiktok videos without watermark.",
-        "usage": [
+        "h": "To download tiktok video.",
+        "d": "Download tiktok videos without watermark.",
+        "u": [
             "{tr}tiktok <link>",
         ],
     },

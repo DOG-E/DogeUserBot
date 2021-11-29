@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from json import loads
@@ -21,8 +21,8 @@ plugin_category = "tool"
     pattern="magisk$",
     command=("magisk", plugin_category),
     info={
-        "header": "To Get latest Magisk releases",
-        "usage": "{tr}magisk",
+        "h": "To Get latest Magisk releases",
+        "u": "{tr}magisk",
     },
 )
 async def kakashi(event):
@@ -47,9 +47,9 @@ async def kakashi(event):
     pattern="device(?: |$)(\S*)",
     command=("device", plugin_category),
     info={
-        "header": "To get android device name/model from its codename",
-        "usage": "{tr}device <codename>",
-        "examples": "{tr}device whyred",
+        "h": "To get android device name/model from its codename",
+        "u": "{tr}device <codename>",
+        "e": "{tr}device whyred",
     },
 )
 async def device_info(event):
@@ -85,9 +85,9 @@ async def device_info(event):
     pattern="dcname(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("dcname", plugin_category),
     info={
-        "header": "To Search for android device codename",
-        "usage": "{tr}dcname <brand> <device>",
-        "examples": "{tr}dcname Xiaomi Redmi Note 5 Pro",
+        "h": "To Search for android device codename",
+        "u": "{tr}dcname <brand> <device>",
+        "e": "{tr}dcname Xiaomi Redmi Note 5 Pro",
     },
 )
 async def codename_info(event):
@@ -137,9 +137,9 @@ async def codename_info(event):
     pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("specs", plugin_category),
     info={
-        "header": "To Get info about android device .",
-        "usage": "{tr}specs",
-        "examples": "{tr}specs Xiaomi Redmi Note 5 Pro",
+        "h": "To Get info about android device .",
+        "u": "{tr}specs",
+        "e": "{tr}specs Xiaomi Redmi Note 5 Pro",
     },
 )
 async def devices_specifications(event):
@@ -204,9 +204,9 @@ async def devices_specifications(event):
     pattern="twrp(?: |$)(\S*)",
     command=("twrp", plugin_category),
     info={
-        "header": "To Get latest twrp download links for android device.",
-        "usage": "{tr}twrp <devicecodename>",
-        "examples": "{tr}twrp whyred",
+        "h": "To Get latest twrp download links for android device.",
+        "u": "{tr}twrp <devicecodename>",
+        "e": "{tr}twrp whyred",
     },
 )
 async def twrp(event):

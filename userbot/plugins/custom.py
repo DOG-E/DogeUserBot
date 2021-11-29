@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from googletrans import LANGUAGES
@@ -103,10 +103,10 @@ alist = [
     pattern="([Ss]|[Gg]|[Dd])dog(?: |$)([\s\S]*)",
     command=("dog", plugin_category),
     info={
-        "header": "Set vars in database or check or delete",
-        "description": "Set, fetch or delete values or vars directly in database without restart or Heroku vars.\
+        "h": "Set vars in database or check or delete",
+        "d": "Set, fetch or delete values or vars directly in database without restart or Heroku vars.\
         \nYou can set multiple pics by giving space after links in alive, ialive, pm permit.",
-        "flags": {
+        "f": {
             "s": "To set new var in database or modify the old var",
             "g": "To show the already existing var value.",
             "d": "To delete the existing value",
@@ -128,12 +128,12 @@ alist = [
             "{remwarns}": "remaining warns",
             "{afktime}": "see afk time for afk command",
         },
-        "usage": [
+        "u": [
             "{tr}sdog <var name> <var value>",
             "{tr}gdog <var name>",
             "{tr}ddog <var name>",
         ],
-        "examples": [
+        "e": [
             "{tr}sdog ALIVE_PIC <pic link>",
             "{tr}sdog ALIVE_PIC <pic link 1> <pic link 2>",
             "{tr}gdog ALIVE_PIC",
@@ -349,17 +349,17 @@ async def dbsetter(event):  # sourcery no-metrics
     pattern="lang (ai|tocr|trt|tts|xg) ([\s\S]*)",
     command=("lang", plugin_category),
     info={
-        "header": "Set language for many command.",
-        "description": "For langugage codes check [this link](https://telegra.ph/LANGUAGE-CODES-07-01)",
-        "options": {
+        "h": "Set language for many command.",
+        "d": "For langugage codes check [this link](https://telegra.ph/LANGUAGE-CODES-07-01)",
+        "o": {
             "ai": "For chatbot(ai)",
             "tocr": "For tocr command",
             "trt": "For trt command",
             "tts": "For tts command",
             "xg": "For Xiaomi plugin",
         },
-        "usage": "{tr}lang option <language codes>",
-        "examples": [
+        "u": "{tr}lang option <language codes>",
+        "e": [
             "{tr}lang ai tr",
             "{tr}lang tocr tur",
             "{tr}lang trt tr",

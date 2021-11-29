@@ -1,105 +1,105 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from random import choice
 
 SLAP_TEMPLATES = [
-    "{u} {h} {v} with a {i}.",
-    "{u} {h} {v} in the face with a {i}.",
-    "{u} {h} {v} around a bit with a {i}.",
-    "{u} {t} a {i} at {v}.",
-    "{u} grabs a {i} and {t} it at {v}'s face.",
-    "{u} {h} a {i} at {v}.",
-    "{t} a few {i} at {v}.",
-    "{u} put {v} in the friendzone.",
-    "{u} slaps {v} with a DMCA takedown request!",
-    "{u} sits on {v}'s face while slamming a {i} {w}.",
-    "{u} starts slapping {v} silly with a {i}.",
-    "{u} pins {v} down and repeatedly {h} them with a {i}.",
-    "{u} RSA-encrypted {v} and deleted the private key.",
-    "put {v} in check-mate.",
-    "{u} hit {v} with a small, interstellar spaceship.",
-    "{u} quickscoped {v}.",
-    "{u} picks up a {i} and {h} {v} with it.",
-    "made {v} a knuckle sandwich.",
-    "{u} {h} {v} {w} with a {i}.",
-    "{u} slapped {v} with pure nothing.",
-    "{u} gave a friendly push to help {v} learn to swim in lava.",
-    "sent {v} down the memory hole.",
-    "threw {v} off a building.",
-    "{u} spammed {v}'s email.",
+    "{u}, {i} ile {v} kullanıcısını {h}.",
+    "{u}, {v} kullanıcısının yüzüne {i} ile {h}.",
+    "{u}, {i} ile {v} kullanıcısını biraz {h}.",
+    "{u}, {v} kullanıcısına {i} {t}.",
+    "{u}, {v} kullanıcısını DMCA kaldırma isteğiyle mağdur bırakıyor!",
+    "{u}, {v} kullanıcısını friendzone'da bırakıyor.",
+    "{v} kullanıcısına biraz {i} {t}lar.",
+    "{u}, RSA-şifreleme ile {v} kullanıcısının gizli anahtarını sildi.",
+    "{u}, {v} kullanıcısını şah-mat etti.",
+    "{u}, {v} kullanıcısının yüzünde otururken {i} ile {w} {h}.",
+    "{u}, {v} aptalına {i} ile tokat atıyor.",
+    "{u}, {v} kullanıcısının bacaklarına tekrar tekrar {i} ile {h}.",
+    "{u}, {v} kullanıcısına gökdelenin 42. katından özel bir {i} {t}.",
+    "{u}, {v} kullanıcısını sniper ile dikizliyor.",
+    "{u}, {v} kullanıcısını ALIEN-X derecesinde tokatlıyor.",
+    "{u}, {v} kullanıcısını küçük yıldızlararası bir uzay gemisi ile vuruyor.",
+    "{u}, otobüsten getirdiği çayı {v} kullanıcısına {t}.",
+    "{u} {v} kullanıcısını bir zincir ile bağlayıp, {i} {t}.",
+    "{u}, {v} kullanıcısının {w} miniminnacık {i} ile {h}.",
+    "{u}, {v} kullanıcısına büyük bir knuckle(yumruk) sandivici yaptı.",
+    "{u}, {v} kullanıcısına lavda yüzmesine yardım etmek için hafifçe ittirdi.",
+    "{u}, {v} kullanıcısının e-postasını spamlıyor.",
+    "{u}, {v} kullanıcısının hafızasını kalıcı olarak sildi ve saçma TikTok videolarıyla doldurdu.",
+    "{u}, {v} kullanıcısını binadan aşağı attı.",
 ]
 
 ITEMS = [
-    "cast iron skillet",
-    "large trout",
-    "baseball bat",
-    "cricket bat",
-    "wooden cane",
-    "nail",
-    "printer",
-    "shovel",
-    "pair of trousers",
-    "CRT monitor",
-    "diamond sword",
-    "baguette",
-    "physics textbook",
-    "toaster",
-    "portrait of Richard Stallman",
-    "television",
-    "tea",
-    "five ton truck",
-    "roll of duct tape",
-    "book",
-    "laptop",
-    "old television",
-    "sack of rocks",
-    "rainbow trout",
-    "cobblestone block",
-    "lava bucket",
-    "rubber chicken",
-    "spiked bat",
-    "gold block",
-    "fire extinguisher",
-    "heavy rock",
-    "chunk of dirt",
-    "beehive",
-    "piece of rotten meat",
-    "bear",
-    "ton of bricks",
+    "düdüklü tencere",
+    "alabalık",
+    "beysbol sopası",
+    "kriket sopası",
+    "tahta baston",
+    "Thor'un Mjölnir çekicini",
+    "yazıcı",
+    "kürek",
+    "kahve makinesi",
+    "tüplü monitör",
+    "elmas kılıç",
+    "greyder aracı",
+    "fizik defteri",
+    "tost makinesi",
+    "yazar kasa",
+    "televizyon",
+    "araba motoru",
+    "beş ton kamyon",
+    "el feneri",
+    "kitap",
+    "dizüstü bilgisayar",
+    "eski televizyon",
+    "çuval çuval taş",
+    "çay",
+    "kereste",
+    "lav kovası",
+    "pişmiş tavuk",
+    "çivili sopa",
+    "altın minecraft bloğu",
+    "yangın söndürücü",
+    "patlıcan",
+    "Azrail'in asasını",
+    "arı kovanı",
+    "çürük et parçası",
+    "ayı",
+    "hakiki Rize çayı",
 ]
 
 THROW = [
-    "throws",
-    "flings",
-    "chucks",
-    "hurls",
+    "atıyor",
+    "fırlatıyor",
+    "savuruyor",
+    "yağdırıyor",
 ]
 
 HIT = [
-    "hits",
-    "whacks",
-    "fatality hits",
-    "slaps",
-    "smacks",
-    "bashes",
+    "vuruyor",
+    "sert vuruyor",
+    "fena geçiriyor",
+    "tokatlıyor",
+    "yumrukluyor",
+    "geçiriyor",
 ]
 
 WHERE = [
-    "in the chest",
-    "on the head",
-    "on the butt",
-    "on the crotch",
+    "karnına",
+    "kafasına",
+    "poposuna",
+    "kasığına",
 ]
 
 
 async def slap(replied_user, event, DEFAULTUSER):
-    """Construct a funny slap sentence!"""
+    """Komik bir  tokat gibi!"""
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     username = replied_user.user.username

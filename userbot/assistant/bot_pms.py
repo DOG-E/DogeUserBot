@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from collections import defaultdict
@@ -63,14 +63,14 @@ async def check_bot_started_users(user, event):
     check = get_starter_details(user.id)
     if check is None:
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **has started me.**\
-                \n**🆔  ID:** `{user.id}`\
-                \n**ℹ️ Name:** {get_display_name(user)}"
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **Beni başlattı.**\
+                \n**🆔  Kullanıcı ID'is:** `{user.id}`\
+                \n**ℹ️ İsim:** {get_display_name(user)}"
     else:
         start_date = check.date
         notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **has restarted me.**\
-                \n**🆔 User ID:** `{user.id}`\
-                \n**ℹ️ Name:** {get_display_name(user)}"
+                \n**🆔 Kullanıcı ID'si:** `{user.id}`\
+                \n**ℹ️ İsim:** {get_display_name(user)}"
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
@@ -121,28 +121,28 @@ async def bot_start(event):
             )
         else:
             start_msg = str(
-                "**🐶 wow!**\
-                \n🐾 Hi {}!\n\
-                \n**🐶 I am {}'s loyal dog.**\
-                \n💭 You can contact to my master from here.".format(
+                "**🐶 Wow!**\
+            \n🐾 Selam {}!\n\
+            \n**🐶 Ben {}'in sadık köpeğiyim.**\
+            \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
                     mention, my_mention
                 )
             )
         buttons = [
-            (Button.url(f"📣 Cʜᴀɴɴᴇʟ", "https://t.me/DogeUserBot"),),
+            (Button.url(f"📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
             (
-                Button.url(f"💬 Sᴜᴘᴘoʀᴛ", "https://t.me/DogeSup"),
-                Button.url(f"🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
+                Button.url(f"💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
+                Button.url(f"🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
             ),
         ]
     else:
-        start_msg = "**🐶 wow!\
-        \n🐾 Hey {}!\n\
-        \n💬 How can I help you?**".format(
+        start_msg = "**🐶 Wow!\
+        \n🐾 Merhaba {}!\n\
+        \n💬 Sana nasıl yardımcı olabilirim?**".format(
             my_mention
         )
         buttons = [
-            (Button.inline(f"🐕‍🦺 Hᴇʟᴘ", data="mainmenu"),),
+            (Button.inline(f"🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
         ]
     try:
         await event.client.send_message(
@@ -156,7 +156,7 @@ async def bot_start(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"**🚨 Eʀʀoʀ:**\n`ℹ️ There was a error while user starting your bot.`\
+                f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                 \n➡️ `{e}`",
             )
     else:
@@ -177,7 +177,7 @@ async def bot_pms(event):  # sourcery no-metrics
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
+                    f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
                     \n➡️ `{str(e)}`",
                 )
     else:
@@ -215,7 +215,7 @@ async def bot_pms(event):  # sourcery no-metrics
                         user_id, event.text, reply_to=reply_msg, link_preview=False
                     )
             except Exception as e:
-                return await event.reply(f"**🚨 Eʀʀoʀ:**\n➡️ `{e}`")
+                return await event.reply(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
             try:
                 add_user_to_db(
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
@@ -225,7 +225,7 @@ async def bot_pms(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
+                        f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
                         \n➡️ `{e}`",
                     )
 
@@ -247,7 +247,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         if reply_msg:
             await event.client.send_message(
                 OWNER_ID,
-                "**⬆️ This message was edited by the user** {} **as:**\n".format(
+                "**⬆️ Bu mesaj şu kullanıcı tarafından düzenlendi.** {} :\n".format(
                     _format.mentionuser(get_display_name(chat), chat.id)
                 ),
                 reply_to=reply_msg,
@@ -260,7 +260,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**🚨 Eʀʀoʀ:**\n`ℹ️ While storing messages details in database`\
+                        f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.__\
                         \n➡️ `{e}`",
                     )
     else:
@@ -319,7 +319,7 @@ async def handler(event):
                         return
                     await event.client.send_message(
                         OWNER_ID,
-                        "**⬆️ This message was deleted by the user** {}.".format(
+                        "**⬆️ Bu mesaj, şu kullanıcı tarafından silindi.** {}.".format(
                             _format.mentionuser(user_name, user_id)
                         ),
                         reply_to=reply_msg,
@@ -332,16 +332,18 @@ async def handler(event):
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply("**ℹ️ Reply to a message to get message info.**")
+        return await event.reply(
+            "**ℹ️ Mesaj bilgisi almak için bir mesajı yanıtlayın.**"
+        )
     info_msg = await event.client.send_message(
         event.chat_id,
-        "`🔎 Searching my database for: this user...`",
+        "`🔎 Bu kullanıcıyı veritabanımda arıyorum...`",
         reply_to=reply_to,
     )
     users = get_user_id(reply_to)
     if users is None:
         return await info_msg.edit(
-            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
     for usr in users:
         user_id = int(usr.chat_id)
@@ -349,11 +351,11 @@ async def bot_start(event):
         break
     if user_id is None:
         return await info_msg.edit(
-            f"**🚨 Eʀʀoʀ:**\n🙁 `Sorry! I couldn't find this user in my database.`"
+            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
-    uinfo = f"**👤 This message was sent by** {_format.mentionuser(user_name, user_id)}\
-            \n**ℹ️ First Name:** {user_name}\
-            \n**🆔 User ID:** `{user_id}`"
+    uinfo = f"**👤 Bu mesaj şu kişi tarafından gönderildi:** {_format.mentionuser(user_name, user_id)}\
+            \n**ℹ️ Kullanıcı İsmi:** {user_name}\
+            \n**🆔 Kullanıcı ID'si:** `{user_id}`"
     await info_msg.edit(uinfo)
 
 
@@ -363,7 +365,7 @@ async def send_flood_alert(user_) -> None:
         (
             Button.inline(f"🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                f"➖ Boᴛ AɴᴛɪFʟooᴅ Oғғ",
+                f"➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ",
                 data="toggle_bot-antiflood_off",
             ),
         )
@@ -380,7 +382,7 @@ async def send_flood_alert(user_) -> None:
             if BOTLOG:
                 await doge.tgbot.send_message(
                     BOTLOG_CHATID,
-                    f"**🚨 Eʀʀoʀ:**\nℹ️ While updating flood count.\
+                    f"**🚨 Hᴀᴛᴀ:**\nℹ️ Flood sayısı güncellenirken hata oluştu.\
                     \n➡️ `{e}`",
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
@@ -390,28 +392,28 @@ async def send_flood_alert(user_) -> None:
     flood_msg = (
         r"**⚠️️ #FLOOD_WARNING**"
         "\n\n"
-        f"**🆔 User ID:** `{user_.id}`\n"
-        f"**ℹ️ Name:** {get_display_name(user_)}\n"
-        f"**👤 User:** {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**🐾 is spamming your {BOT_USERNAME}! -> [ Flood rate ({flood_count}) ]**\n"
-        f"__💡 Quick Action__: Ignored from bot for a while."
+        f"**🆔 Kullanıcı ID'si:** `{user_.id}`\n"
+        f"**ℹ️ İsim:** {get_display_name(user_)}\n"
+        f"**👤 Kullanıcı:** {_format.mentionuser(get_display_name(user_), user_.id)}"
+        f"\n\n**🐾 Botunuz {BOT_USERNAME}'da spam yapıyor! -> [ Flood Atılan Mesajlar ({flood_count}) ]**\n"
+        f"__💡 Hızlı Eylem__: Kullanıcı bir süreliğine bot tarafından göz ardı edildi."
     )
 
     if found:
         if flood_count >= FloodConfig.AUTOBAN:
             if user_.id in Config.SUDO_USERS:
                 sudo_spam = (
-                    f"**👤 Sudo User** {_format.mentionuser(user_.first_name, user_.id)}\
-                    \n**🆔 User ID:** `{user_.id}`\n\n"
-                    f"**🐾 is flooding your {BOT_USERNAME}!**\
-                    \n\nℹ️ Check `{tr}doge rmsudo` to remove the user from Sudo."
+                    f"**👤 Sudo Kullanıcı** {_format.mentionuser(user_.first_name, user_.id)}\
+                    \n**🆔 Kullanıcı ID'si:** `{user_.id}`\n\n"
+                    f"**🐾 Botunuz {BOT_USERNAME}'da spam yapıyor!**\
+                    \n\nℹ️ `{tr}doge rmsudo` komutunu kontrol edin. İsterseniz bu kullanıcıyı __Sudo Kullanıcılar__'dan kaldırabilirsiniz."
                 )
                 if BOTLOG:
                     await doge.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
-                    f"**⛔Auto banned flooding from {BOT_USERNAME} [exceeded flood rate of ({FloodConfig.AUTOBAN})]**",
+                    f"**⛔Yapılan Flood {BOT_USERNAME} tarafından otomatik oalrak engellendi.[Flood sınırı aşıldı: ({FloodConfig.AUTOBAN})]**",
                 )
                 FloodConfig.USERS[user_.id].clear()
                 FloodConfig.ALERT[user_.id].clear()
@@ -438,14 +440,14 @@ async def send_flood_alert(user_) -> None:
             chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
             await doge.tgbot.send_message(
                 OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             await doge(UnblockRequest(BOT_USERNAME))
             chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
             await doge.tgbot.send_message(
                 OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
@@ -458,14 +460,14 @@ async def bot_pm_ban_cb(c_q: CallbackQuery):
     try:
         user = await doge.get_entity(user_id)
     except Exception as e:
-        await c_q.answer(f"**🚨 Eʀʀoʀ:**\n➡️ `{e}`")
+        await c_q.answer(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
     else:
         await c_q.answer(
-            f"**⏳ User ID is banning ->** `{user_id}`**...**",
+            f"*__⏳ Kullanıcı yasaklanıyor...__ **-> Kullanıcı ID'si:** `{user_id}`",
             alert=False,
         )
         await ban_user_from_bot(user, "Spamming Bot")
-        await c_q.edit(f"**✅ Banned!\n🆔 User ID:** `{user_id}`")
+        await c_q.edit(f"**✅ Yasaklandı!\n🆔 Kullanıcı ID'si:** `{user_id}`")
 
 
 def time_now() -> Union[float, int]:
@@ -500,12 +502,10 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvar("bot_antif") is None:
-        return await c_q.answer(
-            "**ℹ️ Bot AntiFlood was already disabled.**", alert=False
-        )
+        return await c_q.answer("**ℹ️ Bot AntiFlood'u zaten kapalı.**", alert=False)
     dgvar("bot_antif")
-    await c_q.answer("**ℹ️ Bot AntiFlood disabled.**", alert=False)
-    await c_q.edit("**ℹ️ Bot AntiFlood disabled.**")
+    await c_q.answer("**ℹ️ Bot AntiFlood'u devre dışı bırakıldı.**", alert=False)
+    await c_q.edit("**ℹ️ Bot AntiFlood'u devre dışı bırakıldı.**")
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)

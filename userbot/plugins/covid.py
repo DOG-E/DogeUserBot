@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from flag import flag
@@ -21,10 +21,10 @@ plugin_category = "tool"
     pattern="covid(?:\s|$)([\s\S]*)",
     command=("covid", plugin_category),
     info={
-        "header": "To get latest information about Covid-19.",
-        "description": "Get information about Covid-19 data in the given country.",
-        "usage": "{tr}covid <country_code>",
-        "examples": ["{tr}covid tr", "{tr}covid az"],
+        "h": "To get latest information about Covid-19.",
+        "d": "Get information about Covid-19 data in the given country.",
+        "u": "{tr}covid <country_code>",
+        "e": ["{tr}covid tr", "{tr}covid az"],
         "note": "If you don't write any country code, it will give Turkey statistics by default.",
     },
 )

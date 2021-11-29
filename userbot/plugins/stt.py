@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from datetime import datetime
@@ -35,8 +35,8 @@ chat = "@VoicyBot"
     pattern="(stt|voicy)$",
     command=("stt", plugin_category),
     info={
-        "header": "Speech to text module.",
-        "usage": ["{tr}stt", "{tr}voicy"],
+        "h": "Speech to text module.",
+        "u": ["{tr}stt", "{tr}voicy"],
     },
 )
 async def _(event):
@@ -131,8 +131,8 @@ async def _(event):
     pattern="voicya$",
     command=("voicya", plugin_category),
     info={
-        "header": "Sets whether the Voicy bot recognizes all audio files.",
-        "usage": "{tr}voicya",
+        "h": "Sets whether the Voicy bot recognizes all audio files.",
+        "u": "{tr}voicya",
         "note": "The setting is turned on or off each time you write the {tr}`voicya` command.",
     },
 )

@@ -2,10 +2,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from PIL import UnidentifiedImageError
@@ -24,12 +24,12 @@ name = "Profile Photos"
     pattern="poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
     info={
-        "header": "To get user or group profile pic.",
-        "description": "Reply to a user to get his profile pic or use command along\
+        "h": "To get user or group profile pic.",
+        "d": "Reply to a user to get his profile pic or use command along\
         with profile pic number to get desired pic else use .poto all to get\
         all pics. If you don't reply to any one\
         then the bot will get the chat profile pic.",
-        "usage": [
+        "u": [
             "{tr}poto <number>",
             "{tr}poto all",
             "{tr}poto",
@@ -90,9 +90,9 @@ async def potocmd(event):
     pattern="blur(?:\s|$)([\s\S]*)",
     command=("blur", plugin_category),
     info={
-        "header": "To blur picture.",
-        "description": "Reply to a user to blur his profile picture or reply to a photo to blur that.",
-        "usage": [
+        "h": "To blur picture.",
+        "d": "Reply to a user to blur his profile picture or reply to a photo to blur that.",
+        "u": [
             "{tr}blur <number> <reply to a picture / user text>",
             "{tr}blur <reply to a picture / user text>",
         ],

@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from time import time
@@ -29,8 +29,8 @@ def convert_from_bytes(size):
     pattern="speedtest(?:\s|$)([\s\S]*)",
     command=("speedtest", plugin_category),
     info={
-        "header": "Botserver's speedtest by ookla.",
-        "options": {
+        "h": "Botserver's speedtest by ookla.",
+        "o": {
             "text": "will give output as text",
             "image": (
                 "Will give output as image this is default option if "
@@ -38,7 +38,7 @@ def convert_from_bytes(size):
             ),
             "file": "will give output as png file.",
         },
-        "usage": ["{tr}speedtest <option>", "{tr}speedtest"],
+        "u": ["{tr}speedtest <option>", "{tr}speedtest"],
     },
 )
 async def _(event):

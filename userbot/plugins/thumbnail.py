@@ -1,10 +1,10 @@
 # Credits: @spechide - Uniborg
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from os import path, remove
@@ -24,8 +24,8 @@ thumb_image_path = TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
     pattern="sthumb$",
     command=("sthumb", plugin_category),
     info={
-        "header": "To save replied image as temporary thumb.",
-        "usage": "{tr}sthumb",
+        "h": "To save replied image as temporary thumb.",
+        "u": "{tr}sthumb",
     },
 )
 async def _(event):
@@ -56,8 +56,8 @@ async def _(event):
     pattern="dthumb$",
     command=("dthumb", plugin_category),
     info={
-        "header": "To delete thumb image.",
-        "usage": "{tr}dthumb",
+        "h": "To delete thumb image.",
+        "u": "{tr}dthumb",
     },
 )
 async def _(event):
@@ -73,8 +73,8 @@ async def _(event):
     pattern="thumb$",
     command=("thumb", plugin_category),
     info={
-        "header": "To get thumbnail of given video or gives your present thumbnail.",
-        "usage": "{tr}thumb",
+        "h": "To get thumbnail of given video or gives your present thumbnail.",
+        "u": "{tr}thumb",
     },
 )
 async def _(event):

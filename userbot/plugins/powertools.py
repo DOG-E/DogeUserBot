@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio.exceptions import CancelledError
@@ -39,8 +39,8 @@ LOGS = logging.getLogger(__name__)
     pattern="restart$",
     command=("restart", plugin_category),
     info={
-        "header": "Restarts the bot !!",
-        "usage": "{tr}restart",
+        "h": "Restarts the bot !!",
+        "u": "{tr}restart",
     },
     disable_errors=True,
 )
@@ -94,9 +94,9 @@ async def _(event):
     pattern="shutdown$",
     command=("shutdown", plugin_category),
     info={
-        "header": "Shutdowns the bot !!",
-        "description": "To turn off the dyno of heroku. you can't turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
-        "usage": "{tr}shutdown",
+        "h": "Shutdowns the bot !!",
+        "d": "To turn off the dyno of heroku. you can't turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
+        "u": "{tr}shutdown",
     },
 )
 async def _(event):
@@ -117,9 +117,9 @@ async def _(event):
     pattern="sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
-        "header": "Userbot will stop working for the mentioned time.",
-        "usage": "{tr}sleep <seconds>",
-        "examples": "{tr}sleep 60",
+        "h": "Userbot will stop working for the mentioned time.",
+        "u": "{tr}sleep <seconds>",
+        "e": "{tr}sleep 60",
     },
 )
 async def _(event):
@@ -141,9 +141,9 @@ async def _(event):
     pattern="notify (on|off)$",
     command=("notify", plugin_category),
     info={
-        "header": "To update the your chat after restart or reload .",
-        "description": "Will send the ping cmd as reply to the previous last msg of (restart/reload/update cmds).",
-        "usage": [
+        "h": "To update the your chat after restart or reload .",
+        "d": "Will send the ping cmd as reply to the previous last msg of (restart/reload/update cmds).",
+        "u": [
             "{tr}notify <on/off>",
         ],
     },
