@@ -101,6 +101,8 @@ async def safe_check_text(msg):  # sourcery no-metrics
     if not msg:
         return False
     msg = str(msg)
+    if gvar("BOT_TOKEN"):
+        return bool(((gvar("BOT_TOKEN") in msg)))
     return bool(
         (
             (Config.STRING_SESSION in msg)

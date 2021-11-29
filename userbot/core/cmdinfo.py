@@ -81,7 +81,7 @@ def _format_about(
         del about["u"]
 
     if "e" in about:
-        tmp_chelp += f"\n\n**🐾 Öʀɴᴇᴋʟᴇʀ:**"
+        tmp_chelp += f"\n\n**🐾 Öʀɴᴇᴋ:**"
         if isinstance(about["e"], list):
             for ex_ in about["e"]:
                 tmp_chelp += f"\n    `{ex_}`"

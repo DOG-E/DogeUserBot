@@ -100,7 +100,7 @@ async def button(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edl(event, "`🔲 Buton'da hangi metni kullanmalıyım?`")
+        return await edl(event, "`🔲 Butonda hangi metni kullanmalıyım?`")
 
     doginput = "Inline buttons " + markdown_note
     results = await event.client.inline_query(BOT_USERNAME, doginput)

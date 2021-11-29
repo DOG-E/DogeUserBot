@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# Tüm hakları saklıdır.
+# All rights reserved.
 #
-# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
-# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
+# This file is a part of < https://github.com/DOG-E/DogeUserBot >
+# Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
@@ -140,20 +140,20 @@ async def cmdlist():
     pattern="([Dd]oge|help) ?(.c|.p|.a)? ?([\s\S]*)?",
     command=("doge", plugin_category),
     info={
-        "h": "To get guide for DogeUserBot.",
-        "d": "To get information or guide for the command or plugin.",
+        "header": "To get guide for DogeUserBot.",
+        "description": "To get information or guide for the command or plugin.",
         "note": "If command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide.",
-        "f": {
+        "flags": {
             "c": "To get info of command.",
             "p": "To get info of plugin.",
             "all": "To get all plugins in text format.",
         },
-        "u": [
+        "usage": [
             "{tr}doge (plugin/command name)",
             "{tr}doge .c (command name)",
             "{tr}doge .all",
         ],
-        "e": ["{tr}doge alive", "{tr}doge .c ialive"],
+        "examples": ["{tr}doge alive", "{tr}doge .c ialive"],
     },
 )
 async def _(event):
@@ -183,9 +183,9 @@ async def _(event):
     pattern="cmds(?:\s|$)([\s\S]*)",
     command=("cmds", plugin_category),
     info={
-        "h": "To show list of cmds.",
-        "d": "If no input is given then will show list of all commands.",
-        "u": [
+        "header": "To show list of cmds.",
+        "description": "If no input is given then will show list of all commands.",
+        "usage": [
             "{tr}cmds",
             "{tr}cmds <plugin name> for paticular plugin",
         ],
@@ -225,8 +225,8 @@ async def _(event):
     pattern="[sS] ([\s\S]*)",
     command=("s", plugin_category),
     info={
-        "h": "To search commands.",
-        "e": "{tr}s song",
+        "header": "To search commands.",
+        "examples": "{tr}s song",
     },
 )
 async def _(event):

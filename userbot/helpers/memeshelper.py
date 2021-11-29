@@ -99,7 +99,7 @@ WHERE = [
 
 
 async def slap(replied_user, event, DEFAULTUSER):
-    """Construct a funny slap sentence!"""
+    """Komik bir  tokat gibi!"""
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     username = replied_user.user.username

@@ -116,7 +116,7 @@ API = "https://weaverbottest.herokuapp.com/gimme"
 
 def nsfw(category):
     category.sort(key=str.casefold)
-    horny = f"**Category:** "
+    horny = f"**Kategori:** "
     for i in category:
         horny += f" `{i.lower()}` ||"
     return horny

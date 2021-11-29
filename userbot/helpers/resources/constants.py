@@ -164,3 +164,6 @@ sndmsgg_ys = "**🦮 SORRY DUDE!\
     \n🤡 Check out @DogeGays\n\
     \n🌪 To appeal,\
     \n💬 You can write to my @DogeSup group.**"
+
+l_gmsgg_ys = "🐶 Yöneticilerim sizi @DogeUserBot kullanmaktan alıkoydu!.\
+    \n🐾 Telegram'da kayıtlı mesajlarınızı kontrol edin."

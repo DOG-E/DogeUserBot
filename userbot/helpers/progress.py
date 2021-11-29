@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 # ===============================================================
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
@@ -64,10 +65,10 @@ def time_formatter(seconds: int) -> str:
     days, hours = divmod(hours, 24)
     seconds = round(seconds, 2)
     tmp = (
-        ((str(days) + f" day(s), ") if days else "")
-        + ((str(hours) + f" hour(s), ") if hours else "")
-        + ((str(minutes) + f" minute(s), ") if minutes else "")
-        + ((str(seconds) + f" second(s), ") if seconds else "")
+        ((str(days) + f" gün, ") if days else "")
+        + ((str(hours) + f" saat, ") if hours else "")
+        + ((str(minutes) + f" dakika, ") if minutes else "")
+        + ((str(seconds) + f" saniye, ") if seconds else "")
     )
     return tmp[:-2]
 
@@ -77,7 +78,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     return (
-        ((str(int(days)) + f" day(s), ") if days else "")
+        ((str(int(days)) + f" gün, ") if days else "")
         + ((str(int(hours)) + ":") if hours else "00:")
         + ((str(int(minutes)) + ":") if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")
@@ -119,7 +120,7 @@ async def progress(
             return
         del _TASKS[task_id]
         try:
-            await gdrive.edit("**⌛ Finalizing process...**")
+            await gdrive.edit("**⌛ Son işlemler uygulanıyor**")
         except MessageNotModifiedError:
             pass
         except Exception as e:
@@ -138,9 +139,9 @@ async def progress(
         eta = round((total - current) / speed)
         elapsed_time = round(elapsed_time)
         if "upload" in prog_type.lower():
-            status = "**📤 Uploading...**"
+            status = "**📤 Yükleniyor...**"
         elif "download" in prog_type.lower():
-            status = "**📥 Downloading...**"
+            status = "**📥 İndiriliyor...**"
         else:
             status = "Unknown"
         progress_str = "{0}\n`[{1}{2}] {3}%`".format(
@@ -156,21 +157,21 @@ async def progress(
             f"{progress_str}\n"
             f"`💾 {humanbytes(current)}/{humanbytes(total)}"
             f"🚀 {humanbytes(speed)}`\n"
-            f"**⏲ Eᴛᴀ:** `{time_formatter(eta)}`\n"
-            f"**⏱ Dᴜʀᴀᴛɪoɴ:** `{time_formatter(elapsed_time)}`"
+            f"**⏲ Kᴀʟᴀɴ Zᴀᴍᴀɴ:** `{time_formatter(eta)}`\n"
+            f"**⏱ Süʀᴇ:** `{time_formatter(elapsed_time)}`"
         )
         if tmp != oldtmp:
             if file_name:
                 await gdrive.edit(
                     f"**{prog_type}**\n\n"
-                    f"**📋 Fɪʟᴇ Nᴀᴍᴇ:** `{file_name}`\n**📊 Sᴛᴀᴛᴜs:** {tmp}"
+                    f"**📋 Dosʏᴀ Aᴅı:** `{file_name}`\n**📊 İsᴛᴀᴛɪsᴛɪᴋ:** {tmp}"
                 )
             else:
-                await gdrive.edit(f"**{prog_type}**\n\n" f"**📊 Sᴛᴀᴛᴜs:** {tmp}")
+                await gdrive.edit(f"**{prog_type}**\n\n" f"**📊 İsᴛᴀᴛɪsᴛɪᴋ:** {tmp}")
             oldtmp = tmp
 
 
 class CancelProcess(Exception):
     """
-    Cancel Process
+    İşlem Durduruldu
     """

@@ -3,10 +3,10 @@
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -26,7 +26,7 @@ disable_warnings(InsecureRequestWarning)
 
 
 @doge.bot_cmd(
-    pattern="([Ss]et|[Gg]et|[Dd]el) [Vv]ar ([\s\S]*)",
+    pattern="([Ss]et|[Gg]et|[Dd]el)[Vv]ar ([\s\S]*)",
     command=("var", plugin_category),
     info={
         "h": "To manage heroku vars.",

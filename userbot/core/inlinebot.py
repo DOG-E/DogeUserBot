@@ -312,7 +312,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [
                 (
                     Button.url("🐶 Doɢᴇ UsᴇʀBoᴛ", "https://t.me/DogeUserBot"),
-                    Button.inline(f"🐾 Iɴꜰo", data="infos"),
+                    Button.inline(f"🐾 Bɪʟɢɪ", data="infos"),
                 )
             ]
             ALIVE_PIC = gvar("ALIVE_PIC")
@@ -337,13 +337,13 @@ async def inline_handler(event):  # sourcery no-metrics
             elif I_IMG:
                 result = builder.document(
                     I_IMG,
-                    title="🐶 Doge UserBot Alive",
+                    title="🐶 Doge UserBot Çalışıyor ⚡",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="🐶 Doge UserBot Alive",
+                    title="🐶 Doge UserBot Çalışıyor ⚡",
                     text=query,
                     buttons=buttons,
                 )
@@ -376,7 +376,7 @@ async def inline_handler(event):  # sourcery no-metrics
             message_text = note_data.strip()
             tl_ib_buttons = ibuild_keyboard(buttons)
             result = builder.article(
-                title=f"🐶 Doge UserBot Custom Buttons",
+                title=f"🐶 Doge UserBot Buton Özelleştirme",
                 text=message_text,
                 buttons=tl_ib_buttons,
                 link_preview=False,
@@ -503,7 +503,7 @@ async def inline_handler(event):  # sourcery no-metrics
             else:
                 dump(newhide, open(hide, "w"))
 
-        elif string == ("help" or "doge" or ""):
+        elif string == ("help" or "doge" or " "):
             HELP_PIC = gvar("HELP_PIC")
             if HELP_PIC:
                 DOG = [x for x in HELP_PIC.split()]
@@ -515,22 +515,22 @@ async def inline_handler(event):  # sourcery no-metrics
             if HP_IMG is not None and HP_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     file=HP_IMG,
-                    # title="🐶 Doge UserBot Help",
-                    # description="Help Menu",
+                    title="🐶 Doɢᴇ UsᴇʀBoᴛ",
+                    description="Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=_result[0],
                     buttons=_result[1],
                 )
             elif HP_IMG:
                 result = builder.document(
                     HP_IMG,
-                    title=f"🐶 Doge UserBot Yardımı",
+                    title=f"🐶 Doɢᴇ UsᴇʀBoᴛ",
                     description=f"Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=query,
                     buttons=_result[1],
                 )
             else:
                 result = builder.article(
-                    title="🐶 Doge UserBot Yardımı",
+                    title="🐶 Doɢᴇ UsᴇʀBoᴛ",
                     description=f"Yᴀʀᴅıᴍ Mᴇɴüsü",
                     text=query,
                     buttons=_result[1],
@@ -696,7 +696,7 @@ async def on_plug_in_callback_query_handler(event):
     ]
     await event.edit(
         f"**[🐶 Doɢᴇ UsᴇʀBoᴛ 🐾](https://t.me/DogeUserBot)\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        \n🐾 Yᴀʀᴅıᴍᴄı\n\
         \n◽ Doɢᴇ oғ {mention}**",
         buttons=buttons,
         link_preview=False,
@@ -706,10 +706,10 @@ async def on_plug_in_callback_query_handler(event):
 @doge.tgbot.on(CallbackQuery(data=compile(b"check")))
 async def on_plugin_callback_query_handler(event):
     text = f"🐶 𝗗𝗢𝗚𝗘 𝗨𝗦𝗘𝗥𝗕𝗢𝗧 🐾\
-    \n🧩 Pʟᴜɢɪɴs: {len(PLG_INFO)}\
-    \n⌨️ Coᴍᴍᴀɴᴅs: {len(CMD_INFO)}\n\
-    \n{tr}doge .c <command>: For any command info.\
-    \n{tr}s <query>: To search any commands."
+    \n🧩 Pʟᴜɢɪɴʟᴇʀ: {len(PLG_INFO)}\
+    \n⌨️ Koᴍᴜᴛʟᴀʀ: {len(CMD_INFO)}\n\
+    \n{tr}doge .c <komut>: Herhangi bir komut hakkında bilgi almak için.\
+    \n{tr}s <query>: Herhangi bir komutu aramak için."
     await event.answer(text, cache_time=0, alert=True)
 
 
@@ -719,11 +719,11 @@ async def on_plug_in_callback_query_handler(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     buttons = paginate_help(0, GRP_INFO[category], category)
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-    \n🐾 Hᴇʟᴘᴇʀ\n\
+    \n🐾 Yᴀʀᴅıᴍcı\n\
     \n◽ Doɢᴇ oғ {mention}**\n\
-    \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category}\
-    \n**🧩 Pʟᴜɢɪɴs:** {len(GRP_INFO[category])}\
-    \n**⌨️ Coᴍᴍᴀɴᴅs:** {command_in_category(category)}"
+    \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
+    \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
+    \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
@@ -740,11 +740,11 @@ async def on_plug_in_callback_query_handler(event):
     if mtype == "plugin":
         buttons = paginate_help(pgno, GRP_INFO[category], category)
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category}\
-        \n**🧩 Pʟᴜɢɪɴs:** {len(GRP_INFO[category])}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {command_in_category(category)}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
+        \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
 
     else:
         category_plugins = str(event.pattern_match.group(4).decode("UTF-8"))
@@ -758,11 +758,11 @@ async def on_plug_in_callback_query_handler(event):
             category_pgno=category_pgno,
         )
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {getkey(category)}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {len(PLG_INFO[category])}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
@@ -788,11 +788,11 @@ async def on_plug_in_callback_query_handler(event):
             category_pgno=category_pgno,
         )
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-        \n🐾 Hᴇʟᴘᴇʀ\n\
+        \n🐾 Yᴀʀᴅıᴍcı\n\
         \n◽ Doɢᴇ oғ {mention}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
-        \n**🗃 Cᴀᴛᴇɢoʀʏ:** {getkey(category)}\
-        \n**⌨️ Coᴍᴍᴀɴᴅs:** {len(PLG_INFO[category])}"
+        \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
+        \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
         try:
             return await event.edit(text, buttons=buttons, link_preview=False)
         except Exception as e:
@@ -855,11 +855,11 @@ async def on_plug_in_callback_query_handler(event):
         ),
     ]
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-    \n🐾 Hᴇʟᴘᴇʀ\n\
+    \n🐾 Yᴀʀᴅıᴍcı\n\
     \n◽ Doɢᴇ oғ {mention}**\n\
-    \n**⌨️ Coᴍᴍᴀɴᴅ:** `{tr}{cmd}`\
+    \n**⌨️ Koᴍᴜᴛʟᴀʀ:** `{tr}{cmd}`\
     \n**🧩 Pʟᴜɢɪɴ:** {category}\
-    \n**🗃 Cᴀᴛᴇɢoʀʏ:** {category_plugins}\n\
-    \n**ℹ️ Iɴғo:**\
+    \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category_plugins}\n\
+    \n**ℹ️ Bɪʟɢɪ:**\
     \n{CMD_INFO[cmd][0]}"
     await event.edit(text, buttons=buttons, link_preview=False)

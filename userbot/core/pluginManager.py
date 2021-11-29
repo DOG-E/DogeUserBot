@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import create_subprocess_exec, get_event_loop
@@ -52,7 +52,7 @@ async def get_pip_packages(requirements):
 
 
 async def install_pip_packages(packages):
-    """Install pip packages."""
+    """PIP paketlerinin kurulumu."""
     args = ["-m", "pip", "install", "--upgrade", "--user"]
     cmd = await create_subprocess_exec(
         sysexecutable.replace(" ", "\\ "),
@@ -66,13 +66,13 @@ async def install_pip_packages(packages):
 
 
 def run_async(func: callable):
-    """Run async functions with the right event loop."""
+    """Async işlevlerini doğru olay döngüsü ile çalıştırın."""
     loop = get_event_loop()
     return loop.run_until_complete(func)
 
 
 async def restart_script(client: TelegramClient, teledoge):
-    """Restart the current script."""
+    """Geçerli komut dosyasını yeniden başlatın."""
     try:
         ulist = get_collectionlist_items()
         for i in ulist:

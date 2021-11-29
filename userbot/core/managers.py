@@ -1,9 +1,9 @@
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E
-# All rights reserved.
+# Tüm hakları saklıdır.
 #
-# This file is a part of < https://github.com/DOG-E/DogeUserBot >
-# Please read the GNU Affero General Public License in;
+# Bu dosya, < https://github.com/DOG-E/DogeUserBot > parçasıdır.
+# Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from asyncio import sleep
@@ -55,7 +55,7 @@ async def eor(
     if not noformat:
         text = md_to_text(text)
     if aslink or deflink:
-        linktext = linktext or "👀 Message was to big so pasted to bin"
+        linktext = linktext or "👀 Mesaj fazla uzun olduğu için yapıştırıldı!"
         response = await paste_message(text, pastetype="t")
         text = linktext + f" [HERE]({response})"
         if event.sender_id in sudo_users:

@@ -99,7 +99,7 @@ def user_input():
             records.append(arguments)
         len(records)
     else:
-        # Taking command line arguments from users
+        # Kullanıcılardan komut satırı argümanları almak
         parser = ArgumentParser()
         parser.add_argument(
             "-k", "--keywords", help="delimited list input", type=str, required=False
@@ -499,7 +499,7 @@ class googleimagesdownload:
         image_objects = [x for x in image_objects if x[0] == 1]
         return image_objects
 
-    # Downloading entire Web Document (Raw Page Content)
+    # Web Belgesinin Tümünü İndirme (Ham Sayfa İçeriği)
     def download_page(self, url):
         try:
             headers = {
@@ -511,8 +511,8 @@ class googleimagesdownload:
             respData = str(resp.read())
         except Exception:
             print(
-                "Could not open URL. Please check your internet connection and/or ssl settings \n"
-                "If you're using proxy, make sure your proxy settings is configured correctly"
+                "URL'yi açamadım.Lütfen internet bağlantınızı ve/veya SSL ayarlarınızı kontrol edin \n"
+                "Proxy kullanıyorsanız, proxy ayarlarınızın doğru yapılandırıldığından emin olun."
             )
             exit()
         try:
@@ -534,9 +534,9 @@ class googleimagesdownload:
             browser = Chrome(chromedriver, chrome_options=options)
         except Exception as e:
             print(
-                "Looks like we cannot locate the path the 'chromedriver' (use the '--chromedriver' "
-                "argument to specify the path to the executable.) or google chrome browser is not "
-                "installed on your machine (exception: %s)" % e
+                "'Chromedriver' yolunu bulamadım gibi görünüyor (yürütülebilir dosya yolunu belirtmek için "
+                "'--chromedriver' bağımsız değişkenini kullanın.) ya da tarayıcınız Google Chrome tarayıcısı değil "
+                "Cihazınıza yüklü (exception: %s)" % e
             )
             exit()
         browser.set_window_size(1024, 768)
@@ -573,7 +573,7 @@ class googleimagesdownload:
         """
         )
         sleep(1)
-        print("Getting you a lot of images. This may take a few moments...")
+        print("Size birden çok resim indiriyorum. Bu birkaç dakika alabilir...")
 
         element = browser.find_element_by_tag_name("body")
         # Scroll down
@@ -591,7 +591,7 @@ class googleimagesdownload:
                 element.send_keys(Keys.PAGE_DOWN)
                 sleep(0.3)  # bot id protection
 
-        print("Reached end of Page.")
+        print("Sayfanın sonuna ulaşıldı.")
         sleep(0.5)
 
         source = browser.page_source  # page source

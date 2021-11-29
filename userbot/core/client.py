@@ -384,11 +384,11 @@ class DogeUserBotClient(TelegramClient):
         )
 
     def _kill_running_processes(self) -> None:
-        """Kill all the running asyncio subprocessess"""
+        """Tüm çalışan asyncio alt işlemkerini durdurur"""
         for _, process in self.running_processes.items():
             try:
                 process.kill()
-                LOGS.debug("Killed %d which was still running.", process.pid)
+                LOGS.debug("Devam eden %d durduruldu.", process.pid)
             except Exception as e:
                 LOGS.debug(e)
         self.running_processes.clear()
