@@ -420,9 +420,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
             html_pc += "<br><br>"
         html_pc += f"<h3>Daha fazla bilgi:</h3>"
         html_pc += f"<br><b>Stüdyolar:</b> {studios}<br>"
-        html_pc += (
-            f"<a href='https://myanimelist.net/anime/{anime_malid}'>MAL'da görüntüle</a>"
-        )
+        html_pc += f"<a href='https://myanimelist.net/anime/{anime_malid}'>MAL'da görüntüle</a>"
         html_pc += f"<a href='{anilist_animelink}'>anilist.com'da göster</a>"
         html_pc += f"<img src='{bannerImg}'/>"
         title_h = english or romaji

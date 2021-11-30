@@ -114,4 +114,4 @@ async def on_plug_in_callback_query_handler(event):
             \n🔹 Yardım Menüsü için:\
             \n{tr}doge"
 
-    await event.answer(statstext, cache_time=0, alert=True) 
+    await event.answer(statstext, cache_time=0, alert=True)

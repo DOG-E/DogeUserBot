@@ -67,9 +67,7 @@ async def ytsearch(query, limit):
     for v in videolinks.result()["result"]:
         textresult = f"[{v['title']}](https://www.youtube.com/watch?v={v['id']})\n"
         try:
-            textresult += (
-                f"**◽ Açıᴋʟᴀᴍᴀ:** `{v['descriptionSnippet'][-1]['text']}`\n"
-            )
+            textresult += f"**◽ Açıᴋʟᴀᴍᴀ:** `{v['descriptionSnippet'][-1]['text']}`\n"
         except Exception:
             textresult += f"**◽ Açıᴋʟᴀᴍᴀ:** `None`\n"
         textresult += f"**⏱ Süʀᴇ:** __{v['duration']}__   **◾ İzʟᴇɴᴍᴇ:** __{v['viewCount']['short']}__\n"
@@ -308,9 +306,7 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(f"🚨 {e}")
     except GeoRestrictedError:
-        LOGS.error(
-            f"**🚨 Hᴀᴛᴀ:** Yükleyici bu videoyu ülkenizde mevcut değildi."
-        )
+        LOGS.error(f"**🚨 Hᴀᴛᴀ:** Yükleyici bu videoyu ülkenizde mevcut değildi.")
     else:
         return x
 

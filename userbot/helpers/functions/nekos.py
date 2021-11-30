@@ -212,4 +212,3 @@ async def magik(photo):
     ).json()
     teledoge = r["message"]
     return teledoge
-

@@ -181,7 +181,7 @@ async def d_paste(message, extension=None):
 
 
 async def pastetext(text_to_print, pastetype=None, extension=None, title=None):
-    response = {"error": "`🚨 Bir şeyler ters gitti!`" }
+    response = {"error": "`🚨 Bir şeyler ters gitti!`"}
     if pastetype is not None:
         if pastetype == "p":
             response = await p_paste(text_to_print, extension)
