@@ -26,7 +26,7 @@ async def vid_to_gif(inputfile, outputfile, speed=None, starttime=None, endtime=
         clip.write_gif(outputfile, logger=None)
         return outputfile
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
         return None
 
 

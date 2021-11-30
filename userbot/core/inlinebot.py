@@ -796,7 +796,7 @@ async def on_plug_in_callback_query_handler(event):
         try:
             return await event.edit(text, buttons=buttons, link_preview=False)
         except Exception as e:
-            LOGS.error("🚨 " + str(e))
+            LOGS.error(f"🚨 {str(e)}")
     await event.edit(buttons=buttons, link_preview=False)
 
 

@@ -306,7 +306,7 @@ def _tubeDl(url: str, starttime, uid: str):
         with YoutubeDL(ydl_opts) as ydl:
             x = ydl.download([url])
     except DownloadError as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
     except GeoRestrictedError:
         LOGS.error(
             f"**🚨 Eʀʀoʀ:** The uploader hasn't made this video available in your country."

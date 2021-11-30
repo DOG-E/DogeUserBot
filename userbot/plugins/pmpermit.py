@@ -170,7 +170,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
                     chat.id, USER_BOT_NO_WARN, reply_to=reply_to_id
                 )
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
         msg = await event.reply(USER_BOT_NO_WARN)
     try:
         if str(chat.id) in PMMESSAGE_CACHE:

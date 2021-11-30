@@ -55,18 +55,18 @@ async def _(event):
             if i == "restart_update":
                 del_keyword_collectionlist("restart_update")
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
     try:
         add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
     try:
         dgvar("ipaddress")
         await doge.disconnect()
     except CancelledError:
         pass
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
 
 
 @doge.bot_cmd(

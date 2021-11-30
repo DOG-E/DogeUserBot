@@ -74,7 +74,7 @@ async def check_bot_started_users(user, event):
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
     if PM_LOGGER_GROUP_ID != -100:
         await doge.tgbot.send_message(PM_LOGGER_GROUP_ID, notification)
     elif BOTLOG:
@@ -173,7 +173,7 @@ async def bot_pms(event):  # sourcery no-metrics
         try:
             add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
         except Exception as e:
-            LOGS.error("🚨 " + str(e))
+            LOGS.error(f"🚨 {str(e)}")
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
@@ -221,7 +221,7 @@ async def bot_pms(event):  # sourcery no-metrics
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
                 )
             except Exception as e:
-                LOGS.error("🚨 " + str(e))
+                LOGS.error(f"🚨 {str(e)}")
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
@@ -256,7 +256,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
             try:
                 add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
             except Exception as e:
-                LOGS.error("🚨 " + str(e))
+                LOGS.error(f"🚨 {str(e)}")
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
@@ -282,7 +282,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                         user_id, result_id, event.text, file=event.media
                     )
                 except Exception as e:
-                    LOGS.error("🚨 " + str(e))
+                    LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.tgbot.on(MessageDeleted)
@@ -301,7 +301,7 @@ async def handler(event):
                 try:
                     await event.client.delete_messages(user_id, result_id)
                 except Exception as e:
-                    LOGS.error("🚨 " + str(e))
+                    LOGS.error(f"🚨 {str(e)}")
         if users_1 is not None:
             reply_msg = None
             for user in users_1:
@@ -325,7 +325,7 @@ async def handler(event):
                         reply_to=reply_msg,
                     )
             except Exception as e:
-                LOGS.error("🚨 " + str(e))
+                LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.shiba_cmd(pattern="^/uinfo$", from_users=OWNER_ID)

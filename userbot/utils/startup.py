@@ -407,7 +407,7 @@ async def add_bot_to_logger_group(chat_id):
                 )
             )
         except Exception as e:
-            LOGS.error("🚨 " + str(e))
+            LOGS.error(f"🚨 {str(e)}")
     rights = ChatAdminRights(
         add_admins=True,
         invite_users=True,
@@ -421,7 +421,7 @@ async def add_bot_to_logger_group(chat_id):
     try:
         await doge(EditAdminRequest(chat_id, bot_details.username, rights, "Doge"))
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
 
 
 async def startupmessage():
@@ -442,14 +442,14 @@ async def startupmessage():
                 ],
             )
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
         return None
     try:
         msg_details = list(get_item_collectionlist("restart_update"))
         if msg_details:
             msg_details = msg_details[0]
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
         return None
     try:
         if msg_details:
@@ -466,7 +466,7 @@ async def startupmessage():
                 )
             del_keyword_collectionlist("restart_update")
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
         return None
 
 

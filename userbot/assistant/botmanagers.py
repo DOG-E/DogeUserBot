@@ -62,7 +62,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         date = str(datetime.now().strftime("%B %d, %Y"))
         add_user_to_bl(user.id, get_display_name(user), user.username, reason, date)
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
     banned_msg = f"**🚫 Sonsuza kadar bu botu kullanmadan yasaklandınız.\
         \n⛓ Sebep:** {reason}"
     await doge.tgbot.send_message(user.id, banned_msg)
@@ -80,7 +80,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
     try:
         rem_user_from_bl(user.id)
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
     banned_msg = f"**👀 Bu bottan yasaklanmıştınız.\
         /nℹ️ Şimdi sahibime mesaj göndermeye devam edebeilirsin!**"
     if reason is not None:

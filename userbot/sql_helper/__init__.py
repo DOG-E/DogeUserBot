@@ -33,4 +33,4 @@ except AttributeError as e:
     LOGS.error(
         "🚨 DB_URI isn't configured. Features depending on the database might have issues."
     )
-    LOGS.error("🚨 " + str(e))
+    LOGS.error(f"🚨 {str(e)}")

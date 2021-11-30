@@ -61,7 +61,7 @@ async def get_user_from_event(
                 user_obj = await event.client.get_entity(user)
                 return user_obj, extra
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
     try:
         if nogroup is False:
             if secondgroup:
@@ -84,7 +84,7 @@ async def get_user_from_event(
                 await edl(dogevent, "`ℹ️ Pass the user's username, ID or reply!`", 5)
             return None, None
     except Exception as e:
-        LOGS.error("🚨 " + str(e))
+        LOGS.error(f"🚨 {str(e)}")
     if not noedits:
         await edl(dogevent, "__Couldn't fetch user to proceed further.__")
     return None, None

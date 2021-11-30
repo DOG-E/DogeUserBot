@@ -85,7 +85,7 @@ def remove_plugin(shortname):
                 del LOADED_CMDS[cmdname]
         return True
     except Exception as e:
-        LOGS.error("🚨 " + e)
+        LOGS.error(f"🚨 {e}")
     try:
         for i in LOAD_PLUG[shortname]:
             doge.remove_event_handler(i)

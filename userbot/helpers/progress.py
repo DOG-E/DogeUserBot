@@ -124,7 +124,7 @@ async def progress(
         except MessageNotModifiedError:
             pass
         except Exception as e:
-            LOGS.error("🚨 " + str(e))
+            LOGS.error(f"🚨 {str(e)}")
         return
     now = time()
     if task_id not in _TASKS:
