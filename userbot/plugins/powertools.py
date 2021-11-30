@@ -20,8 +20,6 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     HEROKU_APP,
-    HEROKU_APP_NAME,
-    Heroku,
     dgvar,
     doge,
     edl,
@@ -39,7 +37,7 @@ LOGS = logging.getLogger(__name__)
     pattern="restart$",
     command=("restart", plugin_category),
     info={
-        "h": "Restarts the bot !!",
+        "h": "Restarts the bot!",
         "u": "{tr}restart",
     },
     disable_errors=True,
@@ -58,36 +56,18 @@ async def _(event):
             if i == "restart_update":
                 del_keyword_collectionlist("restart_update")
     except Exception as e:
-        LOGS.error(e)
+        LOGS.error("🚨 " + e)
     try:
         add_to_collectionlist("restart_update", [teledoge.chat_id, teledoge.id])
     except Exception as e:
-        LOGS.error(e)
-    if HEROKU_APP is not None:
-        try:
-            app = Heroku.apps()[HEROKU_APP_NAME]
-            dgvar("ipaddress")
-            app.restart()
-        except BaseException:
-            try:
-                dgvar("ipaddress")
-                executable = sysexecutable.replace(" ", "\\ ")
-                args = [executable, "-m", "userbot"]
-                execle(executable, *args, environ)
-            except CancelledError:
-                pass
-            except Exception as e:
-                LOGS.error(e)
-    else:
-        try:
-            dgvar("ipaddress")
-            executable = sysexecutable.replace(" ", "\\ ")
-            args = [executable, "-m", "userbot"]
-            execle(executable, *args, environ)
-        except CancelledError:
-            pass
-        except Exception as e:
-            LOGS.error(e)
+        LOGS.error("🚨 " + e)
+    try:
+        dgvar("ipaddress")
+        await doge.disconnect()
+    except CancelledError:
+        pass
+    except Exception as e:
+        LOGS.error("🚨 " + e)
 
 
 @doge.bot_cmd(

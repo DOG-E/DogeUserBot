@@ -248,7 +248,7 @@ async def shazamcmd(event):
         recognize_generator = shazam.recognizeSong()
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
-        LOGS.error(e)
+        LOGS.error("🚨 " + e)
         return await edl(dogevent, f"**Error while reverse searching song:**\n__{e}__")
     image = track["images"]["background"]
     song = track["share"]["subject"]

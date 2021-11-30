@@ -75,7 +75,7 @@ async def afksetter(event):
     start_1 = datetime.now()
     AFK_.afk_on = True
     AFK_.afk_star = start_1.replace(microsecond=0)
-    if media_t == "Sticker" or not media_t:
+    if not media_t:
         AFK_.afk_type = "text"
         if not AFK_.USERAFK_ON:
             input_str = event.pattern_match.group(1)
@@ -154,11 +154,7 @@ async def afksetter(event):
 
 @doge.bot_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
-    if (
-        AFK_.afk_on is False
-        or (await event.client.get_entity(event.message.from_id)).id
-        == (await event.client.get_me()).id
-    ):
+    if AFK_.afk_on is False:
         return
     back_alive = datetime.now()
     AFK_.afk_end = back_alive.replace(microsecond=0)
@@ -185,7 +181,7 @@ async def set_not_afk(event):
     ):
         if gvar("AFKRBIO"):
             try:
-                await event.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
+                await event.client(UpdateProfileRequest(about=f"{gvar('AFKRBIO')}"))
             except BaseException:
                 pass
         shite = await event.client.send_message(
@@ -344,9 +340,8 @@ async def on_afk(event):  # sourcery no-metrics
                 resalt,
                 parse_mode="html",
                 link_preview=False,
-                slient=True,
             )
-            if messaget is not None:
-                await event.client.forward_messages(
-                    PM_LOGGER_GROUP_ID, event.message, silent=True
-                )
+        if messaget is not None:
+            await event.client.forward_messages(
+                PM_LOGGER_GROUP_ID, event.message, silent=True
+            )

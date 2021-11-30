@@ -127,11 +127,11 @@ async def push(event, repo, ups_rem, ac_br, txt):
             if i == "restart_update":
                 del_keyword_collectionlist("restart_update")
     except Exception as e:
-        LOGS.error(e)
+        LOGS.error("🚨 " + e)
     try:
         add_to_collectionlist("restart_update", [dogevent.chat_id, dogevent.id])
     except Exception as e:
-        LOGS.error(e)
+        LOGS.error("🚨 " + e)
     ups_rem.fetch(ac_br)
     repo.git.reset("--hard", "FETCH_HEAD")
     heroku_git_url = heroku_app.git_url.replace(

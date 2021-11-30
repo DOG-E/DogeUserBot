@@ -20,12 +20,10 @@ _LOG_STR = "<<< ----  %s  ---- >>>"
 
 
 def submit_thread(func: Callable[[Any], Any], *args: Any, **kwargs: Any) -> Future:
-    """Konuyu iplik Havuzuna Gönder."""
     return _EXECUTOR.submit(func, *args, **kwargs)
 
 
 def run_in_thread(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
-    """İş parçacığını çalıştırma."""
 
     @wraps(func)
     async def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -42,8 +40,8 @@ def _get() -> ThreadPoolExecutor:
 def _stop():
     _EXECUTOR.shutdown()
     # pylint: disable=protected-access
-    _LOG.info(_LOG_STR, f"Durdurulmuş Program: {_EXECUTOR._max_workers} çalışanı ile")
+    _LOG.info(_LOG_STR, f"{_EXECUTOR._max_workers} işlem durduruldu!")
 
 
 # pylint: disable=protected-access
-_LOG.info(_LOG_STR, f"Durdurulmuş Program: {_EXECUTOR._max_workers} çalışanı ile")
+_LOG.info(_LOG_STR, f"{_EXECUTOR._max_workers} işlem başlatıldı!")

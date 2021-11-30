@@ -100,7 +100,7 @@ async def bot_broadcast(event):
         except (BadRequestError, ValueError, ForbiddenError):
             del_starter_from_db(int(user.user_id))
         except Exception as e:
-            LOGS.error(str(e))
+            LOGS.error("🚨 " + str(e))
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,

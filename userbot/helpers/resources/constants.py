@@ -27,42 +27,42 @@ MONTHS = {
 
 # AFK:
 DEF_AFKS = [
-    "🪐 I have a rush job right now,\
-    \ncan you send message later?\
-    \n🙃 Don't worry, I will come again...",
-    "📴 The person you're calling cannot answer the phone at the moment.\
-    \n🔈 After the signal tone, you can leave your message on your own tariff.\
-    \n💸 The message fee is 69¢.\
-    \n🔉 beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeep!",
-    "✨ I'll be back in a few minutes.\
-    💨 If I don't come, you read this message again.",
-    "🎈 Sometimes the best things in life are worth waiting for...\
-    \n💫 I'll be right back.",
-    "🪐 I'm far from 7 seas & 7 countries,\
-    \n🏝 7 waters & 7 continents,\
-    \n⛰ 7 mountains & 7 hills,\
-    \n🏕 7 plains & 7 mounds,\
-    \n🌊 7 pools & 7 lakes,\
-    \n🌿 7 springs & 7 meadows,\
-    \n🏙 7 cities & 7 neighborhoods,\
-    \n🏘 7 blocks & 7 houses...\n\
-    \n📵 A place where even messages can't reach me!",
-    "⌨️ I'm away from the keyboard right now,\
-    \nbut if you shout loud enough at the screen,\
-    \n👂 I can hear you.",
-    "🔮 If I were here,\
-    \nI'd tell you where I am.\n\
-    \n🍁 But I'm not the one who wrote this message,\
-    \nAsk me when I get back...",
-    "⛅ I'm far away!\
-    \n☁ I don't know when I'll be back!\
-    \n🌬 Hopefully in a few minutes!",
-    "☄ You don't know if I'm good or bad,\
-    \n🌠 but I can tell that I'm away from the keyboard.",
-    "🧑‍💻 🪐 Busy learning HTML to hack NASA.",
-    "🕳 I went to the void.",
-    "😪 I'm not in the mood to be alive.",
-    "🗺 Busy proving the flat earth theory.",
+    "🪐 Şu anda acele bir işim var,\
+    \nmesajınızı daha sonra gönderebilir misiniz?\
+    \n🙃 Endişelenmeyin, size döneceğim...",
+    "📴 Aradığınız kişi şu anda telefona cevap verememektedir.\
+    \n🔈 Sinyal tonundan sonra, mesajınızı tarifeniz üzerinden bırakabilirsiniz.\
+    \n💸 Mesaj ücreti ₺0.69'dir.\
+    \n🔉 biiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiip!",
+    "✨ Birkaç dakika içinde döneceğim.\
+    💨 Eğer gelmezsem, bu mesajı tekrar oku.",
+    "🎈 Bazen hayattaki en iyi şeyler beklemeye değer...\
+    \n💫 Hemen döneceğim.",
+    "🪐 7 deniz ve 7 ülkeden uzakta,\
+    \n🏝 7 su ve 7 kıtadan,\
+    \n⛰ 7 dağ ve 7 kayadan,\
+    \n🏕 7 ova ve 7 höyükten,\
+    \n🌊 7 havuz ve 7 gölden,\
+    \n🌿 7 bahar ve 7 çayırdan,\
+    \n🏙 7 şehir ve 7 mahalleden,\
+    \n🏘 7 blok ve 7 evden...\n\
+    \n📵 Kısaca, mesajların bile bana ulaşamayacağı bir yerdeyim!",
+    "⌨️ Şu an Telegram'dan uzaktayım,\
+    \nama ekrana yeterince yüksek sesle bağırırsan,\
+    \n👂 Seni çok iyi duyabilirim.",
+    "🔮 Burada olsaydım,\
+    \nsana nerede olduğumu söylerdim.\n\
+    \n🍁 ama bu mesajı yazan ben değilim.\
+    \nGeri döndüğümde bunu bana sor.",
+    "⛅ Uzaklardayım!\
+    \n☁ Ne zaman döneceğimi bilmiyorum.\
+    \n🌬 Belki de birkaç dakika içinde!",
+    "☄ İyi ya da kötü olduğumu bilmiyorsun,\
+    \n🌠 ama şu an Telegram'da olmadığımı söyleyebilirim.",
+    "🧑‍💻 🪐 NASA'yı hack'lemek için HTML'yi öğrenmekle meşgul.",
+    "🕳 Kara delikteyim.",
+    "😪 Telegram'da olmak için havamda değilim.",
+    "🗺 Düz Dünya teorisini kanıtlamakla meşgul.",
 ]
 DOGEAFK = f"{str(choice(DEF_AFKS))}"
 
@@ -75,11 +75,11 @@ ALIVETEMP = "{msg}\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
 \n\
 ┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}\n\
-┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}\n\
-┃ ꜱᴛᴀᴛᴜꜱ - {db}\n\
-┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}\n\
-┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}\n\
+┃ ᴅoɢᴇ süʀüᴍü - {dv}\n\
+┃ çᴀʟışᴍᴀ süʀᴇsɪ - {up}\n\
+┃ ᴅᴜʀᴜᴍᴜ - {db}\n\
+┃ ᴛᴇʟᴇᴛʜoɴ süʀüᴍü - {tv}\n\
+┃ ᴘʏᴛʜoɴ süʀüᴍü - {pv}\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
 \n\
 ┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
@@ -94,11 +94,10 @@ IALIVETEMP = "{msg}\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
 \n\
 ┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
-┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}\n\
-┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}\n\
-┃ ꜱᴛᴀᴛᴜꜱ - {db}\n\
-┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}\n\
-┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}\n\
+┃ ᴅoɢᴇ süʀüᴍü - {dv}\n\
+┃ çᴀʟışᴍᴀ süʀᴇsɪ - {up}\n\
+┃ ᴛᴇʟᴇᴛʜoɴ süʀüᴍü - {tv}\n\
+┃ ᴘʏᴛʜoɴ süʀüᴍü - {pv}\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛"
 
 
@@ -107,63 +106,64 @@ DEF_KICKMES = [
     "👋🏻 Bye bye I'm leaving from here!",
     "You'll notice that I'm not in the group the day I left unannounced...\
     \nThat's why I'm leaving this message.",
-    "🪐 I'm far from 7 seas & 7 countries,\
-    \n🏝 7 waters & 7 continents,\
-    \n⛰ 7 mountains & 7 hills,\
-    \n🏕 7 plains & 7 mounds,\
-    \n🌊 7 pools & 7 lakes,\
-    \n🌿 7 springs & 7 meadows,\
-    \n🏙 7 cities & 7 neighborhoods,\
-    \n🏘 7 blocks & 7 houses...\n\
-    \n🤡 In short, to the furthest place from this group..!",
+    "🪐 Buradan uzakta;\
+    \n🗺️ 7 deniz ve 7 ülkeden uzakta,\
+    \n🏝 7 su ve 7 kıtadan,\
+    \n⛰ 7 dağ ve 7 kayadan,\
+    \n🏕 7 ova ve 7 höyükten,\
+    \n🌊 7 havuz ve 7 gölden,\
+    \n🌿 7 bahar ve 7 çayırdan,\
+    \n🏙 7 şehir ve 7 mahalleden,\
+    \n🏘 7 blok ve 7 evden...\n\
+    \n🤡 Kısaca, bu gruptan en uzak yere..!",
 ]
 DOGEKICKME = f"{str(choice(DEF_KICKMES))}"
 
 
 # STICKERS:
 DEF_KANGS = [
-    "🤪 I'm stealing your sticker...",
-    "😈 Long live theft..!",
-    "🎫 I'm inviting this sticker to my own pack...",
-    "🐾 I have to steal this..!",
-    "💫 I'm imprisoning your sticker..!",
-    "🪐 Why not this nice sticker in my package?",
-    "👁‍🗨 Why shouldn't I have this nice sticker on my package as well?",
-    "👀 Mr.Steal your sticker is stealing this sticker...",
-    "🔮 I'm using witchery to kang this sticker...",
+    "🤪 Çıkartmayı dızlıyorum...",
+    "😈 Yaşasın dızcılık..!",
+    "🎫 Bu çıkartmayı paketime davet ediyorum...",
+    "🐾 Bunu dızlamak zorundayım..!",
+    "💫 Çıkartmayı hapsediyorum..!",
+    "🪐 Neden bu güzel çıkartma, paketimde değilmiş ki?",
+    "👁‍🗨 Neden paketimde bu güzel çıkartma olmamalı?",
+    "👀 Bay Dızcı bu çıkartmayı dızlıyor...",
+    "🔮 Bu efsanevi çıkartmayı dızlarken üstün büyücülük yeteneklerimi kullanıyorum...",
 ]
 DOGEKANG = f"{str(choice(DEF_KANGS))}"
 
 
 # HMM:
-hm_st_rd_v = "**🐕‍🦺 Sorry dude.\
-    \n🐾 Don't ask me to do this!\
-    \n🐾 I won't do this to my developer.**"
+hm_st_rd_v = "**🐕‍🦺 Üzgünüm dostum.\
+    \n🐾 Bunu yapmamı isteme!\
+    \n🐾 Bunu sahibime yapmayacağım.**"
 
-m_st_rd_v = "\n\n<b>🧡 This user is my developer!</b>"
+m_st_rd_v = "\n\n<b>🧡 Bu kullanıcı benim geliştiricim!</b>"
 
 
-b_ng_y = "\n\n<b>🤡 This user has been banned from using Doge.</b>"
+b_ng_y = "\n\n<b>🤡 Bu kullanıcı Doge'den yasaklandı.</b>"
 
-c_nf_rm_dg_y = "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!**\n\n"
+c_nf_rm_dg_y = "**🏳️‍🌈 #CONFIRMEDGAY BEN AÇIKÇASI ONAYLANMIŞ BİR GAY'IM!**\n\n"
 
 cc_nf_rm_dg_y = (
-    f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE TO MY CONTACTS.**"
+    f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA KULLANICILARI KİŞİLERİME EKLEMEYE ÇALIŞIYORDUM.**"
 )
 
 pc_nf_rm_dg_y = (
-    f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO ADD USERS HERE WATCH P*RN.**"
+    f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA PORNO İZLEMEYE ÇALIŞIYORDUM.**"
 )
 
-sc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**"
+sc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA ÜYELERİ ÇALMAYA ÇALIŞIYORDUM.**"
 
-sndmsgg_ys = "**🦮 SORRY DUDE!\
-    \n💔 I won't work with you.\
-    \n🐶 My admins have banned you from using @DogeUserBot!\n\
-    \n💡 To find out why,\
-    \n🤡 Check out @DogeGays\n\
-    \n🌪 To appeal,\
-    \n💬 You can write to my @DogeSup group.**"
+sndmsgg_ys = "**🦮 ÜZGÜNÜM DOSTUM!\
+    \n💔 Seninle çalışamam!\
+    \n🐶 Yöneticilerim @DogeUserBot kullanmanı yasakladı.\n\
+    \n💡 Sebebini öğrenmek için,\
+    \n🤡 @DogeGays'ı kontrol edebilirsin.\n\
+    \n🌪 İtiraz için,\
+    \n💬 @TeleDoge'ye yazabilirsin.**"
 
 l_gmsgg_ys = "🐶 Yöneticilerim sizi @DogeUserBot kullanmaktan alıkoydu!.\
     \n🐾 Telegram'da kayıtlı mesajlarınızı kontrol edin."

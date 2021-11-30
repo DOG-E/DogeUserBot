@@ -309,7 +309,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                 except UserAdminInvalidError:
                     del_a += 1
                 except Exception as e:
-                    LOGS.error(str(e))
+                    LOGS.error("🚨 " + str(e))
         if del_u > 0:
             del_status = (
                 f"Successfully cleaned **{del_u}** deleted account(s) in the group."
@@ -345,7 +345,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         f"__Ok the wait is over .I am cleaning all deleted accounts in restricted or banned users list in this group__"
                     )
                 except Exception as e:
-                    LOGS.error(str(e))
+                    LOGS.error("🚨 " + str(e))
                     del_a += 1
         async for user in show.client.iter_participants(
             show.chat_id, filter=ChannelParticipantsBanned
@@ -366,7 +366,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                     )
                     await sleep(e.seconds + 5)
                 except Exception as e:
-                    LOGS.error(str(e))
+                    LOGS.error("🚨 " + str(e))
                     del_a += 1
         if del_u > 0:
             del_status = f"`Successfully cleaned {del_u} deleted account(s) in the group who are banned or restricted.`"

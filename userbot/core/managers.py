@@ -12,6 +12,7 @@ from os.path import exists, join
 
 from ..Config import Config
 from ..helpers.utils.format import md_to_text, paste_message
+from ..sql_helper.globals import gvar
 from .data import _sudousers_list
 
 thumb_image_path = join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
@@ -97,7 +98,10 @@ async def edl(
     sudo_users = _sudousers_list()
     parse_mode = parse_mode or "md"
     link_preview = link_preview or False
-    time = time or 10
+    if gvar("DELMSG_TIME"):
+        time = gvar("DELMSG_TIME") or time
+    elif gvar("DELMSG_TIME") is None:
+        time = time or 7
     if event.sender_id in sudo_users:
         reply_to = await event.get_reply_message()
         dogevent = (

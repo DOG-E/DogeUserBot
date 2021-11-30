@@ -67,7 +67,7 @@ async def thisalive(event):
         caption = fixialive + doge_caption.format(
             msg=ALIVE_TEXT,
             mention=mention,
-            uptime=uptime,
+            up=uptime,
             tv=__version__,
             dv=dogeversion,
             pv=python_version(),
@@ -87,7 +87,7 @@ async def thisalive(event):
             msg=ALIVE_TEXT,
             mention=mention,
             dv=dogeversion,
-            uptime=uptime,
+            up=uptime,
             db=check_sgnirts,
             tv=__version__,
             pv=python_version(),

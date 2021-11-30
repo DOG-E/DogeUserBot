@@ -623,7 +623,7 @@ async def inline_handler(event):  # sourcery no-metrics
             if DOG_IMG and DOG_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     DOG_IMG,
-                    title="🐶 Doge UserBot PMPermit Modülü",
+                    # title="🐶 Doge UserBot PMPermit Modülü",
                     text=query,
                     buttons=buttons,
                 )
@@ -796,7 +796,7 @@ async def on_plug_in_callback_query_handler(event):
         try:
             return await event.edit(text, buttons=buttons, link_preview=False)
         except Exception as e:
-            LOGS.error(str(e))
+            LOGS.error("🚨 " + str(e))
     await event.edit(buttons=buttons, link_preview=False)
 
 

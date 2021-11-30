@@ -51,6 +51,7 @@ vlist = [
     "AUTONAME",
     "AUTOUS",
     "CHANGE_TIME",
+    "DELMSG_TIME",
     "CUSTOM_STICKER_PACKNAME",
     "DEFAULT_BIO",
     "HELP_EMOJI",

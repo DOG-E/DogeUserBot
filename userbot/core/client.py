@@ -148,7 +148,8 @@ class DogeUserBotClient(TelegramClient):
                 except AlreadyInConversationError:
                     await edl(
                         check,
-                        "`🚨 Mevcut sohbetle zaten bir konuşma gerçekleşiyor. 🔃 Bir süre sonra tekrar deneyin.`",
+                        "`🚨 Mevcut sohbetle zaten bir konuşma gerçekleşiyor.\
+                        \n🔃 Bir süre sonra tekrar deneyin.`",
                     )
                 except ChatSendInlineForbiddenError:
                     await edl(
@@ -157,7 +158,8 @@ class DogeUserBotClient(TelegramClient):
                     )
                 except FloodWaitError as e:
                     LOGS.error(
-                        f"🚨 {e.seconds} saniye flood wait nedeniyle engellendi. Lütfen {e.seconds} saniye bekleyin ve tekrar deneyin."
+                        f"🚨 {e.seconds} saniye flood wait nedeniyle engellendi.\
+                        \n🔃 Lütfen {e.seconds} saniye bekleyin ve tekrar deneyin."
                     )
                     await check.delete()
                     await sleep(e.seconds + 5)
@@ -214,9 +216,9 @@ class DogeUserBotClient(TelegramClient):
                         text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
                         link = f"[BURAYA](https://t.me/DogeSup)"
-                        text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
+                        text += "__💬 Eğer isterseniz bunu bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "🐾 Bu mesajı {} ilet.".format(link)
+                        text += "🐾 Bu mesajı {} iletin.".format(link)
                         text += "\n\n"
                         text += (
                             "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
@@ -354,9 +356,9 @@ class DogeUserBotClient(TelegramClient):
                         text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
                         link = f"[BURAYA](https://t.me/DogeSup)"
-                        text += "__💬 Eğer isterseniz buraya bildirebilirisiniz.__"
+                        text += "__💬 Eğer isterseniz bunu bildirebilirisiniz.__"
                         text += "\n\n"
-                        text += "🐾 Bu mesajı {} ilet.".format(link)
+                        text += "🐾 Bu mesajı {} iletin.".format(link)
                         text += "\n\n"
                         text += (
                             "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
@@ -384,7 +386,7 @@ class DogeUserBotClient(TelegramClient):
         )
 
     def _kill_running_processes(self) -> None:
-        """Tüm çalışan asyncio alt işlemkerini durdurur"""
+        """Tüm çalışan asyncio alt işlemlerini durdurur"""
         for _, process in self.running_processes.items():
             try:
                 process.kill()
@@ -400,8 +402,8 @@ DogeUserBotClient.reload = restart_script
 DogeUserBotClient.get_msg_link = get_message_link
 DogeUserBotClient.check_testcases = checking
 try:
-    send_message_check = TelegramClient.send_message
-except AttributeError:
     DogeUserBotClient.send_message = send_message
     DogeUserBotClient.send_file = send_file
     DogeUserBotClient.edit_message = edit_message
+except AttributeError:
+    send_message_check = TelegramClient.send_message

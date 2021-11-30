@@ -68,12 +68,11 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                 LOG_CHATS_.NEWPM = await event.client.send_message(
                     PM_LOGGER_GROUP_ID,
                     f"🪐 #PM\n👤 {_format.mentionuser(sender.first_name, sender.id)} has sent a new message \nID: `{chat.id}`",
-                    slient=True,
                 )
             try:
                 if event.message:
                     await event.client.forward_messages(
-                        PM_LOGGER_GROUP_ID, event.message, silent=True
+                        PM_LOGGER_GROUP_ID, event.message
                     )
                 LOG_CHATS_.COUNT += 1
             except Exception as e:
@@ -119,11 +118,10 @@ async def log_tagged_messages(event):
             resalt,
             parse_mode="html",
             link_preview=False,
-            slient=True,
         )
         if messaget is not None:
             await event.client.forward_messages(
-                PM_LOGGER_GROUP_ID, event.message, silent=True
+                PM_LOGGER_GROUP_ID, event.message
             )
 
 

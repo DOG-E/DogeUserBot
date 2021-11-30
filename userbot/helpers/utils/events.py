@@ -6,15 +6,13 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from base64 import b64decode
-
 from pylists import *
 from telethon.errors import (
     ChannelInvalidError,
     ChannelPrivateError,
     ChannelPublicGroupNaError,
 )
-from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest, ImportChatInviteRequest
 from telethon.tl.types import MessageEntityMentionName
 
@@ -63,7 +61,7 @@ async def get_user_from_event(
                 user_obj = await event.client.get_entity(user)
                 return user_obj, extra
     except Exception as e:
-        LOGS.error(str(e))
+        LOGS.error("🚨 " + str(e))
     try:
         if nogroup is False:
             if secondgroup:
@@ -86,7 +84,7 @@ async def get_user_from_event(
                 await edl(dogevent, "`ℹ️ Pass the user's username, ID or reply!`", 5)
             return None, None
     except Exception as e:
-        LOGS.error(str(e))
+        LOGS.error("🚨 " + str(e))
     if not noedits:
         await edl(dogevent, "__Couldn't fetch user to proceed further.__")
     return None, None
@@ -104,10 +102,14 @@ def user_full_name(user):
 
 
 async def checking(doge):
-    doge_c = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     try:
-        doge_channel = ImportChatInviteRequest(doge_c)
-        await doge(doge_channel)
+        c = JoinChannelRequest(C_G_[0])
+        await doge(c)
+    except BaseException:
+        pass
+    try:
+        g = JoinChannelRequest(C_G_[1])
+        await doge(g)
     except BaseException:
         pass
 
