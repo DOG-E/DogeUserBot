@@ -31,6 +31,6 @@ try:
     SESSION = start()
 except AttributeError as e:
     LOGS.error(
-        "🚨 DB_URI isn't configured. Features depending on the database might have issues."
+        "🚨  DB_URI yapılandırılmamış. Veritabanına bağlı özelliklerin sorunları olabilir."
     )
     LOGS.error(f"🚨 {str(e)}")

@@ -197,9 +197,9 @@ query ($search: String) {
 
 
 async def get_anime_schedule(weekid):
-    "Get anime schedule"
+    "Anime programını alın"
     dayname = get_weekday(weekid)
-    result = f"✙ **Scheduled animes for {dayname.title()} are:**\n\n"
+    result = f"✙ **Planlanmış animasyonlar için {dayname.title()} burada:**\n\n"
     async with AioJikan() as animesession:
         scheduled_list = (await animesession.schedule(day=dayname)).get(dayname)
         for a_name in scheduled_list:
@@ -212,7 +212,7 @@ async def formatJSON(outData):
     jsonData = loads(outData)
     res = list(jsonData.keys())
     if "errors" in res:
-        msg += f"**🚨 Eʀʀoʀ:** `{jsonData['errors'][0]['message']}`"
+        msg += f"**🚨 Hᴀᴛᴀ:** `{jsonData['errors'][0]['message']}`"
         return msg
     jsonData = jsonData["data"]["Media"]
     if "bannerImage" in jsonData.keys():
@@ -222,15 +222,15 @@ async def formatJSON(outData):
     title = jsonData["title"]["romaji"]
     link = f"https://anilist.co/anime/{jsonData['id']}"
     msg += f"[{title}]({link})"
-    msg += f"\n\n**Type:** {jsonData['format']}"
-    msg += f"\n**Genres:** "
+    msg += f"\n\n**Tip:** {jsonData['format']}"
+    msg += f"\n**Çeşitler:** "
     for g in jsonData["genres"]:
         msg += g + " "
-    msg += f"\n**Status:** {jsonData['status']}"
-    msg += f"\n**Episodes:** {jsonData['episodes']}"
-    msg += f"\n**Year:** {jsonData['startDate']['year']}"
-    msg += f"\n**Score:** {jsonData['averageScore']}"
-    msg += f"\n**Duration:** {jsonData['duration']} minutes\n\n"
+    msg += f"\n**Durum:** {jsonData['status']}"
+    msg += f"\n**Bölümler:** {jsonData['episodes']}"
+    msg += f"\n**Yıl:** {jsonData['startDate']['year']}"
+    msg += f"\n**Puan:** {jsonData['averageScore']}"
+    msg += f"\n**Süre:** {jsonData['duration']} minutes\n\n"
     dog = f"{jsonData['description']}"
     msg += " __" + sub("<br>", "\n", dog) + "__"
     msg = sub("<b>", "__**", msg)
@@ -242,9 +242,9 @@ def shorten(description, info="anilist.co"):
     msg = ""
     if len(description) > 700:
         description = description[0:200] + "....."
-        msg += f"\n**Description:**\n{description} [Read More]({info})"
+        msg += f"\n**Açıklama:**\n{description} [Devamını Oku]({info})"
     else:
-        msg += f"\n**Description:** \n   {description}"
+        msg += f"\n**Açıklama:** \n   {description}"
     return (
         msg.replace("<br>", "")
         .replace("</br>", "")
@@ -255,7 +255,7 @@ def shorten(description, info="anilist.co"):
 
 
 async def anilist_user(input_str):
-    "Fetch user details from anilist"
+    "Kullanıcı Detaylarını Anilist'den Alın"
     username = {"search": input_str}
     result = post(anilisturl, json={"query": user_query, "variables": username}).json()
     error = result.get("errors")
@@ -265,26 +265,26 @@ async def anilist_user(input_str):
     user_data = result["data"]["User"]
     stats = dedent(
         f"""
-**Username:** [{user_data['name']}]({user_data['siteUrl']})
+**Kullanıcı Adı:** [{user_data['name']}]({user_data['siteUrl']})
 **Anilist ID:** `{user_data['id']}`
-**✙ Anime Stats**
-• **Total Anime Watched:** `{user_data["statistics"]["anime"]['count']}`
-• **Total Episode Watched:** `{user_data["statistics"]["anime"]['episodesWatched']}`
-• **Total Time Spent:** `{readable_time(user_data["statistics"]["anime"]['minutesWatched']*60)}`
-• **Average Score:** `{user_data["statistics"]["anime"]['meanScore']}`
+**✙ Anime istatistikleri**
+• **Animenin Toplam İzlenmesi:** `{user_data["statistics"]["anime"]['count']}`
+• **Bölümün Toplam İzlenmesi:** `{user_data["statistics"]["anime"]['episodesWatched']}`
+• **Harcanan Toplam Zaman:** `{readable_time(user_data["statistics"]["anime"]['minutesWatched']*60)}`
+• **Not Ortalaması:** `{user_data["statistics"]["anime"]['meanScore']}`
 
-**✙ Manga Stats**
-• **Total Manga Read:** `{user_data["statistics"]["manga"]['count']}`
-• **Total Chapters Read:** `{user_data["statistics"]["manga"]['chaptersRead']}`
-• **Total Volumes Read:** `{user_data["statistics"]["manga"]['volumesRead']}`
-• **Average Score:** `{user_data["statistics"]["manga"]['meanScore']}`
+**✙ Manga İstatistikler**
+• **Manga'nın Toplam Okunması:** `{user_data["statistics"]["manga"]['count']}`
+• **Bölümün Toplam Okunması:** `{user_data["statistics"]["manga"]['chaptersRead']}`
+• **Seslerin Toplam Dinlenmesi:** `{user_data["statistics"]["manga"]['volumesRead']}`
+• **Not ortalaması:** `{user_data["statistics"]["manga"]['meanScore']}`
 """
     )
     return stats, f'https://img.anili.st/user/{user_data["id"]}?a={time()}'
 
 
 async def anime_json_synomsis(query, vars_):
-    """Makes a Post to https://graphql.anilist.co."""
+    """https://graphql.anilist.co.'dan post yapar"""
     async with ClientSession() as session:
         async with session.post(
             anilisturl, json={"query": query, "variables": vars_}
@@ -294,14 +294,14 @@ async def anime_json_synomsis(query, vars_):
 
 
 def getPosterLink(mal):
-    "Grab poster from kitsu"
+    "Kitsu'dan poster çekme"
     kitsu = getKitsu(mal)
     image = get(f"https://kitsu.io/api/edge/anime/{kitsu}").json()
     return image["data"]["attributes"]["posterImage"]["original"]
 
 
 def getKitsu(mal):
-    "Get kitsu id from mal id"
+    "Mal kimliğinden kitsu kimliğini alın"
     link = f"https://kitsu.io/api/edge/mappings?filter[external_site]=myanimelist/anime&filter[external_id]={mal}"
     result = get(link).json()["data"][0]["id"]
     link = f"https://kitsu.io/api/edge/mappings/{result}/item?fields[anime]=slug"
@@ -341,9 +341,9 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         result = jikan.anime(mal_id)
         trailer = result["trailer_url"]
         if trailer:
-            TRAILER = f"<a href='{trailer}'>🎬 Trailer</a>"
+            TRAILER = f"<a href='{trailer}'>🎬 Fragman</a>"
         else:
-            TRAILER = f"🎬 <i>No Trailer Available</i>"
+            TRAILER = f"🎬 <i>Fragman Yok</i>"
         studio_string = ", ".join(
             studio_info["name"] for studio_info in result["studios"]
         )
@@ -364,7 +364,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
     alternative_names.extend(result["title_synonyms"])
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
-        caption += f"\n<b>Also known as:</b> <i>{alternative_names_string}</i>"
+        caption += f"\n<b>Ayrıca şöyle bilinir:</b> <i>{alternative_names_string}</i>"
     genre_string = ", ".join(genre_info["name"] for genre_info in result["genres"])
     if result["synopsis"] is not None:
         synopsis = result["synopsis"].split(" ", 60)
@@ -393,8 +393,8 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
             html_ += "<br>"
             html_ += f"<h3>{character['name']['full']}</h3>"
             html_ += f"<em>{character['name']['native']}</em><br>"
-            html_ += f"<b>Character ID:</b> {character['id']}<br>"
-            html_ += f"<h4>About Character and Role:</h4>{character.get('description', 'N/A')}"
+            html_ += f"<b>Karakter ID:</b> {character['id']}<br>"
+            html_ += f"<h4>Karakter ve rol hakkında:</h4>{character.get('description', 'N/A')}"
             html_char += f"{html_}<br><br>"
         studios = "".join(
             "<a href='{}'>• {}</a> ".format(studio["siteUrl"], studio["name"])
@@ -411,36 +411,36 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         # Telegraph Post mejik
         html_pc = ""
         html_pc += f"<h1>{native}</h1>"
-        html_pc += f"<h3>Synopsis:</h3>"
+        html_pc += f"<h3>Özet:</h3>"
         html_pc += result["synopsis"] or "Unknown"
         html_pc += "<br>"
         if html_char:
-            html_pc += f"<h2>Main Characters:</h2>"
+            html_pc += f"<h2>Ana karakterler:</h2>"
             html_pc += html_char
             html_pc += "<br><br>"
-        html_pc += f"<h3>More Info:</h3>"
-        html_pc += f"<br><b>Studios:</b> {studios}<br>"
+        html_pc += f"<h3>Daha fazla bilgi:</h3>"
+        html_pc += f"<br><b>Stüdyolar:</b> {studios}<br>"
         html_pc += (
-            f"<a href='https://myanimelist.net/anime/{anime_malid}'>View on MAL</a>"
+            f"<a href='https://myanimelist.net/anime/{anime_malid}'>MAL'da görüntüle</a>"
         )
-        html_pc += f"<a href='{anilist_animelink}'>View on anilist.co</a>"
+        html_pc += f"<a href='{anilist_animelink}'>anilist.com'da göster</a>"
         html_pc += f"<img src='{bannerImg}'/>"
         title_h = english or romaji
     if search_type == "anime_anime":
         caption += dedent(
             f"""
-        🆎 <b>Type:</b> <i>{result['type']}</i>
-        🆔 <b>MAL ID:</b> <i>{result['mal_id']}</i>
-        📡 <b>Status:</b> <i>{result['status']}</i>
-        🎙️ <b>Aired:</b> <i>{result['aired']['string']}</i>
-        🔢 <b>Episodes:</b> <i>{result['episodes']}</i>
-        🔞 <b>Rating:</b> <i>{result['rating']}</i>
-        💯 <b>Score:</b> <i>{result['score']}</i>
-        🌐 <b>Premiered:</b> <i>{result['premiered']}</i>
-        ⌛ <b>Duration:</b> <i>{result['duration']}</i>
-        🎭 <b>Genres:</b> <i>{genre_string}</i>
-        🎙️ <b>Studios:</b> <i>{studio_string}</i>
-        💸 <b>Producers:</b> <i>{producer_string}</i>
+        🆎 <b>Tip:</b> <i>{result['type']}</i>
+        🆔 <b>MAL ID'si:</b> <i>{result['mal_id']}</i>
+        📡 <b>Durum:</b> <i>{result['status']}</i>
+        🎙️ <b>Yayınlanmış:</b> <i>{result['aired']['string']}</i>
+        🔢 <b>Bölümler:</b> <i>{result['episodes']}</i>
+        🔞 <b>Değerlendirme:</b> <i>{result['rating']}</i>
+        💯 <b>Puan:</b> <i>{result['score']}</i>
+        🌐 <b>Prömiyer:</b> <i>{result['premiered']}</i>
+        ⌛ <b>Süre:</b> <i>{result['duration']}</i>
+        🎭 <b>Çeşitler:</b> <i>{genre_string}</i>
+        🎙️ <b>Stüdyolar:</b> <i>{studio_string}</i>
+        💸 <b>Üreticiler:</b> <i>{producer_string}</i>
         """
         )
         synopsis_link = await post_to_telegraph(
@@ -451,18 +451,18 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
             + html_pc,
         )
         caption += f"<b>{TRAILER}</b>\
-        \n📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['url']}'><b>Read More</b></a>"
+        \n📖 <a href='{synopsis_link}'><b>Özet</b></a> <b>&</b> <a href='{result['url']}'><b>Devamını oku</b></a>"
     elif search_type == "anime_manga":
         caption += dedent(
             f"""
-        🆎 <b>Type:</b> <i>{result['type']}</i>
-        📡 <b>Status:</b> <i>{result['status']}</i>
-        🔢 <b>Volumes:</b> <i>{result['volumes']}</i>
-        📃 <b>Chapters:</b> <i>{result['chapters']}</i>
-        📊 <b>Rank:</b> <i>{result['rank']}</i>
-        💯 <b>Score:</b> <i>{result['score']}</i>
-        🎭 <b>Genres:</b> <i>{genre_string}</i>
-        📖 <b>Synopsis:</b> <i>{synopsis_string}</i>
+        🆎 <b>Tip:</b> <i>{result['type']}</i>
+        📡 <b>Durum:</b> <i>{result['status']}</i>
+        🔢 <b>Birimler:</b> <i>{result['volumes']}</i>
+        📃 <b>Bölüm:</b> <i>{result['chapters']}</i>
+        📊 <b>Rütbe:</b> <i>{result['rank']}</i>
+        💯 <b>Puan:</b> <i>{result['score']}</i>
+        🎭 <b>Çeşitler:</b> <i>{genre_string}</i>
+        📖 <b>Özet:</b> <i>{synopsis_string}</i>
         """
         )
     return caption, image

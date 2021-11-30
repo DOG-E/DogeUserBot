@@ -33,7 +33,7 @@ async def get_readable_time(seconds: int) -> str:
     count = 0
     up_time = ""
     time_list = []
-    time_suffix_list = ["s", "m", "h", "days"]
+    time_suffix_list = ["sn", "dk", "s", "gün"]
     while count < 4:
         count += 1
         remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
@@ -66,30 +66,30 @@ async def admin_groups(doge):
 
 # Credits: Pokurt - https://github.com/pokurt/LyndaRobot/blob/7556ca0efafd357008131fa88401a8bb8057006f/lynda/modules/helper_funcs/string_handling.py#L238
 async def extract_time(dog, time_val):
-    if any(time_val.endswith(unit) for unit in ("s", "m", "h", "d", "w")):
+    if any(time_val.endswith(unit) for unit in ("sn", "dk", "s", "gün", "hafta")):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            await dog.edit("🚨 Invalid time amount specified.")
+            await dog.edit("🚨 Geçersiz zaman değeri belirtildi.")
             return None
-        if unit == "s":
+        if unit == "sn":
             bantime = int(time() + int(time_num) * 1)
-        elif unit == "m":
+        elif unit == "dk":
             bantime = int(time() + int(time_num) * 60)
-        elif unit == "h":
+        elif unit == "s":
             bantime = int(time() + int(time_num) * 60 * 60)
-        elif unit == "d":
+        elif unit == "gün":
             bantime = int(time() + int(time_num) * 24 * 60 * 60)
-        elif unit == "w":
+        elif unit == "hafta":
             bantime = int(time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             await dog.edit(
-                f"`🚨 Invalid time amount specified.\n⏰ Expected s, m, h, d or w but got:` `{time_val[-1]}`"
+                f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen sn, dk, s, gün ya da hafta iken olan değer:` `{time_val[-1]}`"
             )
             return None
         return bantime
     await dog.edit(
-        f"`🚨 Invalid time amount specified.\n⏰ Expected s, m, h, d or w but got:` `{time_val[-1]}`"
+        f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen sn, dk, s, gün ya da hafta iken olan değer:` `{time_val[-1]}`"
     )
     return None
 
@@ -99,5 +99,5 @@ def Build_Poll(options):
 
 
 def deEmojify(inputString: str) -> str:
-    "Remove emojis and other non-safe characters from string"
+    "Emojileri ve diğer güvenli olmayan karakterleri string'den kaldırın"
     return get_emoji_regexp().sub("", inputString)

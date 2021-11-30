@@ -33,7 +33,7 @@ def load_module(shortname, plugin_path=None):
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        LOGS.info("✅ " + shortname + " imported!")
+        LOGS.info("✅ " + shortname + " yüklendi!")
     else:
         if plugin_path is None:
             path = Path(f"userbot/plugins/{shortname}.py")
@@ -68,7 +68,7 @@ def load_module(shortname, plugin_path=None):
         spec.loader.exec_module(mod)
         # For imports;
         sys.modules["userbot.plugins." + shortname] = mod
-        LOGS.info("✅ " + shortname + " imported!")
+        LOGS.info("✅ " + shortname + " yüklendi!")
 
 
 def remove_plugin(shortname):
@@ -85,7 +85,7 @@ def remove_plugin(shortname):
                 del LOADED_CMDS[cmdname]
         return True
     except Exception as e:
-        LOGS.error(f"🚨 {e}")
+        LOGS.error(f"🚨 Bir plugini silerken hatayla karşılaşıldı! Hata Raporu: {e}")
     try:
         for i in LOAD_PLUG[shortname]:
             doge.remove_event_handler(i)

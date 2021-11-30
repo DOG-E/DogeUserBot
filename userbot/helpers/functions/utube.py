@@ -68,11 +68,11 @@ async def ytsearch(query, limit):
         textresult = f"[{v['title']}](https://www.youtube.com/watch?v={v['id']})\n"
         try:
             textresult += (
-                f"**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:** `{v['descriptionSnippet'][-1]['text']}`\n"
+                f"**◽ Açıᴋʟᴀᴍᴀ:** `{v['descriptionSnippet'][-1]['text']}`\n"
             )
         except Exception:
-            textresult += f"**◽ Dᴇsᴄʀɪᴘᴛɪoɴ:** `None`\n"
-        textresult += f"**⏱ Dᴜʀᴀᴛɪoɴ:** __{v['duration']}__   **◾ Vɪᴇᴡs:** __{v['viewCount']['short']}__\n"
+            textresult += f"**◽ Açıᴋʟᴀᴍᴀ:** `None`\n"
+        textresult += f"**⏱ Süʀᴇ:** __{v['duration']}__   **◾ İzʟᴇɴᴍᴇ:** __{v['viewCount']['short']}__\n"
         result += f"📺 {textresult}\n"
     return result
 
@@ -188,7 +188,7 @@ def yt_search_btns(
     buttons = [
         [
             Button.inline(
-                text=f"⬅️️ Bᴀcᴋ",
+                text=f"⬅️️ Gᴇʀɪ",
                 data=f"ytdl_back_{data_key}_{page}",
             ),
             Button.inline(
@@ -198,11 +198,11 @@ def yt_search_btns(
         ],
         [
             Button.inline(
-                text=f"📜 Lɪsᴛ Aʟʟ",
+                text=f"📜 Hᴇᴘsɪɴɪ Lɪsᴛᴇʟᴇ",
                 data=f"ytdl_listall_{data_key}_{page}",
             ),
             Button.inline(
-                text=f"📥 Doᴡɴʟoᴀᴅ",
+                text=f"📥 İɴᴅɪʀ",
                 data=f"ytdl_download_{vid}_0",
             ),
         ],
@@ -222,9 +222,9 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
         vid_data = {"formats": []}
     buttons = [
         [
-            Button.inline(f"🌟 Bᴇsᴛ - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"),
+            Button.inline(f"🌟 Eɴ İʏɪsɪ - 🎞 ᴍᴋᴠ", data=f"ytdl_download_{vid}_mkv_v"),
             Button.inline(
-                f"🌟 Bᴇsᴛ - 🎞 ᴡᴇʙᴍ/ᴍᴘ4",
+                f"🌟 Eɴ İʏɪsɪ - 🎞 ᴡᴇʙᴍ/ᴍᴘ4",
                 data=f"ytdl_download_{vid}_mp4_v",
             ),
         ]
@@ -264,7 +264,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     buttons += [
         [
             Button.inline(
-                f"🌟 Bᴇsᴛ - 🎵 ᴍᴘ3 - 320ᴋʙᴘs",
+                f"🌟 Eɴ İʏɪsɪ - 🎵 ᴍᴘ3 - 320ᴋʙᴘs",
                 data=f"ytdl_download_{vid}_mp3_a",
             )
         ]
@@ -309,7 +309,7 @@ def _tubeDl(url: str, starttime, uid: str):
         LOGS.error(f"🚨 {e}")
     except GeoRestrictedError:
         LOGS.error(
-            f"**🚨 Eʀʀoʀ:** The uploader hasn't made this video available in your country."
+            f"**🚨 Hᴀᴛᴀ:** Yükleyici bu videoyu ülkenizde mevcut değildi."
         )
     else:
         return x
