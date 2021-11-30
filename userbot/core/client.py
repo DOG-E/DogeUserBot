@@ -402,8 +402,8 @@ DogeUserBotClient.reload = restart_script
 DogeUserBotClient.get_msg_link = get_message_link
 DogeUserBotClient.check_testcases = checking
 try:
+    send_message_check = TelegramClient.send_message
+except AttributeError:
     DogeUserBotClient.send_message = send_message
     DogeUserBotClient.send_file = send_file
     DogeUserBotClient.edit_message = edit_message
-except AttributeError:
-    send_message_check = TelegramClient.send_message
