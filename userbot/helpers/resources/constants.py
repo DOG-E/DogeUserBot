@@ -151,9 +151,7 @@ cc_nf_rm_dg_y = (
     f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA KULLANICILARI KİŞİLERİME EKLEMEYE ÇALIŞIYORDUM.**"
 )
 
-pc_nf_rm_dg_y = (
-    f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA PORNO İZLEMEYE ÇALIŞIYORDUM.**"
-)
+pc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA PORNO İZLEMEYE ÇALIŞIYORDUM.**"
 
 sc_nf_rm_dg_y = f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA ÜYELERİ ÇALMAYA ÇALIŞIYORDUM.**"
 

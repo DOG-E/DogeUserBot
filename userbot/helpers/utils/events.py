@@ -13,7 +13,7 @@ from telethon.errors import (
     ChannelPublicGroupNaError,
 )
 from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
-from telethon.tl.functions.messages import GetFullChatRequest, ImportChatInviteRequest
+from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import MessageEntityMentionName
 
 from ...Config import Config

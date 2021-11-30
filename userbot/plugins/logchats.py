@@ -120,9 +120,7 @@ async def log_tagged_messages(event):
             link_preview=False,
         )
         if messaget is not None:
-            await event.client.forward_messages(
-                PM_LOGGER_GROUP_ID, event.message
-            )
+            await event.client.forward_messages(PM_LOGGER_GROUP_ID, event.message)
 
 
 @doge.bot_cmd(

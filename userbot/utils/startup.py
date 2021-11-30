@@ -20,10 +20,7 @@ from pylists import *
 from requests import get
 from telethon import Button
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.channels import (
-    EditAdminRequest,
-    InviteToChannelRequest,
-)
+from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest

@@ -24,7 +24,6 @@ def submit_thread(func: Callable[[Any], Any], *args: Any, **kwargs: Any) -> Futu
 
 
 def run_in_thread(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
-
     @wraps(func)
     async def wrapper(*args: Any, **kwargs: Any) -> Any:
         loop = get_running_loop()
