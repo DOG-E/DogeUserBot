@@ -41,6 +41,8 @@ except Exception as e:
 class DogCheck:
     def __init__(self):
         self.sucess = True
+
+
 Dogcheck = DogCheck()
 
 
