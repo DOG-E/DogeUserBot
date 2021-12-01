@@ -81,10 +81,9 @@ async def checking_id():
     doge.uid = doge.me.id
     if gvar("OWNER_ID") is None:
         sgvar("OWNER_ID", doge.uid)
-    if gvar("OWNER_ID") != doge.uid:
+    if gvar("OWNER_ID") != doge.uid and gvar("OWNER_ID") is not None:
         LOGS.error(
-            "🚨 Kullanıcı değişikliği algıladım.\
-            \n🔃 Kurulumu yeniden başlatıyorum..."
+            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
         )
         dgvar("OWNER_ID")
         dgvar("ALIVE_NAME")
