@@ -89,7 +89,7 @@ AUTONAME = gvar("AUTONAME")
 BIO_PREFIX = gvar("BIO_PREFIX")
 DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
 
-OWNER_ID = gvar("OWNER_ID") or doge.uid
+OWNER_ID = gvar("OWNER_ID")
 mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={OWNER_ID})"
 hmention = f"<a href = tg://user?id={OWNER_ID}>{gvar('ALIVE_NAME')}</a>"
 
