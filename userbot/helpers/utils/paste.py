@@ -31,7 +31,7 @@ auth_url = r["auth_url"]
 
 async def t_paste(msg, title=None):
     """
-    To Paste the given message/text/code to Telegraph
+    Verilen mesajı / metin / kodu telgrafa yapıştırmak için
     """
     c = title if title else "🐶 Doge UserBot 🐾"
     try:
@@ -42,7 +42,7 @@ async def t_paste(msg, title=None):
 
             await doge.send_message(
                 Config.BOTLOG_CHATID,
-                f"Created new Telegraph account {auth_url} for the current session.\n\n**Don't give this URL to anyone, even if they say they are from Telegram!**",
+                f"⛓ Geçerli oturum için yeni Telegraph hesabı: {auth_url} oluşturuldu.\n\n**⚠ Telegram Moderatörlerinden olduklarını söyleseler bile bu URL'yi kimseye vermeyin!**",
             )
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
@@ -77,7 +77,7 @@ async def p_paste(message, extension=None):
 
             await doge.send_message(
                 Config.BOTLOG_CHATID,
-                f"**You have created a new paste in pasty bin.**\n\nLink to pasty is [HERE]({purl}).\n\nYou can delete that paste by using this token `{response['deletionToken']}`",
+                f"**Pasty Bin kutusuna yapıştırabilmek için yeni bir paste baplantısı oluşturuldu.\nPasty Bin bağlantınız burada: [Tıklayın]({purl})\n\n isterseniz bu pasty'i bu belirteci kullanarak silebilirsiniz `{response['deletionToken']}`",
             )
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
@@ -86,7 +86,7 @@ async def p_paste(message, extension=None):
             "raw": f"https://pasty.lus.pm/{response['id']}/raw",
             "bin": "Pasty",
         }
-    return {"error": f"`🚨 Unable to reach pasty.lus.pm!`"}
+    return {"error": f"`🚨 Pasty.lus.pm'e ulaşılamıyor!`"}
 
 
 async def s_paste(message, extension="txt"):
@@ -107,7 +107,7 @@ async def s_paste(message, extension="txt"):
             "raw": f"{siteurl}{response['payload']['id']}/raw",
             "bin": "Spacebin",
         }
-    return {"error": f"`🚨 Unable to reach spacebin!`"}
+    return {"error": f"`🚨 SpaceBin'e ulaşılamıyor!`"}
 
 
 def spaste(message, extension="txt"):
@@ -128,7 +128,7 @@ def spaste(message, extension="txt"):
             "raw": f"{siteurl}{response['payload']['id']}/raw",
             "bin": "Spacebin",
         }
-    return {"error": "`🚨 Unable to reach spacebin.`"}
+    return {"error": "`🚨 SpaceBin'e ulaşılamıyor!`"}
 
 
 async def n_paste(message, extension=None):
@@ -153,7 +153,7 @@ async def n_paste(message, extension=None):
             "raw": f"nekobin.com/raw/{response['result']['key']}",
             "bin": "Neko",
         }
-    return {"error": f"`🚨 Unable to reach nekobin!`"}
+    return {"error": f"`🚨 Nekobin'e ulaşılamıyor!`"}
 
 
 async def d_paste(message, extension=None):
@@ -178,11 +178,11 @@ async def d_paste(message, extension=None):
             "raw": f"https://catbin.up.railway.app/raw/{response['key']}",
             "bin": "Dog",
         }
-    return {"error": f"`🚨 Unable to reach catbin!`"}
+    return {"error": f"`🚨 CatBin'e ulaşılamıyor!`"}
 
 
 async def pastetext(text_to_print, pastetype=None, extension=None, title=None):
-    response = {"error": "`🚨 Something went wrong!`"}
+    response = {"error": "`🚨 Bir şeyler ters gitti!`"}
     if pastetype is not None:
         if pastetype == "p":
             response = await p_paste(text_to_print, extension)

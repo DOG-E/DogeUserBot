@@ -77,7 +77,6 @@ ALIVETEMP = "{msg}\n\
 ┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
 ┃ ᴅoɢᴇ süʀüᴍü - {dv}\n\
 ┃ çᴀʟışᴍᴀ süʀᴇsɪ - {up}\n\
-┃ ᴅᴜʀᴜᴍᴜ - {db}\n\
 ┃ ᴛᴇʟᴇᴛʜoɴ süʀüᴍü - {tv}\n\
 ┃ ᴘʏᴛʜoɴ süʀüᴍü - {pv}\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
@@ -103,9 +102,9 @@ IALIVETEMP = "{msg}\n\
 
 # GROUP:
 DEF_KICKMES = [
-    "👋🏻 Bye bye I'm leaving from here!",
-    "You'll notice that I'm not in the group the day I left unannounced...\
-    \nThat's why I'm leaving this message.",
+    "👋🏻 Güle güle güle gittim buradan ayrılıyorum!",
+    "Sizi habersiz bıraktığım gün grupta olamadığımı fark edeceksiniz ki ...\
+    \nBu yüzden bu mesajı buraya bırakıyorum. ",
     "🪐 Buradan uzakta;\
     \n🗺️ 7 deniz ve 7 ülkeden uzakta,\
     \n🏝 7 su ve 7 kıtadan,\
@@ -145,7 +144,7 @@ m_st_rd_v = "\n\n<b>🧡 Bu kullanıcı benim geliştiricim!</b>"
 
 b_ng_y = "\n\n<b>🤡 Bu kullanıcı Doge'den yasaklandı.</b>"
 
-c_nf_rm_dg_y = "**🏳️‍🌈 #CONFIRMEDGAY BEN AÇIKÇASI ONAYLANMIŞ BİR GAY'IM!**\n\n"
+c_nf_rm_dg_y = "**🏳️‍🌈 #ONAYLI_GAY BEN ONAYLANMIŞ BİR GAY'IM!**\n\n"
 
 cc_nf_rm_dg_y = (
     f"{c_nf_rm_dg_y}**💨 ÇÜNKÜ BURADA KULLANICILARI KİŞİLERİME EKLEMEYE ÇALIŞIYORDUM.**"

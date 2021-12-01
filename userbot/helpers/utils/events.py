@@ -75,16 +75,21 @@ async def get_user_from_event(
             previous_message = await event.get_reply_message()
             if previous_message.from_id is None:
                 if not noedits:
-                    await edl(dogevent, "`🐾 Well that's an anonymous admin!`")
+                    await edl(dogevent, "`🐾 Bu anonim bir yönetici!`")
                 return None, None
             user_obj = await event.client.get_entity(previous_message.sender_id)
             return user_obj, extra
         if not args:
             if not noedits:
-                await edl(dogevent, "`ℹ️ Pass the user's username, ID or reply!`", 5)
+                await edl(
+                    dogevent,
+                    "`ℹ️ Kullanıcının kullanıcı adını, kimliğini veya cevabını iletin`",
+                )
             return None, None
     except Exception as e:
-        LOGS.error(f"🚨 {str(e)}")
+        LOGS.error(
+            f"🚨 Kullanıcı verisi çekilmeye çalışılırken bir hata oluştu: {str(e)}"
+        )
     if not noedits:
         await edl(dogevent, "__Couldn't fetch user to proceed further.__")
     return None, None
@@ -167,18 +172,18 @@ async def get_chatinfo(event, dogevent):
         try:
             chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await dogevent.edit("`🚨 Invalid channel/group!`")
+            await dogevent.edit("`🚨 Geçersiz kanal / grup!`")
             return None
         except ChannelPrivateError:
-            await dogevent.edit(
-                "`🚨 This is a private channel/group or I'm banned from there.`"
-            )
+            await dogevent.edit("`🚨 Bu kanal/grup gizli ya da orada yasaklıyım.`")
             return None
         except ChannelPublicGroupNaError:
-            await dogevent.edit("`🚨 Channel or supergroup doesn't exist!`")
+            await dogevent.edit("`🚨 Kanal veya grup mevcut değil!`")
             return None
         except (TypeError, ValueError) as err:
-            LOGS.info(err)
-            await edl(dogevent, f"**🚨 Eʀʀoʀ:**\n`ℹ️ Couldn't fetch the chat!`")
+            LOGS.info(
+                f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}"
+            )
+            await edl(dogevent, f"**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
             return None
     return chat_info

@@ -25,9 +25,7 @@ from . import (
     BOT_USERNAME,
     IALIVETEMP,
     StartTime,
-    check_data_base_heal_th,
     doge,
-    dogealive,
     dogeversion,
     eor,
     get_readable_time,
@@ -59,7 +57,6 @@ async def thisalive(event):
     ms = (end - start).microseconds / 1000
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time() - StartTime))
-    _, check_sgnirts = check_data_base_heal_th()
     ALIVE_TEXT = gvar("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
     try:
         fixialive = "ㅤ\n"
@@ -71,7 +68,6 @@ async def thisalive(event):
             tv=__version__,
             dv=dogeversion,
             pv=python_version(),
-            db=check_sgnirts,
             ping=ms,
         )
         results = await event.client.inline_query(BOT_USERNAME, caption)
@@ -88,7 +84,6 @@ async def thisalive(event):
             mention=mention,
             dv=dogeversion,
             up=uptime,
-            db=check_sgnirts,
             tv=__version__,
             pv=python_version(),
             ping=ms,
@@ -112,5 +107,11 @@ async def thisalive(event):
 
 @doge.tgbot.on(CallbackQuery(data=compile(b"infos")))
 async def on_plug_in_callback_query_handler(event):
-    statstext = await dogealive()
+    statstext = f"🐶 Doɢᴇ UsᴇʀBoᴛ\
+            \n🐾 Bɪʟɢɪ\n\
+            \n🔹 Çalıştığını kontrol etmek için:\
+            \n{tr}alive\n\
+            \n🔹 Yardım Menüsü için:\
+            \n{tr}doge"
+
     await event.answer(statstext, cache_time=0, alert=True)

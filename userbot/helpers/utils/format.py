@@ -28,7 +28,7 @@ async def paste_message(text, pastetype="p", extension=None, markdown=True, titl
         response = await pastetext(text, pastetype, extension)
         if "url" in response:
             return response["url"]
-        return f"**🚨 Eʀʀoʀ:** While pasting text to site"
+        return f"**🚨 Hᴀᴛᴀ:** Siteye metni yapıştırırken bir hata oluştu."
 
 
 def md_to_text(md):

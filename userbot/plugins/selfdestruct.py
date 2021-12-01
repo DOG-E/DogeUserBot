@@ -19,7 +19,7 @@ LOGS = logging.getLogger(__name__)
     command=("sdm", plugin_category),
     info={
         "h": "To self destruct the message after paticualr time.",
-        "d": "Suppose if you use .sdm 10 hi then message will be immediately send new message as hi and then after 10 sec this message will auto delete.`",
+        "d": "Suppose if you use .sdm 10 hi then message will be immediately send new message as hi and then after 10 sec this message will auto delete.",
         "u": "{tr}sdm [number] [text]",
         "e": "{tr}sdm 10 hi",
     },
