@@ -9,14 +9,13 @@
 from typing import Dict, List, Union
 
 from ..helpers.utils.extdl import install_pip
+from ..sql_helper.globals import gvar
 
 try:
     from urlextract import URLExtract
 except ModuleNotFoundError:
     install_pip("urlextract")
     from urlextract import URLExtract
-
-from ..Config import Config
 
 extractor = URLExtract()
 
@@ -107,4 +106,4 @@ def _format_about(
                 tmp_chelp += f"__{get_data(about ,t_n)}__"
                 tmp_chelp += "\n"
 
-    return tmp_chelp.replace("{tr}", Config.CMDSET)
+    return tmp_chelp.replace("{tr}", (gvar("CMDSET") or "."))

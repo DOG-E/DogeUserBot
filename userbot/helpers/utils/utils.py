@@ -74,4 +74,4 @@ async def unsavegif(e, m):
             )
         )
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")

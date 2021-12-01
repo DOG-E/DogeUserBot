@@ -21,7 +21,7 @@ from ..sql_helper import pmpermit_sql
 from . import (
     BOT_USERNAME,
     BOTLOG_CHATID,
-    USERID,
+    OWNER_ID,
     _format,
     dgvar,
     doge,
@@ -79,7 +79,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
                 )
                 del PMMESSAGE_CACHE[str(chat.id)]
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         custompmblock = gvar("pmblock") or None
         if custompmblock is not None:
             USER_BOT_WARN_ZERO = custompmblock.format(
@@ -177,7 +177,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     PMMESSAGE_CACHE[str(chat.id)] = msg.id
     sql.del_collection("pmwarns")
     sql.del_collection("pmmessagecache")
@@ -211,7 +211,7 @@ async def do_pm_options_action(event, chat):
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     USER_BOT_WARN_ZERO = f"**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \
@@ -261,7 +261,7 @@ __My master will respond when he/she comes online, if he/she wants to.__
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     USER_BOT_WARN_ZERO = f"**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \
@@ -311,7 +311,7 @@ __My master will respond when he/she comes back online, if he/she wants to.__
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     USER_BOT_WARN_ZERO = f"**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \
@@ -361,7 +361,7 @@ __My master will respond when he/she comes back online, if he/she wants to.__
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     USER_BOT_WARN_ZERO = f"**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \
@@ -392,7 +392,7 @@ async def do_pm_spam_action(event, chat):
             await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     USER_BOT_WARN_ZERO = f"**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \
 Though you ignored that message. So, I simply blocked you. \
 Now you can't do anything unless my master comes online and unblocks you.**"
@@ -480,7 +480,7 @@ async def you_dm_other(event):
                     chat.id, PMMESSAGE_CACHE[str(chat.id)]
                 )
             except Exception as e:
-                LOGS.info(str(e))
+                LOGS.error(f"🚨 {str(e)}")
             del PMMESSAGE_CACHE[str(chat.id)]
         sql.del_collection("pmmessagecache")
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
@@ -488,7 +488,7 @@ async def you_dm_other(event):
 
 @doge.tgbot.on(CallbackQuery(data=compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == USERID:
+    if event.query.user_id == OWNER_ID:
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = f"""Ok, Now you're accessing the availabe menu of my master, {mention}.
@@ -519,7 +519,7 @@ __Let's make this smooth and let me know why you're here.__
 
 @doge.tgbot.on(CallbackQuery(data=compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == USERID:
+    if event.query.user_id == OWNER_ID:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. Your request has been registered. Do not spam my master's inbox now. \
@@ -540,7 +540,7 @@ Then we can extend this conversation more but not right now.__"""
 
 @doge.tgbot.on(CallbackQuery(data=compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == USERID:
+    if event.query.user_id == OWNER_ID:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. I have notified my master about this. When he/she comes comes online\
@@ -561,7 +561,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @doge.tgbot.on(CallbackQuery(data=compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == USERID:
+    if event.query.user_id == OWNER_ID:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Yaa sure we can have a friendly chat but not right now. we can have this\
@@ -581,7 +581,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
 
 @doge.tgbot.on(CallbackQuery(data=compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == USERID:
+    if event.query.user_id == OWNER_ID:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = "`███████▄▄███████████▄\
@@ -730,7 +730,7 @@ async def approve_p_m(event):  # sourcery no-metrics
                     user.id, PMMESSAGE_CACHE[str(user.id)]
                 )
             except Exception as e:
-                LOGS.info(str(e))
+                LOGS.error(f"🚨 {str(e)}")
             del PMMESSAGE_CACHE[str(user.id)]
         sql.del_collection("pmwarns")
         sql.del_collection("pmmessagecache")
@@ -833,7 +833,7 @@ async def block_p_m(event):
         try:
             await event.client.delete_messages(user.id, PMMESSAGE_CACHE[str(user.id)])
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         del PMMESSAGE_CACHE[str(user.id)]
     if pmpermit_sql.is_approved(user.id):
         pmpermit_sql.disapprove(user.id)

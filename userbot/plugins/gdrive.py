@@ -1232,7 +1232,7 @@ async def cancel_process(gdrive):
             aria2.remove_all(force=True)
             aria2.autopurge()
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     GDRIVE_.is_cancelled = True
     await sleep(3.5)
     await gdrive.delete()

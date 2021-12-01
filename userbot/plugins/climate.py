@@ -234,4 +234,4 @@ async def _(event):
     try:
         await event.delete()
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")

@@ -566,7 +566,7 @@ async def _(event):
                         event, f"The ID of the chat/channel `{p.title}` is `{p.id}`"
                     )
             except Exception as e:
-                LOGS.info(str(e))
+                LOGS.error(f"🚨 {str(e)}")
         await eor(event, "`Either give input as username or reply to user`")
     elif event.reply_to_msg_id:
         r_msg = await event.get_reply_message()
@@ -878,7 +878,7 @@ async def file_data(reply):
             hmm += f"Thumb:\
                 \n {yaml_format(reply.media.document.thumbs[-1])}<br>"
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     return hmm
 
 

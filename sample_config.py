@@ -45,8 +45,6 @@ class Config(object):
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     # Set this with same app name you given for Heroku
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
-    # Owner ID to show profile link of given ID as owner
-    OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
 
     # CUSTOM VARS
     # Set this with group ID so it keeps notifying about your tagged messages or PMs
@@ -57,12 +55,6 @@ class Config(object):
     PLUGINS = os.environ.get("PLUGINS", True)
     DOGEPLUGIN = os.environ.get("DOGEPLUGIN", False)
     DOGEHUB = os.environ.get("DOGEHUB", False)
-    # Set this value with your required name for Telegraph plugin
-    TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "@DogeUserBot")
-    # For custom thumb image set this with your required thumb Telegraph link
-    THUMB_IMAGE = os.environ.get(
-        "THUMB_IMAGE", "https://telegra.ph/file/6086da8c041f5de3227ed.jpg"
-    )
     # Specify NO_LOAD with plugin names for not loading in userbot
     NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
     # Specify command handler that should be used for the plugins

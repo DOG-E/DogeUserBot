@@ -1,1 +1,1 @@
-# **[🐶 @DogeUserBot](https://t.me/DogeUserBot)_'un önbellek dosyaları burada saklanır!_**
+# **[🐶 @DogeUserBot](https://t.me/DogeUserBot)_'un önbellek dosyaları burada saklanır._**

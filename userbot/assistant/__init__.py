@@ -15,16 +15,4 @@ from ..core.managers import edl, eor
 from ..core.session import doge
 from ..helpers import *
 from ..helpers.utils import _dogetools, _dogeutils, _format, install_pip, reply_id
-from ..plugins import mention
 from ..sql_helper.globals import dgvar, gvar, sgvar
-
-# OWNER:
-OWNER_ID = Config.OWNER_ID
-
-
-# ASSISTANT BOT:
-BOT_USERNAME = Config.BOT_USERNAME
-
-
-# DIRECTORIES:
-TEMP_DIR = Config.TEMP_DIR

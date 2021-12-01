@@ -432,7 +432,7 @@ async def _(event):  # sourcery no-metrics
     try:
         chat_per = current_chat.default_banned_rights
     except AttributeError as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     else:
         umsg = "❌" if chat_per.send_messages else "✅"
         umedia = "❌" if chat_per.send_media else "✅"

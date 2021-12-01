@@ -125,7 +125,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edl(event, "What I am Supposed to change give text")
+        await edl(event, "Bᴀɴᴀ Bɪ' Mᴇᴛɪɴ Vᴇʀ.")
         return
     string = "".join(args)
     for normaltextcharacter in string:
@@ -134,6 +134,10 @@ async def stylish_generator(event):
                 fonts.normaltext.index(normaltextcharacter)
             ]
             string = string.replace(normaltextcharacter, smallcapscharacter)
+            if "ğ" in string:
+                string = string.replace("ğ", "ɢ̆")
+            if "ı" in string:
+                string = string.replace("ı", "ɪ")
     await eor(event, string)
 
 

@@ -34,7 +34,7 @@ plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
 telegraph = Telegraph()
-r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME)
+r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot")
 auth_url = r["auth_url"]
 
 
@@ -89,7 +89,7 @@ async def _(event):
             ms = (end - start).seconds
             remove(downloaded_file_name)
             await dogevent.edit(
-                f"**➥ Uploaded to:** [telegraph](https://telegra.ph{media_urls[0]})\
+                f"**➥ Uploaded to:** [Telegraph](https://telegra.ph{media_urls[0]})\
                  \n**➥ Uploaded in {ms} seconds.**\
                  \n**➥ Uploaded by:** {mention}",
                 link_preview=True,
@@ -126,7 +126,7 @@ async def _(event):
         ms = (end - start).seconds
         dog = f"https://telegra.ph/{response['path']}"
         await dogevent.edit(
-            f"**➥ Uploaded to:** [telegraph]({dog})\
+            f"**➥ Uploaded to:** [Telegraph]({dog})\
                  \n**➥ Uploaded in {ms} seconds.**\
                  \n**➥ Uploaded by:** {mention}",
             link_preview=True,

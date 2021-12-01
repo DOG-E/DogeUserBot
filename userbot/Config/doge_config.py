@@ -1,4 +1,4 @@
-# Config values will be loaded from here
+# Yapılandırma değerleri buradan yüklenecek
 #
 # @DogeUserBot - < https://t.me/DogeUserBot >
 # Copyright (C) 2021 - DOG-E

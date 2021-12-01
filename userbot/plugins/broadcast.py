@@ -252,7 +252,7 @@ async def dogebroadcast_send(event):
             await event.client.send_message(int(chat), reply)
             i += 1
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
     await edl(dogevent, resultext)
@@ -317,7 +317,7 @@ async def dogebroadcast_send(event):
             await event.client.forward_messages(int(chat), reply)
             i += 1
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         await sleep(0.5)
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
     await edl(dogevent, resultext)

@@ -9,6 +9,7 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 
+from os import remove
 from telethon import Button
 
 from ..sql_helper import no_log_pms_sql
@@ -81,16 +82,17 @@ async def monito_p_m_s(event):  # sourcery no-metrics
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
 async def log_tagged_messages(event):
-    hmm = await event.get_chat()
-    from .afk import AFK_
-
     if gvar("GRPLOG") and gvar("GRPLOG") == "false":
         return
+
+    from .afk import AFK_
+    hmm = await event.get_chat()
+    sndr = await event.get_sender()
     if (
         (no_log_pms_sql.is_approved(hmm.id))
         or (PM_LOGGER_GROUP_ID == -100)
         or ("on" in AFK_.USERAFK_ON)
-        or (await event.get_sender() and (await event.get_sender()).bot)
+        or (sndr and (sndr.bot or sndr.verified))
     ):
         return
 
@@ -98,29 +100,41 @@ async def log_tagged_messages(event):
     try:
         full = await event.client.get_entity(event.message.from_id)
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     messaget = media_type(event)
-    resalt = f"🔔 #TAG\n<b>👥 Group: </b><code>{hmm.title}</code>"
+    resalt = f"🔔 #TAG\n<b>👥 Group: {hmm.title}</b>"
     if full is not None:
         resalt += (
             f"\n<b>👤 From: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
         )
     if messaget is not None:
-        resalt += f"\n<b>🔅 Message Type: </b><code>{messaget}</code>"
+        resalt += f"\n<b>🔅 Message Type: </b>{messaget}"
     else:
-        resalt += f"\n<b>🔹 Message: </b>{event.message.message}"
+        resalt += f"\n<b>🔹 Message: </b><code>{event.message.message}</code>"
     button = [
         (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
     ]
     if not event.is_private:
-        await event.client.send_message(
+        await doge.tgbot.send_message(
             PM_LOGGER_GROUP_ID,
             resalt,
             parse_mode="html",
             link_preview=False,
+            buttons=button,
         )
         if messaget is not None:
-            await event.client.forward_messages(PM_LOGGER_GROUP_ID, event.message)
+            try:
+                await doge.tgbot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
+            except Exception as me:
+                LOGS.warning(me)
+                try:
+                    media = await event.download_media()
+                    await doge.tgbot.send_message(
+                        PM_LOGGER_GROUP_ID, file=media,
+                    )
+                    return remove(media)
+                except Exception as er:
+                    LOGS.error(er)
 
 
 @doge.bot_cmd(
@@ -199,14 +213,14 @@ async def set_no_log_p_m(event):
 
 
 @doge.bot_cmd(
-    pattern="pmlog (on|off)$",
+    pattern="pmlog(on|off)$",
     command=("pmlog", plugin_category),
     info={
         "h": "To turn on or turn off logging of Private messages in pmlogger group.",
         "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "u": [
-            "{tr}pmlog on",
-            "{tr}pmlog off",
+            "{tr}pmlogon",
+            "{tr}pmlogoff",
         ],
     },
 )
@@ -240,14 +254,14 @@ async def set_pmlog(event):
 
 
 @doge.bot_cmd(
-    pattern="grplog (on|off)$",
+    pattern="grplog(on|off)$",
     command=("grplog", plugin_category),
     info={
         "h": "To turn on or turn off group tags logging in pmlogger group.",
         "d": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "u": [
-            "{tr}grplog on",
-            "{tr}grplog off",
+            "{tr}grplogon",
+            "{tr}grplogoff",
         ],
     },
 )

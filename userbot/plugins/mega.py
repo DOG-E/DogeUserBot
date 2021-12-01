@@ -156,7 +156,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
                 await sleep(1)
                 display_message = current_message
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         finally:
             if status == "Combining":
                 wait = round(downloader.get_eta())
@@ -187,7 +187,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
             "`Failed to download, " "check heroku Logs for more details.`"
         )
         for e in downloader.get_errors():
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
     return
 
 

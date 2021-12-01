@@ -34,7 +34,7 @@ async def wall_download(piclink, query):
             f.write(get(piclink).content)
         return picpath
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
         return None
 
 
@@ -111,7 +111,7 @@ async def noods(event):
         )
         await dogevent.delete()
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     for i in piclist:
         remove(i)
 

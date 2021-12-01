@@ -12,7 +12,11 @@ from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
 from ..Config import Config
+from ..sql_helper.globals import dgvar
 from .client import DogeUserBotClient
+from .logger import logging
+
+LOGS = logging.getLogger(__name__)
 
 __version__ = "1.0.0"
 loop = None
@@ -36,7 +40,8 @@ try:
         connection_retries=None,
     )
 except Exception as e:
-    print(f"[STRING_SESSION] - {e}")
+    LOGS.error(f"🚨 [STRING_SESSION] - {e}")
+    dgvar("OWNER_ID")
     exit()
 
 

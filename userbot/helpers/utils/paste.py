@@ -11,6 +11,7 @@ from json import dumps
 from requests import post
 from telegraph import Telegraph
 
+from ... import TELEGRAPH_SHORT_NAME
 from ...Config import Config
 from ...core.logger import logging
 from ..tools import post_to_telegraph
@@ -23,7 +24,7 @@ headers = {
 }
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=Config.TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
 )
 auth_url = r["auth_url"]
 
@@ -44,7 +45,7 @@ async def t_paste(msg, title=None):
                 f"Created new Telegraph account {auth_url} for the current session.\n\n**Don't give this URL to anyone, even if they say they are from Telegram!**",
             )
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         return response
     except Exception:
         try:
@@ -79,7 +80,7 @@ async def p_paste(message, extension=None):
                 f"**You have created a new paste in pasty bin.**\n\nLink to pasty is [HERE]({purl}).\n\nYou can delete that paste by using this token `{response['deletionToken']}`",
             )
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         return {
             "url": purl,
             "raw": f"https://pasty.lus.pm/{response['id']}/raw",

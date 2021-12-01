@@ -32,7 +32,7 @@ plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 telegraph = Telegraph()
-r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME)
+r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot")
 auth_url = r["auth_url"]
 
 vlist = [
@@ -42,6 +42,7 @@ vlist = [
     "DIGITAL_PIC",
     "HELP_PIC",
     "PM_PIC",
+    "THUMB_IMAGE",
     "AFK",
     "AFKBIO",
     "AFKRBIO",
@@ -61,9 +62,14 @@ vlist = [
     "NO_OF_COLUMNS_IN_HELP",
     "PM_BLOCK",
     "PM_TEXT",
-    "SNIP_CMDSET",
     "START_TEXT",
+    "TELEGRAPH_SHORT_NAME",
     "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
+]
+cmdlist = [
+    "CMDSET",
+    "SUDO_CMDSET",
+    "SNIP_CMDSET",
 ]
 alist = [
     "ANTISPAMBOT_BAN",
@@ -228,9 +234,11 @@ async def dbsetter(event):  # sourcery no-metrics
                     \n**{vname}** is updated newly in database as below",
                 )
                 await doge.tgbot.send_message(BOTLOG_CHATID, vinfo, silent=True)
-            await edl(
+            msg = await edl(
                 event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
+            if vname in cmdlist:
+                await event.client.reload(msg)
         if cmd == "g":
             var_data = gvar(vname)
             await edl(event, f"🪀 Value of **{vname}** is  `{var_data}`", time=20)
@@ -245,11 +253,14 @@ async def dbsetter(event):  # sourcery no-metrics
                     \n\
                     \n🚮 Deleted: `{var_data}`",
                 )
-            await edl(
+            msg = await edl(
                 event,
                 f"🪀 Value of **{vname}** is now deleted & set to default.",
                 time=20,
             )
+            if vname in cmdlist:
+                await event.client.reload(msg)
+
     elif vname in apilist:
         apiname = vname
         apinfo = vinfo
@@ -267,10 +278,13 @@ async def dbsetter(event):  # sourcery no-metrics
                     \n**{apiname}** is updated newly in database as below",
                 )
                 await doge.tgbot.send_message(BOTLOG_CHATID, apinfo, silent=True)
-            await edl(
+            msg = await edl(
                 event,
                 f"🔮 Value of **{apiname}** is changed.",
             )
+            if vname in cmdlist:
+                await event.client.reload(msg)
+
         if cmd == "g":
             api_data = gvar(apiname)
             await edl(event, "**I sent API data to BOTLOG.**")
@@ -289,11 +303,14 @@ async def dbsetter(event):  # sourcery no-metrics
                     \n\
                     \n🚮 Deleted: `{api_data}`",
                 )
-            await edl(
+            msg = await edl(
                 event,
                 f"🔮 Value of **{apiname}** is now deleted & set to default.",
                 time=20,
             )
+            if vname in cmdlist:
+                await event.client.reload(msg)
+
     else:
         if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") is True:
             gvarname = vname
@@ -313,10 +330,12 @@ async def dbsetter(event):  # sourcery no-metrics
                         \n**⚙️ {gvarname}** is updated newly in database as below",
                     )
                     await doge.tgbot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
-                await edl(
+                msg = await edl(
                     event,
                     f"⚙️ Value of **{gvarname}** is changed.",
                 )
+                if vname in cmdlist:
+                    await event.client.reload(msg)
             if cmd == "g":
                 gvardata = gvar(gvarname)
                 await edl(event, "**I sent global data var to BOTLOG.**")
@@ -335,11 +354,13 @@ async def dbsetter(event):  # sourcery no-metrics
                         \n\
                         \n🚮 Deleted: `{gvardata}`",
                     )
-                await edl(
+                msg = await edl(
                     event,
                     f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
                     time=20,
                 )
+                if vname in cmdlist:
+                    await event.client.reload(msg)
         else:
             await eor(
                 event,

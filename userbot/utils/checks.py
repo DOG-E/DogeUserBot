@@ -25,7 +25,7 @@ async def is_admin(doge, chat_id, userid):
         ):
             return True
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
         return False
     else:
         return False

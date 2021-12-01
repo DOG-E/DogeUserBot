@@ -98,7 +98,7 @@ async def q_pic(event):  # sourcery no-metrics
     try:
         user = await event.client.get_entity(user)
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
         user = None
     if not pfp:
         pfp = "profilepic.jpg"

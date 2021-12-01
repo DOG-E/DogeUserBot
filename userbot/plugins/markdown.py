@@ -161,7 +161,7 @@ def parse(message, old_entities=None):
 
         return del_surrogate(message), entities + old_entities
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.bot_cmd(outgoing=True)

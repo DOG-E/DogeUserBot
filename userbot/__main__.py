@@ -16,6 +16,7 @@ from .core.session import doge
 from .sql_helper.globals import gvar
 from .utils import (
     add_bot_to_logger_group,
+    checking_id,
     customize_assistantbot,
     ipchange,
     load_plugins,
@@ -30,28 +31,11 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info(f"⏳ STARTING DOGE USERBOT 🐾")
+    LOGS.info(f"⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info(f"✅ STARTUP COMPLETED 🐾")
 except Exception as e:
     LOGS.error(f"🚨 {e}")
     exit()
-
-
-if gvar("BOT_TOKEN") is None:
-    doge.loop.run_until_complete(setup_assistantbot())
-
-
-try:
-    doge.loop.run_until_complete(setup_me_bot())
-except Exception as e:
-    LOGS.error(f"🚨 {e}")
-
-
-try:
-    doge.loop.run_until_complete(customize_assistantbot())
-except Exception as e:
-    LOGS.error(f"🚨 {e}")
 
 
 class DogCheck:
@@ -67,21 +51,26 @@ async def startup_process():
     if check is not None:
         Dogcheck.sucess = False
         return
+    doge.loop.run_until_complete(checking_id())
+    if gvar("BOT_TOKEN") is None:
+        doge.loop.run_until_complete(setup_assistantbot())
+    doge.loop.run_until_complete(setup_me_bot())
+    doge.loop.run_until_complete(customize_assistantbot())
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    LOGS.info(userbot.__copyright__)
-    LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
-    LOGS.info(
+    print(userbot.__copyright__)
+    print(userbot.__license__ + " ile korunmaktadır.")
+    print(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-        \n🐶 wow! Doge is alive!\
-        \n🐾 Doge UserBot is ready to use.\
+        \n🐶 Hey! Doge çalışıyor!\
+        \n🐾 Doge UserBot kullanıma hazır.\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-        \n🔅 Write {tr}alive to check.\
-        \n🔅 Learn the commands by writing {tr}doge\
+        \n🔅 Bir sohbete {tr}alive yazarak durumunu kontrol edin.\
+        \n🔅 {tr}doge yazarak komutlar hakkında bilgi alabilirsin.\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
-        \n💬 Visit our Telegram group for help: t.me/DogeSup\
+        \n💬 Yardım için Telegram grubumuzu ziyaret edin: t.me/DogeSup\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
     )
     await verifyLoggerGroup()

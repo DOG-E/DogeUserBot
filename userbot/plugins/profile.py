@@ -131,7 +131,7 @@ async def _(event):
     try:
         remove(photo)
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.bot_cmd(

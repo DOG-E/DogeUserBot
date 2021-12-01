@@ -191,7 +191,7 @@ async def xiaomeme(event, msg, dogevent):
         await fsmessage(event, msg, chat=chat)
         xio = await newmsgres(conv, chat)
         await dogevent.delete()
-        await event.client.forward_messages(event.chat_id, xio.message.message)
+        await event.client.forward_messages(event.chat_id, xio.message)
         await conv.mark_read()
         await conv.cancel_all()
 

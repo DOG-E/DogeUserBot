@@ -35,7 +35,7 @@ from ..helpers.functions.utube import (
     result_formatter,
     ytsearch_data,
 )
-from ..plugins import mention
+from .. import mention
 from ..sql_helper.globals import gvar
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .logger import logging
@@ -46,7 +46,7 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 
 
 def main_menu():
-    text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+    text = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
     \n🐾 Yᴀʀᴅıᴍᴄı\n\
     \n◽ Doɢᴇ oғ {mention}**"
     buttons = [
@@ -300,7 +300,7 @@ async def inline_handler(event):  # sourcery no-metrics
     string.split()
     query_user_id = event.query.user_id
 
-    if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
+    if query_user_id == gvar("OWNER_ID") or query_user_id in Config.SUDO_USERS:
         hmm = compile("troll (.*) (.*)")
         match = findall(hmm, query)
         inf = compile("s (.*) (.*)")

@@ -435,7 +435,7 @@ async def _(event):  # sourcery no-metrics
         output += "\n\n"
     finalstr = (
         result
-        + f"\n\n**SUDO TRIGGER:** `{Config.SUDO_CMDSET}`\n**Commands:** {count}\n\n"
+        + f"\n\n**SUDO TRIGGER:** `{(gvar('SUDO_CMDSET') or '.')}`\n**Commands:** {count}\n\n"
         + output
     )
     await eor(event, finalstr, aslink=True, linktext=text)

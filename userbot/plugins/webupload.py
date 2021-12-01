@@ -145,7 +145,7 @@ async def _(event):
         try:
             t_response = dumps(loads(t_response), sort_keys=True, indent=4)
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         urls = links = findall(link_regex, t_response)
         result = ""
         for i in urls:

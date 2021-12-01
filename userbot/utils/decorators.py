@@ -13,7 +13,7 @@ from re import compile, search
 from sys import exc_info
 from traceback import format_exc
 
-from .. import CMD_LIST, LOAD_PLUG, SUDO_LIST
+from .. import CMD_LIST, LOAD_PLUG, SUDO_LIST, tr
 from ..Config import Config
 from ..core.data import _sudousers_list, blacklist_chats_list
 from ..core.events import MessageEdited, NewMessage
@@ -43,12 +43,12 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
             except BaseException:
                 CMD_LIST.update({file_test: [cmd]})
         else:
-            if len(Config.CMDSET) == 2:
-                dogreg = "^" + Config.CMDSET
-                reg = Config.CMDSET[1]
-            elif len(Config.CMDSET) == 1:
-                dogreg = "^\\" + Config.CMDSET
-                reg = Config.CMDSET
+            if len(tr) == 2:
+                dogreg = "^" + tr
+                reg = tr[1]
+            elif len(tr) == 1:
+                dogreg = "^\\" + tr
+                reg = tr
             args["pattern"] = compile(dogreg + pattern)
             if command is not None:
                 cmd = reg + command
@@ -93,12 +93,12 @@ def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
             except BaseException:
                 SUDO_LIST.update({file_test: [cmd]})
         else:
-            if len(Config.SUDO_CMDSET) == 2:
-                dogreg = "^" + Config.SUDO_CMDSET
-                reg = Config.SUDO_CMDSET[1]
-            elif len(Config.SUDO_CMDSET) == 1:
-                dogreg = "^\\" + Config.SUDO_CMDSET
-                reg = Config.CMDSET
+            if len((gvar("SUDO_CMDSET") or ".")) == 2:
+                dogreg = "^" + (gvar("SUDO_CMDSET") or ".")
+                reg = (gvar("SUDO_CMDSET") or ".")[1]
+            elif len((gvar("SUDO_CMDSET") or ".")) == 1:
+                dogreg = "^\\" + (gvar("SUDO_CMDSET") or ".")
+                reg = tr
             args["pattern"] = compile(dogreg + pattern)
             if command is not None:
                 cmd = reg + command
@@ -134,57 +134,59 @@ def errors_handler(func):
             if Config.PRIVATE_GROUP_BOT_API_ID != 0:
                 return
             date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-            ftext = "ℹ️ DISCLAIMER:\
-                    \nThis file is pasted ONLY here,\
-                    \nwe logged only fact of error and date,\
-                    \nwe respect your privacy,\
-                    \nif you've any confidential data here,\
-                    \nyou may not report this error.\
-                    \nNo one will see your data.\
-                    \n\
-                    \n--------BEGIN-DOGE-USERBOT-ERROR-LOG--------\
-                    \n📅 Date: {d}\
-                    \n👥 Group ID: {cid}\
-                    \n👤 Sender ID: {sid}\
-                    \n🔗 Message Link: {msg}\
-                    \n\
-                    \n➡️ Event Trigger:\
-                    \n{t}\
-                    \n\
-                    \nℹ️ Traceback Info:\
-                    \n{f}\
-                    \n\
-                    \n🚨 Error Text:\
-                    \n{e}".format(
-                d=date,
-                cid=str(check.chat_id),
-                sid=str(check.sender_id),
-                msg=await check.client.get_msg_link(check),
-                t=str(check.text),
-                f=str(format_exc()),
-                e=str(exc_info()[1]),
-            )
+            ftext = "💥💥💥💥 UYARI 💥💥💥💥\
+                        \n💠 Bu metin sadece buraya yazıldı,\
+                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
+                        \n💠 Gizliliğinize saygı duyuyoruz,\
+                        \n💠 Burada herhangi bir gizli veri varsa,\
+                        \n💠 Bu hatayı bildirmeyebilirsiniz.\
+                        \n💠 Kimse verilerinizi göremez.\
+                        \n\
+                        \n⚠️⚠️⚠️ USERBOT-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
+                        \n📅 Tarih: {d}\
+                        \n👥 Grup ID'si: {cid}\
+                        \n👤 Gönderici ID: {sid}\
+                        \n🔗 Mesaj Linki: {msg}\
+                        \n\
+                        \n➡️ Tetikleyici Komut:\
+                        \n{t}\
+                        \n\
+                        \nℹ️ Geri İzleme Mekanizması:\
+                        \n{f}\
+                        \n\
+                        \n🚨 Hata Metni:\
+                        \n{e}".format(
+                            d=date,
+                            cid=str(check.chat_id),
+                            sid=str(check.sender_id),
+                            msg=await check.client.get_msg_link(check),
+                            t=str(check.text),
+                            f=str(format_exc()),
+                            e=str(exc_info()[1]),
+                        )
             new = {
                 "error": str(exc_info()[1]),
                 "date": datetime.now(),
             }
             ftext += "\n\n"
-            ftext += "--------END-DOGE-USERBOT-ERROR-LOG--------"
+            ftext += "⚠️⚠️⚠️ USERBOT-HATA-RAPORU-SONU ⚠️⚠️⚠️"
             pastelink = await paste_message(ftext, markdown=False)
-            text = "🐶 Doɢᴇ UsᴇʀBoᴛ Eʀʀoʀ Rᴇᴘoʀᴛ 🐾"
-            link = "[HERE](https://t.me/DogeSup)"
+            text = "🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾"
             text += "\n\n"
-            text += "__💬 If you wanna you can report it.__"
+            text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
             text += "\n\n"
-            text += f"🐾 Forward this message {link}."
+            link = f"[BURAYA](https://t.me/DogeSup)"
+            text += "__💬 Eğer isterseniz bunu bildirebilirisiniz.__"
             text += "\n\n"
-            text += "__**🦴 Nothing is logged except of error and date!**__"
+            text += "🐾 Bu mesajı {} iletin.".format(link)
             text += "\n\n"
-            text += f"**▫️ Event Trigger:** `{str(check.text)}`"
+            text += (
+                "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
+            )
             text += "\n\n"
-            text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
+            text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
             await check.client.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
+                Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
             )
 
     return wrapper

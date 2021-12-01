@@ -61,7 +61,7 @@ async def _(event):
         try:
             await event.delete()
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.bot_cmd(
@@ -77,7 +77,7 @@ async def _(event):
     try:
         await event.delete()
     except Exception as e:
-        LOGS.info(str(e))
+        LOGS.error(f"🚨 {str(e)}")
     m = await event.get_reply_message()
     if not m:
         return

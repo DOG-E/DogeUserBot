@@ -103,8 +103,8 @@ class DogeUserBotClient(TelegramClient):
             ):
                 REGEX_.regex1 = REGEX_.regex2 = compile(pattern)
             else:
-                reg1 = "\\" + Config.CMDSET
-                reg2 = "\\" + Config.SUDO_CMDSET
+                reg1 = "\\" + (gvar("CMDSET") or ".")
+                reg2 = "\\" + (gvar("SUDO_CMDSET") or ".")
                 REGEX_.regex1 = compile(reg1 + pattern)
                 REGEX_.regex2 = compile(reg2 + pattern)
 

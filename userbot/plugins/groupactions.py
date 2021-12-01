@@ -114,7 +114,7 @@ async def _(event):
                 success += 1
                 await sleep(0.5)
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
             await sleep(0.5)
     await dogevent.edit(
         f"`Sucessfully i have completed kickall process with {success} members kicked out of {total} members`"
@@ -163,7 +163,7 @@ async def _(event):
                 success += 1
                 await sleep(0.5)
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
             await sleep(0.5)
     await dogevent.edit(
         f"`Sucessfully i have completed banall process with {success} members banned out of {total} members`"

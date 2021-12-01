@@ -8,6 +8,7 @@
 # ================================================================
 from asyncio import sleep
 from datetime import datetime
+from os import remove
 
 from telethon import Button
 from telethon.tl.functions.account import GetPrivacyRequest, UpdateProfileRequest
@@ -91,7 +92,6 @@ async def afksetter(event):
             )
             if isinstance(last_seen_status.rules, PrivacyValueAllowAll):
                 AFK_.afk_time = datetime.now()
-            AFK_.USERAFK_ON = f"on: {AFK_.reason}"
             if gvar("AFKBIO"):
                 try:
                     await event.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
@@ -103,15 +103,16 @@ async def afksetter(event):
                 await edl(event, "`I'm going afk! `", 5)
             if BOTLOG:
                 if AFK_.reason:
-                    await event.client.send_message(
+                    await doge.tgbot.send_message(
                         BOTLOG_CHATID,
                         f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
                     )
                 else:
-                    await event.client.send_message(
+                    await doge.tgbot.send_message(
                         BOTLOG_CHATID,
                         "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                     )
+            AFK_.USERAFK_ON = f"on: {AFK_.reason}"
     elif media_t != "Sticker" and media_t:
         if not BOTLOG:
             return await edl(
@@ -129,7 +130,6 @@ async def afksetter(event):
             )
             if isinstance(last_seen_status.rules, PrivacyValueAllowAll):
                 AFK_.afk_time = datetime.now()
-            AFK_.USERAFK_ON = f"on: {AFK_.reason}"
             if gvar("AFKBIO"):
                 try:
                     await event.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
@@ -141,15 +141,16 @@ async def afksetter(event):
                 await edl(event, "`I'm going afk! `", 5)
             AFK_.media_afk = await reply.forward_to(BOTLOG_CHATID)
             if AFK_.reason:
-                await event.client.send_message(
+                await doge.tgbot.send_message(
                     BOTLOG_CHATID,
                     f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
                 )
             else:
-                await event.client.send_message(
+                await doge.tgbot.send_message(
                     BOTLOG_CHATID,
                     "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                 )
+            AFK_.USERAFK_ON = f"on: {AFK_.reason}"
 
 
 @doge.bot_cmd(outgoing=True, edited=False)
@@ -175,7 +176,7 @@ async def set_not_afk(event):
             endtime += f"{h}h {m}m {s}s"
         else:
             endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
-    current_message = event.message.message
+    current_message = event.message.message.lower()
     if (("afk" not in current_message) or ("#afk" not in current_message)) and (
         "on" in AFK_.USERAFK_ON
     ):
@@ -194,7 +195,7 @@ async def set_not_afk(event):
         await shite.delete()
         AFK_.afk_on = False
         if BOTLOG:
-            await event.client.send_message(
+            await doge.tgbot.send_message(
                 BOTLOG_CHATID,
                 "#AFKFALSE \n`Set AFK mode to False\n"
                 + "Back alive! No Longer afk.\nWas afk for "
@@ -231,17 +232,16 @@ async def on_afk(event):  # sourcery no-metrics
     current_message_text = event.message.message.lower()
     if "afk" in current_message_text or "#afk" in current_message_text:
         return False
-    if not await event.get_sender():
+    sndr = await event.get_sender()
+    if not sndr:
         return
-    if AFK_.USERAFK_ON and not (
-        (await event.get_sender()).bot or (await event.get_sender()).verified
-    ):
+    if AFK_.USERAFK_ON and not (sndr.bot or sndr.verified):
         msg = None
         user = None
         try:
             user = await event.client.get_entity(event.message.from_id)
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         mention = f"[{user.first_name}](tg://user?id={user.id})"
         first = user.first_name
         last = user.last_name if user.last_name else ""
@@ -320,28 +320,38 @@ async def on_afk(event):  # sourcery no-metrics
         try:
             full = await event.client.get_entity(event.message.from_id)
         except Exception as e:
-            LOGS.info(str(e))
+            LOGS.error(f"🚨 {str(e)}")
         messaget = media_type(event)
-        resalt = f"💤 #TAG_AFK\n<b>👥 Group: </b><code>{hmm.title}</code>"
+        resalt = f"💤 #TAG_AFK\n<b>👥 Group: {hmm.title}</b>"
         if full is not None:
             resalt += (
                 f"\n<b>👤 From: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
             )
         if messaget is not None:
-            resalt += f"\n<b>🔅 Message Type: </b><code>{messaget}</code>"
+            resalt += f"\n<b>🔅 Message Type: </b>{messaget}"
         else:
-            resalt += f"\n<b>🔹 Message: </b>{event.message.message}"
+            resalt += f"\n<b>🔹 Message: </b><code>{event.message.message}</code>"
         button = [
             (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
         ]
         if not event.is_private:
-            await event.client.send_message(
+            await doge.tgbot.send_message(
                 PM_LOGGER_GROUP_ID,
                 resalt,
                 parse_mode="html",
                 link_preview=False,
+                buttons=button,
             )
-        if messaget is not None:
-            await event.client.forward_messages(
-                PM_LOGGER_GROUP_ID, event.message, silent=True
-            )
+            if messaget is not None:
+                try:
+                    await doge.tgbot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
+                except Exception as me:
+                    LOGS.warning(me)
+                    try:
+                        media = await event.download_media()
+                        await doge.tgbot.send_message(
+                            PM_LOGGER_GROUP_ID, file=media,
+                        )
+                        return remove(media)
+                    except Exception as er:
+                        LOGS.error(er)
