@@ -77,11 +77,11 @@ async def checking_id():
     """
     Kullanıcı kimliği kontrolü
     """
-    me = await doge.get_me()
-    mi = me.id
+    doge.me = await doge.get_me()
+    doge.uid = doge.me.id
     if gvar("OWNER_ID") is None:
-        sgvar("OWNER_ID", mi)
-    if gvar("OWNER_ID") != mi:
+        sgvar("OWNER_ID", doge.uid)
+    if gvar("OWNER_ID") != doge.uid:
         LOGS.error(
             "🚨 Kullanıcı değişikliği algıladım.\
             \n🔃 Kurulumu yeniden başlatıyorum..."
@@ -114,15 +114,14 @@ async def setup_assistantbot():
         sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
     LOGS.info("🦴 Sizin için @BotFather'dan asistan bot oluşturuyorum.")
-    me = await doge.get_me()
     if Config.ALIVE_NAME:
         botname = f"🐶 {Config.ALIVE_NAME} Asɪsᴛᴀɴ Boᴛ"
     else:
-        botname = f"🐶 {me.first_name} Asɪsᴛᴀɴ Boᴛ"
-    if me.username:
-        botusername = me.username + "Bot"
+        botname = f"🐶 {doge.me.first_name} Asɪsᴛᴀɴ Boᴛ"
+    if doge.me.username:
+        botusername = doge.me.username + "Bot"
     else:
-        botusername = "Doge_" + (str(me.id))[5:] + "_Bot"
+        botusername = "Doge_" + (str(doge.me.id))[5:] + "_Bot"
     bf = "BotFather"
     try:
         await doge.send_message(bf, "/cancel")
@@ -158,7 +157,7 @@ async def setup_assistantbot():
     await doge.send_read_acknowledge(bf)
     if is_ok.startswith("Sorry,"):
         ran = randint(1, 100)
-        botusername = "Doge_" + (str(me.id))[6:] + str(ran) + "_Bot"
+        botusername = "Doge_" + (str(doge.uid))[6:] + str(ran) + "_Bot"
         await doge.send_message(bf, botusername)
         await sleep(1)
         now_ok = (await doge.get_messages(bf, limit=1))[0].text
@@ -213,6 +212,7 @@ async def setup_me_bot():
         LOGS.error(f"🚨 {boter}")
         dgvar("BOT_TOKEN")
         exit()
+    doge.tgbot.me = await doge.tgbot.get_me()
     Config.BOT_USERNAME = f"@{doge.tgbot.me.username}"
 
 
@@ -240,8 +240,7 @@ async def load_plugins(folder):
     Eklentileri belirtilen klasörden yükleme
     """
     path = f"userbot/{folder}/*.py"
-    files = glob(path)
-    files.sort()
+    files = sorted(glob(path))
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
@@ -384,11 +383,10 @@ async def customize_assistantbot():
     Asistan kişiselleştirilir
     """
     try:
-        bot = await doge.get_entity(doge.tgbot.me.username)
+        bot = await doge.get_entity(BOT_USERNAME)
         bf = "BotFather"
         if bot.photo is None:
             LOGS.info("🎨 Telegram asistan botunuzu @BotFather ile özelleştiriyorum.")
-            botusername = f"@{doge.tgbot.me.username}"
             if (doge.me.username) is None:
                 master = doge.me.first_name
             else:
@@ -399,13 +397,13 @@ async def customize_assistantbot():
             await sleep(1)
             await doge.send_message(bf, "/setuserpic")
             await sleep(1)
-            await doge.send_message(bf, botusername)
+            await doge.send_message(bf, BOT_USERNAME)
             await sleep(1)
             await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
             await sleep(2)
             await doge.send_message(bf, "/setabouttext")
             await sleep(1)
-            await doge.send_message(bf, botusername)
+            await doge.send_message(bf, BOT_USERNAME)
             await sleep(1)
             await doge.send_message(
                 bf,
@@ -415,7 +413,7 @@ async def customize_assistantbot():
             await sleep(1.5)
             await doge.send_message(bf, "/setdescription")
             await sleep(1)
-            await doge.send_message(bf, botusername)
+            await doge.send_message(bf, BOT_USERNAME)
             await sleep(1)
             await doge.send_message(
                 bf,
@@ -426,7 +424,7 @@ async def customize_assistantbot():
             await sleep(1.5)
             await doge.send_message(bf, "/setcommands")
             await sleep(1)
-            await doge.send_message(bf, botusername)
+            await doge.send_message(bf, BOT_USERNAME)
             await sleep(1)
             await doge.send_message(
                 bf,
@@ -438,7 +436,7 @@ async def customize_assistantbot():
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
             LOGS.info(
-                f"✅ Başarılı! @{botusername} Telegramda asistan botunuzu özelleştirdim!"
+                f"✅ Başarılı! {BOT_USERNAME} Telegramda asistan botunuzu özelleştirdim!"
             )
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")
