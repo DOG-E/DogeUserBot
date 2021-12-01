@@ -8,7 +8,7 @@
 # ================================================================
 from html_telegraph_poster import TelegraphPoster
 
-from .. import TELEGRAPH_SHORT_NAME
+from ..sql_helper.globals import gvar
 
 
 def media_type(message):
@@ -33,10 +33,10 @@ def media_type(message):
 
 async def post_to_telegraph(page_title, html_format_content):
     post_client = TelegraphPoster(use_api=True)
-    post_client.create_api_token(TELEGRAPH_SHORT_NAME)
+    post_client.create_api_token(gvar("TELEGRAPH_SHORT_NAME"))
     post_page = post_client.post(
         title=page_title,
-        author=TELEGRAPH_SHORT_NAME,
+        author=gvar("TELEGRAPH_SHORT_NAME"),
         author_url="https://t.me/DogeUserBot",
         text=html_format_content,
     )

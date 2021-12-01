@@ -11,9 +11,9 @@ from json import dumps
 from requests import post
 from telegraph import Telegraph
 
-from ... import TELEGRAPH_SHORT_NAME
 from ...Config import Config
 from ...core.logger import logging
+from ...sql_helper.globals import gvar
 from ..tools import post_to_telegraph
 
 LOGS = logging.getLogger("DogeUserBot")
@@ -24,7 +24,7 @@ headers = {
 }
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+    short_name=gvar("TELEGRAPH_SHORT_NAME"), author_url="https://t.me/DogeUserBot"
 )
 auth_url = r["auth_url"]
 
