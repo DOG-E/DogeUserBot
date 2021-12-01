@@ -26,7 +26,14 @@ from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import ChatAdminRights
 
-from .. import BOT_USERNAME, BOTLOG, BOTLOG_CHATID, PLUGIN_CHANNEL, PM_LOGGER_GROUP_ID, tr
+from .. import (
+    BOT_USERNAME,
+    BOTLOG,
+    BOTLOG_CHATID,
+    PLUGIN_CHANNEL,
+    PM_LOGGER_GROUP_ID,
+    tr,
+)
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge

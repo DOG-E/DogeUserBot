@@ -165,7 +165,9 @@ async def autopmlog(PM_LOGGER_GROUP_ID, Config, doge):
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PM_LOGGER_GROUP_ID", groupid)
-        LOGS.info(f"✅ PM_LOGGER_GROUP_ID için grup başarıyla oluşturuldu ve değerler yazıldı!")
+        LOGS.info(
+            f"✅ PM_LOGGER_GROUP_ID için grup başarıyla oluşturuldu ve değerler yazıldı!"
+        )
     return True
 
 

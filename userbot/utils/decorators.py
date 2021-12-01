@@ -156,14 +156,14 @@ def errors_handler(func):
                         \n\
                         \n🚨 Hata Metni:\
                         \n{e}".format(
-                            d=date,
-                            cid=str(check.chat_id),
-                            sid=str(check.sender_id),
-                            msg=await check.client.get_msg_link(check),
-                            t=str(check.text),
-                            f=str(format_exc()),
-                            e=str(exc_info()[1]),
-                        )
+                d=date,
+                cid=str(check.chat_id),
+                sid=str(check.sender_id),
+                msg=await check.client.get_msg_link(check),
+                t=str(check.text),
+                f=str(format_exc()),
+                e=str(exc_info()[1]),
+            )
             new = {
                 "error": str(exc_info()[1]),
                 "date": datetime.now(),
@@ -180,9 +180,7 @@ def errors_handler(func):
             text += "\n\n"
             text += "🐾 Bu mesajı {} iletin.".format(link)
             text += "\n\n"
-            text += (
-                "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
-            )
+            text += "__**🦴 Hata ve tarih dışında hiçbir şey kaydedilmez!**__"
             text += "\n\n"
             text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
             await check.client.send_message(

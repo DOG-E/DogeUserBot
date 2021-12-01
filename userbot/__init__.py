@@ -87,18 +87,18 @@ ALIVE_NAME = gvar("ALIVE_NAME")
 AUTONAME = gvar("AUTONAME")
 
 BIO_PREFIX = gvar("BIO_PREFIX")
-DEFAULT_BIO = (gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾")
+DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
 
-OWNER_ID = (gvar("OWNER_ID") or doge.uid)
+OWNER_ID = gvar("OWNER_ID") or doge.uid
 mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={OWNER_ID})"
 hmention = f"<a href = tg://user?id={OWNER_ID}>{gvar('ALIVE_NAME')}</a>"
 
-TELEGRAPH_SHORT_NAME = (gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot")
+TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
 
 
 # VARIABLES:
-CHANGE_TIME = (gvar("CHANGE_TIME") or "60")
-tr = (gvar("CMDSET") or ".")
+CHANGE_TIME = gvar("CHANGE_TIME") or "60"
+tr = gvar("CMDSET") or "."
 
 
 # ASSISTANT BOT:
@@ -113,7 +113,7 @@ FBAN_GROUP_ID = (
 )
 PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
 PM_LOGGER_GROUP_ID = gvar("PM_LOGGER_GROUP_ID")
-PRIVATE_CHANNEL_ID = (gvar("PRIVATE_CHANNEL_ID") or "me")
+PRIVATE_CHANNEL_ID = gvar("PRIVATE_CHANNEL_ID") or "me"
 
 
 # API VARS:
@@ -165,8 +165,8 @@ TG_2STEP_VERIFICATION_CODE = gvar("TG_2STEP_VERIFICATION_CODE")
 
 WATCH_COUNTRY = gvar("WATCH_COUNTRY")
 
-WEATHER_API = (gvar("WEATHER_API") or "6fded1e1c5ef3f394283e3013a597879")
-WEATHER_CITY = (gvar("WEATHER_CITY") or "Istanbul")
+WEATHER_API = gvar("WEATHER_API") or "6fded1e1c5ef3f394283e3013a597879"
+WEATHER_CITY = gvar("WEATHER_CITY") or "Istanbul"
 
 
 # PM:
@@ -192,7 +192,9 @@ if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
 thumb_image_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 if gvar("THUMB_IMAGE") is not None:
-    check = validatorsurl((gvar("THUMB_IMAGE") or "https://telegra.ph/file/6086da8c041f5de3227ed.jpg"))
+    check = validatorsurl(
+        (gvar("THUMB_IMAGE") or "https://telegra.ph/file/6086da8c041f5de3227ed.jpg")
+    )
     if check:
         try:
             with open(thumb_image_path, "wb") as f:

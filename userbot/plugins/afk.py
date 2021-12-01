@@ -350,7 +350,8 @@ async def on_afk(event):  # sourcery no-metrics
                     try:
                         media = await event.download_media()
                         await doge.tgbot.send_message(
-                            PM_LOGGER_GROUP_ID, file=media,
+                            PM_LOGGER_GROUP_ID,
+                            file=media,
                         )
                         return remove(media)
                     except Exception as er:

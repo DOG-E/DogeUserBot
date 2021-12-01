@@ -10,6 +10,7 @@
 # ================================================================
 
 from os import remove
+
 from telethon import Button
 
 from ..sql_helper import no_log_pms_sql
@@ -86,6 +87,7 @@ async def log_tagged_messages(event):
         return
 
     from .afk import AFK_
+
     hmm = await event.get_chat()
     sndr = await event.get_sender()
     if (
@@ -130,7 +132,8 @@ async def log_tagged_messages(event):
                 try:
                     media = await event.download_media()
                     await doge.tgbot.send_message(
-                        PM_LOGGER_GROUP_ID, file=media,
+                        PM_LOGGER_GROUP_ID,
+                        file=media,
                     )
                     return remove(media)
                 except Exception as er:

@@ -26,6 +26,7 @@ from youtubesearchpython import VideosSearch
 
 from userbot import doge, tr
 
+from .. import mention
 from ..Config import Config
 from ..helpers.functions import rand_key
 from ..helpers.functions.utube import (
@@ -35,7 +36,6 @@ from ..helpers.functions.utube import (
     result_formatter,
     ytsearch_data,
 )
-from .. import mention
 from ..sql_helper.globals import gvar
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .logger import logging

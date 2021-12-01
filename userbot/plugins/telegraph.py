@@ -34,7 +34,9 @@ plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
 telegraph = Telegraph()
-r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot")
+r = telegraph.create_account(
+    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+)
 auth_url = r["auth_url"]
 
 

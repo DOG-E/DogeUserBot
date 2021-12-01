@@ -192,7 +192,9 @@ def get_spotify_info(TIME=5):
         nowtime = int(data["progress_ms"])
         totaltime = int(item["duration_ms"])
         if len(item["album"]["images"]) > 0:
-            telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot")
+            telegraph.create_account(
+                short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+            )
             if path.exists("@DogeUserBot-Spotify.jpg"):
                 remove("@DogeUserBot-Spotify.jpg")
             try:
