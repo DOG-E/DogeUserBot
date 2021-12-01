@@ -24,7 +24,8 @@ headers = {
 }
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"), author_url="https://t.me/DogeUserBot"
+    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"),
+    author_url="https://t.me/DogeUserBot",
 )
 auth_url = r["auth_url"]
 
