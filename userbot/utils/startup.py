@@ -52,7 +52,7 @@ LOGS = logging.getLogger("DogeUserBot")
 
 async def setup_bot():
     """
-    DogeUserBot kurulumu
+    Oturuma bağlanır
     """
     try:
         await doge.connect()
@@ -198,7 +198,7 @@ async def setup_assistantbot():
 
 async def setup_me_bot():
     """
-    Gerekli bazı verileri ayarlama
+    Gerekli bazı verileri ayarlar
     """
     if gvar("ALIVE_NAME") is None:
         if Config.ALIVE_NAME:
@@ -218,7 +218,7 @@ async def setup_me_bot():
 
 async def ipchange():
     """
-    IP'nin değişip değişmeyeceğini kontrol etme
+    IP'nin değişip değişmeyeceğini kontrol eder
     """
     newip = (get("https://httpbin.org/ip").json())["origin"]
     if gvar("ipaddress") is None:
@@ -237,7 +237,7 @@ async def ipchange():
 
 async def load_plugins(folder):
     """
-    Eklentileri belirtilen klasörden yükleme
+    Eklentileri belirtilen klasörden yükler
     """
     path = f"userbot/{folder}/*.py"
     files = sorted(glob(path))
@@ -270,7 +270,7 @@ async def load_plugins(folder):
 
 async def verifyLoggerGroup():
     """
-    Kanal ve logger gruplarını doğrulayacak kısım
+    Kanal ve logger gruplarını doğrular
     """
     flag = False
     a_ = await autobotlog(BOTLOG, BOTLOG_CHATID, Config, doge)
@@ -296,7 +296,7 @@ async def verifyLoggerGroup():
 
 async def add_bot_to_logger_group(chat_id):
     """
-    Asistan botu log gruplarına ekleme
+    Asistan botu log gruplarına ekler
     """
     try:
         await doge(
@@ -380,7 +380,7 @@ async def startupmessage():
 
 async def customize_assistantbot():
     """
-    Asistan kişiselleştirilir
+    Asistanı kişiselleştirir
     """
     try:
         bot = await doge.get_entity(BOT_USERNAME)

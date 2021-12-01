@@ -41,8 +41,6 @@ except Exception as e:
 class DogCheck:
     def __init__(self):
         self.sucess = True
-
-
 Dogcheck = DogCheck()
 
 
@@ -51,11 +49,11 @@ async def startup_process():
     if check is not None:
         Dogcheck.sucess = False
         return
-    doge.loop.run_until_complete(checking_id())
+    await checking_id()
     if gvar("BOT_TOKEN") is None:
-        doge.loop.run_until_complete(setup_assistantbot())
-    doge.loop.run_until_complete(setup_me_bot())
-    doge.loop.run_until_complete(customize_assistantbot())
+        await setup_assistantbot()
+    await setup_me_bot()
+    await customize_assistantbot()
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
