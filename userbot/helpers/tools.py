@@ -33,10 +33,10 @@ def media_type(message):
 
 async def post_to_telegraph(page_title, html_format_content):
     post_client = TelegraphPoster(use_api=True)
-    post_client.create_api_token(gvar("TELEGRAPH_SHORT_NAME"))
+    post_client.create_api_token((gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"))
     post_page = post_client.post(
         title=page_title,
-        author=gvar("TELEGRAPH_SHORT_NAME"),
+        author=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"),
         author_url="https://t.me/DogeUserBot",
         text=html_format_content,
     )
