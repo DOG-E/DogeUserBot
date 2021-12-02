@@ -24,7 +24,7 @@ from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequ
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest
-from telethon.tl.types import ChatAdminRights
+from telethon.tl.types import ChatAdminRights, User
 from telethon.utils import get_peer_id
 
 from .. import (
@@ -48,7 +48,7 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import dgvar, gvar, sgvar
 from .pluginmanager import load_module
-from .tools import autobotlog, autopluginch, autopmlog, checkingpmlog
+from .tools import create_channel, create_supergroup
 
 LOGS = logging.getLogger("DogeUserBot")
 
@@ -194,7 +194,7 @@ async def setup_assistantbot():
         sleep(1)
         await doge.send_message(bf, f"@{botusername}")
         sleep(1)
-        await doge.send_message(bf, "🐶 keşfet...")
+        await doge.send_message(bf, "🐶 Keşfet...")
         LOGS.info(f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!")
     else:
         LOGS.error(
@@ -280,19 +280,134 @@ async def verifyLoggerGroup():
     Kanal ve logger gruplarını doğrular
     """
     flag = False
-    a_ = await autobotlog(BOT_USERNAME, BOTLOG, BOTLOG_CHATID, doge)
-    if a_:
+    odogeubc = "🧡 @DogeUserBot"
+    if BOTLOG:
+        vinfo = "PRIVATE_GROUP_BOT_API_ID"
+        try:
+            entity = await doge.get_entity(BOTLOG_CHATID)
+            if not isinstance(entity, User) and not entity.creator:
+                if entity.default_banned_rights.send_messages:
+                    LOGS.error(
+                        f"🚨Belirtilen {vinfo} için mesaj göndermeyi eksik olan izinler."
+                    )
+                if entity.default_banned_rights.invite_users:
+                    LOGS.error(
+                        f"🚨 Belirtilen {vinfo} için üye ekleme izni eksik. Lütfen kontrol edin!."
+                    )
+        except ValueError:
+            LOGS.error(
+                f"🚨 {vinfo} değerini bulamadım. Lütfen doğru olduğundan emin olun!"
+            )
+        except TypeError:
+            LOGS.error(
+                f"🚨 {vinfo} desteklenmiyor/hatalı. Lütfen doğru olduğundan emin olun!"
+            )
+        except Exception as e:
+            LOGS.error(
+                f"🚨 {vinfo} değerini doğrulamaya çalışırken bir hata oluştu.\nHATA: {str(e)}"
+            )
+    else:
+        descript = f"🚧 BU GRUBU SİLMEYİN!\n\
+        \n🗑 Eğer bu grubu silerseniz,\
+        \n🐾 Doge çalışmayacaktır.\n\
+        \n{odogeubc}"
+        gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
+        _, groupid = await create_supergroup(
+            f"🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
+        )
+        descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
+        \n🚧 BU GRUPTAN AYRILMAYIN!\
+        \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+        \n🗑 Eğer bu grubu silerseniz,\
+        \n🐾 Doge çalışmayacaktır!\n\
+        \n**{odogeubc}**"
+        msg = await doge.send_message(groupid, descmsg)
+        await msg.pin()
+        sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
+        vinfo = "PRIVATE_GROUP_BOT_API_ID"
+        LOGS.info(
+            f"✅ {vinfo} için özel bir grup başarıyla oluşturdum!"
+        )
         flag = True
 
-    b_ = await autopmlog(BOT_USERNAME, PM_LOGGER_GROUP_ID, Config, doge)
-    if b_:
-        flag = True
+    if Config.PMLOGGER:
+        if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
+            vinfo = "PM_LOGGER_GROUP_ID"
+            try:
+                entity = await doge.get_entity(PM_LOGGER_GROUP_ID)
+                if not isinstance(entity, User) and not entity.creator:
+                    if entity.default_banned_rights.send_messages:
+                        LOGS.error(
+                            f"🚨 Belirtilen {vinfo} için mesaj gönderme izni eksik. Doğruluğundan emin olun!"
+                        )
+                    if entity.default_banned_rights.invite_users:
+                        LOGS.error(
+                            f"🚨Belirtilen {vinfo} için üye ekleme izni eksik. Doğruluğundan emin olun!"
+                        )
+            except ValueError:
+                LOGS.error(f"🚨 {vinfo} değerini bulamadım. Doğruluğundan emin olun.")
+            except TypeError:
+                LOGS.error(f"🚨 {vinfo} desteklenmiyor. Doğruluğundan emin olun.")
+            except Exception as e:
+                LOGS.error(
+                    f"🚨 {vinfo} doğrulanmaya çalışırken bir hata oluştu.\nHATA: {str(e)}"
+                )
+        else:
+            descript = f"🚧 BU GRUBU SİLMEYİN!\n\
+            \n🗑 Eğer silerseniz,\
+            \n🚫 PM Logger çalışmayacaktır.\n\
+            \n{odogeubc}"
+            gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
+            _, groupid = await create_supergroup(
+                f"🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
+            )
+            descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
+            \n🚧 BU GRUPTAN AYRILMAYIN!\
+            \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+            \n🗑 Eğer bu grubu silerseniz,\
+            \n🚫 PM Logger özelliği çalışmayacaktır.\n\
+            \n**🦴 EĞER GRUBU SİLMEK İSTERSENİZ,\
+            \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
+            \n`.set var PMLOGGER False`\n\
+            \n**{odogeubc}**"
+            msg = await doge.send_message(groupid, descmsg)
+            await msg.pin()
+            sgvar("PM_LOGGER_GROUP_ID", groupid)
+            LOGS.info(
+                f"✅ PM_LOGGER_GROUP_ID için grup başarıyla oluşturuldu ve değerler yazıldı!"
+            )
+            flag = True
 
-    await checkingpmlog(PM_LOGGER_GROUP_ID, doge)
-
-    c_ = await autopluginch(PLUGIN_CHANNEL, Config, doge)
-    if c_:
-        flag = True
+    if Config.PLUGINS:
+        if PLUGIN_CHANNEL:
+            flag = True
+        else:
+            descript = f"🚧 BU KANALI SİLMEYİN!\n\
+            \n🗑 Eğer bu kanalı silerseniz,\
+            \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
+            \n{odogeubc}"
+            cphoto = await doge.upload_file(
+                file="userbot/helpers/resources/DogeExtraPlugin.jpg"
+            )
+            _, channelid = await create_channel(
+                f"🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
+            )
+            descmsg = f"**🚧 BU KANALI SİLMEYİN!\
+            \n🚧 BU KANALDAN AYRILMAYIN!\
+            \n🚧 BU KANALDA DEĞİŞİKLİK YAPMAYIN!**\n\
+            \n🗑 Eğer silerseniz,\
+            \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
+            \n**🦴 EĞER KANALI SİLMEK İSTERSENİZ,\
+            \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
+            \n`.set var PLUGINS False`\n\
+            \n**{odogeubc}**"
+            msg = await doge.send_message(channelid, descmsg)
+            await msg.pin()
+            sgvar("PLUGIN_CHANNEL", channelid)
+            LOGS.info(
+                "✅ PLUGIN_CHANNEL için gizli bir kanal başarıyla oluşturuldu ve veriler veritabanına yazıldı."
+            )
+            flag = True
 
     if flag:
         executable = sysexecutable.replace(" ", "\\ ")
