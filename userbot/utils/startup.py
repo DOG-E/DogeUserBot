@@ -180,9 +180,7 @@ async def setup_assistantbot():
             await doge.send_message(bf, f"@{botusername}")
             sleep(1)
             await doge.send_message(bf, "🐶 Keşfet...")
-            LOGS.info(
-                f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!"
-            )
+            LOGS.info(f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!")
         else:
             LOGS.error(
                 "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_TOKEN'i ayarlayın."
@@ -197,9 +195,7 @@ async def setup_assistantbot():
         await doge.send_message(bf, f"@{botusername}")
         sleep(1)
         await doge.send_message(bf, "🐶 keşfet...")
-        LOGS.info(
-            f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!"
-        )
+        LOGS.info(f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!")
     else:
         LOGS.error(
             "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_TOKEN'i ayarlayın."
@@ -397,7 +393,9 @@ async def customize_assistantbot():
         bot = await doge.get_entity(BOT_USERNAME)
         bf = "BotFather"
         if bot.photo is None:
-            LOGS.info(f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum.")
+            LOGS.info(
+                f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum."
+            )
             if (doge.me.username) is None:
                 master = doge.me.first_name
             else:
@@ -446,8 +444,6 @@ async def customize_assistantbot():
                 \nyasakac - 🔰 Kullanıcının yasağını kaldırma\
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
-            LOGS.info(
-                f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!"
-            )
+            LOGS.info(f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!")
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")
