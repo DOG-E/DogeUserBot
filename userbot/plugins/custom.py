@@ -230,12 +230,12 @@ async def dbsetter(event):  # sourcery no-metrics
 
             sgvar(vname, vinfo)
             if BOTLOG_CHATID:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"#SET_DATAVAR\
                     \n**{vname}** is updated newly in database as below",
                 )
-                await doge.tgbot.send_message(BOTLOG_CHATID, vinfo, silent=True)
+                await doge.bot.send_message(BOTLOG_CHATID, vinfo, silent=True)
             msg = await edl(
                 event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
@@ -248,7 +248,7 @@ async def dbsetter(event):  # sourcery no-metrics
             var_data = gvar(vname)
             dgvar(vname)
             if BOTLOG_CHATID:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"#DEL_DATAVAR\
                     \n**{vname}** is deleted from database\
@@ -274,12 +274,12 @@ async def dbsetter(event):  # sourcery no-metrics
 
             sgvar(apiname, apinfo)
             if BOTLOG_CHATID:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"#SET_APIDATA\
                     \n**{apiname}** is updated newly in database as below",
                 )
-                await doge.tgbot.send_message(BOTLOG_CHATID, apinfo, silent=True)
+                await doge.bot.send_message(BOTLOG_CHATID, apinfo, silent=True)
             msg = await edl(
                 event,
                 f"🔮 Value of **{apiname}** is changed.",
@@ -290,7 +290,7 @@ async def dbsetter(event):  # sourcery no-metrics
         if cmd == "g":
             api_data = gvar(apiname)
             await edl(event, "**I sent API data to BOTLOG.**")
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"🔮 Value of **{apiname}** is  `{api_data}`",
             )
@@ -298,7 +298,7 @@ async def dbsetter(event):  # sourcery no-metrics
             api_data = gvar(apiname)
             dgvar(apiname)
             if BOTLOG_CHATID:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"#DEL_APIDATA\
                     \n**{apiname}** is deleted from database\
@@ -326,12 +326,12 @@ async def dbsetter(event):  # sourcery no-metrics
 
                 sgvar(gvarname, gvarinfo)
                 if BOTLOG_CHATID:
-                    await doge.tgbot.send_message(
+                    await doge.bot.send_message(
                         BOTLOG_CHATID,
                         f"#SET_GLOBALDATAVAR\
                         \n**⚙️ {gvarname}** is updated newly in database as below",
                     )
-                    await doge.tgbot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
+                    await doge.bot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
                 msg = await edl(
                     event,
                     f"⚙️ Value of **{gvarname}** is changed.",
@@ -341,7 +341,7 @@ async def dbsetter(event):  # sourcery no-metrics
             if cmd == "g":
                 gvardata = gvar(gvarname)
                 await edl(event, "**I sent global data var to BOTLOG.**")
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
                 )
@@ -349,7 +349,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 gvardata = gvar(gvarname)
                 dgvar(gvarname)
                 if BOTLOG_CHATID:
-                    await doge.tgbot.send_message(
+                    await doge.bot.send_message(
                         BOTLOG_CHATID,
                         f"#DEL_GLOBALDATAVAR\
                         \n**{gvarname}** is deleted from database\
@@ -497,27 +497,27 @@ async def lang_set(value):
 
     if BOTLOG:
         if input_str == "trt":
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#SET_LANGUAGE\n\n**🌐 Language for Translator changed to {LANG.title()}.**",
             )
         elif input_str == "tts":
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#SET_LANGUAGE\n\n**🌐 Language for Text to Speech changed to {LANG.title()}.**",
             )
         elif input_str == "tocr":
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#SET_LANGUAGE\n\n**🌐 Language for Translated OCR changed to {LANG.title()}.**",
             )
         elif input_str == "ai":
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#SET_LANGUAGE\n\n**🌐 Language for AI ChatBot is changed to {LANG.title()}.**",
             )
         elif input_str == "xg":
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#SET_LANGUAGE\n\n**🌐 Language for @XiaomiGeekBot is changed to {LANG.title()}.**",
             )

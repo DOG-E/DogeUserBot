@@ -199,7 +199,7 @@ query ($search: String) {
 async def get_anime_schedule(weekid):
     "Anime programını alın"
     dayname = get_weekday(weekid)
-    result = f"✙ **Planlanmış animasyonlar için {dayname.title()} burada:**\n\n"
+    result = f"✙ **Planlanmış Animeler için {dayname.title()} Burada:**\n\n"
     async with AioJikan() as animesession:
         scheduled_list = (await animesession.schedule(day=dayname)).get(dayname)
         for a_name in scheduled_list:
@@ -267,13 +267,13 @@ async def anilist_user(input_str):
         f"""
 **Kullanıcı Adı:** [{user_data['name']}]({user_data['siteUrl']})
 **Anilist ID:** `{user_data['id']}`
-**✙ Anime istatistikleri**
+**✙ Anime İstatistikleri**
 • **Animenin Toplam İzlenmesi:** `{user_data["statistics"]["anime"]['count']}`
 • **Bölümün Toplam İzlenmesi:** `{user_data["statistics"]["anime"]['episodesWatched']}`
 • **Harcanan Toplam Zaman:** `{readable_time(user_data["statistics"]["anime"]['minutesWatched']*60)}`
 • **Not Ortalaması:** `{user_data["statistics"]["anime"]['meanScore']}`
 
-**✙ Manga İstatistikler**
+**✙ Manga İstatistikleri**
 • **Manga'nın Toplam Okunması:** `{user_data["statistics"]["manga"]['count']}`
 • **Bölümün Toplam Okunması:** `{user_data["statistics"]["manga"]['chaptersRead']}`
 • **Seslerin Toplam Dinlenmesi:** `{user_data["statistics"]["manga"]['volumesRead']}`

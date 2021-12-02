@@ -67,7 +67,7 @@ async def bbutton(event):
         tgbot_reply_message = await event.client.download_media(reply_message.media)
     if tl_ib_buttons == []:
         tl_ib_buttons = None
-    await event.client.tgbot.send_message(
+    await event.client.bot.send_message(
         entity=event.chat_id,
         message=message_text,
         parse_mode="html",

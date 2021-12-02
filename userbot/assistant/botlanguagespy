@@ -16,7 +16,7 @@ from . import check_owner, doge, get_back_button, mention, sgvar
 plugin_category = "bot"
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(r"lang_menu")))
+@doge.bot.on(CallbackQuery(data=compile(r"lang_menu")))
 @check_owner
 async def setlang(event):
     buttons = [
@@ -36,7 +36,7 @@ async def setlang(event):
     )
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(b"set_(.*)")))
+@doge.bot.on(CallbackQuery(data=compile(b"set_(.*)")))
 @check_owner
 async def setthelang(event):
     lang = event.data_match.group(1).decode("UTF-8")

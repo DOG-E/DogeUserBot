@@ -117,7 +117,7 @@ async def log_tagged_messages(event):
         (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
     ]
     if not event.is_private:
-        await doge.tgbot.send_message(
+        await doge.bot.send_message(
             PM_LOGGER_GROUP_ID,
             resalt,
             parse_mode="html",
@@ -126,12 +126,12 @@ async def log_tagged_messages(event):
         )
         if messaget is not None:
             try:
-                await doge.tgbot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
+                await doge.bot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
             except Exception as me:
                 LOGS.warning(me)
                 try:
                     media = await event.download_media()
-                    await doge.tgbot.send_message(
+                    await doge.bot.send_message(
                         PM_LOGGER_GROUP_ID,
                         file=media,
                     )

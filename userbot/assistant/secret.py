@@ -15,7 +15,7 @@ from telethon.events import CallbackQuery
 from . import doge
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(b"s_(.*)")))
+@doge.bot.on(CallbackQuery(data=compile(b"s_(.*)")))
 async def on_plug_in_callback_query_handler(event):
     timestamp = int(event.pattern_match.group(1).decode("UTF-8"))
     if path.exists("./userbot/secrets.txt"):

@@ -76,9 +76,9 @@ async def check_bot_started_users(user, event):
     except Exception as e:
         LOGS.error(f"🚨 {str(e)}")
     if PM_LOGGER_GROUP_ID != -100:
-        await doge.tgbot.send_message(PM_LOGGER_GROUP_ID, notification)
+        await doge.bot.send_message(PM_LOGGER_GROUP_ID, notification)
     elif BOTLOG:
-        await doge.tgbot.send_message(BOTLOG_CHATID, notification)
+        await doge.bot.send_message(BOTLOG_CHATID, notification)
 
 
 @doge.shiba_cmd(
@@ -285,7 +285,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                     LOGS.error(f"🚨 {str(e)}")
 
 
-@doge.tgbot.on(MessageDeleted)
+@doge.bot.on(MessageDeleted)
 async def handler(event):
     for msg_id in event.deleted_ids:
         users_1 = get_user_reply(msg_id)
@@ -380,7 +380,7 @@ async def send_flood_alert(user_) -> None:
             FloodConfig.ALERT[user_.id]["count"] = 1
         except Exception as e:
             if BOTLOG:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"**🚨 Hᴀᴛᴀ:**\nℹ️ Flood sayısı güncellenirken hata oluştu.\
                     \n➡️ `{e}`",
@@ -409,7 +409,7 @@ async def send_flood_alert(user_) -> None:
                     \n\nℹ️ `{tr}doge rmsudo` komutunu kontrol edin. İsterseniz bu kullanıcıyı __Sudo Kullanıcılar__'dan kaldırabilirsiniz."
                 )
                 if BOTLOG:
-                    await doge.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
+                    await doge.bot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
@@ -423,7 +423,7 @@ async def send_flood_alert(user_) -> None:
         if not fa_id:
             return
         try:
-            msg_ = await doge.tgbot.get_messages(BOTLOG_CHATID, fa_id)
+            msg_ = await doge.bot.get_messages(BOTLOG_CHATID, fa_id)
             if msg_.text != flood_msg:
                 await msg_.edit(flood_msg, buttons=buttons)
         except Exception as fa_id_err:
@@ -431,21 +431,21 @@ async def send_flood_alert(user_) -> None:
             return
     else:
         if BOTLOG:
-            fa_msg = await doge.tgbot.send_message(
+            fa_msg = await doge.bot.send_message(
                 BOTLOG_CHATID,
                 flood_msg,
                 buttons=buttons,
             )
         try:
-            chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
-            await doge.tgbot.send_message(
+            chat = await doge.bot.get_entity(BOTLOG_CHATID)
+            await doge.bot.send_message(
                 OWNER_ID,
                 f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             await doge(UnblockRequest(BOT_USERNAME))
-            chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
-            await doge.tgbot.send_message(
+            chat = await doge.bot.get_entity(BOTLOG_CHATID)
+            await doge.bot.send_message(
                 OWNER_ID,
                 f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
@@ -453,7 +453,7 @@ async def send_flood_alert(user_) -> None:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(b"bot_pm_ban_([0-9]+)")))
+@doge.bot.on(CallbackQuery(data=compile(b"bot_pm_ban_([0-9]+)")))
 @check_owner
 async def bot_pm_ban_cb(c_q: CallbackQuery):
     user_id = int(c_q.pattern_match.group(1))
@@ -498,7 +498,7 @@ def is_flood(uid: int) -> Optional[bool]:
         return True
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(b"toggle_bot-antiflood_off$")))
+@doge.bot.on(CallbackQuery(data=compile(b"toggle_bot-antiflood_off$")))
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvar("bot_antif") is None:

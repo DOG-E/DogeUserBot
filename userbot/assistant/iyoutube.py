@@ -100,7 +100,7 @@ async def yt_inline(event):
         await dogevent.edit(f"**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
 
 
-@doge.tgbot.on(
+@doge.bot.on(
     CallbackQuery(data=compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?"))
 )
 @check_owner
@@ -194,7 +194,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     )
 
 
-@doge.tgbot.on(
+@doge.bot.on(
     CallbackQuery(data=compile(b"^ytdl_(listall|back|next|detail)_([a-z0-9]+)_(.*)"))
 )
 @check_owner

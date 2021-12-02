@@ -372,9 +372,9 @@ class DogeUserBotClient(TelegramClient):
             from .session import doge
 
             if edited is True:
-                doge.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
+                doge.bot.add_event_handler(func, events.MessageEdited(**kwargs))
             else:
-                doge.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
+                doge.bot.add_event_handler(func, events.NewMessage(**kwargs))
 
             return wrapper
 

@@ -103,12 +103,12 @@ async def afksetter(event):
                 await edl(event, "`I'm going afk! `", 5)
             if BOTLOG:
                 if AFK_.reason:
-                    await doge.tgbot.send_message(
+                    await doge.bot.send_message(
                         BOTLOG_CHATID,
                         f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
                     )
                 else:
-                    await doge.tgbot.send_message(
+                    await doge.bot.send_message(
                         BOTLOG_CHATID,
                         "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                     )
@@ -141,12 +141,12 @@ async def afksetter(event):
                 await edl(event, "`I'm going afk! `", 5)
             AFK_.media_afk = await reply.forward_to(BOTLOG_CHATID)
             if AFK_.reason:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"#AFKTRUE \nSet AFK mode to True, and Reason is {AFK_.reason}",
                 )
             else:
-                await doge.tgbot.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                 )
@@ -195,7 +195,7 @@ async def set_not_afk(event):
         await shite.delete()
         AFK_.afk_on = False
         if BOTLOG:
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#AFKFALSE \n`Set AFK mode to False\n"
                 + "Back alive! No Longer afk.\nWas afk for "
@@ -335,7 +335,7 @@ async def on_afk(event):  # sourcery no-metrics
             (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
         ]
         if not event.is_private:
-            await doge.tgbot.send_message(
+            await doge.bot.send_message(
                 PM_LOGGER_GROUP_ID,
                 resalt,
                 parse_mode="html",
@@ -344,12 +344,12 @@ async def on_afk(event):  # sourcery no-metrics
             )
             if messaget is not None:
                 try:
-                    await doge.tgbot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
+                    await doge.bot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
                 except Exception as me:
                     LOGS.warning(me)
                     try:
                         media = await event.download_media()
-                        await doge.tgbot.send_message(
+                        await doge.bot.send_message(
                             PM_LOGGER_GROUP_ID,
                             file=media,
                         )

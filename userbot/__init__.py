@@ -26,7 +26,7 @@ __copyright__ = "©️ Copyright 2021, " + __author__
 
 doge.version = __version__
 if gvar("BOT_TOKEN"):
-    doge.tgbot.version = __version__
+    doge.bot.version = __version__
 
 LOGS = logging.getLogger("DogeUserBot")
 bot = doge
@@ -102,7 +102,7 @@ tr = gvar("CMDSET") or "."
 
 
 # ASSISTANT BOT:
-BOT_USERNAME = Config.BOT_USERNAME
+BOT_USERNAME = gvar("BOT_USERNAME")
 
 
 # CHANNEL & GROUP IDS:
@@ -112,7 +112,7 @@ FBAN_GROUP_ID = (
     gvar("FBAN_GROUP_ID") if gvar("FBAN_GROUP_ID") is not None else BOTLOG_CHATID
 )
 PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
-PM_LOGGER_GROUP_ID = gvar("PM_LOGGER_GROUP_ID")
+PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 PRIVATE_CHANNEL_ID = gvar("PRIVATE_CHANNEL_ID") or "me"
 
 

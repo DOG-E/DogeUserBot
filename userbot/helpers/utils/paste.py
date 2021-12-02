@@ -43,7 +43,7 @@ async def t_paste(msg, title=None):
 
             await doge.send_message(
                 Config.BOTLOG_CHATID,
-                f"⛓ Geçerli oturum için yeni Telegraph hesabı: {auth_url} oluşturuldu.\n\n**⚠ Telegram Moderatörlerinden olduklarını söyleseler bile bu URL'yi kimseye vermeyin!**",
+                f"⛓ Geçerli oturum için yeni Telegraph hesabı: {auth_url} oluşturuldu.\n\n**⚠ Telegram moderatörlerinden olduklarını söyleseler bile bu URL'yi kimseye vermeyin!**",
             )
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")

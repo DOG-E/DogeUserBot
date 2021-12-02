@@ -105,7 +105,7 @@ async def thisalive(event):
             await eor(event, caption)
 
 
-@doge.tgbot.on(CallbackQuery(data=compile(b"infos")))
+@doge.bot.on(CallbackQuery(data=compile(b"infos")))
 async def on_plug_in_callback_query_handler(event):
     statstext = f"🐶 Doɢᴇ UsᴇʀBoᴛ\
             \n🐾 Bɪʟɢɪ\n\

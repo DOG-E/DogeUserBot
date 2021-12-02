@@ -65,7 +65,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         LOGS.error(f"🚨 {str(e)}")
     banned_msg = f"**🚫 Sonsuza kadar bu botu kullanmadan yasaklandınız.\
         \n⛓ Sebep:** {reason}"
-    await doge.tgbot.send_message(user.id, banned_msg)
+    await doge.bot.send_message(user.id, banned_msg)
     info = f"**⚠️ #BOT_PM_YASAKLAMASİ**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
             \n**ℹ️ İlk İsim** {user.first_name}\
@@ -85,7 +85,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
         /nℹ️ Şimdi sahibime mesaj göndermeye devam edebeilirsin!**"
     if reason is not None:
         banned_msg += f"\n**⛓ Sebep:** `{reason}`"
-    await doge.tgbot.send_message(user.id, banned_msg)
+    await doge.bot.send_message(user.id, banned_msg)
     info = f"**⚠️ #BOT_PM_YASAK_KALDİRİLMASİ**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
             \n**ℹ️ İlk İsim:** {user.first_name}\

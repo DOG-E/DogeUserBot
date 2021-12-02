@@ -45,8 +45,8 @@ except Exception as e:
     exit()
 
 
-doge.tgbot = tgbot = DogeUserBotClient(
-    session="DogeTgBot",
+doge.bot = bot = DogeUserBotClient(
+    session="DogeBot",
     api_id=Config.APP_ID,
     api_hash=Config.API_HASH,
     loop=loop,

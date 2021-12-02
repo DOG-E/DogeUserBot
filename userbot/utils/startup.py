@@ -6,7 +6,6 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from asyncio import sleep
 from asyncio.exceptions import CancelledError
 from datetime import timedelta
 from glob import glob
@@ -15,6 +14,7 @@ from pathlib import Path
 from random import randint
 from sys import executable as sysexecutable
 from sys import exit
+from time import sleep
 
 from pylists import *
 from requests import get
@@ -28,9 +28,11 @@ from telethon.tl.types import ChatAdminRights
 from telethon.utils import get_peer_id
 
 from .. import (
+    ALIVE_NAME,
     BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
+    OWNER_ID,
     PLUGIN_CHANNEL,
     PM_LOGGER_GROUP_ID,
     tr,
@@ -82,14 +84,14 @@ async def checking_id():
         doge.me = await doge.get_me()
         doge.uid = doge.me.id
         dogemeid = get_peer_id(doge.me)
-        if gvar("OWNER_ID") is None:
+        if OWNER_ID is None:
             try:
                 sgvar("OWNER_ID", dogemeid)
             except Exception as owerr:
                 LOGS.error(f"🚨🚨🚨 {owerr}")
-        elif gvar("OWNER_ID") == dogemeid and gvar("OWNER_ID") is not None:
+        elif OWNER_ID == dogemeid and OWNER_ID is not None:
             pass
-        elif gvar("OWNER_ID") != dogemeid and gvar("OWNER_ID") is not None:
+        elif OWNER_ID != dogemeid and OWNER_ID is not None:
             dgvar("OWNER_ID")
             dgvar("ALIVE_NAME")
             dgvar("BOT_TOKEN")
@@ -105,7 +107,7 @@ async def checking_id():
             exit()
     except Exception as dbowerr:
         LOGS.error(f"🚨🚨🚨🚨🚨 {dbowerr}")
-    if gvar("OWNER_ID") in G_YS:
+    if OWNER_ID in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
         LOGS.error(constants.l_gmsgg_ys)
@@ -122,7 +124,7 @@ async def setup_assistantbot():
     if Config.BOT_TOKEN:
         sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
-    LOGS.info("🦴 Sizin için @BotFather'dan asistan bot oluşturuyorum.")
+    LOGS.info("🦴 Sizin için @BotFather'dan asistan botu oluşturuyorum.")
     if Config.ALIVE_NAME:
         botname = f"🐶 {Config.ALIVE_NAME} Asɪsᴛᴀɴ Boᴛ"
     else:
@@ -137,9 +139,9 @@ async def setup_assistantbot():
     except YouBlockedUserError:
         await doge(UnblockRequest(bf))
         await doge.send_message(bf, "/cancel")
-    await sleep(0.5)
+    sleep(0.5)
     await doge.send_message(bf, "/newbot")
-    await sleep(1)
+    sleep(1)
     is_ok = (await doge.get_messages(bf, limit=1))[0].text
     if is_ok.startswith("That I cannot do."):
         LOGS.error(
@@ -148,38 +150,38 @@ async def setup_assistantbot():
         exit()
 
     await doge.send_message(bf, botname)
-    await sleep(1)
+    sleep(1)
     is_ok = (await doge.get_messages(bf, limit=1))[0].text
     if not is_ok.startswith("Good."):
         await doge.send_message(bf, "🐶 Dᴏɢᴇ Asɪsᴛᴀɴıᴍ")
-        await sleep(1)
+        sleep(1)
         is_ok = (await doge.get_messages(bf, limit=1))[0].text
         if not is_ok.startswith("Good."):
             LOGS.error(
-                "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkenine ayar yapın ve beni yeniden başlatın"
+                "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkenine ayar yapın ve beni yeniden başlatın."
             )
             exit()
 
     await doge.send_message(bf, botusername)
-    await sleep(1)
+    sleep(1)
     is_ok = (await doge.get_messages(bf, limit=1))[0].text
     await doge.send_read_acknowledge(bf)
     if is_ok.startswith("Sorry,"):
         ran = randint(1, 100)
         botusername = "Doge_" + (str(doge.uid))[6:] + str(ran) + "_Bot"
         await doge.send_message(bf, botusername)
-        await sleep(1)
+        sleep(1)
         now_ok = (await doge.get_messages(bf, limit=1))[0].text
         if now_ok.startswith("Done!"):
             bottoken = now_ok.split("`")[1]
             sgvar("BOT_TOKEN", bottoken)
             await doge.send_message(bf, "/setinline")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, f"@{botusername}")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, "🐶 Keşfet...")
             LOGS.info(
-                f"✅ Başarılı! @{botusername} Telegram asistanı botunuzu başarıyla oluşturdum!"
+                f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!"
             )
         else:
             LOGS.error(
@@ -191,12 +193,12 @@ async def setup_assistantbot():
         bottoken = is_ok.split("`")[1]
         sgvar("BOT_TOKEN", bottoken)
         await doge.send_message(bf, "/setinline")
-        await sleep(1)
+        sleep(1)
         await doge.send_message(bf, f"@{botusername}")
-        await sleep(1)
+        sleep(1)
         await doge.send_message(bf, "🐶 keşfet...")
         LOGS.info(
-            f"✅ Başarılı! @{botusername} Telegram asistanı botunuzu başarıyla oluşturdum!"
+            f"✅ Başarılı! @{botusername} asistan botunuzu oluşturdum!"
         )
     else:
         LOGS.error(
@@ -209,20 +211,20 @@ async def setup_me_bot():
     """
     Gerekli bazı verileri ayarlar
     """
-    if gvar("ALIVE_NAME") is None:
+    if ALIVE_NAME is None:
         if Config.ALIVE_NAME:
             sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
         else:
             sgvar("ALIVE_NAME", str(doge.me.first_name))
 
     try:
-        await doge.tgbot.start(bot_token=gvar("BOT_TOKEN"))
+        await doge.bot.start(bot_token=gvar("BOT_TOKEN"))
     except Exception as boter:
         LOGS.error(f"🚨 {boter}")
         dgvar("BOT_TOKEN")
         exit()
-    doge.tgbot.me = await doge.tgbot.get_me()
-    Config.BOT_USERNAME = f"@{doge.tgbot.me.username}"
+    doge.bot.me = await doge.bot.get_me()
+    sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
 
 
 async def ipchange():
@@ -282,11 +284,11 @@ async def verifyLoggerGroup():
     Kanal ve logger gruplarını doğrular
     """
     flag = False
-    a_ = await autobotlog(BOTLOG, BOTLOG_CHATID, Config, doge)
+    a_ = await autobotlog(BOT_USERNAME, BOTLOG, BOTLOG_CHATID, doge)
     if a_:
         flag = True
 
-    b_ = await autopmlog(PM_LOGGER_GROUP_ID, Config, doge)
+    b_ = await autopmlog(BOT_USERNAME, PM_LOGGER_GROUP_ID, Config, doge)
     if b_:
         flag = True
 
@@ -347,7 +349,7 @@ async def startupmessage():
     """
     try:
         if BOTLOG:
-            Config.DOGELOGO = await doge.tgbot.send_file(
+            Config.DOGELOGO = await doge.bot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg",
                 caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴıᴍᴀ Hᴀᴢıʀ 🧡**",
@@ -395,46 +397,46 @@ async def customize_assistantbot():
         bot = await doge.get_entity(BOT_USERNAME)
         bf = "BotFather"
         if bot.photo is None:
-            LOGS.info("🎨 Telegram asistan botunuzu @BotFather ile özelleştiriyorum.")
+            LOGS.info(f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum.")
             if (doge.me.username) is None:
                 master = doge.me.first_name
             else:
                 master = f"@{doge.me.username}"
             await doge.send_message(bf, "/cancel")
-            await sleep(0.5)
+            sleep(0.5)
             await doge.send_message(bf, "/start")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, "/setuserpic")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, BOT_USERNAME)
-            await sleep(1)
+            sleep(1)
             await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
-            await sleep(2)
+            sleep(2)
             await doge.send_message(bf, "/setabouttext")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, BOT_USERNAME)
-            await sleep(1)
+            sleep(1)
             await doge.send_message(
                 bf,
                 f"🧡 {master}'ᴜɴ Asɪsᴛᴀɴ Boᴛᴜʏᴜᴍ\n\
                 \n🐶 @DogeUserBot'ᴛᴀɴ ❤️ İʟᴇ Oʟᴜşᴛᴜʀᴜʟᴅᴜ 🐾",
             )
-            await sleep(1.5)
+            sleep(1.5)
             await doge.send_message(bf, "/setdescription")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, BOT_USERNAME)
-            await sleep(1)
+            sleep(1)
             await doge.send_message(
                 bf,
                 f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Asɪsᴛᴀɴ Boᴛᴜ\
                 \n🧡 Sᴀʜɪᴘ: {master}\n\
                 \n🐶 @DogeUserBot'ᴛᴀɴ ❤️ İʟᴇ Oʟᴜşᴛᴜʀᴜʟᴅᴜ 🐾",
             )
-            await sleep(1.5)
+            sleep(1.5)
             await doge.send_message(bf, "/setcommands")
-            await sleep(1)
+            sleep(1)
             await doge.send_message(bf, BOT_USERNAME)
-            await sleep(1)
+            sleep(1)
             await doge.send_message(
                 bf,
                 "start - 🐶 Botunuzu Başlatın\
@@ -445,7 +447,7 @@ async def customize_assistantbot():
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
             LOGS.info(
-                f"✅ Başarılı! {BOT_USERNAME} Telegramda asistan botunuzu özelleştirdim!"
+                f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!"
             )
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")

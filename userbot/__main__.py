@@ -13,7 +13,6 @@ from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 
 from .core.logger import logging
 from .core.session import doge
-from .sql_helper.globals import gvar
 from .utils import (
     add_bot_to_logger_group,
     checking_id,
@@ -52,8 +51,7 @@ async def startup_process():
         Dogcheck.sucess = False
         return
     await checking_id()
-    if gvar("BOT_TOKEN") is None:
-        await setup_assistantbot()
+    await setup_assistantbot()
     await setup_me_bot()
     await customize_assistantbot()
     await verifyLoggerGroup()
