@@ -78,25 +78,33 @@ async def checking_id():
     """
     Kullanıcı kimliği kontrolü
     """
-    doge.me = await doge.get_me()
-    doge.uid = doge.me.id
-    dogemeid = get_peer_id(doge.me)
-    if gvar("OWNER_ID") is None:
-        sgvar("OWNER_ID", dogemeid)
-    if gvar("OWNER_ID") != dogemeid and gvar("OWNER_ID") is not None:
-        LOGS.error(
-            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
-        )
-        dgvar("OWNER_ID")
-        dgvar("ALIVE_NAME")
-        dgvar("BOT_TOKEN")
-        dgvar("PRIVATE_GROUP_BOT_API_ID")
-        dgvar("PM_LOGGER_GROUP_ID")
-        dgvar("PLUGIN_CHANNEL")
-        dgvar("FBAN_GROUP_ID")
-        dgvar("PRIVATE_CHANNEL_ID")
-        dgvar("TG_2STEP_VERIFICATION_CODE")
-        exit()
+    try:
+        doge.me = await doge.get_me()
+        doge.uid = doge.me.id
+        dogemeid = get_peer_id(doge.me)
+        if gvar("OWNER_ID") is None:
+            try:
+                sgvar("OWNER_ID", dogemeid)
+            except Exception as owerr:
+                LOGS.error(f"🚨🚨🚨 {owerr}")
+        elif gvar("OWNER_ID") == dogemeid and gvar("OWNER_ID") is not None:
+            pass
+        elif gvar("OWNER_ID") != dogemeid and gvar("OWNER_ID") is not None:
+            dgvar("OWNER_ID")
+            dgvar("ALIVE_NAME")
+            dgvar("BOT_TOKEN")
+            dgvar("PRIVATE_GROUP_BOT_API_ID")
+            dgvar("PM_LOGGER_GROUP_ID")
+            dgvar("PLUGIN_CHANNEL")
+            dgvar("FBAN_GROUP_ID")
+            dgvar("PRIVATE_CHANNEL_ID")
+            dgvar("TG_2STEP_VERIFICATION_CODE")
+            LOGS.error(
+                "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
+            )
+            exit()
+    except Exception as dbowerr:
+        LOGS.error(f"🚨🚨🚨🚨🚨 {dbowerr}")
     if gvar("OWNER_ID") in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
