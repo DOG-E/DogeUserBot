@@ -87,7 +87,7 @@ async def checking_id():
     if gvar("OWNER_ID") is None:
         sgvar("OWNERID", dogemeid)
     sgvar("OWNER_ID", dogemeid)
-    if (gvar("OWNERID") != gvar("OWNER_ID")):
+    if gvar("OWNERID") != gvar("OWNER_ID"):
         dgvar("OWNER_ID")
         dgvar("ALIVE_NAME")
         dgvar("BOT_TOKEN")
