@@ -13,6 +13,7 @@ from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 
 from .core.logger import logging
 from .core.session import doge
+from .sql_helper.globals import dgvar
 from .utils import (
     add_bot_to_logger_group,
     checking_id,
@@ -80,12 +81,15 @@ doge.loop.run_until_complete(startup_process())
 
 
 if len(argv) not in (1, 3, 4):
+    dgvar("ipaddress")
     doge.disconnect()
 elif not Dogcheck.sucess:
     if HEROKU_APP is not None:
+        dgvar("ipaddress")
         HEROKU_APP.restart()
 else:
     try:
         doge.run_until_disconnected()
     except ConnectionError:
+        dgvar("ipaddress")
         pass

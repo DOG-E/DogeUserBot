@@ -85,10 +85,13 @@ async def _(event):
     await eor(event, "`Turning off bot now ...Manually turn me on later`")
     if HEROKU_APP is not None:
         try:
+            dgvar("ipaddress")
             HEROKU_APP.process_formation()["doger"].scale(0)
         except Exception:
+            dgvar("ipaddress")
             _exit(143)
     else:
+        dgvar("ipaddress")
         _exit(143)
 
 

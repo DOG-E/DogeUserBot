@@ -73,6 +73,7 @@ async def setup_bot():
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
         dgvar("OWNER_ID")
+        dgvar("ipaddress")
         exit()
 
 
@@ -80,37 +81,32 @@ async def checking_id():
     """
     Kullanıcı kimliği kontrolü
     """
-    try:
-        doge.me = await doge.get_me()
-        doge.uid = doge.me.id
-        dogemeid = get_peer_id(doge.me)
-        if OWNER_ID is None:
-            try:
-                sgvar("OWNER_ID", dogemeid)
-            except Exception as owerr:
-                LOGS.error(f"🚨🚨🚨 {owerr}")
-        elif OWNER_ID == dogemeid and OWNER_ID is not None:
-            pass
-        elif OWNER_ID != dogemeid and OWNER_ID is not None:
-            dgvar("OWNER_ID")
-            dgvar("ALIVE_NAME")
-            dgvar("BOT_TOKEN")
-            dgvar("PRIVATE_GROUP_BOT_API_ID")
-            dgvar("PM_LOGGER_GROUP_ID")
-            dgvar("PLUGIN_CHANNEL")
-            dgvar("FBAN_GROUP_ID")
-            dgvar("PRIVATE_CHANNEL_ID")
-            dgvar("TG_2STEP_VERIFICATION_CODE")
-            LOGS.error(
-                "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
-            )
-            exit()
-    except Exception as dbowerr:
-        LOGS.error(f"🚨🚨🚨🚨🚨 {dbowerr}")
+    doge.me = await doge.get_me()
+    doge.uid = doge.me.id
+    dogemeid = get_peer_id(doge.me)
+    if OWNER_ID is None:
+        sgvar("OWNERID", dogemeid)
+    sgvar("OWNER_ID", dogemeid)
+    if OWNER_ID != gvar("OWNERID"):
+        dgvar("OWNER_ID")
+        dgvar("ALIVE_NAME")
+        dgvar("BOT_TOKEN")
+        dgvar("PRIVATE_GROUP_BOT_API_ID")
+        dgvar("PM_LOGGER_GROUP_ID")
+        dgvar("PLUGIN_CHANNEL")
+        dgvar("FBAN_GROUP_ID")
+        dgvar("PRIVATE_CHANNEL_ID")
+        dgvar("TG_2STEP_VERIFICATION_CODE")
+        dgvar("ipaddress")
+        LOGS.error(
+            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
+        )
+        exit()
     if OWNER_ID in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
         LOGS.error(constants.l_gmsgg_ys)
+        dgvar("ipaddress")
         await doge.disconnect()
         exit()
 
@@ -147,6 +143,7 @@ async def setup_assistantbot():
         LOGS.error(
             "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkenine ayar yapın ve beni yeniden başlatın."
         )
+        dgvar("ipaddress")
         exit()
 
     await doge.send_message(bf, botname)
@@ -160,6 +157,7 @@ async def setup_assistantbot():
             LOGS.error(
                 "🚨 @BotFather ile bir bot oluşturun ve BOT_TOKEN değişkenine ayar yapın ve beni yeniden başlatın."
             )
+            dgvar("ipaddress")
             exit()
 
     await doge.send_message(bf, botusername)
@@ -185,6 +183,7 @@ async def setup_assistantbot():
             LOGS.error(
                 "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_TOKEN'i ayarlayın."
             )
+            dgvar("ipaddress")
             exit()
 
     elif is_ok.startswith("Done!"):
@@ -200,6 +199,7 @@ async def setup_assistantbot():
         LOGS.error(
             "🚨 Lütfen @BotFather'dan botlarınızı silin veya bir botun belirteci ile BOT_TOKEN'i ayarlayın."
         )
+        dgvar("ipaddress")
         exit()
 
 
@@ -218,6 +218,7 @@ async def setup_me_bot():
     except Exception as boter:
         LOGS.error(f"🚨 {boter}")
         dgvar("BOT_TOKEN")
+        dgvar("ipaddress")
         exit()
     doge.bot.me = await doge.bot.get_me()
     sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
