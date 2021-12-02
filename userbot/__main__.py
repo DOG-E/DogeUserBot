@@ -29,12 +29,12 @@ from .utils import (
 LOGS = logging.getLogger("DogeUserBot")
 
 
-try:
-    LOGS.info(f"⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
-    doge.loop.run_until_complete(setup_bot())
-except Exception as e:
-    LOGS.error(f"🚨 {e}")
-    exit()
+LOGS.info(f"⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
+doge.loop.run_until_complete(setup_bot())
+doge.loop.run_until_complete(checking_id())
+doge.loop.run_until_complete(setup_assistantbot())
+doge.loop.run_until_complete(setup_me_bot())
+doge.loop.run_until_complete(customize_assistantbot())
 
 
 class DogCheck:
@@ -50,13 +50,14 @@ async def startup_process():
     if check is not None:
         Dogcheck.sucess = False
         return
-    await checking_id()
-    await setup_assistantbot()
-    await setup_me_bot()
-    await customize_assistantbot()
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
+    await verifyLoggerGroup()
+    await add_bot_to_logger_group(BOTLOG_CHATID)
+    if PM_LOGGER_GROUP_ID != -100:
+        await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
+    await startupmessage()
     print(userbot.__copyright__)
     print(userbot.__license__ + " ile korunmaktadır.")
     print(
@@ -71,11 +72,6 @@ async def startup_process():
         \n💬 Yardım için Telegram grubumuzu ziyaret edin: t.me/DogeSup\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
     )
-    await verifyLoggerGroup()
-    await add_bot_to_logger_group(BOTLOG_CHATID)
-    if PM_LOGGER_GROUP_ID != -100:
-        await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
-    await startupmessage()
     Dogcheck.sucess = True
     return
 
