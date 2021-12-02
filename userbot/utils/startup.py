@@ -84,10 +84,10 @@ async def checking_id():
     doge.me = await doge.get_me()
     doge.uid = doge.me.id
     dogemeid = get_peer_id(doge.me)
-    if OWNER_ID is None:
+    if gvar("OWNER_ID") is None:
         sgvar("OWNERID", dogemeid)
     sgvar("OWNER_ID", dogemeid)
-    if OWNER_ID != gvar("OWNERID"):
+    if (gvar("OWNERID") != gvar("OWNER_ID")):
         dgvar("OWNER_ID")
         dgvar("ALIVE_NAME")
         dgvar("BOT_TOKEN")
