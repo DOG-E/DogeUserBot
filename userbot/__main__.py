@@ -92,4 +92,3 @@ else:
         doge.run_until_disconnected()
     except ConnectionError:
         dgvar("ipaddress")
-        pass
