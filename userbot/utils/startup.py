@@ -25,6 +25,7 @@ from telethon.tl.functions.contacts import UnblockRequest
 from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import ChatAdminRights
+from telethon.utils import get_peer_id
 
 from .. import (
     BOT_USERNAME,
@@ -79,9 +80,10 @@ async def checking_id():
     """
     doge.me = await doge.get_me()
     doge.uid = doge.me.id
+    dogemeid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
-        sgvar("OWNER_ID", str(doge.uid))
-    if gvar("OWNER_ID") != doge.uid and gvar("OWNER_ID") is not None:
+        sgvar("OWNER_ID", dogemeid)
+    if gvar("OWNER_ID") != dogemeid and gvar("OWNER_ID") is not None:
         LOGS.error(
             "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
         )
