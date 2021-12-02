@@ -325,9 +325,7 @@ async def verifyLoggerGroup():
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         vinfo = "PRIVATE_GROUP_BOT_API_ID"
-        LOGS.info(
-            f"✅ {vinfo} için özel bir grup başarıyla oluşturdum!"
-        )
+        LOGS.info(f"✅ {vinfo} için özel bir grup başarıyla oluşturdum!")
         flag = True
 
     if Config.PMLOGGER:
@@ -357,7 +355,9 @@ async def verifyLoggerGroup():
             \n🗑 Eğer silerseniz,\
             \n🚫 PM Logger çalışmayacaktır.\n\
             \n{odogeubc}"
-            gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
+            gphoto = await doge.upload_file(
+                file="userbot/helpers/resources/DogePmLog.jpg"
+            )
             _, groupid = await create_supergroup(
                 f"🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
             )
