@@ -29,9 +29,13 @@ from .utils import (
 
 LOGS = logging.getLogger("DogeUserBot")
 
+try:
+    LOGS.info(f"⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
+    doge.loop.run_until_complete(setup_bot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
 
-LOGS.info(f"⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
-doge.loop.run_until_complete(setup_bot())
+
 doge.loop.run_until_complete(checking_id())
 doge.loop.run_until_complete(setup_assistantbot())
 doge.loop.run_until_complete(setup_me_bot())
