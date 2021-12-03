@@ -15,8 +15,7 @@ from .core.logger import logging
 from .core.session import doge
 from .sql_helper.globals import dgvar
 from .utils import (
-    add_bot_to_logger_group,
-    # checking_id,
+    add_bot_to_logger_group,  # checking_id,
     customize_assistantbot,
     ipchange,
     load_plugins,
