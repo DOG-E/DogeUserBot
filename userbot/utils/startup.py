@@ -106,6 +106,11 @@ async def checking_id():
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
         exit()
+    await ch_ck_ngg_y()    
+    return
+
+
+async def ch_ck_ngg_y():
     if OWNER_ID in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
@@ -113,6 +118,7 @@ async def checking_id():
         dgvar("ipaddress")
         await doge.disconnect()
         exit()
+    return
 
 
 async def setup_assistantbot():
