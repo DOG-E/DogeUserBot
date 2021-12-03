@@ -86,8 +86,12 @@ async def checking_id():
     dogemeid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
         sgvar("OWNERID", dogemeid)
-    sgvar("OWNER_ID", dogemeid)
+    try: sgvar("OWNER_ID", dogemeid)
+    except Exception as e: LOGS.error(f"🚨 {e}"); pass
     if gvar("OWNERID") != gvar("OWNER_ID"):
+        LOGS.error(
+            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
+        )
         dgvar("OWNER_ID")
         dgvar("ALIVE_NAME")
         dgvar("BOT_TOKEN")
@@ -98,9 +102,6 @@ async def checking_id():
         dgvar("PRIVATE_CHANNEL_ID")
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
-        LOGS.error(
-            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
-        )
         exit()
     if OWNER_ID in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
@@ -234,8 +235,8 @@ async def ipchange():
         return None
     oldip = gvar("ipaddress")
     if oldip != newip:
+        LOGS.warning("🔄 IP değişimi tespit edildi!")
         dgvar("ipaddress")
-        LOGS.info("🔄 IP değişimi tespit edildi!")
         try:
             await doge.disconnect()
         except (ConnectionError, CancelledError):
@@ -313,9 +314,11 @@ async def verifyLoggerGroup():
         \n🐾 Doge çalışmayacaktır.\n\
         \n{odogeubc}"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
+        sleep(0.75)
         _, groupid = await create_supergroup(
             f"🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
         )
+        sleep(0.75)
         descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
         \n🚧 BU GRUPTAN AYRILMAYIN!\
         \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
@@ -323,6 +326,7 @@ async def verifyLoggerGroup():
         \n🐾 Doge çalışmayacaktır!\n\
         \n**{odogeubc}**"
         msg = await doge.send_message(groupid, descmsg)
+        sleep(0.25)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         vinfo = "PRIVATE_GROUP_BOT_API_ID"
@@ -359,9 +363,11 @@ async def verifyLoggerGroup():
             gphoto = await doge.upload_file(
                 file="userbot/helpers/resources/DogePmLog.jpg"
             )
+            sleep(0.75)
             _, groupid = await create_supergroup(
                 f"🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
             )
+            sleep(0.75)
             descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
             \n🚧 BU GRUPTAN AYRILMAYIN!\
             \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
@@ -372,10 +378,11 @@ async def verifyLoggerGroup():
             \n`.set var PMLOGGER False`\n\
             \n**{odogeubc}**"
             msg = await doge.send_message(groupid, descmsg)
+            sleep(0.25)
             await msg.pin()
             sgvar("PM_LOGGER_GROUP_ID", groupid)
             LOGS.info(
-                f"✅ PM_LOGGER_GROUP_ID için grup başarıyla oluşturuldu ve değerler yazıldı!"
+                f"✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!"
             )
             flag = True
 
@@ -390,9 +397,11 @@ async def verifyLoggerGroup():
             cphoto = await doge.upload_file(
                 file="userbot/helpers/resources/DogeExtraPlugin.jpg"
             )
+            sleep(0.75)
             _, channelid = await create_channel(
                 f"🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
             )
+            sleep(0.75)
             descmsg = f"**🚧 BU KANALI SİLMEYİN!\
             \n🚧 BU KANALDAN AYRILMAYIN!\
             \n🚧 BU KANALDA DEĞİŞİKLİK YAPMAYIN!**\n\
@@ -403,10 +412,11 @@ async def verifyLoggerGroup():
             \n`.set var PLUGINS False`\n\
             \n**{odogeubc}**"
             msg = await doge.send_message(channelid, descmsg)
+            sleep(0.25)
             await msg.pin()
             sgvar("PLUGIN_CHANNEL", channelid)
             LOGS.info(
-                "✅ PLUGIN_CHANNEL için gizli bir kanal başarıyla oluşturuldu ve veriler veritabanına yazıldı."
+                "✅ PLUGIN_CHANNEL için özel bir kanal başarıyla oluşturuldum!"
             )
             flag = True
 
@@ -439,6 +449,7 @@ async def add_bot_to_logger_group(chat_id):
             )
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
+    sleep(0.75)
     rights = ChatAdminRights(
         add_admins=True,
         invite_users=True,
@@ -464,10 +475,10 @@ async def startupmessage():
             Config.DOGELOGO = await doge.bot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg",
-                caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴıᴍᴀ Hᴀᴢıʀ 🧡**",
+                caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴɪᴍᴀ Hᴀᴢɪʀ 🧡**",
                 buttons=[
-                    (Button.inline("🐕‍🦺 Yᴀʀᴅıᴍ", data="mainmenu"),),
-                    (Button.inline("🌍 Dɪʟ Dᴇɢ̆ɪşᴛɪʀ", data="lang_menu"),),
+                    (Button.inline("🐕‍🦺 Yᴀʀᴅɪᴍ", data="mainmenu"),),
+                    (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="set_menu"),),
                     (Button.url("💬 Dᴇsᴛᴇᴋ", "https://t.me/DogeSup"),),
                     (Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),),
                 ],

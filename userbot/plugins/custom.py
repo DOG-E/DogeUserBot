@@ -51,6 +51,7 @@ vlist = [
     "ALIVE",
     "ALIVE_NAME",
     "ALIVE_TEXT",
+    "ANTISPAMBOT_BAN",
     "AUTONAME",
     "AUTOUS",
     "CHANGE_TIME",
@@ -66,6 +67,7 @@ vlist = [
     "PM_TEXT",
     "START_TEXT",
     "TELEGRAPH_SHORT_NAME",
+    "WATCH_COUNTRY",
     "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
 ]
 cmdlist = [
@@ -74,7 +76,6 @@ cmdlist = [
     "SNIP_CMDSET",
 ]
 alist = [
-    "ANTISPAMBOT_BAN",
     "BOT_TOKEN",
     "CURRENCY_API",
     "DEEPAI_API",
@@ -103,7 +104,6 @@ alist = [
     "SPOTIFY_KEY",
     "SS_API",
     "TG_2STEP_VERIFICATION_CODE",
-    "WATCH_COUNTRY",
     "WEATHER_API",
     "WEATHER_CITY",
 ]

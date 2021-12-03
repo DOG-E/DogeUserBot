@@ -115,7 +115,7 @@ def ibuild_keyboard(buttons):
 
 
 def get_back_button(name):
-    return [Button.inline(f"⬅️️ Gᴇʀɪ", data=f"{name}")]
+    return [Button.inline("⬅️️ Gᴇʀɪ", data=f"{name}")]
 
 
 def command_in_category(cname):
@@ -503,7 +503,7 @@ async def inline_handler(event):  # sourcery no-metrics
             else:
                 dump(newhide, open(hide, "w"))
 
-        elif string == ("help" or "doge" or " "):
+        elif string == "help":
             HELP_PIC = gvar("HELP_PIC")
             if HELP_PIC:
                 DOG = [x for x in HELP_PIC.split()]

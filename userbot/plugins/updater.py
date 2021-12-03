@@ -176,13 +176,11 @@ async def push(event, repo, ups_rem, ac_br, txt):
         "o": {
             "pull": "Will update bot but requirements doesnt update.",
             "push": "Bot will update completly with requirements also.",
-            "updoge": "to update to the original repository, if you fork.",
         },
         "u": [
             "{tr}update",
             "{tr}update pull",
             "{tr}update push",
-            "{tr}updoge",
         ],
     },
 )
@@ -259,36 +257,3 @@ async def upstream(event):
         await event.edit("`Updating doge, please wait...`")
         await pull(event, repo, ups_rem, ac_br)
     return
-
-
-@doge.bot_cmd(
-    pattern="updoge$",
-    command=("updoge", plugin_category),
-    info={
-        "h": "To update to Doge.",
-        "d": "I recommend you to do update push atlest once a week.",
-        "o": {
-            "updoge": "To update to the original repository, if you fork.",
-        },
-        "u": [
-            "{tr}updoge",
-        ],
-    },
-)
-async def variable(var):
-    "To update to to the DogeRepository."
-    if Config.HEROKU_API_KEY is None:
-        return await edl(
-            var,
-            "Set the required var in heroku to function this normally `HEROKU_API_KEY`.",
-        )
-    if Config.HEROKU_APP_NAME is not None:
-        app = Heroku.app(Config.HEROKU_APP_NAME)
-    else:
-        return await edl(
-            var,
-            "Set the required var in heroku to function this normally `HEROKU_APP_NAME`.",
-        )
-    heroku_var = app.config()
-    await eor(var, f"`Switch... Wait for 2-3 minutes.`")
-    heroku_var["UPSTREAM_REPO"] = "DOGE-EN"

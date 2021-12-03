@@ -121,7 +121,7 @@ async def bot_start(event):
             )
         else:
             start_msg = str(
-                "**🐶 Wow!**\
+                "**🐶 Hey!**\
             \n🐾 Selam {}!\n\
             \n**🐶 Ben {}'in sadık köpeğiyim.**\
             \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
@@ -129,20 +129,21 @@ async def bot_start(event):
                 )
             )
         buttons = [
-            (Button.url(f"📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
+            (Button.url("📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
             (
-                Button.url(f"💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
-                Button.url(f"🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
+                Button.url("💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
+                Button.url("🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
             ),
         ]
     else:
-        start_msg = "**🐶 Wow!\
+        start_msg = "**🐶 Hey!\
         \n🐾 Merhaba {}!\n\
         \n💬 Sana nasıl yardımcı olabilirim?**".format(
             my_mention
         )
         buttons = [
-            (Button.inline(f"🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="set_menu"),),
+            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
         ]
     try:
         await event.client.send_message(
@@ -365,7 +366,7 @@ async def send_flood_alert(user_) -> None:
         (
             Button.inline(f"🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                f"➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ",
+                "➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ",
                 data="toggle_bot-antiflood_off",
             ),
         )
