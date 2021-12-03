@@ -86,8 +86,11 @@ async def checking_id():
     dogemeid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
         sgvar("OWNERID", dogemeid)
-    try: sgvar("OWNER_ID", dogemeid)
-    except Exception as e: LOGS.error(f"🚨 {e}"); pass
+    try:
+        sgvar("OWNER_ID", dogemeid)
+    except Exception as e:
+        LOGS.error(f"🚨 {e}")
+        pass
     if gvar("OWNERID") != gvar("OWNER_ID"):
         LOGS.error(
             "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
@@ -381,9 +384,7 @@ async def verifyLoggerGroup():
             sleep(0.25)
             await msg.pin()
             sgvar("PM_LOGGER_GROUP_ID", groupid)
-            LOGS.info(
-                f"✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!"
-            )
+            LOGS.info(f"✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
             flag = True
 
     if Config.PLUGINS:
@@ -415,9 +416,7 @@ async def verifyLoggerGroup():
             sleep(0.25)
             await msg.pin()
             sgvar("PLUGIN_CHANNEL", channelid)
-            LOGS.info(
-                "✅ PLUGIN_CHANNEL için özel bir kanal başarıyla oluşturuldum!"
-            )
+            LOGS.info("✅ PLUGIN_CHANNEL için özel bir kanal başarıyla oluşturuldum!")
             flag = True
 
     if flag:

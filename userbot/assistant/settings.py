@@ -44,23 +44,36 @@ async def settings(event):
 @doge.bot.on(CallbackQuery(data=compile(r"api_menu")))
 @check_owner
 async def apisetter(event: CallbackQuery):
-    apis=[
-        [Button.inline("GRUP & KANAL", data="cgapi"),
-        Button.inline("CURRENCY", data="cuapi")],
-        [Button.inline("Dᴇᴇᴘ", data="deapi"),
-        Button.inline("GENIUS", data="geapi")],
-        [Button.inline("GITHUB", data="ghapi"),
-        Button.inline("GOOGLE DRIVE", data="gdapi")],
-        [Button.inline("IBM WATSON", data="ibmwcapi"),
-        Button.inline("IP DATA", data="ipdapi")],
-        [Button.inline("LAST FM", data="lfmapi"),
-        Button.inline("OCR SPACE", data="ocrsapi")],
-        [Button.inline("RANDOM STUFF", data="rsapi"),
-        Button.inline("REMOVE BG", data="rbgapi")],
-        [Button.inline("SPAM WATCH", data="swapi"),
-        Button.inline("SPOTIFY", data="spapi")],
-        [Button.inline("SCREEN SHOT", data="ssapi"),
-        Button.inline("WEATHER", data="woapi")],
+    apis = [
+        [
+            Button.inline("GRUP & KANAL", data="cgapi"),
+            Button.inline("CURRENCY", data="cuapi"),
+        ],
+        [Button.inline("Dᴇᴇᴘ", data="deapi"), Button.inline("GENIUS", data="geapi")],
+        [
+            Button.inline("GITHUB", data="ghapi"),
+            Button.inline("GOOGLE DRIVE", data="gdapi"),
+        ],
+        [
+            Button.inline("IBM WATSON", data="ibmwcapi"),
+            Button.inline("IP DATA", data="ipdapi"),
+        ],
+        [
+            Button.inline("LAST FM", data="lfmapi"),
+            Button.inline("OCR SPACE", data="ocrsapi"),
+        ],
+        [
+            Button.inline("RANDOM STUFF", data="rsapi"),
+            Button.inline("REMOVE BG", data="rbgapi"),
+        ],
+        [
+            Button.inline("SPAM WATCH", data="swapi"),
+            Button.inline("SPOTIFY", data="spapi"),
+        ],
+        [
+            Button.inline("SCREEN SHOT", data="ssapi"),
+            Button.inline("WEATHER", data="woapi"),
+        ],
     ]
     apis.append(get_back_button("set_menu"))
     await event.edit(
@@ -130,9 +143,11 @@ async def setapi(event: CallbackQuery, x, y, z=None):
 @doge.bot.on(CallbackQuery(data=compile(r"cgapi")))
 @check_owner
 async def cgapi(event: CallbackQuery):
-    apis=[
-        [Button.inline("FBAN GRUBU", data="fgapi"),
-        Button.inline("GİZLİ KANAL", data="pcapi")],
+    apis = [
+        [
+            Button.inline("FBAN GRUBU", data="fgapi"),
+            Button.inline("GİZLİ KANAL", data="pcapi"),
+        ],
     ]
     apis.append(get_back_button("api_menu"))
     await event.edit(
