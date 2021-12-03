@@ -31,18 +31,31 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info("⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
+    LOGS.info("⏳ %10 ~ DOGE USERBOT BAŞLATILIYOR 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info("🐶 DOGE USERBOT BAŞLATILIYOR 🐾")
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
+try:
+    LOGS.info("⏳ %20 ~ DOGE USERBOT 🐾")
+    doge.loop.run_until_complete(checking_id())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
 
 try:
-    doge.loop.run_until_complete(checking_id())
-    if gvar("BOT_TOKEN") is None:
-        doge.loop.run_until_complete(setup_assistantbot())
+    LOGS.info("⏳ %30 ~ DOGE USERBOT 🐾")
+    doge.loop.run_until_complete(setup_assistantbot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
+
+try:
+    LOGS.info("⏳ %40 ~ DOGE USERBOT 🐾")
     doge.loop.run_until_complete(setup_me_bot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
+
+try:
+    LOGS.info("⏳ %50 ~ DOGE USERBOT 🐾")
     doge.loop.run_until_complete(customize_assistantbot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
@@ -62,12 +75,16 @@ async def startup_process():
         Dogcheck.sucess = False
         return
     await verifyLoggerGroup()
+    LOGS.info("⏳ %60 ~ DOGE USERBOT 🐾")
     await load_plugins("plugins")
     await load_plugins("assistant")
     await verifyLoggerGroup()
+    LOGS.info("⏳ %70 ~ DOGE USERBOT 🐾")
     await add_bot_to_logger_group(BOTLOG_CHATID)
+    LOGS.info("⏳ %80 ~ DOGE USERBOT 🐾")
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
+        LOGS.info("⏳ %90 ~ DOGE USERBOT 🐾")
     await startupmessage()
     print(userbot.__copyright__)
     print(userbot.__license__ + " ile korunmaktadır.")

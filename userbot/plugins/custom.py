@@ -68,6 +68,7 @@ vlist = [
     "START_TEXT",
     "TELEGRAPH_SHORT_NAME",
     "WATCH_COUNTRY",
+    "WEATHER_CITY",
     "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
 ]
 cmdlist = [
@@ -105,7 +106,6 @@ alist = [
     "SS_API",
     "TG_2STEP_VERIFICATION_CODE",
     "WEATHER_API",
-    "WEATHER_CITY",
 ]
 
 

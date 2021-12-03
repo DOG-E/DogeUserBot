@@ -29,7 +29,6 @@ if gvar("BOT_TOKEN"):
     doge.bot.version = __version__
 
 LOGS = logging.getLogger("DogeUserBot")
-bot = doge
 
 StartTime = time()
 dogeversion = "1.0"
@@ -97,12 +96,20 @@ TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
 
 
 # ASSISTANT BOT:
-BOT_USERNAME = gvar("BOT_USERNAME")
+if gvar("BOT_USERNAME") is not None:
+    BOT_USERNAME = gvar("BOT_USERNAME")
 
 
 # VARIABLES:
+ANTISPAMBOT_BAN = gvar("ANTISPAMBOT_BAN")
+
 CHANGE_TIME = gvar("CHANGE_TIME") or "60"
+
 tr = gvar("CMDSET") or "."
+
+WATCH_COUNTRY = gvar("WATCH_COUNTRY")
+
+WEATHER_CITY = gvar("WEATHER_CITY") or "Istanbul"
 
 
 # CHANNEL & GROUP IDS:
@@ -113,8 +120,6 @@ PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 
 
 # API VARS:
-ANTISPAMBOT_BAN = gvar("ANTISPAMBOT_BAN")
-
 CURRENCY_API = gvar("CURRENCY_API")
 
 DEEPAI_API = gvar("DEEPAI_API")
@@ -159,10 +164,7 @@ SS_API = gvar("SS_API")
 
 TG_2STEP_VERIFICATION_CODE = gvar("TG_2STEP_VERIFICATION_CODE")
 
-WATCH_COUNTRY = gvar("WATCH_COUNTRY")
-
 WEATHER_API = gvar("WEATHER_API") or "6fded1e1c5ef3f394283e3013a597879"
-WEATHER_CITY = gvar("WEATHER_CITY") or "Istanbul"
 
 
 # PM:

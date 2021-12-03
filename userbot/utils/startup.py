@@ -70,6 +70,7 @@ async def setup_bot():
                 doge.session.set_dc(option.id, option.ip_address, option.port)
                 doge.session.save()
                 break
+            return
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
         dgvar("OWNER_ID")
@@ -254,7 +255,8 @@ async def load_plugins(folder):
     Eklentileri belirtilen klasörden yükler
     """
     path = f"userbot/{folder}/*.py"
-    files = sorted(glob(path))
+    files = glob(path)
+    files.sort()
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
