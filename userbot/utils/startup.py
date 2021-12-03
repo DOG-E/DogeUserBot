@@ -70,6 +70,11 @@ async def setup_bot():
                 doge.session.set_dc(option.id, option.ip_address, option.port)
                 doge.session.save()
                 break
+
+        doge.me = await doge.get_me()
+        doge.uid = doge.me.id
+        dogemeid = get_peer_id(doge.me)
+        sgvar("OWNER_ID", dogemeid)
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
         dgvar("ipaddress")
