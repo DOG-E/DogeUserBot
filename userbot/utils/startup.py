@@ -227,7 +227,9 @@ async def setup_me_bot():
         dgvar("ipaddress")
         exit()
     doge.bot.me = await doge.bot.get_me()
-    sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
+    if gvar("BOT_USERNAME") is None:
+        sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
+    return
 
 
 async def ipchange():
