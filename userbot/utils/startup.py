@@ -334,7 +334,9 @@ async def verifyLoggerGroup():
         sleep(0.25)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        LOGS.info(f"✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!")
+        LOGS.info(
+            f"✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!"
+        )
         flag = True
 
     if Config.PMLOGGER:
