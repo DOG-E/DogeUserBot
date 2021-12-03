@@ -106,7 +106,7 @@ async def checking_id():
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
         exit()
-    await ch_ck_ngg_y()    
+    await ch_ck_ngg_y()
     return
 
 
