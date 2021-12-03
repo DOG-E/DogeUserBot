@@ -72,7 +72,6 @@ async def setup_bot():
                 break
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
-        dgvar("OWNER_ID")
         dgvar("ipaddress")
         exit()
 
