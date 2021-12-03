@@ -41,6 +41,7 @@ try:
     )
 except Exception as e:
     LOGS.error(f"🚨 [STRING_SESSION] - {e}")
+    dgvar("OWNER_ID")
     dgvar("ipaddress")
     exit()
 

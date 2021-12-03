@@ -71,12 +71,9 @@ async def setup_bot():
                 doge.session.save()
                 break
 
-        doge.me = await doge.get_me()
-        doge.uid = doge.me.id
-        dogemeid = get_peer_id(doge.me)
-        sgvar("OWNER_ID", dogemeid)
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
+        dgvar("OWNER_ID")
         dgvar("ipaddress")
         exit()
 
@@ -89,6 +86,7 @@ async def checking_id():
     doge.uid = doge.me.id
     dogemeid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
+        dgvar("OWNERID")
         sgvar("OWNERID", dogemeid)
     try:
         dgvar("OWNER_ID")
@@ -110,11 +108,6 @@ async def checking_id():
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
         exit()
-    await ch_ck_ngg_y()
-    return
-
-
-async def ch_ck_ngg_y():
     if OWNER_ID in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
@@ -122,7 +115,6 @@ async def ch_ck_ngg_y():
         dgvar("ipaddress")
         await doge.disconnect()
         exit()
-    return
 
 
 async def setup_assistantbot():
@@ -329,7 +321,7 @@ async def verifyLoggerGroup():
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         sleep(0.75)
         _, groupid = await create_supergroup(
-            f"🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
+            "🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
         )
         sleep(0.75)
         descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -342,8 +334,7 @@ async def verifyLoggerGroup():
         sleep(0.25)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        vinfo = "PRIVATE_GROUP_BOT_API_ID"
-        LOGS.info(f"✅ {vinfo} için özel bir grup başarıyla oluşturdum!")
+        LOGS.info(f"✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!")
         flag = True
 
     if Config.PMLOGGER:
@@ -378,7 +369,7 @@ async def verifyLoggerGroup():
             )
             sleep(0.75)
             _, groupid = await create_supergroup(
-                f"🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
+                "🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
             )
             sleep(0.75)
             descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -410,7 +401,7 @@ async def verifyLoggerGroup():
             )
             sleep(0.75)
             _, channelid = await create_channel(
-                f"🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
+                "🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
             )
             sleep(0.75)
             descmsg = f"**🚧 BU KANALI SİLMEYİN!\
@@ -580,6 +571,7 @@ async def customize_assistantbot():
                 \nyasakac - 🔰 Kullanıcının yasağını kaldırma\
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
+            await doge.send_read_acknowledge(bf)
             LOGS.info(f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!")
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")

@@ -20,6 +20,7 @@ from . import (
     eor,
     fsmessage,
     get_user_from_event,
+    gvar,
     logging,
     newmsgres,
     reply_id,
@@ -30,7 +31,7 @@ from . import (
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
-
+FBAN_GROUP_ID = gvar("FBAN_GROUP_ID") or BOTLOG_CHATID
 rose = "@MissRose_Bot"
 fbanresults = [
     "New FedBan",

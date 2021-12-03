@@ -10,10 +10,12 @@ from string import ascii_lowercase
 
 from telethon.tl.types import Channel, MessageMediaWebPage
 
-from . import PRIVATE_CHANNEL_ID, doge, edl, logging
+from . import BOTLOG_CHATID, PRIVATE_CHANNEL_ID, doge, edl, gvar, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
+
+PRIVATE_CHANNEL_ID = gvar("PRIVATE_CHANNEL_ID") or BOTLOG_CHATID
 
 
 class FPOST:
