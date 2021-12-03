@@ -70,7 +70,6 @@ async def setup_bot():
                 doge.session.set_dc(option.id, option.ip_address, option.port)
                 doge.session.save()
                 break
-
     except Exception as e:
         LOGS.error(f"🚨 [STRING_SESSION] - {e}")
         dgvar("OWNER_ID")
@@ -115,6 +114,7 @@ async def checking_id():
         dgvar("ipaddress")
         await doge.disconnect()
         exit()
+    return
 
 
 async def setup_assistantbot():

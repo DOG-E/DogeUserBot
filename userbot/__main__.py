@@ -14,8 +14,9 @@ from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 from .core.logger import logging
 from .core.session import doge
 from .sql_helper.globals import dgvar, gvar
-from .utils import add_bot_to_logger_group  # checking_id,
 from .utils import (
+    add_bot_to_logger_group,
+    checking_id,
     customize_assistantbot,
     ipchange,
     load_plugins,
@@ -38,7 +39,7 @@ except Exception as e:
 
 
 try:
-    # doge.loop.run_until_complete(checking_id())
+    doge.loop.run_until_complete(checking_id())
     if gvar("BOT_TOKEN") is None:
         doge.loop.run_until_complete(setup_assistantbot())
     doge.loop.run_until_complete(setup_me_bot())
