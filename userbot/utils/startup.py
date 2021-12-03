@@ -575,6 +575,8 @@ async def customize_assistantbot():
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
             await doge.send_read_acknowledge(bf)
-            LOGS.info(f"✅ Başarılı! {gvar('BOT_USERNAME')} asistan botunuzu özelleştirdim!")
+            LOGS.info(
+                f"✅ Başarılı! {gvar('BOT_USERNAME')} asistan botunuzu özelleştirdim!"
+            )
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")
