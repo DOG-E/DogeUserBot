@@ -30,9 +30,10 @@ from .utils import (
 LOGS = logging.getLogger("DogeUserBot")
 
 
-LOGS.info("⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
 try:
+    LOGS.info("⏳ DOGE USERBOT BAŞLATILIYOR 🐾")
     doge.loop.run_until_complete(setup_bot())
+    LOGS.info("🐶 DOGE USERBOT BAŞLATILIYOR 🐾")
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
