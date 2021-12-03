@@ -16,7 +16,7 @@ from .core.session import doge
 from .sql_helper.globals import dgvar
 from .utils import (
     add_bot_to_logger_group,
-    checking_id,
+    # checking_id,
     customize_assistantbot,
     ipchange,
     load_plugins,
@@ -39,7 +39,7 @@ except Exception as e:
 
 
 try:
-    doge.loop.run_until_complete(checking_id())
+    # doge.loop.run_until_complete(checking_id())
     doge.loop.run_until_complete(setup_assistantbot())
     doge.loop.run_until_complete(setup_me_bot())
     doge.loop.run_until_complete(customize_assistantbot())
