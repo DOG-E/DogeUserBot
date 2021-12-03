@@ -87,6 +87,7 @@ async def checking_id():
     if gvar("OWNER_ID") is None:
         sgvar("OWNERID", dogemeid)
     try:
+        dgvar("OWNER_ID")
         sgvar("OWNER_ID", dogemeid)
     except Exception as e:
         LOGS.error(f"🚨 {e}")

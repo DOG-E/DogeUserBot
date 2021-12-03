@@ -177,7 +177,7 @@ class DogeUserBotClient(TelegramClient):
                         \n💠 Bu hatayı bildirmeyebilirsiniz.\
                         \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n⚠️⚠️⚠️ USERBOT-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
+                        \n----- USERBOT-HATA-RAPORU-BAŞLANGICI -----\
                         \n📅 Tarih: {d}\
                         \n👥 Grup ID'si: {cid}\
                         \n👤 Gönderici ID: {sid}\
@@ -204,7 +204,7 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "⚠️⚠️⚠️ USERBOT-HATA-RAPORU-SONU ⚠️⚠️⚠️"
+                        ftext += "----- USERBOT-HATA-RAPORU-SONU -----"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",
@@ -317,7 +317,7 @@ class DogeUserBotClient(TelegramClient):
                         \n💠 Bu hatayı bildirmeyebilirsiniz.\
                         \n💠 Kimse verilerinizi göremez.\
                         \n\
-                        \n⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
+                        \n----- ASİSTAN-HATA-RAPORU-BAŞLANGICI -----\
                         \n📅 Tarih: {d}\
                         \n👥 Grup ID'si: {cid}\
                         \n👤 Gönderici ID: {sid}\
@@ -344,7 +344,7 @@ class DogeUserBotClient(TelegramClient):
                             "date": datetime.now(),
                         }
                         ftext += "\n\n"
-                        ftext += "⚠️⚠️⚠️ ASİSTAN-HATA-RAPORU-SONU ⚠️⚠️⚠️"
+                        ftext += "----- ASİSTAN-HATA-RAPORU-SONU -----"
                         pastelink = await paste_message(
                             ftext,
                             pastetype="t",

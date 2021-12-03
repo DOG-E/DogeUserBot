@@ -135,27 +135,27 @@ def errors_handler(func):
                 return
             date = (datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
             ftext = "💥💥💥💥 UYARI 💥💥💥💥\
-                        \n💠 Bu metin sadece buraya yazıldı,\
-                        \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
-                        \n💠 Gizliliğinize saygı duyuyoruz,\
-                        \n💠 Burada herhangi bir gizli veri varsa,\
-                        \n💠 Bu hatayı bildirmeyebilirsiniz.\
-                        \n💠 Kimse verilerinizi göremez.\
-                        \n\
-                        \n⚠️⚠️⚠️ USERBOT-HATA-RAPORU-BAŞLANGICI ⚠️⚠️⚠️\
-                        \n📅 Tarih: {d}\
-                        \n👥 Grup ID'si: {cid}\
-                        \n👤 Gönderici ID: {sid}\
-                        \n🔗 Mesaj Linki: {msg}\
-                        \n\
-                        \n➡️ Tetikleyici Komut:\
-                        \n{t}\
-                        \n\
-                        \nℹ️ Geri İzleme Mekanizması:\
-                        \n{f}\
-                        \n\
-                        \n🚨 Hata Metni:\
-                        \n{e}".format(
+                    \n💠 Bu metin sadece buraya yazıldı,\
+                    \n💠 Yalnızca bu hata ve gerçekleştiği tarihi kaydettik,\
+                    \n💠 Gizliliğinize saygı duyuyoruz,\
+                    \n💠 Burada herhangi bir gizli veri varsa,\
+                    \n💠 Bu hatayı bildirmeyebilirsiniz.\
+                    \n💠 Kimse verilerinizi göremez.\
+                    \n\
+                    \n----- USERBOT-HATA-RAPORU-BAŞLANGICI -----\
+                    \n📅 Tarih: {d}\
+                    \n👥 Grup ID'si: {cid}\
+                    \n👤 Gönderici ID: {sid}\
+                    \n🔗 Mesaj Linki: {msg}\
+                    \n\
+                    \n➡️ Tetikleyici Komut:\
+                    \n{t}\
+                    \n\
+                    \nℹ️ Geri İzleme Mekanizması:\
+                    \n{f}\
+                    \n\
+                    \n🚨 Hata Metni:\
+                    \n{e}".format(
                 d=date,
                 cid=str(check.chat_id),
                 sid=str(check.sender_id),
@@ -169,7 +169,7 @@ def errors_handler(func):
                 "date": datetime.now(),
             }
             ftext += "\n\n"
-            ftext += "⚠️⚠️⚠️ USERBOT-HATA-RAPORU-SONU ⚠️⚠️⚠️"
+            ftext += "----- USERBOT-HATA-RAPORU-SONU -----"
             pastelink = await paste_message(ftext, markdown=False)
             text = "🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾"
             text += "\n\n"
