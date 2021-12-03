@@ -49,10 +49,7 @@ async def apisetter(event: CallbackQuery):
             Button.inline("GRUP & KANAL", data="cgapi"),
             Button.inline("CURRENCY", data="cuapi"),
         ],
-        [
-            Button.inline("Dᴇᴇᴘ", data="deapi"),
-            Button.inline("GENIUS", data="geapi")
-        ],
+        [Button.inline("Dᴇᴇᴘ", data="deapi"), Button.inline("GENIUS", data="geapi")],
         [
             Button.inline("GITHUB", data="ghapi"),
             Button.inline("GOOGLE DRIVE", data="gdapi"),

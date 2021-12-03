@@ -90,7 +90,6 @@ async def checking_id():
         sgvar("OWNER_ID", dogemeid)
     except Exception as e:
         LOGS.error(f"🚨 {e}")
-        pass
     if gvar("OWNERID") != gvar("OWNER_ID"):
         LOGS.error(
             "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
