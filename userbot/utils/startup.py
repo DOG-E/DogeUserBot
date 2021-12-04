@@ -336,9 +336,7 @@ async def verifyLoggerGroup():
         sleep(0.25)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        LOGS.info(
-            "✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!"
-        )
+        LOGS.info("✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!")
         flag = True
 
     if Config.PMLOGGER:
@@ -574,8 +572,6 @@ async def customize_assistantbot():
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
             await doge.send_read_acknowledge(bf)
-            LOGS.info(
-                f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!"
-            )
+            LOGS.info(f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!")
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")
