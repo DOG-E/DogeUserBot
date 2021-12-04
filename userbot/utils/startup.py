@@ -86,9 +86,11 @@ async def checking_id():
     doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
         dgvar("OWNERID")
+        sleep(0.5)
         sgvar("OWNERID", doge.uid)
     try:
         dgvar("OWNER_ID")
+        sleep(0.5)
         sgvar("OWNER_ID", doge.uid)
     except Exception as e:
         LOGS.error(f"🚨 {e}")
@@ -221,11 +223,17 @@ async def setup_me_bot():
 
     try:
         await doge.bot.start(bot_token=gvar("BOT_TOKEN"))
-    except Exception as boter:
-        LOGS.error(f"🚨 {boter}")
-        dgvar("BOT_TOKEN")
-        dgvar("ipaddress")
-        exit()
+    except Exception:
+        try:
+            if Config.BOT_TOKEN:
+                sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
+                await doge.bot.start(bot_token=gvar("BOT_TOKEN"))
+        except Exception as boter:
+            LOGS.error(f"🚨 {boter}")
+            dgvar("BOT_TOKEN")
+            dgvar("ipaddress")
+            exit()
+
     doge.bot.me = await doge.bot.get_me()
     if gvar("BOT_USERNAME") is None:
         sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
