@@ -96,8 +96,7 @@ TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
 
 
 # ASSISTANT BOT:
-if gvar("BOT_USERNAME") is not None:
-    BOT_USERNAME = gvar("BOT_USERNAME")
+BOT_USERNAME = gvar("BOT_USERNAME")
 
 
 # VARIABLES:
