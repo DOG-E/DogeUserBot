@@ -29,6 +29,7 @@ from telethon.utils import get_peer_id
 
 from .. import (
     ALIVE_NAME,
+    BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
     OWNER_ID,
@@ -82,14 +83,13 @@ async def checking_id():
     Kullanıcı kimliği kontrolü
     """
     doge.me = await doge.get_me()
-    doge.uid = doge.me.id
-    dogemeid = get_peer_id(doge.me)
+    doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
         dgvar("OWNERID")
-        sgvar("OWNERID", dogemeid)
+        sgvar("OWNERID", doge.uid)
     try:
         dgvar("OWNER_ID")
-        sgvar("OWNER_ID", dogemeid)
+        sgvar("OWNER_ID", doge.uid)
     except Exception as e:
         LOGS.error(f"🚨 {e}")
     if gvar("OWNERID") != gvar("OWNER_ID"):
@@ -256,8 +256,7 @@ async def load_plugins(folder):
     Eklentileri belirtilen klasörden yükler
     """
     path = f"userbot/{folder}/*.py"
-    files = glob(path)
-    files.sort()
+    files = sorted(glob(path))
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
@@ -324,7 +323,7 @@ async def verifyLoggerGroup():
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         sleep(0.75)
         _, groupid = await create_supergroup(
-            "🐾 Doɢᴇ Boᴛ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
+            "🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
         )
         sleep(0.75)
         descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -338,7 +337,7 @@ async def verifyLoggerGroup():
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         LOGS.info(
-            f"✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!"
+            "✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!"
         )
         flag = True
 
@@ -374,7 +373,7 @@ async def verifyLoggerGroup():
             )
             sleep(0.75)
             _, groupid = await create_supergroup(
-                "🐾 Doɢᴇ Pᴍ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
+                "🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
             )
             sleep(0.75)
             descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -390,13 +389,11 @@ async def verifyLoggerGroup():
             sleep(0.25)
             await msg.pin()
             sgvar("PM_LOGGER_GROUP_ID", groupid)
-            LOGS.info(f"✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
+            LOGS.info("✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
             flag = True
 
     if Config.PLUGINS:
-        if PLUGIN_CHANNEL:
-            flag = True
-        else:
+        if PLUGIN_CHANNEL is None:
             descript = f"🚧 BU KANALI SİLMEYİN!\n\
             \n🗑 Eğer bu kanalı silerseniz,\
             \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
@@ -440,7 +437,7 @@ async def add_bot_to_logger_group(chat_id):
         await doge(
             AddChatUserRequest(
                 chat_id=chat_id,
-                user_id=gvar("BOT_USERNAME"),
+                user_id=BOT_USERNAME,
                 fwd_limit=1000000,
             )
         )
@@ -449,7 +446,7 @@ async def add_bot_to_logger_group(chat_id):
             await doge(
                 InviteToChannelRequest(
                     channel=chat_id,
-                    users=[gvar("BOT_USERNAME")],
+                    users=[BOT_USERNAME],
                 )
             )
         except Exception as e:
@@ -466,7 +463,7 @@ async def add_bot_to_logger_group(chat_id):
         manage_call=True,
     )
     try:
-        await doge(EditAdminRequest(chat_id, gvar("BOT_USERNAME"), rights, "Doge"))
+        await doge(EditAdminRequest(chat_id, BOT_USERNAME, rights, "Doge"))
     except Exception as e:
         LOGS.error(f"🚨 {str(e)}")
 
@@ -522,11 +519,11 @@ async def customize_assistantbot():
     Asistanı kişiselleştirir
     """
     try:
-        bot = await doge.get_entity(gvar("BOT_USERNAME"))
+        bot = await doge.get_entity(BOT_USERNAME)
         bf = "BotFather"
         if bot.photo is None:
             LOGS.info(
-                f"🎨 {gvar('BOT_USERNAME')} asistan botunuzu @BotFather ile özelleştiriyorum."
+                f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum."
             )
             if (doge.me.username) is None:
                 master = doge.me.first_name
@@ -538,13 +535,13 @@ async def customize_assistantbot():
             sleep(1)
             await doge.send_message(bf, "/setuserpic")
             sleep(1)
-            await doge.send_message(bf, gvar("BOT_USERNAME"))
+            await doge.send_message(bf, BOT_USERNAME)
             sleep(1)
             await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
             sleep(2)
             await doge.send_message(bf, "/setabouttext")
             sleep(1)
-            await doge.send_message(bf, gvar("BOT_USERNAME"))
+            await doge.send_message(bf, BOT_USERNAME)
             sleep(1)
             await doge.send_message(
                 bf,
@@ -554,7 +551,7 @@ async def customize_assistantbot():
             sleep(1.5)
             await doge.send_message(bf, "/setdescription")
             sleep(1)
-            await doge.send_message(bf, gvar("BOT_USERNAME"))
+            await doge.send_message(bf, BOT_USERNAME)
             sleep(1)
             await doge.send_message(
                 bf,
@@ -565,7 +562,7 @@ async def customize_assistantbot():
             sleep(1.5)
             await doge.send_message(bf, "/setcommands")
             sleep(1)
-            await doge.send_message(bf, gvar("BOT_USERNAME"))
+            await doge.send_message(bf, BOT_USERNAME)
             sleep(1)
             await doge.send_message(
                 bf,
@@ -578,7 +575,7 @@ async def customize_assistantbot():
             )
             await doge.send_read_acknowledge(bf)
             LOGS.info(
-                f"✅ Başarılı! {gvar('BOT_USERNAME')} asistan botunuzu özelleştirdim!"
+                f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!"
             )
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")
