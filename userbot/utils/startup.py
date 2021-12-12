@@ -16,7 +16,6 @@ from sys import executable as sysexecutable
 from sys import exit
 from time import sleep
 
-from chromedriver_autoinstaller import install
 from pylists import *
 from requests import get
 from selenium.webdriver import Chrome
