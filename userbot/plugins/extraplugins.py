@@ -20,6 +20,7 @@ plugin_category = "bot"
 
 if Config.PLUGINS:
     if PLUGIN_CHANNEL:
+
         async def install():
             documentss = await doge.get_messages(
                 PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
@@ -52,6 +53,7 @@ if Config.PLUGINS:
 
 
 if Config.DOGEPLUGIN:
+
     async def dogeplugininstall():
         try:
             documentss = await doge.get_messages(
@@ -99,6 +101,7 @@ if Config.DOGEPLUGIN:
 
 
 if Config.DOGEHUB:
+
     async def dogehubinstall():
         try:
             documentss = await doge.get_messages(
