@@ -129,10 +129,10 @@ async def bot_start(event):
                 )
             )
         buttons = [
-            (Button.url("📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
+            (Button.url("📣 Kᴀɴᴀʟ", "https://t.me/DogeUserBot"),),
             (
-                Button.url("💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
-                Button.url("🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
+                Button.url("💬 Sᴜᴘᴘᴏʀᴛ", "https://t.me/DogeSup"),
+                Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
             ),
         ]
     else:

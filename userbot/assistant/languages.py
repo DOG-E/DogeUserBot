@@ -16,7 +16,7 @@ from . import Config, Heroku, check_owner, doge, get_back_button, mention
 plugin_category = "bot"
 
 
-@doge.bot.on(CallbackQuery(data=compile(r"lang_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"lang_menu")))
 @check_owner
 async def setlang(event):
     langs = [

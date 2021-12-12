@@ -46,27 +46,27 @@ async def cmdinfo(input_str, event, plugin=False):
         if plugin:
             await edl(
                 event,
-                f"🚨 <code>{input_str}</code> <b>pluginini ya da komutunu bulamadım.</b>",
+                f"**🚨 I couldn't find** `{input_str}` **plugin or command.**",
             )
             return None
-        await edl(event, f"🚨 <code>{input_str}</code> <b>komutunu bulamadım.</b>")
+        await edl(event, f"**🚨 I couldn't find** `{input_str}` **command.**")
         return None
     except Exception as e:
         await edl(
             event,
-            f"<b>🚨 Hᴀᴛᴀ:</b>\
-            \n➡️ <code>{e}</code>",
+            f"**🚨 ERROR:**\
+            \n➡️ `{e}`",
         )
         return None
-    outstr = f"<b>🐶 Doɢᴇ UsᴇʀBoᴛ\
-        \n\n⌨️ Koᴍᴜᴛ:</b> <code>{tr}{input_str}</code>\n"
+    outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n⌨️ Coᴍᴍᴀɴᴅ:** `{tr}{input_str}`\n"
     plugin = get_key(input_str)
     if plugin is not None:
-        outstr += f"<b>🧩 Pʟᴜɢɪɴ:</b> <code>{plugin}</code>\n"
+        outstr += f"**🧩 Pʟᴜɢɪɴ:** `{plugin}`\n"
         category = getkey(plugin)
         if category is not None:
-            outstr += f"<b>🗃 Kᴀᴛᴇɢoʀɪ:</b> <code>{category}</code>\n\n"
-    outstr += f"<b>🐾 Bɪʟɢɪ:</b>\n{about[0]}"
+            outstr += f"**🗃 Cᴀᴛᴇɢoʀʏ:** `{category}`\n\n"
+    outstr += f"**🐾 Iɴᴛʀo:**\n{about[0]}"
     return outstr
 
 
@@ -79,49 +79,49 @@ async def plugininfo(input_str, event, flag):
     except Exception as e:
         await edl(
             event,
-            f"<b>🚨 Hᴀᴛᴀ:</b>\
-            \n➡️ <code>{e}</code>",
+            f"**🚨 ERROR:**\
+            \n➡️ `{e}`",
         )
         return None
-    if len(cmds) == 1 and (flag is None or (flag and flag != ".p")):
+    if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
         return outstr
-    outstr = f"<b>🧩 Pʟᴜɢɪɴ:</b> <code>{input_str}</code>\n"
-    outstr += f"<b>⌨️ Koᴍᴜᴛʟᴀʀ:</b> <code>{len(cmds)}</code>\n"
+    outstr = f"**🧩 Pʟᴜɢɪɴ:** `{input_str}`\n"
+    outstr += f"**⌨️ Coᴍᴍᴀɴᴅs:** `{len(cmds)}`\n"
     category = getkey(input_str)
     if category is not None:
-        outstr += f"<b>🗃 Kᴀᴛᴇɢoʀɪ:</b> <code>{category}</code>\n\n"
+        outstr += f"**🗃 Cᴀᴛᴇɢoʀʏ:** `{category}`\n\n"
     for cmd in sorted(cmds):
-        outstr += f"<b>🐾 Koᴍᴜᴛ:</b> <code>{tr}{cmd}</code>\n"
+        outstr += f"**🐾 Cᴍᴅ:** `{tr}{cmd}`\n"
         try:
-            outstr += f"<b>🔹 Bɪʟɢɪ:</b> {CMD_INFO[cmd][1]}\n\n"
+            outstr += f"**🔹 Iɴғo:** __{CMD_INFO[cmd][1]}__\n\n"
         except IndexError:
-            outstr += f"<b>🔹 Bɪʟɢɪ:</b> -\n\n"
-    outstr += f"<b>💬 Kᴜʟʟᴀɴɪᴍɪ:</b> <code>{tr}doge (komut adı)</code>\
+            outstr += f"**🔹 Iɴғo:** -\n\n"
+    outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge <command name>`\
         \n\
-        \n<b>🐾 Noᴛ:</b> Eğer plugin adı komut adıyla aynı ise şunu kullanın: <code>{tr}doge .c (komut adı)</code>."
+        \n**🐾 Note:** If command name is same as plugin name then use this `{tr}doge .c <command name>`."
     return outstr
 
 
 async def grpinfo():
-    outstr = ""
-    outstr += f"<b>🐶 Doɢᴇ UsᴇʀBoᴛ\n\
-        \n💬 Kᴜʟʟᴀɴɪᴍɪ:</b> <code>{tr}doge <plugin name></code>\n\
-        \n🐾 Tüᴍ Pʟᴜɢɪɴʟᴇʀ:</b>\n\n"
+    outstr = "**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n🐾 Aʟʟ Pʟᴜɢɪɴs:**\
+        \n\n"
+    outstr += f"**💬 Usᴀɢᴇ:** `{tr}doge <plugin name>`\n\n"
     category = ["admin", "bot", "fun", "misc", "tool", "hub"]
     for dog in category:
         plugins = GRP_INFO[dog]
-        outstr += f"<b>{hemojis[dog]} {dog.title()} </b>({len(plugins)})\n"
+        outstr += f"**{hemojis[dog]} {dog.title()} **({len(plugins)})\n"
         for plugin in plugins:
-            outstr += f"<code>{plugin}</code>  "
+            outstr += f"`{plugin}`  "
         outstr += "\n\n"
     return outstr
 
 
 async def cmdlist():
-    outstr = "**🐶 Doɢᴇ UsᴇʀBoᴛ\n\
-        \n🐾 Toᴛᴀʟ Lɪsᴛ Oғ Coᴍᴍᴀɴᴅs:** \n\
-        \n"
+    outstr = "**🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n\n🐾 Toᴛᴀʟ Lɪsᴛ Oғ Coᴍᴍᴀɴᴅs:** \
+        \n\n"
     category = ["admin", "bot", "fun", "misc", "tool", "hub"]
     for dog in category:
         plugins = GRP_INFO[dog]
@@ -138,7 +138,7 @@ async def cmdlist():
 
 @doge.bot_cmd(
     pattern="([Dd]oge|help) ?(.c|.p|.a)? ?([\s\S]*)?",
-    command=("help", plugin_category),
+    command=("doge", plugin_category),
     info={
         "h": "To get guide for DogeUserBot.",
         "d": "To get information or guide for the command or plugin.",
@@ -146,14 +146,14 @@ async def cmdlist():
         "f": {
             "c": "To get info of command.",
             "p": "To get info of plugin.",
-            "a": "To get all plugins in text format.",
+            "all": "To get all plugins in text format.",
         },
         "u": [
             "{tr}doge (plugin/command name)",
             "{tr}doge .c (command name)",
-            "{tr}doge .a",
+            "{tr}doge .all",
         ],
-        "e": ["{tr}doge alive", "{tr}doge .c ping"],
+        "e": ["{tr}doge alive", "{tr}doge .c ialive"],
     },
 )
 async def _(event):
@@ -176,43 +176,7 @@ async def _(event):
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
         await event.delete()
         return
-    await eor(event, outstr, parse_mode="html")
-
-
-@doge.bot_cmd(
-    pattern="([Dd]oge) ?(.c|.p)? ?([\s\S]*)?",
-    command=("doge", plugin_category),
-    info={
-        "h": "To get guide for DogeUserBot.",
-        "d": "To get information or guide for the command or plugin.",
-        "note": "If command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide.",
-        "f": {
-            "c": "To get info of command.",
-            "p": "To get info of plugin.",
-        },
-        "u": [
-            "{tr}doge",
-            "{tr}doge (plugin/command name)",
-            "{tr}doge .c (command name)",
-        ],
-        "e": ["{tr}doge alive", "{tr}doge .c ping"],
-    },
-)
-async def _(event):
-    "🐶 To get guide for @DogeUserBot."
-    flag = event.pattern_match.group(2)
-    input_str = event.pattern_match.group(3)
-    if flag and flag == ".c" and input_str:
-        outstr = await cmdinfo(input_str, event)
-        if outstr is None:
-            return
-    elif input_str:
-        outstr = await plugininfo(input_str, event, flag)
-        if outstr is None:
-            return
-    else:
-        outstr = await grpinfo()
-    await eor(event, outstr, parse_mode="html")
+    await eor(event, outstr)
 
 
 @doge.bot_cmd(
@@ -240,7 +204,7 @@ async def _(event):
         except Exception as e:
             return await edl(
                 event,
-                f"**🚨 Hᴀᴛᴀ:**\
+                f"**🚨 ERROR:**\
                 \n➡️ `{e}`",
             )
         outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\

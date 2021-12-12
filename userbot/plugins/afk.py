@@ -74,7 +74,6 @@ async def afksetter(event):
     AFK_.last_afk_message = {}
     AFK_.afk_end = {}
     start_1 = datetime.now()
-    AFK_.afk_on = True
     AFK_.afk_star = start_1.replace(microsecond=0)
     if not media_t:
         AFK_.afk_type = "text"
@@ -151,11 +150,12 @@ async def afksetter(event):
                     "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                 )
             AFK_.USERAFK_ON = f"on: {AFK_.reason}"
+    AFK_.afk_on = True
 
 
 @doge.bot_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
-    if AFK_.afk_on is False:
+    if AFK_.afk_on is True:
         return
     back_alive = datetime.now()
     AFK_.afk_end = back_alive.replace(microsecond=0)

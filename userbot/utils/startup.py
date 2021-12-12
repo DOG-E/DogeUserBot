@@ -16,8 +16,10 @@ from sys import executable as sysexecutable
 from sys import exit
 from time import sleep
 
+from chromedriver_autoinstaller import install
 from pylists import *
 from requests import get
+from selenium.webdriver import Chrome
 from telethon import Button
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
@@ -56,6 +58,8 @@ async def setup_bot():
     """
     Oturuma bağlanır
     """
+    (Chrome()).get("http://www.python.org")
+    assert "Python" in (Chrome()).title
     try:
         await doge.connect()
         config = await doge(GetConfigRequest())

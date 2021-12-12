@@ -314,7 +314,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 await event.client.reload(msg)
 
     else:
-        if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") is True:
+        if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") == "True":
             gvarname = vname
             gvarinfo = vinfo
             if cmd == "s":

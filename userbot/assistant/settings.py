@@ -16,7 +16,7 @@ from . import check_owner, doge, get_back_button, mention, newmsgres, sgvar
 plugin_category = "bot"
 
 
-@doge.bot.on(CallbackQuery(data=compile(r"set_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"set_menu")))
 @check_owner
 async def settings(event):
     options = [
@@ -41,7 +41,7 @@ async def settings(event):
     )
 
 
-@doge.bot.on(CallbackQuery(data=compile(r"api_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"api_menu")))
 @check_owner
 async def apisetter(event: CallbackQuery):
     apis = [
@@ -140,7 +140,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
             )
 
 
-@doge.bot.on(CallbackQuery(data=compile(r"cgapi")))
+@doge.bot.on(CallbackQuery(data=compile(b"cgapi")))
 @check_owner
 async def cgapi(event: CallbackQuery):
     apis = [
