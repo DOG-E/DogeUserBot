@@ -18,41 +18,40 @@ from . import BOTLOG_CHATID, PLUGIN_CHANNEL, Config, doge, install_pip
 plugin_category = "bot"
 
 
-if PLUGIN_CHANNEL:
-
-    async def install():
-        documentss = await doge.get_messages(
-            PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
-        )
-        total = int(documentss.total)
-        for module in range(total):
-            plugin_to_install = documentss[module].id
-            plugin_name = documentss[module].file.name
-            if path.exists(f"userbot/plugins/{plugin_name}"):
-                return
-            downloaded_file_name = await doge.download_media(
-                await doge.get_messages(PLUGIN_CHANNEL, ids=plugin_to_install),
-                "userbot/plugins/",
+if Config.PLUGINS:
+    if PLUGIN_CHANNEL:
+        async def install():
+            documentss = await doge.get_messages(
+                PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
             )
-            path1 = Path(downloaded_file_name)
-            shortname = path1.stem
-            flag = True
-            check = 0
-            while flag:
-                try:
-                    load_module(shortname.replace(".py", ""))
-                    break
-                except ModuleNotFoundError as e:
-                    install_pip(e.name)
-                    check += 1
-                    if check > 5:
+            total = int(documentss.total)
+            for module in range(total):
+                plugin_to_install = documentss[module].id
+                plugin_name = documentss[module].file.name
+                if path.exists(f"userbot/plugins/{plugin_name}"):
+                    return
+                downloaded_file_name = await doge.download_media(
+                    await doge.get_messages(PLUGIN_CHANNEL, ids=plugin_to_install),
+                    "userbot/plugins/",
+                )
+                path1 = Path(downloaded_file_name)
+                shortname = path1.stem
+                flag = True
+                check = 0
+                while flag:
+                    try:
+                        load_module(shortname.replace(".py", ""))
                         break
+                    except ModuleNotFoundError as e:
+                        install_pip(e.name)
+                        check += 1
+                        if check > 5:
+                            break
 
-    doge.loop.create_task(install())
+        doge.loop.create_task(install())
 
 
 if Config.DOGEPLUGIN:
-
     async def dogeplugininstall():
         try:
             documentss = await doge.get_messages(
@@ -100,7 +99,6 @@ if Config.DOGEPLUGIN:
 
 
 if Config.DOGEHUB:
-
     async def dogehubinstall():
         try:
             documentss = await doge.get_messages(

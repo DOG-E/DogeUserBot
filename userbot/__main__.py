@@ -9,7 +9,7 @@
 from sys import argv
 
 import userbot
-from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
+from userbot import BOTLOG, BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 
 from .core.logger import logging
 from .core.session import doge
@@ -31,31 +31,31 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info("⏳ %10 ~ DOGE USERBOT BAŞLATILIYOR 🐾")
+    LOGS.info("🐾 %10 ~ BAŞLATILIYOR...")
     doge.loop.run_until_complete(setup_bot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
-    LOGS.info("⏳ %20 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %20 ~ YÜKLENİYOR...")
     doge.loop.run_until_complete(checking_id())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
-    LOGS.info("⏳ %30 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %30 ~ YÜKLENİYOR...")
     doge.loop.run_until_complete(setup_assistantbot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
-    LOGS.info("⏳ %40 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %40 ~ YÜKLENİYOR...")
     doge.loop.run_until_complete(setup_me_bot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
-    LOGS.info("⏳ %50 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %50 ~ YÜKLENİYOR...")
     doge.loop.run_until_complete(customize_assistantbot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
@@ -74,21 +74,21 @@ async def startup_process():
     if check is not None:
         Dogcheck.sucess = False
         return
-    await verifyLoggerGroup()
-    LOGS.info("⏳ %60 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %60 ~ YÜKLENİYOR...")
+    if BOTLOG != True:
+        await verifyLoggerGroup()
+    LOGS.info("🐾 %70 ~ YÜKLENİYOR...")
     await load_plugins("plugins")
     await load_plugins("assistant")
+    LOGS.info("🐾 %80 ~ YÜKLENİYOR...")
     await verifyLoggerGroup()
-    LOGS.info("⏳ %70 ~ DOGE USERBOT 🐾")
+    LOGS.info("🐾 %90 ~ YÜKLENİYOR...")
     await add_bot_to_logger_group(BOTLOG_CHATID)
-    LOGS.info("⏳ %80 ~ DOGE USERBOT 🐾")
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
-        LOGS.info("⏳ %90 ~ DOGE USERBOT 🐾")
-    await startupmessage()
-    print(userbot.__copyright__)
-    print(userbot.__license__ + " ile korunmaktadır.")
-    print(
+    LOGS.info(userbot.__copyright__)
+    LOGS.info(userbot.__license__ + " ile korunmaktadır.")
+    LOGS.info(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
         \n🐶 Hey! Doge çalışıyor!\
@@ -100,6 +100,7 @@ async def startup_process():
         \n💬 Yardım için Telegram grubumuzu ziyaret edin: t.me/DogeSup\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
     )
+    await startupmessage()
     Dogcheck.sucess = True
     return
 

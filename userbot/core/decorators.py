@@ -18,7 +18,7 @@ from ..sql_helper.globals import gvar
 def check_owner(func):
     async def wrapper(c_q: CallbackQuery):
         if c_q.query.user_id and (
-            c_q.query.user_id == gvar("OWNER_ID")
+            c_q.query.user_id == int(gvar("OWNER_ID"))
             or c_q.query.user_id in Config.SUDO_USERS
         ):
             try:

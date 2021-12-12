@@ -300,7 +300,7 @@ async def inline_handler(event):  # sourcery no-metrics
     string.split()
     query_user_id = event.query.user_id
 
-    if query_user_id == gvar("OWNER_ID") or query_user_id in Config.SUDO_USERS:
+    if query_user_id == int(gvar("OWNER_ID")) or query_user_id in Config.SUDO_USERS:
         hmm = compile("troll (.*) (.*)")
         match = findall(hmm, query)
         inf = compile("s (.*) (.*)")

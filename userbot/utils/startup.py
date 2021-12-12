@@ -32,7 +32,6 @@ from .. import (
     BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
-    OWNER_ID,
     PLUGIN_CHANNEL,
     PM_LOGGER_GROUP_ID,
     tr,
@@ -87,11 +86,11 @@ async def checking_id():
     if gvar("OWNER_ID") is None:
         dgvar("OWNERID")
         sleep(0.5)
-        sgvar("OWNERID", doge.uid)
+        sgvar("OWNERID", int(doge.uid))
     try:
         dgvar("OWNER_ID")
         sleep(0.5)
-        sgvar("OWNER_ID", doge.uid)
+        sgvar("OWNER_ID", int(doge.uid))
     except Exception as e:
         LOGS.error(f"🚨 {e}")
     if gvar("OWNERID") != gvar("OWNER_ID"):
@@ -109,7 +108,7 @@ async def checking_id():
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
         exit()
-    if OWNER_ID in G_YS:
+    if gvar("OWNER_ID") in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
         LOGS.error(constants.l_gmsgg_ys)

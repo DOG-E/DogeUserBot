@@ -88,9 +88,9 @@ AUTONAME = gvar("AUTONAME")
 BIO_PREFIX = gvar("BIO_PREFIX")
 DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
 
-OWNER_ID = gvar("OWNER_ID")
-hmention = f"<a href = tg://user?id={OWNER_ID}>{gvar('ALIVE_NAME')}</a>"
-mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={OWNER_ID})"
+OWNER_ID = int(gvar("OWNER_ID"))
+hmention = f"<a href = tg://user?id={OWNER_ID}>{ALIVE_NAME}</a>"
+mention = f"[{ALIVE_NAME}](tg://user?id={OWNER_ID})"
 
 TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
 
@@ -114,10 +114,9 @@ WEATHER_CITY = gvar("WEATHER_CITY") or "Istanbul"
 # CHANNEL & GROUP IDS:
 BOTLOG = Config.BOTLOG
 BOTLOG_CHATID = Config.BOTLOG_CHATID
+PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 
 PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
-
-PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 
 if BOTLOG:
     FBAN_GROUP_ID = gvar("FBAN_GROUP_ID") or BOTLOG_CHATID
