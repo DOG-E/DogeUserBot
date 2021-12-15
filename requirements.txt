@@ -1,3 +1,4 @@
+git+https://github.com/MUTLCC/py-googletrans
 git+https://github.com/MUTLCC/youtube-search-python
 git+https://github.com/MUTLCC/Wikipedia
 aiofiles
@@ -22,11 +23,12 @@ glitch_this
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
-googletrans==4.0.0-rc1
 gtts
 hachoir
 herokum
 html-telegraph-poster
+httpcore
+httpx
 humanize
 imdbpy
 instaloader
