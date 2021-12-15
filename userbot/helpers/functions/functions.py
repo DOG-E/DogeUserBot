@@ -21,7 +21,7 @@ except ModuleNotFoundError:
     install_pip("IMDbPY")
     from imdb import IMDb
 
-from googletrans import Translator
+# _from googletrans import Translator
 from requests import get
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.events import NewMessage
@@ -106,16 +106,16 @@ def getSimilarWords(wordx, limit=5):
 
 
 # https://github.com/ssut/py-googletrans/issues/234#issuecomment-722379788
-async def getTranslate(text, **kwargs):
-    translator = Translator()
-    result = None
-    for _ in range(10):
-        try:
-            result = translator.translate(text, **kwargs)
-        except Exception:
-            translator = Translator()
-            await sleep(0.1)
-    return result
+# _async def getTranslate(text, **kwargs):
+# _    translator = Translator()
+# _    result = None
+# _    for _ in range(10):
+# _        try:
+# _            result = translator.translate(text, **kwargs)
+# _        except Exception:
+# _            translator = Translator()
+# _            await sleep(0.1)
+# _    return result
 
 
 # Credits: Robotlog - https://github.com/robotlog/SiriUserBot/blob/master/userbot/helps/forc.py#L5

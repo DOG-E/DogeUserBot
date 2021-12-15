@@ -6,9 +6,9 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from googletrans import LANGUAGES
+# _from googletrans import LANGUAGES
 
-from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, getTranslate, gvar
+from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, gvar
 
 plugin_category = "tool"
 
@@ -40,14 +40,14 @@ async def _(event):
         return await edl(event, "`.tl LanguageCode` as reply to a message", time=5)
     text = deEmojify(text.strip())
     lang = lang.strip()
-    try:
-        translated = await getTranslate(text, dest=lang)
-        after_tr_text = translated.text
-        output_str = f"**TRANSLATED from {LANGUAGES[translated.src].title()} to {LANGUAGES[lang].title()}**\
-                \n`{after_tr_text}`"
-        await eor(event, output_str)
-    except Exception as exc:
-        await edl(event, f"**Error:**\n`{exc}`", time=5)
+    # _try:
+        # _translated = await getTranslate(text, dest=lang)
+        # _after_tr_text = translated.text
+        # _output_str = f"**TRANSLATED from {LANGUAGES[translated.src].title()} to {LANGUAGES[lang].title()}**\
+        # _        \n`{after_tr_text}`"
+        # _await eor(event, output_str)
+    # _except Exception as exc:
+        # _await edl(event, f"**Error:**\n`{exc}`", time=5)
 
 
 @doge.bot_cmd(
@@ -74,17 +74,17 @@ async def translateme(trans):
         return await eor(trans, "`Give a text or reply to a message to translate!`")
 
     TRT_LANG = gvar("TRT_LANG") or "en"
-    try:
-        reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
-    except ValueError:
-        return await edl(trans, "`Invalid destination language.`", time=5)
+    # _try:
+    # _    reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
+    # _except ValueError:
+    # _    return await edl(trans, "`Invalid destination language.`", time=5)
 
-    source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
-    transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
-    reply_text = f"**From {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}):**\n`{reply_text.text}`"
-    await eor(trans, reply_text)
-    if BOTLOG:
-        await trans.client.send_message(
-            BOTLOG_CHATID,
-            f"`Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.`",
-        )
+    # _source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
+    # _transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
+    # _reply_text = f"**From {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}):**\n`{reply_text.text}`"
+    # _await eor(trans, reply_text)
+    # _if BOTLOG:
+    # _    await trans.client.send_message(
+    # _        BOTLOG_CHATID,
+    # _        f"`Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.`",
+    # _    )

@@ -26,7 +26,6 @@ from . import (
     doge,
     edl,
     eor,
-    getTranslate,
     humanbytes,
 )
 
@@ -331,13 +330,13 @@ async def _(event):
     status_code = response_api.status_code
     if status_code == 200:
         raw_html = response_api.content
-        soup = BeautifulSoup(raw_html, "html.parser")
-        ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        translated = await getTranslate(deEmojify(ext_details), dest="tr")
-        await eor(
-            event,
-            f"**File Extension:** `{input_str}`\n**Description:**\n{translated.text}",
-        )
+        # _soup = BeautifulSoup(raw_html, "html.parser")
+        # _ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
+        # _translated = await getTranslate(deEmojify(ext_details), dest="tr")
+        # _await eor(
+        # _    event,
+        # _    f"**File Extension:** `{input_str}`\n**Description:**\n{translated.text}",
+        # _)
     else:
         await eor(
             event,

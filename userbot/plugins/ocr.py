@@ -10,7 +10,7 @@ from os import makedirs
 from os import path as osp
 from os import remove
 
-from googletrans import LANGUAGES
+# _from googletrans import LANGUAGES
 from requests import post
 
 from . import (
@@ -22,7 +22,6 @@ from . import (
     doge,
     edl,
     eor,
-    getTranslate,
     gvar,
 )
 
@@ -143,16 +142,16 @@ async def ocr(event):
             )
         if cmd == "t":
             TRT_LANG = gvar("TOCR_LANG") or "en"
-            try:
-                reply_text = await getTranslate(deEmojify(ParsedText), dest=TRT_LANG)
-            except ValueError:
-                return await edl(event, "`Invalid destination language.`")
-            source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
-            transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
-            tran_text = f"📜**Translate:\nFrom {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}):**\n\n`{reply_text.text}`"
-            await dogevent.edit(
-                f"🧧 **Here's what I could read from it:**\n\n`{ParsedText}`\n\n{tran_text}"
-            )
+            # _try:
+                # _reply_text = await getTranslate(deEmojify(ParsedText), dest=TRT_LANG)
+            # _except ValueError:
+                # _return await edl(event, "`Invalid destination language.`")
+            # _source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
+            # _transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
+            # _tran_text = f"📜**Translate:\nFrom {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}):**\n\n`{reply_text.text}`"
+            # _await dogevent.edit(
+            # _    f"🧧 **Here's what I could read from it:**\n\n`{ParsedText}`\n\n{tran_text}"
+            # _)
     remove(output_file)
 
 

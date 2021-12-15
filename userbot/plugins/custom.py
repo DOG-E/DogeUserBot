@@ -6,7 +6,7 @@
 # Please read the GNU Affero General Public License in;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from googletrans import LANGUAGES
+# _from googletrans import LANGUAGES
 from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto, PeerUser
@@ -397,6 +397,7 @@ async def lang_set(value):
     "To set language for trt comamnd."
     arg = value.pattern_match.group(2).lower()
     input_str = value.pattern_match.group(1)
+    LANGUAGES = {"#TODO"}
     if arg not in LANGUAGES:
         return await eor(
             value,
