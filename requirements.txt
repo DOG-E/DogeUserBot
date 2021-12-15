@@ -27,8 +27,6 @@ gtts
 hachoir
 herokum
 html-telegraph-poster
-httpcore
-httpx
 humanize
 imdbpy
 instaloader
