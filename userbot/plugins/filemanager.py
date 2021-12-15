@@ -15,19 +15,9 @@ from pathlib import Path
 from shutil import move
 from time import ctime
 
-from bs4 import BeautifulSoup
 from requests import get
 
-from . import (
-    Config,
-    _dogeutils,
-    _format,
-    deEmojify,
-    doge,
-    edl,
-    eor,
-    humanbytes,
-)
+from . import Config, _dogeutils, _format, doge, edl, eor, humanbytes
 
 plugin_category = "bot"
 
@@ -329,7 +319,7 @@ async def _(event):
     response_api = get(sample_url.format(input_str))
     status_code = response_api.status_code
     if status_code == 200:
-        raw_html = response_api.content
+        response_api.content
         # _soup = BeautifulSoup(raw_html, "html.parser")
         # _ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
         # _translated = await getTranslate(deEmojify(ext_details), dest="tr")

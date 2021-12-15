@@ -13,17 +13,7 @@ from os import remove
 # _from googletrans import LANGUAGES
 from requests import post
 
-from . import (
-    OCRSPACE_API,
-    TEMP_DIR,
-    _dogetools,
-    convert_toimage,
-    deEmojify,
-    doge,
-    edl,
-    eor,
-    gvar,
-)
+from . import OCRSPACE_API, TEMP_DIR, _dogetools, convert_toimage, doge, edl, eor, gvar
 
 plugin_category = "tool"
 
@@ -141,11 +131,11 @@ async def ocr(event):
                 f"**Here's what I could read from it:**\n\n`{ParsedText}`"
             )
         if cmd == "t":
-            TRT_LANG = gvar("TOCR_LANG") or "en"
+            gvar("TOCR_LANG") or "en"
             # _try:
-                # _reply_text = await getTranslate(deEmojify(ParsedText), dest=TRT_LANG)
+            # _reply_text = await getTranslate(deEmojify(ParsedText), dest=TRT_LANG)
             # _except ValueError:
-                # _return await edl(event, "`Invalid destination language.`")
+            # _return await edl(event, "`Invalid destination language.`")
             # _source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
             # _transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
             # _tran_text = f"📜**Translate:\nFrom {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}):**\n\n`{reply_text.text}`"

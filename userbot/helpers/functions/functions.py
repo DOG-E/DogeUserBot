@@ -6,7 +6,6 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from asyncio import sleep
 from json import loads
 from os import path
 from random import choice
