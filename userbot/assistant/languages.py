@@ -24,10 +24,7 @@ async def setlang(event):
             "🇬🇧 Eɴɢʟɪsʜ",
             data="setlang_en",
         ),
-        Button.inline(
-            "🐾 Mᴇɴᴜ",
-            data="mainmenu"
-        ),
+        Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
     ]
     langs.append([])
     await event.edit(
