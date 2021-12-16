@@ -8,7 +8,7 @@
 # ================================================================
 # _from googletrans import LANGUAGES
 
-from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, gvar
+from . import deEmojify, doge, edl, eor, gvar
 
 plugin_category = "tool"
 
@@ -41,13 +41,13 @@ async def _(event):
     text = deEmojify(text.strip())
     lang = lang.strip()
     # _try:
-        # _translated = await getTranslate(text, dest=lang)
-        # _after_tr_text = translated.text
-        # _output_str = f"**TRANSLATED from {LANGUAGES[translated.src].title()} to {LANGUAGES[lang].title()}**\
-        # _        \n`{after_tr_text}`"
-        # _await eor(event, output_str)
+    # _translated = await getTranslate(text, dest=lang)
+    # _after_tr_text = translated.text
+    # _output_str = f"**TRANSLATED from {LANGUAGES[translated.src].title()} to {LANGUAGES[lang].title()}**\
+    # _        \n`{after_tr_text}`"
+    # _await eor(event, output_str)
     # _except Exception as exc:
-        # _await edl(event, f"**Error:**\n`{exc}`", time=5)
+    # _await edl(event, f"**Error:**\n`{exc}`", time=5)
 
 
 @doge.bot_cmd(
@@ -73,7 +73,7 @@ async def translateme(trans):
     else:
         return await eor(trans, "`Give a text or reply to a message to translate!`")
 
-    TRT_LANG = gvar("TRT_LANG") or "en"
+    gvar("TRT_LANG") or "en"
     # _try:
     # _    reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
     # _except ValueError:
