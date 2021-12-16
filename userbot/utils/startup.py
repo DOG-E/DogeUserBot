@@ -61,7 +61,6 @@ async def setup_bot():
         install()
     except Exception as c:
         LOGS.warning(f"🚨 {c}")
-        pass
     try:
         await doge.connect()
         config = await doge(GetConfigRequest())
