@@ -16,9 +16,9 @@ from sys import executable as sysexecutable
 from sys import exit
 from time import sleep
 
+from chromedriver_autoinstaller import install
 from pylists import *
 from requests import get
-from selenium.webdriver import Chrome
 from telethon import Button
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
@@ -57,8 +57,11 @@ async def setup_bot():
     """
     Oturuma bağlanır
     """
-    (Chrome()).get("http://www.python.org")
-    assert "Python" in (Chrome()).title
+    try:
+        install()
+    except Exception as c:
+        LOGS.warning(f"🚨 {c}")
+        pass
     try:
         await doge.connect()
         config = await doge(GetConfigRequest())
@@ -66,8 +69,7 @@ async def setup_bot():
             if option.ip_address == doge.session.server_address:
                 if doge.session.dc_id != option.id:
                     LOGS.warning(
-                        f"🛠️ Oturumdaki sabit DC Kimliği {doge.session.dc_id}\
-                        \n➡️ {option.id}'a düzenlendi.",
+                        f"🛠️ Oturumdaki DC kimliği {doge.session.dc_id} ➡️ {option.id} olarak düzenlendi.",
                     )
                 doge.session.set_dc(option.id, option.ip_address, option.port)
                 doge.session.save()
