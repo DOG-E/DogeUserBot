@@ -16,7 +16,7 @@ from . import Config, Heroku, check_owner, doge, get_back_button, mention
 plugin_category = "bot"
 
 
-@doge.bot.on(CallbackQuery(data=compile(b"lang_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"langmenu")))
 @check_owner
 async def setlang(event):
     langs = [
@@ -24,8 +24,12 @@ async def setlang(event):
             "🇬🇧 Eɴɢʟɪsʜ",
             data="setlang_en",
         ),
+        Button.inline(
+            "🐾 Mᴇɴᴜ",
+            data="mainmenu"
+        ),
     ]
-    langs.append([Button.inline("🐾 Mᴇɴᴜ", data="mainmenu")])
+    langs.append([])
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
@@ -55,6 +59,6 @@ async def setlang_en(event):
         \n🇬🇧 Dili İngilizce'ye ayarlıyorum...\n\
         \n⏳ Just a moment,\
         \n🇬🇧 Language is setting to English...**",
-        buttons=get_back_button("lang_menu"),
+        buttons=get_back_button("langmenu"),
     )
     hvar["UPSTREAM_REPO_BRANCH"] = "DOGE-EN"

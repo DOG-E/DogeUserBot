@@ -16,16 +16,16 @@ from . import check_owner, doge, get_back_button, mention, newmsgres, sgvar
 plugin_category = "bot"
 
 
-@doge.bot.on(CallbackQuery(data=compile(b"set_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"setmenu")))
 @check_owner
 async def settings(event):
     options = [
         [
-            Button.inline("🌐 Dɪʟ", data="lang_menu"),
+            Button.inline("🌐 Dɪʟ", data="langmenu"),
         ],
         [
-            Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="api_menu"),
-            Button.inline("🔮 Sᴇçᴇɴᴇᴋʟᴇʀ", data="dv_menu"),
+            Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
+            Button.inline("🔮 Sᴇçᴇɴᴇᴋʟᴇʀ", data="dvmenu"),
         ],
         [
             Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
@@ -41,7 +41,7 @@ async def settings(event):
     )
 
 
-@doge.bot.on(CallbackQuery(data=compile(b"api_menu")))
+@doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
 @check_owner
 async def apisetter(event: CallbackQuery):
     apis = [
@@ -75,7 +75,7 @@ async def apisetter(event: CallbackQuery):
             Button.inline("WEATHER", data="woapi"),
         ],
     ]
-    apis.append(get_back_button("set_menu"))
+    apis.append(get_back_button("setmenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
@@ -116,7 +116,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                     \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
                     \n◽ Doɢᴇ oғ {mention}\n\
                     \n⛔ İptal edildi!**",
-                    buttons=get_back_button("api_menu"),
+                    buttons=get_back_button("apimenu"),
                     link_preview=False,
                 )
         await setdv(event, y, vinfo)
@@ -135,7 +135,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
                 \n◽ Doɢᴇ oғ {mention}\n\
                 \n✅ {y} değişkenini başarıyla değiştirdim.**",
-                buttons=get_back_button("api_menu"),
+                buttons=get_back_button("apimenu"),
                 link_preview=False,
             )
 
@@ -149,7 +149,7 @@ async def cgapi(event: CallbackQuery):
             Button.inline("GİZLİ KANAL", data="pcapi"),
         ],
     ]
-    apis.append(get_back_button("api_menu"))
+    apis.append(get_back_button("apimenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\

@@ -142,7 +142,7 @@ async def bot_start(event):
             my_mention
         )
         buttons = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="set_menu"),),
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
             (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
         ]
     try:
