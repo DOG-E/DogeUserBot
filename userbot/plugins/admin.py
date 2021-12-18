@@ -27,6 +27,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 from telethon.utils import get_display_name
+from userbot.helpers.utils.utils import run_async
 
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 from . import (
@@ -47,11 +48,11 @@ from . import (
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
-PP_TOO_SMOL = "`The image is too small`"
-PP_ERROR = "`Failure while processing the image`"
-NO_PERM = "`I don't have sufficient permissions! This is so sed. Alexa play despacito`"
-CHAT_PP_CHANGED = "`Chat Picture Changed`"
-INVALID_MEDIA = "`Invalid Extension`"
+PP_TOO_SMOL = "`Bu görüntü işlemek için çok küçük`"
+PP_ERROR = "`Görüntüyü işlerken bir hata meydana geldi.`"
+NO_PERM = "`Bunu yapabilmek için yeterli iznim yok! Bu çok üzücü (ಥ﹏ಥ)`"
+CHAT_PP_CHANGED = "`Sohbet resmi değiştirildi.`"
+INVALID_MEDIA = "`Geçersiz uzantı`"
 
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
@@ -85,13 +86,13 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
     pattern="(d|)gpic$",
     command=("gpic", plugin_category),
     info={
-        "h": "For changing group display pic or deleting display pic",
-        "d": "Reply to Image for changing display picture",
+        "h": "Grup profil fotoğrafını değiştirir veya siler.",
+        "d": "Bir resmi yanıtlarak kullanırsanız o resmi grup fotoğrafı yapar.",
         "f": {
-            "d": "To delete group pic",
+            "d": "Grup fotoğrafını siler.",
         },
         "u": [
-            "{tr}gpic <reply to image>",
+            "{tr}gpic <bir fotoğraf yanıtlayarak>",
             "{tr}dgpic",
         ],
     },
@@ -99,15 +100,15 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
     require_admin=True,
 )
 async def set_group_photo(event):  # sourcery no-metrics
-    "For changing Group dp"
+    "DP grubunu değiştirmek için"
     flag = (event.pattern_match.group(1)).strip()
     if flag == "d":
         try:
             await event.client(EditPhotoRequest(event.chat_id, InputChatPhotoEmpty()))
         except Exception as e:
-            return await edl(event, f"**Error:** `{e}`")
-        process = "deleted"
-        await edl(event, "```Successfully group profile pic deleted.```")
+            return await edl(event, f"**Hata:** `{e}`")
+        process = "silindi."
+        await edl(event, "```Grup profil resmi başarıyla silindi.```")
     else:
         replymsg = await event.get_reply_message()
         photo = None
@@ -131,14 +132,15 @@ async def set_group_photo(event):  # sourcery no-metrics
             except ImageProcessFailedError:
                 return await edl(event, PP_ERROR)
             except Exception as e:
-                return await edl(event, f"**Error:** `{str(e)}`")
-            process = "updated"
+                return await edl(event, f"**Hata:** `{str(e)}`")
+            process = "değiştirildi."
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#GROUPPIC\n"
-            f"Group profile pic {process} successfully"
-            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            "#GRUP_RESIM_DEGISIKLIGI\n"
+            f"Grup profili resmi başarıyla {process}"
+            f"**Grup**: {get_display_name(await event.get_chat())}\
+            \n**Grup ID'si:** `{event.chat_id}`",
         )
 
 
@@ -146,19 +148,19 @@ async def set_group_photo(event):  # sourcery no-metrics
     pattern="promote(?:\s|$)([\s\S]*)",
     command=("promote", plugin_category),
     info={
-        "h": "To give admin rights for a person",
-        "d": "Provides admin rights to the person in the chat\
-            \nNote: You need proper rights for this",
+        "h": "Bir kişi için yönetici hakları verir.",
+        "d": "Sohbetteki bir üyeye yönetici hakları sağlar.",
         "u": [
-            "{tr}promote <userid/username/reply>",
-            "{tr}promote <userid/username/reply> <custom title>",
+            "{tr}promote <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}promote <ID/kullanıcı adı/yanıtlayarak> <isteğe bağlı başlık>",
         ],
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır"
     },
     groups_only=True,
     require_admin=True,
 )
 async def promote(event):
-    "To promote a person in chat"
+    "Sohbette bir kişiyi tanıtmak"
     new_rights = ChatAdminRights(
         add_admins=False,
         invite_users=True,
@@ -169,7 +171,7 @@ async def promote(event):
     )
     user, rank = await get_user_from_event(event)
     if not rank:
-        rank = "Admin"
+        rank = "Yönetici"
     if not user:
         return
     dogevent = await eor(event, "`Promoting...`")
@@ -177,13 +179,14 @@ async def promote(event):
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
-    await dogevent.edit("`Promoted Successfully! Now gib Party`")
+    await dogevent.edit("**Kullanıcı başarıyla yetkilendirildi!**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#PROMOTE\
-            \nUSER: [{user.first_name}](tg://user?id={user.id})\
-            \nCHAT: {get_display_name(await event.get_chat())} (`{event.chat_id}`)",
+            f"#YETKILENDIRME\
+            \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
+            \n**Grup:** {get_display_name(await event.get_chat())}\
+            \n**Grup ID'si:** `{event.chat_id}`",
         )
 
 
@@ -191,19 +194,18 @@ async def promote(event):
     pattern="demote(?:\s|$)([\s\S]*)",
     command=("demote", plugin_category),
     info={
-        "h": "To remove a person from admin list",
-        "d": "Removes all admin rights for that peron in that chat\
-            \nNote: You need proper rights for this and also u must be owner or admin who promoted that guy",
+        "h": "Bir kişiyi yönetici listesinden çıkarır.",
+        "d": "Bu kişinin bu sohbet içindeki tüm yönetici haklarını kaldırır.",
         "u": [
-            "{tr}demote <userid/username/reply>",
-            "{tr}demote <userid/username/reply> <custom title>",
+            "{tr}demote <ID/kullanıcı adı/yanıtlayarak>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız var ve ayrıca o üyenin yönetici yetkilerini düzenleyebiliyor olmanız gerekmektedir."
     },
     groups_only=True,
     require_admin=True,
 )
 async def demote(event):
-    "To demote a person in group"
+    "Gruptaki bir kişiyi engellemek için"
     user, _ = await get_user_from_event(event)
     if not user:
         return
@@ -211,7 +213,7 @@ async def demote(event):
     flag = await wowmydev(user_id, event)
     if flag:
         return
-    dogevent = await eor(event, "`Demoting...`")
+    dogevent = await eor(event, "`Yetki düşürülüyor...`")
     newrights = ChatAdminRights(
         add_admins=None,
         invite_users=None,
@@ -225,13 +227,14 @@ async def demote(event):
         await event.client(EditAdminRequest(event.chat_id, user.id, newrights, rank))
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
-    await dogevent.edit("`Demoted Successfully! Betterluck next time`")
+    await dogevent.edit("**Yetkisi başarıyla düşürüldü!**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#DEMOTE\
-            \nUSER: [{user.first_name}](tg://user?id={user.id})\
-            \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            f"#YETKİSİZLENDİRME\
+            \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
+            \n**Grup:** {get_display_name(await event.get_chat())}\
+            \n**Grup ID'si:** `{event.chat_id}`",
         )
 
 
@@ -239,29 +242,29 @@ async def demote(event):
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
-        "h": "Will ban the guy in the group where you used this command.",
-        "d": "Permanently will remove him from this group and he can't join back\
-            \nNote: You need proper rights for this.",
+        "h": "Kullanılan gruptan seçilen üyeyi yasaklar.",
+        "d": "Seçilen üye gruptan kalıcı olarak atılır ve yasağı kaldırılana kadaar geri dönemez.",
         "u": [
-            "{tr}ban <userid/username/reply>",
-            "{tr}ban <userid/username/reply> <reason>",
+            "{tr}ban <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}ban <ID/kullanıcı adı/yanıtlayarak> <sebep>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız vardır."
     },
     groups_only=True,
     require_admin=True,
 )
 async def _ban_person(event):
-    "To ban a person in group"
+    "Gruba bir kişiyi yasaklamak"
     user, reason = await get_user_from_event(event)
     if not user:
         return
     user_id = user.id
     if user_id == event.client.uid:
-        return await edl(event, "__You can't ban yourself.__")
+        return await edl(event, "**__Kendini yasaklayamazsın.__**")
     flag = await wowmydev(user_id, event)
     if flag:
         return
-    dogevent = await eor(event, "`Whacking the pest!`")
+    dogevent = await eor(event, "**Yasaklanıyor!**")
     try:
         await event.client(EditBannedRequest(event.chat_id, user_id, BANNED_RIGHTS))
     except BadRequestError:
@@ -272,31 +275,33 @@ async def _ban_person(event):
             await reply.delete()
     except BadRequestError:
         return await dogevent.edit(
-            "`I don't have message nuking rights! But still he is banned!`"
+            "**Mesajları silmeye hakkım yok ama yine de yasaklandı**"
         )
     if reason:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user_id)}` is banned !!`\n**Reason:** `{reason}`"
+            f"{_format.mentionuser(user.first_name ,user_id)}** yasaklandı!!**\n**Sebep:** `{reason}`"
         )
     else:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user_id)} `is banned !!`"
+            f"{_format.mentionuser(user.first_name ,user_id)}** yasaklandı!!**"
         )
     if BOTLOG:
         if reason:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#BAN\
-                \nUSER: [{user.first_name}](tg://user?id={user_id})\
-                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
-                \nREASON: {reason}",
+                f"#YASAKLAMA\
+                \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
+                \n**Grup:** {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`\
+                \n**Sebep:** {reason}",
             )
         else:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#BAN\
-                \nUSER: [{user.first_name}](tg://user?id={user_id})\
-                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                f"#YASAKLAMA\
+                \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
+                \n**Grup:** {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`",
             )
 
 
@@ -304,39 +309,47 @@ async def _ban_person(event):
     pattern="unban(?:\s|$)([\s\S]*)",
     command=("unban", plugin_category),
     info={
-        "h": "Will unban the guy in the group where you used this command.",
-        "d": "Removes the user account from the banned list of the group\
-            \nNote: You need proper rights for this.",
+        "h": "Bu komutu kullandığınız gruptaki üyenin yasağı kaldırılır.",
+        "d": "Kullanıcı hesabını grubun yasaklı listesinden kaldırır.",
         "u": [
-            "{tr}unban <userid/username/reply>",
-            "{tr}unban <userid/username/reply> <reason>",
+            "{tr}unban <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}unban <ID/kullanıcı adı/yanıtlayarak> <sebep>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız var"
     },
     groups_only=True,
     require_admin=True,
 )
 async def nothanos(event):
-    "To unban a person"
+    "Bir kişinin yasağını açmak için"
     user, _ = await get_user_from_event(event)
     if not user:
         return
-    dogevent = await eor(event, "`Unbanning...`")
+    dogevent = await eor(event, "`Yasak kaldırılıyor...`")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} `is Unbanned Successfully. Granting another chance.`"
+            f"{_format.mentionuser(user.first_name ,user.id)} **yasağı başarıyla kaldırıldı!**`"
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#UNBAN\n"
-                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#YASAK_KALDIRMA\n"
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**Grup:** {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`",
             )
     except UserIdInvalidError:
-        await dogevent.edit("`Uh oh my unban logic broke!`")
+        await dogevent.edit("**Hayatımda böyle kullanıcı görmedim, onun bir mesajını yanıtlarsan tanıyabilirim.**")
     except Exception as e:
-        await dogevent.edit(f"**Error:**\n`{e}`")
+        if BOTLOG:
+            await dogevent.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+            await event.client.send_message(
+                BOTLOG_CHATID, 
+                "#YASAK_KALDIRMA_HATASI\n"
+                f"**Hata:** {e}"
+                )
+
 
 
 @doge.bot_cmd(incoming=True)
@@ -345,50 +358,56 @@ async def watcher(event):
         try:
             await event.delete()
         except Exception as e:
-            LOGS.error(f"🚨 {str(e)}")
+            LOGS.error(f"🚨 Susturulmuş kullanıcının mesajı silinemedi: {str(e)}")
 
 
 @doge.bot_cmd(
     pattern="mute(?:\s|$)([\s\S]*)",
     command=("mute", plugin_category),
     info={
-        "h": "To stop sending messages from that user",
-        "d": "If is is not admin then changes his permission in group,\
-            if he is admin or if you try in personal chat then his messages will be deleted\
-            \nNote: You need proper rights for this.",
+        "h": "Bu kullanıcının mesaj göndermesini engeller.",
+        "d": "Eğer yönetici değilse, gruptaki iznini değiştirir.\
+            ama eğer yönetici ise veya kişisel sohbette denerseniz, mesajları otomatik olarak silinir.",
         "u": [
-            "{tr}mute <userid/username/reply>",
-            "{tr}mute <userid/username/reply> <reason>",
+            "{tr}mute <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}mute <ID/kullanıcı adı/yanıtlayarak> <sebep>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız var."
     },  # sourcery no-metrics
 )
 async def startmute(event):
-    "To mute a person in that paticular chat"
+    "Bu özel sohbette bir kişiyi susturmak için"
     if event.is_private:
-        await event.edit("`Unexpected issues or ugly errors may occur!`")
+        await event.edit("`Beklenmeyen sorunlar oluşabilir!`")
         await sleep(2)
         await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if is_muted(event.chat_id, event.chat_id):
             return await event.edit(
-                "`This user is already muted in this chat ~~lmfao sed rip~~`"
+                "**Bu kullanıcı zaten susturulmuş!**"
             )
         if event.chat_id == doge.uid:
-            return await edl(event, "`You can't mute yourself`")
+            return await edl(event, "**Kendini susturamazın!**")
         flag = await wowmydev(replied_user, event)
         if flag:
             return
         try:
             mute(event.chat_id, event.chat_id)
         except Exception as e:
-            await event.edit(f"**Error:**\n`{e}`")
+            if BOTLOG:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+                await event.client.send_message(
+                    BOTLOG_CHATID, 
+                    "#YASAK_KALDIRMA_HATASI\n"
+                    f"**Hata:** {e}"
+                    )
         else:
-            await event.edit("`Successfully muted that person.\n**｀-´)⊃━☆ﾟ.*･｡ﾟ **`")
+            await event.edit("**Kullanıcı başarıyla susturuldu!**\n｀-´)⊃━☆ﾟ.*･｡ﾟ **`")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#PM_MUTE\n"
-                f"**User:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
+                "#PM_SUSTURULMASI\n"
+                f"**Kullanıcı:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
         chat = await event.get_chat()
@@ -396,14 +415,14 @@ async def startmute(event):
         creator = chat.creator
         if not admin and not creator:
             return await eor(
-                event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
+                event, "**Yönetici hakları olmadan bir kişiyi susturamazsın Niqq.** ಥ﹏ಥ  "
             )
         user, reason = await get_user_from_event(event)
         if not user:
             return
         user_id = user.id
         if user_id == doge.uid:
-            return await eor(event, "`Sorry, I can't mute myself`")
+            return await eor(event, "**Kendini susturamazsın!**")
         flag = await wowmydev(user_id, event)
         if flag:
             return
@@ -416,12 +435,18 @@ async def startmute(event):
             if result.participant.banned_rights.send_messages:
                 return await eor(
                     event,
-                    "`This user is already muted in this chat ~~lmfao sed rip~~`",
+                    "**Bu kullanıcı zaten susturulmuş!**",
                 )
         except AttributeError:
             pass
         except Exception as e:
-            return await eor(event, f"**Error:** `{e}`")
+            if BOTLOG:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+                return await event.client.send_message(
+                    BOTLOG_CHATID, 
+                    "#PM_SUSTURMA_HATASI\n"
+                    f"**Hata:** {e}"
+                    )
         try:
             await event.client(EditBannedRequest(event.chat_id, user_id, MUTE_RIGHTS))
         except UserAdminInvalidError:
@@ -429,32 +454,39 @@ async def startmute(event):
                 if chat.admin_rights.delete_messages is not True:
                     return await eor(
                         event,
-                        "`You can't mute a person if you don't have delete messages permission. ಥ﹏ಥ`",
+                        "**Mesaj silme izniniz yoksa bir kişiyi susturamazsınız.** ಥ﹏ಥ",
                     )
             elif "creator" not in vars(chat):
                 return await eor(
-                    event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
+                    event, "**Yönetici hakları olmadan bir kişiyi susturamazsın.** ಥ﹏ಥ  "
                 )
             mute(user_id, event.chat_id)
         except Exception as e:
-            return await eor(event, f"**Error:** `{e}`")
+            if BOTLOG:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+                return await event.client.send_message(
+                    BOTLOG_CHATID, 
+                    "#SUSTURMA_HATASI\n"
+                    f"**Hata:** {e}"
+                    )
         if reason:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user_id)} `is muted in {get_display_name(await event.get_chat())}`\n"
+                f"{_format.mentionuser(user.first_name, user_id)}, {get_display_name(await event.get_chat())}** grubunda susturuldu!**\n"
                 f"`Reason:`{reason}",
             )
         else:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user_id)} `is muted in {get_display_name(await event.get_chat())}`\n",
+                f"{_format.mentionuser(user.first_name ,user_id)}, {get_display_name(await event.get_chat())}** grubunda susturuldu!**\n",
             )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#MUTE\n"
-                f"**User:** [{user.first_name}](tg://user?id={user_id})\n"
-                f"**Chat:** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#SUSTURMA\n"
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
+                f"**Grup:** {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`",
             )
 
 
@@ -462,37 +494,43 @@ async def startmute(event):
     pattern="unmute(?:\s|$)([\s\S]*)",
     command=("unmute", plugin_category),
     info={
-        "h": "To allow user to send messages again",
-        "d": "Will change user permissions ingroup to send messages again.\
-        \nNote: You need proper rights for this.",
+        "h": "Kullanıcının tekrar mesaj göndermesine izin verir.",
+        "d": "Mesaj göndermek için kullanıcı izinlerini değiştirir.",
         "u": [
-            "{tr}unmute <userid/username/reply>",
-            "{tr}unmute <userid/username/reply> <reason>",
+            "{tr}unmute <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}unmute <ID/kullanıcı adı/yanıtlayarak> <sebep>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız var."
     },
 )
 async def endmute(event):
-    "To mute a person in that paticular chat"
+    "Bu özel sohbette bir kişiyi susturmak için"
     if event.is_private:
-        await event.edit("`Unexpected issues or ugly errors may occur!`")
+        await event.edit("`Beklenmeyen sorunlar ve hatalar oluşabilir!`")
         await sleep(1)
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if not is_muted(event.chat_id, event.chat_id):
             return await event.edit(
-                "`__This user is not muted in this chat__\n（ ^_^）o自自o（^_^ ）`"
+                "**__Bu kullanıcı bu sohbette zaten susturulmadı__**\n（ ^_^）o自自o（^_^ ）"
             )
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
-            await event.edit(f"**Error:**\n`{e}`")
+            if BOTLOG:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+                await event.client.send_message(
+                    BOTLOG_CHATID, 
+                    "#SUSTURMA_KALDIRMA_HATASI\n"
+                    f"**Hata:** {e}"
+                    )
         else:
             await event.edit(
-                "`Successfully unmuted that person\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`"
+                "**Susturulma başarılı bir şekilde kaldırıldı.**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍"
             )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#PM_UNMUTE\n"
+                "#PM_SUSTURULMA_KALDIRILMASI\n"
                 f"**User:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
@@ -511,20 +549,30 @@ async def endmute(event):
         except AttributeError:
             return await eor(
                 event,
-                "`This user can already speak freely in this chat ~~lmfao sed rip~~`",
+                "**Bu kullanıcı zaten bu sohbette serbestçe konuşabiliyor.**",
             )
         except Exception as e:
-            return await eor(event, f"**Error:** `{e}`")
+            if BOTLOG:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+                return await event.client.send_message(
+                    BOTLOG_CHATID, 
+                    "#SUSTURMA_KALDIRMA_HATASI\n"
+                    f"**Hata:** {e}"
+                    )
+            else:
+                await event.edit("__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__")
+
         await eor(
             event,
-            f"{_format.mentionuser(user.first_name ,user.id)} `is unmuted in {get_display_name(await event.get_chat())}\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`",
+            f"{_format.mentionuser(user.first_name ,user.id)}, {get_display_name(await event.get_chat())} **grubunda sesi açıldı!**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍",
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#UNMUTE\n"
-                f"**User:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat:** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#SUSTURMA_KALDIRMA\n"
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**Grup:** {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`",
             )
 
 
@@ -532,19 +580,19 @@ async def endmute(event):
     pattern="kick(?:\s|$)([\s\S]*)",
     command=("kick", plugin_category),
     info={
-        "h": "To kick a person from the group",
-        "d": "Will kick the user from the group so he can join back.\
-        \nNote: You need proper rights for this.",
+        "h": "Bir kişiyi gruptan atar.",
+        "d": "Kullanıcıyı gruptan atar, böylece geri katılabilir.",
         "u": [
-            "{tr}kick <userid/username/reply>",
-            "{tr}kick <userid/username/reply> <reason>",
+            "{tr}kick <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}kick <ID/kullanıcı adı/yanıtlayarak> <sebep>",
         ],
+        "note": "Bunun için uygun haklara ihtiyacınız var."
     },
     groups_only=True,
     require_admin=True,
 )
 async def endmute(event):
-    "use this to kick a user from chat"
+    "Bunu sohbetten bir kullanıcıyı tekmelemek için kullanın"
     user, reason = await get_user_from_event(event)
     if not user:
         return
@@ -552,45 +600,44 @@ async def endmute(event):
     flag = await wowmydev(user_id, event)
     if flag:
         return
-    dogevent = await eor(event, "`Kicking...`")
+    dogevent = await eor(event, "`kullanıcı atılıyor...`")
     try:
         await event.client.kick_participant(event.chat_id, user_id)
     except Exception as e:
-        return await dogevent.edit(NO_PERM + f"\n{e}")
+        return await dogevent.edit(NO_PERM)
     if reason:
         await dogevent.edit(
-            f"`Kicked` [{user.first_name}](tg://user?id={user_id})`!`\nReason: {reason}"
+            f"**Atıldı:** [{user.first_name}](tg://user?id={user_id})**!**\n**Sebep:** `{reason}`"
         )
     else:
-        await dogevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user_id})`!`")
+        await dogevent.edit(f"**Atıldı:** [{user.first_name}](tg://user?id={user_id})**!**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#KICK\n"
+            "#GRUPTAN_ATMA\n"
             f"USER: [{user.first_name}](tg://user?id={user_id})\n"
             f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
         )
 
 
 @doge.bot_cmd(
-    pattern="pin( l|$)",
+    pattern="pin( s|$)",
     command=("pin", plugin_category),
     info={
-        "h": "For pining messages in chat",
-        "d": "reply to a message to pin it in that in chat\
-        \nNote: You need proper rights for this if you want to use in group.",
-        "o": {"l": "To notify everyone without this.it will pin silently"},
+        "h": "Sohbette mesajı sabitler.",
+        "d": "Sohbette bunu sabitlemek için bir mesaja cevap verin.",
+        "o": {"s": "Üyelere bildirim göndererek sabitler."},
         "u": [
-            "{tr}pin <reply>",
-            "{tr}pin l <reply>",
+            "{tr}pin <mesaj yanıtlyarak>",
+            "{tr}pin s <mesaj yanıtlyarak>",
         ],
     },
 )
 async def pin(event):
-    "To pin a message in chat"
+    "Sohbette bir mesajı sabitlemek için"
     to_pin = event.reply_to_msg_id
     if not to_pin:
-        return await edl(event, "`Reply to a message to pin it.`", 5)
+        return await edl(event, "**Sabitleyebilmek için bir mesaja cevap verin.**", 5)
     options = event.pattern_match.group(1)
     is_silent = bool(options)
     try:
@@ -598,15 +645,23 @@ async def pin(event):
     except BadRequestError:
         return await edl(event, NO_PERM, 5)
     except Exception as e:
-        return await edl(event, f"`{e}`", 5)
-    await edl(event, "`Pinned Successfully!`", 3)
+        if BOTLOG:
+            await edl(event, "**Beklenmeyen bir hatayla karşılaşıldı! Lütfen BotLog grubunuza atılmış olan hatayı kontrol edin!**")
+            return await event.client.send_message(BOTLOG, f"Mesaj sabitlerken bir hatayla karşılaşıldı: `{e}`")
+        else:
+            await edl(event, f"**Beklenmeyen bir hatayla karşılaşıldı! Hata Raporu:** {e}")
+    await edl(event, "**Başarıyla sabitlendi!**", 5)
+    if is_silent == True:
+        a = "Evet"
+    elif is_silent == False:
+        a = "Hayır"
     if BOTLOG and not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#PIN\
-                \n__Successfully pinned a message in chat__\
-                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
-                \nLOUD: {is_silent}",
+            f"#SABİTLEME\
+                \n__Grupta mesaj başarıyla sabitlendi!__\
+                \n**Grup:** {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
+                \n**Sesli mi?**: {a}",
         )
 
 
@@ -614,24 +669,24 @@ async def pin(event):
     pattern="unpin(all|$)",
     command=("unpin", plugin_category),
     info={
-        "h": "For unpining messages in chat",
-        "d": "reply to a message to unpin it in that in chat\
-        \nNote: You need proper rights for this if you want to use in group.",
-        "o": {"all": "To unpin all messages in the chat"},
+        "h": "Sohbetteki mesajları sabitten çıkarır.",
+        "d": "Sohbetteki mesajı sabitten çıkarmak için bir mesaja cevap verin.",
+        "o": {"all": "Sohbetteki tüm sabitli mesajları kaldırır."},
         "u": [
-            "{tr}unpin <reply>",
+            "{tr}unpin <yanıtlayarak>",
             "{tr}unpinall",
         ],
+        "note": "Grupta kullanmak istiyorsanız, bunun için uygun haklara ihtiyacınız var."
     },
 )
 async def pin(event):
-    "To unpin message(s) in the group"
+    "Gruptaki mesajları çıkarmak için"
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
     if not to_unpin and options != "all":
         return await edl(
             event,
-            "__Reply to a message to unpin it or use __`.unpin all`__ to unpin all__",
+            f"__Sabitteen kaldırmak istediğiniz mesajı yanıtlayın ya da hepsini kaldırmak için `{tr}unpinall` komutunu kullanın.",
             5,
         )
     try:
@@ -641,46 +696,47 @@ async def pin(event):
             await event.client.unpin_message(event.chat_id)
         else:
             return await edl(
-                event, f"`Reply to a message to unpin it or use {tr}unpinall`", 5
+                event, f"`Mesajları sabitliden çıkarmak için sabitli bir mesaja `{tr}unpinall` ile cevap verin.", 5
             )
     except BadRequestError:
         return await edl(event, NO_PERM, 5)
     except Exception as e:
         return await edl(event, f"`{e}`", 5)
-    await edl(event, "`Unpinned successfully!`", 3)
+    await edl(event, "**Sabitleme başarıyla kaldırıldı!", 5)
     if BOTLOG and not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#UNPIN\
-                \n__Successfully unpinned message(s) in chat__\
-                \nCHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            f"#SABITLEME_KALDIRMA\
+                \n**__Sabitli mesaj(lar) başarıyla sabitten kaldırıldı!__**\
+                \n**Kullanıcı:**: {get_display_name(await event.get_chat())}\
+                \n**Grup ID'si:** `{event.chat_id}`",
         )
 
 
 @doge.bot_cmd(
-    pattern="undlt( .u)?(?: |$)(\d*)?",
+    pattern="undlt( .m)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
-        "h": "To get recent deleted messages in group",
-        "d": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
+        "h": "Gruptaki son silinmiş mesajları alır.",
+        "d": "Gruptaki son silinmiş mesajları kontrol etmek için, varsayılan olarak 5. gösterecek. 1 ila 15 mesaj alabilirsiniz.",
         "f": {
-            "m": "use this flag to upload media to chat else will just show as media."
+            "m": "gruptaki silinen son fotoğrafları direkt alabilir."
         },
         "u": [
-            "{tr}undlt <count>",
-            "{tr}undlt .m <count>",
+            "{tr}undlt <sayı>",
+            "{tr}undlt .m <sayı>",
         ],
         "e": [
             "{tr}undlt 7",
-            "{tr}undlt .m 7 (this will reply all 7 messages to this message",
+            "{tr}undlt .m 7 (Bu, 7 mesajın tümünü bu mesaja cevap verecektir).",
         ],
     },
     groups_only=True,
     require_admin=True,
 )
 async def _iundlt(event):  # sourcery no-metrics
-    "To check recent deleted messages in group"
-    dogevent = await eor(event, "`Searching recent actions .....`")
+    "Gruptaki son silinmiş mesajları kontrol etmek için"
+    dogevent = await eor(event, "__Son eylemler aranıyor.....__")
     flag = event.pattern_match.group(1)
     if event.pattern_match.group(2) != "":
         lim = int(event.pattern_match.group(2))
@@ -693,7 +749,7 @@ async def _iundlt(event):  # sourcery no-metrics
     adminlog = await event.client.get_admin_log(
         event.chat_id, limit=lim, edit=False, delete=True
     )
-    deleted_msg = f"**Recent {lim} Deleted message(s) in this group are:**"
+    deleted_msg = f"**Bu gruptaki silinen son {lim} mesaj(lar):**"
     if not flag:
         for msg in adminlog:
             ruser = (
@@ -701,9 +757,9 @@ async def _iundlt(event):  # sourcery no-metrics
             ).user
             _media_type = media_type(msg.old)
             if _media_type is None:
-                deleted_msg += f"\n☞ __{msg.old.message}__ **Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+                deleted_msg += f"\n☞ __{msg.old.message}__ **Gönderen:** {_format.mentionuser(ruser.first_name ,ruser.id)}"
             else:
-                deleted_msg += f"\n☞ __{_media_type}__ **Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+                deleted_msg += f"\n☞ __{_media_type}__ **Gönderen:** {_format.mentionuser(ruser.first_name ,ruser.id)}"
         await eor(dogevent, deleted_msg)
     else:
         main_msg = await eor(dogevent, deleted_msg)
@@ -714,10 +770,10 @@ async def _iundlt(event):  # sourcery no-metrics
             _media_type = media_type(msg.old)
             if _media_type is None:
                 await main_msg.reply(
-                    f"{msg.old.message}\n**Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+                    f"{msg.old.message}\n**Gönderen:** {_format.mentionuser(ruser.first_name ,ruser.id)}"
                 )
             else:
                 await main_msg.reply(
-                    f"{msg.old.message}\n**Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}",
+                    f"{msg.old.message}\n**Gönderen:** {_format.mentionuser(ruser.first_name ,ruser.id)}",
                     file=msg.old.media,
                 )
