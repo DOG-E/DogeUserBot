@@ -31,12 +31,7 @@ async def setlang(event: CallbackQuery):
                     data="setlang_en",
                 ),
             ),
-            (
-                Button.inline(
-                    "⬅️️ Gᴇʀɪ", 
-                    data="setmenu"
-                ),
-            ),
+            (Button.inline("⬅️️ Gᴇʀɪ", data="setmenu"),),
         ],
         link_preview=False,
     )
