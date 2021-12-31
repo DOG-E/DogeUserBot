@@ -11,7 +11,7 @@ from re import compile
 from telethon import Button
 from telethon.events import CallbackQuery
 
-from . import Config, Heroku, check_owner, doge, get_back_button, mention
+from . import Config, Heroku, check_owner, doge, mention
 
 plugin_category = "bot"
 
