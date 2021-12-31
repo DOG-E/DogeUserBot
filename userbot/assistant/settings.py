@@ -296,11 +296,3 @@ async def woapi(event: CallbackQuery):
     x = "p"
     y = ""
     await setapi(event, x, y)
-
-
-@doge.bot.on(CallbackQuery(data=compile(b"api")))
-@check_owner
-async def api(event: CallbackQuery):
-    x = "q"
-    y = ""
-    await setapi(event, x, y)
