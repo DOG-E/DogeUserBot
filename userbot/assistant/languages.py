@@ -18,27 +18,33 @@ plugin_category = "bot"
 
 @doge.bot.on(CallbackQuery(data=compile(b"langmenu")))
 @check_owner
-async def setlang(event):
-    langs = [
-        Button.inline(
-            "🇬🇧 Eɴɢʟɪsʜ",
-            data="setlang_en",
-        ),
-    ]
-    langs.append(get_back_button("setmenu"))
+async def setlang(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
         \n◽ Doɢᴇ oғ {mention}\n\
         \n🌍 Mᴇᴠᴄᴜᴛ Dɪʟʟᴇʀ:**",
-        buttons=langs,
+        buttons=[
+            (
+                Button.inline(
+                    "🇬🇧 Eɴɢʟɪsʜ",
+                    data="setlang_en",
+                ),
+            ),
+            (
+                Button.inline(
+                    "⬅️️ Gᴇʀɪ", 
+                    data="setmenu"
+                ),
+            ),
+        ],
         link_preview=False,
     )
 
 
 @doge.bot.on(CallbackQuery(data=compile(b"setlang_en")))
 @check_owner
-async def setlang_en(event):
+async def setlang_en(event: CallbackQuery):
     if Config.HEROKU_API_KEY is None:
         return await event.edit(
             "🚨 `HEROKU_API_KEY` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
