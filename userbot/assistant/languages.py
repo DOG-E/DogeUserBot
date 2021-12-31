@@ -61,6 +61,5 @@ async def setlang_en(event: CallbackQuery):
         \n🇬🇧 Dili İngilizce'ye ayarlıyorum...\n\
         \n⏳ Just a moment,\
         \n🇬🇧 Language is setting to English...**",
-        buttons=get_back_button("langmenu"),
     )
     hvar["UPSTREAM_REPO_BRANCH"] = "DOGE-EN"
