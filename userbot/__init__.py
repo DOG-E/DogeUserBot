@@ -88,9 +88,10 @@ AUTONAME = gvar("AUTONAME")
 BIO_PREFIX = gvar("BIO_PREFIX")
 DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
 
-OWNER_ID = int(gvar("OWNER_ID"))
-hmention = f"<a href = tg://user?id={OWNER_ID}>{ALIVE_NAME}</a>"
-mention = f"[{ALIVE_NAME}](tg://user?id={OWNER_ID})"
+if gvar("OWNER_ID") is not None:
+    OWNER_ID = int(gvar("OWNER_ID"))
+    hmention = f"<a href = tg://user?id={OWNER_ID}>{ALIVE_NAME}</a>"
+    mention = f"[{ALIVE_NAME}](tg://user?id={OWNER_ID})"
 
 TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
 

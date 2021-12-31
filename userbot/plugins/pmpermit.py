@@ -21,7 +21,6 @@ from ..sql_helper import pmpermit_sql
 from . import (
     BOT_USERNAME,
     BOTLOG_CHATID,
-    OWNER_ID,
     _format,
     dgvar,
     doge,
@@ -38,6 +37,7 @@ from . import (
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
+OWNER_ID = int(gvar("OWNER_ID"))
 
 
 async def do_pm_permit_action(event, chat):  # sourcery no-metrics

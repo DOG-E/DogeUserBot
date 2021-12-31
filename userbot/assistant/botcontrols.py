@@ -17,7 +17,6 @@ from . import (
     BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
-    OWNER_ID,
     _format,
     dgvar,
     doge,
@@ -39,6 +38,7 @@ from .botmanagers import (
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
+OWNER_ID = int(gvar("OWNER_ID"))
 
 
 @doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=OWNER_ID)

@@ -30,7 +30,6 @@ from . import (
     BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
-    OWNER_ID,
     PM_LOGGER_GROUP_ID,
     Config,
     _format,
@@ -46,6 +45,7 @@ from .botmanagers import ban_user_from_bot
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
+OWNER_ID = int(gvar("OWNER_ID"))
 
 
 class FloodConfig:
