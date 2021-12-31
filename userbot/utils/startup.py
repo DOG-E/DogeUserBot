@@ -582,6 +582,12 @@ async def customize_assistantbot():
                 \nyasakac - 🔰 Kullanıcının yasağını kaldırma\
                 \nyayin - 📣 Kullanıcılara yayın yapın",
             )
+            sleep(1)
+            await doge.send_message(bf, "/setprivacy")
+            sleep(1)
+            await doge.send_message(bf, BOT_USERNAME)
+            sleep(1)
+            await doge.send_message(bf, "Disable")
             await doge.send_read_acknowledge(bf)
             LOGS.info(f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!")
     except Exception as e:

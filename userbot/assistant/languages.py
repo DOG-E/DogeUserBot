@@ -24,9 +24,8 @@ async def setlang(event):
             "🇬🇧 Eɴɢʟɪsʜ",
             data="setlang_en",
         ),
-        Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
     ]
-    langs.append([])
+    langs.append(get_back_button("setmenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\

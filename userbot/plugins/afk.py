@@ -155,7 +155,7 @@ async def afksetter(event):
 
 @doge.bot_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
-    if AFK_.afk_on is True:
+    if AFK_.afk_on is False:
         return
     back_alive = datetime.now()
     AFK_.afk_end = back_alive.replace(microsecond=0)
@@ -270,7 +270,7 @@ async def on_afk(event):  # sourcery no-metrics
                         my_username=my_username,
                         afktime=endtime,
                     )
-                    + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                    + f"\n\n**🐾 Sebep:** {AFK_.reason}"
                 )
             else:
                 dogeafk = customafkmsg.format(
@@ -288,9 +288,9 @@ async def on_afk(event):  # sourcery no-metrics
                 )
         else:
             if AFK_.reason:
-                dogerafk = DOGEAFK + f"\n\n**🐾 Reason:** {AFK_.reason}"
+                dogerafk = "#AFK\n" + DOGEAFK + f"\n\n**🐾 Sebep:** {AFK_.reason}"
             else:
-                dogeafk = DOGEAFK
+                dogeafk = DOGEAFK + "\n#AFK"
 
         if AFK_.afk_type == "media":
             if AFK_.reason:
@@ -335,24 +335,25 @@ async def on_afk(event):  # sourcery no-metrics
             (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
         ]
         if not event.is_private:
-            await doge.bot.send_message(
-                PM_LOGGER_GROUP_ID,
-                resalt,
-                parse_mode="html",
-                link_preview=False,
-                buttons=button,
-            )
             if messaget is not None:
+                await doge.bot.send_message(
+                    PM_LOGGER_GROUP_ID,
+                    resalt,
+                    parse_mode="html",
+                    link_preview=False,
+                    buttons=button,
+                )
+            else:
                 try:
-                    await doge.bot.forward_messages(PM_LOGGER_GROUP_ID, event.message)
-                except Exception as me:
-                    LOGS.warning(me)
-                    try:
-                        media = await event.download_media()
-                        await doge.bot.send_message(
-                            PM_LOGGER_GROUP_ID,
-                            file=media,
-                        )
-                        return remove(media)
-                    except Exception as er:
-                        LOGS.error(er)
+                    media = await event.download_media()
+                    await doge.bot.send_message(
+                        PM_LOGGER_GROUP_ID,
+                        resalt,
+                        parse_mode="html",
+                        link_preview=False,
+                        file=media,
+                        buttons=button,
+                    )
+                    return remove(media)
+                except Exception as er:
+                    LOGS.error(er)

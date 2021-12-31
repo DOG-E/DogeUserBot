@@ -25,7 +25,6 @@ async def settings(event):
         ],
         [
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
-            Button.inline("🔮 Sᴇçᴇɴᴇᴋʟᴇʀ", data="dvmenu"),
         ],
         [
             Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
@@ -160,6 +159,14 @@ async def cgapi(event: CallbackQuery):
     )
 
 
+@doge.bot.on(CallbackQuery(data=compile(b"fgapi")))
+@check_owner
+async def fgapi(event: CallbackQuery):
+    x = "a"
+    y = "FBAN_GROUP_ID"
+    z = "cgapi"
+    await setapi(event, x, y, z)
+ 
 @doge.bot.on(CallbackQuery(data=compile(b"fgapi")))
 @check_owner
 async def fgapi(event: CallbackQuery):

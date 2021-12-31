@@ -9,6 +9,10 @@
 from asyncio import sleep
 from asyncio.exceptions import TimeoutError
 
+from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
+from telethon.tl.functions.messages import AddChatUserRequest
+from telethon.tl.types import ChatAdminRights
+
 from ..sql_helper.global_collectionjson import add_collection, get_collection
 from . import (
     BOTLOG,
@@ -233,12 +237,13 @@ async def quote_search(event):  # sourcery no-metrics
     "Add the federation to database."
     fedgroup = event.pattern_match.group(1)
     fedid = event.pattern_match.group(2)
+    await add_rose_to_fban_group(FBAN_GROUP_ID)
     if get_collection("fedids") is not None:
         feds = get_collection("fedids").json
     else:
         feds = {}
     if fedgroup == ".all":
-        dogevent = await eor(event, "`Adding all your feds to database...`")
+        dogevent = await eor(event, "`Tüm federallerinizi veritabanına ekleniyor...`")
         fedidstoadd = []
         async with event.client.conversation(rose) as conv:
             try:
@@ -249,7 +254,7 @@ async def quote_search(event):  # sourcery no-metrics
                 except TimeoutError:
                     return await eor(
                         dogevent,
-                        "__Rose bot is not responding try again later.__",
+                        "`Rose` __cevap vermiyor tekrar deneyin.__",
                     )
                 if "can only" in response.text:
                     return await edl(dogevent, f"__{response.text}__")
@@ -590,3 +595,39 @@ async def fstat_rose(event):
             )
         await conv.mark_read()
         await conv.cancel_all()
+
+
+async def add_rose_to_fban_group(chat_id):
+    try:
+        await doge(
+            AddChatUserRequest(
+                chat_id=chat_id,
+                user_id=rose,
+                fwd_limit=1000000,
+            )
+        )
+    except BaseException:
+        try:
+            await doge(
+                InviteToChannelRequest(
+                    channel=chat_id,
+                    users=[rose],
+                )
+            )
+        except Exception as e:
+            LOGS.error(f"🚨 {str(e)}")
+    sleep(0.75)
+    rights = ChatAdminRights(
+        add_admins=True,
+        invite_users=True,
+        change_info=True,
+        ban_users=True,
+        delete_messages=True,
+        pin_messages=True,
+        anonymous=False,
+        manage_call=True,
+    )
+    try:
+        await doge(EditAdminRequest(chat_id, rose, rights, "Rose"))
+    except Exception as e:
+        LOGS.error(f"🚨 {str(e)}")
