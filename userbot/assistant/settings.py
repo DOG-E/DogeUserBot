@@ -166,7 +166,8 @@ async def fgapi(event: CallbackQuery):
     y = "FBAN_GROUP_ID"
     z = "cgapi"
     await setapi(event, x, y, z)
- 
+
+
 @doge.bot.on(CallbackQuery(data=compile(b"fgapi")))
 @check_owner
 async def fgapi(event: CallbackQuery):
