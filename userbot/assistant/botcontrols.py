@@ -48,15 +48,16 @@ async def start_botlog(event):
     chat = await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     buttons = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
-        ]
+        (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+    ]
     if not event.is_private and chat.id == BOTLOG_CHATID:
-        await event.reply(f"**🐶 Hey!\
+        await event.reply(
+            f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
-        \n💬 Sana nasıl yardımcı olabilirim?**", buttons=buttons)
-
-
+        \n💬 Sana nasıl yardımcı olabilirim?**",
+            buttons=buttons,
+        )
 
 
 @doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=OWNER_ID)
