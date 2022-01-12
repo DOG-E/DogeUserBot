@@ -9,6 +9,7 @@
 from asyncio import sleep
 from datetime import datetime
 
+from telethon import Button
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
@@ -41,6 +42,23 @@ LOGS = logging.getLogger(__name__)
 OWNER_ID = int(gvar("OWNER_ID"))
 
 
+@doge.shiba_cmd(pattern="^/(start|ba[sş]lat)$", from_users=OWNER_ID)
+async def start_botlog(event):
+    user = await doge.get_me()
+    chat = await event.get_chat()
+    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
+    buttons = [
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+        ]
+    if not event.is_private and chat.id == BOTLOG_CHATID:
+        await event.reply(f"**🐶 Hey!\
+        \n🐾 Merhaba {my_mention}!\n\
+        \n💬 Sana nasıl yardımcı olabilirim?**", buttons=buttons)
+
+
+
+
 @doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=OWNER_ID)
 async def bot_help(event):
     await event.reply(
@@ -52,7 +70,7 @@ async def bot_help(event):
 • **Nᴏᴛ:** __Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!__
 
 • **Kᴏᴍᴜᴛ:** /ban ya da /yasakla <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-• **Bɪʟɢɪ:** Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.__
+• **Bɪʟɢɪ:** __Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.__
 • **Nᴏᴛ:** __Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.__
 
 • **Kᴏᴍᴜᴛ:** /unban ya da /yasakac <Kullanıcı ID/Kullanıcı Adı> <Sebep>
