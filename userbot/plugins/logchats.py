@@ -107,17 +107,17 @@ async def log_tagged_messages(event):
     resalt = f"🔔 #TAG\n<b>👥 Grup: {hmm.title}</b>"
     if full is not None:
         resalt += (
-            f"\n<b>👤 İletildi: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
+            f"\n<b>👤 Kimden: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
         )
     if messaget is not None:
-        resalt += f"\n<b>🔅 Mesaj Tipi: </b>{messaget}"
+        resalt += f"\n<b>🔅 Mesaj Türü: </b>{messaget}"
     else:
         resalt += f"\n<b>🔹 Mesaj: </b><code>{event.message.message}</code>"
     button = [
-        (Button.url("👁‍🗨 Mᴇssᴀɢᴇ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
+        (Button.url("👁‍🗨 Mᴇsᴀᴊ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
     ]
     if not event.is_private:
-        if messaget is not None:
+        if messaget is None:
             await doge.bot.send_message(
                 PM_LOGGER_GROUP_ID,
                 resalt,

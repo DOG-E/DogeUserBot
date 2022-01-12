@@ -86,9 +86,9 @@ async def startup_process():
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
-    LOGS.info(userbot.__copyright__)
-    LOGS.info(userbot.__license__ + " ile korunmaktadır.")
-    LOGS.info(
+    print(userbot.__copyright__)
+    print(userbot.__license__ + " ile korunmaktadır.")
+    print(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
         \n🐶 Hey! Doge çalışıyor!\
