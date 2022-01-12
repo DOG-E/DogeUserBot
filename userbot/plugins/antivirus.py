@@ -74,7 +74,7 @@ async def vscan(event):
         if response.text.startswith("Forward"):
             return await edl(
                 dogevent,
-                "İleriye dönük gizlilik ayarlarınızı nazikçe devre dışı bırakır mısınız?"
+                "İleriye dönük gizlilik ayarlarınızı nazikçe devre dışı bırakır mısınız?",
             )
         elif response.text.startswith("Select"):
             await event.client.send_message(chat, "English")
@@ -90,7 +90,9 @@ async def vscan(event):
             await dogevent.edit("File is scanning...")
             response = await newmsgres(conv, chat)
             if response.text.startswith("No threats"):
-                await event.edit("Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz! ")
+                await event.edit(
+                    "Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz! "
+                )
             else:
                 await event.edit(
                     f"**Virüs taraması sona erdi. Vay canına! Bu durum tehlikeli gözüküyor.** `İndirmemeni tavsiye ederim!` \nBilgi: {response.message.message}"
