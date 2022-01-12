@@ -44,21 +44,20 @@ async def _(event):
     except Exception as e:
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
-            message=f"**Automatic AntiFlooder**\
-                \n@admin [User](tg://user?id={event.message.sender_id}) is flooding this chat.\
+            message=f"**Otomatik AntiFlooder**\
+                \n@admin [Kullanıcı](tg://user?id={event.message.sender_id}) Bu sohbette flood yapıyor.\
                 \n`{e}`",
             reply_to=event.message.id,
         )
         await sleep(4)
         await no_admin_privilege_message.edit(
-            "This is odd SPAM dude. Stop this, enjoy the chat buddy "
+            "Bu garip bir Spam dostum. Bunu durdur ve sohbetin tadını çıkar."
         )
     else:
         await event.client.send_message(
             entity=event.chat_id,
-            message=f"""**Automatic AntiFlooder**
-[User](tg://user?id={event.message.sender_id}) has been automatically restricted
-because he reached the defined flood limit.""",
+            message=f"""**Otomatik AntiFlooder**
+[Kullanıcı](tg://user?id={event.message.sender_id}) tanımlanan flood sınırına ulaştığı için otomatik olarak kısıtlandı.""",
             reply_to=event.message.id,
         )
 
@@ -67,10 +66,10 @@ because he reached the defined flood limit.""",
     pattern="setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
-        "h": "To setup antiflood in a group",
-        "d": "It warns the user if he spams the chat and if you're an admin with proper rights then it mutes him in that group.",
-        "note": "To stop antiflood setflood with high value like 999999",
-        "u": "{tr}setflood <count>",
+        "h": "Bir grupta antiflood kurun",
+        "d": "Kullanıcıyı sohbete spam gönderirse uyarır ve uygun haklara sahip bir yöneticiyseniz, o grupta onu sessize alır.",
+        "note": "Flood baskınını durdurmak için 999999 gibi yüksek bir değer girebilirsiniz.",
+        "u": "{tr}setflood <sayı>",
         "e": [
             "{tr}setflood 10",
         ],
@@ -79,13 +78,13 @@ because he reached the defined flood limit.""",
     require_admin=True,
 )
 async def _(event):
-    "To setup antiflood in a group to prevent spam"
+    "İstenmeyen postaları önlemek için bir grupta antiflood kurun"
     input_str = event.pattern_match.group(1)
-    event = await eor(event, "`updating flood settings!`")
+    event = await eor(event, "`Flood ayarları güncelleniyor!`")
     await sleep(2)
     try:
         sql.set_flood(event.chat_id, input_str)
         sql.__load_flood_settings()
-        await event.edit(f"Antiflood updated to {input_str} in the current chat")
+        await event.edit(f"Antiflood mevcut sohbette {input_str} olarak ayarlandı.")
     except Exception as e:
         await event.edit(str(e))

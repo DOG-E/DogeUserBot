@@ -175,12 +175,6 @@ TG_2STEP_VERIFICATION_CODE = gvar("TG_2STEP_VERIFICATION_CODE")
 WEATHER_API = gvar("WEATHER_API") or "6fded1e1c5ef3f394283e3013a597879"
 
 
-# PM:
-PM_START = []
-PMMESSAGE_CACHE = {}
-PMMENU = "pmpermit_menu" not in Config.NO_LOAD
-
-
 # HEROKU:
 heroku_api = "https://api.heroku.com"
 HEROKU_APP_NAME = Config.HEROKU_APP_NAME

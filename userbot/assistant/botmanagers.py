@@ -86,7 +86,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
     if reason is not None:
         banned_msg += f"\n**⛓ Sebep:** `{reason}`"
     await doge.bot.send_message(user.id, banned_msg)
-    info = f"**⚠️ #BOT_PM_YASAK_KALDİRİLMASİ**\
+    info = f"**⚠️ #BOT_PM_YASAK_KALDIRILMASI**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
             \n**ℹ️ İlk İsim:** {user.first_name}\
             \n**🆔 Kullanıcı ID'si:** `{user.id}`"

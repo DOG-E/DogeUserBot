@@ -129,8 +129,8 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     startTime = time()
     choice_str, disp_str = get_choice_by_id(choice_id, downtype)
     media_type = "Video" if downtype == "v" else "Audio"
-    callback_continue = "**📥 Lütfen bekleyin, {} indiriyorum...**".format(media_type)
-    callback_continue += f"\n\n**🆔 Format Kodu:** {disp_str}"
+    callback_continue = "📥 Lütfen bekleyin, {} indiriyorum...".format(media_type)
+    callback_continue += f"\n\n🆔 Format Kodu: {disp_str}"
     await c_q.answer(callback_continue, alert=True)
     upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**📤 Yükleniyor...**")
     yt_url = BASE_YT_URL + yt_code
@@ -153,7 +153,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
         else:
             _fpath = _path
     if not _fpath:
-        return await edl(upload_msg, "**🚨 Üzgünüm! Siçbir sonuç bulamadım.**")
+        return await edl(upload_msg, "**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
 
     if not thumb_pic:
         thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))

@@ -15,14 +15,70 @@ from os import remove
 
 from heroku3 import from_key
 from requests import get
+from telethon.errors import FloodWaitError
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, Heroku, doge, edl, eor, heroku_api
+from . import (
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    OWNER_ID,
+    Heroku,
+    doge,
+    edl,
+    eor,
+    gvar,
+    heroku_api,
+    logging,
+    sgvar,
+)
 
 plugin_category = "bot"
+LOGS = logging.getLogger(__name__)
 
 disable_warnings(InsecureRequestWarning)
+
+
+if gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is not None:
+
+    async def herokulogger():
+        with doge.bot:
+            while True:
+                try:
+                    t = "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı..."
+                    await doge.bot.send_message(gvar("HLOGGER_ID"), t)
+
+                except FloodWaitError as sec:
+                    await sleep(sec.seconds)
+                except Exception:
+                    LOGS.error(
+                        f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
+                    )
+
+                server = from_key(HEROKU_API_KEY)
+                app = server.app(HEROKU_APP_NAME)
+                for line in app.stream_log(lines=1):
+                    try:
+                        txt = line.decode("utf-8")
+                        await doge.bot.send_message(gvar("HLOGGER_ID"), f"➕ {txt}")
+                    except FloodWaitError as sec:
+                        await sleep(sec.seconds)
+                    except Exception as e:
+                        LOGS.error(e)
+                await sleep(2)
+
+    doge.loop.create_task(herokulogger())
+elif gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is None:
+
+    async def hlogoff():
+        await doge.bot.send_message(
+            OWNER_ID,
+            f"Heroku Logger özelliğini etkinleştirdiniz fakat veritabanına kayıtlı bir Log grubunuz yok. Bunun için HEROKULOGGER değerinizi kapatıyorum. Açmak için lütfen önce bir log grubu kimliği ayarlayın.",
+        )
+        await sgvar("HEROKULOGGER", False)
+        LOGS.error("HEROKULOGGER değeri False olarak ayarlandı.")
+
+    doge.loop.create_task(hlogoff())
 
 
 @doge.bot_cmd(
@@ -94,8 +150,14 @@ async def variable(var):  # sourcery no-metrics
             return await dog.edit("`.set var <ConfigVars-name> <value>`")
         await sleep(1.5)
         if variable in heroku_var:
+            if variable == "PMLOGGER" and value == False:
+                sgvar("PMLOG", "false")
+                sgvar("GRPLOG", "false")
             await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
         else:
+            if variable == "PMLOGGER" and value == False:
+                sgvar("PMLOG", "false")
+                sgvar("GRPLOG", "false")
             await dog.edit(
                 f"`{variable}`** successfully added with value` -> **{value}`"
             )
@@ -104,6 +166,9 @@ async def variable(var):  # sourcery no-metrics
         dog = await eor(var, "`Getting information to deleting variable...`")
         try:
             variable = var.pattern_match.group(2).split()[0]
+            if variable == "PMLOGGER":
+                sgvar("PMLOG", "false")
+                sgvar("GRPLOG", "false")
         except IndexError:
             return await dog.edit("`Please specify ConfigVars you want to delete`")
         await sleep(1.5)
