@@ -113,9 +113,7 @@ async def log_tagged_messages(event):
         resalt += f"\n<b>🔅 Mesaj Türü: </b>{messaget}"
     else:
         resalt += f"\n<b>🔹 Mesaj: </b><code>{event.message.message}</code>"
-    button = [
-        (Button.url("👁‍🗨 Mᴇsᴀᴊ", f"https://t.me/c/{hmm.id}/{event.message.id}"))
-    ]
+    button = [(Button.url("👁‍🗨 Mᴇsᴀᴊ", f"https://t.me/c/{hmm.id}/{event.message.id}"))]
     if not event.is_private:
         if messaget is None:
             await doge.bot.send_message(

@@ -326,9 +326,7 @@ async def on_afk(event):  # sourcery no-metrics
         messaget = media_type(event)
         resalt = f"💤 #AFK_TAG\n<b>👥 Grup: {hmm.title}</b>"
         if full is not None:
-            resalt += (
-                f"\n<b>👤 Kimden: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
-            )
+            resalt += f"\n<b>👤 Kimden: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
         if messaget is not None:
             resalt += f"\n<b>🔅 Mesaj Türü: </b>{messaget}"
         else:

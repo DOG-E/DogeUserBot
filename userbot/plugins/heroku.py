@@ -19,7 +19,19 @@ from telethon.errors import FloodWaitError
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, OWNER_ID, Heroku, doge, edl, eor, gvar, heroku_api, logging, sgvar
+from . import (
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    OWNER_ID,
+    Heroku,
+    doge,
+    edl,
+    eor,
+    gvar,
+    heroku_api,
+    logging,
+    sgvar,
+)
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -28,6 +40,7 @@ disable_warnings(InsecureRequestWarning)
 
 
 if gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is not None:
+
     async def herokulogger():
         with doge.bot:
             while True:
@@ -37,8 +50,10 @@ if gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is not None:
 
                 except FloodWaitError as sec:
                     await sleep(sec.seconds)
-                except Exception as e:
-                    LOGS.error(f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin.")
+                except Exception:
+                    LOGS.error(
+                        f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
+                    )
 
                 server = from_key(HEROKU_API_KEY)
                 app = server.app(HEROKU_APP_NAME)
@@ -51,12 +66,18 @@ if gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is not None:
                     except Exception as e:
                         LOGS.error(e)
                 await sleep(2)
+
     doge.loop.create_task(herokulogger())
 elif gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is None:
+
     async def hlogoff():
-        await doge.bot.send_message(OWNER_ID, f"Heroku Logger özelliğini etkinleştirdiniz fakat veritabanına kayıtlı bir Log grubunuz yok. Bunun için HEROKULOGGER değerinizi kapatıyorum. Açmak için lütfen önce bir log grubu kimliği ayarlayın.")
+        await doge.bot.send_message(
+            OWNER_ID,
+            f"Heroku Logger özelliğini etkinleştirdiniz fakat veritabanına kayıtlı bir Log grubunuz yok. Bunun için HEROKULOGGER değerinizi kapatıyorum. Açmak için lütfen önce bir log grubu kimliği ayarlayın.",
+        )
         await sgvar("HEROKULOGGER", False)
         LOGS.error("HEROKULOGGER değeri False olarak ayarlandı.")
+
     doge.loop.create_task(hlogoff())
 
 

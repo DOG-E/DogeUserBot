@@ -132,7 +132,9 @@ async def group_fban(event):
             success_report += f"\n☞ __{txt}__"
     await eor(dogevent, success_report)
 
+
 # Credit: @teamultroid; https://github.com/TeamUltroid/Ultroid/blob/main/plugins/fedutils.py
+
 
 @doge.bot_cmd(
     pattern="superfban(?:\s|$)([\s\S]*)",
@@ -159,16 +161,22 @@ async def superfban(event):
             FBAN = await event.client.parse_id(arg[1])
             REASON = event.text.split(maxsplit=2)[-1]
         else:
-            return await msg.edit(f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!")
+            return await msg.edit(
+                f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+            )
     else:
-        return await msg.edit("Kullanıcı belirtilmedi! SüperFBan kullanmak için lütfen bir kullanıcı belirtin ya da bir kullanıcısın mesajını yanıtlayın!")
+        return await msg.edit(
+            "Kullanıcı belirtilmedi! SüperFBan kullanmak için lütfen bir kullanıcı belirtin ya da bir kullanıcısın mesajını yanıtlayın!"
+        )
     flag = await wowmydev(FBAN, event)
     if flag:
         return
     if FBAN_GROUP_ID:
         chat = int(FBAN_GROUP_ID)
     else:
-        return await msg.edit(f"SüperFBan özelliğini kullanmak için lütfen FBAN_GROUP_ID değeri ekleyin!")
+        return await msg.edit(
+            f"SüperFBan özelliğini kullanmak için lütfen FBAN_GROUP_ID değeri ekleyin!"
+        )
     fedList = []
     if not fedList:
         for a in range(3):
@@ -202,8 +210,12 @@ async def superfban(event):
                                 fedList.append(line[:36])
                             except BaseException:
                                 pass
-                    elif "You can only use fed commands once every 5 minutes" in (await bot_conv.get_edit):
-                        return await msg.edit(f"@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!")
+                    elif "You can only use fed commands once every 5 minutes" in (
+                        await bot_conv.get_edit
+                    ):
+                        return await msg.edit(
+                            f"@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
+                        )
                 if not fedList:
                     await msg.edit(
                         f"Yöneticisi olduğunuz federasyonlar bulunamadı! Tekrar deneniyor ({a+1}/3)...",
@@ -231,7 +243,9 @@ async def superfban(event):
         await add_rose_to_fban_group(FBAN_GROUP_ID)
         await doge.send_message(chat, "/start")
     except BaseException:
-        return await msg.edit(f"Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin.")
+        return await msg.edit(
+            f"Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin."
+        )
     await sleep(3)
     for fed in fedList:
         await event.client.send_message(chat, f"/joinfed {fed}")
@@ -332,6 +346,7 @@ async def group_unfban(event):
             success_report += f"\n☞ __{txt}__"
     await eor(dogevent, success_report)
 
+
 @doge.bot_cmd(
     pattern="superunfban(?:\s|$)([\s\S]*)",
     command=("superunfban", plugin_category),
@@ -376,13 +391,17 @@ async def _(event):
                 FBAN = arg[1]
                 REASON = arg[2]
             except BaseException:
-                return await msg.edit(f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!")
+                return await msg.edit(
+                    f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+                )
         else:
             try:
                 FBAN = arg[1]
                 REASON = " #DOGE_SUPERUNFBAN "
             except BaseException:
-                return await msg.edit(f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!")
+                return await msg.edit(
+                    f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+                )
     if FBAN_GROUP_ID:
         chat = int(FBAN_GROUP_ID)
     else:
@@ -397,7 +416,8 @@ async def _(event):
                 try:
                     response = await bot_conv.get_response()
                 except TimeoutError:
-                    return await msg.edit("@MissRose_Bot cevap vermiyor!",
+                    return await msg.edit(
+                        "@MissRose_Bot cevap vermiyor!",
                     )
                 await sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
@@ -418,8 +438,12 @@ async def _(event):
                                 fedList.append(line[:36])
                             except BaseException:
                                 pass
-                    elif "You can only use fed commands once every 5 minutes" in (await bot_conv.get_edit):
-                        return await msg.edit("@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!")
+                    elif "You can only use fed commands once every 5 minutes" in (
+                        await bot_conv.get_edit
+                    ):
+                        return await msg.edit(
+                            "@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
+                        )
                 if not fedList:
                     await msg.edit(
                         f"Yöneticisi olduğunuz federasyonlar bulunamadı! Tekrar deneniyor ({a+1}/3)...",
@@ -447,7 +471,9 @@ async def _(event):
         await add_rose_to_fban_group(FBAN_GROUP_ID)
         await event.client.send_message(chat, "/start")
     except BaseException:
-        return await msg.edit("Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin.")
+        return await msg.edit(
+            "Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin."
+        )
     await sleep(3)
     for fed in fedList:
         await doge.send_message(chat, f"/joinfed {fed}")
