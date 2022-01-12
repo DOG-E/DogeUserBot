@@ -42,15 +42,15 @@ plugin_category = "bot"
     pattern="alive$",
     command=("alive", plugin_category),
     info={
-        "h": "To check bot's alive status",
-        "o": "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by {tr}tgm",
+        "h": "Botun durumunu kontrol edin",
+        "o": "Medyayı özelleştirmek için herhangi bi medyaya yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
         "u": [
             "{tr}alive",
         ],
     },
 )
 async def thisalive(event):
-    "A kind of showing bot details"
+    "Botun durumunu kontrol edin"
     start = datetime.now()
     await event.edit("ㅤ")
     end = datetime.now()
@@ -99,7 +99,7 @@ async def thisalive(event):
             except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
                 return await eor(
                     event,
-                    f"**Media Value Error!!**\n__Change the link by __`{tr}setdog`\n\n**__Can't get media from this link:**__ `{PIC}`",
+                    caption+f"\n\n\n[Medyayı]({PIC}) bulamadım.\nMedyayı ayarlamak için bir medyayı yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
                 )
         else:
             await eor(event, caption)

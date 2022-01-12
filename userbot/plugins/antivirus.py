@@ -15,20 +15,21 @@ plugin_category = "tool"
     pattern="scan(i)?$",
     command=("scan", plugin_category),
     info={
-        "h": "To scan the replied file for virus.",
-        "f": {"i": "to get output as image."},
+        "h": "Yanıtlanan dosyaya virüs taraması yapın",
+        "f": {"i": "sonucu görüntü ile alır"},
         "u": ["{tr}scan", "{tr}scani"],
     },
 )
 async def _(event):
+    "Yanıtlanan dosyaya virüs taraması yapın"
     input_str = event.pattern_match.group(1)
     if not event.reply_to_msg_id:
-        return await edl(event, "```Reply to any user message.```")
+        return await edl(event, "```Herhangi bir mesajı yanıtlayın.```")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        return await edl(event, "```Reply to a media message```")
+        return await edl(event, "```Bir medya mesajını yanıtlayın.```")
     chat = "@VS_Robot"
-    dogevent = await eor(event, "`Sliding my tip, of fingers over it`")
+    dogevent = await eor(event, "`Dosyayı tarıyorum... Biraz bekle!`")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response1 = await newmsgres(conv, chat)
@@ -54,25 +55,26 @@ async def _(event):
     pattern="vscan$",
     command=("vscan", plugin_category),
     info={
-        "h": "To scan with @DrWebBot the replied file for virus.",
+        "h": "Yanıtlanan dosyayı @DrWebBot ile tarayın",
         "u": "{tr}vscan",
     },
 )
 async def vscan(event):
+    "Yanıtlanan dosyayı @DrWebBot ile tarayın"
     if not event.reply_to_msg_id:
-        return await edl(event, "```Reply to any user message.```")
+        return await edl(event, "```Herhangi bir mesajı yanıtlayın.```")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        return await edl(event, "```Reply to a media message```")
+        return await edl(event, "```Bir medya mesajını yanıtlayın```")
     chat = "@DrWebBot"
-    dogevent = await eor(event, "`Sliding my tip, of fingers over it`")
+    dogevent = await eor(event, "`Dosyayı tarıyorum... Biraz bekle!`")
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, reply_message, forward=True, chat=chat)
         response = await newmsgres(conv, chat)
         if response.text.startswith("Forward"):
             return await edl(
                 dogevent,
-                "`Can you kindly disable your forward privacy settings for good?`",
+                "İleriye dönük gizlilik ayarlarınızı nazikçe devre dışı bırakır mısınız?"
             )
         elif response.text.startswith("Select"):
             await event.client.send_message(chat, "English")
@@ -80,7 +82,7 @@ async def vscan(event):
             await event.client.forward_messages(chat, reply_message)
             response = await newmsgres(conv, chat)
             await dogevent.edit(
-                f"**Virus scan ended.\nResults:** {response.message.message}"
+                f"**Virüs taraması bitirildi. \nSonuçlar:** {response.message.message}"
             )
         elif response.text.startswith("No threats"):
             await event.edit("Virus scan ended. This file is clean. Go on!")
@@ -88,10 +90,10 @@ async def vscan(event):
             await dogevent.edit("File is scanning...")
             response = await newmsgres(conv, chat)
             if response.text.startswith("No threats"):
-                await event.edit("Virus scan ended. This file is clean. Go on!")
+                await event.edit("Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz! ")
             else:
                 await event.edit(
-                    f"**The virus scan is ended. Whopsie! This case is dangerous. Don't download!**\nInfo: {response.message.message}"
+                    f"**Virüs taraması sona erdi. Vay canına! Bu durum tehlikeli gözüküyor.** `İndirmemeni tavsiye ederim!` \nBilgi: {response.message.message}"
                 )
         await conv.mark_read()
         await conv.cancel_all()
