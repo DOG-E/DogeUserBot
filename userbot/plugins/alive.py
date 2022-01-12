@@ -100,7 +100,8 @@ async def thisalive(event):
                 return await eor(
                     event,
                     caption
-                    + f"\n\n\n[Medyayı]({PIC}) bulamadım.\nMedyayı ayarlamak için bir medyayı yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
+                    + f"\n\n\n[Medyayı]({PIC}) bulamadım.\
+                    \nMedyayı ayarlamak için bir medyayı yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
                 )
         else:
             await eor(event, caption)

@@ -91,7 +91,7 @@ async def vscan(event):
             response = await newmsgres(conv, chat)
             if response.text.startswith("No threats"):
                 await event.edit(
-                    "Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz! "
+                    "Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz!"
                 )
             else:
                 await event.edit(
