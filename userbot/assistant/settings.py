@@ -10,18 +10,25 @@ import logging
 from re import compile
 from time import sleep
 
-# deneme commiti 2
 from telethon import Button
 from telethon.events import CallbackQuery
+from telegraph import Telegraph, upload_file
+from telegraph.exceptions import TelegraphException
+from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
+from validators.url import url
 
-from userbot import BOT_USERNAME, FBAN_GROUP_ID
-from userbot.sql_helper.globals import gvar
-
-from ..utils.tools import create_channel, create_supergroup
-from . import check_owner, doge, get_back_button, mention, newmsgres, sgvar
+from ..helpers import resize_image
+from ..utils import create_channel, create_supergroup
+from . import check_owner, doge, get_back_button, mention, newmsgres, sgvar, BOT_USERNAME, FBAN_GROUP_ID, TEMP_DIR, TELEGRAPH_SHORT_NAME, gvar
 
 plugin_category = "bot"
 LOGS = logging.getLogger("DogeUserBot")
+
+telegraph = Telegraph()
+r = telegraph.create_account(
+    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+)
+auth_url = r["auth_url"]
 
 # ilk ayarlar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"setmenu")))
@@ -29,13 +36,14 @@ LOGS = logging.getLogger("DogeUserBot")
 async def settings(event):
     options = [
         [
-            Button.inline("🌐 Dɪʟ", data="langmenu"),
-        ],
-        [
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
         ],
         [
-            Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
+            Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"), # ss menu yeniden oluşturalacak
+            Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu" )
+        ],
+        [
+            Button.inline("🌐 Dɪʟ", data="langmenu"),
         ],
     ]
     await event.edit(
@@ -47,6 +55,21 @@ async def settings(event):
         link_preview=False,
     )
 
+#TODO
+# ELLEME BEN YAPACAM
+@doge.bot.on(CallbackQuery(data=compile(b"ssmenu")))
+@check_owner
+async def gdapi(event: CallbackQuery):
+    buttons= [
+        [
+            Button.inline("Alive", data="ssalive"),
+            Button.inline("PmPermit", data="pmpermit"),
+        ],
+        [
+            Button.inline("PMBot", data="sspmbot"),
+            Button.inline("", data="")
+        ]
+    ]
 
 # api - grup id'leri menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
@@ -95,11 +118,109 @@ async def apisetter(event: CallbackQuery):
 
 
 # alınan değer ile verisini databseye yazırma işlemi
-async def setdv(e, vname, vinfo):
+async def setdv(e, vname, vinfo, z=None):
     try:
         sgvar(vname, vinfo)
-    except BaseException:
-        return await e.edit("`🚨 Bir şeyler ters gitti!`")
+    except Exception as e:
+        if z:
+            return await e.edit(
+                f"`🚨 Bir şeyler ters gitti!`\n\
+                \n**Hata:** `{e}`", buttons=get_back_button(z)
+            )
+        else:
+            return await e.edit(
+                f"`🚨 Bir şeyler ters gitti!`\n\
+                \n**Hata:** `{e}`", buttons=get_back_button("setmenu")
+            )
+
+
+# API harici ayarların değiştirilme işlemi
+async def ss(event: CallbackQuery, x, y, z=None):
+    await event.delete()
+    chat = event.sender_id
+    async with event.client.conversation(chat) as conv:
+        xmsg = await conv.send_message(x)
+        response = await newmsgres(conv, chat)
+        if "PIC" in y:
+            rpic = response.message
+            try:
+                if (type(rpic.media) == MessageMediaDocument) or (
+                    type(rpic.media) == MessageMediaPhoto
+                ):
+                    downloaded_file_name = await event.client.download_media(
+                        rpic, TEMP_DIR
+                    )
+                    try:
+                        if downloaded_file_name.endswith((".webp")):
+                            resize_image(downloaded_file_name)
+                        media_urls = upload_file(downloaded_file_name)
+                        vinfo = f"https://telegra.ph{media_urls[0]}"
+
+                    except AttributeError:
+                        await xmsg.edit("🚨 `Telegraph bağlantısı oluşturulurken hata oluştu!`")
+                        await sleep(10)
+                        return await xmsg.delete()
+
+                    except TelegraphException as exc:
+                        return await xmsg.edit(f"**🚨 Hata:**\n➡️ `{str(exc)}`")
+
+            except Exception as e:
+                LOGS.error(e)
+
+        elif y == "START_BUTTON":
+            blink = response.message.message
+            SBLINK = blink.split(";")[1]
+            for i in SBLINK:
+                if url(i):
+                    vinfo = blink
+                elif not url(i):
+                    if z:
+                        return await xmsg.edit("🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`", buttons=get_back_button(z))
+                    else:
+                        return await xmsg.edit("🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`", buttons=get_back_button("ssmenu"))
+
+        else:
+            vinfo = response.message.message
+        if vinfo.startswith(("/", "!")):
+            return
+        if vinfo == "/cancel":
+            if z:
+                return await conv.send_message(
+                    f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                    \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n⛔ İptal edildi!**",
+                    buttons=get_back_button(z),
+                    link_preview=False,
+                )
+            else:
+                return await conv.send_message(
+                    f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                    \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n⛔ İptal edildi!**",
+                    buttons=get_back_button("ssmenu"),
+                    link_preview=False,
+                )
+        await setdv(event, y, vinfo, z)
+        if z:
+            await conv.send_message(
+                f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                \n◽ Doɢᴇ oғ {mention}\n\
+                \n✅ {y} değişkenini başarıyla değiştirdim.**",
+                buttons=get_back_button(z),
+                link_preview=False,
+            )
+        else:
+            await conv.send_message(
+                f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                \n◽ Doɢᴇ oғ {mention}\n\
+                \n✅ {y} değişkenini başarıyla değiştirdim.**",
+                buttons=get_back_button("ssmenu"),
+                link_preview=False,
+            )
 
 
 # gelen API keylerde değiştirme işlemi
@@ -131,7 +252,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                     buttons=get_back_button("apimenu"),
                     link_preview=False,
                 )
-        await setdv(event, y, vinfo)
+        await setdv(event, y, vinfo, z)
         if z:
             await conv.send_message(
                 f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
@@ -162,7 +283,7 @@ async def cgapi(event: CallbackQuery):
             Button.inline("GİZLİ KANAL", data="pccreate"),
         ],
         [Button.inline("Heroku Logger", data="hlogger")],
-        [Button.inline("⬅️️ Gᴇʀɪ", data="apimenu")],
+        [Button.inline("⬅️️ Gᴇʀɪ", data="ssmenu")],
     ]
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
@@ -183,8 +304,11 @@ async def hlogger(event: CallbackQuery):
             Button.inline("✅ Aç", data="hgloggeron"),
             Button.inline("❎ Kapat", data="hgloggeroff"),
         ],
-        [Button.inline("HLog Grubu Ayarla", data="hgloggrpc")],
+        [
+            Button.inline("HLog Grubu Ayarla", data="hgloggrpc")
+        ],
     ]
+    buttons.append(get_back_button("cgapi"))
     await event.edit(f"Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)
 
 
@@ -243,7 +367,7 @@ async def hgloggrpc(event: CallbackQuery):
             Button.inline("✅ Evet", data="hgloggerautocreate"),
             Button.inline("❎ Hayır", data="hloggermanuelcreate"),
         ],
-        [Button.inline("⬅️️ Gᴇʀɪ", data="cgapi")],
+        [Button.inline("⬅️️ Gᴇʀɪ", data="hlogger")],
     ]
     await event.edit(
         f"Heroku Logger özelliği için grubunuzun bot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
@@ -304,7 +428,7 @@ async def fggroup(event: CallbackQuery):
             Button.inline("✅ Evet", data="fgcreate"),
             Button.inline("❎ Hayır", data="fgapi"),
         ],
-        [Button.inline("⬅️️ Gᴇʀɪ", data="apimenu")],
+        [Button.inline("⬅️️ Gᴇʀɪ", data="ssmenu")],
     ]
     await event.edit(
         f"**{mention} [Rose](https://t.me/MissRose_Bot) için FBAN Grup ayarları!**\n\
@@ -318,12 +442,10 @@ async def fggroup(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"fgapi")))
 @check_owner
 async def fgapi(event: CallbackQuery):
-    x = "📃 **DEĞER:** `FBan Grup ID`\
-\
-📋 **Açıklama:** `FBan Grubu `\
-\
-🕹 **Değeri elde etmek için;**\
-`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
+    x = "📃 **DEĞER:** `FBan Grup ID`\n\
+    \n📋 **Açıklama:** `FBan Grubu `\n\
+    \n🕹 **Değeri elde etmek için;**\
+    \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
     y = "FBAN_GROUP_ID"
     z = "fgroup"
     await setapi(event, x, y, z)
@@ -394,7 +516,7 @@ async def pcmanuel(event: CallbackQuery):
             await privatechannel(event)
     if gvar("PRIVATE_CHANNEL_ID") is None:
         await event.edit(
-            f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kamal oluşturuyoruM! Lütfen bekleyin..."
+            f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
         )
 
 
@@ -402,12 +524,10 @@ async def pcmanuel(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"pcmanuel")))
 @check_owner
 async def pcmanuel(event: CallbackQuery):
-    x = "📃 **DEĞER:** `Secret Channel ID`\
-\
-📋 **Açıklama:** `Gizli Kanal özelliği için ayarlanan kanal. `\
-\
-🕹 **Değeri elde etmek için;**\
-`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz kanalın kimliğini bana gönderin.`"
+    x = "📃 **DEĞER:** `Secret Channel ID`\n\
+    \n📋 **Açıklama:** `Gizli kanal özelliği için ayarlanan kanal.`\n\
+    \n🕹 **Değeri elde etmek için;**\
+    \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz kanalın kimliğini bana gönderin.`"
     y = "PRIVATE_CHANNEL_ID"
     z = "cgapi"
     await setapi(event, x, y, z)
@@ -425,12 +545,10 @@ async def cuapi(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"deapi")))
 @check_owner
 async def deapi(event: CallbackQuery):
-    x = "📃 **API:** `DEEP API Key`\
-\
-📋 **Açıklama:** `Fotoğraf ve videolardaki çıplaklık oranını ölçebilir ya da gruba atılan medyaların çıplaklık içermesine engel olabilirsiniz.`\
-\
-🕹 **API Key'i elde etmek için;**\
-[Buraya](https://us11.list-manage.com/subscribe?u=ce17e59f5b68a2fd3542801fd&id=252aee70a1) `gidin ve hesap oluşturun. Ardından API key'i alıp bana gönderin.`"
+    x = "📃 **API:** `DEEP API Key`\n\
+    \n📋 **Açıklama:** `Fotoğraf ve videolardaki çıplaklık oranını ölçebilir ya da gruba atılan medyaların çıplaklık içermesine engel olabilirsiniz.`\n\
+    \n🕹 **API Key'i elde etmek için;**\
+    \n[Buraya](https://us11.list-manage.com/subscribe?u=ce17e59f5b68a2fd3542801fd&id=252aee70a1) `gidin ve hesap oluşturun. Ardından API key'i alıp bana gönderin.`"
     y = "DEEPAI_API"
     z = "apimenu"
     await setapi(event, x, y, z)
@@ -439,12 +557,10 @@ async def deapi(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"geapi")))
 @check_owner
 async def geapi(event: CallbackQuery):
-    x = "📃 **API:** `GENIUS API Key`\
-\
-📋 **Açıklama:** `Aradığınız şarkının sözlerini almanızı sağlar.`\
-\
-🕹 **API Key'i elde etmek için;**\
-`Öncelikle` [Genius (https://genius.com/signup_or_login#)](https://genius.com/signup_or_login#) `sitesine kayıt olun. Sonrasında ise` [buradaki](https://genius.com/api-clients#] `ekrana gelip yeni 'client' oluşturun Size verdiği Token'i bana gönderin.`"
+    x = "📃 **API:** `GENIUS API Key`\n\
+    \n📋 **Açıklama:** `Aradığınız şarkının sözlerini almanızı sağlar.`\n\
+    \n🕹 **API Key'i elde etmek için;**\
+    \n`Öncelikle` [Genius](https://genius.com/signup_or_login#) `sitesine kayıt olun. Sonrasında ise` [buradaki](https://genius.com/api-clients#] `ekrana gelip yeni 'client' oluşturun Size verdiği Token'i bana gönderin.`"
     y = "GENIUS_API"
     z = "apimenu"
     await setapi(event, x, y, z)
@@ -548,7 +664,7 @@ async def woapi(event: CallbackQuery):
 
 # FBAN GRUBU İÇİN OTOMATİK GRUP AÇMA / DEĞERLERİ YAZMA
 async def fgchelper(event: CallbackQuery):
-    descript = f"🚧 BU GRUBU SİLMEYİN!\n\
+    descript = "🚧 BU GRUBU SİLMEYİN!\n\
         \n🗑 Eğer bu grubu silerseniz,\
         \n🐾 FBAN özelliği çalışmayacaktır.\n\
         \n🧡 @DogeUserBot"
@@ -558,7 +674,7 @@ async def fgchelper(event: CallbackQuery):
         "🐾 Dᴏɢᴇ FBᴀɴ Gʀᴜᴘ", doge, "@MissRose_Bot", descript, gphoto
     )
     sleep(0.75)
-    descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
+    descmsg = "**🚧 BU GRUBU SİLMEYİN!\
         \n🚧 BU GRUPTAN AYRILMAYIN!\
         \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
         \n🗑 Eğer bu grubu silerseniz,\
@@ -577,7 +693,7 @@ async def fgchelper(event: CallbackQuery):
 
 # HEROKU İÇİN OTOMATİK GRUP AÇMA İŞLEMİ
 async def herokuloggergroupcreate(event: CallbackQuery):
-    descript = f"🚧 BU GRUBU SİLMEYİN!\n\
+    descript = "🚧 BU GRUBU SİLMEYİN!\n\
         \n🗑 Eğer bu grubu silerseniz,\
         \n🐾 Heroku Logger özelliği çalışmayacaktır.\n\
         \n🧡 @DogeUserBot"
@@ -587,7 +703,7 @@ async def herokuloggergroupcreate(event: CallbackQuery):
         "🐾 Doɢᴇ Hᴇʀoᴋᴜ Loɢɢᴇʀ Gʀᴜᴘ", doge, BOT_USERNAME, descript, gphoto
     )
     sleep(0.75)
-    descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
+    descmsg = "**🚧 BU GRUBU SİLMEYİN!\
         \n🚧 BU GRUPTAN AYRILMAYIN!\
         \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
         \n🗑 Eğer bu grubu silerseniz,\

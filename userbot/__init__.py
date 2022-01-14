@@ -191,13 +191,13 @@ if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
 
 thumb_image_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
-if gvar("THUMB_IMAGE") is not None:
+if gvar("THUMB_PIC") is not None:
     check = validatorsurl(
-        (gvar("THUMB_IMAGE") or "https://telegra.ph/file/6086da8c041f5de3227ed.jpg")
+        (gvar("THUMB_PIC") or "https://telegra.ph/file/6086da8c041f5de3227ed.jpg")
     )
     if check:
         try:
             with open(thumb_image_path, "wb") as f:
-                f.write(request_get(gvar("THUMB_IMAGE")).content)
+                f.write(request_get(gvar("THUMB_PIC")).content)
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")

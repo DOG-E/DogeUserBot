@@ -353,31 +353,7 @@ async def limitchecker(event):
     async with event.client.conversation(chat) as conv:
         await fsmessage(event, text="/start", chat=chat)
         lstatus = await newmsgres(conv, chat)
-        if lstatus.text.startswith(
-            "Dear"
-            or "عَزِيز"
-            or "Thân yêu"
-            or "Querido"
-            or "亲爱的"
-            or "Drag"
-            or "Milovaný"
-            or "Kære"
-            or "Dierbaar"
-            or "Rakas"
-            or "Aimé"
-            or "Cher"
-            or "Lieb"
-            or "αγαπητός"
-            or "Caro"
-            or "親愛な"
-            or "사랑하는"
-            or "Kjær"
-            or "Kochany"
-            or "дорогой"
-            or "Kär"
-            or "ซึ่งเป็นที่รักยิ่ง"
-            or "Шановний"
-        ):
+        if lstatus.text.startswith("Dear"):
             gstatus = lstatus.text.split("until ")[1].split(", ")[0]
             ldays, lmonths, lyears = (
                 gstatus.split(" ")[0],
@@ -394,7 +370,8 @@ async def limitchecker(event):
         elif lstatus.text.startswith("Good news"):
             await eor(
                 dogevent,
-                "**🐾 You don't have any limits.\n\n😏 I think you're the freest person on Telegram!**",
+                "**🐾 You don't have any limits.\n\
+                \n😏 I think you're the freest person on Telegram!**",
             )
         else:
             await event.client.forward_messages(event.chat_id, lstatus)
