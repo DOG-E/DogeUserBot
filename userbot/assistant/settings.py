@@ -10,16 +10,28 @@ import logging
 from re import compile
 from time import sleep
 
-from telethon import Button
-from telethon.events import CallbackQuery
 from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
+from telethon import Button
+from telethon.events import CallbackQuery
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
 from validators.url import url
 
 from ..helpers import resize_image
 from ..utils import create_channel, create_supergroup
-from . import check_owner, doge, get_back_button, mention, newmsgres, sgvar, BOT_USERNAME, FBAN_GROUP_ID, TEMP_DIR, TELEGRAPH_SHORT_NAME, gvar
+from . import (
+    BOT_USERNAME,
+    FBAN_GROUP_ID,
+    TELEGRAPH_SHORT_NAME,
+    TEMP_DIR,
+    check_owner,
+    doge,
+    get_back_button,
+    gvar,
+    mention,
+    newmsgres,
+    sgvar,
+)
 
 plugin_category = "bot"
 LOGS = logging.getLogger("DogeUserBot")
@@ -39,8 +51,10 @@ async def settings(event):
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
         ],
         [
-            Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"), # ss menu yeniden oluşturalacak
-            Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu" )
+            Button.inline(
+                "🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"
+            ),  # ss menu yeniden oluşturalacak
+            Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
         ],
         [
             Button.inline("🌐 Dɪʟ", data="langmenu"),
@@ -55,21 +69,20 @@ async def settings(event):
         link_preview=False,
     )
 
-#TODO
+
+# TODO
 # ELLEME BEN YAPACAM
 @doge.bot.on(CallbackQuery(data=compile(b"ssmenu")))
 @check_owner
 async def gdapi(event: CallbackQuery):
-    buttons= [
+    buttons = [
         [
             Button.inline("Alive", data="ssalive"),
             Button.inline("PmPermit", data="pmpermit"),
         ],
-        [
-            Button.inline("PMBot", data="sspmbot"),
-            Button.inline("", data="")
-        ]
+        [Button.inline("PMBot", data="sspmbot"), Button.inline("", data="")],
     ]
+
 
 # api - grup id'leri menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
@@ -121,16 +134,18 @@ async def apisetter(event: CallbackQuery):
 async def setdv(e, vname, vinfo, z=None):
     try:
         sgvar(vname, vinfo)
-    except Exception as e:
+    except Exception:
         if z:
             return await e.edit(
                 f"`🚨 Bir şeyler ters gitti!`\n\
-                \n**Hata:** `{e}`", buttons=get_back_button(z)
+                \n**Hata:** `{e}`",
+                buttons=get_back_button(z),
             )
         else:
             return await e.edit(
                 f"`🚨 Bir şeyler ters gitti!`\n\
-                \n**Hata:** `{e}`", buttons=get_back_button("setmenu")
+                \n**Hata:** `{e}`",
+                buttons=get_back_button("setmenu"),
             )
 
 
@@ -157,7 +172,9 @@ async def ss(event: CallbackQuery, x, y, z=None):
                         vinfo = f"https://telegra.ph{media_urls[0]}"
 
                     except AttributeError:
-                        await xmsg.edit("🚨 `Telegraph bağlantısı oluşturulurken hata oluştu!`")
+                        await xmsg.edit(
+                            "🚨 `Telegraph bağlantısı oluşturulurken hata oluştu!`"
+                        )
                         await sleep(10)
                         return await xmsg.delete()
 
@@ -175,9 +192,15 @@ async def ss(event: CallbackQuery, x, y, z=None):
                     vinfo = blink
                 elif not url(i):
                     if z:
-                        return await xmsg.edit("🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`", buttons=get_back_button(z))
+                        return await xmsg.edit(
+                            "🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`",
+                            buttons=get_back_button(z),
+                        )
                     else:
-                        return await xmsg.edit("🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`", buttons=get_back_button("ssmenu"))
+                        return await xmsg.edit(
+                            "🚨 `Lütfen bağlantıyı kontrol edin ve tekrar deneyin!`",
+                            buttons=get_back_button("ssmenu"),
+                        )
 
         else:
             vinfo = response.message.message
@@ -304,9 +327,7 @@ async def hlogger(event: CallbackQuery):
             Button.inline("✅ Aç", data="hgloggeron"),
             Button.inline("❎ Kapat", data="hgloggeroff"),
         ],
-        [
-            Button.inline("HLog Grubu Ayarla", data="hgloggrpc")
-        ],
+        [Button.inline("HLog Grubu Ayarla", data="hgloggrpc")],
     ]
     buttons.append(get_back_button("cgapi"))
     await event.edit(f"Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)

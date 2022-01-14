@@ -137,11 +137,7 @@ async def bot_start(event):
             sbutton = gvar("START_BUTTON")
             SBNAME = sbutton.split(";")[0]
             SBLINK = sbutton.split(";")[1]
-            buttons = [
-                (
-                    Button.url(SBNAME, url=SBLINK)
-                )
-            ]
+            buttons = [(Button.url(SBNAME, url=SBLINK))]
         else:
             buttons = [
                 (Button.url("📣 Kᴀɴᴀʟ", "https://t.me/DogeUserBot"),),
@@ -162,7 +158,9 @@ async def bot_start(event):
         ]
 
     if gvar("START_PIC") is not "False":
-        START_PIC = gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
+        START_PIC = (
+            gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
+        )
     elif gvar("START_PIC") == "False":
         START_PIC = 1
     try:
@@ -196,7 +194,7 @@ async def bot_start(event):
             await event.client.send_message(
                 BOTLOG,
                 f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilmediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
-                \n\n➡️ Hata Geri Bildirimi: `{e}`"
+                \n\n➡️ Hata Geri Bildirimi: `{e}`",
             )
     except Exception as e:
         if BOTLOG:
@@ -210,6 +208,7 @@ async def bot_start(event):
 
 
 if gvar("BOT_PM") is True:
+
     @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
     async def bot_pms(event):  # sourcery no-metrics
         chat = await event.get_chat()
@@ -276,7 +275,6 @@ if gvar("BOT_PM") is True:
                             \n➡️ `{e}`",
                         )
 
-
     @doge.shiba_cmd(edited=True)
     async def bot_pms_edit(event):  # sourcery no-metrics
         chat = await event.get_chat()
@@ -301,7 +299,9 @@ if gvar("BOT_PM") is True:
                 )
                 msg = await event.forward_to(OWNER_ID)
                 try:
-                    add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
+                    add_user_to_db(
+                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
+                    )
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
                     if BOTLOG:
@@ -330,7 +330,6 @@ if gvar("BOT_PM") is True:
                         )
                     except Exception as e:
                         LOGS.error(f"🚨 {str(e)}")
-
 
     @doge.bot.on(MessageDeleted)
     async def handler(event):
