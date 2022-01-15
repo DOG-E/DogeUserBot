@@ -22,6 +22,7 @@ from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.utils import get_display_name
 
+from ..core.pool import run_in_thread
 from ..sql_helper.bot_blacklists import check_is_black_list
 from ..sql_helper.bot_pms_sql import (
     add_user_to_db,
@@ -522,7 +523,7 @@ def time_now() -> Union[float, int]:
     return datetime.timestamp(datetime.now())
 
 
-@pool.run_in_thread
+@run_in_thread
 def is_flood(uid: int) -> Optional[bool]:
     """Checks if a user is flooding"""
     FloodConfig.USERS[uid].append(time_now())
