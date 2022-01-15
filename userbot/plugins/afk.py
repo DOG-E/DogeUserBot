@@ -314,7 +314,7 @@ async def mention_afk(mention):
                         file=media,
                         buttons=button,
                     )
-                    if messaget is "Sticker":
+                    if messaget == "Sticker":
                         await doge.bot.send_message(
                             PM_LOGGER_GROUP_ID,
                             resalt,

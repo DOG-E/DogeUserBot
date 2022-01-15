@@ -135,7 +135,7 @@ async def log_tagged_messages(event):
                     file=media,
                     buttons=button,
                 )
-                if messaget is "Sticker":
+                if messaget == "Sticker":
                     await doge.bot.send_message(
                         int(TAG_LOGGER_GROUP),
                         resalt,
