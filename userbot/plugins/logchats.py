@@ -79,12 +79,12 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                     )
                 LOG_CHATS_.COUNT += 1
             except Exception as e:
-                LOGS.warn(str(e))
+                LOGS.warning(str(e))
 
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
 async def log_tagged_messages(event):
-    if gvar("GRPLOG") and gvar("GRPLOG") == ("false" or "False"):
+    if gvar("GRPLOG") and gvar("GRPLOG") == "false":
         return
 
     from .afk import AFK_
@@ -118,7 +118,7 @@ async def log_tagged_messages(event):
     if not event.is_private:
         if messaget is None:
             await doge.bot.send_message(
-                TAG_LOGGER_GROUP,
+                int(TAG_LOGGER_GROUP),
                 resalt,
                 parse_mode="html",
                 link_preview=False,
@@ -128,13 +128,21 @@ async def log_tagged_messages(event):
             try:
                 media = await event.download_media()
                 await doge.bot.send_message(
-                    TAG_LOGGER_GROUP,
+                    int(TAG_LOGGER_GROUP),
                     resalt,
                     parse_mode="html",
                     link_preview=False,
                     file=media,
                     buttons=button,
                 )
+                if messaget is "Sticker":
+                    await doge.bot.send_message(
+                        int(TAG_LOGGER_GROUP),
+                        resalt,
+                        parse_mode="html",
+                        link_preview=False,
+                        buttons=button,
+                    )
                 return remove(media)
             except Exception as er:
                 LOGS.error(er)

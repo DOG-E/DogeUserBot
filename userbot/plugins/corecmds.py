@@ -17,13 +17,13 @@ from ..utils import load_module, remove_plugin
 from . import (
     CMD_HELP,
     CMD_LIST,
-    PLUGIN_CHANNEL,
     SUDO_LIST,
     TMP_DOWNLOAD_DIRECTORY,
     _dogeutils,
     doge,
     edl,
     eor,
+    gvar,
     hmention,
     install_pip,
     reply_id,
@@ -31,6 +31,8 @@ from . import (
 )
 
 plugin_category = "bot"
+
+PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
 thumb_image_path = path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
@@ -70,7 +72,7 @@ async def install(event):
                     )
 
                 try:
-                    await reply_message.forward_to(PLUGIN_CHANNEL)
+                    await reply_message.forward_to(int(PLUGIN_CHANNEL))
                 except Exception:
                     remove(downloaded_file_name)
                     return await edl(
@@ -141,7 +143,7 @@ async def finstall(event):
                     load_module(shortestname)
 
                 try:
-                    await reply_message.forward_to(PLUGIN_CHANNEL)
+                    await reply_message.forward_to(int(PLUGIN_CHANNEL))
                 except Exception:
                     remove(downloaded_file_name)
                     return await edl(
@@ -338,7 +340,7 @@ async def uninstall(event):
         remove_plugin(shortname)
         try:
             async for message in event.client.iter_messages(
-                PLUGIN_CHANNEL,
+                int(PLUGIN_CHANNEL),
                 filter=InputMessagesFilterDocument,
                 search=shortname,
             ):
@@ -375,7 +377,7 @@ async def plist(event):
                 f"**[🐶](tg://need_update_for_some_feature/) External Plugins:**\n\n"
             )
             async for plugin in event.client.iter_messages(
-                PLUGIN_CHANNEL, filter=InputMessagesFilterDocument
+                int(PLUGIN_CHANNEL), filter=InputMessagesFilterDocument
             ):
                 try:
                     shortname = plugin.file.name.split(".")[1]

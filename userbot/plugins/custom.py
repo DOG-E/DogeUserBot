@@ -11,6 +11,7 @@ from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto, PeerUser
 
+from ..sql_helper.global_msg import dmsg, gmsg, smsg
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
@@ -46,9 +47,8 @@ vlist = [
     "PM_PIC",
     "START_PIC",
     "THUMB_PIC",
-    "AFK",
     "AFKBIO",
-    "AFKRBIO",
+    "AFKBIOSET",
     "ALIVE",
     "ALIVE_NAME",
     "ALIVE_TEXT",
@@ -70,13 +70,19 @@ vlist = [
     "PM_TEXT",
     "START_BUTTON",
     "START_TEXT",
-    "TAG_LOGGER_GROUP",
+    "FBAN_GROUP_ID",
+    "HLOGGER_ID",
+    "PRIVATE_CHANNEL_ID",
+    "TAG_LOGGER_GROUP_ID",
     "TELEGRAPH_SHORT_NAME",
     "WATCH_COUNTRY",
     "WEATHER_CITY",
     "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
 ]
-cmdlist = [
+mlist= [
+    "AFK",
+]
+clist = [
     "CMDSET",
     "SUDO_CMDSET",
     "SNIP_CMDSET",
@@ -84,7 +90,6 @@ cmdlist = [
 alist = [
     "CURRENCY_API",
     "DEEPAI_API",
-    "FBAN_GROUP_ID",
     "G_DRIVE_CLIENT_ID",
     "G_DRIVE_CLIENT_SECRET",
     "G_DRIVE_DATA",
@@ -93,7 +98,6 @@ alist = [
     "GENIUS_API",
     "GITHUB_ACCESS_TOKEN",
     "GIT_REPO_NAME",
-    "HLOGGER_ID",
     "IBM_WATSON_CRED_URL",
     "IBM_WATSON_CRED_PASSWORD",
     "IPDATA_API",
@@ -102,7 +106,6 @@ alist = [
     "LASTFM_PASSWORD_PLAIN",
     "LASTFM_SECRET",
     "OCRSPACE_API",
-    "PRIVATE_CHANNEL_ID",
     "RANDOMSTUFF_API",
     "REMOVEBG_API",
     "SPAMWATCH_API",
@@ -160,13 +163,15 @@ async def dbsetter(event):  # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
-    vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
-    apilist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(alist, start=1))
+    vnlist = "".join(f"{i})`{each}`\n" for i, each in enumerate(vlist, start=1))
+    msglist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(mlist, start=1))
+    cmdlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(clist, start=1))
+    apilist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(alist, start=1))
     if not vname:
         return await eor(
             event,
-            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\
-            \n**🔮 Give correct API name from the list:\n\n**{apilist}",
+            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}{cmdlist}\n\
+            \n**🔮 Give correct API name from the list:**\n\n{apilist}",
         )
 
     vinfo = None
@@ -212,7 +217,7 @@ async def dbsetter(event):  # sourcery no-metrics
         except AttributeError:
             vinfo = reply.text
 
-    if vname in vlist:
+    if vname in (vlist or mlist or clist):
         if cmd == "s":
             if not vinfo and vname == ("ALIVE" or "AFK"):
                 return await edl(
@@ -221,7 +226,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     45,
                 )
 
-            if len(vinfo) > 70 and vname == ("AFKBIO" or "AFKRBIO"):
+            if len(vinfo) > 70 and vname == "AFKBIO":
                 return await edl(
                     event,
                     "**🚧 Max bio length is 70 characters.**",
@@ -233,7 +238,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     f"Give some values which you want to save for **{vname}**",
                 )
 
-            sgvar(vname, vinfo)
+            smsg(vname, vinfo) if vname in mlist else sgvar(vname, vinfo)
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -244,14 +249,16 @@ async def dbsetter(event):  # sourcery no-metrics
             msg = await edl(
                 event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
-            if vname in cmdlist:
+            if vname in clist:
                 await event.client.reload(msg)
+
         if cmd == "g":
-            var_data = gvar(vname)
+            var_data = gmsg(vname) if vname in mlist else gvar(vname)
             await edl(event, f"🪀 Value of **{vname}** is  `{var_data}`", time=20)
-        elif cmd == "d":
-            var_data = gvar(vname)
-            dgvar(vname)
+
+        if cmd == "d":
+            var_data = gmsg(vname) if vname in mlist else gvar(vname)
+            dmsg(vname) if vname in mlist else dgvar(vname)
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -265,10 +272,10 @@ async def dbsetter(event):  # sourcery no-metrics
                 f"🪀 Value of **{vname}** is now deleted & set to default.",
                 time=20,
             )
-            if vname in cmdlist:
+            if vname in clist:
                 await event.client.reload(msg)
 
-    elif vname in apilist:
+    elif vname in alist:
         apiname = vname
         apinfo = vinfo
         if cmd == "s":
@@ -289,8 +296,6 @@ async def dbsetter(event):  # sourcery no-metrics
                 event,
                 f"🔮 Value of **{apiname}** is changed.",
             )
-            if vname in cmdlist:
-                await event.client.reload(msg)
 
         if cmd == "g":
             api_data = gvar(apiname)
@@ -299,7 +304,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 BOTLOG_CHATID,
                 f"🔮 Value of **{apiname}** is  `{api_data}`",
             )
-        elif cmd == "d":
+        if cmd == "d":
             api_data = gvar(apiname)
             dgvar(apiname)
             if BOTLOG_CHATID:
@@ -315,8 +320,6 @@ async def dbsetter(event):  # sourcery no-metrics
                 f"🔮 Value of **{apiname}** is now deleted & set to default.",
                 time=20,
             )
-            if vname in cmdlist:
-                await event.client.reload(msg)
 
     else:
         if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") == "True":
@@ -341,8 +344,9 @@ async def dbsetter(event):  # sourcery no-metrics
                     event,
                     f"⚙️ Value of **{gvarname}** is changed.",
                 )
-                if vname in cmdlist:
+                if vname in clist:
                     await event.client.reload(msg)
+
             if cmd == "g":
                 gvardata = gvar(gvarname)
                 await edl(event, "**I sent global data var to BOTLOG.**")
@@ -350,7 +354,8 @@ async def dbsetter(event):  # sourcery no-metrics
                     BOTLOG_CHATID,
                     f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
                 )
-            elif cmd == "d":
+
+            if cmd == "d":
                 gvardata = gvar(gvarname)
                 dgvar(gvarname)
                 if BOTLOG_CHATID:
@@ -366,12 +371,14 @@ async def dbsetter(event):  # sourcery no-metrics
                     f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
                     time=20,
                 )
-                if vname in cmdlist:
+                if vname in clist:
                     await event.client.reload(msg)
+
         else:
             await eor(
                 event,
-                f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**🔮 Give correct API name from the list:\n\n**{apilist}",
+                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}{cmdlist}\n\
+                \n**🔮 Give correct API name from the list:**\n\n{apilist}",
             )
 
 

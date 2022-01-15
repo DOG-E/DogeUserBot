@@ -82,9 +82,9 @@ def pack_nick(username, pack, is_anim):
             else f"{gvar('CUSTOM_STICKER_PACKNAME')} {pack}"
         )
     elif is_anim:
-        return f"@DogeUserBot {username} A. {pack}"
+        return f"@DogeUserBot @{username} A. {pack}"
     else:
-        return f"@DogeUserBot {username} {pack}"
+        return f"@DogeUserBot @{username} {pack}"
 
 
 async def resize_photo(photo):
@@ -251,9 +251,13 @@ async def kang(args):  # sourcery no-metrics
     message = await args.get_reply_message()
     user = await args.client.get_me()
     if not user.username:
-        username = user.first_name
+        try:
+            user.first_name.encode("utf-8").decode("ascii")
+            username = user.first_name
+        except UnicodeDecodeError:
+            username = f"doge_{user.id}"
     else:
-        username = f"@{user.username}"
+        username = user.username
     userid = user.id
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
@@ -394,9 +398,13 @@ async def pack_kang(event):  # sourcery no-metrics
     "To kang entire sticker sticker."
     user = await event.client.get_me()
     if user.username:
-        username = f"@{user.username}"
+        username = user.username
     else:
-        username = user.first_name
+        try:
+            user.first_name.encode("utf-8").decode("ascii")
+            username = user.first_name
+        except UnicodeDecodeError:
+            username = f"doge_{user.id}"
     photo = None
     userid = user.id
     is_anim = False

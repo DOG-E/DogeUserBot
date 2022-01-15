@@ -10,21 +10,18 @@ from asyncio import sleep
 from asyncio.exceptions import TimeoutError
 from os import remove
 
-from telethon.tl.functions.channels import EditAdminRequest, InviteToChannelRequest
-from telethon.tl.functions.messages import AddChatUserRequest
-from telethon.tl.types import ChatAdminRights
-
 from ..sql_helper.global_collectionjson import add_collection, get_collection
+from ..utils import add_bot_to_logger_group
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    FBAN_GROUP_ID,
     _format,
     doge,
     edl,
     eor,
     fsmessage,
     get_user_from_event,
+    gvar,
     logging,
     newmsgres,
     reply_id,
@@ -35,6 +32,7 @@ from . import (
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
+FBAN_GROUP_ID = gvar("FBAN_GROUP_ID")
 rose = "@MissRose_Bot"
 fbanresults = [
     "New FedBan",
@@ -89,7 +87,7 @@ async def group_fban(event):
     dogevent = await eor(
         event, f"Fbanning {_format.mentionuser(user.first_name ,user_id)}.."
     )
-    fedchat = FBAN_GROUP_ID
+    fedchat = int(FBAN_GROUP_ID)
     success = 0
     errors = []
     total = 0
@@ -133,9 +131,7 @@ async def group_fban(event):
     await eor(dogevent, success_report)
 
 
-# Credit: @teamultroid; https://github.com/TeamUltroid/Ultroid/blob/main/plugins/fedutils.py
-
-
+# Credits: @teamultroid; https://github.com/TeamUltroid/Ultroid/blob/main/plugins/fedutils.py
 @doge.bot_cmd(
     pattern="superfban(?:\s|$)([\s\S]*)",
     command=("superfban", plugin_category),
@@ -145,7 +141,7 @@ async def group_fban(event):
         "u": "{tr}superfban <userid/username/reply> <category> <reason>",
     },
 )
-async def superfban(event):
+async def sfban(event):
     msg = await eor(event, f"SüperFBan başlatılıyor...")
     inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
@@ -240,7 +236,7 @@ async def superfban(event):
         return await msg.edit("Yöneticisi olduğunuz federasyonlar bulunamadı!")
     await msg.edit(f"{len(fedList)} tane federasyondan yasaklanıyor...")
     try:
-        await add_rose_to_fban_group(FBAN_GROUP_ID)
+        await add_bot_to_logger_group(doge, FBAN_GROUP_ID, rose, "Rose")
         await doge.send_message(chat, "/start")
     except BaseException:
         return await msg.edit(
@@ -303,7 +299,7 @@ async def group_unfban(event):
     dogevent = await eor(
         event, f"Unfbanning {_format.mentionuser(user.first_name ,user_id)}.."
     )
-    fedchat = FBAN_GROUP_ID
+    fedchat = int(FBAN_GROUP_ID)
     success = 0
     errors = []
     total = 0
@@ -347,6 +343,7 @@ async def group_unfban(event):
     await eor(dogevent, success_report)
 
 
+# Credits: @teamultroid; https://github.com/TeamUltroid/Ultroid/blob/main/plugins/fedutils.py
 @doge.bot_cmd(
     pattern="superunfban(?:\s|$)([\s\S]*)",
     command=("superunfban", plugin_category),
@@ -356,7 +353,7 @@ async def group_unfban(event):
         "u": "{tr}superunfban <userid/username/reply> <category> <reason>",
     },
 )
-async def _(event):
+async def sunfban(event):
     msg = await eor(event, f"SüperUnFBan başlatılıyor..")
     fedList = []
     if event.reply_to_msg_id:
@@ -468,7 +465,7 @@ async def _(event):
         return await msg.edit("Yöneticisi olduğunuz federasyonlar bulunamadı!")
     await msg.edit(f"{len(fedList)} tane federasyondan yasağı kaldırılıyor...")
     try:
-        await add_rose_to_fban_group(FBAN_GROUP_ID)
+        await add_bot_to_logger_group(doge, FBAN_GROUP_ID, rose, "Rose")
         await event.client.send_message(chat, "/start")
     except BaseException:
         return await msg.edit(
@@ -508,7 +505,7 @@ async def quote_search(event):  # sourcery no-metrics
     "Add the federation to database."
     fedgroup = event.pattern_match.group(1)
     fedid = event.pattern_match.group(2)
-    await add_rose_to_fban_group(FBAN_GROUP_ID)
+    await add_bot_to_logger_group(doge, FBAN_GROUP_ID, rose, "Rose")
     if get_collection("fedids") is not None:
         feds = get_collection("fedids").json
     else:
@@ -866,39 +863,3 @@ async def fstat_rose(event):
             )
         await conv.mark_read()
         await conv.cancel_all()
-
-
-async def add_rose_to_fban_group(chat_id):
-    try:
-        await doge(
-            AddChatUserRequest(
-                chat_id=chat_id,
-                user_id=rose,
-                fwd_limit=1000000,
-            )
-        )
-    except BaseException:
-        try:
-            await doge(
-                InviteToChannelRequest(
-                    channel=chat_id,
-                    users=[rose],
-                )
-            )
-        except Exception as e:
-            LOGS.error(f"🚨 {str(e)}")
-    sleep(0.75)
-    rights = ChatAdminRights(
-        add_admins=True,
-        invite_users=True,
-        change_info=True,
-        ban_users=True,
-        delete_messages=True,
-        pin_messages=True,
-        anonymous=False,
-        manage_call=True,
-    )
-    try:
-        await doge(EditAdminRequest(chat_id, rose, rights, "Rose"))
-    except Exception as e:
-        LOGS.error(f"🚨 {str(e)}")

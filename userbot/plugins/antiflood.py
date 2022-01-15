@@ -45,7 +45,7 @@ async def _(event):
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
             message=f"**Otomatik AntiFlooder**\
-                \n@admin [Kullanıcı](tg://user?id={event.message.sender_id}) Bu sohbette flood yapıyor.\
+                \n@admin [Kullanıcı](tg://user?id={event.message.sender_id}) bu sohbette flood yapıyor.\
                 \n`{e}`",
             reply_to=event.message.id,
         )

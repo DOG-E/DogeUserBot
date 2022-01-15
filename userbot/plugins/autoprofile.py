@@ -52,7 +52,7 @@ from . import (
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
-DEFAULTUSERBIO = DEFAULT_BIO or "🐶 @DogeUserBot 🐾"
+DEFAULTUSERBIO = DEFAULT_BIO
 DEFAULTUSER = AUTONAME or ALIVE_NAME
 FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
 autopic_path = path.join(getcwd(), "userbot", "original_pic.png")
@@ -82,14 +82,14 @@ async def autopicloop():
         if BOTLOG:
             return await doge.send_message(
                 BOTLOG_CHATID,
-                "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var`",
+                "**Hata:**\n`Otomatik profil fotoğrafı özelliği için lütfen DEFAULT_PIC değişkenini ayarlayın.`",
             )
         return
     if gvar("autopic") is not None:
         try:
             counter = int(gvar("autopic_counter"))
         except Exception as e:
-            LOGS.warn(str(e))
+            LOGS.warning(str(e))
     while AUTOPICSTART:
         if not path.exists(autopic_path):
             downloader = SmartDL(gvar("DEFAULT_PIC"), autopic_path, progress_bar=False)
@@ -99,7 +99,7 @@ async def autopicloop():
         copy(autopic_path, autophoto_path)
         im = Image.open(autophoto_path)
         file_test = im.rotate(counter, expand=False).save(autophoto_path, "PNG")
-        current_time = datetime.now().strftime("  Time: %H:%M \n  Date: %d.%m.%y ")
+        current_time = datetime.now().strftime("  Saat: %H:%M \n  Tarih: %d.%m.%y ")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
@@ -121,7 +121,7 @@ async def custompfploop():
     i = 0
     while CUSTOMPICSTART:
         if len(get_collection_list("CUSTOM_PFP_LINKS")) == 0:
-            LOGS.error("No custom pfp images to set.")
+            LOGS.error("Ayarlanacak özel profil fotoğrafları yok.")
             return
         pic = choice(list(get_collection_list("CUSTOM_PFP_LINKS")))
         urlretrieve(pic, "donottouch.jpg")
@@ -183,7 +183,7 @@ async def bloom_pfploop():
         if BOTLOG:
             return await doge.send_message(
                 BOTLOG_CHATID,
-                "**Error**\n`For functing of bloom you need to set DEFAULT_PIC var`",
+                "**Hata:**\n`Otomatik çiçek profil fotoğrafı özelliği için lütfen DEFAULT_PIC değişkenini ayarlayın.`",
             )
         return
     while BLOOMSTART:
@@ -203,7 +203,7 @@ async def bloom_pfploop():
         image = Image.open(autophoto_path)
         image.paste((R, G, B), [0, 0, image.size[0], image.size[1]])
         image.save(autophoto_path)
-        current_time = datetime.now().strftime("\n Time: %H:%M:%S \n \n Date: %d/%m/%y")
+        current_time = datetime.now().strftime("\n Saat: %H:%M:%S\n\n Tarih: %d/%m/%y")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 60)

@@ -10,10 +10,12 @@ from string import ascii_lowercase
 
 from telethon.tl.types import Channel, MessageMediaWebPage
 
-from . import PRIVATE_CHANNEL_ID, doge, edl, logging
+from . import doge, edl, gvar, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
+
+PRIVATE_CHANNEL_ID = gvar("PRIVATE_CHANNEL_ID")
 
 
 class FPOST:
@@ -50,7 +52,7 @@ async def _(event):
             "Please set the required environment variable `PRIVATE_CHANNEL_ID` for this plugin to work",
         )
     try:
-        e = await event.client.get_entity(PRIVATE_CHANNEL_ID)
+        e = await event.client.get_entity(int(PRIVATE_CHANNEL_ID))
     except Exception as e:
         await edl(event, str(e))
     else:

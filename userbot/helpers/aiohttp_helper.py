@@ -9,6 +9,13 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
+try:
+    import aiofiles
+    import aiohttp
+except ImportError:
+    from urllib.request import urlretrieve
+
+    aiohttp = None
 from aiohttp import ClientSession
 
 
@@ -36,3 +43,15 @@ class AioHttp:
         async with ClientSession() as session:
             async with session.get(link) as resp:
                 return resp.status
+    
+    @staticmethod
+    async def download_file(link, name):
+        if not aiohttp:
+            urlretrieve(link, name)
+            return name
+        async with ClientSession() as session:
+            async with session.get(link) as resp:
+                file = await aiofiles.open(name, "wb")
+                await file.write(await resp.read())
+                await file.close()
+        return name

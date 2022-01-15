@@ -26,72 +26,68 @@ LOGS = logging.getLogger(__name__)
     pattern="chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
-        "h": "To enable and disable chats blacklist.",
-        "d": "If you turn this on, then your userbot won't work on the chats stored\
-         in database by addblkchat cmd. If you turn it off even though you added chats to database\
-         userbot won't stop working in that chat.",
+        "h": "Sohbet karalistesini etkinleştirin veya devre dışı bırakır.",
+        "d": "Bunu açarsanız, Doge addblackchat komutu ile veritabanında saklanan sohbetler üzerinde çalışmayacaktır. Bunu kapatırsanız, veritabanına sohbet eklemiş olsanız bile Doge o sohbette çalışmayı bırakmaz.",
         "u": "{tr}chatblacklist <on/off>",
     },
 )
 async def chat_blacklist(event):
-    "To enable and disable chats blacklist."
+    "Sohbet kara listesini etkinleştirin veya devre dışı bırakır."
     input_str = event.pattern_match.group(1)
     blkchats = blacklist_chats_list()
     if input_str == "on":
         if gvar("blacklist_chats") is not None:
-            return await edl(event, "__Already it was turned on.__")
+            return await edl(event, "__Zaten açık.__")
         sgvar("blacklist_chats", "true")
-        text = "__From now on, your DogeUserBot doesn't work in the chats stored in database.__"
+        text = "__Şu andan itibaren, DogeUserBot'unuz veritabanında saklanan sohbetlerde çalışmıyor.__"
         if len(blkchats) != 0:
             text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
+                "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. Lütfen biraz bekleyin...**"
             )
             msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        text += "**You haven't added any chat to blacklist.**"
+        text += "**Kara listeye herhangi bir sohbet eklemediniz.**"
         return await eor(
             event,
             text,
         )
     if gvar("blacklist_chats") is not None:
         dgvar("blacklist_chats")
-        text = "__Your DogeUserBot is as free as a bird. It works in Every Chat.__"
+        text = "__DogeUserBot'unuz bir kuş kadar özgür. Her sohbette çalışır.__"
         if len(blkchats) != 0:
             text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
+                "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. lütfen biraz bekleyin**"
             )
             msg = await eor(
                 event,
                 text,
             )
             return await event.client.reload(msg)
-        text += "**You haven't added any chat to blacklist.**"
+        text += "**Kara listeye herhangi bir sohbet eklemediniz.**"
         return await eor(
             event,
             text,
         )
-    await edl(event, "It was turned off already")
+    await edl(event, "zaten kapalıydı")
 
 
 @doge.bot_cmd(
     pattern="addblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
-        "h": "To add chats to blacklist.",
-        "d": "to add the chats to database so your bot doesn't work in\
-         thoose chats. Either give chatids as input or do this cmd in the chat\
-         which you want to add to db.",
+        "h": "Karalisteye sohbet ekler.",
+        "d": "Karalisteye eklediğiniz sohbetlerde Doge çalışmayacaktır. Sohbet ID'lerini girdi olarak verin veya eklemek istediğiniz sohbette bu komutu kullanın.",
         "u": [
-            "{tr}addblkchat <chat ids>",
-            "{tr}addblkchat in the chat which you want to add",
+            "{tr}addblkchat <sohbet ID>",
+            "{tr}addblkchat eklemek istediğin sohbette kullan",
         ],
     },
 )
 async def add_blacklist_chat(event):
-    "To add chats to blacklist."
+    "Karalisteye sohbet ekler."
     input_str = event.pattern_match.group(2)
     errors = ""
     result = ""
@@ -106,7 +102,7 @@ async def add_blacklist_chat(event):
             try:
                 chatid = int(chatid.strip())
                 if chatid in blkchats:
-                    errors += f"**While adding the {chatid}** - __This chat has already been blacklisted__\n"
+                    errors += f"{chatid} ID'sine sahip olan grup zaten karalistede."
                     continue
                 chat = await event.client.get_entity(chatid)
                 date = str(datetime.now().strftime("%B %d, %Y"))
@@ -118,16 +114,16 @@ async def add_blacklist_chat(event):
                 }
                 blacklistchats[str(chat.id)] = chatdata
                 result += (
-                    f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
+                    f"{get_display_name ( chat)} sohbeti karalisteye başarıyla eklendi."
                 )
             except Exception as e:
-                errors += f"**While adding the {chatid}** - __{e}__\n"
+                errors += f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
     else:
         chat = await event.get_chat()
         try:
             chatid = chat.id
             if chatid in blkchats:
-                errors += f"**While adding the {chatid}** - __This chat has already been blacklisted__\n"
+                errors += f"{chatid} ID'sine sahip olan grup zaten kara listede"
             else:
                 date = str(datetime.now().strftime("%B %d, %Y"))
                 chatdata = {
@@ -138,19 +134,19 @@ async def add_blacklist_chat(event):
                 }
                 blacklistchats[str(chat.id)] = chatdata
                 result += (
-                    f"Successfully added {get_display_name(chat)} to blacklist chats.\n"
+                    f"{get_display_name ( chat)} sohbeti karalisteye başarıyla eklendi."
                 )
         except Exception as e:
-            errors += f"**While adding the {chatid}** - __{e}__\n"
+            errors += f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
     del_collection("blacklist_chats_list")
     add_collection("blacklist_chats_list", blacklistchats, {})
     output = ""
     if result != "":
-        output += f"**Success:**\n{result}\n"
+        output += f"**Başarılı:**\n{result}\n"
     if errors != "":
-        output += f"**Error:**\n{errors}\n"
+        output += f"**Hata:**\n{errors}\n"
     if result != "":
-        output += "**Bot is reloading to apply the changes. Please wait for a minute**"
+        output += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor... Lütfen biraz bekleyin...**"
     msg = await eor(event, output)
     await event.client.reload(msg)
 
@@ -159,18 +155,16 @@ async def add_blacklist_chat(event):
     pattern="rmblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
-        "h": "To remove chats to blacklist.",
-        "d": "to remove the chats from database so your bot will work in\
-         those chats. Either give chatids as input or do this cmd in the chat\
-         which you want to remove from db.",
+        "h": "Karalistenizdeki sohbetleri karalisteden kaldırır.",
+        "d": "Doge karalistenizden kaldırdığınız sohbetlerde de çalışacaktır. Sohbet ID'lerini girdi olarak verin veya çıkarmak istediğiniz sohbette bu komutu kullanın.",
         "u": [
-            "{tr}rmblkchat <chat ids>",
-            "{tr}rmblkchat in the chat which you want to add",
+            "{tr}rmblkchat <sohbet ID>",
+            "{tr}rmblkchat çıkarmak istediğiniz sohbet",
         ],
     },
 )
 async def add_blacklist_chat(event):
-    "To remove chats from blacklisted chats."
+    "Karalistenizdeki sohbetleri karalisteden kaldırır."
     input_str = event.pattern_match.group(2)
     errors = ""
     result = ""
@@ -188,12 +182,12 @@ async def add_blacklist_chat(event):
                     chatname = blacklistchats[str(chatid)]["chat_name"]
                     del blacklistchats[str(chatid)]
                     result += (
-                        f"Successfully removed {chatname} from blacklisted chats.\n"
+                        f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı!"
                     )
                 else:
-                    errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
+                    errors += f"Verilen {chatid} kimliği veritabanınızda mevcut değil. Yani karalisteye alınmamış."
             except Exception as e:
-                errors += f"**While removing the {chatid}** - __{e}__\n"
+                errors += f"**{chatid} kaldırılırken bir hata oluştu** \nHata: `{e}`\n"
     else:
         chat = await event.get_chat()
         try:
@@ -201,49 +195,49 @@ async def add_blacklist_chat(event):
             if chatid in blkchats:
                 chatname = blacklistchats[str(chatid)]["chat_name"]
                 del blacklistchats[str(chatid)]
-                result += f"Successfully removed {chatname} from blacklisted chats.\n"
+                result += f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı."
             else:
-                errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
+                errors += f"Verilen {chatid} kimliği veritabanınızda mevcut değil. Yani karalisteye alınmamış."
         except Exception as e:
-            errors += f"**While removing the {chatid}** - __{e}__\n"
+            errors += f"**{chatid} kaldırılırken bir hata oluştu\nHata:** `{e}`\n"
     del_collection("blacklist_chats_list")
     add_collection("blacklist_chats_list", blacklistchats, {})
     output = ""
     if result != "":
-        output += f"**Success:**\n{result}\n"
+        output += f"**Başarılı:**\n{result}\n"
     if errors != "":
-        output += f"**Error:**\n{errors}\n"
+        output += f"**Hata:**\n{errors}\n"
     if result != "":
-        output += "**Bot is reloading to apply the changes. Please wait for a minute**"
+        output += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor... Lütfen biraz bekleyin...**"
     msg = await eor(event, output)
     await event.client.reload(msg)
 
 
 @doge.bot_cmd(
-    pattern="listblkchats$",
+    pattern="listbl(ac)kchats$",
     command=("listblkchats", plugin_category),
     info={
-        "h": "To list all blacklisted chats.",
-        "d": "Will show you the list of all blacklisted chats",
+        "h": "Karalisteye alınan tüm sohbetleri listeler.",
+        "d": "Karalisteye alınmış tüm sohbetleri listesini gösterir.",
         "u": [
             "{tr}listblkchat",
         ],
     },
 )
 async def add_blacklist_chat(event):
-    "To show list of chats which are blacklisted."
+    "Karalisteye alınan tüm sohbetleri listeler."
     blkchats = blacklist_chats_list()
     try:
         blacklistchats = get_collection("blacklist_chats_list").json
     except AttributeError:
         blacklistchats = {}
     if len(blkchats) == 0:
-        return await edl(event, "__There are no blacklisted chats in your bot.__")
-    result = "**The list of blacklisted chats are:**\n\n"
+        return await edl(event, "__Botunuzda karalisteye alınmış sohbet yok.__")
+    result = "**Karalisteye alınan sohbetlerin listesi:**\n\n"
     for chat in blkchats:
         result += f"☞ {blacklistchats[str(chat)]['chat_name']}\n"
-        result += f"**Chat ID:** `{chat}`\n"
-        username = blacklistchats[str(chat)]["chat_username"] or "__Private group__"
-        result += f"**Username:** {username}\n"
-        result += f"Added on {blacklistchats[str(chat)]['date']}\n\n"
+        result += f"**Sohbet ID:** `{chat}`\n"
+        username = blacklistchats[str(chat)]["chat_username"] or "__Gizli grup__"
+        result += f"**Kullanıcı Adı:** {username}\n"
+        result += f"**Eklendiği Zaman:** {blacklistchats[str(chat)]['date']}\n\n"
     await eor(event, result)

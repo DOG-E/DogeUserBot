@@ -52,11 +52,11 @@ if ANTISPAMBOT_BAN == True:
             doggban = get_gbanuser(user.id)
             if doggban.reason:
                 hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) was gbanned by you for the reason `{doggban.reason}`"
+                    f"[{user.first_name}](tg://user?id={user.id}) `{doggban.reason}` nedeniyle gban olarak yasaklandın."
                 )
             else:
                 hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) was gbanned by you"
+                    f"[{user.first_name}](tg://user?id={user.id}) gban olarak yasaklandın."
                 )
             try:
                 await event.client.edit_permissions(
@@ -69,7 +69,7 @@ if ANTISPAMBOT_BAN == True:
             ban = SPAMWATCH.get_ban(user.id)
             if ban:
                 hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) was banned by spamwatch for the reason `{ban.reason}`"
+                    f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandı."
                 )
                 try:
                     await event.client.edit_permissions(
@@ -87,10 +87,10 @@ if ANTISPAMBOT_BAN == True:
                 data = None
             if data and data["ok"]:
                 reason = (
-                    f"[Banned by Combot Anti Spam](https://cas.chat/query?u={user.id})"
+                    f"[Combot anti-spam servisi (CAS)](https://cas.chat/query?u={user.id})"
                 )
                 hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) was banned by Combat anti-spam service(CAS) for the reason check {reason}"
+                    f"[{user.first_name}](tg://user?id={user.id}) {reason} tarafından yasaklandın."
                 )
                 try:
                     await event.client.edit_permissions(
@@ -103,9 +103,9 @@ if ANTISPAMBOT_BAN == True:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#ANTISPAMBOT\n"
-                f"**User:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat:** {get_display_name(await event.get_chat())} (`{event.chat_id}`)\n"
-                f"**Reason:** {hmm.text}",
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**Sohbet:** {get_display_name(await event.get_chat())} (`{event.chat_id}`)\n"
+                f"**Nedeni:** {hmm.text}",
             )
 
 
@@ -113,18 +113,18 @@ if ANTISPAMBOT_BAN == True:
     pattern="casc$",
     command=("casc", plugin_category),
     info={
-        "h": "To check the users who are banned in cas",
-        "d": "When you use this cmd it will check every user in the group where you used whether \
-        he is banned in cas (combat antispam service) and will show there names if they are flagged in cas",
+        "h": "CAS'ta yasaklanan kullanıcıları kontrol eder.",
+        "d": "Bu komutu kullandığınız gruptaki her kullanıcıyı kontrol eder.",
         "u": "{tr}casc",
     },
     groups_only=True,
 )
 async def caschecker(event):
-    "Searches for cas(combot antispam service) banned users in group and shows you the list"
+    "CAS'ta yasaklanan kullanıcıları kontrol eder."
     dogevent = await eor(
         event,
-        "`checking any cas(combot antispam service) banned users here, this may take several minutes too......`",
+        "`CAS'den (combot antispam servisi) yasaklananları kontrol ediyorum.\
+        \nLütfen bekleyin, bu biraz zaman alabilir...`",
     )
     text = ""
     try:
@@ -140,20 +140,18 @@ async def caschecker(event):
                 if not user.deleted:
                     banned_users += f"{user.first_name}-`{user.id}`\n"
                 else:
-                    banned_users += f"Deleted Account `{user.id}`\n"
+                    banned_users += f"Silinen hesap `{user.id}`\n"
             members_count += 1
-        text = "**Warning!** Found `{}` of `{}` users are CAS Banned:\n".format(
-            cas_count, members_count
+        text = "**Uyarı!** `{}` kullanıcının `{}` tanesi CAS'den yasaklanmış:\n".format(
+            members_count, cas_count, 
         )
         text += banned_users
         if not cas_count:
-            text = "No CAS Banned users found!"
+            text = "Hiçbir kullanıcı CAS'den yasaklanmamış durumda!"
     except ChatAdminRequiredError:
-        await dogevent.edit("`CAS check failed: Admin privileges are required`")
-        return
+        return await dogevent.edit("`CAS kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`")
     except BaseException:
-        await dogevent.edit("`CAS check failed`")
-        return
+        return await dogevent.edit("`CAS kontrolü yaparken hatayla karşılaştım!`")
     await dogevent.edit(text)
 
 
@@ -161,25 +159,24 @@ async def caschecker(event):
     pattern="spamc$",
     command=("spamc", plugin_category),
     info={
-        "h": "To check the users who are banned in spamwatch",
-        "d": "When you use this command it will check every user in the group where you used whether \
-        he is banned in spamwatch federation and will show there names if they are banned in spamwatch federation",
+        "h": "SpamWatch'ta yasaklanan kullanıcıları kontrol eder.",
+        "d": "Bu komutu kullandığınız gruptaki her kullanıcıyı kontrol eder.",
         "u": "{tr}spamc",
     },
     groups_only=True,
 )
 async def caschecker(event):
-    "Searches for spamwatch federation banned users in group and shows you the list"
+    "SpamWatch'ta yasaklanan kullanıcıları kontrol eder."
     text = ""
     dogevent = await eor(
         event,
-        "`checking any spamwatch banned users here, this may take several minutes too......`",
+        "`SpamWatch'dan yasaklananları kontrol ediyorum.\
+        \nLütfen bekleyin, bu biraz zaman alabilir...`",
     )
     try:
         info = await event.client.get_entity(event.chat_id)
     except (TypeError, ValueError) as err:
-        await event.edit(str(err))
-        return
+        return await event.edit(str(err))
     try:
         cas_count, members_count = (0,) * 2
         banned_users = ""
@@ -189,20 +186,18 @@ async def caschecker(event):
                 if not user.deleted:
                     banned_users += f"{user.first_name}-`{user.id}`\n"
                 else:
-                    banned_users += f"Deleted Account `{user.id}`\n"
+                    banned_users += f"Silinen hesap `{user.id}`\n"
             members_count += 1
-        text = "**Warning! **Found `{}` of `{}` users are spamwatch Banned:\n".format(
-            cas_count, members_count
+        text = "**Uyarı!** `{}` kullanıcının `{}` tanesi SpamWatch'dan yasaklanmış:\n".format(
+            members_count, cas_count,
         )
         text += banned_users
         if not cas_count:
-            text = "No spamwatch Banned users found!"
+            text = "Hiçbir kullanıcı SpamWatch'dan yasaklanmamış durumda!"
     except ChatAdminRequiredError:
-        await dogevent.edit("`spamwatch check failed: Admin privileges are required`")
-        return
+        return await dogevent.edit("`SpamWatch kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`")
     except BaseException:
-        await dogevent.edit("`spamwatch check failed`")
-        return
+        return await dogevent.edit("`SpamWatch kontrolü yaparken hatayla karşılaştım!`")
     await dogevent.edit(text)
 
 

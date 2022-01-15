@@ -207,10 +207,9 @@ async def bot_start(event):
         await check_bot_started_users(chat, event)
 
 
-if gvar("BOT_PM") == "True":
-
-    @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
-    async def bot_pms(event):  # sourcery no-metrics
+@doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
+async def bot_pms(event):  # sourcery no-metrics
+    if gvar("BOT_PM") == "True":
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
@@ -275,8 +274,10 @@ if gvar("BOT_PM") == "True":
                             \n➡️ `{e}`",
                         )
 
-    @doge.shiba_cmd(edited=True)
-    async def bot_pms_edit(event):  # sourcery no-metrics
+
+@doge.shiba_cmd(edited=True)
+async def bot_pms_edit(event):  # sourcery no-metrics
+    if gvar("BOT_PM") == "True":
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
@@ -299,9 +300,7 @@ if gvar("BOT_PM") == "True":
                 )
                 msg = await event.forward_to(OWNER_ID)
                 try:
-                    add_user_to_db(
-                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
-                    )
+                    add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
                     if BOTLOG:
@@ -331,8 +330,10 @@ if gvar("BOT_PM") == "True":
                     except Exception as e:
                         LOGS.error(f"🚨 {str(e)}")
 
-    @doge.bot.on(MessageDeleted)
-    async def handler(event):
+
+@doge.bot.on(MessageDeleted)
+async def handler(event):
+    if gvar("BOT_PM") == "True":
         for msg_id in event.deleted_ids:
             users_1 = get_user_reply(msg_id)
             users_2 = get_user_logging(msg_id)
@@ -520,7 +521,7 @@ def time_now() -> Union[float, int]:
     return datetime.timestamp(datetime.now())
 
 
-@run_in_thread
+@pool.run_in_thread
 def is_flood(uid: int) -> Optional[bool]:
     """Checks if a user is flooding"""
     FloodConfig.USERS[uid].append(time_now())

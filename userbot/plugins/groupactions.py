@@ -197,7 +197,7 @@ async def _(event):
         try:
             await event.client(EditBannedRequest(event.chat_id, i, rights))
         except FloodWaitError as e:
-            LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+            LOGS.warning(f"A flood wait of {e.seconds} occurred.")
             await dogevent.edit(
                 f"__A wait of {readable_time(e.seconds)} needed again to continue the process.__"
             )
@@ -298,7 +298,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         event, "`I don't have ban rights in this group`", 5
                     )
                 except FloodWaitError as e:
-                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    LOGS.warning(f"A flood wait of {e.seconds} occurred.")
                     await event.edit(
                         f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
                     )
@@ -336,7 +336,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         event, "`I don't have ban rights in this group`", 5
                     )
                 except FloodWaitError as e:
-                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    LOGS.warning(f"A flood wait of {e.seconds} occurred.")
                     await event.edit(
                         f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
                     )
@@ -360,7 +360,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         event, "`I don't have ban rights in this group`", 5
                     )
                 except FloodWaitError as e:
-                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    LOGS.warning(f"A flood wait of {e.seconds} occurred.")
                     await event.edit(
                         f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
                     )

@@ -41,38 +41,39 @@ def zipdir(dirName):
     pattern="zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
-        "h": "To compress the file/folders",
-        "d": "Will create a zip file for the given file path or folder path",
+        "h": "Dosya veya klasörü zip olarak sıkıştırır.",
+        "d": "Verilen dosya yolu veya klasör yolu için bir zip dosyası oluşturur.",
         "u": [
-            "{tr}zip <file/folder path>",
+            "{tr}zip <dosya/klasör yolu>",
         ],
-        "e": ["{tr}zip downloads", "{tr}zip sample_config.py"],
+        "e": ["{tr}zip downloads ", "{tr}zip sample_config.py"],
     },
 )
 async def zip_file(event):
-    "To create zip file"
+    "Dosya veya klasörü zip olarak sıkıştırır."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(event, "`Provide file path to zip`")
+        return await edl(event, "`Bir şeyi zip olarak sıkıştırmam için dosya yolu sağlayın.`")
     start = datetime.now()
     if not osp.exists(Path(input_str)):
         return await eor(
             event,
-            f"There is no such directory or file with the name `{input_str}` check again",
+            f"{input_str} adında böyle bir dizin veya dosya yok tekrar kontrol edin!",
         )
     if osp.isfile(Path(input_str)):
-        return await edl(event, "`File compressing is not implemented yet`")
-    mone = await eor(event, "`Zipping in progress...`")
+        return await edl(event, "`Dosya sıkıştırma henüz uygulanmadı.`")
+    mone = await eor(event, "`Zip sıkıştırma işlemi devam ediyor...`")
     filePaths = zipdir(input_str)
     filepath = osp.join(TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str)))
-    zip_file = ZipFile(filepath + ".zip", "w")
+    destination = f"{filepath}.zip"
+    zip_file = ZipFile(destination, "w")
     with zip_file:
         for file in filePaths:
             zip_file.write(file)
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Zipped the path `{input_str}` into `{filepath+'.zip'}` in __{ms}__ Seconds"
+        f"{input_str} ögesini {destination} içine {ms} saniyede sıkıştırdım."
     )
 
 
@@ -80,27 +81,27 @@ async def zip_file(event):
     pattern="tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
-        "h": "To compress the file/folders to tar file",
-        "d": "Will create a tar file for the given file path or folder path",
+        "h": "Dosya veya klasörü tar olarak sıkıştırır.",
+        "d": "Verilen dosya yolu veya klasör yolu için bir tar dosyası oluşturur.",
         "u": [
-            "{tr}tar <file/folder path>",
+            "{tr}tar <dosya/klasör yolu>",
         ],
-        "e": ["{tr}tar downloads", "{tr}tar sample_config.py"],
+        "e": ["{tr}tar downloads ", "{tr}tar sample_config.py"],
     },
 )
 async def tar_file(event):
-    "To create tar file"
+    "Dosya veya klasörü tar olarak sıkıştırır."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(event, "`Provide file path to compress`")
+        return await edl(event, "`Bir şeyi tar olarak sıkıştırmam için dosya yolu sağlayın.`")
     if not osp.exists(Path(input_str)):
         return await eor(
             event,
-            f"There is no such directory or file with the name `{input_str}` check again",
+            f"{input_str} adında böyle bir dizin veya dosya yok tekrar kontrol edin.",
         )
     if osp.isfile(Path(input_str)):
-        return await edl(event, "`File compressing is not implemented yet`")
-    mone = await eor(event, "`Tar creation in progress...`")
+        return await edl(event, "`Dosya sıkıştırma henüz uygulanmadı.`")
+    mone = await eor(event, "`Tar sıkıştırma işlemi devam ediyor...`")
     start = datetime.now()
     filePaths = zipdir(input_str)
     filepath = osp.join(TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str)))
@@ -112,7 +113,7 @@ async def tar_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ Seconds"
+        f"{input_str} ögesini {destination} içine {ms} saniyede sıkıştırdım."
     )
 
 
@@ -120,15 +121,15 @@ async def tar_file(event):
     pattern="unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
-        "h": "To unpack the given zip file",
-        "d": "Reply to a zip file or provide zip file path with command to unzip the given file",
+        "h": "Zip dosyası açar.",
+        "d": "Bir zip dosyasını açmak için bir zip dosyasına yanıt verin veya zip dosyası yolu sağlayın.",
         "u": [
-            "{tr}unzip <reply/file path>",
+            "{tr}unzip <yanıt/dosya yolu>",
         ],
     },
 )
 async def zip_file(event):  # sourcery no-metrics
-    "To unpack the zip file"
+    "Zip dosyası açar."
     input_str = event.pattern_match.group(1)
     if input_str:
         path = Path(input_str)
@@ -136,10 +137,10 @@ async def zip_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_zipfile(path):
                 return await edl(
-                    event, f"`The Given path {path} is not zip file to unpack`"
+                    event, f"`Verilen yol {path}, paketten çıkarılacak zip dosyası değil.`"
                 )
 
-            mone = await eor(event, "`Unpacking...`")
+            mone = await eor(event, "`Çıkartıyorum...`")
             destination = osp.join(
                 TMP_DOWNLOAD_DIRECTORY,
                 osp.splitext(osp.basename(path))[0],
@@ -149,10 +150,10 @@ async def zip_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"unzipped and stored to `{destination}` \n**Time Taken:** `{ms} seconds`"
+                f"{destination} yoluna çıkarttım! {ms} saniye sürdü."
             )
         else:
-            await edl(event, f"I can't find that path `{input_str}`")
+            await edl(event, f"`{input_str} yolunu bulamıyorum.`")
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
@@ -160,9 +161,9 @@ async def zip_file(event):  # sourcery no-metrics
         if ext != ".zip":
             return await edl(
                 event,
-                "`The replied file is not a zip file recheck the replied message`",
+                "`Yanıtlanan dosya, bir zip dosyası değil, yanıtlanan mesajı tekrar kontrol edin.`",
             )
-        mone = await eor(event, "`Unpacking...`")
+        mone = await eor(event, "`Çıkartılıyor...`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, DocumentAttributeFilename):
                 filename = attr.file_name
@@ -174,14 +175,14 @@ async def zip_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "İndiriliyor")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edl(mone, f"**Error:**\n__{e}__")
+            return await edl(mone, f"**Hata:**\n`{e}`")
 
-        await mone.edit("`Download finished Unpacking now`")
+        await mone.edit("`İndirme bitti, dosyayı açıyorum...`")
         destination = osp.join(
             TMP_DOWNLOAD_DIRECTORY,
             osp.splitext(osp.basename(filename))[0],
@@ -191,13 +192,13 @@ async def zip_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"unzipped and stored to `{destination}` \n**Time Taken:** `{ms} seconds`"
+           f"{destination} yoluna çıkarttım. {ms} saniye sürdü."
         )
         remove(filename)
     else:
         await edl(
             event,
-            "`Either reply to the zipfile or provide path of zip file along with command`",
+            "`Zip dosyasına yanıt verin veya komutla birlikte zip dosyasının yolunu sağlayın.`",
         )
 
 
@@ -205,15 +206,15 @@ async def zip_file(event):  # sourcery no-metrics
     pattern="untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={
-        "h": "To unpack the given tar file",
-        "d": "Reply to a tar file or provide tar file path with command to unpack the given tar file",
+        "h": "Tar dosyası açar.",
+        "d": "Bir tar dosyasını açmak için bir tar dosyasına yanıt verin veya tar dosyası yolunu sağlayın.",
         "u": [
-            "{tr}untar <reply/file path>",
+            "{tr}untar <yanıt/dosya yolu>",
         ],
     },
 )
 async def untar_file(event):  # sourcery no-metrics
-    "To unpack the tar file"
+    "Tar dosyası açar."
     input_str = event.pattern_match.group(1)
     if input_str:
         path = Path(input_str)
@@ -221,10 +222,10 @@ async def untar_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_tarfile(path):
                 return await edl(
-                    event, f"`The Given path {path} is not tar file to unpack`"
+                    event, f"`Verilen yol {path}, paketinden çıkarılacak tar dosyası değil`"
                 )
 
-            mone = await eor(event, "`Unpacking...`")
+            mone = await eor(event, "`Çıkartıyorum...`")
             destination = osp.join(
                 TMP_DOWNLOAD_DIRECTORY, (osp.basename(path).split("."))[0]
             )
@@ -237,15 +238,14 @@ async def untar_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"**Time Taken:** `{ms} seconds`\
-                \nUnpacked the input path `{input_str}` and stored to `{destination}`"
+                f"`{input_str}` ögesini `{destination}` yoluna çıkarttım! {ms} saniye sürdü."
             )
         else:
-            await edl(event, f"I can't find that path `{input_str}`")
+            await edl(event, f"{input_str} yolunu bulamıyorum.`")
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
-        mone = await eor(event, "`Unpacking...`")
+        mone = await eor(event, "`Çıkartıyorum...`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, DocumentAttributeFilename):
                 filename = attr.file_name
@@ -257,19 +257,19 @@ async def untar_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "İndiriliyor")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edl(mone, f"**Error:**\n__{e}__")
+            return await edl(mone, f"**Hata:**\n`{e}`")
 
         if not is_tarfile(filename):
             return await edl(
-                mone, "`The replied file is not tar file to unpack it recheck it`"
+                mone, "`Yanıtlanan dosya, bir tar dosyası değil, yanıtlanan mesajı tekrar kontrol edin.`"
             )
 
-        await mone.edit("`Download finished Unpacking now`")
+        await mone.edit("`İndirme bitti, dosyayı açıyorum...`")
         destination = osp.join(
             TMP_DOWNLOAD_DIRECTORY, (osp.basename(filename).split("."))[0]
         )
@@ -283,12 +283,11 @@ async def untar_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**Time Taken:** `{ms} seconds`\
-                \nUnpacked the replied file and stored to `{destination}`"
+            f"`{destination}` yoluna çıkarttım. {ms} saniye sürdü."
         )
         remove(filename)
     else:
         await edl(
             event,
-            "`Either reply to the tarfile or provide path of tarfile along with command`",
+            "`Tar dosyasına yanıt verin veya komutla birlikte tar dosyasının yolunu sağlayın.`",
         )

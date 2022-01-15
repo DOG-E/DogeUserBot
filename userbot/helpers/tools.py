@@ -8,7 +8,25 @@
 # ================================================================
 from html_telegraph_poster import TelegraphPoster
 
+from ..core.session import doge
 from ..sql_helper.globals import gvar
+from ..sql_helper.global_msg import gmsg
+from ..helpers.resources.constants import DOGEAFK
+
+
+CMSG = {}
+MSG = {"AFK": f"{DOGEAFK}"}
+for msg in ["AFK"]:
+    delmsg = gmsg(msg)
+    if delmsg == False:
+        CMSG[msg] = MSG[msg]
+    else:
+        if delmsg.startswith("MEDIA_"):
+            md = int(delmsg.split("MEDIA_")[1])
+            md = doge.get_messages(gvar("PLUGIN_CHANNEL"), ids=md)
+            CMSG[msg] = md
+        else:
+            CMSG[msg] = delmsg
 
 
 def media_type(message):

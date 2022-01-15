@@ -11,7 +11,7 @@
 from bs4 import BeautifulSoup
 from requests import get
 
-from . import ALIVE_NAME, doge, eor
+from . import doge, eor
 
 plugin_category = "tool"
 
@@ -20,15 +20,15 @@ plugin_category = "tool"
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={
-        "h": "To search any app in playstore",
-        "d": "Searches the app in the playstore and provides the link to the app in playstore and fetchs app details",
-        "u": "{tr}app <name>",
+        "h": "PlayStore'da herhangi bir uygulama arayın",
+        "d": "Uygulamayı PlayStore'da arar, bağlantı verir ve ayrıntılarını getirir",
+        "u": "{tr}app <isim>",
     },
 )
 async def app_search(event):
-    "To search any app in playstore."
+    "PlayStore'da herhangi bir uygulama arayın"
     app_name = event.pattern_match.group(1)
-    event = await eor(event, "`Searching!..`")
+    event = await eor(event, "`Arıyorum...`")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
@@ -66,13 +66,13 @@ async def app_search(event):
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
         app_details += " <b>" + app_name + "</b>"
         app_details += (
-            "\n\n<code>Developer:</code> <a href='"
+            "\n\n<code>Geliştirici:</code> <a href='"
             + app_dev_link
             + "'>"
             + app_dev
             + "</a>"
         )
-        app_details += "\n<code>Rating:</code> " + app_rating.replace(
+        app_details += "\n<code>Puanı:</code> " + app_rating.replace(
             "Rated ", "⭐ "
         ).replace(" out of ", "/").replace(" stars", "", 1).replace(
             " stars", "⭐ "
@@ -80,11 +80,10 @@ async def app_search(event):
             "five", "5"
         )
         app_details += (
-            "\n<code>Features:</code> <a href='" + app_link + "'>View in Play Store</a>"
+            "\n<code>Özellikleri:</code> <a href='" + app_link + "'>Play Store'dan bak</a>"
         )
-        app_details += f"\n\n===> {ALIVE_NAME} <==="
         await event.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit("No result found in search. Please enter **Valid app name**")
+        await event.edit("`Herhangi bir şey bulamadım. Lütfen geçerli uygulama adı girin!`")
     except Exception as err:
-        await event.edit("Exception Occured: " + str(err))
+        await event.edit("**Hata:** `" + str(err) + "`")

@@ -17,17 +17,17 @@ plugin_category = "tool"
     pattern="firmware ([\s\S]*)",
     command=("firmware", plugin_category),
     info={
-        "h": "To get lastest Firmware.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}firmware <codename>",
+        "h": "En son Firmware'i alır.",
+        "d": "Yalnızca Xiaomi cihazları için çalışır.",
+        "u": "{tr}firmware <kod adı>",
         "e": "{tr}firmware whyred",
     },
 )
 async def _(event):
-    "To get lastest Firmware."
+    "En son Firmware'i alır."
     link = event.pattern_match.group(1)
     msg = f"/firmware {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -35,17 +35,17 @@ async def _(event):
     pattern="vendor ([\s\S]*)",
     command=("vendor", plugin_category),
     info={
-        "h": "To get lastest Vendor.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}vendor <codename>",
+        "h": "En son Vendoru alır.",
+        "d": "Yalnızca Xiaomi cohazları için çalışır.",
+        "u": "{tr}vendor <kod adı>",
         "e": "{tr}vendor whyred",
     },
 )
 async def _(event):
-    "To get lastest Vendor."
+    "En son Vendor'u alır."
     link = event.pattern_match.group(1)
     msg = f"/vendor {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -53,17 +53,17 @@ async def _(event):
     pattern="xspecs ([\s\S]*)",
     command=("xspecs", plugin_category),
     info={
-        "h": "To get quick spec information about device",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}xspecs <codename>",
+        "h": "Cihaz özellikleri hakkında bilgi alır.",
+        "d": "Yalnızca Xiaomi cihazlarında çalışır.",
+        "u": "{tr}xspecs <kod adı>",
         "e": "{tr}xspecs whyred",
     },
 )
 async def _(event):
-    "To get quick spec information about device"
+    "Cihaz özellikleri hakkında bilgi alır."
     link = event.pattern_match.group(1)
     msg = f"/specs {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -71,17 +71,17 @@ async def _(event):
     pattern="fastboot ([\s\S]*)",
     command=("fastboot", plugin_category),
     info={
-        "h": "To get latest fastboot MIUI.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}fastboot <codename>",
+        "h": "En son fastboot MIUI'yı alır.",
+        "d": "Yalnızca Xiaomi cihazlarında çalışır.",
+        "u": "{tr}fastboot <kod adı>",
         "e": "{tr}fastboot whyred",
     },
 )
 async def _(event):
-    "To get latest fastboot MIUI."
+    "En son fastboot MIUI'yı alır."
     link = event.pattern_match.group(1)
     msg = f"/fastboot {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -89,17 +89,17 @@ async def _(event):
     pattern="recovery ([\s\S]*)",
     command=("recovery", plugin_category),
     info={
-        "h": "To get latest recovery MIUI.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}recovery <codename>",
+        "h": "En son recovery MIUI'yı alır.",
+        "d": "Yalnızca Xiaomi cihazlarında çalışır.",
+        "u": "{tr}recovery <kod adı>",
         "e": "{tr}recovery whyred",
     },
 )
 async def _(event):
-    "To get latest recovery MIUI."
+    "En son recovery MIUI'yı alır."
     link = event.pattern_match.group(1)
     msg = f"/recovery {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -107,17 +107,17 @@ async def _(event):
     pattern="pb ([\s\S]*)",
     command=("pb", plugin_category),
     info={
-        "h": "To get latest PBRP.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}pb <codename>",
+        "h": "En son PitchBlack Recovery'i alır.",
+        "d": "Yalnızca Xiaomi cihazlarlnda çalışır.",
+        "u": "{tr}pb <kod adı>",
         "e": "{tr}pb whyred",
     },
 )
 async def _(event):
-    "To get latest PBRP."
+    "En son PitchBlack Recovery'i alır."
     link = event.pattern_match.group(1)
     msg = f"/pb {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)
 
 
@@ -125,15 +125,15 @@ async def _(event):
     pattern="of ([\s\S]*)",
     command=("of", plugin_category),
     info={
-        "h": "To get latest OrangeFox Recovery.",
-        "d": "Works for Xiaomi devices only",
-        "u": "{tr}of <codename>",
+        "h": "En son OrangeFox Recovery'yi alır.",
+        "d": "Yalnızca Xiaomi cihazlarında çalışır.",
+        "u": "{tr}of <kod adı>",
         "e": "{tr}of whyred",
     },
 )
 async def _(event):
-    "To get latest OrangeFox Recovery."
+    "En son OrangeFox Recovery'yi alır."
     link = event.pattern_match.group(1)
     msg = f"/of {link}"
-    dogevent = await eor(event, "**⏳ Processing...**")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     await xiaomeme(event, msg, dogevent)

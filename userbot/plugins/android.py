@@ -21,12 +21,12 @@ plugin_category = "tool"
     pattern="magisk$",
     command=("magisk", plugin_category),
     info={
-        "h": "En son Magisk sürümlerini alın",
+        "h": "En son Magisk sürümlerini alır.",
         "u": "{tr}magisk",
     },
 )
 async def kakashi(event):
-    "En son Magisk sürümlerini alın"
+    "En son Magisk sürümlerini alır."
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
         "⦁ Stabil": magisk_repo + "master/stable.json",
@@ -47,13 +47,13 @@ async def kakashi(event):
     pattern="device(?: |$)(\S*)",
     command=("device", plugin_category),
     info={
-        "h": "Android cihaz adını/modelini kod_adı'ndan almak için Doge eklentisi",
+        "h": "Android cihazınızın adını/modelini kod adından arar.",
         "u": "{tr}device <kod_adı>",
         "e": "{tr}device whyred",
     },
 )
 async def device_info(event):
-    "Kod adından Android cihaz adını al"
+    "Android cihazınızın adını/modelini kod adından arar."
     textx = await event.get_reply_message()
     codename = event.pattern_match.group(1)
     if not codename:
@@ -85,12 +85,13 @@ async def device_info(event):
     pattern="dcname(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("dcname", plugin_category),
     info={
-        "h": "To Search for android device codename",
-        "u": "{tr}dcname <brand> <device>",
+        "h": "Android cihazınızın kod adını model/cihaz adından arar.",
+        "u": "{tr}dcname <marka> <cihaz>",
         "e": "{tr}dcname Xiaomi Redmi Note 5 Pro",
     },
 )
 async def codename_info(event):
+    "Android cihazınızın kod adını model/cihaz adından arar."
     textx = await event.get_reply_message()
     brand = event.pattern_match.group(1).lower()
     device = event.pattern_match.group(2).lower()
@@ -101,7 +102,7 @@ async def codename_info(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"Usage: {tr}dcname <marka> <cihaz>")
+        return await edl(event, f"Kullanımı: {tr}dcname <marka> <cihaz>")
 
     data = loads(
         get(
@@ -112,7 +113,7 @@ async def codename_info(event):
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     if not devices:
-        return await eor(event, f"__I couldn't find {brand}.__")
+        return await eor(event, f"`{brand}` `adında bir cihaz bulamadım.`")
     results = [
         i
         for i in devices
@@ -137,13 +138,13 @@ async def codename_info(event):
     pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("specs", plugin_category),
     info={
-        "h": "Android cihazı hakkında bilgi almak için.",
+        "h": "Android cihazınız hakkında bilgi alır.",
         "u": "{tr}specs",
         "e": "{tr}specs Xiaomi Redmi Note 5 Pro",
     },
 )
 async def devices_specifications(event):
-    "Mobil cihaz özellikleri"
+    "Android cihazınız hakkında bilgi alır."
     textx = await event.get_reply_message()
     brand = event.pattern_match.group(1).lower()
     device = event.pattern_match.group(2).lower()
@@ -153,7 +154,7 @@ async def devices_specifications(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"Usage: {tr}specs <marka> <cihaz>")
+        return await edl(event, f"Kullanımı: {tr}specs <marka> <cihaz>")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -167,7 +168,7 @@ async def devices_specifications(event):
             i["href"] for i in all_brands if brand == i.text.strip().lower()
         ][0]
     except IndexError:
-        return await edl(event, f"{brand} bilinmeyen bir marka!")
+        return await edl(event, f"`{brand}` `adında bir cihaz bulamadım.`")
     devices = BeautifulSoup(get(brand_page_url).content, "lxml").findAll(
         "div", {"class": "model-listing-container-80"}
     )
@@ -204,13 +205,13 @@ async def devices_specifications(event):
     pattern="twrp(?: |$)(\S*)",
     command=("twrp", plugin_category),
     info={
-        "h": "Android cihaz için en son twrp indirme bağlantılarını almak için.",
+        "h": "Android cihazınız için en son TWRP indirme bağlantılarını alır.",
         "u": "{tr}twrp <cihaz> <kod adı>",
         "e": "{tr}twrp whyred",
     },
 )
 async def twrp(event):
-    "get android device twrp"
+    "Android cihazınız için en son TWRP indirme bağlantılarını alır."
     textx = await event.get_reply_message()
     device = event.pattern_match.group(1)
     if device:

@@ -42,7 +42,7 @@ plugin_category = "bot"
     pattern="alive$",
     command=("alive", plugin_category),
     info={
-        "h": "Botun durumunu kontrol edin",
+        "h": "Botun durumunu kontrol eder.",
         "o": "Medyayı özelleştirmek için herhangi bi medyaya yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
         "u": [
             "{tr}alive",
@@ -50,7 +50,7 @@ plugin_category = "bot"
     },
 )
 async def thisalive(event):
-    "Botun durumunu kontrol edin"
+    "Botun durumunu kontrol eder."
     start = datetime.now()
     await event.edit("ㅤ")
     end = datetime.now()

@@ -6,9 +6,8 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-import logging
+from asyncio.tasks import sleep
 from re import compile
-from time import sleep
 
 from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
@@ -17,11 +16,11 @@ from telethon.events import CallbackQuery
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
 from validators.url import url
 
+from ..core.logger import logging
 from ..helpers import resize_image
-from ..utils import create_channel, create_supergroup
+from ..utils import add_bot_to_logger_group, create_channel, create_supergroup
 from . import (
     BOT_USERNAME,
-    FBAN_GROUP_ID,
     TELEGRAPH_SHORT_NAME,
     TEMP_DIR,
     check_owner,
@@ -543,7 +542,7 @@ async def fggrupcreate(event: CallbackQuery):
         await fgchelper(event)
     else:
         try:
-            a = await doge.send_message(FBAN_GROUP_ID, "FBan Grup Deneme mesajı!")
+            a = await doge.send_message(int(gvar("FBAN_GROUP_ID")), "FBan Grup Deneme mesajı!")
             await a.delete()
             return await event.edit(
                 f"FBan için zaten bir grubunuz var! Grup oluşturma işlemini iptal ediyorum...",
@@ -746,23 +745,26 @@ async def woapi(event: CallbackQuery):
 # FBAN GRUBU İÇİN OTOMATİK GRUP AÇMA / DEĞERLERİ YAZMA
 async def fgchelper(event: CallbackQuery):
     descript = "🚧 BU GRUBU SİLMEYİN!\n\
-        \n🗑 Eğer bu grubu silerseniz,\
-        \n🐾 FBAN özelliği çalışmayacaktır.\n\
-        \n🧡 @DogeUserBot"
+    \n🗑 Eğer bu grubu silerseniz,\
+    \n🐾 FBAN özelliği çalışmayacaktır.\n\
+    \n🧡 @DogeUserBot"
     gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
-    sleep(0.75)
+    await sleep(0.75)
+    rose = "@MissRose_Bot"
     _, groupid = await create_supergroup(
-        "🐾 Dᴏɢᴇ FBᴀɴ Gʀᴜᴘ", doge, "@MissRose_Bot", descript, gphoto
+        "🐾 Dᴏɢᴇ FBᴀɴ Gʀᴜᴘ", doge, rose, descript, gphoto
     )
-    sleep(0.75)
+    await sleep(0.75)
+    await add_bot_to_logger_group(doge, groupid, rose, "Rose")
+    await sleep(0.75)
     descmsg = "**🚧 BU GRUBU SİLMEYİN!\
-        \n🚧 BU GRUPTAN AYRILMAYIN!\
-        \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
-        \n🗑 Eğer bu grubu silerseniz,\
-        \n🐾 FBAN özelliği çalışmayacaktır!\n\
-        \n**🧡 @DogeUserBot**"
+    \n🚧 BU GRUPTAN AYRILMAYIN!\
+    \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+    \n🗑 Eğer bu grubu silerseniz,\
+    \n🐾 FBAN özelliği çalışmayacaktır!\n\
+    \n**🧡 @DogeUserBot**"
     msg = await doge.send_message(groupid, descmsg)
-    sleep(0.25)
+    await sleep(0.25)
     await msg.pin()
     sgvar("FBAN_GROUP_ID", groupid)
     await event.edit(
@@ -775,23 +777,25 @@ async def fgchelper(event: CallbackQuery):
 # HEROKU İÇİN OTOMATİK GRUP AÇMA İŞLEMİ
 async def herokuloggergroupcreate(event: CallbackQuery):
     descript = "🚧 BU GRUBU SİLMEYİN!\n\
-        \n🗑 Eğer bu grubu silerseniz,\
-        \n🐾 Heroku Logger özelliği çalışmayacaktır.\n\
-        \n🧡 @DogeUserBot"
+    \n🗑 Eğer bu grubu silerseniz,\
+    \n🐾 Heroku Logger özelliği çalışmayacaktır.\n\
+    \n🧡 @DogeUserBot"
     gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
-    sleep(0.75)
+    await sleep(0.75)
     _, groupid = await create_supergroup(
         "🐾 Doɢᴇ Hᴇʀoᴋᴜ Loɢɢᴇʀ Gʀᴜᴘ", doge, BOT_USERNAME, descript, gphoto
     )
-    sleep(0.75)
+    await sleep(0.75)
+    await add_bot_to_logger_group(doge, groupid, BOT_USERNAME, "Doge")
+    await sleep(0.75)
     descmsg = "**🚧 BU GRUBU SİLMEYİN!\
-        \n🚧 BU GRUPTAN AYRILMAYIN!\
-        \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
-        \n🗑 Eğer bu grubu silerseniz,\
-        \n🐾 Heroku Logger özelliği çalışmayacaktır!\n\
-        \n**🧡 @DogeUserBot**"
-    msg = await doge.send_message(groupid, descmsg)
-    sleep(0.25)
+    \n🚧 BU GRUPTAN AYRILMAYIN!\
+    \n🚧 BU GRUBU DEĞİŞTİRMEYİN!**\n\
+    \n🗑 Eğer bu grubu silerseniz,\
+    \n🐾 Heroku Logger özelliği çalışmayacaktır!\n\
+    \n**🧡 @DogeUserBot**"
+    msg = await doge.bot.send_message(groupid, descmsg)
+    await sleep(0.25)
     await msg.pin()
     sgvar("HLOGGER_ID", groupid)
     await event.edit(
@@ -804,21 +808,21 @@ async def herokuloggergroupcreate(event: CallbackQuery):
 # GİZLİ KANAL İÇİN OTOMATİK KANAL AÇMA İŞLEMİ
 async def privatechannel(event: CallbackQuery):
     descript = f"🚧 BU KANALI SİLMEYİN!\n\
-        \n🗑 Eğer bu kanalı silerseniz,\
-        \n🐾 Kaydederek iletme özelliği çalışmayacaktır.\n\
-        \n🧡 @DogeUserBot"
+    \n🗑 Eğer bu kanalı silerseniz,\
+    \n🐾 Kaydederek iletme özelliği çalışmayacaktır.\n\
+    \n🧡 @DogeUserBot"
     gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
-    sleep(0.75)
+    await sleep(0.75)
     _, channelid = await create_channel("🐾 Doɢᴇ Gɪzʟɪ Kᴀɴᴀʟ", doge, descript, gphoto)
-    sleep(0.75)
+    await sleep(0.75)
     descmsg = f"**🚧 BU KANALI SİLMEYİN!\
-        \n🚧 BU KANALDAN AYRILMAYIN!\
-        \n🚧 BU KANALI DEĞİŞTİRMEYİN!**\n\
-        \n🗑 Eğer bu kanalı silerseniz,\
-        \n🐾 Kaydederek iletme özelliği çalışmayacaktır!\n\
-        \n**🧡 @DogeUserBot**"
+    \n🚧 BU KANALDAN AYRILMAYIN!\
+    \n🚧 BU KANALI DEĞİŞTİRMEYİN!**\n\
+    \n🗑 Eğer bu kanalı silerseniz,\
+    \n🐾 Kaydederek iletme özelliği çalışmayacaktır!\n\
+    \n**🧡 @DogeUserBot**"
     msg = await doge.send_message(channelid, descmsg)
-    sleep(0.25)
+    await sleep(0.25)
     await msg.pin()
     sgvar("PRIVATE_CHANNEL_ID", channelid)
     await event.edit(

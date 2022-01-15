@@ -32,8 +32,8 @@ async def on_new_message(event):
             except Exception:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"I do not have DELETE permission in {get_display_name(await event.get_chat())}.\
-                     So removing blacklist words from this group",
+                    f"{get_display_name(await event.get_chat())} sohbetinde silme iznim yok.\
+                    \nYani bu sohbette karalistedeki kelimeleri içeren mesajları silemem.",
                 )
                 for word in snips:
                     sql.rm_from_blacklist(event.chat_id, word.lower())
@@ -44,18 +44,17 @@ async def on_new_message(event):
     pattern="addblacklist ((.|\n)*)",
     command=("addblacklist", plugin_category),
     info={
-        "h": "To add blacklist words to database",
-        "d": "The given word or words will be added to blacklist in that specific chat if any user sends then the message gets deleted.",
-        "note": "if you're adding more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
-            \n[hi \n hello]",
-        "u": "{tr}addblacklist <word(s)>",
-        "e": ["{tr}addblacklist fuck", "{tr}addblacklist fuck\nsex"],
+        "h": "Karalisteye kelime ekler.",
+        "d": "Verilen kelime veya kelimeler, komutu kullandığınız sohbette karalisteye eklenecek, herhangi bir kullanıcı karalistedeki kelimeyle mesaj gönderirse mesaj silinecek.",
+        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekilde [merhaba merhaba] değil, yeni bir satırda verilmelidir. [merhaba\nmerhaba] gibi olmalıdır.",
+        "u": "{tr}addblacklist <kelime(ler)>",
+        "e": ["{tr}addblacklist aq", "{tr}addblacklist aq (enter) amk"],
     },
     groups_only=True,
     require_admin=True,
 )
 async def _(event):
-    "To add blacklist words to database"
+    "Karalisteye kelime ekler."
     text = event.pattern_match.group(1)
     to_blacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
@@ -65,7 +64,7 @@ async def _(event):
         sql.add_to_blacklist(event.chat_id, trigger.lower())
     await eor(
         event,
-        "Added {} triggers to the blacklist in the current chat".format(
+         "Bu sohbetteki karalisteye {} eklendi.".format(
             len(to_blacklist)
         ),
     )
@@ -75,18 +74,17 @@ async def _(event):
     pattern="rmblacklist ((.|\n)*)",
     command=("rmblacklist", plugin_category),
     info={
-        "h": "To remove blacklist words from database",
-        "d": "The given word or words will be removed from blacklist in that specific chat",
-        "note": "if you're removing more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
-            \n[hi \n hello]",
-        "u": "{tr}rmblacklist <word(s)>",
-        "e": ["{tr}rmblacklist fuck", "{tr}rmblacklist fuck\nsex"],
+        "h": "Karalistedeki kelimeleri kaldırır.",
+        "d": "Verilen kelime veya kelimeler, komutu kullandığınız sohbette karalisteden kaldırılacaktır.",
+        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekildee [merhaba merhaba] değil, yeni bir satırda verilmelidir. [merhaba\nmerhaba] gibi olmalıdır.",
+        "u": "{tr}rmblacklist <kelime(ler)>",
+        "e": ["{tr}rmblacklist aq", "{tr}rmblacklist aq (enter) amk"],
     },
     groups_only=True,
     require_admin=True,
 )
 async def _(event):
-    "To Remove Blacklist Words from Database."
+    "Karalistedeki kelimeleri kaldırır."
     text = event.pattern_match.group(1)
     to_unblacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
@@ -95,27 +93,27 @@ async def _(event):
         bool(sql.rm_from_blacklist(event.chat_id, trigger.lower()))
         for trigger in to_unblacklist
     )
-    await eor(event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
+    await eor(event, f"Karalistedeki {len(to_unblacklist)} kelimelerinden {successful} kaldırıldı.")
 
 
 @doge.bot_cmd(
     pattern="listblacklist$",
     command=("listblacklist", plugin_category),
     info={
-        "h": "To show the black list words",
-        "d": "Shows you the list of blacklist words in that specific chat",
+        "h": "Karalistedeki kelimeleri listeler.",
+        "d": "Sohbette karalistedeki kelimelerin listesini gösterir.",
         "u": "{tr}listblacklist",
     },
     groups_only=True,
     require_admin=True,
 )
 async def _(event):
-    "To show the blacklist words in that specific chat"
+    "Karalistedeki kelimeleri listeler."
     all_blacklisted = sql.get_chat_blacklist(event.chat_id)
-    OUT_STR = "Blacklists in the Current Chat:\n"
+    OUT_STR = "Mevcut Sohbetteki Kara Listeler:\n"
     if len(all_blacklisted) > 0:
         for trigger in all_blacklisted:
             OUT_STR += f"👉 {trigger} \n"
     else:
-        OUT_STR = "No Blacklists found. Start saving using `.addblacklist`"
+        OUT_STR = "KaraListe bulunamadı. `.addblacklist` komutu ile  karalisteye kelime eklemeye başlayın."
     await eor(event, OUT_STR)

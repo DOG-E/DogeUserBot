@@ -13,10 +13,11 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.types import InputMessagesFilterDocument
 
 from ..utils import load_module
-from . import BOTLOG_CHATID, PLUGIN_CHANNEL, Config, doge, install_pip
+from . import BOTLOG_CHATID, Config, doge, gvar, install_pip
 
 plugin_category = "bot"
 
+PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
 
 if Config.PLUGINS:
     if PLUGIN_CHANNEL:

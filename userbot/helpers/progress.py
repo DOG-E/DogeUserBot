@@ -73,6 +73,18 @@ def time_formatter(seconds: int) -> str:
     return tmp[:-2]
 
 
+# Credits: UsergeTeam ~ https://github.com/UsergeTeam/Userge/blob/053786a1ed54530b305c1bfb96e70147ca99463f/userge/utils/tools.py#L70
+def afk_time(seconds, short=True):
+    minutes, seconds = divmod(int(seconds), 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = ((str(days) + (" gün, " if not short else "gün, ")) if days else "") + \
+        ((str(hours) + (" saat, " if not short else "sa, ")) if hours else "") + \
+        ((str(minutes) + (" dakika, " if not short else "dk, ")) if minutes else "") + \
+        ((str(seconds) + (" saniye, " if not short else "s, ")) if seconds else "")
+    return tmp[:-2] + " önce"
+
+
 def readable_time(seconds: int) -> str:
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
@@ -138,12 +150,12 @@ async def progress(
         speed = current / elapsed_time
         eta = round((total - current) / speed)
         elapsed_time = round(elapsed_time)
-        if "upload" in prog_type.lower():
+        if ("upload" or "yükle") in prog_type.lower():
             status = "**📤 Yükleniyor...**"
-        elif "download" in prog_type.lower():
+        elif ("download" or "indir") in prog_type.lower():
             status = "**📥 İndiriliyor...**"
         else:
-            status = "Unknown"
+            status = "Bilinmiyor"
         progress_str = "{0}\n`[{1}{2}] {3}%`".format(
             status,
             "".join(Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))),
@@ -173,5 +185,5 @@ async def progress(
 
 class CancelProcess(Exception):
     """
-    İşlem Durduruldu
+    İşlem durduruldu
     """
