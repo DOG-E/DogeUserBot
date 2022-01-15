@@ -15,7 +15,6 @@ from ..sql_helper.global_msg import dmsg, gmsg, smsg
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    TELEGRAPH_SHORT_NAME,
     TEMP_DIR,
     dgvar,
     doge,
@@ -34,7 +33,8 @@ LOGS = logging.getLogger(__name__)
 
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"),
+    author_url="https://t.me/DogeUserBot",
 )
 auth_url = r["auth_url"]
 
@@ -163,7 +163,7 @@ async def dbsetter(event):  # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
-    vnlist = "".join(f"{i})`{each}`\n" for i, each in enumerate(vlist, start=1))
+    vnlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(vlist, start=1))
     msglist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(mlist, start=1))
     cmdlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(clist, start=1))
     apilist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(alist, start=1))

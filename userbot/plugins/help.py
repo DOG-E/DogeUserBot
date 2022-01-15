@@ -7,7 +7,7 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
-from . import BOT_USERNAME, doge, edl, eor, reply_id, tr
+from . import doge, edl, eor, gvar, reply_id, tr
 
 plugin_category = "bot"
 
@@ -172,7 +172,7 @@ async def _(event):
     elif flag == ".a":
         outstr = await grpinfo()
     else:
-        results = await event.client.inline_query(BOT_USERNAME, "help")
+        results = await event.client.inline_query(gvar("BOT_USERNAME"), "help")
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
         await event.delete()
         return

@@ -22,7 +22,6 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DOGEAFK,
-    OWNER_ID,
     PM_LOGGER_GROUP_ID,
     _format,
     afk_time,
@@ -100,7 +99,9 @@ async def set_afk(event):
         LAST_SEEN = time()
         if gvar("AFKBIOSET") is (None or True):
             try:
-                bio = (await event.client(GetFullUserRequest(int(OWNER_ID)))).about
+                bio = (
+                    await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
+                ).about
                 if bio:
                     sgvar("AFKBIO", bio)
                     await event.client(

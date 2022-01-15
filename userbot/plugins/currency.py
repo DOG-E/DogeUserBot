@@ -9,7 +9,7 @@
 from json import loads
 from re import sub
 
-from . import CURRENCY_API, AioHttp, doge, edl, eor, tr
+from . import AioHttp, doge, edl, eor, gvar, tr
 
 plugin_category = "tool"
 
@@ -27,7 +27,7 @@ plugin_category = "tool"
 )
 async def currency(event):
     """To convert one currency value to other."""
-    if CURRENCY_API is None:
+    if gvar("CURRENCY_API") is None:
         return await edl(
             event,
             f"__You haven't set the api value.__ `{tr}setdog CURRENCY_API <api>` __from https://free.currencyconverterapi.com__.",
@@ -44,7 +44,7 @@ async def currency(event):
     try:
         value = float(value)
         aresponse = await AioHttp().get_json(
-            f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={CURRENCY_API}"
+            f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={gvar('CURRENCY_API')}"
         )
         symbols = await AioHttp().get_raw(
             "https://raw.githubusercontent.com/DOG-E/Source/DOGE/Core/currency.py"

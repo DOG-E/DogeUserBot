@@ -15,7 +15,6 @@ from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from . import (
-    BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
     _format,
@@ -39,10 +38,9 @@ from .botmanagers import (
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
-OWNER_ID = int(gvar("OWNER_ID"))
 
 
-@doge.shiba_cmd(pattern="^/(start|ba[sş]lat)$", from_users=OWNER_ID)
+@doge.shiba_cmd(pattern="^/(start|ba[sş]lat)$", from_users=int(gvar("OWNER_ID")))
 async def start_botlog(event):
     user = await doge.get_me()
     chat = await event.get_chat()
@@ -60,11 +58,11 @@ async def start_botlog(event):
         )
 
 
-@doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=OWNER_ID)
+@doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=int(gvar("OWNER_ID")))
 async def bot_help(event):
     await event.reply(
         f"""🐾 Botun Tüm Komutlar:
-**Nᴏᴛ:** __Buradaki tüm komular yalnızca bu bot için çalışır!:__ {BOT_USERNAME}
+**Nᴏᴛ:** __Buradaki tüm komular yalnızca bu bot için çalışır!:__ {gvar('BOT_USERNAME')}
 
 • **Kᴏᴍᴜᴛ:** /uinfo ya da /kbilgi <kullanıcının mesajını yanıtlayarak>
 • **Bɪʟɢɪ:** __İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.__
@@ -85,7 +83,7 @@ async def bot_help(event):
     )
 
 
-@doge.shiba_cmd(pattern="^/(broadcast|yayin)$", from_users=OWNER_ID)
+@doge.shiba_cmd(pattern="^/(broadcast|yayin)$", from_users=int(gvar("OWNER_ID")))
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -98,13 +96,13 @@ async def bot_broadcast(event):
     bot_users_count = len(get_all_starters())
     if bot_users_count == 0:
         return await event.reply(
-            f"**ℹ️ Henüz kimse {BOT_USERNAME} botunu başlatmamış!**"
+            f"**ℹ️ Henüz kimse {gvar('BOT_USERNAME')} botunu başlatmamış!**"
         )
 
     users = get_all_starters()
     if users is None:
         return await event.reply(
-            f"**ℹ️ Henüz kimse {BOT_USERNAME} botunu başlatmamış!**"
+            f"**ℹ️ Henüz kimse {gvar('BOT_USERNAME')} botunu başlatmamış!**"
         )
 
     for user in users:
@@ -146,7 +144,7 @@ async def bot_broadcast(event):
         count
     )
     if len(blocked_users) != 0:
-        b_info += f"\n🚫 <b>{len(blocked_users)} tane kullanıcı</b> {BOT_USERNAME} botunu engellemiş ya da botla olan mesajları silmiş. Bu yüzden bot kullanıcıları listesinden silindi."
+        b_info += f"\n🚫 <b>{len(blocked_users)} tane kullanıcı</b> {gvar('BOT_USERNAME')} botunu engellemiş ya da botla olan mesajları silmiş. Bu yüzden bot kullanıcıları listesinden silindi."
     b_info += "⏱ Tamamlanma Süresi:<code> {}</code>.".format(
         time_formatter((end_ - start_).seconds)
     )
@@ -167,10 +165,10 @@ async def ban_starters(event):
     ulist = get_all_starters()
     if len(ulist) == 0:
         return await edl(
-            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(BOT_USERNAME)
+            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(gvar("BOT_USERNAME"))
         )
 
-    msg = f"**🐾 {BOT_USERNAME} botunu başlatan kullanıcıların listesi:\n\n**"
+    msg = f"**🐾 {gvar('BOT_USERNAME')} botunu başlatan kullanıcıların listesi:\n\n**"
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name, user.user_id)}\
                 \n   **🆔 Kullanıcı ID'si:** `{user.user_id}`\
@@ -179,7 +177,9 @@ async def ban_starters(event):
     await eor(event, msg)
 
 
-@doge.shiba_cmd(pattern="^/(ban|yasakla)\\s+([\\s\\S]*)", from_users=OWNER_ID)
+@doge.shiba_cmd(
+    pattern="^/(ban|yasakla)\\s+([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -203,7 +203,7 @@ async def ban_botpms(event):
     except Exception as e:
         return await event.reply(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
 
-    if user_id == OWNER_ID:
+    if user_id == int(gvar("OWNER_ID")):
         return await event.reply("**🚨 Seni yasaklayamam.**")
 
     check = check_is_black_list(user.id)
@@ -220,7 +220,9 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.shiba_cmd(pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)", from_users=OWNER_ID)
+@doge.shiba_cmd(
+    pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -261,10 +263,12 @@ async def ban_starters(event):
     ulist = get_all_bl_users()
     if len(ulist) == 0:
         return await edl(
-            event, f"**ℹ️ {BOT_USERNAME } botunda henüz kimse yasaklanmadı.**"
+            event, f"**ℹ️ {gvar('BOT_USERNAME') } botunda henüz kimse yasaklanmadı.**"
         )
 
-    msg = f"**🐾 {BOT_USERNAME } botunda yasaklanan kullanıcıların listesi:\n\n**"
+    msg = (
+        f"**🐾 {gvar('BOT_USERNAME') } botunda yasaklanan kullanıcıların listesi:\n\n**"
+    )
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name, user.chat_id)}\
                 \n   **🆔 Kullanıcı ID'si:** `{user.chat_id}`\

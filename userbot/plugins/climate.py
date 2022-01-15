@@ -16,7 +16,7 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
-from . import WEATHER_API, WEATHER_CITY, _format, doge, eor, logging, reply_id, sgvar
+from . import _format, doge, eor, gvar, logging, reply_id, sgvar
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ async def get_weather(event):  # sourcery no-metrics
     # if WEATHER_API is None:
     # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
-    CITY = WEATHER_CITY if not input_str else input_str
+    CITY = (gvar("WEATHER_CITY") or "Istanbul") if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -83,9 +83,7 @@ async def get_weather(event):  # sourcery no-metrics
             except KeyError:
                 return await eor(event, "`Invalid Country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = (
-        f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
-    )
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={(gvar('WEATHER_API') or '6fded1e1c5ef3f394283e3013a597879')}"
     async with ClientSession() as _session:
         async with _session.get(url) as request:
             requeststatus = request.status
@@ -153,7 +151,7 @@ async def set_default_city(event):
     # if WEATHER_API is None:
     # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = event.pattern_match.group(1)
-    CITY = WEATHER_CITY if not input_str else input_str
+    CITY = (gvar("WEATHER_CITY") or "Istanbul") if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -170,9 +168,7 @@ async def set_default_city(event):
             except KeyError:
                 return await eor(event, "`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = (
-        f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
-    )
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={(gvar('WEATHER_API') or '6fded1e1c5ef3f394283e3013a597879')}"
     request = get(url)
     result = loads(request.text)
     if request.status_code != 200:
@@ -200,7 +196,7 @@ async def _(event):
     "weather report today from 'wttr.in'"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = WEATHER_CITY
+        input_str = gvar("WEATHER_CITY") or "Istanbul"
     output = get(f"https://wttr.in/{input_str}?mnTC0&lang=en").text
     await eor(event, output, parse_mode=_format.parse_pre)
 
@@ -222,7 +218,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = WEATHER_CITY
+        input_str = gvar("WEATHER_CITY") or "Istanbul"
     async with ClientSession() as session:
         sample_url = "https://wttr.in/{}.png"
         response_api_zero = await session.get(sample_url.format(input_str))

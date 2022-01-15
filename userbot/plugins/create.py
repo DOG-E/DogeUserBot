@@ -10,7 +10,7 @@ from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.messages import CreateChatRequest, ExportChatInviteRequest
 
 from ..utils.tools import create_supergroup
-from . import BOT_USERNAME, doge, edl, eor, tr
+from . import doge, edl, eor, gvar, tr
 
 plugin_category = "tool"
 
@@ -44,7 +44,7 @@ async def _(event):
         try:
             result = await event.client(
                 CreateChatRequest(
-                    users=[BOT_USERNAME],
+                    users=[gvar("BOT_USERNAME")],
                     # Not enough users (to create a chat, for example)
                     # Telegram, no longer allows creating a chat with ourselves
                     title=group_name,
@@ -84,7 +84,7 @@ async def _(event):
             await edl(event, f"**Error:**\n{e}")
     elif type_of_group == "b":
         answer = await create_supergroup(
-            group_name, event.client, BOT_USERNAME, descript
+            group_name, event.client, gvar("BOT_USERNAME"), descript
         )
         if answer[0] != "error":
             await eor(

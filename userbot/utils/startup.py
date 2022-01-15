@@ -26,7 +26,7 @@ from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
-from .. import ALIVE_NAME, BOT_USERNAME, BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID, tr
+from .. import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
@@ -211,7 +211,7 @@ async def setup_me_bot():
     """
     Gerekli bazı verileri ayarlar
     """
-    if ALIVE_NAME is None:
+    if gvar("ALIVE_NAME") is None:
         if Config.ALIVE_NAME:
             sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
         else:
@@ -327,7 +327,7 @@ async def verifyLoggerGroup():
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         await sleep(0.75)
         _, groupid = await create_supergroup(
-            "🐾 Doɢᴇ Boᴛ Loɢ", doge, BOT_USERNAME, descript, gphoto
+            "🐾 Doɢᴇ Boᴛ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
         )
         await sleep(0.75)
         descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -375,7 +375,7 @@ async def verifyLoggerGroup():
             )
             await sleep(0.75)
             _, groupid = await create_supergroup(
-                "🐾 Doɢᴇ Pᴍ Loɢ", doge, BOT_USERNAME, descript, gphoto
+                "🐾 Doɢᴇ Pᴍ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
             )
             await sleep(0.75)
             descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -483,7 +483,8 @@ async def customize_assistantbot():
     try:
         if doge.bot.me.photo:
             return
-        LOGS.info(f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum.")
+        DOG = gvar("BOT_USERNAME")
+        LOGS.info(f"🎨 {DOG} asistan botunuzu @BotFather ile özelleştiriyorum.")
         if not doge.me.username:
             master = doge.me.first_name
         else:
@@ -495,13 +496,13 @@ async def customize_assistantbot():
         await sleep(1)
         await doge.send_message(bf, "/setuserpic")
         await sleep(1)
-        await doge.send_message(bf, BOT_USERNAME)
+        await doge.send_message(bf, DOG)
         await sleep(1)
         await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
         await sleep(2)
         await doge.send_message(bf, "/setabouttext")
         await sleep(1)
-        await doge.send_message(bf, BOT_USERNAME)
+        await doge.send_message(bf, DOG)
         await sleep(1)
         await doge.send_message(
             bf,
@@ -511,7 +512,7 @@ async def customize_assistantbot():
         await sleep(1.5)
         await doge.send_message(bf, "/setdescription")
         await sleep(1)
-        await doge.send_message(bf, BOT_USERNAME)
+        await doge.send_message(bf, DOG)
         await sleep(1)
         await doge.send_message(
             bf,
@@ -522,7 +523,7 @@ async def customize_assistantbot():
         await sleep(1.5)
         await doge.send_message(bf, "/setcommands")
         await sleep(1)
-        await doge.send_message(bf, BOT_USERNAME)
+        await doge.send_message(bf, DOG)
         await sleep(1)
         await doge.send_message(
             bf,
@@ -536,10 +537,10 @@ async def customize_assistantbot():
         await sleep(1)
         await doge.send_message(bf, "/setprivacy")
         await sleep(1)
-        await doge.send_message(bf, BOT_USERNAME)
+        await doge.send_message(bf, DOG)
         await sleep(1)
         await doge.send_message(bf, "Disable")
         await doge.send_read_acknowledge(bf)
-        LOGS.info(f"✅ Başarılı! {BOT_USERNAME} asistan botunuzu özelleştirdim!")
+        LOGS.info(f"✅ Başarılı! {DOG} asistan botunuzu özelleştirdim!")
     except Exception as e:
         LOGS.warning(f"🚨 {str(e)}")

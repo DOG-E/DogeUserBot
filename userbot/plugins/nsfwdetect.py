@@ -13,7 +13,7 @@ from os import remove
 
 from requests import post
 
-from . import DEEPAI_API, doge, edl, eor, tr
+from . import doge, edl, eor, gvar, tr
 
 plugin_category = "hub"
 
@@ -29,7 +29,7 @@ plugin_category = "hub"
 )
 async def detect(event):
     "To detect the nudity in reply image."
-    if DEEPAI_API is None:
+    if gvar("DEEPAI_API") is None:
         return await edl(
             event,
             f"__You haven't set the api value.__ `{tr}setdog DEEPAI_API <api>` __from https://deepai.org/__.",
@@ -48,7 +48,7 @@ async def detect(event):
         files={
             "image": open(media, "rb"),
         },
-        headers={"api-key": DEEPAI_API},
+        headers={"api-key": gvar("DEEPAI_API")},
     )
     remove(media)
     if "status" in r.json():

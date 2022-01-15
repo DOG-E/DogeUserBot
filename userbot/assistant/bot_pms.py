@@ -32,7 +32,6 @@ from ..sql_helper.bot_pms_sql import (
 )
 from ..sql_helper.bot_starters import add_starter_to_db, get_starter_details
 from . import (
-    BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
     PM_LOGGER_GROUP_ID,
@@ -50,7 +49,6 @@ from .botmanagers import ban_user_from_bot
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
-OWNER_ID = int(gvar("OWNER_ID"))
 
 
 class FloodConfig:
@@ -63,7 +61,7 @@ class FloodConfig:
 
 
 async def check_bot_started_users(user, event):
-    if user.id == OWNER_ID:
+    if user.id == int(gvar("OWNER_ID")):
         return
     check = get_starter_details(user.id)
     if check is None:
@@ -87,7 +85,7 @@ async def check_bot_started_users(user, event):
 
 
 @doge.shiba_cmd(
-    pattern=f"^/start({BOT_USERNAME})?([\s]+)?$",
+    pattern=f"^/start({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_private,
 )
@@ -108,7 +106,7 @@ async def bot_start(event):
     my_last = user.last_name if user.last_name else ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
-    if chat.id != OWNER_ID:
+    if chat.id != int(gvar("OWNER_ID")):
         customstrmsg = gvar("START_TEXT") or None
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
@@ -213,8 +211,8 @@ async def bot_pms(event):  # sourcery no-metrics
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
-        if chat.id != OWNER_ID:
-            msg = await event.forward_to(OWNER_ID)
+        if chat.id != int(gvar("OWNER_ID")):
+            msg = await event.forward_to(int(gvar("OWNER_ID")))
             try:
                 add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
             except Exception as e:
@@ -250,7 +248,7 @@ async def bot_pms(event):  # sourcery no-metrics
                             user_id, event.text, reply_to=reply_msg, link_preview=False
                         )
                 except UserIsBlockedError:
-                    await doge(UnblockRequest(BOT_USERNAME))
+                    await doge(UnblockRequest(gvar("BOT_USERNAME")))
                     if event.media:
                         msg = await event.client.send_file(
                             user_id, event.media, caption=event.text, reply_to=reply_msg
@@ -281,7 +279,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
-        if chat.id != OWNER_ID:
+        if chat.id != int(gvar("OWNER_ID")):
             users = get_user_reply(event.id)
             if users is None:
                 return
@@ -292,13 +290,13 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                     break
             if reply_msg:
                 await event.client.send_message(
-                    OWNER_ID,
+                    int(gvar("OWNER_ID")),
                     "**⬆️ Bu mesaj şu kullanıcı tarafından düzenlendi.** {} :\n".format(
                         _format.mentionuser(get_display_name(chat), chat.id)
                     ),
                     reply_to=reply_msg,
                 )
-                msg = await event.forward_to(OWNER_ID)
+                msg = await event.forward_to(int(gvar("OWNER_ID")))
                 try:
                     add_user_to_db(
                         msg.id, get_display_name(chat), chat.id, event.id, 0, 0
@@ -354,7 +352,7 @@ async def handler(event):
             if users_1 is not None:
                 reply_msg = None
                 for user in users_1:
-                    if user.chat_id != OWNER_ID:
+                    if user.chat_id != int(gvar("OWNER_ID")):
                         reply_msg = user.message_id
                         break
                 try:
@@ -367,7 +365,7 @@ async def handler(event):
                         if check_is_black_list(user_id):
                             return
                         await event.client.send_message(
-                            OWNER_ID,
+                            int(gvar("OWNER_ID")),
                             "**⬆️ Bu mesaj, şu kullanıcı tarafından silindi.** {}.".format(
                                 _format.mentionuser(user_name, user_id)
                             ),
@@ -377,7 +375,7 @@ async def handler(event):
                     LOGS.error(f"🚨 {str(e)}")
 
 
-@doge.shiba_cmd(pattern="^/uinfo$", from_users=OWNER_ID)
+@doge.shiba_cmd(pattern="^/uinfo$", from_users=int(gvar("OWNER_ID")))
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
@@ -444,7 +442,7 @@ async def send_flood_alert(user_) -> None:
         f"**🆔 Kullanıcı ID'si:** `{user_.id}`\n"
         f"**ℹ️ İsim:** {get_display_name(user_)}\n"
         f"**👤 Kullanıcı:** {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**🐾 Botunuz {BOT_USERNAME}'da spam yapıyor! -> [ Flood Atılan Mesajlar ({flood_count}) ]**\n"
+        f"\n\n**🐾 Botunuz {gvar('BOT_USERNAME')}'da spam yapıyor! -> [ Flood Atılan Mesajlar ({flood_count}) ]**\n"
         f"__💡 Hızlı Eylem__: Kullanıcı bir süreliğine bot tarafından göz ardı edildi."
     )
 
@@ -454,7 +452,7 @@ async def send_flood_alert(user_) -> None:
                 sudo_spam = (
                     f"**👤 Sudo Kullanıcı** {_format.mentionuser(user_.first_name, user_.id)}\
                     \n**🆔 Kullanıcı ID'si:** `{user_.id}`\n\n"
-                    f"**🐾 Botunuz {BOT_USERNAME}'da spam yapıyor!**\
+                    f"**🐾 Botunuz {gvar('BOT_USERNAME')}'da spam yapıyor!**\
                     \n\nℹ️ `{tr}doge rmsudo` komutunu kontrol edin. İsterseniz bu kullanıcıyı __Sudo Kullanıcılar__'dan kaldırabilirsiniz."
                 )
                 if BOTLOG:
@@ -462,7 +460,7 @@ async def send_flood_alert(user_) -> None:
             else:
                 await ban_user_from_bot(
                     user_,
-                    f"**⛔Yapılan Flood {BOT_USERNAME} tarafından otomatik oalrak engellendi.[Flood sınırı aşıldı: ({FloodConfig.AUTOBAN})]**",
+                    f"**⛔Yapılan Flood {gvar('BOT_USERNAME')} tarafından otomatik oalrak engellendi.[Flood sınırı aşıldı: ({FloodConfig.AUTOBAN})]**",
                 )
                 FloodConfig.USERS[user_.id].clear()
                 FloodConfig.ALERT[user_.id].clear()
@@ -488,15 +486,15 @@ async def send_flood_alert(user_) -> None:
         try:
             chat = await doge.bot.get_entity(BOTLOG_CHATID)
             await doge.bot.send_message(
-                OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                int(gvar("OWNER_ID")),
+                f"**⚠️️ [{gvar('BOT_USERNAME')} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
-            await doge(UnblockRequest(BOT_USERNAME))
+            await doge(UnblockRequest(gvar("BOT_USERNAME")))
             chat = await doge.bot.get_entity(BOTLOG_CHATID)
             await doge.bot.send_message(
-                OWNER_ID,
-                f"**⚠️️ [{BOT_USERNAME} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                int(gvar("OWNER_ID")),
+                f"**⚠️️ [{gvar('BOT_USERNAME')} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
@@ -563,7 +561,7 @@ async def antif_on_msg(event):
     if gvar("bot_antif") is None:
         return
     chat = await event.get_chat()
-    if chat.id == OWNER_ID:
+    if chat.id == int(gvar("OWNER_ID")):
         return
     user_id = chat.id
     if check_is_black_list(user_id):

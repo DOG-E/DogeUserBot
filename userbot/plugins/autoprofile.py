@@ -33,12 +33,8 @@ from ..sql_helper.global_list import (
     rm_from_list,
 )
 from . import (
-    ALIVE_NAME,
-    AUTONAME,
     BOTLOG,
     BOTLOG_CHATID,
-    CHANGE_TIME,
-    DEFAULT_BIO,
     _dogeutils,
     _format,
     dgvar,
@@ -52,8 +48,6 @@ from . import (
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
-DEFAULTUSERBIO = DEFAULT_BIO
-DEFAULTUSER = AUTONAME or ALIVE_NAME
 FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
 autopic_path = path.join(getcwd(), "userbot", "original_pic.png")
 digitalpic_path = path.join(getcwd(), "userbot", "digital_pic.png")
@@ -110,7 +104,7 @@ async def autopicloop():
             await doge(UploadProfilePhotoRequest(file))
             remove(autophoto_path)
             counter += counter
-            await sleep(CHANGE_TIME)
+            await sleep((gvar("CHANGE_TIME") or "60"))
         except BaseException:
             return
         AUTOPICSTART = gvar("autopic") == "true"
@@ -134,7 +128,7 @@ async def custompfploop():
             i += 1
             await doge(UploadProfilePhotoRequest(file))
             remove("donottouch.jpg")
-            await sleep(CHANGE_TIME)
+            await sleep((gvar("CHANGE_TIME") or "60"))
         except BaseException:
             return
         CUSTOMPICSTART = gvar("CUSTOM_PFP") == "true"
@@ -215,7 +209,7 @@ async def bloom_pfploop():
         try:
             await doge(UploadProfilePhotoRequest(file))
             remove(autophoto_path)
-            await sleep(CHANGE_TIME)
+            await sleep((gvar("CHANGE_TIME") or "60"))
         except BaseException:
             return
         BLOOMSTART = gvar("bloom") == "true"
@@ -226,6 +220,7 @@ async def autoname_loop():
     while AUTONAMESTART:
         DM = strftime("%d-%m-%y")
         HM = strftime("%H:%M")
+        DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
         name = f"⌚️ {HM} ||›  {DEFAULTUSER} ‹|| {DM} 📅"
         LOGS.info(name)
         try:
@@ -233,7 +228,7 @@ async def autoname_loop():
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
-        await sleep(CHANGE_TIME)
+        await sleep((gvar("CHANGE_TIME") or "60"))
         AUTONAMESTART = gvar("autoname") == "true"
 
 
@@ -242,14 +237,15 @@ async def autobio_loop():
     while AUTOBIOSTART:
         DMY = strftime("%d.%m.%Y")
         HM = strftime("%H:%M")
-        bio = f"📅 {DMY} | {DEFAULTUSERBIO} | ⌚️ {HM}"
+        DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
+        bio = f"📅 {DMY} | {(DEFAULTUSERBIO)} | ⌚️ {HM}"
         LOGS.info(bio)
         try:
             await doge(UpdateProfileRequest(about=bio))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
-        await sleep(CHANGE_TIME)
+        await sleep((gvar("CHANGE_TIME") or "60"))
         AUTOBIOSTART = gvar("autobio") == "true"
 
 
@@ -288,7 +284,7 @@ async def autopfp_start():
         i += 1
         await doge(UploadProfilePhotoRequest(file))
         await _dogeutils.runcmd("rm -rf donottouch.jpg")
-        await sleep(CHANGE_TIME)
+        await sleep((gvar("CHANGE_TIME") or "60"))
         AUTOPFP_START = gvar("autopfp_strings") is not None
 
 
@@ -638,12 +634,14 @@ async def _(event):  # sourcery no-metrics
     if input_str == "autoname":
         if gvar("autoname") is not None and gvar("autoname") == "true":
             dgvar("autoname")
+            DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
             await event.client(UpdateProfileRequest(first_name=DEFAULTUSER))
             return await edl(event, "`Autoname has been stopped now`")
         return await edl(event, "`Autoname haven't enabled`")
     if input_str == "autobio":
         if gvar("autobio") is not None and gvar("autobio") == "true":
             dgvar("autobio")
+            DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
             await event.client(UpdateProfileRequest(about=DEFAULTUSERBIO))
             return await edl(event, "`Autobio has been stopped now`")
         return await edl(event, "`Autobio haven't enabled`")

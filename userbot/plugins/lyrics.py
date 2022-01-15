@@ -12,7 +12,7 @@ from re import findall
 
 from lyricsgenius import Genius
 
-from . import GENIUS_API, doge, eor
+from . import doge, eor, gvar
 
 plugin_category = "fun"
 
@@ -42,7 +42,7 @@ plugin_category = "fun"
 )
 async def lyrics(event):  # sourcery no-metrics
     "To fetch song lyrics"
-    if GENIUS_API is None:
+    if gvar("GENIUS_API") is None:
         return await eor(
             event,
             "`Set genius access token in API vars for functioning of this command`",
@@ -65,7 +65,7 @@ async def lyrics(event):  # sourcery no-metrics
     match = match.replace(".l", "")
     listview = bool(listview)
     query = match.strip()
-    genius = Genius(GENIUS_API)
+    genius = Genius(gvar("GENIUS_API"))
     if "-" in query:
         args = query.split("-", 1)
         artist = args[0].strip(" ")

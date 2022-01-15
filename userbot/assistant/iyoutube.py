@@ -27,7 +27,6 @@ from wget import download
 from ..core import pool
 from ..helpers.functions.utube import _mp3Dl, _tubeDl
 from . import (
-    BOT_USERNAME,
     BOTLOG_CHATID,
     TEMP_DIR,
     check_owner,
@@ -37,6 +36,7 @@ from . import (
     eor,
     get_choice_by_id,
     get_ytthumb,
+    gvar,
     logging,
     post_to_telegraph,
     progress,
@@ -86,7 +86,9 @@ async def yt_inline(event):
     results = None
     while flag:
         try:
-            results = await event.client.inline_query(BOT_USERNAME, f"yt {input_url}")
+            results = await event.client.inline_query(
+                gvar("BOT_USERNAME"), f"yt {input_url}"
+            )
             break
         except BotResponseTimeoutError:
             await sleep(2)

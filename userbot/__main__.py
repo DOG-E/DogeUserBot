@@ -11,13 +11,13 @@ from sys import argv
 import userbot
 
 from . import (
-    BOT_USERNAME,
     BOTLOG,
     BOTLOG_CHATID,
     HEROKU_APP,
     PM_LOGGER_GROUP_ID,
     dgvar,
     doge,
+    gvar,
     logging,
     tr,
 )
@@ -91,12 +91,14 @@ async def startup_process():
     LOGS.info("🐾 %80 ~ YÜKLENİYOR...")
     await verifyLoggerGroup()
     LOGS.info("🐾 %90 ~ YÜKLENİYOR...")
-    await add_bot_to_logger_group(doge, BOTLOG_CHATID, BOT_USERNAME, "Doge")
+    await add_bot_to_logger_group(doge, BOTLOG_CHATID, gvar("BOT_USERNAME"), "Doge")
     if PM_LOGGER_GROUP_ID != -100:
-        await add_bot_to_logger_group(doge, PM_LOGGER_GROUP_ID, BOT_USERNAME, "Doge")
-    print(userbot.__copyright__)
-    print(userbot.__license__ + " ile korunmaktadır.")
-    print(
+        await add_bot_to_logger_group(
+            doge, PM_LOGGER_GROUP_ID, gvar("BOT_USERNAME"), "Doge"
+        )
+    LOGS.info(userbot.__copyright__)
+    LOGS.info(userbot.__license__ + " ile korunmaktadır.")
+    LOGS.info(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
         \n🐶 Hey! Doge çalışıyor!\
