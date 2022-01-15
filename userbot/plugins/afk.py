@@ -16,11 +16,12 @@ from telethon.tl.custom.button import Button
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
+from ..sql_helper.global_msg import gmsg
 from ..sql_helper.no_log_pms_sql import is_approved
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    CMSG,
+    DOGEAFK,
     OWNER_ID,
     PM_LOGGER_GROUP_ID,
     _format,
@@ -35,6 +36,20 @@ from . import (
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
+
+CMSG = {}
+MSG = {"AFK": f"{DOGEAFK}"}
+for msg in ["AFK"]:
+    delmsg = gmsg(msg)
+    if delmsg == False:
+        CMSG[msg] = MSG[msg]
+    else:
+        if delmsg.startswith("MEDIA_"):
+            md = int(delmsg.split("MEDIA_")[1])
+            md = doge.get_messages(gvar("PLUGIN_CHANNEL"), ids=md)
+            CMSG[msg] = md
+        else:
+            CMSG[msg] = delmsg
 
 AFKREASON = None
 AFKMEDIA = None
