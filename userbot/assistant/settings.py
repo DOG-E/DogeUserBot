@@ -61,7 +61,9 @@ async def settings(event):
         ],
     ]
     if event.chat_id == BOTLOG:
-        return await event.answer(f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=Truew)
+        return await event.answer(
+            f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=Truew
+        )
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
