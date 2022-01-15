@@ -81,15 +81,15 @@ async def ssmenu(event: CallbackQuery):
         ],
         [
             Button.inline("PMBot", data="sspmbot"),
-            Button.inline("CMDSET", data="sshandler")
+            Button.inline("CMDSET", data="sshandler"),
         ],
         [
-            Button.inline("Grup & Kanal", data="sscg"), # api değil grup ss
-            Button.inline("Logger", data="sslogger")
+            Button.inline("Grup & Kanal", data="sscg"),  # api değil grup ss
+            Button.inline("Logger", data="sslogger"),
         ],
         [
             Button.inline("SETHELP", data="sshelp"),
-            Button.inline("Other", data="ssother")
+            Button.inline("Other", data="ssother"),
         ],
     ]
     buttons.append(get_back_button("setmenu"))
@@ -102,6 +102,7 @@ async def ssmenu(event: CallbackQuery):
         link_preview=False,
     )
 
+
 # Alive yapılandırma ayarları
 @doge.bot.on(CallbackQuery(data=compile(b"ssalive")))
 @check_owner
@@ -109,15 +110,12 @@ async def ssalive(event: CallbackQuery):
     buttons = [
         [
             Button.inline("IALIVE_PIC", data="IALIVE_PIC"),
-            Button.inline("ALIVE_PIC", data="ALIVE_PIC")
+            Button.inline("ALIVE_PIC", data="ALIVE_PIC"),
         ],
         [
             Button.inline("ALIVE_NAME", data="ALIVE_NAME"),
             Button.inline("ALIVE_TEXT", data="ALIVE_TEXT"),
-        ]
-        [
-            Button.inline("ALIVE", data="ALIVE")
-        ]
+        ][Button.inline("ALIVE", data="ALIVE")],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -128,6 +126,8 @@ async def ssalive(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
+
 # TODO
 """
 @doge.bot.on(CallbackQuery(data=compile(b"sspmmenu")))
@@ -417,7 +417,7 @@ async def hgloggeron(event: CallbackQuery):
         [Button.inline("⬅️️ Gᴇʀɪ", data="hgloggeron")],
     ]
     # if gvar("DEV_MODE") != True: #Yakında
-    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
     if gvar("HEROKULOGGER") == True:
         return await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz zaten açık!", alert=True
@@ -459,7 +459,7 @@ async def hgloggrpc(event: CallbackQuery):
 @check_owner
 async def hgloggerautocreate(event: CallbackQuery):
     # if gvar("DEV_MODE") != True: #Yakında
-    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
     if gvar("HLOGGER_ID") is None:
         await event.edit(
             f"{mention} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
@@ -496,7 +496,7 @@ async def hloggermanuelcreate(event: CallbackQuery):
     y = "HLOGGER_ID"
     z = "hgloggrpc"
     # if gvar("DEV_MODE") != True: #Yakında
-    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
     await setapi(event, x, y, z)
 
 
