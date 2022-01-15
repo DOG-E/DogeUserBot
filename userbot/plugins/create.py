@@ -44,7 +44,7 @@ async def _(event):
         try:
             result = await event.client(
                 CreateChatRequest(
-                    users=[gvar('BOT_USERNAME')],
+                    users=[gvar("BOT_USERNAME")],
                     # Not enough users (to create a chat, for example)
                     # Telegram, no longer allows creating a chat with ourselves
                     title=group_name,
@@ -84,7 +84,7 @@ async def _(event):
             await edl(event, f"**Error:**\n{e}")
     elif type_of_group == "b":
         answer = await create_supergroup(
-            group_name, event.client, gvar('BOT_USERNAME'), descript
+            group_name, event.client, gvar("BOT_USERNAME"), descript
         )
         if answer[0] != "error":
             await eor(

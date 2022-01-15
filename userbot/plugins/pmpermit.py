@@ -145,7 +145,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     PM_WARNS[str(chat.id)] += 1
     try:
         if gvar("pmmenu") is None:
-            results = await event.client.inline_query(gvar('BOT_USERNAME'), "pmpermit")
+            results = await event.client.inline_query(gvar("BOT_USERNAME"), "pmpermit")
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
             PM_PIC = gvar("PM_PIC")

@@ -220,7 +220,7 @@ async def autoname_loop():
     while AUTONAMESTART:
         DM = strftime("%d-%m-%y")
         HM = strftime("%H:%M")
-        DEFAULTUSER = (gvar("AUTONAME") or gvar("ALIVE_NAME"))
+        DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
         name = f"⌚️ {HM} ||›  {DEFAULTUSER} ‹|| {DM} 📅"
         LOGS.info(name)
         try:
@@ -634,7 +634,7 @@ async def _(event):  # sourcery no-metrics
     if input_str == "autoname":
         if gvar("autoname") is not None and gvar("autoname") == "true":
             dgvar("autoname")
-            DEFAULTUSER = (gvar("AUTONAME") or gvar("ALIVE_NAME"))
+            DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
             await event.client(UpdateProfileRequest(first_name=DEFAULTUSER))
             return await edl(event, "`Autoname has been stopped now`")
         return await edl(event, "`Autoname haven't enabled`")

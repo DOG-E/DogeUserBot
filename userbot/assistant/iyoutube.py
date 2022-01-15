@@ -86,7 +86,9 @@ async def yt_inline(event):
     results = None
     while flag:
         try:
-            results = await event.client.inline_query(gvar('BOT_USERNAME'), f"yt {input_url}")
+            results = await event.client.inline_query(
+                gvar("BOT_USERNAME"), f"yt {input_url}"
+            )
             break
         except BotResponseTimeoutError:
             await sleep(2)

@@ -93,7 +93,9 @@ async def startup_process():
     LOGS.info("🐾 %90 ~ YÜKLENİYOR...")
     await add_bot_to_logger_group(doge, BOTLOG_CHATID, gvar("BOT_USERNAME"), "Doge")
     if PM_LOGGER_GROUP_ID != -100:
-        await add_bot_to_logger_group(doge, PM_LOGGER_GROUP_ID, gvar("BOT_USERNAME"), "Doge")
+        await add_bot_to_logger_group(
+            doge, PM_LOGGER_GROUP_ID, gvar("BOT_USERNAME"), "Doge"
+        )
     LOGS.info(userbot.__copyright__)
     LOGS.info(userbot.__license__ + " ile korunmaktadır.")
     LOGS.info(

@@ -14,16 +14,7 @@ from os import makedirs, path, remove
 from requests import post
 from telethon.events import MessageEdited
 
-from . import (
-    TEMP_DIR,
-    doge,
-    edl,
-    eor,
-    fsmessage,
-    gvar,
-    media_type,
-    newmsgres,
-)
+from . import TEMP_DIR, doge, edl, eor, fsmessage, gvar, media_type, newmsgres
 
 plugin_category = "tool"
 
@@ -73,7 +64,10 @@ async def _(event):
             await conv.cancel_all()
 
     except BaseException:
-        if gvar("IBM_WATSON_CRED_URL") is None or gvar("IBM_WATSON_CRED_PASSWORD") is None:
+        if (
+            gvar("IBM_WATSON_CRED_URL") is None
+            or gvar("IBM_WATSON_CRED_PASSWORD") is None
+        ):
             return await edl(
                 event,
                 "`You need to set the required ENV variables for this module.\nModule stopping`",

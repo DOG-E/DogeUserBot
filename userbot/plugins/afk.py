@@ -99,7 +99,9 @@ async def set_afk(event):
         LAST_SEEN = time()
         if gvar("AFKBIOSET") is (None or True):
             try:
-                bio = (await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))).about
+                bio = (
+                    await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
+                ).about
                 if bio:
                     sgvar("AFKBIO", bio)
                     await event.client(

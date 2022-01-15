@@ -69,7 +69,7 @@ async def thisalive(event):
             pv=python_version(),
             ping=ms,
         )
-        results = await event.client.inline_query(gvar('BOT_USERNAME'), caption)
+        results = await event.client.inline_query(gvar("BOT_USERNAME"), caption)
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
         await event.delete()
 

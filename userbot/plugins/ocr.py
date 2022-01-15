@@ -18,7 +18,9 @@ from . import TEMP_DIR, _dogetools, convert_toimage, doge, edl, eor, gvar
 plugin_category = "tool"
 
 
-async def ocr_space_file(filename, overlay=False, api_key=gvar("OCRSPACE_API"), language="eng"):
+async def ocr_space_file(
+    filename, overlay=False, api_key=gvar("OCRSPACE_API"), language="eng"
+):
     """OCR.space API request with local file.
         Python3.5 - not tested on 2.7
     :param filename: Your file path & name.

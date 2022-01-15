@@ -490,7 +490,7 @@ async def send_flood_alert(user_) -> None:
                 f"**⚠️️ [{gvar('BOT_USERNAME')} Flood Uyarısı!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
-            await doge(UnblockRequest(gvar('BOT_USERNAME')))
+            await doge(UnblockRequest(gvar("BOT_USERNAME")))
             chat = await doge.bot.get_entity(BOTLOG_CHATID)
             await doge.bot.send_message(
                 int(gvar("OWNER_ID")),

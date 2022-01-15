@@ -35,7 +35,8 @@ LOGS = logging.getLogger("DogeUserBot")
 
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"), author_url="https://t.me/DogeUserBot"
+    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"),
+    author_url="https://t.me/DogeUserBot",
 )
 auth_url = r["auth_url"]
 
@@ -783,10 +784,10 @@ async def herokuloggergroupcreate(event: CallbackQuery):
     gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
     await sleep(0.75)
     _, groupid = await create_supergroup(
-        "🐾 Doɢᴇ Hᴇʀoᴋᴜ Loɢɢᴇʀ Gʀᴜᴘ", doge, gvar('BOT_USERNAME'), descript, gphoto
+        "🐾 Doɢᴇ Hᴇʀoᴋᴜ Loɢɢᴇʀ Gʀᴜᴘ", doge, gvar("BOT_USERNAME"), descript, gphoto
     )
     await sleep(0.75)
-    await add_bot_to_logger_group(doge, groupid, gvar('BOT_USERNAME'), "Doge")
+    await add_bot_to_logger_group(doge, groupid, gvar("BOT_USERNAME"), "Doge")
     await sleep(0.75)
     descmsg = "**🚧 BU GRUBU SİLMEYİN!\
     \n🚧 BU GRUPTAN AYRILMAYIN!\

@@ -165,7 +165,7 @@ async def ban_starters(event):
     ulist = get_all_starters()
     if len(ulist) == 0:
         return await edl(
-            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(gvar('BOT_USERNAME'))
+            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(gvar("BOT_USERNAME"))
         )
 
     msg = f"**🐾 {gvar('BOT_USERNAME')} botunu başlatan kullanıcıların listesi:\n\n**"
@@ -177,7 +177,9 @@ async def ban_starters(event):
     await eor(event, msg)
 
 
-@doge.shiba_cmd(pattern="^/(ban|yasakla)\\s+([\\s\\S]*)", from_users=int(gvar("OWNER_ID")))
+@doge.shiba_cmd(
+    pattern="^/(ban|yasakla)\\s+([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -218,7 +220,9 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.shiba_cmd(pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)", from_users=int(gvar("OWNER_ID")))
+@doge.shiba_cmd(
+    pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -262,7 +266,9 @@ async def ban_starters(event):
             event, f"**ℹ️ {gvar('BOT_USERNAME') } botunda henüz kimse yasaklanmadı.**"
         )
 
-    msg = f"**🐾 {gvar('BOT_USERNAME') } botunda yasaklanan kullanıcıların listesi:\n\n**"
+    msg = (
+        f"**🐾 {gvar('BOT_USERNAME') } botunda yasaklanan kullanıcıların listesi:\n\n**"
+    )
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name, user.chat_id)}\
                 \n   **🆔 Kullanıcı ID'si:** `{user.chat_id}`\
