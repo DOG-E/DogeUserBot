@@ -80,10 +80,14 @@ async def app_search(event):
             "five", "5"
         )
         app_details += (
-            "\n<code>Özellikleri:</code> <a href='" + app_link + "'>Play Store'dan bak</a>"
+            "\n<code>Özellikleri:</code> <a href='"
+            + app_link
+            + "'>Play Store'dan bak</a>"
         )
         await event.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit("`Herhangi bir şey bulamadım. Lütfen geçerli uygulama adı girin!`")
+        await event.edit(
+            "`Herhangi bir şey bulamadım. Lütfen geçerli uygulama adı girin!`"
+        )
     except Exception as err:
         await event.edit("**Hata:** `" + str(err) + "`")

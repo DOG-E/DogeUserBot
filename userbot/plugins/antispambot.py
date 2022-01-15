@@ -86,9 +86,7 @@ if ANTISPAMBOT_BAN == True:
                 LOGS.info(e)
                 data = None
             if data and data["ok"]:
-                reason = (
-                    f"[Combot anti-spam servisi (CAS)](https://cas.chat/query?u={user.id})"
-                )
+                reason = f"[Combot anti-spam servisi (CAS)](https://cas.chat/query?u={user.id})"
                 hmm = await event.reply(
                     f"[{user.first_name}](tg://user?id={user.id}) {reason} tarafından yasaklandın."
                 )
@@ -143,13 +141,16 @@ async def caschecker(event):
                     banned_users += f"Silinen hesap `{user.id}`\n"
             members_count += 1
         text = "**Uyarı!** `{}` kullanıcının `{}` tanesi CAS'den yasaklanmış:\n".format(
-            members_count, cas_count, 
+            members_count,
+            cas_count,
         )
         text += banned_users
         if not cas_count:
             text = "Hiçbir kullanıcı CAS'den yasaklanmamış durumda!"
     except ChatAdminRequiredError:
-        return await dogevent.edit("`CAS kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`")
+        return await dogevent.edit(
+            "`CAS kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`"
+        )
     except BaseException:
         return await dogevent.edit("`CAS kontrolü yaparken hatayla karşılaştım!`")
     await dogevent.edit(text)
@@ -189,13 +190,16 @@ async def caschecker(event):
                     banned_users += f"Silinen hesap `{user.id}`\n"
             members_count += 1
         text = "**Uyarı!** `{}` kullanıcının `{}` tanesi SpamWatch'dan yasaklanmış:\n".format(
-            members_count, cas_count,
+            members_count,
+            cas_count,
         )
         text += banned_users
         if not cas_count:
             text = "Hiçbir kullanıcı SpamWatch'dan yasaklanmamış durumda!"
     except ChatAdminRequiredError:
-        return await dogevent.edit("`SpamWatch kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`")
+        return await dogevent.edit(
+            "`SpamWatch kontrolü yaparken hatayla karşılaştım: Yönetici yetkileri gereklidir!`"
+        )
     except BaseException:
         return await dogevent.edit("`SpamWatch kontrolü yaparken hatayla karşılaştım!`")
     await dogevent.edit(text)

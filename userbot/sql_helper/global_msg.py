@@ -29,14 +29,17 @@ class Global_msg(BASE):
         return "<Doge Global Messages lists '%s' for %s>" % (self.cmd, self.msg)
 
     def __eq__(self, other):
-        return bool(isinstance(other, Global_msg)
-                    and self.cmd == other.cmd
-                    and self.msg == other.msg)
+        return bool(
+            isinstance(other, Global_msg)
+            and self.cmd == other.cmd
+            and self.msg == other.msg
+        )
 
 
 Global_msg.__table__.create(checkfirst=True)
 
 CMD_INSERTION_LOCK = RLock()
+
 
 def smsg(cmd, msg):
     with CMD_INSERTION_LOCK:
@@ -55,7 +58,7 @@ def gmsg(cm):
         return MSG.msg
     except:
         return False
-    
+
 
 def dmsg(cm):
     try:
