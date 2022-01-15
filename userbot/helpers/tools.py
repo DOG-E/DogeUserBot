@@ -10,6 +10,7 @@ from html_telegraph_poster import TelegraphPoster
 
 from ..sql_helper.globals import gvar
 
+
 def media_type(message):
     if message and message.photo:
         return "Photo"
