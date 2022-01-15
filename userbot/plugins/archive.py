@@ -53,7 +53,9 @@ async def zip_file(event):
     "Dosya veya klasörü zip olarak sıkıştırır."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(event, "`Bir şeyi zip olarak sıkıştırmam için dosya yolu sağlayın.`")
+        return await edl(
+            event, "`Bir şeyi zip olarak sıkıştırmam için dosya yolu sağlayın.`"
+        )
     start = datetime.now()
     if not osp.exists(Path(input_str)):
         return await eor(
@@ -93,7 +95,9 @@ async def tar_file(event):
     "Dosya veya klasörü tar olarak sıkıştırır."
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edl(event, "`Bir şeyi tar olarak sıkıştırmam için dosya yolu sağlayın.`")
+        return await edl(
+            event, "`Bir şeyi tar olarak sıkıştırmam için dosya yolu sağlayın.`"
+        )
     if not osp.exists(Path(input_str)):
         return await eor(
             event,
@@ -137,7 +141,8 @@ async def zip_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_zipfile(path):
                 return await edl(
-                    event, f"`Verilen yol {path}, paketten çıkarılacak zip dosyası değil.`"
+                    event,
+                    f"`Verilen yol {path}, paketten çıkarılacak zip dosyası değil.`",
                 )
 
             mone = await eor(event, "`Çıkartıyorum...`")
@@ -149,9 +154,7 @@ async def zip_file(event):  # sourcery no-metrics
                 zip_ref.extractall(destination)
             end = datetime.now()
             ms = (end - start).seconds
-            await mone.edit(
-                f"{destination} yoluna çıkarttım! {ms} saniye sürdü."
-            )
+            await mone.edit(f"{destination} yoluna çıkarttım! {ms} saniye sürdü.")
         else:
             await edl(event, f"`{input_str} yolunu bulamıyorum.`")
     elif event.reply_to_msg_id:
@@ -191,9 +194,7 @@ async def zip_file(event):  # sourcery no-metrics
             zip_ref.extractall(destination)
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-           f"{destination} yoluna çıkarttım. {ms} saniye sürdü."
-        )
+        await mone.edit(f"{destination} yoluna çıkarttım. {ms} saniye sürdü.")
         remove(filename)
     else:
         await edl(
@@ -222,7 +223,8 @@ async def untar_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_tarfile(path):
                 return await edl(
-                    event, f"`Verilen yol {path}, paketinden çıkarılacak tar dosyası değil`"
+                    event,
+                    f"`Verilen yol {path}, paketinden çıkarılacak tar dosyası değil`",
                 )
 
             mone = await eor(event, "`Çıkartıyorum...`")
@@ -266,7 +268,8 @@ async def untar_file(event):  # sourcery no-metrics
 
         if not is_tarfile(filename):
             return await edl(
-                mone, "`Yanıtlanan dosya, bir tar dosyası değil, yanıtlanan mesajı tekrar kontrol edin.`"
+                mone,
+                "`Yanıtlanan dosya, bir tar dosyası değil, yanıtlanan mesajı tekrar kontrol edin.`",
             )
 
         await mone.edit("`İndirme bitti, dosyayı açıyorum...`")
@@ -282,9 +285,7 @@ async def untar_file(event):  # sourcery no-metrics
         file.close()
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-            f"`{destination}` yoluna çıkarttım. {ms} saniye sürdü."
-        )
+        await mone.edit(f"`{destination}` yoluna çıkarttım. {ms} saniye sürdü.")
         remove(filename)
     else:
         await edl(

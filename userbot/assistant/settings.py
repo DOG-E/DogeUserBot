@@ -542,7 +542,9 @@ async def fggrupcreate(event: CallbackQuery):
         await fgchelper(event)
     else:
         try:
-            a = await doge.send_message(int(gvar("FBAN_GROUP_ID")), "FBan Grup Deneme mesajı!")
+            a = await doge.send_message(
+                int(gvar("FBAN_GROUP_ID")), "FBan Grup Deneme mesajı!"
+            )
             await a.delete()
             return await event.edit(
                 f"FBan için zaten bir grubunuz var! Grup oluşturma işlemini iptal ediyorum...",

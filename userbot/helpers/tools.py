@@ -9,10 +9,9 @@
 from html_telegraph_poster import TelegraphPoster
 
 from ..core.session import doge
-from ..sql_helper.globals import gvar
-from ..sql_helper.global_msg import gmsg
 from ..helpers.resources.constants import DOGEAFK
-
+from ..sql_helper.global_msg import gmsg
+from ..sql_helper.globals import gvar
 
 CMSG = {}
 MSG = {"AFK": f"{DOGEAFK}"}

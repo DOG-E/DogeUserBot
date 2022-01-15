@@ -22,7 +22,6 @@ from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.utils import get_display_name
 
-from ..core.pool import run_in_thread
 from ..sql_helper.bot_blacklists import check_is_black_list
 from ..sql_helper.bot_pms_sql import (
     add_user_to_db,
@@ -300,7 +299,9 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 )
                 msg = await event.forward_to(OWNER_ID)
                 try:
-                    add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
+                    add_user_to_db(
+                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
+                    )
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
                     if BOTLOG:

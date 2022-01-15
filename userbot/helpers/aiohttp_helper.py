@@ -43,7 +43,7 @@ class AioHttp:
         async with ClientSession() as session:
             async with session.get(link) as resp:
                 return resp.status
-    
+
     @staticmethod
     async def download_file(link, name):
         if not aiohttp:

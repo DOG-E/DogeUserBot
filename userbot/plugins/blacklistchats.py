@@ -41,9 +41,7 @@ async def chat_blacklist(event):
         sgvar("blacklist_chats", "true")
         text = "__Şu andan itibaren, DogeUserBot'unuz veritabanında saklanan sohbetlerde çalışmıyor.__"
         if len(blkchats) != 0:
-            text += (
-                "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. Lütfen biraz bekleyin...**"
-            )
+            text += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. Lütfen biraz bekleyin...**"
             msg = await eor(
                 event,
                 text,
@@ -58,9 +56,7 @@ async def chat_blacklist(event):
         dgvar("blacklist_chats")
         text = "__DogeUserBot'unuz bir kuş kadar özgür. Her sohbette çalışır.__"
         if len(blkchats) != 0:
-            text += (
-                "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. lütfen biraz bekleyin**"
-            )
+            text += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. lütfen biraz bekleyin**"
             msg = await eor(
                 event,
                 text,
@@ -117,7 +113,9 @@ async def add_blacklist_chat(event):
                     f"{get_display_name ( chat)} sohbeti karalisteye başarıyla eklendi."
                 )
             except Exception as e:
-                errors += f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
+                errors += (
+                    f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
+                )
     else:
         chat = await event.get_chat()
         try:
@@ -137,7 +135,9 @@ async def add_blacklist_chat(event):
                     f"{get_display_name ( chat)} sohbeti karalisteye başarıyla eklendi."
                 )
         except Exception as e:
-            errors += f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
+            errors += (
+                f"**{chatid} karalisteye eklenirken hata meydana geldi.** \n__{e}__"
+            )
     del_collection("blacklist_chats_list")
     add_collection("blacklist_chats_list", blacklistchats, {})
     output = ""
@@ -181,9 +181,7 @@ async def add_blacklist_chat(event):
                 if chatid in blkchats:
                     chatname = blacklistchats[str(chatid)]["chat_name"]
                     del blacklistchats[str(chatid)]
-                    result += (
-                        f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı!"
-                    )
+                    result += f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı!"
                 else:
                     errors += f"Verilen {chatid} kimliği veritabanınızda mevcut değil. Yani karalisteye alınmamış."
             except Exception as e:
@@ -195,7 +193,9 @@ async def add_blacklist_chat(event):
             if chatid in blkchats:
                 chatname = blacklistchats[str(chatid)]["chat_name"]
                 del blacklistchats[str(chatid)]
-                result += f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı."
+                result += (
+                    f"{chatname} karalisteye alınmış sohbetlerden başarıyla kaldırıldı."
+                )
             else:
                 errors += f"Verilen {chatid} kimliği veritabanınızda mevcut değil. Yani karalisteye alınmamış."
         except Exception as e:

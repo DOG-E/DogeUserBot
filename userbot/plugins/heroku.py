@@ -45,13 +45,14 @@ if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
     async def herokulogger():
         while True:
             try:
-                await doge.bot.send_message(int(gvar("HLOGGER_ID")), "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı...")
+                await doge.bot.send_message(
+                    int(gvar("HLOGGER_ID")),
+                    "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı...",
+                )
             except FloodWaitError as sec:
                 await sleep(sec.seconds)
             except Exception as e:
-                LOGS.error(
-                    "HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
-                )
+                LOGS.error("HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin.")
                 LOGS.error(f"Heroku Logger Grup Yanlış. Hata Raporu: {e}")
             server = from_key(HEROKU_API_KEY)
             app = server.app(HEROKU_APP_NAME)

@@ -64,9 +64,7 @@ async def _(event):
         sql.add_to_blacklist(event.chat_id, trigger.lower())
     await eor(
         event,
-         "Bu sohbetteki karalisteye {} eklendi.".format(
-            len(to_blacklist)
-        ),
+        "Bu sohbetteki karalisteye {} eklendi.".format(len(to_blacklist)),
     )
 
 
@@ -93,7 +91,10 @@ async def _(event):
         bool(sql.rm_from_blacklist(event.chat_id, trigger.lower()))
         for trigger in to_unblacklist
     )
-    await eor(event, f"Karalistedeki {len(to_unblacklist)} kelimelerinden {successful} kaldırıldı.")
+    await eor(
+        event,
+        f"Karalistedeki {len(to_unblacklist)} kelimelerinden {successful} kaldırıldı.",
+    )
 
 
 @doge.bot_cmd(

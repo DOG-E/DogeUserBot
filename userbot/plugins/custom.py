@@ -79,7 +79,7 @@ vlist = [
     "WEATHER_CITY",
     "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
 ]
-mlist= [
+mlist = [
     "AFK",
 ]
 clist = [

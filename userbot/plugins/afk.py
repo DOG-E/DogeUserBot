@@ -88,20 +88,24 @@ async def set_afk(event):
                 bio = (await event.client(GetFullUserRequest(int(OWNER_ID)))).about
                 if bio:
                     sgvar("AFKBIO", bio)
-                    await event.client(UpdateProfileRequest(about=f"{gvar('AFK_BIO')} @DogeUserBot"))
+                    await event.client(
+                        UpdateProfileRequest(about=f"{gvar('AFK_BIO')} @DogeUserBot")
+                    )
                 else:
-                    await event.client(UpdateProfileRequest(about="🐶 @DogeUserBot sadık köpeğiniz! 🐾"))
+                    await event.client(
+                        UpdateProfileRequest(about="🐶 @DogeUserBot sadık köpeğiniz! 🐾")
+                    )
             except BaseException:
                 pass
         if BOTLOG:
             if string:
                 await event.client.send_message(
-                    BOTLOG_CHATID, 
+                    BOTLOG_CHATID,
                     f"#AFK\nAFK modundasınız.\n**Nedeni:** `{string}`",
                 )
             else:
                 await event.client.send_message(
-                    BOTLOG_CHATID, 
+                    BOTLOG_CHATID,
                     "#AFK\nAFK modundasınız.\nNedenini belirtmediniz.",
                 )
         ISAFK = True
@@ -117,185 +121,195 @@ async def mention_afk(mention):
     if "afk" in current_message_text or "#afk" in current_message_text:
         return False
     if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
-            from_user = await mention.get_sender()
-            if from_user.username:
-                username = '@' + from_user.username
-            else:
-                if from_user.last_name:
-                    username = f'[{from_user.first_name} {from_user.last_name}](tg://user?id={from_user.id})'
-                else:
-                    username = f'[{from_user.first_name}](tg://user?id={from_user.id})'
-            mention_format = f'[{from_user.first_name}](tg://user?id={from_user.id})'
-            first_name = from_user.first_name
+        from_user = await mention.get_sender()
+        if from_user.username:
+            username = "@" + from_user.username
+        else:
             if from_user.last_name:
-                last_name = from_user.last_name
+                username = f"[{from_user.first_name} {from_user.last_name}](tg://user?id={from_user.id})"
             else:
-                last_name = ''
-            last_seen_seconds = round(time() - LAST_SEEN)
-            last_seen = afk_time(last_seen_seconds)
-            last_seen_long = afk_time(last_seen_seconds, False)
-            if mention.sender_id not in USERS:
-                if AFKREASON:
-                    if type(CMSG['AFK']) is str:
-                        afkmsg = CMSG['AFK'].format(
+                username = f"[{from_user.first_name}](tg://user?id={from_user.id})"
+        mention_format = f"[{from_user.first_name}](tg://user?id={from_user.id})"
+        first_name = from_user.first_name
+        if from_user.last_name:
+            last_name = from_user.last_name
+        else:
+            last_name = ""
+        last_seen_seconds = round(time() - LAST_SEEN)
+        last_seen = afk_time(last_seen_seconds)
+        last_seen_long = afk_time(last_seen_seconds, False)
+        if mention.sender_id not in USERS:
+            if AFKREASON:
+                if type(CMSG["AFK"]) is str:
+                    afkmsg = (
+                        CMSG["AFK"].format(
+                            username=username,
+                            mention=mention_format,
+                            first_name=first_name,
+                            last_name=last_name,
+                            last_seen_seconds=last_seen_seconds,
+                            last_seen=last_seen,
+                            last_seen_long=last_seen_long,
+                        )
+                        + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                    )
+                    if AFKMEDIA is None:
+                        await mention.reply(afkmsg)
+                    elif AFKMEDIA:
+                        await mention.reply(afkmsg, file=AFKMEDIA.media)
+                else:
+                    afkmsg = await mention.reply(CMSG["AFK"])
+                    if AFKMEDIA is None:
+                        await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}")
+                    elif AFKMEDIA:
+                        await afkmsg.reply(
+                            f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media
+                        )
+            else:
+                if not isinstance(CMSG["AFK"], str):
+                    CMSG["AFK"].text = CMSG["AFK"].text.format(
                         username=username,
                         mention=mention_format,
                         first_name=first_name,
                         last_name=last_name,
                         last_seen_seconds=last_seen_seconds,
                         last_seen=last_seen,
-                        last_seen_long=last_seen_long
-                        ) + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                        last_seen_long=last_seen_long,
+                    )
+                    afkmsg = CMSG["AFK"]
+                    if AFKMEDIA is None:
+                        await mention.reply(afkmsg)
+                    elif AFKMEDIA:
+                        await mention.reply(afkmsg, file=AFKMEDIA.media)
+                else:
+                    afkmsg = CMSG["AFK"].format(
+                        username=username,
+                        mention=mention_format,
+                        first_name=first_name,
+                        last_name=last_name,
+                        last_seen_seconds=last_seen_seconds,
+                        last_seen=last_seen,
+                        last_seen_long=last_seen_long,
+                    )
+                    if AFKMEDIA is None:
+                        await mention.reply(afkmsg)
+                    elif AFKMEDIA:
+                        await mention.reply(afkmsg, file=AFKMEDIA.media)
+            USERS.update({mention.sender_id: 1})
+            COUNT_MSG = COUNT_MSG + 1
+        elif mention.sender_id in USERS:
+            if USERS[mention.sender_id] % randint(2, 4) == 0:
+                if AFKREASON:
+                    if CMSG["AFK"] is str:
+                        afkmsg = (
+                            CMSG["AFK"].format(
+                                username=username,
+                                mention=mention_format,
+                                first_name=first_name,
+                                last_name=last_name,
+                                last_seen_seconds=last_seen_seconds,
+                                last_seen=last_seen,
+                                last_seen_long=last_seen_long,
+                            )
+                            + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                        )
                         if AFKMEDIA is None:
                             await mention.reply(afkmsg)
                         elif AFKMEDIA:
                             await mention.reply(afkmsg, file=AFKMEDIA.media)
                     else:
-                        afkmsg = await mention.reply(CMSG['AFK'])
+                        afkmsg = await mention.reply(CMSG["AFK"])
                         if AFKMEDIA is None:
                             await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}")
                         elif AFKMEDIA:
-                            await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media)
+                            await afkmsg.reply(
+                                f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media
+                            )
                 else:
-                    if not isinstance(CMSG['AFK'], str):
-                        CMSG['AFK'].text = CMSG['AFK'].text.format(
+                    if not isinstance(CMSG["AFK"], str):
+                        CMSG["AFK"].text = CMSG["AFK"].text.format(
                             username=username,
                             mention=mention_format,
                             first_name=first_name,
                             last_name=last_name,
                             last_seen_seconds=last_seen_seconds,
                             last_seen=last_seen,
-                            last_seen_long=last_seen_long
+                            last_seen_long=last_seen_long,
                         )
-                        afkmsg = CMSG['AFK']
+                        afkmsg = CMSG["AFK"]
                         if AFKMEDIA is None:
                             await mention.reply(afkmsg)
                         elif AFKMEDIA:
                             await mention.reply(afkmsg, file=AFKMEDIA.media)
                     else:
-                        afkmsg = CMSG['AFK'].format(
+                        afkmsg = CMSG["AFK"].format(
                             username=username,
                             mention=mention_format,
                             first_name=first_name,
                             last_name=last_name,
                             last_seen_seconds=last_seen_seconds,
                             last_seen=last_seen,
-                            last_seen_long=last_seen_long
+                            last_seen_long=last_seen_long,
                         )
                         if AFKMEDIA is None:
                             await mention.reply(afkmsg)
                         elif AFKMEDIA:
                             await mention.reply(afkmsg, file=AFKMEDIA.media)
-                USERS.update({mention.sender_id: 1})
+                USERS[mention.sender_id] = USERS[mention.sender_id] + 1
                 COUNT_MSG = COUNT_MSG + 1
-            elif mention.sender_id in USERS:
-                if USERS[mention.sender_id] % randint(2, 4) == 0:
-                    if AFKREASON:
-                        if CMSG['AFK'] is str:
-                            afkmsg = CMSG['AFK'].format(
-                            username=username,
-                            mention=mention_format,
-                            first_name=first_name,
-                            last_name=last_name,
-                            last_seen_seconds=last_seen_seconds,
-                            last_seen=last_seen,
-                            last_seen_long=last_seen_long
-                            ) + f"\n\n**🐾 Nedeni:** {AFKREASON}"
-                            if AFKMEDIA is None:
-                                await mention.reply(afkmsg)
-                            elif AFKMEDIA:
-                                await mention.reply(afkmsg, file=AFKMEDIA.media)
-                        else:
-                            afkmsg = await mention.reply(CMSG['AFK'])
-                            if AFKMEDIA is None:
-                                await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}")
-                            elif AFKMEDIA:
-                                await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media)
-                    else:
-                        if not isinstance(CMSG['AFK'], str):
-                            CMSG['AFK'].text = CMSG['AFK'].text.format(
-                                username=username,
-                                mention=mention_format,
-                                first_name=first_name,
-                                last_name=last_name,
-                                last_seen_seconds=last_seen_seconds,
-                                last_seen=last_seen,
-                                last_seen_long=last_seen_long
-                            )
-                            afkmsg = CMSG['AFK']
-                            if AFKMEDIA is None:
-                                await mention.reply(afkmsg)
-                            elif AFKMEDIA:
-                                await mention.reply(afkmsg, file=AFKMEDIA.media)
-                        else:
-                            afkmsg = CMSG['AFK'].format(
-                                username=username,
-                                mention=mention_format,
-                                first_name=first_name,
-                                last_name=last_name,
-                                last_seen_seconds=last_seen_seconds,
-                                last_seen=last_seen,
-                                last_seen_long=last_seen_long
-                            )
-                            if AFKMEDIA is None:
-                                await mention.reply(afkmsg)
-                            elif AFKMEDIA:
-                                await mention.reply(afkmsg, file=AFKMEDIA.media)
-                    USERS[mention.sender_id] = USERS[mention.sender_id] + 1
-                    COUNT_MSG = COUNT_MSG + 1
-                else:
-                    USERS[mention.sender_id] = USERS[mention.sender_id] + 1
-                    COUNT_MSG = COUNT_MSG + 1
-            hmm = await mention.get_chat()
-            if PM_LOGGER_GROUP_ID == -100:
-                return
-            full = None
-            try:
-                full = await mention.client.get_entity(mention.message.from_id)
-            except Exception as e:
-                LOGS.error(f"🚨 {str(e)}")
-            messaget = media_type(mention)
-            resalt = f"💤 #AFK_TAG\n<b>👥 Grup: {hmm.title}</b>"
-            if full is not None:
-                resalt += f"\n<b>👤 Kimden: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
-            if messaget is not None:
-                resalt += f"\n<b>🔅 Mesaj Türü: </b>{messaget}"
             else:
-                resalt += f"\n<b>🔹 Mesaj: </b><code>{mention.message.message}</code>"
-            button = [
-                (Button.url("👁‍🗨 Mᴇsᴀᴊ", f"https://t.me/c/{hmm.id}/{mention.message.id}"))
-            ]
-            if not mention.is_private:
-                if messaget is None:
+                USERS[mention.sender_id] = USERS[mention.sender_id] + 1
+                COUNT_MSG = COUNT_MSG + 1
+        hmm = await mention.get_chat()
+        if PM_LOGGER_GROUP_ID == -100:
+            return
+        full = None
+        try:
+            full = await mention.client.get_entity(mention.message.from_id)
+        except Exception as e:
+            LOGS.error(f"🚨 {str(e)}")
+        messaget = media_type(mention)
+        resalt = f"💤 #AFK_TAG\n<b>👥 Grup: {hmm.title}</b>"
+        if full is not None:
+            resalt += f"\n<b>👤 Kimden: </b>{_format.htmlmentionuser(full.first_name, full.id)}"
+        if messaget is not None:
+            resalt += f"\n<b>🔅 Mesaj Türü: </b>{messaget}"
+        else:
+            resalt += f"\n<b>🔹 Mesaj: </b><code>{mention.message.message}</code>"
+        button = [
+            (Button.url("👁‍🗨 Mᴇsᴀᴊ", f"https://t.me/c/{hmm.id}/{mention.message.id}"))
+        ]
+        if not mention.is_private:
+            if messaget is None:
+                await doge.bot.send_message(
+                    PM_LOGGER_GROUP_ID,
+                    resalt,
+                    parse_mode="html",
+                    link_preview=False,
+                    buttons=button,
+                )
+            else:
+                try:
+                    media = await mention.download_media()
                     await doge.bot.send_message(
                         PM_LOGGER_GROUP_ID,
                         resalt,
                         parse_mode="html",
                         link_preview=False,
+                        file=media,
                         buttons=button,
                     )
-                else:
-                    try:
-                        media = await mention.download_media()
+                    if messaget is "Sticker":
                         await doge.bot.send_message(
                             PM_LOGGER_GROUP_ID,
                             resalt,
                             parse_mode="html",
                             link_preview=False,
-                            file=media,
                             buttons=button,
                         )
-                        if messaget is "Sticker":
-                            await doge.bot.send_message(
-                                PM_LOGGER_GROUP_ID,
-                                resalt,
-                                parse_mode="html",
-                                link_preview=False,
-                                buttons=button,
-                            )
-                        return remove(media)
-                    except Exception as er:
-                        LOGS.error(er)
+                    return remove(media)
+                except Exception as er:
+                    LOGS.error(er)
 
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
@@ -306,7 +320,12 @@ async def afk_on_pm(sender):
     current_message_text = sender.message.message.lower()
     if "afk" in current_message_text or "#afk" in current_message_text:
         return False
-    if sender.is_private and sender.sender_id != 777000 and not (await sender.get_sender()).bot and ISAFK:
+    if (
+        sender.is_private
+        and sender.sender_id != 777000
+        and not (await sender.get_sender()).bot
+        and ISAFK
+    ):
         try:
             apprv = is_approved(sender.sender_id)
         except AttributeError:
@@ -315,62 +334,65 @@ async def afk_on_pm(sender):
             apprv = True
         from_user = await sender.get_sender()
         if from_user.username:
-            username = '@' + from_user.username
+            username = "@" + from_user.username
         else:
             if from_user.last_name:
-                username = f'[{from_user.first_name} {from_user.last_name}](tg://user?id={from_user.id})'
+                username = f"[{from_user.first_name} {from_user.last_name}](tg://user?id={from_user.id})"
             else:
-                username = f'[{from_user.first_name}](tg://user?id={from_user.id})'
-        mention = f'[{from_user.first_name}](tg://user?id={from_user.id})'
+                username = f"[{from_user.first_name}](tg://user?id={from_user.id})"
+        mention = f"[{from_user.first_name}](tg://user?id={from_user.id})"
         first_name = from_user.first_name
         if from_user.last_name:
             last_name = from_user.last_name
         else:
-            last_name = ''
+            last_name = ""
         last_seen_seconds = round(time() - LAST_SEEN)
         last_seen = afk_time(last_seen_seconds)
         last_seen_long = afk_time(last_seen_seconds, False)
         if apprv:
             if sender.sender_id not in USERS:
                 if AFKREASON:
-                    afkmsg = CMSG['AFK'].format(
-                        username=username,
-                        mention=mention,
-                        first_name=first_name,
-                        last_name=last_name,
-                        last_seen_seconds=last_seen_seconds,
-                        last_seen=last_seen,
-                        last_seen_long=last_seen_long
-                    ) + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                    afkmsg = (
+                        CMSG["AFK"].format(
+                            username=username,
+                            mention=mention,
+                            first_name=first_name,
+                            last_name=last_name,
+                            last_seen_seconds=last_seen_seconds,
+                            last_seen=last_seen,
+                            last_seen_long=last_seen_long,
+                        )
+                        + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                    )
                     if AFKMEDIA is None:
                         await sender.reply(afkmsg)
                     elif AFKMEDIA:
                         await sender.reply(afkmsg, file=AFKMEDIA.media)
                 else:
-                    if not isinstance(CMSG['AFK'], str):
-                        CMSG['AFK'].text = CMSG['AFK'].text.format(
+                    if not isinstance(CMSG["AFK"], str):
+                        CMSG["AFK"].text = CMSG["AFK"].text.format(
                             username=username,
                             mention=mention,
                             first_name=first_name,
                             last_name=last_name,
                             last_seen_seconds=last_seen_seconds,
                             last_seen=last_seen,
-                            last_seen_long=last_seen_long
+                            last_seen_long=last_seen_long,
                         )
-                        afkmsg = CMSG['AFK']
+                        afkmsg = CMSG["AFK"]
                         if AFKMEDIA is None:
                             await sender.reply(afkmsg)
                         elif AFKMEDIA:
                             await sender.reply(afkmsg, file=AFKMEDIA.media)
                     else:
-                        afkmsg = CMSG['AFK'].format(
+                        afkmsg = CMSG["AFK"].format(
                             username=username,
                             mention=mention,
                             first_name=first_name,
                             last_name=last_name,
                             last_seen_seconds=last_seen_seconds,
                             last_seen=last_seen,
-                            last_seen_long=last_seen_long
+                            last_seen_long=last_seen_long,
                         )
                         if AFKMEDIA is None:
                             await sender.reply(afkmsg)
@@ -381,51 +403,56 @@ async def afk_on_pm(sender):
             elif apprv and sender.sender_id in USERS:
                 if USERS[sender.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-                        if type(CMSG['AFK']) is str:
-                            afkmsg = CMSG['AFK'].format(
-                                username=username,
-                                mention=mention,
-                                first_name=first_name,
-                                last_name=last_name,
-                                last_seen_seconds=last_seen_seconds,
-                                last_seen=last_seen,
-                                last_seen_long=last_seen_long
-                            ) + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                        if type(CMSG["AFK"]) is str:
+                            afkmsg = (
+                                CMSG["AFK"].format(
+                                    username=username,
+                                    mention=mention,
+                                    first_name=first_name,
+                                    last_name=last_name,
+                                    last_seen_seconds=last_seen_seconds,
+                                    last_seen=last_seen,
+                                    last_seen_long=last_seen_long,
+                                )
+                                + f"\n\n**🐾 Nedeni:** {AFKREASON}"
+                            )
                             if AFKMEDIA is None:
                                 await sender.reply(afkmsg)
                             elif AFKMEDIA:
                                 await sender.reply(afkmsg, file=AFKMEDIA.media)
                         else:
-                            afkmsg = await sender.reply(CMSG['AFK'])
+                            afkmsg = await sender.reply(CMSG["AFK"])
                             if AFKMEDIA is None:
                                 await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}")
                             elif AFKMEDIA:
-                                await afkmsg.reply(f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media)
+                                await afkmsg.reply(
+                                    f"**🐾 Nedeni:** {AFKREASON}", file=AFKMEDIA.media
+                                )
                     else:
-                        if not isinstance(CMSG['AFK'], str):
-                            CMSG['AFK'].text = CMSG['AFK'].text.format(
+                        if not isinstance(CMSG["AFK"], str):
+                            CMSG["AFK"].text = CMSG["AFK"].text.format(
                                 username=username,
                                 mention=mention,
                                 first_name=first_name,
                                 last_name=last_name,
                                 last_seen_seconds=last_seen_seconds,
                                 last_seen=last_seen,
-                                last_seen_long=last_seen_long
+                                last_seen_long=last_seen_long,
                             )
-                            afkmsg = CMSG['AFK']
+                            afkmsg = CMSG["AFK"]
                             if AFKMEDIA is None:
                                 await sender.reply(afkmsg)
                             elif AFKMEDIA:
                                 await sender.reply(afkmsg, file=AFKMEDIA.media)
                         else:
-                            afkmsg = CMSG['AFK'].format(
+                            afkmsg = CMSG["AFK"].format(
                                 username=username,
                                 mention=mention,
                                 first_name=first_name,
                                 last_name=last_name,
                                 last_seen_seconds=last_seen_seconds,
                                 last_seen=last_seen,
-                                last_seen_long=last_seen_long
+                                last_seen_long=last_seen_long,
                             )
                             if AFKMEDIA is None:
                                 await sender.reply(afkmsg)
@@ -451,7 +478,9 @@ async def setnotafk(notafk):
         ISAFK = False
         endtime_seconds = round(time() - LAST_SEEN)
         endtime = afk_time(endtime_seconds, False)
-        await notafk.respond("Artık AFK değilim.\n\nŞu kadar süredir AFK'yım: `" + endtime + "`")
+        await notafk.respond(
+            "Artık AFK değilim.\n\nŞu kadar süredir AFK'yım: `" + endtime + "`"
+        )
         await sleep(2)
         if gvar("AFKBIOSET") is (None or True):
             try:

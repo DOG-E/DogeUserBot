@@ -26,16 +26,7 @@ from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
-from userbot.core.fasttelethon import download_file
-
-from .. import (
-    ALIVE_NAME,
-    BOT_USERNAME,
-    BOTLOG,
-    BOTLOG_CHATID,
-    PM_LOGGER_GROUP_ID,
-    tr,
-)
+from .. import ALIVE_NAME, BOT_USERNAME, BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
@@ -493,9 +484,7 @@ async def customize_assistantbot():
     try:
         if doge.bot.me.photo:
             return
-        LOGS.info(
-            f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum."
-        )
+        LOGS.info(f"🎨 {BOT_USERNAME} asistan botunuzu @BotFather ile özelleştiriyorum.")
         if not doge.me.username:
             master = doge.me.first_name
         else:
