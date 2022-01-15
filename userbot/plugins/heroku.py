@@ -19,6 +19,8 @@ from telethon.errors import FloodWaitError
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
+from userbot import BOTLOG_CHATID
+
 from . import (
     HEROKU_API_KEY,
     HEROKU_APP_NAME,
@@ -45,19 +47,20 @@ if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
         while True:
             try:
                 t = "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı..."
-                await doge.bot.send_message(gvar("HLOGGER_ID"), t)
+                await doge.bot.send_message(int(gvar("HLOGGER_ID")), t)
             except FloodWaitError as sec:
                 await sleep(sec.seconds)
-            except Exception:
+            except Exception as e:
                 LOGS.error(
                     f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
                 )
+                LOGS.error(f"Heroku Logger Grup Yanlış. Hata Raporu: {e}")
             server = from_key(HEROKU_API_KEY)
             app = server.app(HEROKU_APP_NAME)
             for line in app.stream_log(lines=1):
                 try:
                     txt = line.decode("utf-8")
-                    await doge.bot.send_message(gvar("HLOGGER_ID"), f"➕ {txt}")
+                    await doge.bot.send_message(int(gvar("HLOGGER_ID")), f"➕ {txt}")
                 except FloodWaitError as sec:
                     await sleep(sec.seconds)
                 except Exception as e:
@@ -69,7 +72,7 @@ elif gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is None:
 
     async def hlogoff():
         await doge.bot.send_message(
-            OWNER_ID,
+            BOTLOG_CHATID,
             f"Heroku Logger özelliğini etkinleştirdiniz fakat veritabanına kayıtlı bir Log grubunuz yok. Bunun için HEROKULOGGER değerinizi kapatıyorum. Açmak için lütfen önce bir log grubu kimliği ayarlayın.",
         )
         await sgvar("HEROKULOGGER", False)
