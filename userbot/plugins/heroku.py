@@ -24,7 +24,6 @@ from userbot import BOTLOG_CHATID
 from . import (
     HEROKU_API_KEY,
     HEROKU_APP_NAME,
-    OWNER_ID,
     Heroku,
     doge,
     edl,
