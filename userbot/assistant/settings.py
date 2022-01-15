@@ -393,12 +393,12 @@ async def hlogger(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"hgloggeroff")))
 @check_owner
 async def hgloggeroff(event: CallbackQuery):
-    if gvar("HEROKULOGGER") == False or None:
+    if gvar("HEROKULOGGER") == ("False" or None):
         return await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!", alert=True
         )
-    if gvar("HEROKULOOGER") == True:
-        await sgvar("HEROKULOGGER", False)
+    if gvar("HEROKULOOGER") == "True":
+        await sgvar("HEROKULOGGER", "False")
         return await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\ Heroku Logger özelliğiniz başarıyla kapatıldı",
             alert=True,
@@ -418,11 +418,11 @@ async def hgloggeron(event: CallbackQuery):
     ]
     # if gvar("DEV_MODE") != True: #Yakında
     #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
-    if gvar("HEROKULOGGER") == True:
+    if gvar("HEROKULOGGER") == "True":
         return await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz zaten açık!", alert=True
         )
-    if gvar("HLOGGER_ID") is None and gvar("HEROKULOGGER") == False:
+    if gvar("HLOGGER_ID") is None and gvar("HEROKULOGGER") == "False":
         await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
@@ -430,8 +430,8 @@ async def hgloggeron(event: CallbackQuery):
             f"Heroku Logger özelliği için grubunuzun bot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
             buttons=buttons,
         )
-    if gvar("HEROKULOGGER") == False and gvar("HLOOGER_ID") is not None:
-        await sgvar("HEROKLOGGER", True)
+    if gvar("HEROKULOGGER") == "False" and gvar("HLOOGER_ID") is not None:
+        await sgvar("HEROKLOGGER", "True")
         await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz başarıyla etkinleştirildi! Veritabanına kayıtlı gruba Heroku Log eylemi başlatılacaktır."
         )
@@ -468,7 +468,7 @@ async def hgloggerautocreate(event: CallbackQuery):
     elif gvar("HLOGGER_ID") is not None:
         try:
             a = await doge.bot.send_message(
-                gvar("HLOGGER_ID"), f"Heroku Logger Grubu Test Mesajı!"
+                int(gvar("HLOGGER_ID")), f"Heroku Logger Grubu Test Mesajı!"
             )
             await a.delete()
             return await event.edit(
@@ -580,7 +580,7 @@ async def pcmanuel(event: CallbackQuery):
     if gvar("PRIVATE_CHANNEL_ID") is not None:
         try:
             a = await doge.send_message(
-                gvar("PRIVATE_CHANNEL_ID"), f"Gizli kanal Deneme mesajı!"
+                int(gvar("PRIVATE_CHANNEL_ID")), f"Gizli kanal Deneme mesajı!"
             )
             await a.delete()
             return await event.edit(

@@ -60,7 +60,7 @@ if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
             for line in app.stream_log(lines=1):
                 try:
                     txt = line.decode("utf-8")
-                    await doge.bot.send_message(int(gvar("HLOGGER_ID")), f"➕ {txt}")
+                    await doge.bot.send_message(int(gvar("HLOGGER_ID")), f"➕ `{txt}`")
                 except FloodWaitError as sec:
                     await sleep(sec.seconds)
                 except Exception as e:

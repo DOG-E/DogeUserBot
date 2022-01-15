@@ -23,7 +23,7 @@ if Config.PLUGINS:
 
         async def install():
             documentss = await doge.get_messages(
-                PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
+                int(PLUGIN_CHANNEL), None, filter=InputMessagesFilterDocument
             )
             total = int(documentss.total)
             for module in range(total):
@@ -32,7 +32,7 @@ if Config.PLUGINS:
                 if path.exists(f"userbot/plugins/{plugin_name}"):
                     return
                 downloaded_file_name = await doge.download_media(
-                    await doge.get_messages(PLUGIN_CHANNEL, ids=plugin_to_install),
+                    await doge.get_messages(int(PLUGIN_CHANNEL), ids=plugin_to_install),
                     "userbot/plugins/",
                 )
                 path1 = Path(downloaded_file_name)
