@@ -16,6 +16,8 @@ from telethon.events import CallbackQuery
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
 from validators.url import url
 
+from userbot import BOTLOG
+
 from ..core.logger import logging
 from ..helpers import resize_image
 from ..utils import add_bot_to_logger_group, create_channel, create_supergroup
@@ -59,6 +61,8 @@ async def settings(event):
             Button.inline("🌐 Dɪʟ", data="langmenu"),
         ],
     ]
+    if event.chat_id == BOTLOG:
+        return await event.answer(f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=Truew)
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\

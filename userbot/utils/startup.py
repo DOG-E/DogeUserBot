@@ -443,7 +443,6 @@ async def startupmessage():
                 caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴɪᴍᴀ Hᴀᴢɪʀ 🧡**",
                 buttons=[
                     (Button.inline("🐕‍🦺 Yᴀʀᴅɪᴍ", data="mainmenu"),),
-                    (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
                     (Button.url("💬 Dᴇsᴛᴇᴋ", "https://t.me/DogeSup"),),
                     (Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),),
                 ],
