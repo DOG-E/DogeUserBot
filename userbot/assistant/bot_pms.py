@@ -157,7 +157,7 @@ async def bot_start(event):
             (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
         ]
 
-    if gvar("START_PIC") is not "False":
+    if gvar("START_PIC") != "False":
         START_PIC = (
             gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
         )
@@ -207,7 +207,7 @@ async def bot_start(event):
         await check_bot_started_users(chat, event)
 
 
-if gvar("BOT_PM") is True:
+if gvar("BOT_PM") == "True":
 
     @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
     async def bot_pms(event):  # sourcery no-metrics

@@ -18,6 +18,7 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     PM_LOGGER_GROUP_ID,
+    TAG_LOGGER_GROUP,
     _format,
     doge,
     edl,
@@ -83,7 +84,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
 async def log_tagged_messages(event):
-    if gvar("GRPLOG") and gvar("GRPLOG") == "false":
+    if gvar("GRPLOG") and gvar("GRPLOG") == ("false" or "False"):
         return
 
     from .afk import AFK_
@@ -117,7 +118,7 @@ async def log_tagged_messages(event):
     if not event.is_private:
         if messaget is None:
             await doge.bot.send_message(
-                PM_LOGGER_GROUP_ID,
+                TAG_LOGGER_GROUP,
                 resalt,
                 parse_mode="html",
                 link_preview=False,
@@ -127,7 +128,7 @@ async def log_tagged_messages(event):
             try:
                 media = await event.download_media()
                 await doge.bot.send_message(
-                    PM_LOGGER_GROUP_ID,
+                    TAG_LOGGER_GROUP,
                     resalt,
                     parse_mode="html",
                     link_preview=False,

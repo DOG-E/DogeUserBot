@@ -70,19 +70,75 @@ async def settings(event):
     )
 
 
-# TODO
-# ELLEME BEN YAPACAM
+# Ayarlar - Seçenekler
 @doge.bot.on(CallbackQuery(data=compile(b"ssmenu")))
 @check_owner
-async def gdapi(event: CallbackQuery):
+async def ssmenu(event: CallbackQuery):
     buttons = [
         [
             Button.inline("Alive", data="ssalive"),
-            Button.inline("PmPermit", data="pmpermit"),
+            Button.inline("PmPermit", data="sspmmenu"),
         ],
-        [Button.inline("PMBot", data="sspmbot"), Button.inline("", data="")],
+        [
+            Button.inline("PMBot", data="sspmbot"),
+            Button.inline("CMDSET", data="sshandler")
+        ],
+        [
+            Button.inline("Grup & Kanal", data="sscg"), # api değil grup ss
+            Button.inline("Logger", data="sslogger")
+        ],
+        [
+            Button.inline("SETHELP", data="sshelp"),
+            Button.inline("Other", data="ssother")
+        ],
     ]
+    buttons.append(get_back_button("setmenu"))
+    await event.edit(
+        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+        \n◽ Doɢᴇ oғ {mention}\n\
+        \n🧶 Ayarlamak istediğiniz ayarı seçin:**",
+        buttons=buttons,
+        link_preview=False,
+    )
 
+# Alive yapılandırma ayarları
+@doge.bot.on(CallbackQuery(data=compile(b"ssalive")))
+@check_owner
+async def ssalive(event: CallbackQuery):
+    buttons = [
+        [
+            Button.inline("IALIVE_PIC", data="IALIVE_PIC"),
+            Button.inline("ALIVE_PIC", data="ALIVE_PIC")
+        ],
+        [
+            Button.inline("ALIVE_NAME", data="ALIVE_NAME"),
+            Button.inline("ALIVE_TEXT", data="ALIVE_TEXT"),
+        ]
+        [
+            Button.inline("ALIVE", data="ALIVE")
+        ]
+    ]
+    buttons.append(get_back_button("ssmenu"))
+    await event.edit(
+        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+        \n◽ Doɢᴇ oғ {mention}\n\
+        \n🧶 Alive ile ilgili ayarlamak istediğiniz ayarı seçin:**",
+        buttons=buttons,
+        link_preview=False,
+    )
+# TODO
+"""
+@doge.bot.on(CallbackQuery(data=compile(b"sspmmenu")))
+@check_owner
+async def sspmmenu(event: CallbackQuery):
+    buttons = [
+        [
+            Button.inline("PM_PIC", data="PM_PIC")
+        ]
+    ]
+"""
 
 # api - grup id'leri menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
@@ -90,7 +146,7 @@ async def gdapi(event: CallbackQuery):
 async def apisetter(event: CallbackQuery):
     apis = [
         [
-            Button.inline("GRUP & KANAL", data="cgapi"),
+            Button.inline("GRUP & KANAL", data="sscg"),
             Button.inline("CURRENCY", data="cuapi"),
         ],
         [Button.inline("Dᴇᴇᴘ", data="deapi"), Button.inline("GENIUS", data="geapi")],
@@ -297,9 +353,9 @@ async def setapi(event: CallbackQuery, x, y, z=None):
 
 
 # grup/kanalların ayar menüsü
-@doge.bot.on(CallbackQuery(data=compile(b"cgapi")))
+@doge.bot.on(CallbackQuery(data=compile(b"sscg")))
 @check_owner
-async def cgapi(event: CallbackQuery):
+async def sscg(event: CallbackQuery):
     apis = [
         [
             Button.inline("FBAN GRUBU", data="fgroup"),
@@ -329,7 +385,7 @@ async def hlogger(event: CallbackQuery):
         ],
         [Button.inline("HLog Grubu Ayarla", data="hgloggrpc")],
     ]
-    buttons.append(get_back_button("cgapi"))
+    buttons.append(get_back_button("sscg"))
     await event.edit(f"Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)
 
 
@@ -360,6 +416,8 @@ async def hgloggeron(event: CallbackQuery):
         ],
         [Button.inline("⬅️️ Gᴇʀɪ", data="hgloggeron")],
     ]
+    # if gvar("DEV_MODE") != True: #Yakında
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
     if gvar("HEROKULOGGER") == True:
         return await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz zaten açık!", alert=True
@@ -400,6 +458,8 @@ async def hgloggrpc(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"hgloggerautocreate")))
 @check_owner
 async def hgloggerautocreate(event: CallbackQuery):
+    # if gvar("DEV_MODE") != True: #Yakında
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
     if gvar("HLOGGER_ID") is None:
         await event.edit(
             f"{mention} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
@@ -429,14 +489,14 @@ async def hgloggerautocreate(event: CallbackQuery):
 @doge.bot.on(CallbackQuery(data=compile(b"hloggermanuelcreate")))
 @check_owner
 async def hloggermanuelcreate(event: CallbackQuery):
-    x = "📃 **DEĞER:** `Heroku Logger Grup ID`\
-\
-📋 **Açıklama:** `Heroku Logger Grubu `\
-\
-🕹 **Değeri elde etmek için;**\
-`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
+    x = "📃 **DEĞER:** `Heroku Logger Grup ID`\n\
+    \n📋 **Açıklama:** `Heroku Logger Grubu `\n\
+    \n🕹 **Değeri elde etmek için;**\
+    \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
     y = "HLOGGER_ID"
     z = "hgloggrpc"
+    # if gvar("DEV_MODE") != True: #Yakında
+    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)  
     await setapi(event, x, y, z)
 
 
@@ -505,7 +565,7 @@ async def pccreate(event: CallbackQuery):
             Button.inline("✅ Evet", data="pcauto"),
             Button.inline("❎ Hayır", data="pcmanuel"),
         ],
-        [Button.inline("⬅️️ Gᴇʀɪ", data="cgapi")],
+        [Button.inline("⬅️️ Gᴇʀɪ", data="sscg")],
     ]
     await event.edit(
         f"__Gizli kanalınız için DogeUserBot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
@@ -550,7 +610,7 @@ async def pcmanuel(event: CallbackQuery):
     \n🕹 **Değeri elde etmek için;**\
     \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz kanalın kimliğini bana gönderin.`"
     y = "PRIVATE_CHANNEL_ID"
-    z = "cgapi"
+    z = "sscg"
     await setapi(event, x, y, z)
 
 
@@ -763,6 +823,6 @@ async def privatechannel(event: CallbackQuery):
     sgvar("PRIVATE_CHANNEL_ID", channelid)
     await event.edit(
         f"{mention} Sizin için bir Gizli Kanal oluşturdum ve verileri veritabanına yazdım!",
-        buttons=get_back_button("cgapi"),
+        buttons=get_back_button("sscg"),
     )
     LOGS.info("✅ PRIVATE_CHANNEL_ID için özel bir grup başarıyla oluşturdum!")

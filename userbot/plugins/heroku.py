@@ -39,7 +39,7 @@ LOGS = logging.getLogger(__name__)
 disable_warnings(InsecureRequestWarning)
 
 
-if gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is not None:
+if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
 
     async def herokulogger():
         with doge.bot:
