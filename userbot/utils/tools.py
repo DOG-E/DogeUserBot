@@ -18,9 +18,9 @@ from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import ChatAdminRights
 
 
-async def create_supergroup(group_name, doge, botusername, descript, photo):
+async def create_supergroup(group_name, client, botusername, descript, photo):
     try:
-        result = await doge(
+        result = await client(
             CreateChannelRequest(
                 title=group_name,
                 about=descript,
@@ -28,14 +28,14 @@ async def create_supergroup(group_name, doge, botusername, descript, photo):
             )
         )
         created_chat_id = result.chats[0].id
-        await doge(
+        await client(
             InviteToChannelRequest(
                 channel=created_chat_id,
                 users=[botusername],
             )
         )
         if photo:
-            await doge(
+            await client(
                 EditPhotoRequest(
                     channel=created_chat_id,
                     photo=photo,
@@ -48,9 +48,9 @@ async def create_supergroup(group_name, doge, botusername, descript, photo):
     return result, created_chat_id
 
 
-async def create_channel(channel_name, doge, descript, photo):
+async def create_channel(channel_name, client, descript, photo):
     try:
-        result = await doge(
+        result = await client(
             CreateChannelRequest(
                 title=channel_name,
                 about=descript,
@@ -59,7 +59,7 @@ async def create_channel(channel_name, doge, descript, photo):
         )
         created_chat_id = result.chats[0].id
         if photo:
-            await doge(
+            await client(
                 EditPhotoRequest(
                     channel=created_chat_id,
                     photo=photo,
@@ -72,12 +72,12 @@ async def create_channel(channel_name, doge, descript, photo):
     return result, created_chat_id
 
 
-async def add_bot_to_logger_group(doge, chat_id, botusername, admintag):
+async def add_bot_to_logger_group(client, chat_id, botusername, admintag):
     """
     Asistan botu log gruplarına ekler
     """
     try:
-        await doge(
+        await client(
             AddChatUserRequest(
                 chat_id=chat_id,
                 user_id=botusername,
@@ -86,7 +86,7 @@ async def add_bot_to_logger_group(doge, chat_id, botusername, admintag):
         )
     except BaseException:
         try:
-            await doge(
+            await client(
                 InviteToChannelRequest(
                     channel=chat_id,
                     users=[botusername],
@@ -106,7 +106,7 @@ async def add_bot_to_logger_group(doge, chat_id, botusername, admintag):
         manage_call=True,
     )
     try:
-        await doge(EditAdminRequest(chat_id, botusername, rights, admintag))
+        await client(EditAdminRequest(chat_id, botusername, rights, admintag))
     except Exception as e:
         return "error", str(e)
     return
