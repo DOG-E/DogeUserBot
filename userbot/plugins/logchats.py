@@ -87,14 +87,14 @@ async def log_tagged_messages(event):
     if gvar("GRPLOG") and gvar("GRPLOG") == "false":
         return
 
-    from .afk import AFK_
+    from .afk import ISAFK
 
     hmm = await event.get_chat()
     sndr = await event.get_sender()
     if (
         (no_log_pms_sql.is_approved(hmm.id))
         or (PM_LOGGER_GROUP_ID == -100)
-        or ("on" in AFK_.USERAFK_ON)
+        or (ISAFK)
         or (sndr and (sndr.bot or sndr.verified))
     ):
         return
