@@ -42,30 +42,27 @@ disable_warnings(InsecureRequestWarning)
 if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
 
     async def herokulogger():
-        with doge.bot:
-            while True:
+        while True:
+            try:
+                t = "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı..."
+                await doge.bot.send_message(gvar("HLOGGER_ID"), t)
+            except FloodWaitError as sec:
+                await sleep(sec.seconds)
+            except Exception:
+                LOGS.error(
+                    f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
+                )
+            server = from_key(HEROKU_API_KEY)
+            app = server.app(HEROKU_APP_NAME)
+            for line in app.stream_log(lines=1):
                 try:
-                    t = "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı..."
-                    await doge.bot.send_message(gvar("HLOGGER_ID"), t)
-
+                    txt = line.decode("utf-8")
+                    await doge.bot.send_message(gvar("HLOGGER_ID"), f"➕ {txt}")
                 except FloodWaitError as sec:
                     await sleep(sec.seconds)
-                except Exception:
-                    LOGS.error(
-                        f"HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin."
-                    )
-
-                server = from_key(HEROKU_API_KEY)
-                app = server.app(HEROKU_APP_NAME)
-                for line in app.stream_log(lines=1):
-                    try:
-                        txt = line.decode("utf-8")
-                        await doge.bot.send_message(gvar("HLOGGER_ID"), f"➕ {txt}")
-                    except FloodWaitError as sec:
-                        await sleep(sec.seconds)
-                    except Exception as e:
-                        LOGS.error(e)
-                await sleep(2)
+                except Exception as e:
+                    LOGS.error(e)
+            await sleep(2)
 
     doge.loop.create_task(herokulogger())
 elif gvar("HEROKULOGGER") == True and gvar("HLOGGER_ID") is None:
