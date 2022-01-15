@@ -17,7 +17,7 @@ from requests import get
 from selenium.webdriver import Chrome, ChromeOptions
 from validators.url import url
 
-from . import SS_API, Config, doge, eor, reply_id
+from . import Config, doge, eor, gvar, reply_id
 
 plugin_category = "tool"
 
@@ -109,7 +109,7 @@ async def _(event):
     "To Take a screenshot of a website."
     start = datetime.now()
     message_id = await reply_id(event)
-    if SS_API is None:
+    if gvar("SS_API") is None:
         return await eor(
             event,
             "`Need to get an API key from https://screenshotlayer.com/product and need to set it SS_API !`",
@@ -125,7 +125,7 @@ async def _(event):
     if not dogurl:
         return await dogevent.edit("`The given input is not supported url`")
     response_api = get(
-        sample_url.format(SS_API, inputstr, "1", "2560x1440", "PNG", "1")
+        sample_url.format(gvar("SS_API"), inputstr, "1", "2560x1440", "PNG", "1")
     )
     # https://stackoverflow.com/a/23718458/4723940
     contentType = response_api.headers["content-type"]

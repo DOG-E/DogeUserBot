@@ -18,12 +18,12 @@ from telethon.utils import get_display_name
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    TELEGRAPH_SHORT_NAME,
     TEMP_DIR,
     doge,
     edl,
     eor,
     fsmessage,
+    gvar,
     logging,
     mention,
     newmsgres,
@@ -35,7 +35,7 @@ LOGS = logging.getLogger(__name__)
 
 telegraph = Telegraph()
 r = telegraph.create_account(
-    short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+    short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"), author_url="https://t.me/DogeUserBot"
 )
 auth_url = r["auth_url"]
 

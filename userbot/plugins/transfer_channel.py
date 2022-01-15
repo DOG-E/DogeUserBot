@@ -10,7 +10,7 @@ from telethon.password import compute_check
 from telethon.tl.functions.account import GetPasswordRequest
 from telethon.tl.functions.channels import EditCreatorRequest
 
-from . import TG_2STEP_VERIFICATION_CODE, doge
+from . import doge, gvar
 
 plugin_category = "tool"
 
@@ -29,7 +29,7 @@ async def _(event):
     user_name = event.pattern_match.group(1)
     try:
         pwd = await event.client(GetPasswordRequest())
-        my_srp_password = compute_check(pwd, TG_2STEP_VERIFICATION_CODE)
+        my_srp_password = compute_check(pwd, gvar("TG_2STEP_VERIFICATION_CODE"))
         await event.client(
             EditCreatorRequest(
                 channel=event.chat_id, user_id=user_name, password=my_srp_password

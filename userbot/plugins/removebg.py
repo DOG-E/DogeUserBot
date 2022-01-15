@@ -14,13 +14,13 @@ from os.path import join
 from requests import post
 
 from . import (
-    REMOVEBG_API,
     TEMP_DIR,
     convert_toimage,
     convert_tosticker,
     doge,
     edl,
     eor,
+    gvar,
     reply_id,
 )
 
@@ -29,7 +29,7 @@ plugin_category = "misc"
 
 def ReTrieveFile(input_file_name):
     headers = {
-        "X-API-Key": REMOVEBG_API,
+        "X-API-Key": gvar("REMOVEBG_API"),
     }
     files = {
         "image_file": (input_file_name, open(input_file_name, "rb")),
@@ -45,7 +45,7 @@ def ReTrieveFile(input_file_name):
 
 def ReTrieveURL(input_url):
     headers = {
-        "X-API-Key": REMOVEBG_API,
+        "X-API-Key": gvar("REMOVEBG_API"),
     }
     data = {"image_url": input_url}
     return post(
@@ -76,7 +76,7 @@ def ReTrieveURL(input_url):
 )
 async def remove_background(event):
     "To remove background of a image."
-    if REMOVEBG_API is None:
+    if gvar("REMOVEBG_API") is None:
         return await edl(
             event,
             "`You have to set REMOVEBG_API in Config vars with API token from remove.bg to use this plugin .`",

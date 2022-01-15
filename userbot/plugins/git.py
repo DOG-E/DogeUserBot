@@ -15,7 +15,7 @@ from github import Github
 from pySmartDL import SmartDL
 from requests import get
 
-from . import GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, doge, edl, eor, logging, reply_id
+from . import doge, edl, eor, gvar, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(basename(__name__))
@@ -121,10 +121,10 @@ async def _(event):
 )
 async def download(event):
     "To commit the replied plugin to github."
-    if GITHUB_ACCESS_TOKEN is None:
+    if gvar("GITHUB_ACCESS_TOKEN") is None:
         return await edl(event, "`Please ADD Proper Access Token from github.com`", 5)
 
-    if GIT_REPO_NAME is None:
+    if gvar("GIT_REPO_NAME") is None:
         return await edl(
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5
         )
@@ -155,11 +155,11 @@ async def download(event):
 
 async def git_commit(file_name, mone):
     content_list = []
-    access_token = GITHUB_ACCESS_TOKEN
+    access_token = gvar("GITHUB_ACCESS_TOKEN")
     g = Github(access_token)
     file = open(file_name, "r", encoding="utf-8")
     commit_data = file.read()
-    repo = g.get_repo(GIT_REPO_NAME)
+    repo = g.get_repo(gvar("GIT_REPO_NAME"))
     LOGS.info(repo.name)
     create_file = True
     contents = repo.get_contents("")
@@ -179,7 +179,7 @@ async def git_commit(file_name, mone):
                 file_name, "Uploaded New Plugin", commit_data, branch="master"
             )
             LOGS.info("Committed File")
-            ccess = GIT_REPO_NAME
+            ccess = gvar("GIT_REPO_NAME")
             ccess = ccess.strip()
             await mone.edit(
                 f"`Commited On Your Github Repo`\n\n[Your PLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)"

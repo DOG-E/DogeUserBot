@@ -24,17 +24,15 @@ from telethon.errors import AboutTooLongError
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from . import (
-    BIO_PREFIX,
     BOTLOG,
     BOTLOG_CHATID,
-    DEFAULT_BIO,
     SPOTIFY_DC,
     SPOTIFY_KEY,
-    TELEGRAPH_SHORT_NAME,
     doge,
     edl,
     eor,
     fsmessage,
+    gvar,
     newmsgres,
     tr,
 )
@@ -42,8 +40,6 @@ from . import (
 plugin_category = "misc"
 
 telegraph = Telegraph()
-SP_DC = SPOTIFY_DC
-SP_KEY = SPOTIFY_KEY
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
@@ -68,7 +64,7 @@ SPOTIFY_ = SPOTIFY()
 
 
 async def get_spotify_token():
-    sptoken = start_session(SP_DC, SP_KEY)
+    sptoken = start_session(gvar("SPOTIFY_DC"), gvar("SPOTIFY_KEY"))
     access_token = sptoken[0]
     environ["spftoken"] = access_token
 
@@ -77,6 +73,7 @@ async def update_spotify_info():  # sourcery no-metrics
     oldartist = ""
     oldsong = ""
     while SPOTIFY_.SPOTIFYCHECK:
+        DEFAULT_BIO = (gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾")
         try:
             SPOTIFY_.RUNNING = True
             spftoken = environ.get("spftoken", None)
@@ -91,8 +88,8 @@ async def update_spotify_info():  # sourcery no-metrics
             if song != oldsong and artist != oldartist:
                 oldartist = artist
                 environ["oldsong"] = song
-                if BIO_PREFIX:
-                    spobio = f"{BIO_PREFIX} 🎧: {artist} - {song}"
+                if gvar("BIO_PREFIX"):
+                    spobio = f"{gvar('BIO_PREFIX')} 🎧: {artist} - {song}"
                 else:
                     spobio = f"🎧: {artist} - {song}"
                 try:
@@ -129,7 +126,7 @@ async def update_spotify_info():  # sourcery no-metrics
 
 
 async def update_token():
-    sptoken = start_session(SP_DC, SP_KEY)
+    sptoken = start_session(gvar("SPOTIFY_DC"), gvar("SPOTIFY_KEY"))
     access_token = sptoken[0]
     environ["spftoken"] = access_token
     environ["errorcheck"] = "1"
@@ -193,7 +190,7 @@ def get_spotify_info(TIME=5):
         totaltime = int(item["duration_ms"])
         if len(item["album"]["images"]) > 0:
             telegraph.create_account(
-                short_name=TELEGRAPH_SHORT_NAME, author_url="https://t.me/DogeUserBot"
+                short_name=(gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"), author_url="https://t.me/DogeUserBot"
             )
             if path.exists("@DogeUserBot-Spotify.jpg"):
                 remove("@DogeUserBot-Spotify.jpg")
@@ -278,6 +275,7 @@ async def set_biostgraph(setstbio):
         else:
             await setstbio.edit(SPO_BIO_RUNNING)
     elif arg == "off":
+        DEFAULT_BIO = (gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾")
         SPOTIFY_.SPOTIFYCHECK = False
         SPOTIFY_.RUNNING = False
         await doge(UpdateProfileRequest(about=DEFAULT_BIO))

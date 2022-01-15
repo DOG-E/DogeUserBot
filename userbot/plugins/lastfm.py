@@ -24,16 +24,11 @@ from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
 from . import (
-    BIO_PREFIX,
     BOTLOG,
     BOTLOG_CHATID,
-    DEFAULT_BIO,
-    LASTFM_API,
-    LASTFM_PASSWORD_PLAIN,
-    LASTFM_SECRET,
-    LASTFM_USERNAME,
     deEmojify,
     doge,
+    gvar,
     hide_inlinebot,
     logging,
     reply_id,
@@ -42,12 +37,12 @@ from . import (
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
-LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
-if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
+LASTFM_PASS = md5(gvar("LASTFM_PASSWORD_PLAIN"))
+if gvar("LASTFM_API") and gvar("LASTFM_SECRET") and gvar("LASTFM_USERNAME") and LASTFM_PASS:
     lastfm = LastFMNetwork(
-        api_key=LASTFM_API,
-        api_secret=LASTFM_SECRET,
-        username=LASTFM_USERNAME,
+        api_key=gvar("LASTFM_API"),
+        api_secret=gvar("LASTFM_SECRET"),
+        username=gvar("LASTFM_USERNAME"),
         password_hash=LASTFM_PASS,
     )
 else:
@@ -106,12 +101,13 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
     oldartist = ""
     oldsong = ""
     while LASTFM_.LASTFMCHECK:
+        DEFAULT_BIO = (gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾")
         try:
             if LASTFM_.USER_ID == 0:
                 LASTFM_.USER_ID = (await lfmbio.client.get_me()).id
             user_info = await doge(GetFullUserRequest(LASTFM_.USER_ID))
             LASTFM_.RUNNING = True
-            playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
+            playing = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing()
             LASTFM_.SONG = playing.get_title()
             LASTFM_.ARTIST = playing.get_artist()
             oldsong = environ.get("oldsong", None)
@@ -123,8 +119,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             ):
                 environ["oldsong"] = str(LASTFM_.SONG)
                 environ["oldartist"] = str(LASTFM_.ARTIST)
-                if BIO_PREFIX:
-                    lfmbio = f"{BIO_PREFIX} 🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
+                if gvar("BIO_PREFIX"):
+                    lfmbio = f"{gvar('BIO_PREFIX')} 🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
                 else:
                     lfmbio = f"🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
                 try:
@@ -182,25 +178,25 @@ async def last_fm(lastFM):
     ".lastfm command, fetch scrobble data from last.fm."
     await lastFM.edit("**⏳ Processing...**")
     preview = None
-    playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-    username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
+    playing = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing()
+    username = f"https://www.last.fm/user/{gvar('LASTFM_USERNAME')}"
     if playing is not None:
         try:
-            image = User(LASTFM_USERNAME, lastfm).get_now_playing().get_cover_image()
+            image = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing().get_cover_image()
         except IndexError:
             image = None
         tags = await gettags(isNowPlaying=True, playing=playing)
         rectrack = quote(f"{playing}")
         rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
         if image:
-            output = f"[‎]({image})[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[‎]({image})[{gvar('LASTFM_USERNAME')}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
             preview = True
         else:
-            output = f"[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[{gvar('LASTFM_USERNAME')}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
     else:
-        recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
-        playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-        output = f"[{LASTFM_USERNAME}]({username}) __was last listening to:__\n\n"
+        recent = User(gvar("LASTFM_USERNAME"), lastfm).get_recent_tracks(limit=3)
+        playing = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing()
+        output = f"[{gvar('LASTFM_USERNAME')}]({username}) __was last listening to:__\n\n"
         for i, track in enumerate(recent):
             LOGS.info(i)
             printable = await artist_and_song(track)
@@ -279,6 +275,7 @@ async def lastbio(lfmbio):
         else:
             await lfmbio.edit(LFM_BIO_RUNNING)
     elif arg == "off":
+        DEFAULT_BIO = (gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾")
         LASTFM_.LASTFMCHECK = False
         LASTFM_.RUNNING = False
         await lfmbio.client(UpdateProfileRequest(about=DEFAULT_BIO))

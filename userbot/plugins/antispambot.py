@@ -16,13 +16,13 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import ANTISPAMBOT_BAN, BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, logging
+from . import BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, gvar, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
 
-if ANTISPAMBOT_BAN == True:
+if gvar("ANTISPAMBOT_BAN") == "True":
 
     @doge.on(ChatAction())
     async def anti_spambot(event):  # sourcery no-metrics

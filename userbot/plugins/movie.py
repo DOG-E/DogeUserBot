@@ -13,11 +13,11 @@ from justwatch import JustWatch, justwatchapi
 from pySmartDL import SmartDL
 
 from . import (
-    WATCH_COUNTRY,
     doge,
     eor,
     get_cast,
     get_moviecollections,
+    gvar,
     imdb,
     logging,
     mov_titles,
@@ -37,7 +37,7 @@ def get_stream_data(query):
     stream_data = {}
     # Compatibility for Current Userge Users
     try:
-        country = WATCH_COUNTRY
+        country = gvar("WATCH_COUNTRY")
     except Exception:
         country = "TR"
     # Cooking Data

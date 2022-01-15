@@ -88,34 +88,12 @@ SUDO_LIST = {}
 
 
 # OWNER:
-ALIVE_NAME = gvar("ALIVE_NAME")
-AUTONAME = gvar("AUTONAME")
-
-BIO_PREFIX = gvar("BIO_PREFIX")
-DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
-
-if gvar("OWNER_ID") is not None:
-    OWNER_ID = int(gvar("OWNER_ID"))
-    hmention = f"<a href = tg://user?id={OWNER_ID}>{ALIVE_NAME}</a>"
-    mention = f"[{ALIVE_NAME}](tg://user?id={OWNER_ID})"
-
-TELEGRAPH_SHORT_NAME = gvar("TELEGRAPH_SHORT_NAME") or "@DogeUserBot"
-
-
-# ASSISTANT BOT:
-BOT_USERNAME = gvar("BOT_USERNAME")
+hmention = f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
+mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={int(gvar('OWNER_ID'))})"
 
 
 # VARIABLES:
-ANTISPAMBOT_BAN = gvar("ANTISPAMBOT_BAN")
-
-CHANGE_TIME = gvar("CHANGE_TIME") or "60"
-
 tr = gvar("CMDSET") or "."
-
-WATCH_COUNTRY = gvar("WATCH_COUNTRY")
-
-WEATHER_CITY = gvar("WEATHER_CITY") or "Istanbul"
 
 
 # CHANNEL & GROUP IDS:
@@ -125,51 +103,13 @@ PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 
 
 # API VARS:
-CURRENCY_API = gvar("CURRENCY_API")
-
-DEEPAI_API = gvar("DEEPAI_API")
-
-G_DRIVE_CLIENT_ID = gvar("G_DRIVE_CLIENT_ID")
-G_DRIVE_CLIENT_SECRET = gvar("G_DRIVE_CLIENT_SECRET")
-G_DRIVE_DATA = gvar("G_DRIVE_DATA")
 G_DRIVE_FOLDER_ID = gvar("G_DRIVE_FOLDER_ID")
-G_DRIVE_INDEX_LINK = gvar("G_DRIVE_INDEX_LINK")
-
-GENIUS_API = gvar("GENIUS_API")
-
-GITHUB_ACCESS_TOKEN = gvar("GITHUB_ACCESS_TOKEN")
-GIT_REPO_NAME = gvar("GIT_REPO_NAME")
-
-IBM_WATSON_CRED_URL = gvar("IBM_WATSON_CRED_URL")
-IBM_WATSON_CRED_PASSWORD = gvar("IBM_WATSON_CRED_PASSWORD")
-
-IPDATA_API = gvar("IPDATA_API")
-
-LASTFM_API = gvar("LASTFM_API")
-LASTFM_SECRET = gvar("LASTFM_SECRET")
-LASTFM_USERNAME = gvar("LASTFM_USERNAME")
-LASTFM_PASSWORD_PLAIN = gvar("LASTFM_PASSWORD_PLAIN")
-
-OCRSPACE_API = gvar("OCRSPACE_API")
-
-RANDOMSTUFF_API = gvar("RANDOMSTUFF_API")
-
-REMOVEBG_API = gvar("REMOVEBG_API")
 
 if gvar("SPAMWATCH_API"):
     token = gvar("SPAMWATCH_API")
     SPAMWATCH = spamwclient(token)
 else:
     SPAMWATCH = None
-
-SPOTIFY_DC = gvar("SPOTIFY_DC")
-SPOTIFY_KEY = gvar("SPOTIFY_KEY")
-
-SS_API = gvar("SS_API")
-
-TG_2STEP_VERIFICATION_CODE = gvar("TG_2STEP_VERIFICATION_CODE")
-
-WEATHER_API = gvar("WEATHER_API") or "6fded1e1c5ef3f394283e3013a597879"
 
 
 # HEROKU:

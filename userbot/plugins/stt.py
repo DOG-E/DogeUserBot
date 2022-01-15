@@ -15,13 +15,12 @@ from requests import post
 from telethon.events import MessageEdited
 
 from . import (
-    IBM_WATSON_CRED_PASSWORD,
-    IBM_WATSON_CRED_URL,
     TEMP_DIR,
     doge,
     edl,
     eor,
     fsmessage,
+    gvar,
     media_type,
     newmsgres,
 )
@@ -74,7 +73,7 @@ async def _(event):
             await conv.cancel_all()
 
     except BaseException:
-        if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
+        if gvar("IBM_WATSON_CRED_URL") is None or gvar("IBM_WATSON_CRED_PASSWORD") is None:
             return await edl(
                 event,
                 "`You need to set the required ENV variables for this module.\nModule stopping`",
@@ -98,10 +97,10 @@ async def _(event):
         }
         data = open(required_file_name, "rb").read()
         response = post(
-            IBM_WATSON_CRED_URL + "/v1/recognize",
+            gvar("IBM_WATSON_CRED_URL") + "/v1/recognize",
             headers=headers,
             data=data,
-            auth=("apikey", IBM_WATSON_CRED_PASSWORD),
+            auth=("apikey", gvar("IBM_WATSON_CRED_PASSWORD")),
         )
         r = response.json()
         if "results" not in r:

@@ -15,13 +15,13 @@ from telegraph.exceptions import TelegraphException
 from telethon.tl.functions.users import GetFullUserRequest
 
 from . import (
-    ALIVE_NAME,
     _dogetools,
     convert_toimage,
     deEmojify,
     doge,
     edl,
     eor,
+    gvar,
     phcomment,
     reply_id,
     threats,
@@ -188,7 +188,7 @@ async def dogbot(event):
         username = getuser.user.first_name
     elif input_str:
         text = input_str
-        username = ALIVE_NAME
+        username = gvar("ALIVE_NAME")
     elif not input_str:
         return await edl(
             event,

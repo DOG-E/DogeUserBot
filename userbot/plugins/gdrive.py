@@ -37,11 +37,7 @@ from ..sql_helper import google_drive_sql as helper
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    G_DRIVE_CLIENT_ID,
-    G_DRIVE_CLIENT_SECRET,
-    G_DRIVE_DATA,
     G_DRIVE_FOLDER_ID,
-    G_DRIVE_INDEX_LINK,
     TMP_DOWNLOAD_DIRECTORY,
     CancelProcess,
     Config,
@@ -49,6 +45,7 @@ from . import (
     doge,
     edl,
     eor,
+    gvar,
     humanbytes,
     logging,
     progress,
@@ -111,8 +108,6 @@ thumb_image_path = osp.join(TMP_DOWNLOAD_DIRECTORY, "/thumb_image.jpg")
 GDRIVE_ID = compile(
     r"https://drive.google.com/[\w\?\./&=]+([-\w]{33}|(?<=[/=])0(?:A[-\w]{17}|B[-\w]{26}))"
 )
-
-
 G_DRIVE_FILE_LINK = "📄 [{}](https://drive.google.com/open?id={}) __({})__"
 G_DRIVE_FOLDER_LINK = "📁 [{}](https://drive.google.com/drive/folders/{})"
 
@@ -749,9 +744,9 @@ async def get_output(service, file_id):
         out = G_DRIVE_FOLDER_LINK.format(file_name, file_id)
     else:
         out = G_DRIVE_FILE_LINK.format(file_name, file_id, file_size)
-    if G_DRIVE_INDEX_LINK:
+    if gvar("G_DRIVE_INDEX_LINK"):
         link = osp.join(
-            G_DRIVE_INDEX_LINK.rstrip("/"),
+            gvar("G_DRIVE_INDEX_LINK").rstrip("/"),
             quote(get_file_path(service, file_id, file_name)),
         )
         if mime_type == "application/vnd.google-apps.folder":
@@ -943,9 +938,9 @@ async def generate_credentials(gdrive):
         await gdrive.delete()
         return False
     """Generate credentials"""
-    if G_DRIVE_DATA is not None:
+    if gvar("G_DRIVE_DATA") is not None:
         try:
-            configs = loads(G_DRIVE_DATA)
+            configs = loads(gvar("G_DRIVE_DATA"))
         except JSONDecodeError:
             await eor(
                 gdrive,
@@ -956,7 +951,7 @@ async def generate_credentials(gdrive):
             return False
     else:
         """Only for old user"""
-        if G_DRIVE_CLIENT_ID is None and G_DRIVE_CLIENT_SECRET is None:
+        if gvar("G_DRIVE_CLIENT_ID") is None and gvar("G_DRIVE_CLIENT_SECRET") is None:
             await eor(
                 gdrive,
                 "**AUTHENTICATE - ERROR**\n\n"
@@ -966,8 +961,8 @@ async def generate_credentials(gdrive):
             return False
         configs = {
             "installed": {
-                "client_id": G_DRIVE_CLIENT_ID,
-                "client_secret": G_DRIVE_CLIENT_SECRET,
+                "client_id": gvar("G_DRIVE_CLIENT_ID"),
+                "client_secret": gvar("G_DRIVE_CLIENT_SECRET"),
                 "auth_uri": GOOGLE_AUTH_URI,
                 "token_uri": GOOGLE_TOKEN_URI,
             }

@@ -22,7 +22,6 @@ from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_input_location, pack_bot_file_id
 
 from . import (
-    IPDATA_API,
     SPAMWATCH,
     TEMP_DIR,
     TMP_DOWNLOAD_DIRECTORY,
@@ -32,6 +31,7 @@ from . import (
     eor,
     fsmessage,
     get_user_from_event,
+    gvar,
     humanbytes,
     inline_mention,
     logging,
@@ -901,13 +901,13 @@ async def spy(event):
     if not inpt:
         return await edl(event, "**Give an ip address to lookup...**", 20)
     check = "" if inpt == "mine" else inpt
-    if IPDATA_API is None:
+    if gvar("IPDATA_API") is None:
         return await edl(
             event,
             f"**Get an API key from [IPdata](https://dashboard.ipdata.co/sign-up.html) & set var `IPDATA_API` with {tr}setdog**",
             80,
         )
-    url = get(f"https://api.ipdata.co/{check}?api-key={IPDATA_API}")
+    url = get(f"https://api.ipdata.co/{check}?api-key={gvar('IPDATA_API')}")
     r = url.json()
     try:
         return await edl(event, f"**{r['message']}**", 60)

@@ -15,13 +15,13 @@ from re import sub
 from telethon.tl.functions.users import GetFullUserRequest
 
 from . import (
-    ALIVE_NAME,
     changemymind,
     deEmojify,
     doge,
     edl,
     eor,
     fakegs,
+    gvar,
     kannagen,
     magik,
     reply_id,
@@ -188,7 +188,7 @@ async def nekobot(dog):
         text = text
     elif text:
         text = text
-        username = ALIVE_NAME
+        username = gvar("ALIVE_NAME")
     else:
         return await edl(
             dog,

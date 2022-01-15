@@ -19,7 +19,6 @@ from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from ..sql_helper import pmpermit_sql
 from . import (
-    BOT_USERNAME,
     BOTLOG_CHATID,
     _format,
     dgvar,
@@ -37,7 +36,6 @@ from . import (
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
-OWNER_ID = int(gvar("OWNER_ID"))
 
 
 async def do_pm_permit_action(event, chat):  # sourcery no-metrics
@@ -147,7 +145,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     PM_WARNS[str(chat.id)] += 1
     try:
         if gvar("pmmenu") is None:
-            results = await event.client.inline_query(BOT_USERNAME, "pmpermit")
+            results = await event.client.inline_query(gvar('BOT_USERNAME'), "pmpermit")
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
             PM_PIC = gvar("PM_PIC")
@@ -488,7 +486,7 @@ async def you_dm_other(event):
 
 @doge.bot.on(CallbackQuery(data=compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == OWNER_ID:
+    if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = f"""Ok, Now you're accessing the availabe menu of my master, {mention}.
@@ -519,7 +517,7 @@ __Let's make this smooth and let me know why you're here.__
 
 @doge.bot.on(CallbackQuery(data=compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == OWNER_ID:
+    if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. Your request has been registered. Do not spam my master's inbox now. \
@@ -540,7 +538,7 @@ Then we can extend this conversation more but not right now.__"""
 
 @doge.bot.on(CallbackQuery(data=compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == OWNER_ID:
+    if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. I have notified my master about this. When he/she comes comes online\
@@ -561,7 +559,7 @@ async def on_plug_in_callback_query_handler(event):
 
 @doge.bot.on(CallbackQuery(data=compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == OWNER_ID:
+    if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Yaa sure we can have a friendly chat but not right now. we can have this\
@@ -581,7 +579,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
 
 @doge.bot.on(CallbackQuery(data=compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == OWNER_ID:
+    if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = "`███████▄▄███████████▄\

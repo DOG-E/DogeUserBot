@@ -12,7 +12,7 @@
 from os import remove
 from re import compile
 
-from . import BOT_USERNAME, doge, edl, ibuild_keyboard, reply_id
+from . import doge, edl, gvar, ibuild_keyboard, reply_id
 
 plugin_category = "tool"
 # Regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
@@ -24,7 +24,7 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
     command=("bbutton", plugin_category),
     info={
         "h": "Botonlarla(düğme) mesaj oluşturmak için",
-        "note": f"Bunun çalışması için, kullandığınız grup ya da kanalda botunuza ({BOT_USERNAME}) ihtiyacınız var. Varsayılan yazı tipi HTML'dir.",
+        "note": f"Bunun çalışması için, kullandığınız grup ya da kanalda botunuza ({gvar('BOT_USERNAME')}) ihtiyacınız var. Varsayılan yazı tipi HTML'dir.",
         "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
         "u": "{tr}bbutton <yazı> [Butonun Adı](açmak istediğiniz bağlantı)",
         "e": "{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
@@ -103,6 +103,6 @@ async def button(event):
         return await edl(event, "`🔲 Butonda hangi metni kullanmalıyım?`")
 
     doginput = "Inline buttons " + markdown_note
-    results = await event.client.inline_query(BOT_USERNAME, doginput)
+    results = await event.client.inline_query(gvar('BOT_USERNAME'), doginput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
