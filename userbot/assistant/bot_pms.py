@@ -106,7 +106,7 @@ async def bot_start(event):
     my_last = user.last_name if user.last_name else ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
-    if chat.id != int(gvar("OWNER_ID")):
+    if chat.id != int(gvar("OWNER_ID")) or chat.id not in Config.SUDO_USERS:
         customstrmsg = gvar("START_TEXT") or None
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
@@ -191,7 +191,7 @@ async def bot_start(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG,
-                f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilmediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
+                f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilemediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
                 \n\n➡️ Hata Geri Bildirimi: `{e}`",
             )
     except Exception as e:

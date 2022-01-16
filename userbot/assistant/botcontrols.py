@@ -19,6 +19,7 @@ from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
+    Config,
     _format,
     dgvar,
     doge,
@@ -111,6 +112,45 @@ async def bot_help(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
+        )
+
+@doge.shiba_cmd(pattern=f"^/(settings|ayarlar)({gvar('BOT_USERNAME')})?([\s]+)?$")
+async def settings(event):
+    user = await event.get_sender()
+    if user.id != int(gvar("OWNER_ID")) or user.id not in Config.SUDO_USERS:
+        return
+    options = [
+        [
+            Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
+        ],
+        [
+            Button.inline(
+                "🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"
+            ),
+            Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
+        ],
+        [
+            Button.inline("🌐 Dɪʟ", data="langmenu"),
+        ],
+    ]
+    bot_username = gvar("BOT_USERNAME")
+    if bot_username.startswith("@"):
+        new_bot_username = bot_username[-1:]
+    buttons = [
+        [
+            Button.inline(f"Buraya Tıklayın", url=f"https://t.me/{new_bot_username}?start=settings"),
+        ],
+    ]
+    ment = f"[{user.first_name}](tg://user?id={user.id})"
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
+        return event.reply(f"🐾 Selam {ment}! Lütfen ayarlarınızı yapmak için aşağıdaki düğmeye tıklayın.",buttons=buttons)
+    elif event.is_private:
+        await event.reply(
+            f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+            \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+            \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+            buttons=options,
+            link_preview=False,
         )
 
 
