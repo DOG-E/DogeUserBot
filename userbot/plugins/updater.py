@@ -248,9 +248,7 @@ async def upstream(event):
         await push(event, repo, ups_rem, ac_br, txt)
         return
     if changelog == "" and not force_update:
-        await event.edit(
-            "`🐶`** Doge UserBot**` en güncel durumda!`"
-        )
+        await event.edit("`🐶`** Doge UserBot**` en güncel durumda!`")
         return repo.__del__()
     if conf == "" and not force_update:
         await print_changelogs(event, ac_br, changelog)
