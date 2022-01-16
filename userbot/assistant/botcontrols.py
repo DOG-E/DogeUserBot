@@ -70,6 +70,7 @@ async def grup_start(event):
     incoming=True,
     func=lambda e: e.is_group,
 )
+@sudo_owner()
 async def grup_start(event):
     await event.get_chat()
     user = await doge.get_me()
