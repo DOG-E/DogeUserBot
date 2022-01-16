@@ -70,13 +70,14 @@ async def grup_start(event):
 )
 @check_owner
 async def grup_start(event):
+    chat = await event.get_chat()
     user = await doge.get_me()
     await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     buttons = [
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
     ]
-    if not event.is_private and event.chat_id == BOTLOG_CHATID:
+    if not event.is_private and chat.id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
