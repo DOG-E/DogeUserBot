@@ -60,7 +60,7 @@ async def settings(event):
             Button.inline("🌐 Dɪʟ", data="langmenu"),
         ],
     ]
-    if not event.is_private and event.chat_id == BOTLOG:
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
         return await event.answer(
             f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=True
         )

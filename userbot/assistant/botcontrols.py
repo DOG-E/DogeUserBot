@@ -12,6 +12,8 @@ from datetime import datetime
 from telethon import Button
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
+from userbot.core.decorators import check_owner
+
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from . import (
@@ -39,22 +41,20 @@ from .botmanagers import (
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
-
+# denemeler için kısa süreliğine var silenecek
 @doge.shiba_cmd(
-    pattern=f"^/start({gvar('BOT_USERNAME')})?([\s]+)?$",
+    pattern=f"^/(a)$",
     incoming=True,
     func=lambda e: e.is_group,
-    from_users=int(gvar("OWNER_ID")),
-)
+    from_user=int(gvar("OWNER_ID")))
 async def grup_start(event):
     user = await doge.get_me()
     await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     buttons = [
         (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
     ]
-    if not event.is_private:  # and chat.id == BOTLOG_CHATID:
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
@@ -63,32 +63,57 @@ async def grup_start(event):
         )
 
 
-@doge.shiba_cmd(pattern="^/(help|yardim)$", from_users=int(gvar("OWNER_ID")))
+@doge.shiba_cmd(
+    pattern=f"^/(start|ba[sş]lat)$",
+    incoming=True,
+    func=lambda e: e.is_group,
+)
+@check_owner
+async def grup_start(event):
+    user = await doge.get_me()
+    await event.get_chat()
+    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
+    buttons = [
+        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+    ]
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
+        await event.reply(
+            f"**🐶 Hey!\
+        \n🐾 Merhaba {my_mention}!\n\
+        \n💬 Sana nasıl yardımcı olabilirim?**",
+            buttons=buttons,
+        )
+
+
+@doge.shiba_cmd(pattern="^/(help|yardim)$")
+@check_owner
 async def bot_help(event):
-    await event.reply(
-        f"""🐾 Botun Tüm Komutlar:
-**Nᴏᴛ:** __Buradaki tüm komular yalnızca bu bot için çalışır!:__ {gvar('BOT_USERNAME')}
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
+        await event.reply(
+            f"""🐾 Botun Tüm Komutlar:
+    **Nᴏᴛ:** __Buradaki tüm komular yalnızca bu bot için çalışır!:__ {gvar('BOT_USERNAME')}
 
-• **Kᴏᴍᴜᴛ:** /uinfo ya da /kbilgi <kullanıcının mesajını yanıtlayarak>
-• **Bɪʟɢɪ:** __İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.__
-• **Nᴏᴛ:** __Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!__
+    • **Kᴏᴍᴜᴛ:** /uinfo ya da /kbilgi <kullanıcının mesajını yanıtlayarak>
+    • **Bɪʟɢɪ:** __İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.__
+    • **Nᴏᴛ:** __Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!__
 
-• **Kᴏᴍᴜᴛ:** /ban ya da /yasakla <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-• **Bɪʟɢɪ:** __Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.__
-• **Nᴏᴛ:** __Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.__
+    • **Kᴏᴍᴜᴛ:** /ban ya da /yasakla <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+    • **Bɪʟɢɪ:** __Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.__
+    • **Nᴏᴛ:** __Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.__
 
-• **Kᴏᴍᴜᴛ:** /unban ya da /yasakac <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-• **Bɪʟɢɪ:** __Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.__
-• **Nᴏᴛ:** __Yasaklananlar listesini görmek için `{tr}botbans` ya da `{tr}yasaklananlar` komutunu kullanın.__
+    • **Kᴏᴍᴜᴛ:** /unban ya da /yasakac <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+    • **Bɪʟɢɪ:** __Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.__
+    • **Nᴏᴛ:** __Yasaklananlar listesini görmek için `{tr}botbans` ya da `{tr}yasaklananlar` komutunu kullanın.__
 
-• **Kᴏᴍᴜᴛ:** /broadcast - /yayin
-• **Bɪʟɢɪ:** __Botunu kullananan kullanıcıların listesini görmek için `{tr}botusers` ya da `{tr}kullanicilar` komutunu kullanın__
-• **Nᴏᴛ:** __Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir.__
-"""
-    )
+    • **Kᴏᴍᴜᴛ:** /broadcast - /yayin
+    • **Bɪʟɢɪ:** __Botunu kullananan kullanıcıların listesini görmek için `{tr}botusers` ya da `{tr}kullanicilar` komutunu kullanın__
+    • **Nᴏᴛ:** __Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir.__
+    """
+        )
 
 
-@doge.shiba_cmd(pattern="^/(broadcast|yayin)$", from_users=int(gvar("OWNER_ID")))
+@doge.shiba_cmd(pattern="^/(broadcast|yayin)$")
+@check_owner
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -165,6 +190,7 @@ async def bot_broadcast(event):
         "u": ["{tr}botusers", "{tr}kullanıcılar"],
     },
 )
+@check_owner
 async def ban_starters(event):
     "Botu başlatan kullanıcıların listesini almak için."
     ulist = get_all_starters()
@@ -183,8 +209,8 @@ async def ban_starters(event):
 
 
 @doge.shiba_cmd(
-    pattern="^/(ban|yasakla)\\s+([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
-)
+    pattern="^/(ban|yasakla)\\s+([\\s\\S]*)")
+@check_owner
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -226,8 +252,8 @@ async def ban_botpms(event):
 
 
 @doge.shiba_cmd(
-    pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)", from_users=int(gvar("OWNER_ID"))
-)
+    pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)")
+@check_owner
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -255,7 +281,7 @@ async def ban_botpms(event):
 
 
 @doge.bot_cmd(
-    pattern="(botbans|yasaklilar)$",
+    pattern="(botbans|yasakl[iı]lar)$",
     command=("botbans", plugin_category),
     info={
         "h": "Bottan yasaklanan kullanıcılar listesini almak için.",
