@@ -16,8 +16,6 @@ from telethon.events import CallbackQuery
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
 from validators.url import url
 
-from userbot import BOTLOG
-
 from ..core.logger import logging
 from ..helpers import resize_image
 from ..utils import add_bot_to_logger_group, create_channel, create_supergroup

@@ -46,7 +46,8 @@ LOGS = logging.getLogger(__name__)
     pattern=f"^/(a)$",
     incoming=True,
     func=lambda e: e.is_group,
-    from_user=int(gvar("OWNER_ID")))
+    from_user=int(gvar("OWNER_ID")),
+)
 async def grup_start(event):
     user = await doge.get_me()
     await event.get_chat()
@@ -209,8 +210,7 @@ async def ban_starters(event):
     await eor(event, msg)
 
 
-@doge.shiba_cmd(
-    pattern="^/(ban|yasakla)\\s+([\\s\\S]*)")
+@doge.shiba_cmd(pattern="^/(ban|yasakla)\\s+([\\s\\S]*)")
 @check_owner
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
@@ -252,8 +252,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.shiba_cmd(
-    pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)")
+@doge.shiba_cmd(pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)")
 @check_owner
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)

@@ -669,6 +669,7 @@ async def hmm(dog):
     "Some random facts"
     await eor(dog, fact())
 
+
 """
 @doge.bot_cmd(
     pattern="^\:/$",
@@ -723,6 +724,7 @@ async def fun(e):
         t = t[:-1] + "_;"
         await e.edit(t)
 """
+
 
 @doge.bot_cmd(
     pattern="oof$",
