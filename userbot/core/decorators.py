@@ -13,10 +13,10 @@ from telethon.events import CallbackQuery
 
 from ..Config import Config
 from ..sql_helper.globals import gvar
-
 from .logger import logging
 
 LOGS = logging.getLogger(__name__)
+
 
 def check_owner(func):
     async def wrapper(c_q: CallbackQuery):
@@ -43,6 +43,7 @@ def check_owner(func):
 
 def sudo_owner(func):
     LOGS.info(f" sudo_owner Altı Logu func alınacak: {func}")
+
     async def wrapper(event):
         LOGS.info(f" Wrapper Altı Logu event alınacak: {event}")
         if event.user_id and (
@@ -50,7 +51,9 @@ def sudo_owner(func):
         ):
             try:
                 await func(event)
-                LOGS.info(f" await func(event) Altı Logu func(event) alınacak: {func(event)}")
+                LOGS.info(
+                    f" await func(event) Altı Logu func(event) alınacak: {func(event)}"
+                )
             except FloodWaitError as e:
                 await sleep(e.seconds + 5)
             except MessageNotModifiedError:
