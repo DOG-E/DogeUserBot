@@ -30,7 +30,7 @@ from telethon.errors import (
 
 from ..Config import Config
 from ..helpers.utils.events import checking, get_message_link
-from ..helpers.utils.format import paste_message, parse_id
+from ..helpers.utils.format import parse_id, paste_message
 from ..sql_helper.globals import gvar
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about

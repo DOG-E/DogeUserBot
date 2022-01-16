@@ -6,8 +6,8 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from sys import argv
 from asyncio import sleep
+from sys import argv
 
 import userbot
 

@@ -421,9 +421,7 @@ async def startmute(event):
         if flag:
             return
         if is_muted(user_id, event.chat_id):
-            return await eor(
-                event, "**Bu kullanıcı zaten susturulmuş!**"
-            )
+            return await eor(event, "**Bu kullanıcı zaten susturulmuş!**")
         result = await event.client.get_permissions(event.chat_id, user.id)
         try:
             if result.participant.banned_rights.send_messages:

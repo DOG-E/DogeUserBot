@@ -36,15 +36,18 @@ def check_owner(func):
                 or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 Hey! Sen benim sahibim değilsin!.\n\n🐕‍🦺 Kendine bir @DogeUserBot sahiplen!"
             )
             await c_q.answer(HELP_TEXT, alert=True)
+
     return wrapper
 
 
 def sudo_owner(func):
     LOGS.info(f" sudo_owner Altı Logu func alınacak: {func}")
+
     async def wrapper(event):
         LOGS.info(f" Wrapper Altı Logu event alınacak: {event}")
         if event.sender_id and (
-            event.sender_id == int(gvar("OWNER_ID")) or event.sender_id in Config.SUDO_USERS
+            event.sender_id == int(gvar("OWNER_ID"))
+            or event.sender_id in Config.SUDO_USERS
         ):
             try:
                 await func(event)
@@ -57,4 +60,5 @@ def sudo_owner(func):
                 pass
         else:
             return
+
     return wrapper
