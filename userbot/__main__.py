@@ -104,9 +104,9 @@ async def startup_process():
         )
 
     await startupmessage()
-    LOGS.info("🐶 %100 ~ DOGE USERBOT HAZIR!\n\n\n\n\n\n")
     await sleep(3)
 
+    LOGS.info("🐶 %100 ~ DOGE USERBOT HAZIR!\n\n\n\n\n\n\n")
     LOGS.info(userbot.__copyright__)
     LOGS.info(userbot.__license__ + " ile korunmaktadır.")
     LOGS.info(

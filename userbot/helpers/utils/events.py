@@ -169,14 +169,6 @@ async def get_message_link(client, event):
     return f"https://t.me/c/{chat.id}/{event.id}"
 
 
-async def parse_id(self, text):
-    try:
-        text = int(text)
-    except ValueError:
-        pass
-    return await self.get_peer_id(text)
-
-
 async def reply_id(event):
     reply_to_id = None
     if event.sender_id in Config.SUDO_USERS:
