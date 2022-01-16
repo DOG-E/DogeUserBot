@@ -88,7 +88,7 @@ async def grup_start(event):
         \nBOTLOG_CHATID = {BOTLOG_CHATID}\n\
         \nevent.chat_id = {event.chat_id}",
             buttons=buttons,
-        ))
+        )
 
 
 @doge.shiba_cmd(pattern="^/(help|yardim)$")
