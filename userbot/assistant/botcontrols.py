@@ -40,12 +40,12 @@ plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 
-
 @doge.shiba_cmd(
     pattern=f"^/start({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_group,
-    from_users=int(gvar("OWNER_ID")))
+    from_users=int(gvar("OWNER_ID")),
+)
 async def grup_start(event):
     user = await doge.get_me()
     chat = await event.get_chat()
