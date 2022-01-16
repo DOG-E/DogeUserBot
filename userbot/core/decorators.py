@@ -41,8 +41,7 @@ def check_owner(func):
 def sudo_owner(func):
     async def wrapper(event):
         if event.user_id and (
-            event.user_id == int(gvar("OWNER_ID"))
-            or event.user_id in Config.SUDO_USERS
+            event.user_id == int(gvar("OWNER_ID")) or event.user_id in Config.SUDO_USERS
         ):
             try:
                 await func(event)
@@ -52,4 +51,5 @@ def sudo_owner(func):
                 pass
         else:
             return
+
     return wrapper
