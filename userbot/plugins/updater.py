@@ -254,7 +254,7 @@ async def upstream(event):
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            f"**Komut:**\n\n[ `{tr}update push` ] > deploy ile güncellemer\n[ `{tr}update pull` ] > şimdi günceller"
+            f"**Komut:**\n\n[ `{tr}update push` ] > Deploy ile günceller...\n[ `{tr}update pull` ] > Şimdi günceller.."
         )
 
     if force_update:
