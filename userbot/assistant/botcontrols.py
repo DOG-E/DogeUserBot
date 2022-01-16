@@ -87,7 +87,7 @@ async def grup_start(event):
         )
 
 
-@doge.shiba_cmd(pattern="^/(help|yardim)$")
+@doge.shiba_cmd(pattern=f"^/(help|yard[ıi]m)({gvar('BOT_USERNAME')})?([\s]+)?$")
 async def bot_help(event):
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
@@ -113,7 +113,7 @@ async def bot_help(event):
         )
 
 
-@doge.shiba_cmd(pattern="^/(broadcast|yayin)$")
+@doge.shiba_cmd(pattern=f"^/(broadcast|yay[ıi]n)({gvar('BOT_USERNAME')})?([\s]+)?$")
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -182,7 +182,7 @@ async def bot_broadcast(event):
 
 
 @doge.bot_cmd(
-    pattern="(botusers|kullan[iı]c[iı]lar)$",
+    pattern=f"^/(botusers|kullan[ıi]c[ıi]lar)({gvar('BOT_USERNAME')})?([\s]+)?$",
     command=("botusers", plugin_category),
     info={
         "h": "Botu başlatan kullanıcıların listesini almak için.",
@@ -190,7 +190,6 @@ async def bot_broadcast(event):
         "u": ["{tr}botusers", "{tr}kullanıcılar"],
     },
 )
-@check_owner
 async def ban_starters(event):
     "Botu başlatan kullanıcıların listesini almak için."
     ulist = get_all_starters()
@@ -208,8 +207,7 @@ async def ban_starters(event):
     await eor(event, msg)
 
 
-@doge.shiba_cmd(pattern="^/(ban|yasakla)\\s+([\\s\\S]*)")
-@check_owner
+@doge.shiba_cmd(pattern="^/(ban|yasakla)({gvar('BOT_USERNAME')})?([\s]+)?\\s+([\\s\\S]*)")
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -250,8 +248,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.shiba_cmd(pattern="^/(unban|yasakac)(?:\\s|$)([\\s\\S]*)")
-@check_owner
+@doge.shiba_cmd(pattern="^/(unban|yasakac)({gvar('BOT_USERNAME')})?([\s]+)?(?:\\s|$)([\\s\\S]*)")
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
