@@ -91,7 +91,8 @@ async def pull(event, repo, ups_rem, ac_br):
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
     dogevent = await event.edit(
-        "`Güncelleme başarıyla tamamlandı!\n" "Bot yeniden başlatılıyor... Lütfen bekleyin!`"
+        "`Güncelleme başarıyla tamamlandı!\n"
+        "Bot yeniden başlatılıyor... Lütfen bekleyin!`"
     )
     await event.client.reload(dogevent)
 
@@ -115,7 +116,8 @@ async def push(event, repo, ups_rem, ac_br, txt):
             break
     if heroku_app is None:
         await event.edit(
-            f"{txt}\n" "`DogeUserBot'unuzu deploy etmek için ayarlanan Heroku dyno kimlik bilgileri yanlış!.`"
+            f"{txt}\n"
+            "`DogeUserBot'unuzu deploy etmek için ayarlanan Heroku dyno kimlik bilgileri yanlış!.`"
         )
         return repo.__del__()
     dogevent = await event.edit(
@@ -150,14 +152,18 @@ async def push(event, repo, ups_rem, ac_br, txt):
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
         return await edl(
-            event, "`Yapılandırma iptal edildi! ❌\n" "Kullanıcı tarafından iptal edildi ya da bazı hatalar oluştu...`"
+            event,
+            "`Yapılandırma iptal edildi! ❌\n"
+            "Kullanıcı tarafından iptal edildi ya da bazı hatalar oluştu...`",
         )
     try:
         remote.push("master:main", force=True)
     except Exception as error:
         await event.edit(f"{txt}\n*Hata log'unuz burada:**\n`{error}`")
         return repo.__del__()
-    await event.edit("`Deploy edilirken hata oluştu! Bu yüzden yeniden başlatılarak güncelleniyor!`")
+    await event.edit(
+        "`Deploy edilirken hata oluştu! Bu yüzden yeniden başlatılarak güncelleniyor!`"
+    )
     dgvar("ipaddress")
     try:
         await event.client.disconnect()
@@ -191,7 +197,9 @@ async def upstream(event):
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await eor(event, "`Botu güncellemek için önce gerekli değerleri ayarlayın`")
+        return await eor(
+            event, "`Botu güncellemek için önce gerekli değerleri ayarlayın`"
+        )
     try:
         txt = "`Ops... Hata! Güncelleme şu nedenle devam edemiyor: "
         txt += "bazı sorunlar oluştu:`\n\n**LOGTRACE:**\n"
@@ -252,7 +260,9 @@ async def upstream(event):
         )
 
     if force_update:
-        await event.edit("`Son yol olarak, bot kodları zorunlu-güncelleştirme uyhulanıyor.`")
+        await event.edit(
+            "`Son yol olarak, bot kodları zorunlu-güncelleştirme uyhulanıyor.`"
+        )
     if conf == "pull":
         await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")
         await pull(event, repo, ups_rem, ac_br)
