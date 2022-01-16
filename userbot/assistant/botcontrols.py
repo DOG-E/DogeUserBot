@@ -66,7 +66,7 @@ async def grup_start(event):
 
 
 @doge.shiba_cmd(
-    pattern=f"^/(start|ba[sş]lat)$",
+    pattern=f"^/(start|ba[sş]lat(|{gvar('BOT_USERNAME')}))$",
     incoming=True,
     func=lambda e: e.is_group,
 )
