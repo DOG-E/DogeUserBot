@@ -249,7 +249,7 @@ async def upstream(event):
         return
     if changelog == "" and not force_update:
         await event.edit(
-            "\n`Doge is`  **up-to-date**  `with`  " f"**{UPSTREAM_REPO_BRANCH}**\n"
+            "`🐶`** Doge UserBot**` en güncel durumda!`"
         )
         return repo.__del__()
     if conf == "" and not force_update:
@@ -261,7 +261,7 @@ async def upstream(event):
 
     if force_update:
         await event.edit(
-            "`Son yol olarak, bot kodları zorunlu-güncelleştirme uyhulanıyor.`"
+            "`Son yol olarak, bot kodlarına zorunlu-güncelleştirme uyhulanıyor.`"
         )
     if conf == "pull":
         await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")

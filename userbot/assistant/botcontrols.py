@@ -43,10 +43,9 @@ LOGS = logging.getLogger(__name__)
 
 # denemeler için kısa süreliğine var silenecek
 @doge.shiba_cmd(
-    pattern=f"^/(a)$",
+    pattern=f"^/(aylak|a)$",
     incoming=True,
     func=lambda e: e.is_group,
-    from_user=int(gvar("OWNER_ID")),
 )
 async def grup_start(event):
     user = await doge.get_me()
@@ -71,7 +70,6 @@ async def grup_start(event):
     incoming=True,
     func=lambda e: e.is_group,
 )
-@check_owner
 async def grup_start(event):
     await event.get_chat()
     user = await doge.get_me()
@@ -84,37 +82,34 @@ async def grup_start(event):
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
-        \n💬 Bu bir test mesajıdır**\n\
-        \nBOTLOG_CHATID = {BOTLOG_CHATID}\n\
-        \nevent.chat_id = {event.chat_id}",
+        \n💬 Sana nasıl yardımcı olabilirim?**\n",
             buttons=buttons,
         )
 
 
 @doge.shiba_cmd(pattern="^/(help|yardim)$")
-@check_owner
 async def bot_help(event):
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
-            f"""🐾 Botun Tüm Komutlar:
-    **Nᴏᴛ:** __Buradaki tüm komular yalnızca bu bot için çalışır!:__ {gvar('BOT_USERNAME')}
+            f"""🐶 **Botun Komutları:**
 
-    • **Kᴏᴍᴜᴛ:** /uinfo ya da /kbilgi <kullanıcının mesajını yanıtlayarak>
-    • **Bɪʟɢɪ:** __İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.__
-    • **Nᴏᴛ:** __Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!__
+🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
 
-    • **Kᴏᴍᴜᴛ:** /ban ya da /yasakla <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-    • **Bɪʟɢɪ:** __Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.__
-    • **Nᴏᴛ:** __Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.__
+🕹 **Kᴏᴍᴜᴛ:** `/uinfo` ya da `/kbilgi` <kullanıcının mesajını yanıtlayarak>
+📄 **Bɪʟɢɪ:** İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.
+📍 **Nᴏᴛ:** Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!
 
-    • **Kᴏᴍᴜᴛ:** /unban ya da /yasakac <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-    • **Bɪʟɢɪ:** __Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.__
-    • **Nᴏᴛ:** __Yasaklananlar listesini görmek için `{tr}botbans` ya da `{tr}yasaklananlar` komutunu kullanın.__
+🕹 **Kᴏᴍᴜᴛ:** `/ban` ya da `/yasakla` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+📄 **Bɪʟɢɪ:** Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.
+📍 **Nᴏᴛ:** Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.
 
-    • **Kᴏᴍᴜᴛ:** /broadcast - /yayin
-    • **Bɪʟɢɪ:** __Botunu kullananan kullanıcıların listesini görmek için `{tr}botusers` ya da `{tr}kullanicilar` komutunu kullanın__
-    • **Nᴏᴛ:** __Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir.__
-    """
+🕹 **Kᴏᴍᴜᴛ:** `/unban` ya da `/yasakac` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+📄 **Bɪʟɢɪ:** Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.
+📍 **Nᴏᴛ:** Yasaklananlar listesini görmek için `.botbans` ya da `.yasaklananlar` komutunu kullanın.
+
+🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
+📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
+📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
         )
 
 
