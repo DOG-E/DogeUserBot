@@ -19,8 +19,8 @@ from youtube_dl.utils import DownloadError, ExtractorError, GeoRestrictedError
 from youtubesearchpython import VideosSearch
 
 from ...Config import Config
-from ...core import pool
 from ...core.logger import logging
+from ...core.pool import run_in_thread
 from ..aiohttp_helper import AioHttp
 from ..progress import humanbytes
 from .functions import sublists
@@ -210,7 +210,7 @@ def yt_search_btns(
     return buttons
 
 
-@pool.run_in_thread
+@run_in_thread
 def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     try:
         vid_data = YoutubeDL({"no-playlist": True}).extract_info(
@@ -280,7 +280,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     return buttons
 
 
-@pool.run_in_thread
+@run_in_thread
 def _tubeDl(url: str, starttime, uid: str):
     ydl_opts = {
         "addmetadata": True,
@@ -306,12 +306,12 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(f"🚨 {e}")
     except GeoRestrictedError:
-        LOGS.error(f"**🚨 Hᴀᴛᴀ:** Yükleyici bu videoyu ülkenizde mevcut değildi.")
+        LOGS.error(f"**🚨 Hᴀᴛᴀ:** Bu video ülkenizde mevcut değil.")
     else:
         return x
 
 
-@pool.run_in_thread
+@run_in_thread
 def _mp3Dl(url: str, starttime, uid: str):
     _opts = {
         "outtmpl": path.join(Config.TEMP_DIR, str(starttime), "%(title)s.%(ext)s"),

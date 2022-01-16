@@ -28,7 +28,15 @@ async def paste_message(text, pastetype="p", extension=None, markdown=True, titl
         response = await pastetext(text, pastetype, extension)
         if "url" in response:
             return response["url"]
-        return f"**🚨 Hᴀᴛᴀ:** Siteye metni yapıştırırken bir hata oluştu."
+        return "**🚨 Hᴀᴛᴀ:** Siteye metni yapıştırırken bir hata oluştu."
+
+
+async def parse_id(self, text):
+    try:
+        text = int(text)
+    except ValueError:
+        pass
+    return await self.get_peer_id(text)
 
 
 def md_to_text(md):

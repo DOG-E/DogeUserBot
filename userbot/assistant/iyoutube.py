@@ -24,7 +24,7 @@ from telethon.utils import get_attributes
 from ujson import load
 from wget import download
 
-from ..core import pool
+from ..core.pool import run_in_thread
 from ..helpers.functions.utube import _mp3Dl, _tubeDl
 from . import (
     BOTLOG_CHATID,
@@ -158,7 +158,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
         return await edl(upload_msg, "**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
 
     if not thumb_pic:
-        thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))
+        thumb_pic = str(await run_in_thread(download)(await get_ytthumb(yt_code)))
     attributes, mime_type = get_attributes(str(_fpath))
     ul = iopen(Path(_fpath), "rb")
     uploaded = await c_q.client.fast_upload_file(

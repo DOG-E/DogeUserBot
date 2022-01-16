@@ -459,8 +459,8 @@ async def fetch_info(replied_user, event):
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
         dc_id = "Couldn't fetch DC ID!"
-    m_st_r = await wowcmydev(user_id)
-    g_y = await wowcg_y(user_id)
+    m_st_r = wowcmydev(user_id)
+    g_y = wowcg_y(user_id)
     common_chat = replied_user.common_chats_count
     username = replied_user.user.username
     user_bio = replied_user.about

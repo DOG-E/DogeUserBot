@@ -6,6 +6,8 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
+from typing import Union
+
 from pylists import *
 from telethon.errors import (
     ChannelInvalidError,
@@ -14,23 +16,17 @@ from telethon.errors import (
 )
 from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
-from telethon.tl.types import MessageEntityMentionName
+from telethon.tl.types import Channel, Chat, MessageEntityMentionName, User
+from telethon.utils import get_display_name
 
+from ... import BOTLOG_CHATID
 from ...Config import Config
+from ...core.events import NewMessage
 from ...core.logger import logging
 from ...core.managers import edl
 from ..resources.constants import *
 
 LOGS = logging.getLogger(__name__)
-
-
-async def reply_id(event):
-    reply_to_id = None
-    if event.sender_id in Config.SUDO_USERS:
-        reply_to_id = event.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
-    return reply_to_id
 
 
 async def get_user_from_event(
@@ -95,15 +91,91 @@ async def get_user_from_event(
     return None, None
 
 
-def inline_mention(user):
-    full_name = user_full_name(user) or "No name"
-    return f"[{full_name}](tg://user?id={user.id})"
+async def get_chatinfo(event, dogevent):
+    chat = event.pattern_match.group(1)
+    chat_info = None
+    if chat:
+        try:
+            chat = int(chat)
+        except ValueError:
+            pass
+    if not chat:
+        if event.reply_to_msg_id:
+            replied_msg = await event.get_reply_message()
+            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
+                chat = replied_msg.fwd_from.channel_id
+        else:
+            chat = event.chat_id
+    try:
+        chat_info = await event.client(GetFullChatRequest(chat))
+    except BaseException:
+        try:
+            chat_info = await event.client(GetFullChannelRequest(chat))
+        except ChannelInvalidError:
+            await dogevent.edit("`🚨 Geçersiz kanal veya grup!`")
+            return None
+        except ChannelPrivateError:
+            await dogevent.edit("`🚨 Bu kanal veya grup gizli ya da orada yasaklıyım.`")
+            return None
+        except ChannelPublicGroupNaError:
+            await dogevent.edit("`🚨 Kanal veya grup mevcut değil!`")
+            return None
+        except (TypeError, ValueError) as err:
+            LOGS.info(
+                f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}"
+            )
+            await edl(dogevent, f"**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
+            return None
+    return chat_info
 
 
-def user_full_name(user):
-    names = [user.first_name, user.last_name]
-    names = [i for i in list(names) if i]
-    return " ".join(names)
+async def get_chat_link(
+    arg: Union[User, Chat, Channel, NewMessage.Event], reply=None
+) -> str:
+    if isinstance(arg, (User, Chat, Channel)):
+        entity = arg
+    else:
+        entity = await arg.get_chat()
+
+    if isinstance(entity, User):
+        if entity.is_self:
+            name = '"Kayıtlı Mesajlar"ında'
+        else:
+            name = get_display_name(entity) or "Silinen Hesap?"
+        extra = f"[{name}](tg://user?id={entity.id})"
+    else:
+        if hasattr(entity, "username") and entity.username is not None:
+            username = "@" + entity.username
+        else:
+            username = entity.id
+        if reply is not None:
+            if isinstance(username, str) and username.startswith("@"):
+                username = username[1:]
+            else:
+                username = f"c/{username}"
+            extra = f"[{entity.title}](https://t.me/{username}/{reply})"
+        elif isinstance(username, int):
+            username = f"`{username}`"
+            extra = f"{entity.title} ( {username} )"
+        else:
+            extra = f"[{entity.title}](tg://resolve?domain={username})"
+    return extra
+
+
+async def get_message_link(client, event):
+    chat = await event.get_chat()
+    if event.is_private:
+        return f"tg://openmessage?user_id={chat.id}&message_id={event.id}"
+    return f"https://t.me/c/{chat.id}/{event.id}"
+
+
+async def reply_id(event):
+    reply_to_id = None
+    if event.sender_id in Config.SUDO_USERS:
+        reply_to_id = event.id
+    if event.reply_to_msg_id:
+        reply_to_id = event.reply_to_msg_id
+    return reply_to_id
 
 
 async def checking(doge):
@@ -117,6 +189,12 @@ async def checking(doge):
         await doge(g)
     except BaseException:
         pass
+
+
+def only_botlog(event):
+    if str(event.chat_id) != BOTLOG_CHATID:
+        return False
+    return True
 
 
 async def wowmygroup(event, msg):
@@ -141,49 +219,27 @@ async def wowmydev(user, event):
     return False
 
 
-async def wowcmydev(user):
+def wowcmydev(user):
     if user in M_ST_RS:
         return m_st_rd_v
 
 
-async def wowcg_y(user):
+def wowcg_y(user):
     if user in G_YS:
         return b_ng_y
 
 
-async def get_chatinfo(event, dogevent):
-    chat = event.pattern_match.group(1)
-    chat_info = None
-    if chat:
-        try:
-            chat = int(chat)
-        except ValueError:
-            pass
-    if not chat:
-        if event.reply_to_msg_id:
-            replied_msg = await event.get_reply_message()
-            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
-                chat = replied_msg.fwd_from.channel_id
-        else:
-            chat = event.chat_id
-    try:
-        chat_info = await event.client(GetFullChatRequest(chat))
-    except BaseException:
-        try:
-            chat_info = await event.client(GetFullChannelRequest(chat))
-        except ChannelInvalidError:
-            await dogevent.edit("`🚨 Geçersiz kanal / grup!`")
-            return None
-        except ChannelPrivateError:
-            await dogevent.edit("`🚨 Bu kanal/grup gizli ya da orada yasaklıyım.`")
-            return None
-        except ChannelPublicGroupNaError:
-            await dogevent.edit("`🚨 Kanal veya grup mevcut değil!`")
-            return None
-        except (TypeError, ValueError) as err:
-            LOGS.info(
-                f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}"
-            )
-            await edl(dogevent, f"**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
-            return None
-    return chat_info
+def inline_mention(user):
+    full_name = user_full_name(user) or "Adsız"
+    return f"[{full_name}](tg://user?id={user.id})"
+
+
+def user_full_name(user):
+    names = [user.first_name, user.last_name]
+    names = [i for i in list(names) if i]
+    return " ".join(names)
+
+
+def printUser(entity: User) -> None:
+    user = get_display_name(entity)
+    LOGS.warning("{0} başarıyla giriş yapıldı.".format(user))

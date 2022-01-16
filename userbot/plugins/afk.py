@@ -25,6 +25,7 @@ from . import (
     PM_LOGGER_GROUP_ID,
     _format,
     afk_time,
+    dgvar,
     doge,
     edl,
     gvar,
@@ -53,7 +54,6 @@ for msg in ["AFK"]:
 AFKREASON = None
 AFKMEDIA = None
 COUNT_MSG = 0
-ISAFK = False
 USERS = {}
 LAST_SEEN = 0
 
@@ -74,14 +74,15 @@ LAST_SEEN = 0
 )
 async def set_afk(event):
     "AFK olduğunuzu belirtir."
+    if gvar("ISAFK"):
+        return
     string = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     media_t = media_type(reply)
-    global ISAFK
     global AFKREASON
     global AFKMEDIA
     global LAST_SEEN
-    if not ISAFK:
+    if gvar("ISAFK") is None:
         if not media_t:
             AFKMEDIA = None
         elif media_t != "Sticker" and media_t:
@@ -97,11 +98,10 @@ async def set_afk(event):
         else:
             await edl(event, "`AFK'yım!`")
         LAST_SEEN = time()
-        if gvar("AFKBIOSET") is (None or True):
+        if gvar("AFKBIOSET") != "False":
             try:
-                bio = (
-                    await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
-                ).about
+                full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
+                bio = full.about
                 if bio:
                     sgvar("AFKBIO", bio)
                     await event.client(
@@ -124,19 +124,18 @@ async def set_afk(event):
                     BOTLOG_CHATID,
                     "#AFK\nAFK modundasınız.\nNedenini belirtmediniz.",
                 )
-        ISAFK = True
+        sgvar("ISAFK", "True")
         raise StopPropagation
 
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False)
 async def mention_afk(mention):
-    global ISAFK
+    if gvar("ISAFK") or "afk" in mention.text.lower():
+        return
+
     global USERS
     global COUNT_MSG
-    current_message_text = mention.message.message.lower()
-    if "afk" in current_message_text or "#afk" in current_message_text:
-        return False
-    if mention.message.mentioned and not (await mention.get_sender()).bot and ISAFK:
+    if mention.message.mentioned and not (await mention.get_sender()).bot:
         from_user = await mention.get_sender()
         if from_user.username:
             username = "@" + from_user.username
@@ -330,17 +329,15 @@ async def mention_afk(mention):
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
 async def afk_on_pm(sender):
-    global ISAFK
+    if gvar("ISAFK") or "afk" in sender.text.lower():
+        return
+
     global USERS
     global COUNT_MSG
-    current_message_text = sender.message.message.lower()
-    if "afk" in current_message_text or "#afk" in current_message_text:
-        return False
     if (
         sender.is_private
         and sender.sender_id != 777000
         and not (await sender.get_sender()).bot
-        and ISAFK
     ):
         try:
             apprv = is_approved(sender.sender_id)
@@ -483,41 +480,41 @@ async def afk_on_pm(sender):
 
 @doge.bot_cmd(outgoing=True, edited=False)
 async def setnotafk(notafk):
-    global ISAFK
+    if gvar("ISAFK") or "afk" in notafk.text.lower():
+        return
+
     global COUNT_MSG
     global USERS
     global AFKMEDIA
     global AFKREASON
     global LAST_SEEN
-    current_message = notafk.message.message.lower()
-    if (("afk" not in current_message) or ("#afk" not in current_message)) and ISAFK:
-        ISAFK = False
-        endtime_seconds = round(time() - LAST_SEEN)
-        endtime = afk_time(endtime_seconds, False)
-        await notafk.respond(
-            "Artık AFK değilim.\n\nŞu kadar süredir AFK'yım: `" + endtime + "`"
+    dgvar("ISAFK")
+    endtime_seconds = round(time() - LAST_SEEN)
+    endtime = afk_time(endtime_seconds, False)
+    await notafk.respond(
+        "Artık AFK değilim.\n\nŞu kadar süredir AFK'yım: `" + endtime + "`"
+    )
+    await sleep(2)
+    if gvar("AFKBIOSET") != "False":
+        try:
+            await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
+        except Exception:
+            pass
+    if BOTLOG:
+        await notafk.client.send_message(
+            BOTLOG_CHATID,
+            "AFK'dan çıktınız.\n\n"
+            + "Şu kadar süredir AFK'ydınız: `"
+            + endtime
+            + "`"
+            + "Siz AFK iken **"
+            + str(len(USERS))
+            + "** kullanıcı **"
+            + str(COUNT_MSG)
+            + "** mesaj gönderdi.",
         )
-        await sleep(2)
-        if gvar("AFKBIOSET") is (None or True):
-            try:
-                await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
-            except Exception:
-                pass
-        if BOTLOG:
-            await notafk.client.send_message(
-                BOTLOG_CHATID,
-                "AFK'dan çıktınız.\n\n"
-                + "Şu kadar süredir AFK'ydınız: `"
-                + endtime
-                + "`"
-                + "Siz AFK iken **"
-                + str(len(USERS))
-                + "** kullanıcı **"
-                + str(COUNT_MSG)
-                + "** mesaj gönderdi.",
-            )
-        COUNT_MSG = 0
-        USERS = {}
-        AFKMEDIA = None
-        AFKREASON = None
-        LAST_SEEN = 0
+    COUNT_MSG = 0
+    USERS = {}
+    AFKMEDIA = None
+    AFKREASON = None
+    LAST_SEEN = 0
