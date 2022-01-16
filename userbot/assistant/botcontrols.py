@@ -12,7 +12,7 @@ from datetime import datetime
 from telethon import Button
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
-from userbot.core.decorators import check_owner, sudo_owner
+from userbot.core.decorators import sudo_owner
 
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
@@ -208,7 +208,9 @@ async def ban_starters(event):
     await eor(event, msg)
 
 
-@doge.shiba_cmd(pattern="^/(ban|yasakla)({gvar('BOT_USERNAME')})?([\s]+)?\\s+([\\s\\S]*)")
+@doge.shiba_cmd(
+    pattern="^/(ban|yasakla)({gvar('BOT_USERNAME')})?([\s]+)?\\s+([\\s\\S]*)"
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -249,7 +251,9 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@doge.shiba_cmd(pattern="^/(unban|yasakac)({gvar('BOT_USERNAME')})?([\s]+)?(?:\\s|$)([\\s\\S]*)")
+@doge.shiba_cmd(
+    pattern="^/(unban|yasakac)({gvar('BOT_USERNAME')})?([\s]+)?(?:\\s|$)([\\s\\S]*)"
+)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
