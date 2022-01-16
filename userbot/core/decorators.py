@@ -30,24 +30,21 @@ def check_owner(func):
                 await sleep(e.seconds + 5)
             except MessageNotModifiedError:
                 pass
-
         else:
             HELP_TEXT = (
                 gvar("HELP_TEXT")
                 or "🐶 Doɢᴇ UsᴇʀBoᴛ\n\n🐾 Hey! Sen benim sahibim değilsin!.\n\n🐕‍🦺 Kendine bir @DogeUserBot sahiplen!"
             )
             await c_q.answer(HELP_TEXT, alert=True)
-
     return wrapper
 
 
 def sudo_owner(func):
     LOGS.info(f" sudo_owner Altı Logu func alınacak: {func}")
-
     async def wrapper(event):
         LOGS.info(f" Wrapper Altı Logu event alınacak: {event}")
-        if event.user_id and (
-            event.user_id == int(gvar("OWNER_ID")) or event.user_id in Config.SUDO_USERS
+        if event.sender_id and (
+            event.sender_id == int(gvar("OWNER_ID")) or event.sender_id in Config.SUDO_USERS
         ):
             try:
                 await func(event)
@@ -60,5 +57,4 @@ def sudo_owner(func):
                 pass
         else:
             return
-
     return wrapper

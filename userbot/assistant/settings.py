@@ -20,6 +20,7 @@ from ..core.logger import logging
 from ..helpers import resize_image
 from ..utils import add_bot_to_logger_group, create_channel, create_supergroup
 from . import (
+    BOTLOG_CHATID,
     TEMP_DIR,
     check_owner,
     doge,

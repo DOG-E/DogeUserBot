@@ -54,19 +54,12 @@ CHAT_PP_CHANGED = "`Sohbet resmi değiştirildi.`"
 INVALID_MEDIA = "`Geçersiz uzantı`"
 
 BANNED_RIGHTS = ChatBannedRights(
-    until_date=None,
     view_messages=True,
-    send_messages=True,
-    send_media=True,
-    send_stickers=True,
-    send_gifs=True,
-    send_games=True,
-    send_inline=True,
-    embed_links=True,
 )
 
 UNBAN_RIGHTS = ChatBannedRights(
     until_date=None,
+    view_messages=None,
     send_messages=None,
     send_media=None,
     send_stickers=None,
@@ -74,6 +67,8 @@ UNBAN_RIGHTS = ChatBannedRights(
     send_games=None,
     send_inline=None,
     embed_links=None,
+    send_polls=None,
+    invite_users=None,
 )
 
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
@@ -99,7 +94,7 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
     require_admin=True,
 )
 async def set_group_photo(event):  # sourcery no-metrics
-    "DP grubunu değiştirmek için"
+    "Grup profil fotoğrafını değiştirir veya siler."
     flag = (event.pattern_match.group(1)).strip()
     if flag == "d":
         try:
@@ -159,21 +154,21 @@ async def set_group_photo(event):  # sourcery no-metrics
     require_admin=True,
 )
 async def promote(event):
-    "Sohbette bir kişiyi tanıtmak"
+    "Bir kişi için yönetici hakları verir."
     new_rights = ChatAdminRights(
-        add_admins=False,
-        invite_users=True,
         change_info=False,
+        invite_users=True,
+        pin_messages=True,
+        add_admins=False,
         ban_users=True,
         delete_messages=True,
-        pin_messages=True,
     )
     user, rank = await get_user_from_event(event)
     if not rank:
         rank = "Yönetici"
     if not user:
         return
-    dogevent = await eor(event, "`Promoting...`")
+    dogevent = await eor(event, "`Yetkilendiriyorum...`")
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
@@ -204,7 +199,7 @@ async def promote(event):
     require_admin=True,
 )
 async def demote(event):
-    "Gruptaki bir kişiyi engellemek için"
+    "Bir kişiyi yönetici listesinden çıkarır."
     user, _ = await get_user_from_event(event)
     if not user:
         return
@@ -221,7 +216,7 @@ async def demote(event):
         delete_messages=None,
         pin_messages=None,
     )
-    rank = "admin"
+    rank = "Yönetici"
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, newrights, rank))
     except BadRequestError:
@@ -253,7 +248,7 @@ async def demote(event):
     require_admin=True,
 )
 async def _ban_person(event):
-    "Gruba bir kişiyi yasaklamak"
+    "Kullanılan gruptan seçilen üyeyi yasaklar."
     user, reason = await get_user_from_event(event)
     if not user:
         return
@@ -320,7 +315,7 @@ async def _ban_person(event):
     require_admin=True,
 )
 async def nothanos(event):
-    "Bir kişinin yasağını açmak için"
+    "Bu komutu kullandığınız gruptaki üyenin yasağı kaldırılır."
     user, _ = await get_user_from_event(event)
     if not user:
         return
@@ -376,9 +371,9 @@ async def watcher(event):
     },  # sourcery no-metrics
 )
 async def startmute(event):
-    "Bu özel sohbette bir kişiyi susturmak için"
+    "Bu kullanıcının mesaj göndermesini engeller."
     if event.is_private:
-        await event.edit("`Beklenmeyen sorunlar oluşabilir!`")
+        await event.edit("`Mesaj gönderilmesini engelliyorum...`")
         await sleep(2)
         await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
@@ -427,7 +422,7 @@ async def startmute(event):
             return
         if is_muted(user_id, event.chat_id):
             return await eor(
-                event, "`This user is already muted in this chat ~~lmfao sed rip~~`"
+                event, "**Bu kullanıcı zaten susturulmuş!**"
             )
         result = await event.client.get_permissions(event.chat_id, user.id)
         try:
@@ -504,7 +499,7 @@ async def startmute(event):
     },
 )
 async def endmute(event):
-    "Bu özel sohbette bir kişiyi susturmak için"
+    "Kullanıcının tekrar mesaj göndermesine izin verir."
     if event.is_private:
         await event.edit("`Beklenmeyen sorunlar ve hatalar oluşabilir!`")
         await sleep(1)
@@ -594,7 +589,7 @@ async def endmute(event):
     require_admin=True,
 )
 async def endmute(event):
-    "Bunu sohbetten bir kullanıcıyı tekmelemek için kullanın"
+    "Bir kişiyi gruptan atar."
     user, reason = await get_user_from_event(event)
     if not user:
         return
@@ -638,7 +633,7 @@ async def endmute(event):
     },
 )
 async def pin(event):
-    "Sohbette bir mesajı sabitlemek için"
+    "Sohbette mesajı sabitler."
     to_pin = event.reply_to_msg_id
     if not to_pin:
         return await edl(event, "**Sabitleyebilmek için bir mesaja cevap verin.**", 5)
@@ -691,7 +686,7 @@ async def pin(event):
     },
 )
 async def pin(event):
-    "Gruptaki mesajları çıkarmak için"
+    "Sohbetteki mesajları sabitten çıkarır."
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
     if not to_unpin and options != "all":
@@ -746,7 +741,7 @@ async def pin(event):
     require_admin=True,
 )
 async def _iundlt(event):  # sourcery no-metrics
-    "Gruptaki son silinmiş mesajları kontrol etmek için"
+    "Gruptaki son silinmiş mesajları alır."
     dogevent = await eor(event, "__Son eylemler aranıyor.....__")
     flag = event.pattern_match.group(1)
     if event.pattern_match.group(2) != "":

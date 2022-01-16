@@ -224,8 +224,8 @@ async def setup_me_bot():
             if Config.BOT_TOKEN:
                 sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
                 await doge.bot.start(bot_token=gvar("BOT_TOKEN"))
-        except Exception as boter:
-            LOGS.error(f"🚨 {boter}")
+        except Exception as e:
+            LOGS.error(f"🚨 {e}")
             dgvar("BOT_TOKEN")
             dgvar("ipaddress")
             exit()

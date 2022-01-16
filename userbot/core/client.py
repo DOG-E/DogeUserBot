@@ -29,8 +29,8 @@ from telethon.errors import (
 )
 
 from ..Config import Config
-from ..helpers.utils.events import checking
-from ..helpers.utils.format import paste_message
+from ..helpers.utils.events import checking, get_message_link
+from ..helpers.utils.format import paste_message, parse_id
 from ..sql_helper.globals import gvar
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
@@ -39,7 +39,7 @@ from .events import *
 from .fasttelethon import download_file, upload_file
 from .logger import logging
 from .managers import edl
-from .pluginManager import get_message_link, restart_script
+from .pluginManager import restart_script
 
 LOGS = logging.getLogger(__name__)
 
@@ -226,7 +226,7 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
+                            gvar("PRIVATE_GROUP_BOT_API_ID"), text, link_preview=True
                         )
 
             from .session import doge
@@ -366,7 +366,7 @@ class DogeUserBotClient(TelegramClient):
                         text += "\n\n"
                         text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
                         await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
+                            gvar("PRIVATE_GROUP_BOT_API_ID"), text, link_preview=True
                         )
 
             from .session import doge
@@ -396,11 +396,12 @@ class DogeUserBotClient(TelegramClient):
         self.running_processes.clear()
 
 
+DogeUserBotClient.check_testcases = checking
 DogeUserBotClient.fast_download_file = download_file
 DogeUserBotClient.fast_upload_file = upload_file
-DogeUserBotClient.reload = restart_script
 DogeUserBotClient.get_msg_link = get_message_link
-DogeUserBotClient.check_testcases = checking
+DogeUserBotClient.parse_id = parse_id
+DogeUserBotClient.reload = restart_script
 try:
     send_message_check = TelegramClient.send_message
 except AttributeError:

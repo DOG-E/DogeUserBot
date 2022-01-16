@@ -708,8 +708,8 @@ async def on_plugin_callback_query_handler(event):
     text = f"🐶 𝗗𝗢𝗚𝗘 𝗨𝗦𝗘𝗥𝗕𝗢𝗧 🐾\
     \n🧩 Pʟᴜɢɪɴʟᴇʀ: {len(PLG_INFO)}\
     \n⌨️ Koᴍᴜᴛʟᴀʀ: {len(CMD_INFO)}\n\
-    \n{tr}doge .c <komut>: Herhangi bir komut hakkında bilgi almak için.\
-    \n{tr}s <query>: Herhangi bir komutu aramak için."
+    \n{tr}doge .c <komut>: Herhangi bir komut hakkında bilgi alır.\
+    \n{tr}s <komut>: Herhangi bir komutu arar."
     await event.answer(text, cache_time=0, alert=True)
 
 

@@ -184,7 +184,7 @@ def errors_handler(func):
             text += "\n\n"
             text += f"**▫️ Tetikleyici Komut:** `{str(check.text)}`"
             await check.client.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=True
+                gvar("PRIVATE_GROUP_BOT_API_ID"), text, link_preview=True
             )
 
     return wrapper
