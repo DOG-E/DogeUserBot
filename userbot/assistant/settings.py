@@ -60,18 +60,21 @@ async def settings(event):
             Button.inline("🌐 Dɪʟ", data="langmenu"),
         ],
     ]
-    if event.chat_id == BOTLOG:
+    if not event.is_private and event.chat_id == BOTLOG:
         return await event.answer(
-            f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=Truew
+            f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=True
         )
-    await event.edit(
-        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
-        \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-        buttons=options,
-        link_preview=False,
-    )
+    elif not event.is_private:
+        return
+    else:
+        await event.edit(
+            f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+            \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+            \n◽ Doɢᴇ oғ {mention}\n\
+            \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+            buttons=options,
+            link_preview=False,
+        )
 
 
 # Ayarlar - Seçenekler
