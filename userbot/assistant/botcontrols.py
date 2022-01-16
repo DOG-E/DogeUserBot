@@ -48,13 +48,13 @@ LOGS = logging.getLogger(__name__)
 )
 async def grup_start(event):
     user = await doge.get_me()
-    chat = await event.get_chat()
+    await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     buttons = [
         (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
     ]
-    if not event.is_private: # and chat.id == BOTLOG_CHATID:
+    if not event.is_private:  # and chat.id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
