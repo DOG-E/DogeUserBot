@@ -49,7 +49,7 @@ async def gen_chlog(repo, diff):
 
 async def print_changelogs(event, ac_br, changelog):
     changelog_str = (
-        f"**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`"
+        f"**[{ac_br}] için yeni güncelleme mevcut!:\n\nCHANGELOG:**\n`{changelog}`"
     )
     if len(changelog_str) > 4096:
         await event.edit("`Changelog is too big, view the file to see it.`")
@@ -91,21 +91,21 @@ async def pull(event, repo, ups_rem, ac_br):
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
     dogevent = await event.edit(
-        "`Successfully Updated!\n" "Bot is restarting... Wait for a minute!`"
+        "`Güncelleme başarıyla tamamlandı!\n" "Bot yeniden başlatılıyor... Lütfen bekleyin!`"
     )
     await event.client.reload(dogevent)
 
 
 async def push(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is None:
-        return await event.edit("`Please set up`  **HEROKU_API_KEY**  ` Var...`")
+        return await event.edit("`Lütfen`  **HEROKU_API_KEY**  `değerini ayarlayın...`")
     heroku = from_key(HEROKU_API_KEY)
     heroku_app = None
     heroku_applications = heroku.apps()
     if HEROKU_APP_NAME is None:
         await event.edit(
-            "`Please set up the` **HEROKU_APP_NAME** `Var`"
-            " to be able to deploy your doge...`"
+            "DogeUserBot'unuzu tekrar deploy edebilmek için`"
+            "lütfen` **HEROKU_APP_NAME** `değerini ayarlayın...`"
         )
         repo.__del__()
         return
@@ -115,11 +115,11 @@ async def push(event, repo, ups_rem, ac_br, txt):
             break
     if heroku_app is None:
         await event.edit(
-            f"{txt}\n" "`Invalid Heroku credentials for deploying Doge dyno.`"
+            f"{txt}\n" "`DogeUserBot'unuzu deploy etmek için ayarlanan Heroku dyno kimlik bilgileri yanlış!.`"
         )
         return repo.__del__()
     dogevent = await event.edit(
-        "`Doge dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
+        "`Doge dyno derlemesi devam ediyor, lütfen işlem bitene kadar bekleyin, genellikle 4 ila 5 dakika sürer.`"
     )
     try:
         ulist = get_collectionlist_items()
@@ -145,19 +145,19 @@ async def push(event, repo, ups_rem, ac_br, txt):
     try:
         remote.push(refspec="HEAD:refs/heads/master", force=True)
     except Exception as error:
-        await event.edit(f"{txt}\n**Error log:**\n`{error}`")
+        await event.edit(f"{txt}\n**Hata log'unuz burada:**\n`{error}`")
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
         return await edl(
-            event, "`Build failed! ❌\n" "Cancelled or there were some errors...`"
+            event, "`Yapılandırma iptal edildi! ❌\n" "Kullanıcı tarafından iptal edildi ya da bazı hatalar oluştu...`"
         )
     try:
         remote.push("master:main", force=True)
     except Exception as error:
-        await event.edit(f"{txt}\n**Here is the error log:**\n`{error}`")
+        await event.edit(f"{txt}\n*Hata log'unuz burada:**\n`{error}`")
         return repo.__del__()
-    await event.edit("`Deploy was failed. So restarting to update`")
+    await event.edit("`Deploy edilirken hata oluştu! Bu yüzden yeniden başlatılarak güncelleniyor!`")
     dgvar("ipaddress")
     try:
         await event.client.disconnect()
@@ -171,11 +171,11 @@ async def push(event, repo, ups_rem, ac_br, txt):
     pattern="update( pull| push|$)",
     command=("update", plugin_category),
     info={
-        "h": "To update DogeUserbot.",
-        "d": "I recommend you to do update push atlest once a week.",
+        "h": "DogeUserbot'unuzu günceller.",
+        "d": "Haftada en az bir defa `.update push` yapmanız önerilir..",
         "o": {
-            "pull": "Will update bot but requirements doesnt update.",
-            "push": "Bot will update completly with requirements also.",
+            "pull": "Bot günceller ama gereksinimler güncellenmiyor.",
+            "push": "Bot ve  gereksinimlerini de tamamen güncelleyecektir.",
         },
         "u": [
             "{tr}update",
@@ -185,29 +185,29 @@ async def push(event, repo, ups_rem, ac_br, txt):
     },
 )
 async def upstream(event):
-    "To check if the bot is up to date and update if specified"
+    "Botun güncel olup olmadığını kontrol eder ve belirtilmişse günceller."
     conf = event.pattern_match.group(1).strip()
-    event = await eor(event, "`Checking for updates, please wait...`")
+    event = await eor(event, "`Güncellemeleri kontrol ediyorum, lütfen bekleyin...`")
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        return await eor(event, "`Set the required vars first to update the bot`")
+        return await eor(event, "`Botu güncellemek için önce gerekli değerleri ayarlayın`")
     try:
-        txt = "`Oops.. Updater cannot continue due to "
-        txt += "some problems occured`\n\n**LOGTRACE:**\n"
+        txt = "`Ops... Hata! Güncelleme şu nedenle devam edemiyor: "
+        txt += "bazı sorunlar oluştu:`\n\n**LOGTRACE:**\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n`directory {error} is not found`")
+        await event.edit(f"{txt}\n`Dizininde {error} bulunamadı`")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n`Early failure! {error}`")
+        await event.edit(f"{txt}\n`Erken hata! {error}`")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
             return await event.edit(
-                f"`Unfortunately, the directory {error} "
-                "does not seem to be a git repository.\n"
-                "But we can fix that by force updating the doge bot using "
+                f"`Ne yazık ki, dizin {error} "
+                "bir GİT reposu gibi görünmüyor..\n"
+                "Ancak bunu, doge botunu kullanarak zorla güncelleyerek düzeltebiliriz "
                 ".update pull.`"
             )
         repo = Repo.init()
@@ -221,10 +221,10 @@ async def upstream(event):
     if ac_br != UPSTREAM_REPO_BRANCH:
         await event.edit(
             "**[UPDATER]:**\n"
-            f"`Looks like you're using your own custom branch ({ac_br}). "
-            "in that case, Updater is unable to identify "
-            "which branch is to be merged. "
-            "please checkout to any official branch`"
+            f"__Görünüşe göre kendi özel reponuzu kullanıyorsunuz:__[ `{ac_br}` ]. "
+            "__Bu durumda hangi 'Branch' üzerinden"
+            "güncelleneceği tanımlanamaz. "
+            "Lütfen resmi repoyu kullanın.__"
         )
         return repo.__del__()
     try:
@@ -236,7 +236,7 @@ async def upstream(event):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     # Special case for deploy
     if conf == "push":
-        await event.edit("`Deploying Doge, please wait...`")
+        await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")
         await push(event, repo, ups_rem, ac_br, txt)
         return
     if changelog == "" and not force_update:
@@ -248,12 +248,12 @@ async def upstream(event):
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            f"**Command:**\n\n[ `{tr}update push` ] > update deploy\n[ `{tr}update pull` ] > update now"
+            f"**Komut:**\n\n[ `{tr}update push` ] > deploy ile güncellemer\n[ `{tr}update pull` ] > şimdi günceller"
         )
 
     if force_update:
-        await event.edit("`Force-Syncing to latest stable bot code, please wait...`")
+        await event.edit("`Son yol olarak, bot kodları zorunlu-güncelleştirme uyhulanıyor.`")
     if conf == "pull":
-        await event.edit("`Updating doge, please wait...`")
+        await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")
         await pull(event, repo, ups_rem, ac_br)
     return
