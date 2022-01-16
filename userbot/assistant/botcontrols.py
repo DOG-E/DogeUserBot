@@ -29,7 +29,6 @@ from . import (
     reply_id,
     sgvar,
     time_formatter,
-    tr,
 )
 from .botmanagers import (
     ban_user_from_bot,
