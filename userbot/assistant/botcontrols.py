@@ -54,7 +54,7 @@ async def grup_start(event):
         (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
     ]
-    if not event.is_private and chat.id == BOTLOG_CHATID:
+    if not event.is_private: # and chat.id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
