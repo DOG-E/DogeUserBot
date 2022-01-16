@@ -46,7 +46,7 @@ LOGS = logging.getLogger(__name__)
     incoming=True,
     func=lambda e: e.is_group,
 )
-@sudo_owner()
+@sudo_owner
 async def grup_start(event):
     user = await doge.get_me()
     await event.get_chat()
@@ -66,7 +66,7 @@ async def grup_start(event):
 
 
 @doge.shiba_cmd(
-    pattern=f"^/(start|ba[sş]lat|start{gvar('BOT_USERNAME')}|ba[sş]lat{gvar('BOT_USERNAME')})$",
+    pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_group,
 )
