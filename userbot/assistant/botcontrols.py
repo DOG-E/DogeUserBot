@@ -12,7 +12,7 @@ from datetime import datetime
 from telethon import Button
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
-from userbot.core.decorators import check_owner
+from userbot.core.decorators import check_owner, sudo_owner
 
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
@@ -46,6 +46,7 @@ LOGS = logging.getLogger(__name__)
     incoming=True,
     func=lambda e: e.is_group,
 )
+@sudo_owner
 async def grup_start(event):
     user = await doge.get_me()
     await event.get_chat()
@@ -113,7 +114,6 @@ async def bot_help(event):
 
 
 @doge.shiba_cmd(pattern="^/(broadcast|yayin)$")
-@check_owner
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
