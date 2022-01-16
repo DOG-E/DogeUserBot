@@ -603,7 +603,10 @@ async def pcmanuel(event: CallbackQuery):
             await event.edit(
                 f"{mention} Veritabanınızda kayıtlı gizli kanala erişilemedi! Sizin için bir Gizli Kanal oluşturuyorum! Lütfen bekleyin..."
             )
+        try:
             await privatechannel(event)
+        except Exception as e:
+            await event.edit(f"Gizli kanal oluştururken bir hata oluşu! Hata Raporu: {e}")
     if gvar("PRIVATE_CHANNEL_ID") is None:
         await event.edit(
             f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
