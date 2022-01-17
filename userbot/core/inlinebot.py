@@ -744,7 +744,6 @@ async def back_main_menu(event):
 @doge.bot.on(CallbackQuery(data=compile(b"start")))
 @check_owner
 async def back_to_start(event):
-    event.get_chat()
     buttons = [
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
     ]

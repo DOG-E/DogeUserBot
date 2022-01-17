@@ -22,6 +22,8 @@ from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
 from telethon.tl.functions.contacts import UnblockRequest
 from telethon.utils import get_display_name
 
+from userbot.core.decorators import sudo_owner
+
 from ..core.pool import run_in_thread
 from ..sql_helper.bot_blacklists import check_is_black_list
 from ..sql_helper.bot_pms_sql import (
@@ -85,10 +87,11 @@ async def check_bot_started_users(user, event):
 
 
 @doge.shiba_cmd(
-    pattern=f"/(start|ba[sş]lat) ?(.*)",
+    pattern=f"/(start ?(.*)|ba[sş]lat ?(.*))",
     incoming=True,
     func=lambda e: e.is_private,
 )
+@sudo_owner
 async def bot_start(event):
     chat = await event.get_chat()
     user = await doge.get_me()
