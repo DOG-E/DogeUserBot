@@ -113,6 +113,7 @@ async def bot_help(event):
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
         )
 
+
 @doge.shiba_cmd(pattern=f"^/(settings|ayarlar)({gvar('BOT_USERNAME')})?([\s]+)?$")
 async def settings(event):
     user = await event.get_sender()
@@ -123,9 +124,7 @@ async def settings(event):
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
         ],
         [
-            Button.inline(
-                "🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"
-            ),
+            Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
             Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
         ],
         [
@@ -137,12 +136,18 @@ async def settings(event):
         new_bot_username = bot_username[-1:]
     buttons = [
         [
-            Button.inline(f"Buraya Tıklayın", url=f"https://t.me/{new_bot_username}?start=settings"),
+            Button.inline(
+                f"Buraya Tıklayın",
+                url=f"https://t.me/{new_bot_username}?start=settings",
+            ),
         ],
     ]
     ment = f"[{user.first_name}](tg://user?id={user.id})"
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
-        return event.reply(f"🐾 Selam {ment}! Lütfen ayarlarınızı yapmak için aşağıdaki düğmeye tıklayın.",buttons=buttons)
+        return event.reply(
+            f"🐾 Selam {ment}! Lütfen ayarlarınızı yapmak için aşağıdaki düğmeye tıklayın.",
+            buttons=buttons,
+        )
     elif event.is_private:
         await event.reply(
             f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
