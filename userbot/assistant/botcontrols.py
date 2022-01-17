@@ -53,7 +53,8 @@ async def grup_start(event):
         user = await doge.get_me()
         my_mention = f"[{user.first_name}](tg://user?id={user.id})"
         buttons = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),)
+            (Button.inline("Help", data="backmainmenu")),
         ]
         # if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
         await event.reply(
@@ -74,10 +75,9 @@ async def grup_start(event):
 @sudo_owner
 async def grup_start(event):
     user = await doge.get_me()
-    await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     buttons = [
-        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
     ]
     if not event.is_private:  # and chat.id == BOTLOG_CHATID:
         await event.reply(
@@ -136,7 +136,7 @@ async def settings(event):
         new_bot_username = bot_username[-1:]
     buttons = [
         [
-            Button.inline(
+            Button.url(
                 f"Buraya Tıklayın",
                 url=f"https://t.me/{new_bot_username}?start=settings",
             ),
