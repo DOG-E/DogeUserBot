@@ -734,9 +734,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(_result[0], buttons=_result[1], link_preview=False)
 
 
-doge.bot.on(CallbackQuery(data=compile(rb"backmainmenu")))
-
-
+@doge.bot.on(CallbackQuery(data=compile(rb"backmainmenu")))
 @check_owner
 async def back_main_menu(event):
     _result = back_menu("start")
