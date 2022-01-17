@@ -147,7 +147,8 @@ async def bot_start(event):
                 ]
                 if gvar("START_PIC") != "False":
                     START_PIC = (
-                        gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
+                        gvar("START_PIC")
+                        or "https://telegra.ph/file/e854a644808aeb1112462.png"
                     )
                 elif gvar("START_PIC") == "False":
                     START_PIC = 1
@@ -169,7 +170,11 @@ async def bot_start(event):
                                 buttons=buttons,
                                 reply_to=reply_to,
                             )
-                    except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError) as e:
+                    except (
+                        WebpageMediaEmptyError,
+                        MediaEmptyError,
+                        WebpageCurlFailedError,
+                    ) as e:
                         await event.client.send_file(
                             chat.id,
                             "https://telegra.ph/file/e854a644808aeb1112462.png",
@@ -220,17 +225,19 @@ async def bot_start(event):
                         Button.inline("🌐 Dɪʟ", data="langmenu"),
                     ],
                 ]
-                await event.client.send_file(chat.id,
-                        "https://telegra.ph/file/e854a644808aeb1112462.png",
-                        caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                await event.client.send_file(
+                    chat.id,
+                    "https://telegra.ph/file/e854a644808aeb1112462.png",
+                    caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
                         \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-                        buttons=options,
-                        link_preview=False,
-                        reply_to=reply_to,)
+                    buttons=options,
+                    link_preview=False,
+                    reply_to=reply_to,
+                )
             elif args == "help":
                 await event.reply(
-            f"""🐶 **Botun Komutları:**
+                    f"""🐶 **Botun Komutları:**
 
 🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
 
@@ -249,7 +256,7 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-        )
+                )
             else:
                 try:
                     if START_PIC == 1:
@@ -269,7 +276,11 @@ async def bot_start(event):
                             buttons=buttons,
                             reply_to=reply_to,
                         )
-                except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError) as a:
+                except (
+                    WebpageMediaEmptyError,
+                    MediaEmptyError,
+                    WebpageCurlFailedError,
+                ) as a:
                     await event.client.send_file(
                         chat.id,
                         "https://telegra.ph/file/e854a644808aeb1112462.png",

@@ -53,8 +53,9 @@ async def grup_start(event):
         user = await doge.get_me()
         my_mention = f"[{user.first_name}](tg://user?id={user.id})"
         buttons = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),)
-            (Button.inline("Help", data="backmainmenu")),
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),)(
+                Button.inline("Help", data="backmainmenu")
+            ),
         ]
         # if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
         await event.reply(

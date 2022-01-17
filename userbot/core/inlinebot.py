@@ -44,6 +44,7 @@ LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 
+
 def back_menu(back):
     text = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
     \n🐾 Yᴀʀᴅıᴍᴄı\n\
@@ -732,11 +733,15 @@ async def on_plug_in_callback_query_handler(event):
     _result = main_menu()
     await event.edit(_result[0], buttons=_result[1], link_preview=False)
 
+
 doge.bot.on(CallbackQuery(data=compile(rb"backmainmenu")))
+
+
 @check_owner
 async def back_main_menu(event):
     _result = back_menu("start")
     await event.edit(_result[0], buttons=_result[1], link_preview=False)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"start")))
 @check_owner
@@ -751,6 +756,7 @@ async def back_to_start(event):
         \n💬 Sana nasıl yardımcı olabilirim?**\n",
             buttons=buttons,
         )
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"close")))
 @check_owner
