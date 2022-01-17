@@ -159,6 +159,7 @@ async def bot_start(event):
             reply_to=reply_to,
         )
 
+
 @doge.shiba_cmd(
     pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
