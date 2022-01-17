@@ -24,7 +24,6 @@ from . import (
     eor,
     gvar,
     logging,
-    only_botlog,
     reply_id,
     sgvar,
     sudo_owner,
@@ -68,6 +67,8 @@ async def grup_start(event):
         )
 
 """
+
+
 @doge.shiba_cmd(
     pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
@@ -92,8 +93,8 @@ async def grup_start(event):
 @doge.shiba_cmd(pattern=f"^/(help|yard[ıi]m)({gvar('BOT_USERNAME')})?([\s]+)?$")
 @sudo_owner
 async def bot_help(event):
-        await event.reply(
-            f"""🐶 **Botun Komutları:**
+    await event.reply(
+        f"""🐶 **Botun Komutları:**
 
 🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
 
@@ -112,7 +113,7 @@ async def bot_help(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-        )
+    )
 
 
 @doge.shiba_cmd(pattern=f"^/(settings|ayarlar)({gvar('BOT_USERNAME')})?([\s]+)?$")
