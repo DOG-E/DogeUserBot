@@ -93,7 +93,6 @@ async def bot_start(event):
     chat = await event.get_chat()
     user = await doge.get_me()
     reply_to = await reply_id(event)
-    mention = f"[{chat.first_name}](tg://user?id={chat.id})"
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     args = event.pattern_match.group(1)
     # if chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
@@ -106,38 +105,32 @@ async def bot_start(event):
         (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
     ]
-    if gvar("START_PIC") != "False":
-        START_PIC = (
-            gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
+    if args == "settings":
+        options = [
+            [
+                Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
+            ],
+            [
+                Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
+                Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
+            ],
+            [
+                Button.inline("🌐 Dɪʟ", data="langmenu"),
+            ],
+        ]
+        await event.client.send_file(
+            chat.id,
+            "https://telegra.ph/file/e854a644808aeb1112462.png",
+            caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+            buttons=options,
+            link_preview=False,
+            reply_to=reply_to,
         )
-    elif gvar("START_PIC") == "False":
-        START_PIC = 1
-        if args == "settings":
-            options = [
-                [
-                    Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
-                ],
-                [
-                    Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
-                    Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
-                ],
-                [
-                    Button.inline("🌐 Dɪʟ", data="langmenu"),
-                ],
-            ]
-            await event.client.send_file(
-                chat.id,
-                "https://telegra.ph/file/e854a644808aeb1112462.png",
-                caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-                    \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                    \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-                buttons=options,
-                link_preview=False,
-                reply_to=reply_to,
-            )
-        elif args == "help":
-            await event.reply(
-                f"""🐶 **Botun Komutları:**
+    elif args == "help":
+        await event.reply(
+            f"""🐶 **Botun Komutları:**
 
 🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
 
@@ -156,43 +149,15 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-            )
-        else:
-            try:
-                if START_PIC == 1:
-                    await event.client.send_message(
-                        chat.id,
-                        start_msg,
-                        link_preview=False,
-                        buttons=buttons,
-                        reply_to=reply_to,
-                    )
-                else:
-                    await event.client.send_file(
-                        chat.id,
-                        START_PIC,
-                        caption=start_msg,
-                        link_preview=False,
-                        buttons=buttons,
-                        reply_to=reply_to,
-                    )
-            except (
-                WebpageMediaEmptyError,
-                MediaEmptyError,
-                WebpageCurlFailedError,
-            ) as a:
-                await event.client.send_file(
-                    chat.id,
-                    "https://telegra.ph/file/e854a644808aeb1112462.png",
-                    caption=start_msg,
-                    link_preview=False,
-                    buttons=buttons,
-                    reply_to=reply_to,
-                )
-                LOGS.info(f"{a}")
-            except Exception as e:
-                LOGS.info(f"{e}")
-
+        )
+    else:
+        await event.client.send_message(
+            chat.id,
+            start_msg,
+            link_preview=False,
+            buttons=buttons,
+            reply_to=reply_to,
+        )
 
 @doge.shiba_cmd(
     pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
