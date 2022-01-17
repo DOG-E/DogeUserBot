@@ -105,8 +105,10 @@ async def set_afk(event):
             if bio is not None:
                 if len(bio) > 57:
                     await event.client(
-                    UpdateProfileRequest(about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾")
-                )
+                        UpdateProfileRequest(
+                            about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
+                        )
+                    )
                 elif len(bio) < 57:
                     sgvar("AFKBIO", bio)
                     await event.client(
@@ -135,7 +137,7 @@ async def set_afk(event):
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False)
 async def mention_afk(mention):
-    if gvar("ISAFK") is None:# or "afk" in mention.text.lower():
+    if gvar("ISAFK") is None:  # or "afk" in mention.text.lower():
         return
 
     global LAST_SEEN
@@ -335,7 +337,7 @@ async def mention_afk(mention):
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
 async def afk_on_pm(sender):
-    if gvar("ISAFK") is None:# or "afk" in sender.text.lower():
+    if gvar("ISAFK") is None:  # or "afk" in sender.text.lower():
         return
 
     global USERS
@@ -504,11 +506,11 @@ async def setnotafk(notafk):
     await sleep(2)
     if gvar("AFKBIOSET") != "False":
         try:
-            if gvar('AFKBIO'):
+            if gvar("AFKBIO"):
                 await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
             else:
                 await notafk.client(UpdateProfileRequest(about=None))
-            dgvar('AFKBIO')
+            dgvar("AFKBIO")
         except Exception:
             pass
     if BOTLOG:
