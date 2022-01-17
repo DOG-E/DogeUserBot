@@ -6,7 +6,7 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from .decorators import check_owner
+from .decorators import check_owner, sudo_owner
 
 CMD_INFO = {}
 PLG_INFO = {}

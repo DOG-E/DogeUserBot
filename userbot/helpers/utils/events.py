@@ -19,7 +19,7 @@ from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import Channel, Chat, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
-from ... import BOTLOG_CHATID
+from ...sql_helper.globals import gvar
 from ...Config import Config
 from ...core.events import NewMessage
 from ...core.logger import logging
@@ -192,9 +192,9 @@ async def checking(doge):
 
 
 def only_botlog(event):
-    if str(event.chat_id) != BOTLOG_CHATID:
-        return False
-    return True
+    if str(event.chat_id) == gvar("PRIVATE_GROUP_BOT_API_ID"):
+        return True
+    return False
 
 
 async def wowmygroup(event, msg):

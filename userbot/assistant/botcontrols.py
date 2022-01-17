@@ -12,8 +12,6 @@ from datetime import datetime
 from telethon import Button
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
-from userbot.core.decorators import sudo_owner
-
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from . import (
@@ -27,8 +25,10 @@ from . import (
     eor,
     gvar,
     logging,
+    only_botlog,
     reply_id,
     sgvar,
+    sudo_owner,
     time_formatter,
 )
 from .botmanagers import (
@@ -47,22 +47,22 @@ LOGS = logging.getLogger(__name__)
     incoming=True,
     func=lambda e: e.is_group,
 )
-@sudo_owner
 async def grup_start(event):
-    user = await doge.get_me()
-    await event.get_chat()
-    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
-    buttons = [
-        (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-    ]
-    if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
+    obl = only_botlog(event)
+    if obl:
+        user = await doge.get_me()
+        my_mention = f"[{user.first_name}](tg://user?id={user.id})"
+        buttons = [
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+        ]
+        # if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
         await event.reply(
-            f"**🐶 Hey!\
-        \n🐾 Merhaba {my_mention}!\n\
-        \n💬 Bu bir test mesajıdır**\n\
-        \nBOTLOG_CHATID = {BOTLOG_CHATID}\n\
-        \nevent.chat_id = {event.chat_id}",
-            buttons=buttons,
+                f"**🐶 Hey!\
+                \n🐾 Merhaba {my_mention}!\n\
+                \n💬 Bu bir test mesajıdır**\n\
+                \nBOTLOG_CHATID = {BOTLOG_CHATID}\n\
+                \nevent.chat_id = {event.chat_id}",
+                buttons=buttons,
         )
 
 
@@ -73,7 +73,6 @@ async def grup_start(event):
 )
 @sudo_owner
 async def grup_start(event):
-    await event.get_chat()
     user = await doge.get_me()
     await event.get_chat()
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
