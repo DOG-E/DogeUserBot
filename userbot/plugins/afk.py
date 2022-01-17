@@ -102,14 +102,19 @@ async def set_afk(event):
         try:
             full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
             bio = full.about
-            if bio:
-                sgvar("AFKBIO", bio)
-                await event.client(
-                    UpdateProfileRequest(about=f"{gvar('AFK_BIO')} @DogeUserBot")
+            if bio is not None:
+                if len(bio) > 57:
+                    await event.client(
+                    UpdateProfileRequest(about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾")
                 )
+                elif len(bio) < 57:
+                    sgvar("AFKBIO", bio)
+                    await event.client(
+                        UpdateProfileRequest(about=f"{gvar('AFKBIO')} @DogeUserBot")
+                    )
             else:
                 await event.client(
-                    UpdateProfileRequest(about="🐶 @DogeUserBot sadık köpeğiniz! 🐾")
+                    UpdateProfileRequest(about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾")
                 )
         except BaseException:
             pass
@@ -130,7 +135,7 @@ async def set_afk(event):
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False)
 async def mention_afk(mention):
-    if gvar("ISAFK") == "True" or "afk" in mention.text.lower():
+    if gvar("ISAFK") is None:# or "afk" in mention.text.lower():
         return
 
     global LAST_SEEN
@@ -330,7 +335,7 @@ async def mention_afk(mention):
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
 async def afk_on_pm(sender):
-    if gvar("ISAFK") == "True" or "afk" in sender.text.lower():
+    if gvar("ISAFK") is None:# or "afk" in sender.text.lower():
         return
 
     global USERS
@@ -481,7 +486,7 @@ async def afk_on_pm(sender):
 
 @doge.bot_cmd(outgoing=True, edited=False)
 async def setnotafk(notafk):
-    if gvar("ISAFK") == "True" or "afk" in notafk.text.lower():
+    if gvar("ISAFK") is None or "afk" in notafk.text.lower():
         return
 
     global COUNT_MSG
@@ -499,7 +504,11 @@ async def setnotafk(notafk):
     await sleep(2)
     if gvar("AFKBIOSET") != "False":
         try:
-            await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
+            if gvar('AFKBIO'):
+                await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
+            else:
+                await notafk.client(UpdateProfileRequest(about=None))
+            dgvar('AFKBIO')
         except Exception:
             pass
     if BOTLOG:

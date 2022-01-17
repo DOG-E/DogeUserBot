@@ -47,7 +47,6 @@ vlist = [
     "PM_PIC",
     "START_PIC",
     "THUMB_PIC",
-    "AFKBIO",
     "AFKBIOSET",
     "ALIVE",
     "ALIVE_NAME",
@@ -77,15 +76,18 @@ vlist = [
     "TELEGRAPH_SHORT_NAME",
     "WATCH_COUNTRY",
     "WEATHER_CITY",
-    "PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES",
+    "DEV_MOD",
+    "CMDSET",
+    "SUDO_CMDSET",
+    "SNIP_CMDSET",
 ]
 mlist = [
     "AFK",
 ]
 clist = [
-    "CMDSET",
-    "SUDO_CMDSET",
-    "SNIP_CMDSET",
+"CMDSET",
+"SUDO_CMDSET",
+"SNIP_CMDSET",
 ]
 alist = [
     "CURRENCY_API",
@@ -164,12 +166,11 @@ async def dbsetter(event):  # sourcery no-metrics
     vname = event.pattern_match.group(2)
     vnlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(vlist, start=1))
     msglist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(mlist, start=1))
-    cmdlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(clist, start=1))
     apilist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(alist, start=1))
     if not vname:
         return await eor(
             event,
-            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}{cmdlist}\n\
+            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}\n\
             \n**🔮 Give correct API name from the list:**\n\n{apilist}",
         )
 
@@ -216,7 +217,7 @@ async def dbsetter(event):  # sourcery no-metrics
         except AttributeError:
             vinfo = reply.text
 
-    if vname in (vlist or mlist or clist):
+    if vname in (vlist or mlist):
         if cmd == "s":
             if not vinfo and vname == ("ALIVE" or "AFK"):
                 return await edl(
@@ -321,7 +322,7 @@ async def dbsetter(event):  # sourcery no-metrics
             )
 
     else:
-        if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") == "True":
+        if gvar("DEV_MOD") == "True":
             gvarname = vname
             gvarinfo = vinfo
             if cmd == "s":
@@ -380,7 +381,7 @@ async def dbsetter(event):  # sourcery no-metrics
         else:
             await eor(
                 event,
-                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}{cmdlist}\n\
+                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}\n\
                 \n**🔮 Give correct API name from the list:**\n\n{apilist}",
             )
 
