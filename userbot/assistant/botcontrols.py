@@ -116,10 +116,9 @@ async def bot_help(event):
 
 
 @doge.shiba_cmd(pattern=f"^/(settings|ayarlar)({gvar('BOT_USERNAME')})?([\s]+)?$")
+@sudo_owner
 async def settings(event):
     user = await event.get_sender()
-    if user.id != int(gvar("OWNER_ID")) or user.id not in Config.SUDO_USERS:
-        return
     options = [
         [
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
