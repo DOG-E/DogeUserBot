@@ -17,7 +17,6 @@ from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    Config,
     _format,
     dgvar,
     doge,
