@@ -520,10 +520,10 @@ async def setnot_afk(notafk):
 
 
 if gvar("ISAFK") == "True":
-    doge.add_event_handler(setnot_afk, NewMessage(outgoing=True, edited=False))
+    doge.add_event_handler(setnot_afk, NewMessage(outgoing=True))
     doge.add_event_handler(
-        mention_afk, NewMessage(incoming=True, func=lambda e: e.mentioned, edited=False)
+        mention_afk, NewMessage(incoming=True, func=lambda e: e.mentioned)
     )
     doge.add_event_handler(
-        pm_afk, NewMessage(incoming=True, func=lambda e: e.is_private, edited=False)
+        pm_afk, NewMessage(incoming=True, func=lambda e: e.is_private)
     )
