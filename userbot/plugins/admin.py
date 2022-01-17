@@ -53,10 +53,6 @@ NO_PERM = "`Bunu yapabilmek için yeterli iznim yok! Bu çok üzücü (ಥ﹏ಥ
 CHAT_PP_CHANGED = "`Sohbet resmi değiştirildi.`"
 INVALID_MEDIA = "`Geçersiz uzantı`"
 
-BANNED_RIGHTS = ChatBannedRights(
-    view_messages=True,
-)
-
 UNBAN_RIGHTS = ChatBannedRights(
     until_date=None,
     view_messages=None,
@@ -260,7 +256,7 @@ async def _ban_person(event):
         return
     dogevent = await eor(event, "**Yasaklanıyor!**")
     try:
-        await event.client(EditBannedRequest(event.chat_id, user_id, BANNED_RIGHTS))
+        await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(view_messages=True)))
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
     try:

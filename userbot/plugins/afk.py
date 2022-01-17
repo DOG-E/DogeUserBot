@@ -11,7 +11,7 @@ from os import remove
 from random import randint
 from time import time
 
-from telethon.events import StopPropagation
+from telethon.events import NewMessage, StopPropagation
 from telethon.tl.custom.button import Button
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -46,7 +46,7 @@ for msg in ["AFK"]:
     else:
         if delmsg.startswith("MEDIA_"):
             md = int(delmsg.split("MEDIA_")[1])
-            md = doge.get_messages(gvar("PLUGIN_CHANNEL"), ids=md)
+            md = doge.get_messages(int(gvar("PLUGIN_CHANNEL")), ids=md)
             CMSG[msg] = md
         else:
             CMSG[msg] = delmsg
@@ -74,8 +74,9 @@ LAST_SEEN = 0
 )
 async def set_afk(event):
     "AFK olduğunuzu belirtir."
-    if gvar("ISAFK"):
+    if gvar("ISAFK") == "True":
         return
+
     string = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     media_t = media_type(reply)
@@ -128,13 +129,13 @@ async def set_afk(event):
         raise StopPropagation
 
 
-@doge.bot_cmd(incoming=True, func=lambda e: e.mentioned, edited=False)
 async def mention_afk(mention):
-    if gvar("ISAFK") or "afk" in mention.text.lower():
-        return
-
+    global LAST_SEEN
     global USERS
     global COUNT_MSG
+    if "afk" in mention.text.lower():
+        return
+
     if mention.message.mentioned and not (await mention.get_sender()).bot:
         from_user = await mention.get_sender()
         if from_user.username:
@@ -327,13 +328,12 @@ async def mention_afk(mention):
                     LOGS.error(er)
 
 
-@doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
-async def afk_on_pm(sender):
-    if gvar("ISAFK") or "afk" in sender.text.lower():
-        return
-
+async def pm_afk(sender):
     global USERS
     global COUNT_MSG
+    if "afk" in sender.text.lower():
+        return
+
     if (
         sender.is_private
         and sender.sender_id != 777000
@@ -478,16 +478,15 @@ async def afk_on_pm(sender):
                     COUNT_MSG = COUNT_MSG + 1
 
 
-@doge.bot_cmd(outgoing=True, edited=False)
-async def setnotafk(notafk):
-    if gvar("ISAFK") or "afk" in notafk.text.lower():
-        return
-
+async def setnot_afk(notafk):
     global COUNT_MSG
     global USERS
     global AFKMEDIA
     global AFKREASON
     global LAST_SEEN
+    if "afk" in notafk.text.lower():
+        return
+
     dgvar("ISAFK")
     endtime_seconds = round(time() - LAST_SEEN)
     endtime = afk_time(endtime_seconds, False)
@@ -518,3 +517,9 @@ async def setnotafk(notafk):
     AFKMEDIA = None
     AFKREASON = None
     LAST_SEEN = 0
+
+
+if gvar("ISAFK") == "True":
+    doge.add_event_handler(setnot_afk, NewMessage(outgoing=True, edited=False))
+    doge.add_event_handler(mention_afk, NewMessage(incoming=True, func=lambda e: e.mentioned, edited=False))
+    doge.add_event_handler(pm_afk, NewMessage(incoming=True, func=lambda e: e.is_private, edited=False))
