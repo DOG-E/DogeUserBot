@@ -144,7 +144,7 @@ async def settings(event):
     ]
     ment = f"[{user.first_name}](tg://user?id={user.id})"
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
-        return event.reply(
+        return await event.reply(
             f"🐾 Selam {ment}! Lütfen ayarlarınızı yapmak için aşağıdaki düğmeye tıklayın.",
             buttons=buttons,
         )

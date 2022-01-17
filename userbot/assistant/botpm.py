@@ -453,7 +453,7 @@ async def handler(event):
 
 
 @doge.shiba_cmd(pattern="^/uinfo$", from_users=int(gvar("OWNER_ID")))
-async def bot_start(event):
+async def uinfo(event):
     reply_to = await reply_id(event)
     if not reply_to:
         return await event.reply(
