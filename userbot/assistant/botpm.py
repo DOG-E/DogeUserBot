@@ -85,7 +85,7 @@ async def check_bot_started_users(user, event):
 
 
 @doge.shiba_cmd(
-    pattern=f"^/start({gvar('BOT_USERNAME')})?([\s]+)?$",
+    pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_private,
 )
