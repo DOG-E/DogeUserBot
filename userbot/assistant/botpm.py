@@ -107,7 +107,7 @@ async def bot_start(event):
     my_last = user.last_name if user.last_name else ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
-    if chat.id != int(gvar("OWNER_ID")) or chat.id not in Config.SUDO_USERS:
+    if event.sender_id != int(gvar("OWNER_ID")) or event.sender_id not in Config.SUDO_USERS:
         customstrmsg = gvar("START_TEXT") or None
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
