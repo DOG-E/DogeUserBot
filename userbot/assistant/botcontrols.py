@@ -40,7 +40,7 @@ from .botmanagers import (
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
-# denemeler için kısa süreliğine var silenecek
+"""# denemeler için kısa süreliğine var silenecek
 @doge.shiba_cmd(
     pattern=f"^/(aylak|a)$",
     incoming=True,
@@ -56,7 +56,8 @@ async def grup_start(event):
                 Button.inline("Help", data="backmainmenu")
             ),  # noqa
         ]
-        # if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
+        # 
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
                 \n🐾 Merhaba {my_mention}!\n\
@@ -66,7 +67,7 @@ async def grup_start(event):
             buttons=buttons,
         )
 
-
+"""
 @doge.shiba_cmd(
     pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
     incoming=True,
@@ -79,7 +80,7 @@ async def grup_start(event):
     buttons = [
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
     ]
-    if not event.is_private:  # and chat.id == BOTLOG_CHATID:
+    if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
         \n🐾 Merhaba {my_mention}!\n\
@@ -89,8 +90,8 @@ async def grup_start(event):
 
 
 @doge.shiba_cmd(pattern=f"^/(help|yard[ıi]m)({gvar('BOT_USERNAME')})?([\s]+)?$")
+@sudo_owner
 async def bot_help(event):
-    if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
             f"""🐶 **Botun Komutları:**
 
@@ -158,6 +159,7 @@ async def settings(event):
 
 
 @doge.shiba_cmd(pattern=f"^/(broadcast|yay[ıi]n)({gvar('BOT_USERNAME')})?([\s]+)?$")
+@sudo_owner
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:

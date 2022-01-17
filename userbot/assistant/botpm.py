@@ -73,7 +73,7 @@ async def check_bot_started_users(user, event):
                 \n**ℹ️ İsim:** {get_display_name(user)}"
     else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **has restarted me.**\
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **Beni başlattı.**\
                 \n**🆔 Kullanıcı ID'si:** `{user.id}`\
                 \n**ℹ️ İsim:** {get_display_name(user)}"
     try:
@@ -98,7 +98,6 @@ async def bot_start(event):
     reply_to = await reply_id(event)
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     args = event.pattern_match.group(1)
-    # if chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
     start_msg = "**🐶 Hey!\
     \n🐾 Merhaba {}!\n\
     \n💬 Sana nasıl yardımcı olabilirim?**".format(
@@ -173,6 +172,10 @@ async def bot_start(event):
     user = await doge.get_me()
     if check_is_black_list(chat.id):
         return
+    if event.sender_id == int(gvar("OWNER_ID")):
+        return
+    if event.sender_id in Config.SUDO_USERS:
+        return
     reply_to = await reply_id(event)
     mention = f"[{chat.first_name}](tg://user?id={chat.id})"
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
@@ -185,101 +188,95 @@ async def bot_start(event):
     my_last = user.last_name if user.last_name else ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
-    if (
-        event.sender_id != int(gvar("OWNER_ID"))
-        or event.sender_id not in Config.SUDO_USERS
-    ):
-        customstrmsg = gvar("START_TEXT") or None
-        if customstrmsg is not None:
-            start_msg = customstrmsg.format(
-                mention=mention,
-                first=first,
-                last=last,
-                fullname=fullname,
-                username=username,
-                userid=userid,
-                my_first=my_first,
-                my_last=my_last,
-                my_fullname=my_fullname,
-                my_username=my_username,
-                my_mention=my_mention,
+    customstrmsg = gvar("START_TEXT") or None
+    await check_bot_started_users(chat, event)
+    if customstrmsg is not None:
+        start_msg = customstrmsg.format(
+            mention=mention,
+            first=first,
+            last=last,
+            fullname=fullname,
+            username=username,
+            userid=userid,
+            my_first=my_first,
+            my_last=my_last,
+            my_fullname=my_fullname,
+            my_username=my_username,
+            my_mention=my_mention,
+        )
+    else:
+        start_msg = str(
+            "**🐶 Hey!**\
+        \n🐾 Selam {}!\n\
+        \n**🐶 Ben {}'in sadık köpeğiyim.**\
+        \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
+                mention, my_mention
             )
+        )
+        if gvar("START_BUTTON"):
+            sbutton = gvar("START_BUTTON")
+            SBNAME = sbutton.split(";")[0]
+            SBLINK = sbutton.split(";")[1]
+            buttons = [(Button.url(SBNAME, url=SBLINK))]
         else:
-            start_msg = str(
-                "**🐶 Hey!**\
-            \n🐾 Selam {}!\n\
-            \n**🐶 Ben {}'in sadık köpeğiyim.**\
-            \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
-                    mention, my_mention
+            buttons = [
+                (Button.url("📣 Kᴀɴᴀʟ", "https://t.me/DogeUserBot"),),
+                (
+                    Button.url("💬 Sᴜᴘᴘᴏʀᴛ", "https://t.me/DogeSup"),
+                    Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
+                ),
+            ]
+            if gvar("START_PIC") != "False":
+                START_PIC = (
+                    gvar("START_PIC")
+                    or "https://telegra.ph/file/e854a644808aeb1112462.png"
                 )
-            )
-            if gvar("START_BUTTON"):
-                sbutton = gvar("START_BUTTON")
-                SBNAME = sbutton.split(";")[0]
-                SBLINK = sbutton.split(";")[1]
-                buttons = [(Button.url(SBNAME, url=SBLINK))]
-            else:
-                buttons = [
-                    (Button.url("📣 Kᴀɴᴀʟ", "https://t.me/DogeUserBot"),),
-                    (
-                        Button.url("💬 Sᴜᴘᴘᴏʀᴛ", "https://t.me/DogeSup"),
-                        Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),
-                    ),
-                ]
-                if gvar("START_PIC") != "False":
-                    START_PIC = (
-                        gvar("START_PIC")
-                        or "https://telegra.ph/file/e854a644808aeb1112462.png"
-                    )
-                elif gvar("START_PIC") == "False":
-                    START_PIC = 1
-                    try:
-                        if START_PIC == 1:
-                            await event.client.send_message(
-                                chat.id,
-                                start_msg,
-                                link_preview=False,
-                                buttons=buttons,
-                                reply_to=reply_to,
-                            )
-                        else:
-                            await event.client.send_file(
-                                chat.id,
-                                START_PIC,
-                                caption=start_msg,
-                                link_preview=False,
-                                buttons=buttons,
-                                reply_to=reply_to,
-                            )
-                    except (
-                        WebpageMediaEmptyError,
-                        MediaEmptyError,
-                        WebpageCurlFailedError,
-                    ) as e:
+            elif gvar("START_PIC") == "False":
+                START_PIC = 1
+                try:
+                    if START_PIC == 1:
+                        await event.client.send_message(
+                            chat.id,
+                            start_msg,
+                            link_preview=False,
+                            buttons=buttons,
+                            reply_to=reply_to,
+                        )
+                    else:
                         await event.client.send_file(
                             chat.id,
-                            "https://telegra.ph/file/e854a644808aeb1112462.png",
+                            START_PIC,
                             caption=start_msg,
                             link_preview=False,
                             buttons=buttons,
                             reply_to=reply_to,
                         )
-                        if BOTLOG:
-                            await event.client.send_message(
-                                BOTLOG,
-                                f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilemediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
-                                \n\n➡️ Hata Geri Bildirimi: `{e}`",
-                            )
-                    except Exception as e:
-                        if BOTLOG:
-                            await doge.bot.send_message(
-                                BOTLOG_CHATID,
-                                f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
-                                \n➡️ `{e}`",
-                            )
-
-    # else:
-    #   await check_bot_started_users(chat, event)
+                except (
+                    WebpageMediaEmptyError,
+                    MediaEmptyError,
+                    WebpageCurlFailedError,
+                ) as e:
+                    await event.client.send_file(
+                        chat.id,
+                        "https://telegra.ph/file/e854a644808aeb1112462.png",
+                        caption=start_msg,
+                        link_preview=False,
+                        buttons=buttons,
+                        reply_to=reply_to,
+                    )
+                    if BOTLOG:
+                        await event.client.send_message(
+                            BOTLOG,
+                            f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilemediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
+                            \n\n➡️ Hata Geri Bildirimi: `{e}`",
+                        )
+                except Exception as e:
+                    if BOTLOG:
+                        await doge.bot.send_message(
+                            BOTLOG_CHATID,
+                            f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
+                            \n➡️ `{e}`",
+                        )
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
