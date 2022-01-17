@@ -72,7 +72,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
             \n**🆔 Kullanıcı ID'si:** `{user.id}`\
             \n**⛓ Sebep:** `{reason}`"
     if BOTLOG:
-        await doge.send_message(BOTLOG_CHATID, info)
+        await doge.bot.send_message(BOTLOG_CHATID, info)
     return info
 
 
@@ -91,5 +91,5 @@ async def unban_user_from_bot(user, reason, reply_to=None):
             \n**ℹ️ İlk İsim:** {user.first_name}\
             \n**🆔 Kullanıcı ID'si:** `{user.id}`"
     if BOTLOG:
-        await doge.send_message(BOTLOG_CHATID, info)
+        await doge.bot.send_message(BOTLOG_CHATID, info)
     return info

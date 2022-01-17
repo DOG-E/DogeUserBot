@@ -40,11 +40,11 @@ async def t_paste(msg, title=None):
         response = t["url"]
         try:
             from ...core.session import doge
-
-            await doge.send_message(
+            """
+            await doge.bot.send_message(
                 Config.BOTLOG_CHATID,
                 f"⛓ Geçerli oturum için yeni Telegraph hesabı: {auth_url} oluşturuldu.\n\n**⚠ Telegram moderatörlerinden olduklarını söyleseler bile bu URL'yi kimseye vermeyin!**",
-            )
+            )"""
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
         return response
@@ -76,7 +76,7 @@ async def p_paste(message, extension=None):
         try:
             from ...core.session import doge
 
-            await doge.send_message(
+            await doge.bot.send_message(
                 Config.BOTLOG_CHATID,
                 f"**Pasty Bin kutusuna yapıştırabilmek için yeni bir paste baplantısı oluşturuldu.\nPasty Bin bağlantınız burada: [Tıklayın]({purl})\n\n isterseniz bu pasty'i bu belirteci kullanarak silebilirsiniz `{response['deletionToken']}`",
             )

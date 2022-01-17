@@ -67,7 +67,7 @@ if Config.DOGEPLUGIN:
                     -1001482657964, None, filter=InputMessagesFilterDocument
                 )
             except BaseException:
-                await doge.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     "**🚨 I couldn't install plugins of @DogePlugin!\n\
                         \n\
@@ -115,7 +115,7 @@ if Config.DOGEHUB:
                     -1001233006670, None, filter=InputMessagesFilterDocument
                 )
             except BaseException:
-                await doge.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     "**🚨 I couldn't install hub plugins of @DogeHUB!\n\
                         \n\

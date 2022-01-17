@@ -61,8 +61,8 @@ async def dogebroadcast_add(event):
         )
     if reply and reason and user.id != reply.sender_id:
         if BOTLOG:
-            msg = await event.client.send_message(BOTLOG_CHATID, reason)
-            await event.client.send_message(
+            msg = await doge.bot.send_message(BOTLOG_CHATID, reason)
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "The replied message was failed to send to the user. Confusion between to whom it should send.",
                 reply_to=msg.id,
@@ -114,13 +114,13 @@ async def dogebroadcast_add(event):
     chat = await event.get_chat()
     if BOTLOG:
         try:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The Chat {chat.title} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The user {chat.first_name} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
@@ -257,7 +257,7 @@ async def dogebroadcast_send(event):
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
     await edl(dogevent, resultext)
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
             parse_mode=_format.parse_pre,
@@ -322,7 +322,7 @@ async def dogebroadcast_send(event):
     resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
     await edl(dogevent, resultext)
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"A message is forwared to {i} chats out of {no_of_chats} chats in category {keyword}",
             parse_mode=_format.parse_pre,
@@ -364,13 +364,13 @@ async def dogebroadcast_remove(event):
     chat = await event.get_chat()
     if BOTLOG:
         try:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The Chat {chat.title} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The user {chat.first_name} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
@@ -433,13 +433,13 @@ async def dogebroadcast_remove(event):
     chat = await event.get_chat()
     if BOTLOG:
         try:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The Chat {chat.title} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"The user {chat.first_name} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,

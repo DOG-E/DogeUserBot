@@ -106,7 +106,6 @@ alist = [
     "LASTFM_PASSWORD_PLAIN",
     "LASTFM_SECRET",
     "OCRSPACE_API",
-    "RANDOMSTUFF_API",
     "REMOVEBG_API",
     "SPAMWATCH_API",
     "SPOTIFY_DC",
@@ -332,6 +331,8 @@ async def dbsetter(event):  # sourcery no-metrics
                         f"⚙️ Give some values which you want to save for **{gvarname}**",
                     )
 
+                if gvarname == "OWNER_ID" or gvarname == "OWNERID":
+                    return
                 sgvar(gvarname, gvarinfo)
                 if BOTLOG_CHATID:
                     await doge.bot.send_message(
@@ -357,6 +358,8 @@ async def dbsetter(event):  # sourcery no-metrics
 
             if cmd == "d":
                 gvardata = gvar(gvarname)
+                if gvarname == "OWNER_ID" or gvarname == "OWNERID":
+                    return
                 dgvar(gvarname)
                 if BOTLOG_CHATID:
                     await doge.bot.send_message(

@@ -120,6 +120,15 @@ async def group_fban(event):
                         check = True
                 if not check:
                     errors.append(reply.text)
+                await conv.mark_read()
+                await conv.cancel_all()
+                if BOTLOG:
+                    await doge.bot.send_message(
+                        BOTLOG_CHATID,
+                        f"#FBAN\
+                        \n**Federasyon:** `{i}`\
+                        \nBaşarıyla federasyondan engelledim.",
+                    )
         except Exception as e:
             errors.append(str(e))
     success_report = f"{_format.mentionuser(user.first_name ,user_id)} is succesfully banned in {success} feds of {total}\
@@ -176,13 +185,16 @@ async def sfban(event):
     fedList = []
     if not fedList:
         for a in range(3):
-            async with event.client.conversation(rose) as bot_conv:
-                await bot_conv.send_message("/start")
+            async with event.client.conversation(rose) as conv:
+                await conv.send_message("/start")
                 await sleep(2)
-                await bot_conv.send_message("/myfeds")
+                await conv.send_message("/myfeds")
                 await sleep(2)
                 try:
-                    response = await bot_conv.get_response()
+                    response = await conv.get_response()
+                    await event.client.send_read_acknowledge(
+                        conv.chat_id, message=response, clear_mentions=True
+                    )
                 except TimeoutError:
                     return await msg.edit(
                         f"@MissRose_Bot cevap vermiyor!",
@@ -191,7 +203,7 @@ async def sfban(event):
                 if "make a file" in response.text or "Looks like" in response.text:
                     await response.click(0)
                     await sleep(3)
-                    fedfile = await bot_conv.get_response()
+                    fedfile = await conv.get_response()
                     await sleep(3)
                     if fedfile.media:
                         downloaded_file_name = await doge.download_media(
@@ -207,17 +219,21 @@ async def sfban(event):
                             except BaseException:
                                 pass
                     elif "You can only use fed commands once every 5 minutes" in (
-                        await bot_conv.get_edit
+                        await conv.get_edit
                     ):
                         return await msg.edit(
                             f"@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
                         )
+                    await event.client.send_read_acknowledge(
+                        conv.chat_id, message=fedfile, clear_mentions=True
+                    )
                 if not fedList:
                     await msg.edit(
                         f"Yöneticisi olduğunuz federasyonlar bulunamadı! Tekrar deneniyor ({a+1}/3)...",
                     )
                 else:
                     break
+                await conv.cancel_all()
         else:
             await msg.edit("Hata")
         In = False
@@ -255,6 +271,13 @@ async def sfban(event):
     await msg.edit(
         f"SüperFBan tamamlandı!\nToplam Federasyonlar - {len(fedList)}.\n#DOGE",
     )
+    if BOTLOG:
+        await doge.bot.send_message(
+            BOTLOG_CHATID,
+            f"#SUPERFBAN\
+            \nKullanıcı ID: `{FBAN}`\
+            \nBaşarıyla federasyondan engelledim.",
+        )
 
 
 @doge.bot_cmd(
@@ -332,6 +355,8 @@ async def group_unfban(event):
                         check = True
                 if not check:
                     errors.append(reply.text)
+                await conv.mark_read()
+                await conv.cancel_all()
         except Exception as e:
             errors.append(str(e))
     success_report = f"{_format.mentionuser(user.first_name ,user_id)} is succesfully unbanned in {success} feds of {total}\
@@ -405,13 +430,13 @@ async def sunfban(event):
         chat = await event.get_chat()
     if not fedList:
         for a in range(3):
-            async with event.client.conversation(rose) as bot_conv:
-                await bot_conv.send_message("/start")
+            async with event.client.conversation(rose) as conv:
+                await conv.send_message("/start")
                 await sleep(3)
-                await bot_conv.send_message("/myfeds")
+                await conv.send_message("/myfeds")
                 await sleep(3)
                 try:
-                    response = await bot_conv.get_response()
+                    response = await conv.get_response()
                 except TimeoutError:
                     return await msg.edit(
                         "@MissRose_Bot cevap vermiyor!",
@@ -420,7 +445,7 @@ async def sunfban(event):
                 if "make a file" in response.text or "Looks like" in response.text:
                     await response.click(0)
                     await sleep(3)
-                    fedfile = await bot_conv.get_response()
+                    fedfile = await conv.get_response()
                     await sleep(3)
                     if fedfile.media:
                         downloaded_file_name = await doge.download_media(
@@ -436,7 +461,7 @@ async def sunfban(event):
                             except BaseException:
                                 pass
                     elif "You can only use fed commands once every 5 minutes" in (
-                        await bot_conv.get_edit
+                        await conv.get_edit
                     ):
                         return await msg.edit(
                             "@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
@@ -447,6 +472,8 @@ async def sunfban(event):
                     )
                 else:
                     break
+                await conv.mark_read()
+                await conv.cancel_all()
         else:
             await msg.edit("Hata")
         In = False
@@ -568,7 +595,7 @@ async def quote_search(event):  # sourcery no-metrics
             f"__Successfully added all your feds to database group__ **{fedid}**.",
         )
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#ADDFEDID\
                 \n**Fed Group:** `{fedid}`\
@@ -588,7 +615,7 @@ async def quote_search(event):  # sourcery no-metrics
     add_collection("fedids", feds)
     await eor(event, "__The given fed is succesfully added to fed category.__")
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#ADDFEDID\
             \n**FedID:** `{fedid}`\
@@ -627,7 +654,7 @@ async def quote_search(event):
         add_collection("fedids", feds)
         await eor(event, f"__Succesfully removed all feds in the category {fedid}__")
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#REMOVEFEDID\
             \n**Fed Group:** `{fedid}`\
@@ -644,7 +671,7 @@ async def quote_search(event):
     add_collection("fedids", feds)
     await eor(event, "__The given fed is succesfully removed from fed category.__")
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#REMOVEFEDID\
         \n**FedID:** `{fedid}`\

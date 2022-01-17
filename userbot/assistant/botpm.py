@@ -196,7 +196,7 @@ async def bot_start(event):
             )
     except Exception as e:
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                 \n➡️ `{e}`",
@@ -218,7 +218,7 @@ async def bot_pms(event):  # sourcery no-metrics
             except Exception as e:
                 LOGS.error(f"🚨 {str(e)}")
                 if BOTLOG:
-                    await event.client.send_message(
+                    await doge.bot.send_message(
                         BOTLOG_CHATID,
                         f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
                         \n➡️ `{str(e)}`",
@@ -266,7 +266,7 @@ async def bot_pms(event):  # sourcery no-metrics
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
                     if BOTLOG:
-                        await event.client.send_message(
+                        await doge.bot.send_message(
                             BOTLOG_CHATID,
                             f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
                             \n➡️ `{e}`",
@@ -304,7 +304,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
                     if BOTLOG:
-                        await event.client.send_message(
+                        await doge.bot.send_message(
                             BOTLOG_CHATID,
                             f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.__\
                             \n➡️ `{e}`",

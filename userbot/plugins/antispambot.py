@@ -98,7 +98,7 @@ if gvar("ANTISPAMBOT_BAN") == "True":
                 except Exception as e:
                     LOGS.info(e)
         if BOTLOG and dogbanned:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#ANTISPAMBOT\n"
                 f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"

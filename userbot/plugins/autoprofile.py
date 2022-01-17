@@ -74,7 +74,7 @@ async def autopicloop():
     AUTOPICSTART = gvar("autopic") == "true"
     if AUTOPICSTART and gvar("DEFAULT_PIC") is None:
         if BOTLOG:
-            return await doge.send_message(
+            return await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "**Hata:**\n`Otomatik profil fotoğrafı özelliği için lütfen DEFAULT_PIC değişkenini ayarlayın.`",
             )
@@ -175,7 +175,7 @@ async def bloom_pfploop():
     BLOOMSTART = gvar("bloom") == "true"
     if BLOOMSTART and gvar("DEFAULT_PIC") is None:
         if BOTLOG:
-            return await doge.send_message(
+            return await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "**Hata:**\n`Otomatik çiçek profil fotoğrafı özelliği için lütfen DEFAULT_PIC değişkenini ayarlayın.`",
             )

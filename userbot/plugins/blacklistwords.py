@@ -30,7 +30,7 @@ async def on_new_message(event):
             try:
                 await event.delete()
             except Exception:
-                await event.client.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID,
                     f"{get_display_name(await event.get_chat())} sohbetinde silme iznim yok.\
                     \nYani bu sohbette karalistedeki kelimeleri içeren mesajları silemem.",

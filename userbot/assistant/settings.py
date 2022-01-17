@@ -400,9 +400,10 @@ async def hlogger(event: CallbackQuery):
 @check_owner
 async def hgloggeroff(event: CallbackQuery):
     if gvar("HEROKULOGGER") == ("False" or None):
-        return await event.answer(
+        await event.answer(
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!", alert=True
         )
+        return
     if gvar("HEROKULOOGER") == "True":
         await sgvar("HEROKULOGGER", "False")
         return await event.answer(
@@ -762,7 +763,7 @@ async def fgchelper(event: CallbackQuery):
     \n🗑 Eğer bu grubu silerseniz,\
     \n🐾 FBAN özelliği çalışmayacaktır.\n\
     \n🧡 @DogeUserBot"
-    gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
+    gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeFBan.jpg")
     await sleep(0.75)
     rose = "@MissRose_Bot"
     _, groupid = await create_supergroup(
@@ -794,7 +795,7 @@ async def herokuloggergroupcreate(event: CallbackQuery):
     \n🗑 Eğer bu grubu silerseniz,\
     \n🐾 Heroku Logger özelliği çalışmayacaktır.\n\
     \n🧡 @DogeUserBot"
-    gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
+    gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeHerokuLog.jpg")
     await sleep(0.75)
     _, groupid = await create_supergroup(
         "🐾 Doɢᴇ Hᴇʀoᴋᴜ Loɢɢᴇʀ Gʀᴜᴘ", doge, gvar("BOT_USERNAME"), descript, gphoto

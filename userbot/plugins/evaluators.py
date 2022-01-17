@@ -47,7 +47,7 @@ async def _(event):
         linktext=f"**•  Exec:** \n```{cmd}``` \n\n**•  Result:** \n",
     )
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             "Terminal command " + cmd + " was executed sucessfully.",
         )
@@ -105,7 +105,7 @@ async def _(event):
         linktext=f"**•  Eval:** \n```{cmd}``` \n\n**•  Result:** \n",
     )
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             "eval command " + cmd + " was executed sucessfully.",
         )

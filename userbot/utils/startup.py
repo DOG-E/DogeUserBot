@@ -78,13 +78,12 @@ async def checking_id():
     doge.me = await doge.get_me()
     doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
-        dgvar("OWNERID")
-        await sleep(0.5)
         sgvar("OWNERID", int(doge.uid))
-    try:
-        dgvar("OWNER_ID")
         await sleep(0.5)
+    try:
+        await sleep(3)
         sgvar("OWNER_ID", int(doge.uid))
+        await sleep(0.5)
     except Exception as e:
         LOGS.error(f"🚨 {e}")
     if gvar("OWNERID") != gvar("OWNER_ID"):
@@ -92,6 +91,7 @@ async def checking_id():
             "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
         )
         dgvar("OWNER_ID")
+        dgvar("OWNERID")
         dgvar("ALIVE_NAME")
         dgvar("BOT_TOKEN")
         dgvar("PRIVATE_GROUP_BOT_API_ID")
@@ -100,6 +100,7 @@ async def checking_id():
         dgvar("PLUGIN_CHANNEL")
         dgvar("FBAN_GROUP_ID")
         dgvar("PRIVATE_CHANNEL_ID")
+        dgvar("HLOGGER_ID")
         dgvar("TG_2STEP_VERIFICATION_CODE")
         dgvar("ipaddress")
         exit()

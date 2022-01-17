@@ -22,7 +22,7 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DOGEAFK,
-    PM_LOGGER_GROUP_ID,
+    TAG_LOGGER_GROUP,
     _format,
     afk_time,
     dgvar,
@@ -80,53 +80,52 @@ async def set_afk(event):
     string = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     media_t = media_type(reply)
+    global LAST_SEEN
     global AFKREASON
     global AFKMEDIA
-    global LAST_SEEN
-    if gvar("ISAFK") is None:
-        if not media_t:
-            AFKMEDIA = None
-        elif media_t != "Sticker" and media_t:
-            if not BOTLOG:
-                return await edl(
-                    event,
-                    "Medya ile birlikte AFK kullanmak için `PRIVATE_GROUP_BOT_API_ID` değişkenini ayarlamalısınız.",
-                )
-            AFKMEDIA = await reply.forward_to(BOTLOG_CHATID)
-        if string:
-            AFKREASON = string
-            await edl(event, f"`AFK'yım!`\n**Nedeni:** {string}")
-        else:
-            await edl(event, "`AFK'yım!`")
-        LAST_SEEN = time()
-        if gvar("AFKBIOSET") != "False":
-            try:
-                full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
-                bio = full.about
-                if bio:
-                    sgvar("AFKBIO", bio)
-                    await event.client(
-                        UpdateProfileRequest(about=f"{gvar('AFK_BIO')} @DogeUserBot")
-                    )
-                else:
-                    await event.client(
-                        UpdateProfileRequest(about="🐶 @DogeUserBot sadık köpeğiniz! 🐾")
-                    )
-            except BaseException:
-                pass
-        if BOTLOG:
-            if string:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#AFK\nAFK modundasınız.\n**Nedeni:** `{string}`",
+    LAST_SEEN = time()
+    if not media_t:
+        AFKMEDIA = None
+    elif media_t != "Sticker" and media_t:
+        if not BOTLOG:
+            return await edl(
+                event,
+                "Medya ile birlikte AFK kullanmak için `PRIVATE_GROUP_BOT_API_ID` değişkenini ayarlamalısınız.",
+            )
+        AFKMEDIA = await reply.forward_to(BOTLOG_CHATID)
+    if string:
+        AFKREASON = string
+        await edl(event, f"`AFK'yım!`\n**Nedeni:** {string}")
+    else:
+        await edl(event, "`AFK'yım!`")
+    if gvar("AFKBIOSET") != "False":
+        try:
+            full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
+            bio = full.about
+            if bio:
+                sgvar("AFKBIO", bio)
+                await event.client(
+                    UpdateProfileRequest(about=f"{gvar('AFKBIO')} @DogeUserBot")
                 )
             else:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    "#AFK\nAFK modundasınız.\nNedenini belirtmediniz.",
+                await event.client(
+                    UpdateProfileRequest(about="🐶 @DogeUserBot sadık köpeğiniz! 🐾")
                 )
-        sgvar("ISAFK", "True")
-        raise StopPropagation
+        except BaseException:
+            pass
+    if BOTLOG:
+        if string:
+            await doge.bot.send_message(
+                BOTLOG_CHATID,
+                f"#AFK\nAFK modundasınız.\n**Nedeni:** `{string}`",
+            )
+        else:
+            await doge.bot.send_message(
+                BOTLOG_CHATID,
+                "#AFK\nAFK modundasınız.\nNedenini belirtmediniz.",
+            )
+    sgvar("ISAFK", "True")
+    raise StopPropagation
 
 
 async def mention_afk(mention):
@@ -277,7 +276,7 @@ async def mention_afk(mention):
                 USERS[mention.sender_id] = USERS[mention.sender_id] + 1
                 COUNT_MSG = COUNT_MSG + 1
         hmm = await mention.get_chat()
-        if PM_LOGGER_GROUP_ID == -100:
+        if int(TAG_LOGGER_GROUP) == -100:
             return
         full = None
         try:
@@ -298,7 +297,7 @@ async def mention_afk(mention):
         if not mention.is_private:
             if messaget is None:
                 await doge.bot.send_message(
-                    PM_LOGGER_GROUP_ID,
+                    int(TAG_LOGGER_GROUP),
                     resalt,
                     parse_mode="html",
                     link_preview=False,
@@ -308,7 +307,7 @@ async def mention_afk(mention):
                 try:
                     media = await mention.download_media()
                     await doge.bot.send_message(
-                        PM_LOGGER_GROUP_ID,
+                        int(TAG_LOGGER_GROUP),
                         resalt,
                         parse_mode="html",
                         link_preview=False,
@@ -317,7 +316,7 @@ async def mention_afk(mention):
                     )
                     if messaget == "Sticker":
                         await doge.bot.send_message(
-                            PM_LOGGER_GROUP_ID,
+                            int(TAG_LOGGER_GROUP),
                             resalt,
                             parse_mode="html",
                             link_preview=False,
@@ -500,12 +499,12 @@ async def setnot_afk(notafk):
         except Exception:
             pass
     if BOTLOG:
-        await notafk.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             "AFK'dan çıktınız.\n\n"
             + "Şu kadar süredir AFK'ydınız: `"
             + endtime
-            + "`"
+            + "`\n\n"
             + "Siz AFK iken **"
             + str(len(USERS))
             + "** kullanıcı **"

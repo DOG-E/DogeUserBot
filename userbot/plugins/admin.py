@@ -125,7 +125,7 @@ async def set_group_photo(event):  # sourcery no-metrics
                 return await edl(event, f"**Hata:** `{str(e)}`")
             process = "değiştirildi."
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             "#GRUP_RESIM_DEGISIKLIGI\n"
             f"Grup profili resmi başarıyla {process}"
@@ -171,7 +171,7 @@ async def promote(event):
         return await dogevent.edit(NO_PERM)
     await dogevent.edit("**Kullanıcı başarıyla yetkilendirildi!**")
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#YETKILENDIRME\
             \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
@@ -219,7 +219,7 @@ async def demote(event):
         return await dogevent.edit(NO_PERM)
     await dogevent.edit("**Yetkisi başarıyla düşürüldü!**")
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#YETKİSİZLENDİRME\
             \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
@@ -281,7 +281,7 @@ async def _ban_person(event):
         )
     if BOTLOG:
         if reason:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#YASAKLAMA\
                 \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
@@ -290,7 +290,7 @@ async def _ban_person(event):
                 \n**Sebep:** {reason}",
             )
         else:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 f"#YASAKLAMA\
                 \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
@@ -326,7 +326,7 @@ async def nothanos(event):
             f"{_format.mentionuser(user.first_name ,user.id)} **yasağı başarıyla kaldırıldı!**`"
         )
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#YASAK_KALDIRMA\n"
                 f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
@@ -342,7 +342,7 @@ async def nothanos(event):
             await dogevent.edit(
                 "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
             )
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID, "#YASAK_KALDIRMA_HATASI\n" f"**Hata:** {e}"
             )
 
@@ -391,13 +391,13 @@ async def startmute(event):
                 await event.edit(
                     "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
                 )
-                await event.client.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID, "#YASAK_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
         else:
             await event.edit("**Kullanıcı başarıyla susturuldu!**\n｀-´)⊃━☆ﾟ.*･｡ﾟ **`")
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#PM_SUSTURULMASI\n"
                 f"**Kullanıcı:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
@@ -436,7 +436,7 @@ async def startmute(event):
                 await event.edit(
                     "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
                 )
-                return await event.client.send_message(
+                return await doge.bot.send_message(
                     BOTLOG_CHATID, "#PM_SUSTURMA_HATASI\n" f"**Hata:** {e}"
                 )
         try:
@@ -459,7 +459,7 @@ async def startmute(event):
                 await event.edit(
                     "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
                 )
-                return await event.client.send_message(
+                return await doge.bot.send_message(
                     BOTLOG_CHATID, "#SUSTURMA_HATASI\n" f"**Hata:** {e}"
                 )
         if reason:
@@ -474,7 +474,7 @@ async def startmute(event):
                 f"{_format.mentionuser(user.first_name ,user_id)}, {get_display_name(await event.get_chat())}** grubunda susturuldu!**\n",
             )
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#SUSTURMA\n"
                 f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
@@ -513,7 +513,7 @@ async def endmute(event):
                 await event.edit(
                     "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
                 )
-                await event.client.send_message(
+                await doge.bot.send_message(
                     BOTLOG_CHATID, "#SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
         else:
@@ -521,7 +521,7 @@ async def endmute(event):
                 "**Susturulma başarılı bir şekilde kaldırıldı.**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍"
             )
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#PM_SUSTURULMA_KALDIRILMASI\n"
                 f"**User:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
@@ -549,7 +549,7 @@ async def endmute(event):
                 await event.edit(
                     "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
                 )
-                return await event.client.send_message(
+                return await doge.bot.send_message(
                     BOTLOG_CHATID, "#SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
             else:
@@ -562,7 +562,7 @@ async def endmute(event):
             f"{_format.mentionuser(user.first_name ,user.id)}, {get_display_name(await event.get_chat())} **grubunda sesi açıldı!**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍",
         )
         if BOTLOG:
-            await event.client.send_message(
+            await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#SUSTURMA_KALDIRMA\n"
                 f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
@@ -609,7 +609,7 @@ async def endmute(event):
             f"**Atıldı:** [{user.first_name}](tg://user?id={user_id})**!**"
         )
     if BOTLOG:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             "#GRUPTAN_ATMA\n"
             f"USER: [{user.first_name}](tg://user?id={user_id})\n"
@@ -647,7 +647,7 @@ async def pin(event):
                 event,
                 "**Beklenmeyen bir hatayla karşılaşıldı! Lütfen BotLog grubunuza atılmış olan hatayı kontrol edin!**",
             )
-            return await event.client.send_message(
+            return await doge.bot.send_message(
                 BOTLOG, f"Mesaj sabitlerken bir hatayla karşılaşıldı: `{e}`"
             )
         else:
@@ -660,7 +660,7 @@ async def pin(event):
     elif is_silent == False:
         a = "Hayır"
     if BOTLOG and not event.is_private:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#SABİTLEME\
                 \n__Grupta mesaj başarıyla sabitlendi!__\
@@ -710,7 +710,7 @@ async def pin(event):
         return await edl(event, f"`{e}`", 5)
     await edl(event, "**Sabitleme başarıyla kaldırıldı!", 5)
     if BOTLOG and not event.is_private:
-        await event.client.send_message(
+        await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#SABITLEME_KALDIRMA\
                 \n**__Sabitli mesaj(lar) başarıyla sabitten kaldırıldı!__**\
