@@ -96,7 +96,7 @@ async def bot_start(event):
     mention = f"[{chat.first_name}](tg://user?id={chat.id})"
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     args = event.pattern_match.group(1)
-#if chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
+    # if chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
     start_msg = "**🐶 Hey!\
     \n🐾 Merhaba {}!\n\
     \n💬 Sana nasıl yardımcı olabilirim?**".format(
@@ -156,7 +156,7 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-                )
+            )
         else:
             try:
                 if START_PIC == 1:
@@ -308,7 +308,7 @@ async def bot_start(event):
                                 f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                                 \n➡️ `{e}`",
                             )
-    
+
     # else:
     #   await check_bot_started_users(chat, event)
 
