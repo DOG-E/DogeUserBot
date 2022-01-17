@@ -85,9 +85,9 @@ mlist = [
     "AFK",
 ]
 clist = [
-"CMDSET",
-"SUDO_CMDSET",
-"SNIP_CMDSET",
+    "CMDSET",
+    "SUDO_CMDSET",
+    "SNIP_CMDSET",
 ]
 alist = [
     "CURRENCY_API",
