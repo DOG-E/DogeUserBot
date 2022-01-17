@@ -256,7 +256,11 @@ async def _ban_person(event):
         return
     dogevent = await eor(event, "**Yasaklanıyor!**")
     try:
-        await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(view_messages=True)))
+        await event.client(
+            EditBannedRequest(
+                event.chat_id, user_id, ChatBannedRights(view_messages=True)
+            )
+        )
     except BadRequestError:
         return await dogevent.edit(NO_PERM)
     try:
