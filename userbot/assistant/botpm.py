@@ -90,7 +90,116 @@ async def check_bot_started_users(user, event):
     func=lambda e: e.is_private,
 )
 async def bot_start(event):
+    chat = await event.get_chat()
+    user = await doge.get_me()
+    reply_to = await reply_id(event)
+    mention = f"[{chat.first_name}](tg://user?id={chat.id})"
+    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     args = event.pattern_match.group(1)
+#if chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
+    start_msg = "**🐶 Hey!\
+    \n🐾 Merhaba {}!\n\
+    \n💬 Sana nasıl yardımcı olabilirim?**".format(
+        my_mention
+    )
+    buttons = [
+        (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+    ]
+    if gvar("START_PIC") != "False":
+        START_PIC = (
+            gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
+        )
+    elif gvar("START_PIC") == "False":
+        START_PIC = 1
+        if args == "settings":
+            options = [
+                [
+                    Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
+                ],
+                [
+                    Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
+                    Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
+                ],
+                [
+                    Button.inline("🌐 Dɪʟ", data="langmenu"),
+                ],
+            ]
+            await event.client.send_file(
+                chat.id,
+                "https://telegra.ph/file/e854a644808aeb1112462.png",
+                caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                    \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                    \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+                buttons=options,
+                link_preview=False,
+                reply_to=reply_to,
+            )
+        elif args == "help":
+            await event.reply(
+                f"""🐶 **Botun Komutları:**
+
+🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
+
+🕹 **Kᴏᴍᴜᴛ:** `/uinfo` ya da `/kbilgi` <kullanıcının mesajını yanıtlayarak>
+📄 **Bɪʟɢɪ:** İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.
+📍 **Nᴏᴛ:** Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!
+
+🕹 **Kᴏᴍᴜᴛ:** `/ban` ya da `/yasakla` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+📄 **Bɪʟɢɪ:** Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.
+📍 **Nᴏᴛ:** Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.
+
+🕹 **Kᴏᴍᴜᴛ:** `/unban` ya da `/yasakac` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+📄 **Bɪʟɢɪ:** Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.
+📍 **Nᴏᴛ:** Yasaklananlar listesini görmek için `.botbans` ya da `.yasaklananlar` komutunu kullanın.
+
+🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
+📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
+📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
+                )
+        else:
+            try:
+                if START_PIC == 1:
+                    await event.client.send_message(
+                        chat.id,
+                        start_msg,
+                        link_preview=False,
+                        buttons=buttons,
+                        reply_to=reply_to,
+                    )
+                else:
+                    await event.client.send_file(
+                        chat.id,
+                        START_PIC,
+                        caption=start_msg,
+                        link_preview=False,
+                        buttons=buttons,
+                        reply_to=reply_to,
+                    )
+            except (
+                WebpageMediaEmptyError,
+                MediaEmptyError,
+                WebpageCurlFailedError,
+            ) as a:
+                await event.client.send_file(
+                    chat.id,
+                    "https://telegra.ph/file/e854a644808aeb1112462.png",
+                    caption=start_msg,
+                    link_preview=False,
+                    buttons=buttons,
+                    reply_to=reply_to,
+                )
+                LOGS.info(f"{a}")
+            except Exception as e:
+                LOGS.info(f"{e}")
+
+
+@doge.shiba_cmd(
+    pattern=f"^/(start|ba[sş]lat)({gvar('BOT_USERNAME')})?([\s]+)?$",
+    incoming=True,
+    func=lambda e: e.is_private,
+)
+async def bot_start(event):
     chat = await event.get_chat()
     user = await doge.get_me()
     if check_is_black_list(chat.id):
@@ -199,102 +308,7 @@ async def bot_start(event):
                                 f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                                 \n➡️ `{e}`",
                             )
-    else:  # chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
-        start_msg = "**🐶 Hey!\
-        \n🐾 Merhaba {}!\n\
-        \n💬 Sana nasıl yardımcı olabilirim?**".format(
-            my_mention
-        )
-        buttons = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
-        ]
-        if gvar("START_PIC") != "False":
-            START_PIC = (
-                gvar("START_PIC") or "https://telegra.ph/file/e854a644808aeb1112462.png"
-            )
-        elif gvar("START_PIC") == "False":
-            START_PIC = 1
-            if args == "settings":
-                options = [
-                    [
-                        Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
-                    ],
-                    [
-                        Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
-                        Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
-                    ],
-                    [
-                        Button.inline("🌐 Dɪʟ", data="langmenu"),
-                    ],
-                ]
-                await event.client.send_file(
-                    chat.id,
-                    "https://telegra.ph/file/e854a644808aeb1112462.png",
-                    caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-                        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                        \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-                    buttons=options,
-                    link_preview=False,
-                    reply_to=reply_to,
-                )
-            elif args == "help":
-                await event.reply(
-                    f"""🐶 **Botun Komutları:**
-
-🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
-
-🕹 **Kᴏᴍᴜᴛ:** `/uinfo` ya da `/kbilgi` <kullanıcının mesajını yanıtlayarak>
-📄 **Bɪʟɢɪ:** İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.
-📍 **Nᴏᴛ:** Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!
-
-🕹 **Kᴏᴍᴜᴛ:** `/ban` ya da `/yasakla` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-📄 **Bɪʟɢɪ:** Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.
-📍 **Nᴏᴛ:** Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.
-
-🕹 **Kᴏᴍᴜᴛ:** `/unban` ya da `/yasakac` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
-📄 **Bɪʟɢɪ:** Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.
-📍 **Nᴏᴛ:** Yasaklananlar listesini görmek için `.botbans` ya da `.yasaklananlar` komutunu kullanın.
-
-🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
-📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
-📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-                )
-            else:
-                try:
-                    if START_PIC == 1:
-                        await event.client.send_message(
-                            chat.id,
-                            start_msg,
-                            link_preview=False,
-                            buttons=buttons,
-                            reply_to=reply_to,
-                        )
-                    else:
-                        await event.client.send_file(
-                            chat.id,
-                            START_PIC,
-                            caption=start_msg,
-                            link_preview=False,
-                            buttons=buttons,
-                            reply_to=reply_to,
-                        )
-                except (
-                    WebpageMediaEmptyError,
-                    MediaEmptyError,
-                    WebpageCurlFailedError,
-                ) as a:
-                    await event.client.send_file(
-                        chat.id,
-                        "https://telegra.ph/file/e854a644808aeb1112462.png",
-                        caption=start_msg,
-                        link_preview=False,
-                        buttons=buttons,
-                        reply_to=reply_to,
-                    )
-                    LOGS.info(f"{a}")
-                except Exception as e:
-                    LOGS.info(f"{e}")
+    
     # else:
     #   await check_bot_started_users(chat, event)
 
