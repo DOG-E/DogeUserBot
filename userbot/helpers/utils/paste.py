@@ -39,7 +39,6 @@ async def t_paste(msg, title=None):
         t = telegraph.create_page(title=c, content=[f"{msg}"])
         response = t["url"]
         try:
-            from ...core.session import doge
             """
             await doge.bot.send_message(
                 Config.BOTLOG_CHATID,

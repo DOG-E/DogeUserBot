@@ -59,7 +59,7 @@ if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
             try:
                 await doge.bot.send_message(int(gvar("HLOGGER_ID")), f"➕ `{line}`")
             except FloodWaitError as sec:
-                await sleep(sec.seconds+5)
+                await sleep(sec.seconds + 5)
             except Exception as e:
                 LOGS.error(e)
         await sleep(2)
