@@ -1,46 +1,14 @@
-from collections import defaultdict
-from datetime import datetime
-from re import compile
-from typing import Optional, Union
-
 from telethon import Button
-from telethon.errors import UserIsBlockedError
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     WebpageCurlFailedError,
     WebpageMediaEmptyError,
 )
-from telethon.events import CallbackQuery, MessageDeleted, StopPropagation
-from telethon.tl.functions.contacts import UnblockRequest
-from telethon.utils import get_display_name
+
 from userbot.assistant.botpm import check_bot_started_users
 
-from userbot.core.decorators import sudo_owner
-
-from ..core.pool import run_in_thread
 from ..sql_helper.bot_blacklists import check_is_black_list
-from ..sql_helper.bot_pms_sql import (
-    add_user_to_db,
-    get_user_id,
-    get_user_logging,
-    get_user_reply,
-)
-from ..sql_helper.bot_starters import add_starter_to_db, get_starter_details
-from . import (
-    BOTLOG,
-    BOTLOG_CHATID,
-    PM_LOGGER_GROUP_ID,
-    Config,
-    _format,
-    check_owner,
-    dgvar,
-    doge,
-    gvar,
-    logging,
-    reply_id,
-    tr,
-)
-from .botmanagers import ban_user_from_bot
+from . import BOTLOG, BOTLOG_CHATID, Config, doge, gvar, reply_id
 
 
 @doge.shiba_cmd(
@@ -86,8 +54,11 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-    #TODO await check_bot_started_users(chat, event)
-    if event.sender_id != int(gvar("OWNER_ID")) or event.sender_id not in Config.SUDO_USERS:
+    # TODO await check_bot_started_users(chat, event)
+    if (
+        event.sender_id != int(gvar("OWNER_ID"))
+        or event.sender_id not in Config.SUDO_USERS
+    ):
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
                 mention=mention,
@@ -175,7 +146,9 @@ async def bot_start(event):
                                 f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                                 \n➡️ `{e}`",
                             )
-    elif event.sender_id == int(gvar("OWNER_ID")) or event.sender_id in Config.SUDO_USERS:
+    elif (
+        event.sender_id == int(gvar("OWNER_ID")) or event.sender_id in Config.SUDO_USERS
+    ):
         options = [
             [
                 Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
@@ -189,34 +162,34 @@ async def bot_start(event):
             ],
         ]
         ownerb = [
-        (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
-    ]
+            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
+            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+        ]
         owner = "**🐶 Hey!\
     \n🐾 Merhaba {}!\n\
     \n💬 Sana nasıl yardımcı olabilirim?**".format(
-        my_mention
-    )
+            my_mention
+        )
         if args == "settings":
             await event.client.send_file(
-            chat.id,
-            "https://telegra.ph/file/e854a644808aeb1112462.png",
-            caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                chat.id,
+                "https://telegra.ph/file/e854a644808aeb1112462.png",
+                caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
                 \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-            buttons=options,
-            link_preview=False,
-            reply_to=reply_to,
-        )
+                buttons=options,
+                link_preview=False,
+                reply_to=reply_to,
+            )
         elif args == "help":
             await event.reply(help_text)
         else:
             await event.client.send_message(
-            chat.id,
-            owner,
-            link_preview=False,
-            buttons=ownerb,
-            reply_to=reply_to,
-        )
+                chat.id,
+                owner,
+                link_preview=False,
+                buttons=ownerb,
+                reply_to=reply_to,
+            )
     else:
         await check_bot_started_users(chat, event)
