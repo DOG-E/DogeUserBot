@@ -196,7 +196,7 @@ async def bot_start(event):
                                 f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Kullanıcı botunuzu başlatırken bir hata oluştu.`\
                                 \n➡️ `{e}`",
                             )
-    else: #chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
+    else:  # chat.id == int(gvar("OWNER_ID")) or chat.id in Config.SUDO_USERS:
         start_msg = "**🐶 Hey!\
         \n🐾 Merhaba {}!\n\
         \n💬 Sana nasıl yardımcı olabilirim?**".format(
@@ -292,8 +292,8 @@ async def bot_start(event):
                     LOGS.info(f"{a}")
                 except Exception as e:
                     LOGS.info(f"{e}")
-    #else:
-     #   await check_bot_started_users(chat, event)
+    # else:
+    #   await check_bot_started_users(chat, event)
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
