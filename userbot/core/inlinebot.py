@@ -26,7 +26,7 @@ from youtubesearchpython import VideosSearch
 
 from userbot import doge, tr
 
-from .. import BOTLOG_CHATID, mention
+from .. import mention
 from ..Config import Config
 from ..helpers.functions import rand_key
 from ..helpers.functions.utube import (
@@ -744,11 +744,11 @@ async def back_main_menu(event):
 @doge.bot.on(CallbackQuery(data=compile(b"start")))
 @check_owner
 async def back_to_start(event):
-    chat = event.get_chat()
+    event.get_chat()
     buttons = [
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
     ]
-    #if not event.is_private and chat.id == BOTLOG_CHATID:
+    # if not event.is_private and chat.id == BOTLOG_CHATID:
     await event.edit(
         f"**🐶 Hey!\
     \n🐾 Merhaba {mention}!\n\
