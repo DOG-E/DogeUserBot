@@ -57,12 +57,12 @@ async def grup_start(event):
         ]
         # if not event.is_private:  # and event.chat_id == BOTLOG_CHATID:
         await event.reply(
-                f"**🐶 Hey!\
+            f"**🐶 Hey!\
                 \n🐾 Merhaba {my_mention}!\n\
                 \n💬 Bu bir test mesajıdır**\n\
                 \nBOTLOG_CHATID = {BOTLOG_CHATID}\n\
                 \nevent.chat_id = {event.chat_id}",
-                buttons=buttons,
+            buttons=buttons,
         )
 
 

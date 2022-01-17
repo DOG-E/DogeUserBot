@@ -19,11 +19,11 @@ from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.types import Channel, Chat, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
-from ...sql_helper.globals import gvar
 from ...Config import Config
 from ...core.events import NewMessage
 from ...core.logger import logging
 from ...core.managers import edl
+from ...sql_helper.globals import gvar
 from ..resources.constants import *
 
 LOGS = logging.getLogger(__name__)
