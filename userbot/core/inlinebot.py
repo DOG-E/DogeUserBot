@@ -748,13 +748,13 @@ async def back_to_start(event):
     buttons = [
         (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
     ]
-    if not event.is_private and chat.id == BOTLOG_CHATID:
-        await event.edit(
-            f"**🐶 Hey!\
-        \n🐾 Merhaba {mention}!\n\
-        \n💬 Sana nasıl yardımcı olabilirim?**\n",
-            buttons=buttons,
-        )
+    #if not event.is_private and chat.id == BOTLOG_CHATID:
+    await event.edit(
+        f"**🐶 Hey!\
+    \n🐾 Merhaba {mention}!\n\
+    \n💬 Sana nasıl yardımcı olabilirim?**\n",
+        buttons=buttons,
+    )
 
 
 @doge.bot.on(CallbackQuery(data=compile(b"close")))
