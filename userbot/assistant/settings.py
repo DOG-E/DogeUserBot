@@ -134,15 +134,11 @@ async def ssalive(event: CallbackQuery):
     )
 
 
-
 @doge.bot.on(CallbackQuery(data=compile(b"sspmmenu")))
 @check_owner
 async def sspmmenu(event: CallbackQuery):
     buttons = [
-        [
-            Button.inline("PM_PIC", data="PM_PIC")
-        ],
-
+        [Button.inline("PM_PIC", data="PM_PIC")],
     ]
 
 
