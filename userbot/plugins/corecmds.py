@@ -371,9 +371,7 @@ async def plist(event):
         await eor(event, OUTPUT)
     else:
         if gvar("PLUGIN_CHANNEL") is not None:
-            installed = (
-                f"[🐶](tg://need_update_for_some_feature/) External Plugins:\n\n"
-            )
+            installed = f"[🐶](tg://need_update_for_some_feature/) External Plugins:\n\n"
             async for plugin in event.client.iter_messages(
                 int(gvar("PLUGIN_CHANNEL")), filter=InputMessagesFilterDocument
             ):
