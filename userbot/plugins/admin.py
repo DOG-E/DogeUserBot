@@ -258,7 +258,9 @@ async def _ban_person(event):
     try:
         await event.client(
             EditBannedRequest(
-                event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)
+                event.chat_id,
+                user_id,
+                ChatBannedRights(until_date=None, view_messages=True),
             )
         )
     except BadRequestError:
