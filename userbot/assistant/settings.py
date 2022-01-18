@@ -43,7 +43,7 @@ auth_url = r["auth_url"]
 # ilk ayarlar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"setmenu")))
 @check_owner
-async def settings(event):
+async def settings(event: CallbackQuery):
     options = [
         [
             Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
@@ -397,14 +397,10 @@ async def hlogger(event: CallbackQuery):
 # heroku logger özelliğini kapatma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"hgloggeroff")))
 @check_owner
-async def hgloggeroff(event: CallbackQuery):
+async def hgloggeroff(event):
     if gvar("HEROKULOGGER") == ("False" or None):
-        await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!",
-            cache_time=0,
-            alert=True,
-        )
-        return
+        hloff="🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!"
+        return await event.answer(hloff, cache_time=0, alert=True)
     if gvar("HEROKULOOGER") == "True":
         await sgvar("HEROKULOGGER", "False")
         return await event.answer(

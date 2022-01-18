@@ -451,7 +451,7 @@ async def startupmessage():
                 "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg",
                 caption="**🧡 Dᴏɢᴇ UsᴇʀBᴏᴛ Kᴜʟʟᴀɴɪᴍᴀ Hᴀᴢɪʀ 🧡**",
                 buttons=[
-                    (Button.inline("🐕‍🦺 Yᴀʀᴅɪᴍ", data="mainmenu"),),
+                    (Button.inline("🐕‍🦺 Yᴀʀᴅɪᴍ", data="backmainmenu"),),
                     (Button.url("💬 Dᴇsᴛᴇᴋ", "https://t.me/DogeSup"),),
                     (Button.url("🧩 Pʟᴜɢɪɴ", "https://t.me/DogePlugin"),),
                 ],
