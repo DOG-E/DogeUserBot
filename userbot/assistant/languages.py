@@ -12,7 +12,15 @@ from telethon.events import CallbackQuery
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from . import HEROKU_API_KEY, HEROKU_APP_NAME, check_owner, compile, doge, get_back_button, gvar
+from . import (
+    HEROKU_API_KEY,
+    HEROKU_APP_NAME,
+    check_owner,
+    compile,
+    doge,
+    get_back_button,
+    gvar,
+)
 
 disable_warnings(InsecureRequestWarning)
 if HEROKU_API_KEY:

@@ -400,7 +400,9 @@ async def hlogger(event: CallbackQuery):
 async def hgloggeroff(event: CallbackQuery):
     if gvar("HEROKULOGGER") == ("False" or None):
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!", cache_time=0, alert=True
+            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!",
+            cache_time=0,
+            alert=True,
         )
         return
     if gvar("HEROKULOOGER") == "True":

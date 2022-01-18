@@ -140,7 +140,8 @@ async def settings(event):
             buttons=[
                 Button.url(
                     "🧶 Bᴜʀᴀʏᴀ Tıᴋʟᴀʏıɴ ",
-                    f"https://t.me/{new_bot_username}?start=settings"),
+                    f"https://t.me/{new_bot_username}?start=settings",
+                ),
             ],
         )
     elif event.is_private:

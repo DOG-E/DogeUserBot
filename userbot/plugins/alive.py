@@ -56,7 +56,7 @@ async def thisalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time() - StartTime))
     ALIVE_TEXT = gvar("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
-    mention = gvar('mention')
+    mention = gvar("mention")
     try:
         fixialive = "ㅤ\n"
         doge_caption = gvar("ALIVE") or IALIVETEMP

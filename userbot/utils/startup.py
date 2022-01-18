@@ -122,7 +122,9 @@ async def checkid_setme():
             sgvar("ALIVE_NAME", str(doge.me.first_name))
 
     if gvar("hmention") is None or gvar("mention") is None:
-        hmention = f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
+        hmention = (
+            f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
+        )
         mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={int(gvar('OWNER_ID'))})"
         sgvar("hmention", str(hmention))
         sgvar("mention", str(mention))
@@ -316,13 +318,9 @@ async def verifyLoggerGroup():
                         f"🚨 Belirtilen {vinfo} için üye ekleme izni yok. Lütfen kontrol edin!"
                     )
         except ValueError:
-            LOGS.error(
-                f"🚨 {vinfo} değerini bulamadım. Doğruluğundan emin olun."
-            )
+            LOGS.error(f"🚨 {vinfo} değerini bulamadım. Doğruluğundan emin olun.")
         except TypeError:
-            LOGS.error(
-                f"🚨 {vinfo} desteklenmiyor. Doğruluğundan emin olun."
-            )
+            LOGS.error(f"🚨 {vinfo} desteklenmiyor. Doğruluğundan emin olun.")
         except Exception as e:
             LOGS.error(
                 f"🚨 {vinfo} doğrulanmaya çalışırken bir hata oluştu.\nHATA: {str(e)}"

@@ -402,7 +402,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 gvardata = gvar(gvarname)
                 if gvarname == "OWNER_ID" or gvarname == "OWNERID":
                     return
-                
+
                 if gvarname == "PMLOGGER" and gvarinfo == "False":
                     sgvar("PMLOGGER", "False")
                     dgvar("PMLOG")

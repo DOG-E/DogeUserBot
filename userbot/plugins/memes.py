@@ -199,7 +199,7 @@ async def who(event):
     replied_user = await get_user(event)
     if replied_user is None:
         return
-    caption = await dogememes.slap(replied_user, event, gvar('mention'))
+    caption = await dogememes.slap(replied_user, event, gvar("mention"))
     try:
         await eor(event, caption)
     except BaseException:

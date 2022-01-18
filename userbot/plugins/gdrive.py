@@ -40,7 +40,6 @@ from . import (
     G_DRIVE_FOLDER_ID,
     TMP_DOWNLOAD_DIRECTORY,
     CancelProcess,
-    Config,
     _format,
     doge,
     edl,
@@ -486,11 +485,11 @@ async def gdrive_download(
                     prog_str = "`{0}` | `[{1}{2}] {3}%`".format(
                         status,
                         "".join(
-                            (gvar("FINISHED_PROGRESS_STR")or"▰")
+                            (gvar("FINISHED_PROGRESS_STR") or "▰")
                             for i in range(floor(percentage / 5))
                         ),
                         "".join(
-                            (gvar("UNFINISHED_PROGRESS_STR")or"▱")
+                            (gvar("UNFINISHED_PROGRESS_STR") or "▱")
                             for i in range(20 - floor(percentage / 5))
                         ),
                         round(percentage, 2),
@@ -643,9 +642,13 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
             eta = round((file_size - uploaded) / speed)
             prog_str = "`Uploading:`\n`[{0}{1}] {2}`".format(
                 "".join(
-                    (gvar("FINISHED_PROGRESS_STR")or"▰") for i in range(floor(percentage / 10))
+                    (gvar("FINISHED_PROGRESS_STR") or "▰")
+                    for i in range(floor(percentage / 10))
                 ),
-                "".join((gvar("UNFINISHED_PROGRESS_STR")or"▱") for i in range(10 - floor(percentage / 10))),
+                "".join(
+                    (gvar("UNFINISHED_PROGRESS_STR") or "▱")
+                    for i in range(10 - floor(percentage / 10))
+                ),
                 round(percentage, 2),
             )
 

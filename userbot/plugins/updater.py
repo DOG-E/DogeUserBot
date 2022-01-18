@@ -24,7 +24,19 @@ from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
-from . import HEROKU_API_KEY, HEROKU_APP, HEROKU_APP_NAME, UPSTREAM_REPO_URL, Config, dgvar, doge, edl, eor, gvar, logging, tr
+from . import (
+    HEROKU_API_KEY,
+    HEROKU_APP,
+    HEROKU_APP_NAME,
+    UPSTREAM_REPO_URL,
+    Config,
+    dgvar,
+    doge,
+    edl,
+    eor,
+    logging,
+    tr,
+)
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -43,11 +55,9 @@ async def gen_chlog(repo, diff):
 
 
 async def print_changelogs(event, changelog):
-    changelog_str = (
-        f"**Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ ᴠᴀʀ!:\n\
+    changelog_str = f"**Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ ᴠᴀʀ!:\n\
         \nDᴇɢ̆ɪşɪᴋʟɪᴋʟᴇʀ:**\
         \n`{changelog}`"
-    )
     if len(changelog_str) > 4096:
         await event.edit(
             "`🐶 Değişiklik listesi upuzun.\
@@ -82,9 +92,7 @@ async def update_requirements():
                     "-r",
                     str(
                         osp.join(
-                            osp.dirname(
-                                osp.dirname(
-                                    osp.dirname(__file__))),
+                            osp.dirname(osp.dirname(osp.dirname(__file__))),
                             "requirements.txt",
                         ),
                     ),
@@ -128,9 +136,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
             heroku_app = app
             break
     if heroku_app is None:
-        await event.edit(
-            f"{txt}\n\n`Heroku dyno kimlik bilgileri yanlış!`"
-        )
+        await event.edit(f"{txt}\n\n`Heroku dyno kimlik bilgileri yanlış!`")
         return repo.__del__()
     dogevent = await event.edit(
         "`Doge dyno derlemesi devam ediyor, lütfen işlem bitene kadar bekleyin, genellikle 4 ila 5 dakika sürer.`"

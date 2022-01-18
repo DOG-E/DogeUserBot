@@ -12,7 +12,7 @@ from os import remove
 from instaloader import Instaloader, Profile
 from requests import get
 
-from . import doge, edl, eor, gvar, fsmessage, newmsgres
+from . import doge, edl, eor, fsmessage, gvar, newmsgres
 
 plugin_category = "misc"
 

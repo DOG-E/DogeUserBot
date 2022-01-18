@@ -49,8 +49,18 @@ def progress_str(total: int, current: int) -> str:
     return prog_arg.format(
         "Progress",
         percentage,
-        "".join(((gvar("FINISHED_PROGRESS_STR")or"▰") for i in range(floor(percentage / 5)))),
-        "".join(((gvar("UNFINISHED_PROGRESS_STR")or"▱") for i in range(20 - floor(percentage / 5)))),
+        "".join(
+            (
+                (gvar("FINISHED_PROGRESS_STR") or "▰")
+                for i in range(floor(percentage / 5))
+            )
+        ),
+        "".join(
+            (
+                (gvar("UNFINISHED_PROGRESS_STR") or "▱")
+                for i in range(20 - floor(percentage / 5))
+            )
+        ),
     )
 
 

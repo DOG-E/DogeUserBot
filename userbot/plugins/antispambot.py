@@ -25,40 +25,54 @@ LOGS = logging.getLogger(__name__)
 
 @doge.on(ChatAction())
 async def anti_spambot(event):  # sourcery no-metrics
-        if gvar("ANTISPAMBOT_BAN") != "True":
+    if gvar("ANTISPAMBOT_BAN") != "True":
+        return
+    if not event.user_joined and not event.user_added:
+        return
+    user = await event.get_user()
+    dogadmin = await is_admin(event.client, event.chat_id, event.client.uid)
+    if not dogadmin:
+        return
+    dogbanned = None
+    adder = None
+    ignore = None
+    if event.user_added:
+        try:
+            adder = event.action_message.sender_id
+        except AttributeError:
             return
-        if not event.user_joined and not event.user_added:
-            return
-        user = await event.get_user()
-        dogadmin = await is_admin(event.client, event.chat_id, event.client.uid)
-        if not dogadmin:
-            return
-        dogbanned = None
-        adder = None
-        ignore = None
-        if event.user_added:
-            try:
-                adder = event.action_message.sender_id
-            except AttributeError:
-                return
-        async for admin in event.client.iter_participants(
-            event.chat_id, filter=ChannelParticipantsAdmins
-        ):
-            if admin.id == adder:
-                ignore = True
-                break
-        if ignore:
-            return
-        if is_gbanned(user.id):
-            doggban = get_gbanuser(user.id)
-            if doggban.reason:
-                hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) `{doggban.reason}` nedeniyle gban olarak yasaklandın."
-                )
-            else:
-                hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) gban olarak yasaklandın."
-                )
+    async for admin in event.client.iter_participants(
+        event.chat_id, filter=ChannelParticipantsAdmins
+    ):
+        if admin.id == adder:
+            ignore = True
+            break
+    if ignore:
+        return
+    if is_gbanned(user.id):
+        doggban = get_gbanuser(user.id)
+        if doggban.reason:
+            hmm = await event.reply(
+                f"[{user.first_name}](tg://user?id={user.id}) `{doggban.reason}` nedeniyle gban olarak yasaklandın."
+            )
+        else:
+            hmm = await event.reply(
+                f"[{user.first_name}](tg://user?id={user.id}) gban olarak yasaklandın."
+            )
+        try:
+            await event.client.edit_permissions(
+                event.chat_id, user.id, view_messages=False
+            )
+            dogbanned = True
+        except Exception as e:
+            LOGS.info(e)
+    SPAMWATCH = Client(gvar("SPAMWATCH_API"))
+    if SPAMWATCH and not dogbanned:
+        ban = SPAMWATCH.get_ban(user.id)
+        if ban:
+            hmm = await event.reply(
+                f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandı."
+            )
             try:
                 await event.client.edit_permissions(
                     event.chat_id, user.id, view_messages=False
@@ -66,47 +80,35 @@ async def anti_spambot(event):  # sourcery no-metrics
                 dogbanned = True
             except Exception as e:
                 LOGS.info(e)
-        SPAMWATCH = Client(gvar("SPAMWATCH_API"))
-        if SPAMWATCH and not dogbanned:
-            ban = SPAMWATCH.get_ban(user.id)
-            if ban:
-                hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandı."
-                )
-                try:
-                    await event.client.edit_permissions(
-                        event.chat_id, user.id, view_messages=False
-                    )
-                    dogbanned = True
-                except Exception as e:
-                    LOGS.info(e)
-        if not dogbanned:
+    if not dogbanned:
+        try:
+            casurl = "https://api.cas.chat/check?user_id={}".format(user.id)
+            data = get(casurl).json()
+        except Exception as e:
+            LOGS.info(e)
+            data = None
+        if data and data["ok"]:
+            reason = (
+                f"[Combot anti-spam servisi (CAS)](https://cas.chat/query?u={user.id})"
+            )
+            hmm = await event.reply(
+                f"[{user.first_name}](tg://user?id={user.id}) {reason} tarafından yasaklandın."
+            )
             try:
-                casurl = "https://api.cas.chat/check?user_id={}".format(user.id)
-                data = get(casurl).json()
+                await event.client.edit_permissions(
+                    event.chat_id, user.id, view_messages=False
+                )
+                dogbanned = True
             except Exception as e:
                 LOGS.info(e)
-                data = None
-            if data and data["ok"]:
-                reason = f"[Combot anti-spam servisi (CAS)](https://cas.chat/query?u={user.id})"
-                hmm = await event.reply(
-                    f"[{user.first_name}](tg://user?id={user.id}) {reason} tarafından yasaklandın."
-                )
-                try:
-                    await event.client.edit_permissions(
-                        event.chat_id, user.id, view_messages=False
-                    )
-                    dogbanned = True
-                except Exception as e:
-                    LOGS.info(e)
-        if BOTLOG and dogbanned:
-            await doge.bot.send_message(
-                BOTLOG_CHATID,
-                "#ANTISPAMBOT\n"
-                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Sohbet:** {get_display_name(await event.get_chat())} (`{event.chat_id}`)\n"
-                f"**Nedeni:** {hmm.text}",
-            )
+    if BOTLOG and dogbanned:
+        await doge.bot.send_message(
+            BOTLOG_CHATID,
+            "#ANTISPAMBOT\n"
+            f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+            f"**Sohbet:** {get_display_name(await event.get_chat())} (`{event.chat_id}`)\n"
+            f"**Nedeni:** {hmm.text}",
+        )
 
 
 @doge.bot_cmd(
