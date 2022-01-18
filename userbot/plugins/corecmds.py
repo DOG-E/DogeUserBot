@@ -351,20 +351,20 @@ async def uninstall(event):
 
 
 @doge.bot_cmd(
-    pattern="plist( .all)$",
+    pattern="plist( all)$",
     command=("plist", plugin_category),
     info={
         "h": "To list all or external plugins in userbot.",
         "f": {
-            ".all": "List all of plugins.",
+            "all": "List all of plugins.",
         },
-        "u": ["{tr}plist", "{tr}plist .all"],
+        "u": ["{tr}plist", "{tr}plist all"],
     },
 )
 async def plist(event):
     "To list all or external plugins in userbot"
     listcmd = event.pattern_match.group(1)
-    if listcmd == " .all":
+    if listcmd == " all":
         cmd = "ls userbot/plugins"
         o = f"🐾 `{(await _dogeutils.runcmd(cmd))[0]}`"
         OUTPUT = f"**[🐶](tg://need_update_for_some_feature/) Plugins:**\n{o}"
@@ -372,7 +372,7 @@ async def plist(event):
     else:
         if gvar("PLUGIN_CHANNEL") is not None:
             installed = (
-                f"**[🐶](tg://need_update_for_some_feature/) External Plugins:**\n\n"
+                f"[🐶](tg://need_update_for_some_feature/) External Plugins:\n\n"
             )
             async for plugin in event.client.iter_messages(
                 int(gvar("PLUGIN_CHANNEL")), filter=InputMessagesFilterDocument
@@ -383,8 +383,8 @@ async def plist(event):
                     continue
 
                 if shortname == "py":
-                    installed += f"🐾 {plugin.file.name}    🐾 {plugin.file.name}\n"
-            await eor(event, installed)
+                    installed += f"🐾 <code>{plugin.file.name.split('.')[0]}</code>\n"
+            await eor(event, installed, parse_mode="html")
         else:
             await edl(
                 event,
