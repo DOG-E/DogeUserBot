@@ -134,17 +134,17 @@ async def ssalive(event: CallbackQuery):
     )
 
 
-# TODO
-"""
+
 @doge.bot.on(CallbackQuery(data=compile(b"sspmmenu")))
 @check_owner
 async def sspmmenu(event: CallbackQuery):
     buttons = [
         [
             Button.inline("PM_PIC", data="PM_PIC")
-        ]
+        ],
+
     ]
-"""
+
 
 # api - grup id'leri menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
@@ -382,7 +382,7 @@ async def sscg(event: CallbackQuery):
 # heroku logger menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"hlogger")))
 @check_owner
-async def hlogger(event: CallbackQuery):
+async def hlogger(event):
     buttons = [
         [
             Button.inline("✅ Aç", data="hgloggeron"),
