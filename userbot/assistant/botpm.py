@@ -319,10 +319,7 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-    if (
-        userid != int(gvar("OWNER_ID"))
-        or userid not in Config.SUDO_USERS
-    ):
+    if userid != int(gvar("OWNER_ID")) or userid not in Config.SUDO_USERS:
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
                 mention=mention,
@@ -411,9 +408,7 @@ async def bot_start(event):
                             \n➡️ `{e}`",
                         )
         await check_bot_started_users(chat)
-    elif (
-        userid == int(gvar("OWNER_ID")) or userid in Config.SUDO_USERS
-    ):
+    elif userid == int(gvar("OWNER_ID")) or userid in Config.SUDO_USERS:
         options = [
             [
                 Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
