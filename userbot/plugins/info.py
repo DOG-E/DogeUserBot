@@ -13,6 +13,7 @@ from os import makedirs, path, remove
 from time import time
 
 from requests import get
+from spamwatch import Client
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.help import GetNearestDcRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest, SaveDraftRequest
@@ -22,7 +23,6 @@ from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_input_location, pack_bot_file_id
 
 from . import (
-    SPAMWATCH,
     TEMP_DIR,
     TMP_DOWNLOAD_DIRECTORY,
     _dogeutils,
@@ -399,6 +399,7 @@ async def _(event):
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
         dc_id = "Couldn't fetch DC ID!"
+    SPAMWATCH = Client(gvar("SPAMWATCH_API"))
     if SPAMWATCH:
         ban = SPAMWATCH.get_ban(user_id)
         if ban:

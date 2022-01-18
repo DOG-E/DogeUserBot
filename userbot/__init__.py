@@ -11,7 +11,6 @@ from time import time
 
 from heroku3 import from_key
 from requests import get as request_get
-from spamwatch import Client as spamwclient
 from validators.url import url as validatorsurl
 
 from .Config import Config
@@ -71,6 +70,7 @@ else:
     TAG_LOGGER_GROUP = Config.PM_LOGGER_GROUP_ID
 
 
+# HEROKU:
 try:
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:
         HEROKU_APP = from_key(Config.HEROKU_API_KEY).apps()[Config.HEROKU_APP_NAME]
@@ -79,17 +79,15 @@ try:
 except Exception:
     HEROKU_APP = None
 
+HEROKU_API_KEY = Config.HEROKU_API_KEY
+HEROKU_APP_NAME = Config.HEROKU_APP_NAME
+
 
 # GLOBALS:
 CMD_HELP = {}
 CMD_LIST = {}
 LOAD_PLUG = {}
 SUDO_LIST = {}
-
-
-# OWNER:
-hmention = f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
-mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={int(gvar('OWNER_ID'))})"
 
 
 # VARIABLES:
@@ -104,19 +102,6 @@ PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 
 # API VARS:
 G_DRIVE_FOLDER_ID = gvar("G_DRIVE_FOLDER_ID")
-
-if gvar("SPAMWATCH_API"):
-    token = gvar("SPAMWATCH_API")
-    SPAMWATCH = spamwclient(token)
-else:
-    SPAMWATCH = None
-
-
-# HEROKU:
-heroku_api = "https://api.heroku.com"
-HEROKU_APP_NAME = Config.HEROKU_APP_NAME
-HEROKU_API_KEY = Config.HEROKU_API_KEY
-Heroku = from_key(HEROKU_API_KEY)
 
 
 # DIRECTORIES:

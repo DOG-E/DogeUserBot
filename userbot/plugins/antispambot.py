@@ -9,6 +9,7 @@
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
 from requests import get
+from spamwatch import Client
 from telethon.errors import ChatAdminRequiredError
 from telethon.events import ChatAction
 from telethon.tl.types import ChannelParticipantsAdmins
@@ -16,16 +17,16 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, gvar, logging
+from . import BOTLOG, BOTLOG_CHATID, doge, eor, gvar, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
 
-if gvar("ANTISPAMBOT_BAN") == "True":
-
-    @doge.on(ChatAction())
-    async def anti_spambot(event):  # sourcery no-metrics
+@doge.on(ChatAction())
+async def anti_spambot(event):  # sourcery no-metrics
+        if gvar("ANTISPAMBOT_BAN") != "True":
+            return
         if not event.user_joined and not event.user_added:
             return
         user = await event.get_user()
@@ -65,6 +66,7 @@ if gvar("ANTISPAMBOT_BAN") == "True":
                 dogbanned = True
             except Exception as e:
                 LOGS.info(e)
+        SPAMWATCH = Client(gvar("SPAMWATCH_API"))
         if SPAMWATCH and not dogbanned:
             ban = SPAMWATCH.get_ban(user.id)
             if ban:
@@ -216,5 +218,6 @@ def banchecker(user_id):
 
 
 def spamchecker(user_id):
+    SPAMWATCH = Client(gvar("SPAMWATCH_API"))
     ban = SPAMWATCH.get_ban(user_id) if SPAMWATCH else None
     return bool(ban)

@@ -50,7 +50,7 @@ async def setup_bot():
     try:
         install()
     except Exception as c:
-        LOGS.warning(f"🚨 {c}")
+        LOGS.warning(f"🚧 {c}")
     try:
         await doge.connect()
         config = await doge(GetConfigRequest())
@@ -71,9 +71,9 @@ async def setup_bot():
         exit()
 
 
-async def checking_id():
+async def checkid_setme():
     """
-    Kullanıcı kimliği kontrolü
+    Kullanıcı kimliği kontrolü ve gerekli bilgilerin DB'ye aktarımı
     """
     doge.me = await doge.get_me()
     doge.uid = get_peer_id(doge.me)
@@ -88,7 +88,8 @@ async def checking_id():
         LOGS.error(f"🚨 {e}")
     if gvar("OWNERID") != gvar("OWNER_ID"):
         LOGS.error(
-            "🚨 Kullanıcı değişikliği algıladım. 🔃 Kurulumu yeniden başlatıyorum..."
+            "🚨 Kullanıcı değişikliği algıladım.\
+            \n🔃 Kurulumu yeniden başlatıyorum..."
         )
         dgvar("OWNER_ID")
         dgvar("OWNERID")
@@ -102,6 +103,8 @@ async def checking_id():
         dgvar("PRIVATE_CHANNEL_ID")
         dgvar("HLOGGER_ID")
         dgvar("TG_2STEP_VERIFICATION_CODE")
+        dgvar("hmention")
+        dgvar("mention")
         dgvar("ipaddress")
         exit()
     if gvar("OWNER_ID") in G_YS:
@@ -111,7 +114,18 @@ async def checking_id():
         dgvar("ipaddress")
         await doge.disconnect()
         exit()
-    return
+
+    if gvar("ALIVE_NAME") is None:
+        if Config.ALIVE_NAME:
+            sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
+        else:
+            sgvar("ALIVE_NAME", str(doge.me.first_name))
+
+    if gvar("hmention") is None or gvar("mention") is None:
+        hmention = f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
+        mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={int(gvar('OWNER_ID'))})"
+        sgvar("hmention", str(hmention))
+        sgvar("mention", str(mention))
 
 
 async def setup_assistantbot():
@@ -124,8 +138,8 @@ async def setup_assistantbot():
         sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
     LOGS.info("🦴 Sizin için @BotFather'dan asistan botu oluşturuyorum.")
-    if Config.ALIVE_NAME:
-        botname = f"🐶 {Config.ALIVE_NAME} Asɪsᴛᴀɴ Boᴛ"
+    if gvar("ALIVE_NAME"):
+        botname = f"🐶 {gvar('ALIVE_NAME')} Asɪsᴛᴀɴ Boᴛ"
     else:
         botname = f"🐶 {doge.me.first_name} Asɪsᴛᴀɴ Boᴛ"
     if doge.me.username:
@@ -208,16 +222,10 @@ async def setup_assistantbot():
         exit()
 
 
-async def setup_me_bot():
+async def start_assistantbot():
     """
-    Gerekli bazı verileri ayarlar
+    Botu başlatır
     """
-    if gvar("ALIVE_NAME") is None:
-        if Config.ALIVE_NAME:
-            sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
-        else:
-            sgvar("ALIVE_NAME", str(doge.me.first_name))
-
     try:
         await doge.bot.start(bot_token=gvar("BOT_TOKEN"))
     except Exception:
@@ -234,7 +242,6 @@ async def setup_me_bot():
     doge.bot.me = await doge.bot.get_me()
     if gvar("BOT_USERNAME") is None:
         sgvar("BOT_USERNAME", f"@{doge.bot.me.username}")
-    return
 
 
 async def ipchange():
@@ -253,7 +260,7 @@ async def ipchange():
             await doge.disconnect()
         except (ConnectionError, CancelledError):
             pass
-        return "ip change"
+        return "ip degistir"
 
 
 async def load_plugins(folder):
@@ -302,23 +309,23 @@ async def verifyLoggerGroup():
             if not isinstance(entity, User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.error(
-                        f"🚨Belirtilen {vinfo} için mesaj göndermeyi eksik olan izinler."
+                        f"🚨 Belirtilen {vinfo} için mesaj gönderme izni yok. Lütfen kontrol edin!"
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.error(
-                        f"🚨 Belirtilen {vinfo} için üye ekleme izni eksik. Lütfen kontrol edin!."
+                        f"🚨 Belirtilen {vinfo} için üye ekleme izni yok. Lütfen kontrol edin!"
                     )
         except ValueError:
             LOGS.error(
-                f"🚨 {vinfo} değerini bulamadım. Lütfen doğru olduğundan emin olun!"
+                f"🚨 {vinfo} değerini bulamadım. Doğruluğundan emin olun."
             )
         except TypeError:
             LOGS.error(
-                f"🚨 {vinfo} desteklenmiyor/hatalı. Lütfen doğru olduğundan emin olun!"
+                f"🚨 {vinfo} desteklenmiyor. Doğruluğundan emin olun."
             )
         except Exception as e:
             LOGS.error(
-                f"🚨 {vinfo} değerini doğrulamaya çalışırken bir hata oluştu.\nHATA: {str(e)}"
+                f"🚨 {vinfo} doğrulanmaya çalışırken bir hata oluştu.\nHATA: {str(e)}"
             )
     else:
         descript = f"🚧 BU GRUBU SİLMEYİN!\n\
@@ -344,7 +351,9 @@ async def verifyLoggerGroup():
         LOGS.info("✅ PRIVATE_GROUP_BOT_API_ID için özel bir grup başarıyla oluşturdum!")
         flag = True
 
-    if Config.PMLOGGER:
+    if gvar("PMLOGGER") is None and Config.PMLOGGER:
+        sgvar("PMLOGGER", "True")
+    if gvar("PMLOGGER") == "True":
         if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
             vinfo = "PM_LOGGER_GROUP_ID"
             try:
@@ -386,7 +395,7 @@ async def verifyLoggerGroup():
             \n🚫 PM Logger özelliği çalışmayacaktır.\n\
             \n**🦴 EĞER GRUBU SİLMEK İSTERSENİZ,\
             \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
-            \n`.set var PMLOGGER False`\n\
+            \n`.sdog PMLOGGER False`\n\
             \n**{odogeubc}**"
             msg = await doge.bot.send_message(groupid, descmsg)
             await sleep(0.25)
@@ -395,35 +404,36 @@ async def verifyLoggerGroup():
             LOGS.info("✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
             flag = True
 
-    if Config.PLUGINS:
-        if gvar("PLUGIN_CHANNEL") is None:
-            descript = f"🚧 BU KANALI SİLMEYİN!\n\
-            \n🗑 Eğer bu kanalı silerseniz,\
-            \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
-            \n{odogeubc}"
-            cphoto = await doge.upload_file(
-                file="userbot/helpers/resources/DogeExtraPlugin.jpg"
-            )
-            await sleep(0.75)
-            _, channelid = await create_channel(
-                "🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
-            )
-            await sleep(0.75)
-            descmsg = f"**🚧 BU KANALI SİLMEYİN!\
-            \n🚧 BU KANALDAN AYRILMAYIN!\
-            \n🚧 BU KANALDA DEĞİŞİKLİK YAPMAYIN!**\n\
-            \n🗑 Eğer silerseniz,\
-            \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
-            \n**🦴 EĞER KANALI SİLMEK İSTERSENİZ,\
-            \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
-            \n`.set var PLUGINS False`\n\
-            \n**{odogeubc}**"
-            msg = await doge.send_message(channelid, descmsg)
-            await sleep(0.25)
-            await msg.pin()
-            sgvar("PLUGIN_CHANNEL", channelid)
-            LOGS.info("✅ PLUGIN_CHANNEL için özel bir kanal başarıyla oluşturuldum!")
-            flag = True
+    if gvar("PLUGINS") is None and Config.PLUGINS:
+        sgvar("PLUGINS", "True")
+    if gvar("PLUGINS") == "True" and gvar("PLUGIN_CHANNEL") is None:
+        descript = f"🚧 BU KANALI SİLMEYİN!\n\
+        \n🗑 Eğer bu kanalı silerseniz,\
+        \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
+        \n{odogeubc}"
+        cphoto = await doge.upload_file(
+            file="userbot/helpers/resources/DogeExtraPlugin.jpg"
+        )
+        await sleep(0.75)
+        _, channelid = await create_channel(
+            "🐾 Doɢᴇ Eᴋsᴛʀᴀ Pʟᴜɢɪɴʟᴇʀ", doge, descript, cphoto
+        )
+        await sleep(0.75)
+        descmsg = f"**🚧 BU KANALI SİLMEYİN!\
+        \n🚧 BU KANALDAN AYRILMAYIN!\
+        \n🚧 BU KANALDA DEĞİŞİKLİK YAPMAYIN!**\n\
+        \n🗑 Eğer silerseniz,\
+        \n🧩 yüklenen tüm ekstra pluginler silinecektir.\n\
+        \n**🦴 EĞER KANALI SİLMEK İSTERSENİZ,\
+        \n🔅 İLK ÖNCE ŞUNU YAZIN:**\
+        \n`.sdog PLUGINS False`\n\
+        \n**{odogeubc}**"
+        msg = await doge.send_message(channelid, descmsg)
+        await sleep(0.25)
+        await msg.pin()
+        sgvar("PLUGIN_CHANNEL", channelid)
+        LOGS.info("✅ PLUGIN_CHANNEL için özel bir kanal başarıyla oluşturuldum!")
+        flag = True
 
     if flag:
         executable = sysexecutable.replace(" ", "\\ ")

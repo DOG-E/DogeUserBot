@@ -75,17 +75,13 @@ async def grup_start(event):
     func=lambda e: e.is_group,
 )
 @sudo_owner
-async def grup_start(event):
-    user = await doge.get_me()
-    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
-    buttons = [
-        (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu"),),
-    ]
+async def group_start(event):
+    buttons = [Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="backmainmenu")]
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
         await event.reply(
             f"**🐶 Hey!\
-        \n🐾 Merhaba {my_mention}!\n\
-        \n💬 Sana nasıl yardımcı olabilirim?**\n",
+            \n🐾 Merhaba {gvar('mention')}!\n\
+            \n💬 Sana nasıl yardımcı olabilirim?**\n",
             buttons=buttons,
         )
 
@@ -96,22 +92,22 @@ async def bot_help(event):
     await event.reply(
         f"""🐶 **Botun Komutları:**
 
-🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot](http://t.me/Doge_278943_Bot) için çalışır! 
+🚨 **Nᴏᴛ:** Buradaki komular yalnızca [bu bot]({gvar('BOT_USERNAME')}) için çalışır! 
 
-🕹 **Kᴏᴍᴜᴛ:** `/uinfo` ya da `/kbilgi` <kullanıcının mesajını yanıtlayarak>
+🕹 **Kᴏᴍᴜᴛ:** `/uinfo` - `/kbilgi` <kullanıcının mesajını yanıtlayarak>
 📄 **Bɪʟɢɪ:** İletilen çıkartmaların/emojilerin ileti etiketi olmadığından ileti olarak sayılmazlar bu  yüzden komut sadece normal iletilmiş mesajlarda çalışır.
 📍 **Nᴏᴛ:** Tüm iletilen mesajlar için çalışır.İletilen mesajlar gizlilik ayarları kapalı olanlar için bile!
 
-🕹 **Kᴏᴍᴜᴛ:** `/ban` ya da `/yasakla` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+🕹 **Kᴏᴍᴜᴛ:** `/ban` - `/yasakla` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
 📄 **Bɪʟɢɪ:** Komutu kullanıcı mesajını yanıtlayarak sebeple birlikte kullanın. Böylece bottan yasaklandığınız gibi bildirilecek ve mesajları size daha fazla iletilmeyecektir.
-📍 **Nᴏᴛ:** Sebep Kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.
+📍 **Nᴏᴛ:** Sebep kullanımı zorunludur. Sebep olmazsa çalışmayacaktır.
 
-🕹 **Kᴏᴍᴜᴛ:** `/unban` ya da `/yasakac` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
+🕹 **Kᴏᴍᴜᴛ:** `/unban` - `/yasakac` <Kullanıcı ID/Kullanıcı Adı> <Sebep>
 📄 **Bɪʟɢɪ:** Kullanıcının bottanyasağını kaldırmak için kullanıcının mesajını yanıtlayrak ya da ID/Kullanıcı Adı yazarak kullanın.
 📍 **Nᴏᴛ:** Yasaklananlar listesini görmek için `.botbans` ya da `.yasaklananlar` komutunu kullanın.
 
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
-📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
+📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın.
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
     )
 
@@ -135,25 +131,23 @@ async def settings(event):
     bot_username = gvar("BOT_USERNAME")
     if bot_username.startswith("@"):
         new_bot_username = bot_username[:-1]
-    buttons = [
-        [
-            Button.url(
-                f"Buraya Tıklayın",
-                url=f"https://t.me/{new_bot_username}?start=settings",
-            ),
-        ],
-    ]
     ment = f"[{user.first_name}](tg://user?id={user.id})"
+
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
         return await event.reply(
-            f"🐾 Selam {ment}! Lütfen ayarlarınızı yapmak için aşağıdaki düğmeye tıklayın.",
-            buttons=buttons,
+            f"**🐾 Selam {ment}!**\
+            \n🧶 Ayarlarınızı yapılandırmak için aşağıdaki butona tıklayın.",
+            buttons=[
+                Button.url(
+                    "🧶 Bᴜʀᴀʏᴀ Tıᴋʟᴀʏıɴ ",
+                    f"https://t.me/{new_bot_username}?start=settings"),
+            ],
         )
     elif event.is_private:
         await event.reply(
-            f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+            "**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
             \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-            \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+            \n🧶 Ayarlamak istediğinizi aşağıdan seçin:**",
             buttons=options,
             link_preview=False,
         )
@@ -228,32 +222,6 @@ async def bot_broadcast(event):
     await br_cast.edit(b_info, parse_mode="html")
 
 
-@doge.bot_cmd(
-    pattern=f"^/(botusers|kullan[ıi]c[ıi]lar)({gvar('BOT_USERNAME')})?([\s]+)?$",
-    command=("botusers", plugin_category),
-    info={
-        "h": "Botu başlatan kullanıcıların listesini almak için.",
-        "d": "Botunu başlatan kullanıcıların tam listesini almak için kullanılır.",
-        "u": ["{tr}botusers", "{tr}kullanıcılar"],
-    },
-)
-async def ban_starters(event):
-    "Botu başlatan kullanıcıların listesini almak için."
-    ulist = get_all_starters()
-    if len(ulist) == 0:
-        return await edl(
-            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(gvar("BOT_USERNAME"))
-        )
-
-    msg = f"**🐾 {gvar('BOT_USERNAME')} botunu başlatan kullanıcıların listesi:\n\n**"
-    for user in ulist:
-        msg += f"• 👤 {_format.mentionuser(user.first_name, user.user_id)}\
-                \n   **🆔 Kullanıcı ID'si:** `{user.user_id}`\
-                \n   **ℹ️ Kullanıcı Adı:** @{user.username}\
-                \n   **📅 Tarih:** __{user.date}__\n\n"
-    await eor(event, msg)
-
-
 @doge.shiba_cmd(
     pattern="^/(ban|yasakla)({gvar('BOT_USERNAME')})?([\s]+)?\\s+([\\s\\S]*)"
 )
@@ -305,7 +273,7 @@ async def ban_botpms(event):
     reply_to = await reply_id(event)
     if not user_id:
         return await event.client.send_message(
-            event.chat_id, "**🚨 Kullanıcıyı bulamadım.", reply_to=reply_to
+            event.chat_id, "**🚨 Kullanıcıyı bulamadım.**", reply_to=reply_to
         )
 
     try:
@@ -348,10 +316,36 @@ async def ban_starters(event):
     )
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name, user.chat_id)}\
-                \n   **🆔 Kullanıcı ID'si:** `{user.chat_id}`\
-                \n   **ℹ️ UKullnıcı Adı:** @{user.username}\
+                \n   **🆔 Kullanıcı ID:** `{user.chat_id}`\
+                \n   **ℹ️ Kullnıcı Adı:** @{user.username}\
                 \n   **📅 Tarih:** __{user.date}__\
                 \n   **⛓ Sebep:** __{user.reason}__\n\n"
+    await eor(event, msg)
+
+
+@doge.bot_cmd(
+    pattern=f"^/(botusers|kullan[ıi]c[ıi]lar)({gvar('BOT_USERNAME')})?([\s]+)?$",
+    command=("botusers", plugin_category),
+    info={
+        "h": "Botu başlatan kullanıcıların listesini almak için.",
+        "d": "Botunu başlatan kullanıcıların tam listesini almak için kullanılır.",
+        "u": ["{tr}botusers", "{tr}kullanıcılar"],
+    },
+)
+async def ban_starters(event):
+    "Botu başlatan kullanıcıların listesini almak için."
+    ulist = get_all_starters()
+    if len(ulist) == 0:
+        return await edl(
+            event, "**ℹ️ {} botunu henüz kimse başlattı.**".format(gvar("BOT_USERNAME"))
+        )
+
+    msg = f"**🐾 {gvar('BOT_USERNAME')} botunu başlatan kullanıcıların listesi:\n\n**"
+    for user in ulist:
+        msg += f"• 👤 {_format.mentionuser(user.first_name, user.user_id)}\
+                \n   **🆔 Kullanıcı ID:** `{user.user_id}`\
+                \n   **ℹ️ Kullanıcı Adı:** @{user.username}\
+                \n   **📅 Tarih:** __{user.date}__\n\n"
     await eor(event, msg)
 
 
@@ -375,10 +369,10 @@ async def ban_antiflood(event):
             return await edl(event, "**ℹ️ Bot Antiflood zaten etkindi.**")
 
         sgvar("bot_antif", True)
-        await edl(event, "**ℹ️ Bot Antiflood Etkin.**")
+        await edl(event, "**ℹ️ Bot Antiflood etkinleştirildi.**")
     elif input_str == "off":
         if gvar("bot_antif") is None:
             return await edl(event, "**ℹ️ Bot Antiflood zaten devre dışı.**")
 
         dgvar("bot_antif")
-        await edl(event, "**ℹ️ Bot antiflolood devre dışı.**")
+        await edl(event, "**ℹ️ Bot antiflolood devre dışı bırakıldı.**")

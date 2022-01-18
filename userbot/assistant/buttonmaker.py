@@ -23,15 +23,15 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
     pattern="bbutton(?:\s|$)([\s\S]*)",
     command=("bbutton", plugin_category),
     info={
-        "h": "Botonlarla(düğme) mesaj oluşturmak için",
+        "h": "Butonlarla mesaj oluşturmak için",
         "note": f"Bunun çalışması için, kullandığınız grup ya da kanalda botunuza ({gvar('BOT_USERNAME')}) ihtiyacınız var. Varsayılan yazı tipi HTML'dir.",
-        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "o": "2. butonun diğer butonla aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
         "u": "{tr}bbutton <yazı> [Butonun Adı](açmak istediğiniz bağlantı)",
         "e": "{tr}bbutton Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def bbutton(event):
-    "Botonlarla(düğme) mesaj oluşturmak için"
+    "Butonlarla mesaj oluşturmak için"
     reply_message = await event.get_reply_message()
     if reply_message:
         markdown_note = reply_message.text
@@ -84,15 +84,15 @@ async def bbutton(event):
     pattern="button(?:\s|$)([\s\S]*)",
     command=("button", plugin_category),
     info={
-        "h": "Satır içi ile düğme gönderileri oluşturmak için.",
+        "h": "Satır içi ile buton gönderileri oluşturmak için.",
         "note": "Markdown, HTML'ye varsayılandır.",
-        "o": "2. düğmenin diğer düğmeyle aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
+        "o": "2. butonun diğer butonla aynı satırda olmasını istediğinizde, sonuna şunu koyun: (link:same)",
         "u": "{tr}button <yazı> [Butonun adı](açmak istediğiniz bağlantı)",
         "e": "{tr}button Test [🔎 Google]<https://www.google.com> [🐶 Doge UserBot]<https://t.me/DogeUserBot:same> [🐾 Support]<https://t.me/DogeSup>",
     },
 )
 async def button(event):
-    "Satır içi ile düğme gönderileri oluşturmak için."
+    "Satır içi ile buton gönderileri oluşturmak için."
     reply_to_id = await reply_id(event)
     reply_message = await event.get_reply_message()
     if reply_message:

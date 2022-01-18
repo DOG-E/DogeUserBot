@@ -26,7 +26,6 @@ from youtubesearchpython import VideosSearch
 
 from userbot import doge, tr
 
-from .. import mention
 from ..Config import Config
 from ..helpers.functions import rand_key
 from ..helpers.functions.utube import (
@@ -48,7 +47,7 @@ BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<(?:/{0,2})(.+?)(:same)?\>)")
 def back_menu(back):
     text = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
     \n🐾 Yᴀʀᴅıᴍᴄı\n\
-    \n◽ Doɢᴇ oғ {mention}**"
+    \n◽ Doɢᴇ oғ {gvar('mention')}**"
     buttons = [
         (
             Button.inline(
@@ -94,7 +93,7 @@ def back_menu(back):
 def main_menu():
     text = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
     \n🐾 Yᴀʀᴅıᴍᴄı\n\
-    \n◽ Doɢᴇ oғ {mention}**"
+    \n◽ Doɢᴇ oғ {gvar('mention')}**"
     buttons = [
         (
             Button.inline(
@@ -750,7 +749,7 @@ async def back_to_start(event):
     # if not event.is_private and chat.id == BOTLOG_CHATID:
     await event.edit(
         f"**🐶 Hey!\
-    \n🐾 Merhaba {mention}!\n\
+    \n🐾 Merhaba {gvar('mention')}!\n\
     \n💬 Sana nasıl yardımcı olabilirim?**\n",
         buttons=buttons,
     )
@@ -765,7 +764,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(
         f"**[🐶 Doɢᴇ UsᴇʀBoᴛ 🐾](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅıᴍᴄı\n\
-        \n◽ Doɢᴇ oғ {mention}**",
+        \n◽ Doɢᴇ oғ {gvar('mention')}**",
         buttons=buttons,
         link_preview=False,
     )
@@ -788,7 +787,7 @@ async def on_plug_in_callback_query_handler(event):
     buttons = paginate_help(0, GRP_INFO[category], category)
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
     \n🐾 Yᴀʀᴅıᴍcı\n\
-    \n◽ Doɢᴇ oғ {mention}**\n\
+    \n◽ Doɢᴇ oғ {gvar('mention')}**\n\
     \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
     \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
     \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
@@ -809,7 +808,7 @@ async def on_plug_in_callback_query_handler(event):
         buttons = paginate_help(pgno, GRP_INFO[category], category)
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅıᴍcı\n\
-        \n◽ Doɢᴇ oғ {mention}**\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}**\n\
         \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category}\
         \n**🧩 Pʟᴜɢɪɴʟᴇʀ:** {len(GRP_INFO[category])}\
         \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {command_in_category(category)}"
@@ -827,7 +826,7 @@ async def on_plug_in_callback_query_handler(event):
         )
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅıᴍcı\n\
-        \n◽ Doɢᴇ oғ {mention}**\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
         \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
         \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
@@ -857,7 +856,7 @@ async def on_plug_in_callback_query_handler(event):
         )
         text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅıᴍcı\n\
-        \n◽ Doɢᴇ oғ {mention}**\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}**\n\
         \n**🧩 Pʟᴜɢɪɴ:** {category}\
         \n**🗃 Kᴀᴛᴇɢoʀɪ:** {getkey(category)}\
         \n**⌨️ Koᴍᴜᴛʟᴀʀ:** {len(PLG_INFO[category])}"
@@ -924,7 +923,7 @@ async def on_plug_in_callback_query_handler(event):
     ]
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
     \n🐾 Yᴀʀᴅıᴍcı\n\
-    \n◽ Doɢᴇ oғ {mention}**\n\
+    \n◽ Doɢᴇ oғ {gvar('mention')}**\n\
     \n**⌨️ Koᴍᴜᴛʟᴀʀ:** `{tr}{cmd}`\
     \n**🧩 Pʟᴜɢɪɴ:** {category}\
     \n**🗃 Kᴀᴛᴇɢoʀɪ:** {category_plugins}\n\

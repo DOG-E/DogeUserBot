@@ -19,8 +19,7 @@ plugin_category = "bot"
 
 PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
 
-if Config.PLUGINS:
-    if PLUGIN_CHANNEL:
+if gvar("PLUGINS") == "True" and PLUGIN_CHANNEL:
 
         async def install():
             documentss = await doge.get_messages(

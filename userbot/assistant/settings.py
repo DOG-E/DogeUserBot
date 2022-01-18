@@ -26,7 +26,6 @@ from . import (
     doge,
     get_back_button,
     gvar,
-    mention,
     newmsgres,
     sgvar,
 )
@@ -69,7 +68,7 @@ async def settings(event):
         await event.edit(
             f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
             \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-            \n◽ Doɢᴇ oғ {mention}\n\
+            \n◽ Doɢᴇ oғ {gvar('mention')}\n\
             \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
             buttons=options,
             link_preview=False,
@@ -102,7 +101,7 @@ async def ssmenu(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🧶 Ayarlamak istediğiniz ayarı seçin:**",
         buttons=buttons,
         link_preview=False,
@@ -127,7 +126,7 @@ async def ssalive(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🧶 Alive ile ilgili ayarlamak istediğiniz ayarı seçin:**",
         buttons=buttons,
         link_preview=False,
@@ -185,7 +184,7 @@ async def apisetter(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🧶 Ayarlamak istediğiniz değişkeni seçin:**",
         buttons=apis,
         link_preview=False,
@@ -273,7 +272,7 @@ async def ss(event: CallbackQuery, x, y, z=None):
                 return await conv.send_message(
                     f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                     \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                     \n⛔ İptal edildi!**",
                     buttons=get_back_button(z),
                     link_preview=False,
@@ -282,7 +281,7 @@ async def ss(event: CallbackQuery, x, y, z=None):
                 return await conv.send_message(
                     f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                     \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                     \n⛔ İptal edildi!**",
                     buttons=get_back_button("ssmenu"),
                     link_preview=False,
@@ -292,7 +291,7 @@ async def ss(event: CallbackQuery, x, y, z=None):
             await conv.send_message(
                 f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n◽ Doɢᴇ oғ {mention}\n\
+                \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                 \n✅ {y} değişkenini başarıyla değiştirdim.**",
                 buttons=get_back_button(z),
                 link_preview=False,
@@ -301,7 +300,7 @@ async def ss(event: CallbackQuery, x, y, z=None):
             await conv.send_message(
                 f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n◽ Doɢᴇ oғ {mention}\n\
+                \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                 \n✅ {y} değişkenini başarıyla değiştirdim.**",
                 buttons=get_back_button("ssmenu"),
                 link_preview=False,
@@ -323,7 +322,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                 return await conv.send_message(
                     f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                     \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                     \n⛔ İptal edildi!**",
                     buttons=get_back_button(z),
                     link_preview=False,
@@ -332,7 +331,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                 return await conv.send_message(
                     f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                     \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                    \n◽ Doɢᴇ oғ {mention}\n\
+                    \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                     \n⛔ İptal edildi!**",
                     buttons=get_back_button("apimenu"),
                     link_preview=False,
@@ -342,7 +341,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
             await conv.send_message(
                 f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n◽ Doɢᴇ oғ {mention}\n\
+                \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                 \n✅ {y} değişkenini başarıyla değiştirdim.**",
                 buttons=get_back_button(z),
                 link_preview=False,
@@ -351,7 +350,7 @@ async def setapi(event: CallbackQuery, x, y, z=None):
             await conv.send_message(
                 f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n◽ Doɢᴇ oғ {mention}\n\
+                \n◽ Doɢᴇ oғ {gvar('mention')}\n\
                 \n✅ {y} değişkenini başarıyla değiştirdim.**",
                 buttons=get_back_button("apimenu"),
                 link_preview=False,
@@ -373,7 +372,7 @@ async def sscg(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🧶 Ayarlamak istediğiniz değişkeni seçin:**",
         buttons=apis,
         link_preview=False,
@@ -401,7 +400,7 @@ async def hlogger(event: CallbackQuery):
 async def hgloggeroff(event: CallbackQuery):
     if gvar("HEROKULOGGER") == ("False" or None):
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!", alert=True
+            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!", cache_time=0, alert=True
         )
         return
     if gvar("HEROKULOOGER") == "True":
@@ -469,7 +468,7 @@ async def hgloggerautocreate(event: CallbackQuery):
     #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
     if gvar("HLOGGER_ID") is None:
         await event.edit(
-            f"{mention} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
+            f"{gvar('mention')} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
         )
         await herokuloggergroupcreate(event)
     elif gvar("HLOGGER_ID") is not None:
@@ -487,7 +486,7 @@ async def hgloggerautocreate(event: CallbackQuery):
                 f"Heroku Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
             )
             await event.edit(
-                f"{mention} Veritabanınızda kayıtlı gruba erişilemedi! Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
+                f"{gvar('mention')} Veritabanınızda kayıtlı gruba erişilemedi! Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
             )
             await herokuloggergroupcreate(event)
 
@@ -519,7 +518,7 @@ async def fggroup(event: CallbackQuery):
         [Button.inline("⬅️️ Gᴇʀɪ", data="ssmenu")],
     ]
     await event.edit(
-        f"**{mention} [Rose](https://t.me/MissRose_Bot) için FBAN Grup ayarları!**\n\
+        f"**{gvar('mention')} [Rose](https://t.me/MissRose_Bot) için FBAN Grup ayarları!**\n\
         \n__FBAN grubunuzun için bot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
         buttons=buttons,
         link_preview=False,
@@ -545,7 +544,7 @@ async def fgapi(event: CallbackQuery):
 async def fggrupcreate(event: CallbackQuery):
     if gvar("FBAN_GROUP_ID") is None:
         await event.edit(
-            f"{mention} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir FBan grubu oluşturuyorum! Lütfen bekleyin..."
+            f"{gvar('mention')} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir FBan grubu oluşturuyorum! Lütfen bekleyin..."
         )
         await fgchelper(event)
     else:
@@ -560,7 +559,7 @@ async def fggrupcreate(event: CallbackQuery):
             )
         except Exception:
             await event.edit(
-                f"{mention} Veritabanına kayıtlı grubunuza erişiminiz yok. Sizin için bir FBan grubu oluşturuyorum! Lütfen bekleyin..."
+                f"{gvar('mention')} Veritabanına kayıtlı grubunuza erişiminiz yok. Sizin için bir FBan grubu oluşturuyorum! Lütfen bekleyin..."
             )
             await fgchelper(event)
 
@@ -601,7 +600,7 @@ async def pcmanuel(event: CallbackQuery):
                 f"Gizli kanala erişim sağlanamadı yeni kanal açılıyor... Hata Raporu: {e}"
             )
             await event.edit(
-                f"{mention} Veritabanınızda kayıtlı gizli kanala erişilemedi! Sizin için bir Gizli Kanal oluşturuyorum! Lütfen bekleyin..."
+                f"{gvar('mention')} Veritabanınızda kayıtlı gizli kanala erişilemedi! Sizin için bir Gizli Kanal oluşturuyorum! Lütfen bekleyin..."
             )
         try:
             await privatechannel(event)
@@ -783,7 +782,7 @@ async def fgchelper(event: CallbackQuery):
     await msg.pin()
     sgvar("FBAN_GROUP_ID", groupid)
     await event.edit(
-        f"{mention} Sizin için bir FBan grubu oluşturdum ve verileri veritabanına yazdım!",
+        f"{gvar('mention')} Sizin için bir FBan grubu oluşturdum ve verileri veritabanına yazdım!",
         buttons=get_back_button("fgroup"),
     )
     LOGS.info("✅ FBAN_GROUP_ID için özel bir grup başarıyla oluşturdum!")
@@ -814,7 +813,7 @@ async def herokuloggergroupcreate(event: CallbackQuery):
     await msg.pin()
     sgvar("HLOGGER_ID", groupid)
     await event.edit(
-        f"{mention} Sizin için bir Heroku Logger grubu oluşturdum ve verileri veritabanına yazdım!",
+        f"{gvar('mention')} Sizin için bir Heroku Logger grubu oluşturdum ve verileri veritabanına yazdım!",
         buttons=get_back_button("hlogger"),
     )
     LOGS.info("✅ HLOGGER_ID için özel bir grup başarıyla oluşturdum!")
@@ -841,7 +840,7 @@ async def privatechannel(event: CallbackQuery):
     await msg.pin()
     sgvar("PRIVATE_CHANNEL_ID", channelid)
     await event.edit(
-        f"{mention} Sizin için bir Gizli Kanal oluşturdum ve verileri veritabanına yazdım!",
+        f"{gvar('mention')} Sizin için bir Gizli Kanal oluşturdum ve verileri veritabanına yazdım!",
         buttons=get_back_button("sscg"),
     )
     LOGS.info("✅ PRIVATE_CHANNEL_ID için özel bir grup başarıyla oluşturdum!")

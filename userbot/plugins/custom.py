@@ -11,7 +11,6 @@ from telegraph import Telegraph, upload_file
 from telegraph.exceptions import TelegraphException
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto, PeerUser
 
-from ..sql_helper.global_msg import dmsg, gmsg, smsg
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
@@ -47,6 +46,7 @@ vlist = [
     "PM_PIC",
     "START_PIC",
     "THUMB_PIC",
+    "AFK",
     "AFKBIOSET",
     "ALIVE",
     "ALIVE_NAME",
@@ -57,15 +57,15 @@ vlist = [
     "CHANGE_TIME",
     "CUSTOM_STICKER_PACKNAME",
     "DEFAULT_BIO",
-    "GRPLOG",
     "HELP_EMOJI",
     "HELP_TEXT",
     "HEROKULOGGER",
     "MAX_FLOOD_IN_PMS",
     "NO_OF_ROWS_IN_HELP",
     "NO_OF_COLUMNS_IN_HELP",
+    "PLUGINS",
+    "PMLOGGER",
     "PM_BLOCK",
-    "PMLOG",
     "PM_TEXT",
     "START_BUTTON",
     "START_TEXT",
@@ -80,11 +80,10 @@ vlist = [
     "CMDSET",
     "SUDO_CMDSET",
     "SNIP_CMDSET",
+    "FINISHED_PROGRESS_STR",
+    "UNFINISHED_PROGRESS_STR",
 ]
-mlist = [
-    "AFK",
-]
-clist = [
+rlist = [
     "CMDSET",
     "SUDO_CMDSET",
     "SNIP_CMDSET",
@@ -165,12 +164,11 @@ async def dbsetter(event):  # sourcery no-metrics
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
     vnlist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(vlist, start=1))
-    msglist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(mlist, start=1))
     apilist = "".join(f"{i}) `{each}`\n" for i, each in enumerate(alist, start=1))
     if not vname:
         return await eor(
             event,
-            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}\n\
+            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}\n\
             \n**🔮 Give correct API name from the list:**\n\n{apilist}",
         )
 
@@ -217,7 +215,7 @@ async def dbsetter(event):  # sourcery no-metrics
         except AttributeError:
             vinfo = reply.text
 
-    if vname in (vlist or mlist):
+    if vname in vlist:
         if cmd == "s":
             if not vinfo and vname == ("ALIVE" or "AFK"):
                 return await edl(
@@ -226,7 +224,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     45,
                 )
 
-            if len(vinfo) > 70 and vname == "AFKBIO":
+            if len(vinfo) > 70 and vname == "DEFAULT_BIO":
                 return await edl(
                     event,
                     "**🚧 Max bio length is 70 characters.**",
@@ -238,7 +236,15 @@ async def dbsetter(event):  # sourcery no-metrics
                     f"Give some values which you want to save for **{vname}**",
                 )
 
-            smsg(vname, vinfo) if vname in mlist else sgvar(vname, vinfo)
+            if vname == "PMLOGGER" and vinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            elif vname == "PLUGINS" and vinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                sgvar(vname, vinfo)
+
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -249,16 +255,25 @@ async def dbsetter(event):  # sourcery no-metrics
             msg = await edl(
                 event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
-            if vname in clist:
+            if vname in rlist:
                 await event.client.reload(msg)
 
         if cmd == "g":
-            var_data = gmsg(vname) if vname in mlist else gvar(vname)
+            var_data = gvar(vname)
             await edl(event, f"🪀 Value of **{vname}** is  `{var_data}`", time=20)
 
         if cmd == "d":
-            var_data = gmsg(vname) if vname in mlist else gvar(vname)
-            dmsg(vname) if vname in mlist else dgvar(vname)
+            var_data = gvar(vname)
+
+            if vname == "PMLOGGER" and vinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            elif vname == "PLUGINS" and vinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                dgvar(vname)
+
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -272,7 +287,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 f"🪀 Value of **{vname}** is now deleted & set to default.",
                 time=20,
             )
-            if vname in clist:
+            if vname in rlist:
                 await event.client.reload(msg)
 
     elif vname in alist:
@@ -284,7 +299,15 @@ async def dbsetter(event):  # sourcery no-metrics
                     event, f"Give some values which you want to save for **{apiname}**"
                 )
 
-            sgvar(apiname, apinfo)
+            if apiname == "PMLOGGER" and apinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            elif apiname == "PLUGINS" and apinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                sgvar(apiname, apinfo)
+
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -306,7 +329,16 @@ async def dbsetter(event):  # sourcery no-metrics
             )
         if cmd == "d":
             api_data = gvar(apiname)
-            dgvar(apiname)
+
+            if apiname == "PMLOGGER" and apinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            elif apiname == "PLUGINS" and apinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                dgvar(apiname)
+
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -334,7 +366,16 @@ async def dbsetter(event):  # sourcery no-metrics
 
                 if gvarname == "OWNER_ID" or gvarname == "OWNERID":
                     return
-                sgvar(gvarname, gvarinfo)
+
+                if gvarname == "PMLOGGER" and gvarinfo == "False":
+                    sgvar("PMLOGGER", "False")
+                    dgvar("PMLOG")
+                    dgvar("GRPLOG")
+                elif gvarname == "PLUGINS" and gvarinfo == "False":
+                    sgvar("PLUGINS", "False")
+                else:
+                    sgvar(gvarname, gvarinfo)
+
                 if BOTLOG_CHATID:
                     await doge.bot.send_message(
                         BOTLOG_CHATID,
@@ -346,7 +387,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     event,
                     f"⚙️ Value of **{gvarname}** is changed.",
                 )
-                if vname in clist:
+                if vname in rlist:
                     await event.client.reload(msg)
 
             if cmd == "g":
@@ -361,7 +402,16 @@ async def dbsetter(event):  # sourcery no-metrics
                 gvardata = gvar(gvarname)
                 if gvarname == "OWNER_ID" or gvarname == "OWNERID":
                     return
-                dgvar(gvarname)
+                
+                if gvarname == "PMLOGGER" and gvarinfo == "False":
+                    sgvar("PMLOGGER", "False")
+                    dgvar("PMLOG")
+                    dgvar("GRPLOG")
+                elif gvarname == "PLUGINS" and gvarinfo == "False":
+                    sgvar("PLUGINS", "False")
+                else:
+                    dgvar(gvarname)
+
                 if BOTLOG_CHATID:
                     await doge.bot.send_message(
                         BOTLOG_CHATID,
@@ -375,13 +425,13 @@ async def dbsetter(event):  # sourcery no-metrics
                     f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
                     time=20,
                 )
-                if vname in clist:
+                if vname in rlist:
                     await event.client.reload(msg)
 
         else:
             await eor(
                 event,
-                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}{msglist}\n\
+                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}\n\
                 \n**🔮 Give correct API name from the list:**\n\n{apilist}",
             )
 

@@ -24,7 +24,6 @@ from . import (
     edl,
     eor,
     gvar,
-    hmention,
     install_pip,
     reply_id,
     tr,
@@ -32,7 +31,6 @@ from . import (
 
 plugin_category = "bot"
 
-PLUGIN_CHANNEL = gvar("PLUGIN_CHANNEL")
 thumb_image_path = path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
@@ -72,7 +70,7 @@ async def install(event):
                     )
 
                 try:
-                    await reply_message.forward_to(int(PLUGIN_CHANNEL))
+                    await reply_message.forward_to(int(gvar("PLUGIN_CHANNEL")))
                 except Exception:
                     remove(downloaded_file_name)
                     return await edl(
@@ -81,7 +79,7 @@ async def install(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}set var PLUGINS True`\
+                        \n🦴 Write** `{tr}sdog PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -143,7 +141,7 @@ async def finstall(event):
                     load_module(shortestname)
 
                 try:
-                    await reply_message.forward_to(int(PLUGIN_CHANNEL))
+                    await reply_message.forward_to(int(gvar("PLUGIN_CHANNEL")))
                 except Exception:
                     remove(downloaded_file_name)
                     return await edl(
@@ -152,7 +150,7 @@ async def finstall(event):
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                        \n🦴 Write** `{tr}set var PLUGINS True`\
+                        \n🦴 Write** `{tr}sdog PLUGINS True`\
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
@@ -285,7 +283,7 @@ async def send(event):
         ms = (end - start).seconds
         await event.delete()
         await doog.edit(
-            f"<b><i>➥ Plugin Name: {input_str}</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {hmention}</i></b>",
+            f"<b><i>➥ Plugin Name: {input_str}</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {gvar('hmention')}</i></b>",
             parse_mode="html",
         )
     else:
@@ -340,7 +338,7 @@ async def uninstall(event):
         remove_plugin(shortname)
         try:
             async for message in event.client.iter_messages(
-                int(PLUGIN_CHANNEL),
+                int(gvar("PLUGIN_CHANNEL")),
                 filter=InputMessagesFilterDocument,
                 search=shortname,
             ):
@@ -372,12 +370,12 @@ async def plist(event):
         OUTPUT = f"**[🐶](tg://need_update_for_some_feature/) Plugins:**\n{o}"
         await eor(event, OUTPUT)
     else:
-        if PLUGIN_CHANNEL != None:
+        if gvar("PLUGIN_CHANNEL") is not None:
             installed = (
                 f"**[🐶](tg://need_update_for_some_feature/) External Plugins:**\n\n"
             )
             async for plugin in event.client.iter_messages(
-                int(PLUGIN_CHANNEL), filter=InputMessagesFilterDocument
+                int(gvar("PLUGIN_CHANNEL")), filter=InputMessagesFilterDocument
             ):
                 try:
                     shortname = plugin.file.name.split(".")[1]
@@ -394,7 +392,7 @@ async def plist(event):
                 \n**➡️ To list externally installed plugins, you must first set a PLUGIN_CHANNEL.\
                 \n\
                 \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
-                \n🦴 Write** `{tr}set var PLUGINS True`",
+                \n🦴 Write** `{tr}sdog PLUGINS True`",
             )
 
 

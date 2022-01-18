@@ -58,13 +58,13 @@ PATH = "./userbot/cache/ytsearch.json"
     pattern="yt(?:\s|$)([\s\S]*)",
     command=("yt", plugin_category),
     info={
-        "h": "Satır içi düğmelerle YouTube'dan videolar indirin.",
-        "d": "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için.",
+        "h": "Satır içi butonlarla YouTube'dan videolar indirin.",
+        "d": "YouTube videolarını satır içi butonlara göre aramak ve indirmek için.",
         "u": "{tr}yt yazı ya da yanıtlanmış ya da yazılmış link",
     },
 )
 async def yt_inline(event):
-    "YouTube videolarını satır içi düğmelere göre aramak ve indirmek için."
+    "YouTube videolarını satır içi butonlara göre aramak ve indirmek için."
     reply = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)

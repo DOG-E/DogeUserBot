@@ -24,13 +24,13 @@ from . import (
 )
 from .utils import (
     add_bot_to_logger_group,
-    checking_id,
+    checkid_setme,
     customize_assistantbot,
     ipchange,
     load_plugins,
     setup_assistantbot,
     setup_bot,
-    setup_me_bot,
+    start_assistantbot,
     startupmessage,
     verifyLoggerGroup,
 )
@@ -39,31 +39,31 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info("🐾 %5 ~ BAŞLATILIYOR...")
+    LOGS.info("🐾 %10 ~ BAŞLATILIYOR...")
     doge.loop.run_until_complete(setup_bot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
-    LOGS.info("🐾 %10 ~ YÜKLENİYOR...")
-    doge.loop.run_until_complete(checking_id())
-except Exception as e:
-    LOGS.error(f"🚨 {e}")
-
-try:
     LOGS.info("🐾 %20 ~ YÜKLENİYOR...")
-    doge.loop.run_until_complete(setup_assistantbot())
+    doge.loop.run_until_complete(checkid_setme())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
     LOGS.info("🐾 %30 ~ YÜKLENİYOR...")
-    doge.loop.run_until_complete(setup_me_bot())
+    doge.loop.run_until_complete(setup_assistantbot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 try:
     LOGS.info("🐾 %40 ~ YÜKLENİYOR...")
+    doge.loop.run_until_complete(start_assistantbot())
+except Exception as e:
+    LOGS.error(f"🚨 {e}")
+
+try:
+    LOGS.info("🐾 %50 ~ YÜKLENİYOR...")
     doge.loop.run_until_complete(customize_assistantbot())
 except Exception as e:
     LOGS.error(f"🚨 {e}")
@@ -83,18 +83,15 @@ async def startup_process():
         Dogcheck.sucess = False
         return
 
-    LOGS.info("🐾 %50 ~ YÜKLENİYOR...")
+    LOGS.info("🐾 %60 ~ YÜKLENİYOR...")
     if BOTLOG != True:
         await verifyLoggerGroup()
 
-    LOGS.info("🐾 %60 ~ PLUGINLER YÜKLENİYOR...")
+    LOGS.info("🐾 %70 ~ PLUGINLER YÜKLENİYOR...")
     await load_plugins("plugins")
 
-    LOGS.info("🐾 %70 ~ ASİSTAN BAŞLATILIYOR...")
+    LOGS.info("🐾 %80 ~ ASİSTAN BAŞLATILIYOR...")
     await load_plugins("assistant")
-
-    LOGS.info("🐾 %80 ~ YÜKLENİYOR...")
-    await verifyLoggerGroup()
 
     LOGS.info("🐾 %90 ~ YÜKLENİYOR...")
     await add_bot_to_logger_group(doge, BOTLOG_CHATID, gvar("BOT_USERNAME"), "Doge")

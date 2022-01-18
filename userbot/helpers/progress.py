@@ -33,6 +33,7 @@ from telethon.errors.rpcerrorlist import MessageNotModifiedError
 
 from ..Config import Config
 from ..core.logger import logging
+from ..sql_helper.globals import gvar
 
 LOGS = logging.getLogger(__name__)
 _TASKS: Dict[str, Tuple[int, int]] = {}
@@ -160,11 +161,8 @@ async def progress(
             status = "Bilinmiyor"
         progress_str = "{0}\n`[{1}{2}] {3}%`".format(
             status,
-            "".join(Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5))),
-            "".join(
-                Config.UNFINISHED_PROGRESS_STR
-                for i in range(20 - floor(percentage / 5))
-            ),
+            "".join((gvar("FINISHED_PROGRESS_STR")or"▰") for i in range(floor(percentage / 5))),
+            "".join((gvar("UNFINISHED_PROGRESS_STR")or"▱") for i in range(20 - floor(percentage / 5))),
             round(percentage, 2),
         )
         tmp = (

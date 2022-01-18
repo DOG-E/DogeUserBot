@@ -12,7 +12,7 @@ from os import remove
 from instaloader import Instaloader, Profile
 from requests import get
 
-from . import doge, edl, eor, fsmessage, hmention, newmsgres
+from . import doge, edl, eor, gvar, fsmessage, newmsgres
 
 plugin_category = "misc"
 
@@ -50,7 +50,7 @@ async def kakashi(event):
         end = datetime.now()
         ms = (end - start).seconds
         await dog.edit(
-            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {hmention}</i></b>",
+            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by: {gvar('hmention')}</i></b>",
             parse_mode="html",
         )
         await conv.mark_read()

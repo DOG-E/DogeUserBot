@@ -24,19 +24,14 @@ from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
-from . import HEROKU_APP, UPSTREAM_REPO_URL, Config, dgvar, doge, edl, eor, logging, tr
+from . import HEROKU_API_KEY, HEROKU_APP, HEROKU_APP_NAME, UPSTREAM_REPO_URL, Config, dgvar, doge, edl, eor, gvar, logging, tr
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
-HEROKU_APP_NAME = Config.HEROKU_APP_NAME or None
-HEROKU_API_KEY = Config.HEROKU_API_KEY or None
-Heroku = from_key(Config.HEROKU_API_KEY)
-UPSTREAM_REPO_BRANCH = Config.UPSTREAM_REPO_BRANCH
 disable_warnings(InsecureRequestWarning)
-requirements_path = osp.join(
-    osp.dirname(osp.dirname(osp.dirname(__file__))), "requirements.txt"
-)
+if HEROKU_API_KEY:
+    heroku = from_key(HEROKU_API_KEY)
 
 
 async def gen_chlog(repo, diff):
@@ -47,12 +42,17 @@ async def gen_chlog(repo, diff):
     )
 
 
-async def print_changelogs(event, ac_br, changelog):
+async def print_changelogs(event, changelog):
     changelog_str = (
-        f"**[{ac_br}] için yeni güncelleme mevcut!:\n\nCHANGELOG:**\n`{changelog}`"
+        f"**Güɴᴄᴇʟʟᴇᴍᴇʟᴇʀ ᴠᴀʀ!:\n\
+        \nDᴇɢ̆ɪşɪᴋʟɪᴋʟᴇʀ:**\
+        \n`{changelog}`"
     )
     if len(changelog_str) > 4096:
-        await event.edit("`Changelog is too big, view the file to see it.`")
+        await event.edit(
+            "`🐶 Değişiklik listesi upuzun.\
+            \n🐾 Bu yüzden değişiklikleri dosya olarak gönderiyorum...`"
+        )
         with open("@DogeUserBot.txt", "w+") as file:
             file.write(changelog_str)
         await event.client.send_file(
@@ -71,10 +71,25 @@ async def print_changelogs(event, ac_br, changelog):
 
 
 async def update_requirements():
-    reqs = str(requirements_path)
     try:
         process = await create_subprocess_shell(
-            " ".join([executable, "-m", "pip", "install", "-r", reqs]),
+            " ".join(
+                [
+                    executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    "-r",
+                    str(
+                        osp.join(
+                            osp.dirname(
+                                osp.dirname(
+                                    osp.dirname(__file__))),
+                            "requirements.txt",
+                        ),
+                    ),
+                ],
+            ),
             stdout=PIPE,
             stderr=PIPE,
         )
@@ -99,15 +114,13 @@ async def pull(event, repo, ups_rem, ac_br):
 
 async def push(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is None:
-        return await event.edit("`Lütfen`  **HEROKU_API_KEY**  `değerini ayarlayın...`")
-    heroku = from_key(HEROKU_API_KEY)
+        await event.edit("**Lütfen** `HEROKU_API_KEY` **değerini ayarlayın!**")
+        repo.__del__()
+        return
     heroku_app = None
     heroku_applications = heroku.apps()
     if HEROKU_APP_NAME is None:
-        await event.edit(
-            "DogeUserBot'unuzu tekrar deploy edebilmek için`"
-            "lütfen` **HEROKU_APP_NAME** `değerini ayarlayın...`"
-        )
+        await event.edit("**Lütfen** `HEROKU_APP_NAME` **değerini ayarlayın!**")
         repo.__del__()
         return
     for app in heroku_applications:
@@ -116,8 +129,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
             break
     if heroku_app is None:
         await event.edit(
-            f"{txt}\n"
-            "`DogeUserBot'unuzu deploy etmek için ayarlanan Heroku dyno kimlik bilgileri yanlış!.`"
+            f"{txt}\n\n`Heroku dyno kimlik bilgileri yanlış!`"
         )
         return repo.__del__()
     dogevent = await event.edit(
@@ -191,24 +203,26 @@ async def push(event, repo, ups_rem, ac_br, txt):
     },
 )
 async def upstream(event):
-    "Botun güncel olup olmadığını kontrol eder ve belirtilmişse günceller."
+    "Botun güncel olup olmadığını kontrol eder ve günceller."
     conf = event.pattern_match.group(1).strip()
     event = await eor(event, "`Güncellemeleri kontrol ediyorum, lütfen bekleyin...`")
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         return await eor(
-            event, "`Botu güncellemek için önce gerekli değerleri ayarlayın`"
+            event, "`Botu güncellemek için önce gerekli değerleri ayarlayın.`"
         )
     try:
-        txt = "`Ops... Hata! Güncelleme şu nedenle devam edemiyor: "
-        txt += "bazı sorunlar oluştu:`\n\n**LOGTRACE:**\n"
+        txt = "`Oops... Hata! Güncelleme şu nedenle devam edemiyor: "
+        txt += "Bazı sorunlar oluştu:`\n\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await event.edit(f"{txt}\n`Dizininde {error} bulunamadı`")
+        await event.edit(f"{txt}`{error} dizininde bulunamadı!`")
+        repo = Repo()
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n`Erken hata! {error}`")
+        await event.edit(f"{txt}\n`{error}`")
+        repo = Repo()
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
@@ -222,11 +236,11 @@ async def upstream(event):
         origin = repo.create_remote("upstream", off_repo)
         origin.fetch()
         force_update = True
-        repo.create_head("DOGE", origin.refs.DOGE)
+        repo.create_head("DOGE-TR", origin.refs.DOGE)
         repo.heads.DOGE.set_tracking_branch(origin.refs.DOGE)
         repo.heads.DOGE.checkout(True)
     ac_br = repo.active_branch.name
-    if ac_br != UPSTREAM_REPO_BRANCH:
+    if ac_br != Config.UPSTREAM_REPO_BRANCH:
         await event.edit(
             "**[UPDATER]:**\n"
             f"__Görünüşe göre kendi özel reponuzu kullanıyorsunuz:__[ `{ac_br}` ]. "
@@ -248,18 +262,18 @@ async def upstream(event):
         await push(event, repo, ups_rem, ac_br, txt)
         return
     if changelog == "" and not force_update:
-        await event.edit("`🐶`** Doge UserBot**` en güncel durumda!`")
+        await event.edit("`🐶`** Doge UserBot **`en güncel durumda!`")
         return repo.__del__()
     if conf == "" and not force_update:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            f"**Komut:**\n\n[ `{tr}update push` ] > Deploy ile günceller...\n[ `{tr}update pull` ] > Şimdi günceller.."
+            f"**Komut:**\n\n[ `{tr}update push` ] > Deploy ile günceller...\n[ `{tr}update pull` ] > Şimdi günceller..."
         )
 
     if force_update:
         await event.edit(
-            "`Son yol olarak, bot kodlarına zorunlu-güncelleştirme uyhulanıyor.`"
+            "`Son yol olarak, bot kodlarına zorunlu-güncelleştirme uygulanıyor.`"
         )
     if conf == "pull":
         await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")

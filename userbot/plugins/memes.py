@@ -28,8 +28,8 @@ from . import (
     dogememes,
     edl,
     eor,
+    gvar,
     mememaker,
-    mention,
     parse_pre,
     reply_id,
 )
@@ -199,7 +199,7 @@ async def who(event):
     replied_user = await get_user(event)
     if replied_user is None:
         return
-    caption = await dogememes.slap(replied_user, event, mention)
+    caption = await dogememes.slap(replied_user, event, gvar('mention'))
     try:
         await eor(event, caption)
     except BaseException:

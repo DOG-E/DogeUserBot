@@ -25,7 +25,6 @@ from . import (
     fsmessage,
     gvar,
     logging,
-    mention,
     newmsgres,
     resize_image,
 )
@@ -94,7 +93,7 @@ async def _(event):
             await dogevent.edit(
                 f"**➥ Uploaded to:** [Telegraph](https://telegra.ph{media_urls[0]})\
                  \n**➥ Uploaded in {ms} seconds.**\
-                 \n**➥ Uploaded by:** {mention}",
+                 \n**➥ Uploaded by:** {gvar('mention')}",
                 link_preview=True,
             )
     elif input_str in ["text", "t"]:
@@ -131,7 +130,7 @@ async def _(event):
         await dogevent.edit(
             f"**➥ Uploaded to:** [Telegraph]({dog})\
                  \n**➥ Uploaded in {ms} seconds.**\
-                 \n**➥ Uploaded by:** {mention}",
+                 \n**➥ Uploaded by:** {gvar('mention')}",
             link_preview=True,
         )
 

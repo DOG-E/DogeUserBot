@@ -13,9 +13,8 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.bot_blacklists import add_user_to_bl, rem_user_from_bl
 from ..sql_helper.bot_pms_sql import get_user_id
-from . import BOTLOG, BOTLOG_CHATID, Config, _format, doge, logging, reply_id
+from . import BOTLOG, BOTLOG_CHATID, _format, doge, gvar, logging, reply_id
 
-plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 
@@ -50,10 +49,8 @@ def progress_str(total: int, current: int) -> str:
     return prog_arg.format(
         "Progress",
         percentage,
-        "".join((Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5)))),
-        "".join(
-            (Config.UNFINISHED_PROGRESS_STR for i in range(20 - floor(percentage / 5)))
-        ),
+        "".join(((gvar("FINISHED_PROGRESS_STR")or"▰") for i in range(floor(percentage / 5)))),
+        "".join(((gvar("UNFINISHED_PROGRESS_STR")or"▱") for i in range(20 - floor(percentage / 5)))),
     )
 
 
@@ -63,13 +60,13 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         add_user_to_bl(user.id, get_display_name(user), user.username, reason, date)
     except Exception as e:
         LOGS.error(f"🚨 {str(e)}")
-    banned_msg = f"**🚫 Sonsuza kadar bu botu kullanmadan yasaklandınız.\
+    banned_msg = f"**🚫 Sonsuza kadar bu bottan yasaklandınız.\
         \n⛓ Sebep:** {reason}"
     await doge.bot.send_message(user.id, banned_msg)
-    info = f"**⚠️ #BOT_PM_YASAKLAMASİ**\
+    info = f"**⚠️ #BOT_PM_YASAKLAMASI**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
-            \n**ℹ️ İlk İsim** {user.first_name}\
-            \n**🆔 Kullanıcı ID'si:** `{user.id}`\
+            \n**ℹ️ İsim** {user.first_name}\
+            \n**🆔 Kullanıcı ID:** `{user.id}`\
             \n**⛓ Sebep:** `{reason}`"
     if BOTLOG:
         await doge.bot.send_message(BOTLOG_CHATID, info)

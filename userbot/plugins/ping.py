@@ -10,7 +10,7 @@ from asyncio import sleep
 from datetime import datetime
 from time import time
 
-from . import StartTime, doge, eor, get_readable_time, mention
+from . import StartTime, doge, eor, get_readable_time, gvar
 
 plugin_category = "bot"
 
@@ -47,7 +47,7 @@ async def _(event):
   🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
 ┗━━━━━━━━━━━━━━\n\
 ┏━━━━━━━━━━━━━━\n\
-  ◽ Doɢᴇ oғ {mention}\n\
+  ◽ Doɢᴇ oғ {gvar('mention')}\n\
 ┗━━━━━━━━━━━━━━**",
         )
     elif flag == "f":
@@ -416,7 +416,7 @@ async def _(event):
 ‎‎‎‎‎‎‎‎‎\n\
 **🐾 {ms} ᴍs\n\
 🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
-◽ Doɢᴇ oғ {mention}**",
+◽ Doɢᴇ oғ {gvar('mention')}**",
         )
     else:
         start = datetime.now()
@@ -434,6 +434,6 @@ async def _(event):
   🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
 ┗━━━━━━━━━━━━━━\n\
 ┏━━━━━━━━━━━━━━\n\
-  ◽ Doɢᴇ oғ {mention}\n\
+  ◽ Doɢᴇ oғ {gvar('mention')}\n\
 ┗━━━━━━━━━━━━━━**",
         )

@@ -19,17 +19,15 @@ from telethon.errors import FloodWaitError
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
-from userbot import BOTLOG_CHATID
-
 from . import (
+    BOTLOG_CHATID,
     HEROKU_API_KEY,
     HEROKU_APP_NAME,
-    Heroku,
+    dgvar,
     doge,
     edl,
     eor,
     gvar,
-    heroku_api,
     logging,
     sgvar,
 )
@@ -38,33 +36,37 @@ plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 disable_warnings(InsecureRequestWarning)
+if HEROKU_API_KEY:
+    heroku = from_key(HEROKU_API_KEY)
+    app = heroku.app(HEROKU_APP_NAME)
 
 
 if gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is not None:
 
     async def herokulogger():
+        HLOGGER_ID = int(gvar("HLOGGER_ID"))
         try:
             await doge.bot.send_message(
-                int(gvar("HLOGGER_ID")),
+                HLOGGER_ID,
                 "💬 [BİLGİ] Botunuzun hata ayıklama yazdırılması başlatıldı...",
             )
         except FloodWaitError as sec:
-            await sleep(sec.seconds)
+            await sleep(sec.seconds + 3)
         except Exception as e:
             LOGS.error("HLOGGER_ID değeriniz yanlış, lütfen kontrol edip düzeltin.")
-            LOGS.error(f"Heroku Logger Grup Yanlış. Hata Raporu: {e}")
-        server = from_key(HEROKU_API_KEY)
-        app = server.app(HEROKU_APP_NAME)
+            LOGS.error(f"Heroku Logger grubu yanlış. Hata Raporu: {e}")
+            return
         for line in app.stream_log(lines=1):
             try:
-                await doge.bot.send_message(int(gvar("HLOGGER_ID")), f"➕ `{line}`")
+                await doge.bot.send_message(HLOGGER_ID, f"➕ `{line}`")
             except FloodWaitError as sec:
-                await sleep(sec.seconds + 5)
+                await sleep(sec.seconds + 3)
             except Exception as e:
                 LOGS.error(e)
+                return
         await sleep(2)
 
-    doge.loop.create_task(herokulogger())
+    doge.loop.run_forever(herokulogger())
 
 elif gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is None:
 
@@ -75,8 +77,9 @@ elif gvar("HEROKULOGGER") == "True" and gvar("HLOGGER_ID") is None:
         )
         sgvar("HEROKULOGGER", "False")
         LOGS.error("HEROKULOGGER değeri False olarak ayarlandı.")
+        return
 
-    doge.loop.create_task(hlogoff())
+    doge.loop.run_until_complete(hlogoff())
 
 
 @doge.bot_cmd(
@@ -103,12 +106,16 @@ async def variable(var):  # sourcery no-metrics
     """
     Manage most of ConfigVars setting, set new var, get current var, or delete var...
     """
-    if (HEROKU_API_KEY is None) or (HEROKU_APP_NAME is None):
+    if HEROKU_API_KEY is None:
         return await edl(
             var,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "🚨 `HEROKU_API_KEY` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
         )
-    app = Heroku.app(HEROKU_APP_NAME)
+    if HEROKU_APP_NAME is None:
+        return await edl(
+            var,
+            "🚨 `HEROKU_APP_NAME` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
+        )
     exe = var.pattern_match.group(1)
     heroku_var = app.config()
     if exe == "get":
@@ -148,14 +155,20 @@ async def variable(var):  # sourcery no-metrics
             return await dog.edit("`.set var <ConfigVars-name> <value>`")
         await sleep(1.5)
         if variable in heroku_var:
-            if variable == "PMLOGGER" and value == False:
-                sgvar("PMLOG", "false")
-                sgvar("GRPLOG", "false")
+            if variable == "PMLOGGER" and value == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            if variable == "PLUGINS" and value == "False":
+                sgvar("PLUGINS", "False")
             await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
         else:
-            if variable == "PMLOGGER" and value == False:
-                sgvar("PMLOG", "false")
-                sgvar("GRPLOG", "false")
+            if variable == "PMLOGGER" and value == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            if variable == "PLUGINS" and value == "False":
+                sgvar("PLUGINS", "False")
             await dog.edit(
                 f"`{variable}`** successfully added with value` -> **{value}`"
             )
@@ -165,8 +178,11 @@ async def variable(var):  # sourcery no-metrics
         try:
             variable = var.pattern_match.group(2).split()[0]
             if variable == "PMLOGGER":
-                sgvar("PMLOG", "false")
-                sgvar("GRPLOG", "false")
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("GRPLOG")
+            if variable == "PLUGINS":
+                sgvar("PLUGINS", "False")
         except IndexError:
             return await dog.edit("`Please specify ConfigVars you want to delete`")
         await sleep(1.5)
@@ -189,10 +205,15 @@ async def dyno_usage(dyno):
     """
     Get your account Dyno usage
     """
-    if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
+    if HEROKU_API_KEY is None:
         return await edl(
             dyno,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "🚨 `HEROKU_API_KEY` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
+        )
+    if HEROKU_APP_NAME is None:
+        return await edl(
+            dyno,
+            "🚨 `HEROKU_APP_NAME` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
         )
     dyno = await eor(dyno, "**⏳ Processing...**")
     useragent = (
@@ -200,14 +221,14 @@ async def dyno_usage(dyno):
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/80.0.3987.149 Mobile Safari/537.36"
     )
-    user_id = Heroku.account().id
+    user_id = heroku.account().id
     headers = {
         "User-Agent": useragent,
         "Authorization": f"Bearer {HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
-    r = get(heroku_api + path, headers=headers)
+    r = get("https://api.heroku.com" + path, headers=headers)
     if r.status_code != 200:
         return await dyno.edit(
             "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
@@ -261,17 +282,15 @@ async def dyno_usage(dyno):
 )
 async def _(dyno):
     "To get recent 100 lines logs from heroku"
-    if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
+    if HEROKU_API_KEY is None:
         return await edl(
             dyno,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "🚨 `HEROKU_API_KEY` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
         )
-    try:
-        Heroku = from_key(HEROKU_API_KEY)
-        app = Heroku.app(HEROKU_APP_NAME)
-    except BaseException:
-        return await dyno.reply(
-            " Please make sure your Heroku API Key, Your App name are configured correctly in the heroku"
+    if HEROKU_APP_NAME is None:
+        return await edl(
+            dyno,
+            "🚨 `HEROKU_APP_NAME` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
         )
     data = app.get_log()
     await eor(

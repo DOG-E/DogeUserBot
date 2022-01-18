@@ -9,7 +9,7 @@
 from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.messages import CreateChatRequest, ExportChatInviteRequest
 
-from ..utils.tools import create_supergroup
+from ..utils import create_supergroup
 from . import doge, edl, eor, gvar, tr
 
 plugin_category = "tool"

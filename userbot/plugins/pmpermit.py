@@ -28,7 +28,6 @@ from . import (
     get_user_from_event,
     gvar,
     logging,
-    mention,
     reply_id,
     sgvar,
     tr,
@@ -489,7 +488,7 @@ async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == int(gvar("OWNER_ID")):
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
-    text = f"""Ok, Now you're accessing the availabe menu of my master, {mention}.
+    text = f"""Ok, Now you're accessing the availabe menu of my master, {gvar('mention')}.
 __Let's make this smooth and let me know why you're here.__
 **Choose one of the following reasons why you're here:**"""
     buttons = [

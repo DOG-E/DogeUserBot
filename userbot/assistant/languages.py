@@ -6,14 +6,18 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from re import compile
-
+from heroku3 import from_key
 from telethon import Button
 from telethon.events import CallbackQuery
+from urllib3 import disable_warnings
+from urllib3.exceptions import InsecureRequestWarning
 
-from . import Config, Heroku, check_owner, doge, mention
+from . import HEROKU_API_KEY, HEROKU_APP_NAME, check_owner, compile, doge, get_back_button, gvar
 
-plugin_category = "bot"
+disable_warnings(InsecureRequestWarning)
+if HEROKU_API_KEY:
+    heroku = from_key(HEROKU_API_KEY)
+    app = heroku.app(HEROKU_APP_NAME)
 
 
 @doge.bot.on(CallbackQuery(data=compile(b"langmenu")))
@@ -22,39 +26,32 @@ async def setlang(event: CallbackQuery):
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {mention}\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🌍 Mᴇᴠᴄᴜᴛ Dɪʟʟᴇʀ:**",
-        buttons=[
-            (
-                Button.inline(
-                    "🇬🇧 Eɴɢʟɪsʜ",
-                    data="setlang_en",
-                ),
-            ),
-            (Button.inline("⬅️️ Gᴇʀɪ", data="setmenu"),),
-        ],
+        buttons=Button.inline("🇬🇧 Eɴɢʟɪsʜ", data="setlang_en"),
         link_preview=False,
     )
 
 
-@doge.bot.on(CallbackQuery(data=compile(b"setlang_en")))
+@doge.bot.on(CallbackQuery(data=compile(b"setlang_(.*)")))
 @check_owner
 async def setlang_en(event: CallbackQuery):
-    if Config.HEROKU_API_KEY is None:
+    lang = event.pattern_match.group(1)
+    if HEROKU_API_KEY is None:
         return await event.edit(
             "🚨 `HEROKU_API_KEY` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
+            buttons=get_back_button("langmenu"),
         )
-    if Config.HEROKU_APP_NAME is not None:
-        app = Heroku.app(Config.HEROKU_APP_NAME)
-    else:
+    if HEROKU_APP_NAME is None:
         return await event.edit(
             "🚨 `HEROKU_APP_NAME` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
+            buttons=get_back_button("langmenu"),
         )
-    hvar = app.config()
     await event.edit(
         "**⏳ Biraz bekleyin,\
         \n🇬🇧 Dili İngilizce'ye ayarlıyorum...\n\
         \n⏳ Just a moment,\
         \n🇬🇧 Language is setting to English...**",
     )
-    hvar["UPSTREAM_REPO_BRANCH"] = "DOGE-EN"
+    if lang == "en":
+        app.config()["UPSTREAM_REPO_BRANCH"] = "DOGE-EN"

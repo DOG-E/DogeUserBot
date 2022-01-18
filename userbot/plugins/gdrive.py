@@ -486,11 +486,11 @@ async def gdrive_download(
                     prog_str = "`{0}` | `[{1}{2}] {3}%`".format(
                         status,
                         "".join(
-                            Config.FINISHED_PROGRESS_STR
+                            (gvar("FINISHED_PROGRESS_STR")or"▰")
                             for i in range(floor(percentage / 5))
                         ),
                         "".join(
-                            Config.UNFINISHED_PROGRESS_STR
+                            (gvar("UNFINISHED_PROGRESS_STR")or"▱")
                             for i in range(20 - floor(percentage / 5))
                         ),
                         round(percentage, 2),
@@ -643,12 +643,9 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
             eta = round((file_size - uploaded) / speed)
             prog_str = "`Uploading:`\n`[{0}{1}] {2}`".format(
                 "".join(
-                    Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 10))
+                    (gvar("FINISHED_PROGRESS_STR")or"▰") for i in range(floor(percentage / 10))
                 ),
-                "".join(
-                    Config.UNFINISHED_PROGRESS_STR
-                    for i in range(10 - floor(percentage / 10))
-                ),
+                "".join((gvar("UNFINISHED_PROGRESS_STR")or"▱") for i in range(10 - floor(percentage / 10))),
                 round(percentage, 2),
             )
 

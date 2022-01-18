@@ -12,9 +12,9 @@ from re import compile
 from typing import Optional, Union
 
 from telethon import Button
-from telethon.errors import UserIsBlockedError
-from telethon.errors.rpcerrorlist import (
+from telethon.errors import (
     MediaEmptyError,
+    UserIsBlockedError,
     WebpageCurlFailedError,
     WebpageMediaEmptyError,
 )
@@ -47,7 +47,6 @@ from . import (
 )
 from .botmanagers import ban_user_from_bot
 
-plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 
 
@@ -60,19 +59,19 @@ class FloodConfig:
     AUTOBAN = 10
 
 
-async def check_bot_started_users(user, event):
+async def check_bot_started_users(user):
     if user.id == int(gvar("OWNER_ID")):
         return
     check = get_starter_details(user.id)
     if check is None:
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **Beni başlattı.**\
-                \n**🆔  Kullanıcı ID'is:** `{user.id}`\
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **beni başlattı.**\n\
+                \n**🆔  Kullanıcı ID:** `{user.id}`\
                 \n**ℹ️ İsim:** {get_display_name(user)}"
     else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **Beni başlattı.**\
-                \n**🆔 Kullanıcı ID'si:** `{user.id}`\
+        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **beni başlattı.**\n\
+                \n**🆔 Kullanıcı ID:** `{user.id}`\
                 \n**ℹ️ İsim:** {get_display_name(user)}"
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
@@ -401,7 +400,7 @@ async def bot_start(event):
                         )
                         if BOTLOG:
                             await event.client.send_message(
-                                BOTLOG,
+                                BOTLOG_CHATID,
                                 f"**🚨 Hᴀᴛᴀ:** Kullanıcı botunuzu başlatırken ayarladığınız görsel gönderilemediği için varsayılan [görsel](https://telegra.ph/file/e854a644808aeb1112462.png) gönderildi! Lütfen en kısa sürede kontrol edip düzeltiniz.\
                                 \n\n➡️ Hata Geri Bildirimi: `{e}`",
                             )
@@ -440,9 +439,9 @@ async def bot_start(event):
             await event.client.send_file(
                 chat.id,
                 "https://telegra.ph/file/e854a644808aeb1112462.png",
-                caption=f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                caption="**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
                 \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+                \n🧶 Ayarlamak istediğinizi aşağıdan seçin:**",
                 buttons=options,
                 link_preview=False,
                 reply_to=reply_to,
@@ -458,7 +457,7 @@ async def bot_start(event):
                 reply_to=reply_to,
             )
     else:
-        await check_bot_started_users(chat, event)
+        await check_bot_started_users(chat)
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
