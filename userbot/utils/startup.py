@@ -469,7 +469,9 @@ async def startupmessage():
     try:
         if msg_details:
             await doge.check_testcases()
-            await doge.edit_message(msg_details[0], msg_details[1], "**🐶 Dᴏɢᴇ UsᴇʀBoᴛ Gᴇʀɪ Gᴇʟᴅɪ 🐾**")
+            await doge.edit_message(
+                msg_details[0], msg_details[1], "**🐶 Dᴏɢᴇ UsᴇʀBoᴛ Gᴇʀɪ Gᴇʟᴅɪ 🐾**"
+            )
             if gvar("restartupdate") is not None:
                 await doge.send_message(
                     msg_details[0],

@@ -121,9 +121,7 @@ async def ssalive(event: CallbackQuery):
             Button.inline("ALIVE_NAME", data="ALIVE_NAME"),
             Button.inline("ALIVE_TEXT", data="ALIVE_TEXT"),
         ],
-        [
-            Button.inline("ALIVE", data="ALIVE")
-        ],
+        [Button.inline("ALIVE", data="ALIVE")],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
