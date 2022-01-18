@@ -271,7 +271,7 @@ async def upstream(event):
         await event.edit("`🐶`** Doge UserBot **`en güncel durumda!`")
         return repo.__del__()
     if conf == "" and not force_update:
-        await print_changelogs(event, ac_br, changelog)
+        await print_changelogs(event, changelog)
         await event.delete()
         return await event.respond(
             f"**Komut:**\n\n[ `{tr}update push` ] > Deploy ile günceller...\n[ `{tr}update pull` ] > Şimdi günceller..."
