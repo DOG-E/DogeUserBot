@@ -34,7 +34,7 @@ dogeversion = "1.0"
 
 
 if Config.UPSTREAM_REPO == "DOGE-TR":
-    UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeUserBot"
+    UPSTREAM_REPO_URL = "https://github.com/DOG-E/DogeStarter"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
