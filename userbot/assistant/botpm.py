@@ -462,7 +462,7 @@ async def bot_start(event):
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
 async def bot_pms(event):  # sourcery no-metrics
-    if gvar("BOT_PM") == "True":
+    if gvar("BOT_PM") != "False":
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
@@ -530,7 +530,7 @@ async def bot_pms(event):  # sourcery no-metrics
 
 @doge.shiba_cmd(edited=True)
 async def bot_pms_edit(event):  # sourcery no-metrics
-    if gvar("BOT_PM") == "True":
+    if gvar("BOT_PM") != "False":
         chat = await event.get_chat()
         if check_is_black_list(chat.id):
             return
@@ -588,7 +588,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
 
 @doge.bot.on(MessageDeleted)
 async def handler(event):
-    if gvar("BOT_PM") == "True":
+    if gvar("BOT_PM") != "False":
         for msg_id in event.deleted_ids:
             users_1 = get_user_reply(msg_id)
             users_2 = get_user_logging(msg_id)

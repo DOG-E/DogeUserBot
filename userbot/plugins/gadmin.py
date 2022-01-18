@@ -35,6 +35,7 @@ from . import (
 plugin_category = "admin"
 
 BANNED_RIGHTS = ChatBannedRights(
+    until_date=None,
     view_messages=True,
 )
 
