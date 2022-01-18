@@ -11,13 +11,7 @@ from sys import argv
 
 import userbot
 
-from . import (
-    HEROKU_APP,
-    dgvar,
-    doge,
-    logging,
-    tr,
-)
+from . import HEROKU_APP, dgvar, doge, logging, tr
 from .utils import (
     checkid_setme,
     customize_assistantbot,
