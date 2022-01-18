@@ -399,7 +399,7 @@ async def hlogger(event: CallbackQuery):
 @check_owner
 async def hgloggeroff(event):
     if gvar("HEROKULOGGER") == ("False" or None):
-        hloff="🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!"
+        hloff = "🐶 Doɢᴇ UsᴇʀBoᴛ\n\nHeroku Logger özelliğiniz zaten kapalı!"
         return await event.answer(hloff, cache_time=0, alert=True)
     if gvar("HEROKULOOGER") == "True":
         await sgvar("HEROKULOGGER", "False")
