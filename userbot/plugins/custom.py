@@ -239,7 +239,7 @@ async def dbsetter(event):  # sourcery no-metrics
             if vname == "PMLOGGER" and vinfo == "False":
                 sgvar("PMLOGGER", "False")
                 dgvar("PMLOG")
-                dgvar("GRPLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
             elif vname == "PLUGINS" and vinfo == "False":
                 sgvar("PLUGINS", "False")
             else:
@@ -268,7 +268,7 @@ async def dbsetter(event):  # sourcery no-metrics
             if vname == "PMLOGGER" and vinfo == "False":
                 sgvar("PMLOGGER", "False")
                 dgvar("PMLOG")
-                dgvar("GRPLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
             elif vname == "PLUGINS" and vinfo == "False":
                 sgvar("PLUGINS", "False")
             else:
@@ -298,16 +298,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 return await edl(
                     event, f"Give some values which you want to save for **{apiname}**"
                 )
-
-            if apiname == "PMLOGGER" and apinfo == "False":
-                sgvar("PMLOGGER", "False")
-                dgvar("PMLOG")
-                dgvar("GRPLOG")
-            elif apiname == "PLUGINS" and apinfo == "False":
-                sgvar("PLUGINS", "False")
-            else:
-                sgvar(apiname, apinfo)
-
+            sgvar(apiname, apinfo)
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -329,16 +320,7 @@ async def dbsetter(event):  # sourcery no-metrics
             )
         if cmd == "d":
             api_data = gvar(apiname)
-
-            if apiname == "PMLOGGER" and apinfo == "False":
-                sgvar("PMLOGGER", "False")
-                dgvar("PMLOG")
-                dgvar("GRPLOG")
-            elif apiname == "PLUGINS" and apinfo == "False":
-                sgvar("PLUGINS", "False")
-            else:
-                dgvar(apiname)
-
+            dgvar(apiname)
             if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
@@ -370,7 +352,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 if gvarname == "PMLOGGER" and gvarinfo == "False":
                     sgvar("PMLOGGER", "False")
                     dgvar("PMLOG")
-                    dgvar("GRPLOG")
+                    dgvar("PM_LOGGER_GROUP_ID")
                 elif gvarname == "PLUGINS" and gvarinfo == "False":
                     sgvar("PLUGINS", "False")
                 else:
@@ -406,7 +388,7 @@ async def dbsetter(event):  # sourcery no-metrics
                 if gvarname == "PMLOGGER" and gvarinfo == "False":
                     sgvar("PMLOGGER", "False")
                     dgvar("PMLOG")
-                    dgvar("GRPLOG")
+                    dgvar("PM_LOGGER_GROUP_ID")
                 elif gvarname == "PLUGINS" and gvarinfo == "False":
                     sgvar("PLUGINS", "False")
                 else:

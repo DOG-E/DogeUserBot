@@ -538,6 +538,7 @@ async def customize_assistantbot():
             bf,
             "start - 🐶 Botunuzu Başlatın\
             \nyardim - 🐾 Yardım Menüsü\
+            \nayarlar - 🧶 Doge Ayarları\
             \nkbilgi - ℹ️ Botu kullanan kişilerin bilgileri\
             \nyasakla - ⛔ Kullanıcıyı bottan yasakla\
             \nyasakac - 🔰 Kullanıcının yasağını kaldır\

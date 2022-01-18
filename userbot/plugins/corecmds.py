@@ -206,7 +206,7 @@ async def ptest(event):
             shortname = path1.stem
             shortestname = shortname.replace(".py", "")
             try:
-                load_module(shortestname)
+                load_module(shortestname, plugin_path="userbot/temp_plugins")
             except ModuleNotFoundError as e:
                 install_pip(e.name)
                 sleep(1)

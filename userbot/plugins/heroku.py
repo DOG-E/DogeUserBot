@@ -158,7 +158,7 @@ async def variable(var):  # sourcery no-metrics
             if variable == "PMLOGGER" and value == "False":
                 sgvar("PMLOGGER", "False")
                 dgvar("PMLOG")
-                dgvar("GRPLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
             if variable == "PLUGINS" and value == "False":
                 sgvar("PLUGINS", "False")
             await dog.edit(f"`{variable}` **successfully changed to -> **`{value}`")
@@ -166,7 +166,7 @@ async def variable(var):  # sourcery no-metrics
             if variable == "PMLOGGER" and value == "False":
                 sgvar("PMLOGGER", "False")
                 dgvar("PMLOG")
-                dgvar("GRPLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
             if variable == "PLUGINS" and value == "False":
                 sgvar("PLUGINS", "False")
             await dog.edit(
@@ -180,7 +180,7 @@ async def variable(var):  # sourcery no-metrics
             if variable == "PMLOGGER":
                 sgvar("PMLOGGER", "False")
                 dgvar("PMLOG")
-                dgvar("GRPLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
             if variable == "PLUGINS":
                 sgvar("PLUGINS", "False")
         except IndexError:
