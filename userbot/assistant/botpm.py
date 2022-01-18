@@ -277,7 +277,7 @@ async def bot_start(event):
 
 
 @doge.shiba_cmd(
-    pattern=f"/start ?(.*))",
+    pattern="^/start ?(.*)",
     incoming=True,
     func=lambda e: e.is_private,
 )

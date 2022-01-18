@@ -12,18 +12,13 @@ from sys import argv
 import userbot
 
 from . import (
-    BOTLOG,
-    BOTLOG_CHATID,
     HEROKU_APP,
-    PM_LOGGER_GROUP_ID,
     dgvar,
     doge,
-    gvar,
     logging,
     tr,
 )
 from .utils import (
-    add_bot_to_logger_group,
     checkid_setme,
     customize_assistantbot,
     ipchange,
@@ -84,8 +79,7 @@ async def startup_process():
         return
 
     LOGS.info("🐾 %60 ~ YÜKLENİYOR...")
-    if BOTLOG != True:
-        await verifyLoggerGroup()
+    await verifyLoggerGroup()
 
     LOGS.info("🐾 %70 ~ PLUGINLER YÜKLENİYOR...")
     await load_plugins("plugins")
@@ -94,12 +88,6 @@ async def startup_process():
     await load_plugins("assistant")
 
     LOGS.info("🐾 %90 ~ YÜKLENİYOR...")
-    await add_bot_to_logger_group(doge, BOTLOG_CHATID, gvar("BOT_USERNAME"), "Doge")
-    if PM_LOGGER_GROUP_ID != -100:
-        await add_bot_to_logger_group(
-            doge, PM_LOGGER_GROUP_ID, gvar("BOT_USERNAME"), "Doge"
-        )
-
     await startupmessage()
     await sleep(3)
 
