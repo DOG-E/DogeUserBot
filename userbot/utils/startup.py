@@ -333,7 +333,7 @@ async def verifyLoggerGroup():
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         await sleep(0.75)
         _, groupid = await create_supergroup(
-            "🐾 Doɢᴇ Boᴛ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
+            "🐾 Doɢᴇ Boᴛ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto, "Doge"
         )
         await sleep(0.75)
         descmsg = f"**🚧 BU GRUBU SİLMEYİN!\
@@ -383,7 +383,7 @@ async def verifyLoggerGroup():
             )
             await sleep(0.75)
             _, groupid = await create_supergroup(
-                "🐾 Doɢᴇ Pᴍ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto
+                "🐾 Doɢᴇ Pᴍ Loɢ", doge, gvar("BOT_USERNAME"), descript, gphoto, "Doge"
             )
             await sleep(0.75)
             descmsg = f"**🚧 BU GRUBU SİLMEYİN!\

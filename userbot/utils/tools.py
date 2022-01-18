@@ -18,7 +18,7 @@ from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import ChatAdminRights
 
 
-async def create_supergroup(group_name, client, botusername, descript, photo):
+async def create_supergroup(group_name, client, botusername, descript, photo, admin):
     try:
         result = await client(
             CreateChannelRequest(
@@ -28,12 +28,20 @@ async def create_supergroup(group_name, client, botusername, descript, photo):
             )
         )
         created_chat_id = result.chats[0].id
-        await client(
-            InviteToChannelRequest(
-                channel=created_chat_id,
-                users=[botusername],
-            )
-        )
+        if botusername:
+            if admin:
+                await add_bot_to_logger_group(
+                    client,
+                    created_chat_id,
+                    botusername,
+                    admin,
+                )
+            else:
+                await add_bot_to_logger_group(
+                    client,
+                    created_chat_id,
+                    botusername,
+                )
         if photo:
             await client(
                 EditPhotoRequest(
@@ -73,9 +81,6 @@ async def create_channel(channel_name, client, descript, photo):
 
 
 async def add_bot_to_logger_group(client, chat_id, botusername, admintag):
-    """
-    Asistan botu log gruplarına ekler
-    """
     try:
         await client(
             AddChatUserRequest(
@@ -94,19 +99,20 @@ async def add_bot_to_logger_group(client, chat_id, botusername, admintag):
             )
         except Exception as e:
             return "error", str(e)
-    await sleep(0.5)
-    rights = ChatAdminRights(
-        add_admins=True,
-        invite_users=True,
-        change_info=True,
-        ban_users=True,
-        delete_messages=True,
-        pin_messages=True,
-        anonymous=False,
-        manage_call=True,
-    )
-    try:
-        await client(EditAdminRequest(chat_id, botusername, rights, admintag))
-    except Exception as e:
-        return "error", str(e)
+    if admintag:
+        await sleep(1)
+        rights = ChatAdminRights(
+            change_info=True,
+            delete_messages=True,
+            ban_users=True,
+            invite_users=True,
+            pin_messages=True,
+            add_admins=True,
+            anonymous=False,
+            manage_call=True,
+        )
+        try:
+            await client(EditAdminRequest(chat_id, botusername, rights, admintag))
+        except Exception as e:
+            return "error", str(e)
     return
