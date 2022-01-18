@@ -68,11 +68,11 @@ async def check_bot_started_users(user):
         notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **beni başlattı.**\n\
                 \n**🆔  Kullanıcı ID:** `{user.id}`\
                 \n**ℹ️ İsim:** {get_display_name(user)}"
-    else:
+    """else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name, user.id)} **beni başlattı.**\n\
+        notification = f'👤 {_format.mentionuser(user.first_name, user.id)} **beni başlattı.**\n\
                 \n**🆔 Kullanıcı ID:** `{user.id}`\
-                \n**ℹ️ İsim:** {get_display_name(user)}"
+                \n**ℹ️ İsim:** {get_display_name(user)}'"""
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:

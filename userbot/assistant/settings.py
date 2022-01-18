@@ -120,7 +120,10 @@ async def ssalive(event: CallbackQuery):
         [
             Button.inline("ALIVE_NAME", data="ALIVE_NAME"),
             Button.inline("ALIVE_TEXT", data="ALIVE_TEXT"),
-        ][Button.inline("ALIVE", data="ALIVE")],
+        ],
+        [
+            Button.inline("ALIVE", data="ALIVE")
+        ],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -151,24 +154,23 @@ async def sspmmenu(event: CallbackQuery):
 async def apisetter(event: CallbackQuery):
     apis = [
         [
-            Button.inline("GRUP & KANAL", data="sscg"),
             Button.inline("CURRENCY", data="cuapi"),
+            Button.inline("Dᴇᴇᴘ", data="deapi"),
         ],
-        [Button.inline("Dᴇᴇᴘ", data="deapi"), Button.inline("GENIUS", data="geapi")],
         [
+            Button.inline("GENIUS", data="geapi"),
             Button.inline("GITHUB", data="ghapi"),
+        ],
+        [
             Button.inline("GOOGLE DRIVE", data="gdapi"),
-        ],
-        [
             Button.inline("IBM WATSON", data="ibmwcapi"),
+        ],
+        [
             Button.inline("IP DATA", data="ipdapi"),
-        ],
-        [
             Button.inline("LAST FM", data="lfmapi"),
-            Button.inline("OCR SPACE", data="ocrsapi"),
         ],
         [
-            Button.inline("RANDOM STUFF", data="rsapi"),
+            Button.inline("OCR SPACE", data="ocrsapi"),
             Button.inline("REMOVE BG", data="rbgapi"),
         ],
         [
