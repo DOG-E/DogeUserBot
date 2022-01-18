@@ -31,12 +31,14 @@ if HEROKU_API_KEY:
 @doge.bot.on(CallbackQuery(data=compile(b"langmenu")))
 @check_owner
 async def setlang(event: CallbackQuery):
+    lnglist = [Button.inline("🇬🇧 Eɴɢʟɪsʜ", data="setlang_en")]
+    lnglist.append(get_back_button("setmenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
         \n◽ Doɢᴇ oғ {gvar('mention')}\n\
         \n🌍 Mᴇᴠᴄᴜᴛ Dɪʟʟᴇʀ:**",
-        buttons=Button.inline("🇬🇧 Eɴɢʟɪsʜ", data="setlang_en"),
+        buttons=lnglist,
         link_preview=False,
     )
 

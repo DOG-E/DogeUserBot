@@ -290,7 +290,7 @@ async def bot_start(event):
         return
     reply_to = await reply_id(event)
     mention = f"[{chat.first_name}](tg://user?id={userid})"
-    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
+    my_mention = gvar("mention")
     first = chat.first_name
     last = chat.last_name if chat.last_name else ""
     fullname = f"{first} {last}" if last else first
@@ -319,7 +319,50 @@ async def bot_start(event):
 🕹 **Kᴏᴍᴜᴛ:** `/broadcast` - `/yayin`
 📄 **Bɪʟɢɪ:** Botunu kullananan/başlatan kullanıcıların listesini görmek için `.botusers` ya da `.kullanicilar` komutunu kullanın
 📍 **Nᴏᴛ:** Kullanıcı botu durdurdu veya engellediyse, veritabanınızdan kaldırılacaktır. Bot kullanıcıları listesinden silinir."""
-    if userid != int(gvar("OWNER_ID")) or userid not in Config.SUDO_USERS:
+    if userid == int(gvar("OWNER_ID")) or userid in Config.SUDO_USERS:
+        options = [
+            [
+                Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
+            ],
+            [
+                Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
+                Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
+            ],
+            [
+                Button.inline("🌐 Dɪʟ", data="langmenu"),
+            ],
+        ]
+        ownerb = [
+            (Button.inline("🔮 Aʏᴀʀʟᴀʀ", data="setmenu"),),
+            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
+        ]
+        owner = "**🐶 Hey!\
+        \n🐾 Merhaba {}!\n\
+        \n💬 Sana nasıl yardımcı olabilirim?**".format(
+            my_mention
+        )
+        if args == "settings":
+            await event.client.send_file(
+                userid,
+                "https://telegra.ph/file/e854a644808aeb1112462.png",
+                caption="**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+                \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+                \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
+                buttons=options,
+                link_preview=False,
+                reply_to=reply_to,
+            )
+        elif args == "help":
+            await event.reply(help_text)
+        else:
+            await event.client.send_message(
+                userid,
+                owner,
+                link_preview=False,
+                buttons=ownerb,
+                reply_to=reply_to,
+            )
+    else:
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
                 mention=mention,
@@ -337,9 +380,9 @@ async def bot_start(event):
         else:
             start_msg = str(
                 "**🐶 Hey!**\
-            \n🐾 Selam {}!\n\
-            \n**🐶 Ben {}'in sadık köpeğiyim.**\
-            \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
+                \n🐾 Selam {}!\n\
+                \n**🐶 Ben {}'in sadık köpeğiyim.**\
+                \n💭 Ustamla buradan iletişime geçebilirsiniz.".format(
                     mention, my_mention
                 )
             )
@@ -408,49 +451,6 @@ async def bot_start(event):
                             \n➡️ `{e}`",
                         )
         await check_bot_started_users(chat)
-    elif userid == int(gvar("OWNER_ID")) or userid in Config.SUDO_USERS:
-        options = [
-            [
-                Button.inline("🧶 Aᴘɪ'ʟᴇʀ", data="apimenu"),
-            ],
-            [
-                Button.inline("🐾 Sᴇçᴇɴᴇᴋʟᴇʀ", data="ssmenu"),
-                Button.inline("🧊 Hᴇʀᴏᴋᴜ", data="herokumenu"),
-            ],
-            [
-                Button.inline("🌐 Dɪʟ", data="langmenu"),
-            ],
-        ]
-        ownerb = [
-            (Button.inline("✨ Aʏᴀʀʟᴀʀ", data="setmenu"),),
-            (Button.inline("🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
-        ]
-        owner = "**🐶 Hey!\
-    \n🐾 Merhaba {}!\n\
-    \n💬 Sana nasıl yardımcı olabilirim?**".format(
-            my_mention
-        )
-        if args == "settings":
-            await event.client.send_file(
-                userid,
-                "https://telegra.ph/file/e854a644808aeb1112462.png",
-                caption="**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-                \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-                \n🧶 Ayarlamak istediğinizi aşağıdan seçin:**",
-                buttons=options,
-                link_preview=False,
-                reply_to=reply_to,
-            )
-        elif args == "help":
-            await event.reply(help_text)
-        else:
-            await event.client.send_message(
-                userid,
-                owner,
-                link_preview=False,
-                buttons=ownerb,
-                reply_to=reply_to,
-            )
 
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)

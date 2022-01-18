@@ -130,7 +130,7 @@ async def settings(event):
     ]
     bot_username = gvar("BOT_USERNAME")
     if bot_username.startswith("@"):
-        new_bot_username = bot_username[:-1]
+        new_bot_username = bot_username[1:]
     ment = f"[{user.first_name}](tg://user?id={user.id})"
 
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
