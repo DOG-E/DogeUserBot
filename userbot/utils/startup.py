@@ -26,7 +26,7 @@ from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
-from .. import BOTLOG, BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
+from .. import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
