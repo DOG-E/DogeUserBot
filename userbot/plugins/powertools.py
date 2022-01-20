@@ -44,10 +44,10 @@ LOGS = logging.getLogger(__name__)
 async def _(event):
     "Restarts the bot !!"
     if BOTLOG:
-        await event.client.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot Restarted")
+        await doge.bot.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot yeniden başlatıldı")
     teledoge = await eor(
         event,
-        "Restarted. `.ping` me or `.doge` to check if I am online, actually it takes 1-2 min for restarting",
+        "Yeniden başlatıldı. Tekra çalıştığımı kontrol etmek için `.ping` ya da  `.doge` yazın. Bir iki dakikaya geri dönerim...",
     )
     try:
         ulist = get_collectionlist_items()

@@ -102,22 +102,25 @@ async def set_afk(event):
         try:
             full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
             bio = full.about
+            CACHEAFK = "🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
             if bio is not None:
-                if len(bio) > 57:
+                if len(bio) > 55:
                     await event.client(
                         UpdateProfileRequest(
-                            about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
+                            about=CACHEAFK
                         )
                     )
-                elif len(bio) < 57:
-                    sgvar("AFKBIO", bio)
+                    sgvar("CACHEAFKBIO", CACHEAFK)
+                elif len(bio) < 55:
                     await event.client(
-                        UpdateProfileRequest(about=f"{gvar('AFKBIO')} @DogeUserBot")
+                        UpdateProfileRequest(about=f"{gvar('AFKBIO')} | @DogeUserBot")
                     )
-            else:
+                    sgvar("AFKBIO", bio)
+            elif bio is None:
                 await event.client(
-                    UpdateProfileRequest(about="🐶 @DogeUserBot Sahibim şu an AFK! 🐾")
+                    UpdateProfileRequest(about=CACHEAFK)
                 )
+                sgvar("CACHEAFKBIO", CACHEAFK)
         except BaseException:
             pass
     if BOTLOG:
@@ -507,10 +510,11 @@ async def setnotafk(notafk):
     if gvar("AFKBIOSET") != "False":
         try:
             if gvar("AFKBIO"):
-                await notafk.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
-            else:
+                await notafk.client(UpdateProfileRequest(about=gvar('AFKBIO')))
+                dgvar("AFKBIO")
+            elif gvar("CACHEAFKBIO"):
                 await notafk.client(UpdateProfileRequest(about=None))
-            dgvar("AFKBIO")
+                dgvar("CACHEAFKBIO")
         except Exception:
             pass
     if BOTLOG:
