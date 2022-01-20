@@ -614,7 +614,7 @@ async def handler(event):
                             return
                         await event.client.send_message(
                             int(gvar("OWNER_ID")),
-                            "**⬆️ Bu mesaj, şu kullanıcı tarafından silindi.** {}.".format(
+                            "**⬆️ Bu mesaj, {} tarafından asistan botun sohbetinden silindi!**".format(
                                 _format.mentionuser(user_name, user_id)
                             ),
                             reply_to=reply_msg,

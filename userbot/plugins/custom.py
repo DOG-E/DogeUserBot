@@ -346,7 +346,7 @@ async def dbsetter(event):  # sourcery no-metrics
                         f"⚙️ Give some values which you want to save for **{gvarname}**",
                     )
 
-                if gvarname == "OWNER_ID" or gvarname == "OWNERID":
+                if gvarname == "OWNER_ID" or gvarname == "CACHE_OWNER_ID":
                     return
 
                 if gvarname == "PMLOGGER" and gvarinfo == "False":
@@ -382,7 +382,7 @@ async def dbsetter(event):  # sourcery no-metrics
 
             if cmd == "d":
                 gvardata = gvar(gvarname)
-                if gvarname == "OWNER_ID" or gvarname == "OWNERID":
+                if gvarname == "OWNER_ID" or gvarname == "CACHE_OWNER_ID":
                     return
 
                 if gvarname == "PMLOGGER" and gvarinfo == "False":

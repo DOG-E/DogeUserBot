@@ -78,7 +78,7 @@ async def checkid_setme():
     doge.me = await doge.get_me()
     doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
-        sgvar("OWNERID", int(doge.uid))
+        sgvar("CACHE_OWNER_ID", int(doge.uid))
         await sleep(0.5)
     try:
         await sleep(3)
@@ -86,14 +86,15 @@ async def checkid_setme():
         await sleep(0.5)
     except Exception as e:
         LOGS.error(f"🚨 {e}")
-    if gvar("OWNERID") != gvar("OWNER_ID"):
+    if gvar("CACHE_OWNER_ID") != gvar("OWNER_ID"):
         LOGS.error(
             "🚨 Kullanıcı değişikliği algıladım.\
             \n🔃 Kurulumu yeniden başlatıyorum..."
         )
         dgvar("OWNER_ID")
-        dgvar("OWNERID")
+        dgvar("CACHE_OWNER_ID")
         dgvar("ALIVE_NAME")
+        dgvar("CACHE_ALIVE_NAME")
         dgvar("BOT_TOKEN")
         dgvar("PRIVATE_GROUP_BOT_API_ID")
         dgvar("PM_LOGGER_GROUP_ID")
@@ -118,10 +119,15 @@ async def checkid_setme():
     if gvar("ALIVE_NAME") is None:
         if Config.ALIVE_NAME:
             sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
+            sgvar("CACHE_ALIVE_NAME", str(Config.ALIVE_NAME))
         else:
             sgvar("ALIVE_NAME", str(doge.me.first_name))
-
-    if gvar("hmention") is None or gvar("mention") is None:
+            sgvar("CACHE_ALIVE_NAME", str(doge.me.first_name))
+    if (
+        gvar("hmention") is None
+        or gvar("mention") is None
+        or gvar("CACHE_ALIVE_NAME") != gvar("ALIVE_NAME")
+    ):
         hmention = (
             f"<a href = tg://user?id={int(gvar('OWNER_ID'))}>{gvar('ALIVE_NAME')}</a>"
         )

@@ -31,7 +31,7 @@ if HEROKU_API_KEY:
 @doge.bot.on(CallbackQuery(data=compile(b"langmenu")))
 @check_owner
 async def setlang(event: CallbackQuery):
-    lnglist = [Button.inline("🇬🇧 Eɴɢʟɪsʜ", data="setlang_en")]
+    lnglist = [(Button.inline("🇬🇧 Eɴɢʟɪsʜ", data="setlang_en"))]
     lnglist.append(get_back_button("setmenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
@@ -57,11 +57,12 @@ async def setlang_en(event: CallbackQuery):
             "🚨 `HEROKU_APP_NAME` değişken ayarınız eksik. Heroku'da gerekli değişkeni ayarlayın.",
             buttons=get_back_button("langmenu"),
         )
-    await event.edit(
+    await event.answer(
         "**⏳ Biraz bekleyin,\
         \n🇬🇧 Dili İngilizce'ye ayarlıyorum...\n\
         \n⏳ Just a moment,\
         \n🇬🇧 Language is setting to English...**",
+        alert=True,
     )
     if lang == "en":
         app.config()["UPSTREAM_REPO_BRANCH"] = "DOGE-EN"
