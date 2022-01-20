@@ -26,7 +26,7 @@ from telethon.tl.functions.help import GetConfigRequest
 from telethon.tl.types import User
 from telethon.utils import get_peer_id
 
-from .. import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID, tr
+from .. import BOTLOG, BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID, tr
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import doge
@@ -107,7 +107,10 @@ async def checkid_setme():
         dgvar("hmention")
         dgvar("mention")
         dgvar("ipaddress")
-        exit()
+        executable = sysexecutable.replace(" ", "\\ ")
+        args = [executable, "-m", "userbot"]
+        execle(executable, *args, environ)
+        exit(0)
     if gvar("OWNER_ID") in G_YS:
         f = "https://telegra.ph/file/b7e740bbda31d43d510ab.jpg"
         await doge.send_message("me", constants.sndmsgg_ys, file=f)
@@ -245,7 +248,10 @@ async def start_assistantbot():
             LOGS.error(f"🚨 {e}")
             dgvar("BOT_TOKEN")
             dgvar("ipaddress")
-            exit()
+            executable = sysexecutable.replace(" ", "\\ ")
+            args = [executable, "-m", "userbot"]
+            execle(executable, *args, environ)
+            exit(0)
 
     doge.bot.me = await doge.bot.get_me()
     if gvar("BOT_USERNAME") is None:
