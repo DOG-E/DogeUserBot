@@ -843,7 +843,7 @@ async def fggroup(event: CallbackQuery):
             Button.inline("🥏 Manüel", data="fgapi"),
         ],
         [
-            Button.inline("⬅️️ Gᴇʀɪ", data="ssmenu"),
+            Button.inline("⬅️️ Gᴇʀɪ", data="sscg"),
         ],
     ]
     await event.edit(
