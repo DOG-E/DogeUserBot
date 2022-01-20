@@ -105,11 +105,7 @@ async def set_afk(event):
             CACHEAFK = "🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
             if bio is not None:
                 if len(bio) > 55:
-                    await event.client(
-                        UpdateProfileRequest(
-                            about=CACHEAFK
-                        )
-                    )
+                    await event.client(UpdateProfileRequest(about=CACHEAFK))
                     sgvar("CACHEAFKBIO", CACHEAFK)
                 elif len(bio) < 55:
                     await event.client(
@@ -117,9 +113,7 @@ async def set_afk(event):
                     )
                     sgvar("AFKBIO", bio)
             elif bio is None:
-                await event.client(
-                    UpdateProfileRequest(about=CACHEAFK)
-                )
+                await event.client(UpdateProfileRequest(about=CACHEAFK))
                 sgvar("CACHEAFKBIO", CACHEAFK)
         except BaseException:
             pass
@@ -510,7 +504,7 @@ async def setnotafk(notafk):
     if gvar("AFKBIOSET") != "False":
         try:
             if gvar("AFKBIO"):
-                await notafk.client(UpdateProfileRequest(about=gvar('AFKBIO')))
+                await notafk.client(UpdateProfileRequest(about=gvar("AFKBIO")))
                 dgvar("AFKBIO")
             elif gvar("CACHEAFKBIO"):
                 await notafk.client(UpdateProfileRequest(about=None))

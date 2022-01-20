@@ -77,6 +77,7 @@ async def settings(event: CallbackQuery):
             link_preview=False,
         )
 
+
 # HEROKU
 @doge.bot.on(CallbackQuery(data=compile(b"herokumenu")))
 @check_owner
@@ -104,18 +105,22 @@ async def herokumenu(event: CallbackQuery):
         ],
         [
             Button.inline("UPSTREAM_REPO_BRANCH", data="UPSTREAM_REPO_BRANCH"),
-            Button.inline("PRIVATE_GROUP_BOT_API_ID", data="PRIVATE_GROUP_BOT_API_ID    "),
-        ]
+            Button.inline(
+                "PRIVATE_GROUP_BOT_API_ID", data="PRIVATE_GROUP_BOT_API_ID    "
+            ),
+        ],
     ]
     buttons.append(get_back_button("setmenu"))
     await event.edit(
-            f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
             \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
             \n◽ Doɢᴇ oғ {gvar('mention')}\n\
             \n✨ Ayarlamak istediğinizi aşağıdan seçin:**",
-            buttons=buttons,
-            link_preview=False,
-        )
+        buttons=buttons,
+        link_preview=False,
+    )
+
+
 # Ayarlar - Seçenekler
 @doge.bot.on(CallbackQuery(data=compile(b"ssmenu")))
 @check_owner
@@ -162,9 +167,7 @@ async def ssalive(event: CallbackQuery):
             Button.inline("ALIVE_NAME", data="ALIVE_NAME"),
             Button.inline("ALIVE_TEXT", data="ALIVE_TEXT"),
         ],
-        [
-            Button.inline("ALIVE", data="ALIVE")
-        ],
+        [Button.inline("ALIVE", data="ALIVE")],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -176,7 +179,9 @@ async def ssalive(event: CallbackQuery):
         link_preview=False,
     )
 
-#TODO çok fazla değiişken var ve çok karışık -_-
+
+# TODO çok fazla değiişken var ve çok karışık -_-
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"sspmmenu")))
 @check_owner
@@ -184,17 +189,15 @@ async def sspmmenu(event: CallbackQuery):
     buttons = [
         [
             Button.inline("PM_PIC", data="PM_PIC"),
-            Button.inline("MAX_FLOOD_IN_PMS", data="MAX_FLOOD_IN_PMS")
+            Button.inline("MAX_FLOOD_IN_PMS", data="MAX_FLOOD_IN_PMS"),
         ],
         [
             Button.inline("pmmenu", data="pmmenu"),
-            Button.inline("pmpermit_txt", data="pmpermit_txt")
+            Button.inline("pmpermit_txt", data="pmpermit_txt"),
         ],
-        [
-            Button.inline("pmpermit", data="pmpermit")
-        ]
+        [Button.inline("pmpermit", data="pmpermit")],
     ]
-    
+
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
         f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
@@ -215,9 +218,7 @@ async def sspmbot(event: CallbackQuery):
             Button.inline("START_PIC", data="START_PIC"),
             Button.inline("START_TEXT", data="START_TEXT"),
         ],
-        [
-            Button.inline("START_BUTTON", data="START_BUTTON")
-        ],
+        [Button.inline("START_BUTTON", data="START_BUTTON")],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -228,6 +229,7 @@ async def sspmbot(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
 
 # varsayılan komutlar ayarlar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"sshandler")))
@@ -240,7 +242,7 @@ async def sshandler(event: CallbackQuery):
         ],
         [
             Button.inline("SNIP_CMDSET", data="SNIP_CMDSET"),
-        ]
+        ],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -251,6 +253,7 @@ async def sshandler(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
 
 # pm - tag logger ayar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"sslogger")))
@@ -262,7 +265,7 @@ async def sslogger(event: CallbackQuery):
         ],
         [
             Button.inline("Tag Logger", data="TAG_LOGGER"),
-        ]
+        ],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -274,7 +277,9 @@ async def sslogger(event: CallbackQuery):
         link_preview=False,
     )
 
-# TAG LOGGER 
+
+# TAG LOGGER
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"TAG_LOGGER")))
 @check_owner
@@ -282,11 +287,9 @@ async def TAG_LOGGER(event: CallbackQuery):
     buttons = [
         [
             Button.inline("Aç", data="TAG_LOGGER_ON"),
-            Button.inline("Kapa", data="TAG_LOGGER_OFF")
+            Button.inline("Kapa", data="TAG_LOGGER_OFF"),
         ],
-        [
-            Button.inline("Grup ayarları", data="TAG_LOGGER_GROUP")
-        ]
+        [Button.inline("Grup ayarları", data="TAG_LOGGER_GROUP")],
     ]
     buttons.append(get_back_button("sslogger"))
     await event.edit(
@@ -297,6 +300,7 @@ async def TAG_LOGGER(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
 
 # TAG LOGGER GROUP
 @doge.bot.on(CallbackQuery(data=compile(b"TAG_LOGGER_GROUP")))
@@ -318,6 +322,7 @@ async def TAG_LOGGER_GROUP(event: CallbackQuery):
         link_preview=False,
     )
 
+
 # TAG LOGGER KAPAMA
 @doge.bot.on(CallbackQuery(data=compile(b"TAG_LOGGER_OFF")))
 @check_owner
@@ -331,6 +336,7 @@ async def TAG_LOGGER_OFF(event: CallbackQuery):
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n TAG loggerözelliğiniz başarıyla kapatıldı",
             alert=True,
         )
+
 
 # TAG LOGGER açma -_-
 @doge.bot.on(CallbackQuery(data=compile(b"TAG_LOGGER_ON")))
@@ -354,12 +360,16 @@ async def TAG_LOGGER_ON(event: CallbackQuery):
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n TAG Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
         await event.edit(
-            f'''🔔 **Etiketleri kaydetme grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**''',
+            f"""🔔 **Etiketleri kaydetme grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
             buttons=buttons,
         )
-    elif gvar("PM_LOGGER_GROUP_ID") is not None or gvar("TAG_LOGGER_GROUP_ID") is not None:
+    elif (
+        gvar("PM_LOGGER_GROUP_ID") is not None
+        or gvar("TAG_LOGGER_GROUP_ID") is not None
+    ):
         sgvar("GRPLOG", True)
         return await event.answer("🐶 TAG LOGGER değeriniz açıldı!", alert=True)
+
 
 # TAG LOGGER otomatik grup açma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"TAG_LOGGER_GROUP_AUTO")))
@@ -397,11 +407,9 @@ async def PM_LOGGER(event: CallbackQuery):
     buttons = [
         [
             Button.inline("Aç", data="PM_LOGGER_ON"),
-            Button.inline("Kapa", data="PM_LOGGER_OFF")
+            Button.inline("Kapa", data="PM_LOGGER_OFF"),
         ],
-        [
-            Button.inline("Grup ayarları", data="PM_LOGGER_GROUP")
-        ]
+        [Button.inline("Grup ayarları", data="PM_LOGGER_GROUP")],
     ]
     buttons.append(get_back_button("sslogger"))
     await event.edit(
@@ -412,6 +420,7 @@ async def PM_LOGGER(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
 
 # PM LOGGER için grup ayarları
 @doge.bot.on(CallbackQuery(data=compile(b"PM_LOGGER_GROUP")))
@@ -433,6 +442,7 @@ async def PM_LOGGER_GROUP(event: CallbackQuery):
         link_preview=False,
     )
 
+
 # PM LOGGER kapatma
 @doge.bot.on(CallbackQuery(data=compile(b"PM_LOGGER_OFF")))
 @check_owner
@@ -446,6 +456,8 @@ async def PM_LOGGER_OFF(event):
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\ PM Permit özelliğiniz başarıyla kapatıldı",
             alert=True,
         )
+
+
 # PM LOGGER açma
 @doge.bot.on(CallbackQuery(data=compile(b"PM_LOGGER_ON")))
 @check_owner
@@ -471,9 +483,11 @@ async def PM_LOGGER_ON(event: CallbackQuery):
             f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n PM Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
         await event.edit(
-            f'''💬 **PM için log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**''',
+            f"""💬 **PM için log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
             buttons=buttons,
         )
+
+
 # PM LOGGER Otomatik grup açma
 @doge.bot.on(CallbackQuery(data=compile(b"PM_LOGGER_GROUP_AUTO")))
 @check_owner
@@ -503,7 +517,6 @@ async def PM_LOGGER_GROUP_AUTO(event: CallbackQuery):
             await pmloggeraurocreate(event)
 
 
-
 # help için ayarlar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"sshelp")))
 @check_owner
@@ -519,7 +532,7 @@ async def sshelp(event: CallbackQuery):
         [
             Button.inline("Yardımdaki Satır sayısı", data="NO_OF_ROWS_IN_HELP"),
             Button.inline("Yardımdaki Sütun Sayısı", data="NO_OF_COLUMNS_IN_HELP"),
-        ]
+        ],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -531,7 +544,9 @@ async def sshelp(event: CallbackQuery):
         link_preview=False,
     )
 
+
 # geriye kalanlar ayarlar menüsü TODO
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"ssother")))
 @check_owner
@@ -551,7 +566,7 @@ async def ssother(event: CallbackQuery):
         ],
         [
             Button.inline("Hava Durumu", data="otherweather"),
-        ]
+        ],
     ]
     buttons.append(get_back_button("ssmenu"))
     await event.edit(
@@ -563,7 +578,9 @@ async def ssother(event: CallbackQuery):
         link_preview=False,
     )
 
+
 # SSOTHER geriye kalan fotoğraflar
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"otherpics")))
 @check_owner
@@ -573,9 +590,7 @@ async def otherpics(event: CallbackQuery):
             Button.inline("DEFAULT_PIC", data="DEFAULT_PIC"),
             Button.inline("DIGITAL_PIC", data="DIGITAL_PIC"),
         ],
-        [
-            Button.inline("THUMB_PIC", data="THUMB_PIC")
-        ]
+        [Button.inline("THUMB_PIC", data="THUMB_PIC")],
     ]
     buttons.append(get_back_button("ssother"))
     await event.edit(
@@ -586,6 +601,8 @@ async def otherpics(event: CallbackQuery):
         buttons=buttons,
         link_preview=False,
     )
+
+
 # SSOTHER geriye kalan isimler
 @doge.bot.on(CallbackQuery(data=compile(b"othernames")))
 @check_owner
@@ -595,8 +612,27 @@ async def othernames(event: CallbackQuery):
             Button.inline("AUTONAME", data="AUTONAME"),
             Button.inline("CUSTOM_STICKER_PACKNAME", data="CUSTOM_STICKER_PACKNAME"),
         ],
+        [Button.inline("TELEGRAPH_SHORT_NAME", data="TELEGRAPH_SHORT_NAME")],
+    ]
+    buttons.append(get_back_button("ssother"))
+    await event.edit(
+        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
+        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
+        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
+        \n🧶 Ayarlamak istediğiniz değişkeni seçin:**",
+        buttons=buttons,
+        link_preview=False,
+    )
+
+
+# SSOTHER hava durumu ayarları
+@doge.bot.on(CallbackQuery(data=compile(b"otherweather")))
+@check_owner
+async def otherweather(event: CallbackQuery):
+    buttons = [
         [
-            Button.inline("TELEGRAPH_SHORT_NAME", data="TELEGRAPH_SHORT_NAME")
+            Button.inline("WATCH_COUNTRY", data="WATCH_COUNTRY"),
+            Button.inline("WEATHER_CITY", data="WEATHER_CITY"),
         ]
     ]
     buttons.append(get_back_button("ssother"))
@@ -609,25 +645,6 @@ async def othernames(event: CallbackQuery):
         link_preview=False,
     )
 
-# SSOTHER hava durumu ayarları
-@doge.bot.on(CallbackQuery(data=compile(b"otherweather")))
-@check_owner
-async def otherweather(event: CallbackQuery):
-    buttons = [
-        [
-            Button.inline("WATCH_COUNTRY", data="WATCH_COUNTRY"),
-            Button.inline("WEATHER_CITY", data="WEATHER_CITY")
-        ]
-    ]
-    buttons.append(get_back_button("ssother"))
-    await event.edit(
-        f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
-        \n🐾 Yᴀʀᴅɪᴍᴄɪ\n\
-        \n◽ Doɢᴇ oғ {gvar('mention')}\n\
-        \n🧶 Ayarlamak istediğiniz değişkeni seçin:**",
-        buttons=buttons,
-        link_preview=False,
-    )
 
 # api - grup id'leri menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"apimenu")))
@@ -643,7 +660,7 @@ async def apisetter(event: CallbackQuery):
             Button.inline("GITHUB", data="ghapi"),
         ],
         [
-        # Button.inline("GOOGLE DRIVE", data="gdapi"),
+            # Button.inline("GOOGLE DRIVE", data="gdapi"),
             Button.inline("IBM WATSON", data="ibmwcapi"),
         ],
         [
@@ -672,6 +689,7 @@ async def apisetter(event: CallbackQuery):
         buttons=apis,
         link_preview=False,
     )
+
 
 # grup/kanalların ayar menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"sscg")))
@@ -814,6 +832,7 @@ async def hgloggerautocreate(event: CallbackQuery):
             )
             await herokuloggergroupcreate(event)
 
+
 # fban grubu açmak için seçenekler menüsü
 @doge.bot.on(CallbackQuery(data=compile(b"fgroup")))
 @check_owner
@@ -828,12 +847,13 @@ async def fggroup(event: CallbackQuery):
         ],
     ]
     await event.edit(
-        f'''✅ **Rose için Fban grup ayarları!**
+        f"""✅ **Rose için Fban grup ayarları!**
 
-**Fban grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`c`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**''',
+**Fban grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`c`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
         buttons=buttons,
         link_preview=False,
     )
+
 
 # otomatik FBAN grubu açma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"fgcreate")))
@@ -912,6 +932,7 @@ async def pcmanuel(event: CallbackQuery):
             f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
         )
 
+
 ###### SEÇENEKLER #####
 
 # Heroku Values Callbacks
@@ -925,6 +946,7 @@ async def api_id(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"api_hash")))
 @check_owner
 async def api_hash(event: CallbackQuery):
@@ -934,6 +956,7 @@ async def api_hash(event: CallbackQuery):
     y = "API_HASH"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"dogehub")))
 @check_owner
@@ -945,6 +968,7 @@ async def dogehub(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"dogeplugin")))
 @check_owner
 async def dogeplugin(event: CallbackQuery):
@@ -954,6 +978,7 @@ async def dogeplugin(event: CallbackQuery):
     y = "DOGEPLUGIN"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"heroku_api_key")))
 @check_owner
@@ -965,6 +990,7 @@ async def heroku_api_key(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"heroku_app_name")))
 @check_owner
 async def heroku_app_name(event: CallbackQuery):
@@ -974,6 +1000,7 @@ async def heroku_app_name(event: CallbackQuery):
     y = "HEROKU_APP_NAME"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"TZ_HEROKU")))
 @check_owner
@@ -985,6 +1012,7 @@ async def TZ_HEROKU(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"TZ_NUMBER_HEROKU")))
 @check_owner
 async def TZ_NUMBER_HEROKU(event: CallbackQuery):
@@ -994,6 +1022,7 @@ async def TZ_NUMBER_HEROKU(event: CallbackQuery):
     y = "TZ_NUMBER"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"DATABASE_URL")))
 @check_owner
@@ -1005,6 +1034,7 @@ async def DATABASE_URL(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"STRING_SESSION")))
 @check_owner
 async def STRING_SESSION(event: CallbackQuery):
@@ -1014,6 +1044,7 @@ async def STRING_SESSION(event: CallbackQuery):
     y = "STRING_SESSION"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"UPSTREAM_REPO_BRANCH")))
 @check_owner
@@ -1025,6 +1056,7 @@ async def UPSTREAM_REPO_BRANCH(event: CallbackQuery):
     z = "herokumenu"
     await sh(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"PRIVATE_GROUP_BOT_API_ID")))
 @check_owner
 async def PRIVATE_GROUP_BOT_API_ID(event: CallbackQuery):
@@ -1034,6 +1066,7 @@ async def PRIVATE_GROUP_BOT_API_ID(event: CallbackQuery):
     y = "PRIVATE_GROUP_BOT_API_ID"
     z = "herokumenu"
     await sh(event, x, y, z)
+
 
 # Alive values callbacks
 @doge.bot.on(CallbackQuery(data=compile(b"IALIVE_PIC")))
@@ -1046,6 +1079,7 @@ async def IALIVE_PIC(event: CallbackQuery):
     z = "ssalive"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"ALIVE_PIC")))
 @check_owner
 async def ALIVE_PIC(event: CallbackQuery):
@@ -1055,6 +1089,7 @@ async def ALIVE_PIC(event: CallbackQuery):
     y = "ALIVE_PIC"
     z = "ssalive"
     await ss(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"ALIVE_NAME")))
 @check_owner
@@ -1066,6 +1101,7 @@ async def ALIVE_NAME(event: CallbackQuery):
     z = "ssalive"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"ALIVE_TEXT")))
 @check_owner
 async def ALIVE_TEXT(event: CallbackQuery):
@@ -1076,6 +1112,7 @@ async def ALIVE_TEXT(event: CallbackQuery):
     z = "ssalive"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"ALIVE")))
 @check_owner
 async def ALIVE(event: CallbackQuery):
@@ -1085,6 +1122,7 @@ async def ALIVE(event: CallbackQuery):
     y = "ALIVE"
     z = "ssalive"
     await ss(event, x, y, z)
+
 
 # PM Permit values callbacks
 @doge.bot.on(CallbackQuery(data=compile(b"PM_PIC")))
@@ -1097,6 +1135,7 @@ async def PM_PIC(event: CallbackQuery):
     z = "sspmmenu"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"MAX_FLOOD_IN_PMS")))
 @check_owner
 async def MAX_FLOOD_IN_PMS(event: CallbackQuery):
@@ -1106,6 +1145,7 @@ async def MAX_FLOOD_IN_PMS(event: CallbackQuery):
     y = "MAX_FLOOD_IN_PMS"
     z = "sspmmenu"
     await ss(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"pmmenu")))
 @check_owner
@@ -1117,6 +1157,7 @@ async def pmmenu(event: CallbackQuery):
     z = "sspmmenu"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"pmpermit_txt")))
 @check_owner
 async def pmpermit_txt(event: CallbackQuery):
@@ -1127,6 +1168,7 @@ async def pmpermit_txt(event: CallbackQuery):
     z = "sspmmenu"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"pmpermit")))
 @check_owner
 async def pmpermit(event: CallbackQuery):
@@ -1136,6 +1178,7 @@ async def pmpermit(event: CallbackQuery):
     y = "pmpermit"
     z = "sspmmenu"
     await ss(event, x, y, z)
+
 
 # Assıstant bot values callbacks
 @doge.bot.on(CallbackQuery(data=compile(b"START_PIC")))
@@ -1148,6 +1191,7 @@ async def START_PIC(event: CallbackQuery):
     z = "sspmmenu"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"START_TEXT")))
 @check_owner
 async def START_TEXT(event: CallbackQuery):
@@ -1158,6 +1202,7 @@ async def START_TEXT(event: CallbackQuery):
     z = "sspmmenu"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"START_BUTTON")))
 @check_owner
 async def START_BUTTON(event: CallbackQuery):
@@ -1167,6 +1212,7 @@ async def START_BUTTON(event: CallbackQuery):
     y = "START_BUTTON"
     z = "sspmmenu"
     await ss(event, x, y, z)
+
 
 # CMD set values callback
 @doge.bot.on(CallbackQuery(data=compile(b"CMDSET")))
@@ -1179,6 +1225,7 @@ async def CMDSET(event: CallbackQuery):
     z = "sshandler"
     await ss(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"SUDO_CMDSET")))
 @check_owner
 async def SUDO_CMDSET(event: CallbackQuery):
@@ -1188,6 +1235,7 @@ async def SUDO_CMDSET(event: CallbackQuery):
     y = "SUDO_CMDSET"
     z = "sshandler"
     await ss(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"SNIP_CMDSET")))
 @check_owner
@@ -1225,6 +1273,7 @@ async def PM_LOGGER_GROUP_MANUEL(event: CallbackQuery):
     z = "PM_LOGGER_GROUP"
     await ss(event, x, y, z)
 
+
 # heroku logger manuel grup açma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"hloggermanuelcreate")))
 @check_owner
@@ -1251,6 +1300,7 @@ async def fgapi(event: CallbackQuery):
     y = "FBAN_GROUP_ID"
     z = "fgroup"
     await setapi(event, x, y, z)
+
 
 # gizli kanalın manuel ayarlanma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"pcmanuel")))
@@ -1334,13 +1384,14 @@ async def IBM_WATSON_CRED_PASSWORD(event: CallbackQuery):
     z = "ibmwcapi"
     await setapi(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"ibmwcapi")))
 @check_owner
 async def ibmwcapi(event: CallbackQuery):
     buttons = [
         [
             Button.inline("IBM_WATSON_CRED_URL", data="IBM_WATSON_CRED_URL"),
-            Button.inline("IBM_WATSON_CRED_PASSWORD", data="IBM_WATSON_CRED_PASSWORD")
+            Button.inline("IBM_WATSON_CRED_PASSWORD", data="IBM_WATSON_CRED_PASSWORD"),
         ]
     ]
     buttons.append(get_back_button("apimenu"))
@@ -1353,6 +1404,7 @@ async def ibmwcapi(event: CallbackQuery):
         link_preview=False,
     )
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"ipdapi")))
 @check_owner
 async def ipdapi(event: CallbackQuery):
@@ -1360,6 +1412,7 @@ async def ipdapi(event: CallbackQuery):
     y = "IPDATA_API"
     z = "apimenu"
     await setapi(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"LASTFM_API")))
 @check_owner
@@ -1408,7 +1461,7 @@ async def ibmwcapi(event: CallbackQuery):
         [
             Button.inline("LASTFM_PASSWORD_PLAIN", data="LASTFM_PASSWORD_PLAIN"),
             Button.inline("LASTFM_SECRET", data="LASTFM_SECRET"),
-        ]
+        ],
     ]
     buttons.append(get_back_button("apimenu"))
     await event.edit(
@@ -1456,6 +1509,7 @@ async def SPOTIFY_DC(event: CallbackQuery):
     z = "spapi"
     await setapi(event, x, y, z)
 
+
 @doge.bot.on(CallbackQuery(data=compile(b"SPOTIFY_KEY")))
 @check_owner
 async def SPOTIFY_KEY(event: CallbackQuery):
@@ -1463,6 +1517,7 @@ async def SPOTIFY_KEY(event: CallbackQuery):
     y = "SPOTIFY_KEY"
     z = "spapi"
     await setapi(event, x, y, z)
+
 
 @doge.bot.on(CallbackQuery(data=compile(b"spapi")))
 @check_owner
@@ -1589,6 +1644,7 @@ async def privatechannel(event: CallbackQuery):
     )
     LOGS.info("✅ PRIVATE_CHANNEL_ID için özel bir grup başarıyla oluşturdum!")
 
+
 # PM LOGGER İÇİN OTOMATİK GRUP AÇMA İŞLEMİ
 async def pmloggeraurocreate(event: CallbackQuery):
     descript = "🚨 BU GRUBU SİLMEYİN!\n\
@@ -1603,14 +1659,14 @@ async def pmloggeraurocreate(event: CallbackQuery):
     await sleep(1)
     await add_bot_to_logger_group(doge, groupid, gvar("BOT_USERNAME"), "Doge")
     await sleep(1)
-    descmsg = '''🚨 **Bu grubu silmeyin!        
+    descmsg = """🚨 **Bu grubu silmeyin!        
 🚨 Bu gruptan ayrılmayın!        
 🚨 Bu grubu değiştirmeyin!**
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖      
 🗑 **Eğer bu grubu silecek olursanız,        
 🐾 [Doge](http://t.me/DogeUserBot) çalışmayacaktır!**
         
-🧡 @DogeUserBot'''
+🧡 @DogeUserBot"""
     msg = await doge.bot.send_message(groupid, descmsg)
     await sleep(0.25)
     await msg.pin()
@@ -1620,6 +1676,7 @@ async def pmloggeraurocreate(event: CallbackQuery):
         buttons=get_back_button("hlogger"),
     )
     LOGS.info("✅ PM_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
+
 
 # TAG LOGGER İÇİN otomatik grup açma
 async def tagloggeraurocreate(event: CallbackQuery):
@@ -1635,14 +1692,14 @@ async def tagloggeraurocreate(event: CallbackQuery):
     await sleep(1)
     await add_bot_to_logger_group(doge, groupid, gvar("BOT_USERNAME"), "Doge")
     await sleep(1)
-    descmsg = '''🚨 **Bu grubu silmeyin!        
+    descmsg = """🚨 **Bu grubu silmeyin!        
 🚨 Bu gruptan ayrılmayın!        
 🚨 Bu grubu değiştirmeyin!**
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖      
 🗑 **Eğer bu grubu silecek olursanız,        
 🐾 Tag Logger çalışmayacaktır!**
         
-🧡 @DogeUserBot'''
+🧡 @DogeUserBot"""
     msg = await doge.bot.send_message(groupid, descmsg)
     await sleep(0.25)
     await msg.pin()
@@ -1677,6 +1734,7 @@ async def hheroku(e, vname, vinfo, z=None):
                 buttons=get_back_button("setmenu"),
             )
 
+
 # alınan değer ile verisini databseye yazdırma işlemi
 async def setdv(e, vname, vinfo, z=None):
     try:
@@ -1695,7 +1753,8 @@ async def setdv(e, vname, vinfo, z=None):
                 buttons=get_back_button("setmenu"),
             )
 
-# heroku configleri değiştirilme işlemi 
+
+# heroku configleri değiştirilme işlemi
 async def sh(event: CallbackQuery, x, y, z=None):
     await event.delete()
     chat = event.sender_id
@@ -1743,6 +1802,8 @@ async def sh(event: CallbackQuery, x, y, z=None):
                 buttons=get_back_button("herokumenu"),
                 link_preview=False,
             )
+
+
 # API harici ayarların değiştirilme işlemi
 async def ss(event: CallbackQuery, x, y, z=None):
     await event.delete()
@@ -1888,4 +1949,3 @@ async def setapi(event: CallbackQuery, x, y, z=None):
                 buttons=get_back_button("apimenu"),
                 link_preview=False,
             )
-

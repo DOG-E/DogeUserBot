@@ -44,7 +44,9 @@ LOGS = logging.getLogger(__name__)
 async def _(event):
     "Restarts the bot !!"
     if BOTLOG:
-        await doge.bot.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot yeniden başlatıldı")
+        await doge.bot.send_message(
+            BOTLOG_CHATID, "#RESTART \n" "Bot yeniden başlatıldı"
+        )
     teledoge = await eor(
         event,
         "Yeniden başlatıldı. Tekra çalıştığımı kontrol etmek için `.ping` ya da  `.doge` yazın. Bir iki dakikaya geri dönerim...",
