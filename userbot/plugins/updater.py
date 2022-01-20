@@ -81,7 +81,9 @@ async def print_changelogs(event, changelog):
 
 
 async def update_requirements():
-    reqs = str(osp.join(osp.dirname(osp.dirname(osp.dirname(__file__))), "requirements.txt"))
+    reqs = str(
+        osp.join(osp.dirname(osp.dirname(osp.dirname(__file__))), "requirements.txt")
+    )
     try:
         process = await create_subprocess_shell(
             " ".join([executable, "-m", "pip", "install", "-r", reqs]),
