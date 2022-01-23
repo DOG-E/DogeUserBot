@@ -936,6 +936,7 @@ async def pcmanuel(event: CallbackQuery):
             f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
         )
 
+
 #######################
 #######################
 ###### SEÇENEKLER #####
@@ -1291,7 +1292,7 @@ async def hloggermanuelcreate(event: CallbackQuery):
     \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
     y = "HLOGGER_ID"
     z = "hgloggrpc"
-    if gvar("DEV_MODE") != True: #Yakında
+    if gvar("DEV_MODE") != True:  # Yakında
         return await event.answer("Bir geliştirici değilsiniz.", alert=True)
     await setapi(event, x, y, z)
 
@@ -1564,6 +1565,7 @@ async def woapi(event: CallbackQuery):
     x = "p"
     y = "WEATHER_API"
     await setapi(event, x, y)
+
 
 #######################
 #######################
