@@ -289,7 +289,9 @@ async def TAG_LOGGER(event: CallbackQuery):
             Button.inline("Aç", data="TAG_LOGGER_ON"),
             Button.inline("Kapa", data="TAG_LOGGER_OFF"),
         ],
-        [Button.inline("Grup ayarları", data="TAG_LOGGER_GROUP")],
+        [
+            Button.inline("Grup ayarları", data="TAG_LOGGER_GROUP"),
+        ],
     ]
     buttons.append(get_back_button("sslogger"))
     await event.edit(
@@ -377,25 +379,25 @@ async def TAG_LOGGER_ON(event: CallbackQuery):
 async def TAG_LOGGER_GROUP_AUTO(event: CallbackQuery):
     if gvar("TAG_LOGGER_GROUP_ID") is None and gvar("PM_LOGGER_GROUP_ID") is None:
         await event.edit(
-            f"{gvar('mention')} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
+            f"{gvar('mention')} Veritabanına kayıtlı bir grubunuz yok. Sizin için bir Tag Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
         )
         await tagloggeraurocreate(event)
-    elif gvar("HLOGGER_ID") is not None:
+    elif gvar("TAG_LOGGER_GROUP_ID") is not None:
         try:
             a = await doge.bot.send_message(
-                int(gvar("HLOGGER_ID")), f"Heroku Logger Grubu Test Mesajı!"
+                int(gvar("TAG_LOGGER_GROUP_ID")), f"Tag Logger Grubu Test Mesajı!"
             )
             await a.delete()
             return await event.edit(
-                f"Heroku Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
-                buttons=get_back_button("hgloggrpc"),
+                f"Tag Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
+                buttons=get_back_button("TAG_LOGGER_GROUP"),
             )
         except Exception as e:
             LOGS.warning(
-                f"Heroku Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
+                f"Tag Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
             )
             await event.edit(
-                f"{gvar('mention')} Veritabanınızda kayıtlı gruba erişilemedi! Sizin için bir Heroku Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
+                f"{gvar('mention')} Veritabanınızda kayıtlı gruba erişilemedi! Sizin için bir Tag Logger Kayıt grubu oluşturuyorum! Lütfen bekleyin..."
             )
             await tagloggeraurocreate(event)
 
@@ -409,7 +411,9 @@ async def PM_LOGGER(event: CallbackQuery):
             Button.inline("Aç", data="PM_LOGGER_ON"),
             Button.inline("Kapa", data="PM_LOGGER_OFF"),
         ],
-        [Button.inline("Grup ayarları", data="PM_LOGGER_GROUP")],
+        [
+            Button.inline("Grup ayarları", data="PM_LOGGER_GROUP"),
+        ],
     ]
     buttons.append(get_back_button("sslogger"))
     await event.edit(
@@ -843,7 +847,7 @@ async def fggroup(event: CallbackQuery):
             Button.inline("🥏 Manüel", data="fgapi"),
         ],
         [
-            Button.inline("⬅️️ Gᴇʀɪ", data="sscg"),
+            Button.inline("⬅️️ Gᴇʀɪ", data="ssmenu"),
         ],
     ]
     await event.edit(
@@ -932,7 +936,8 @@ async def pcmanuel(event: CallbackQuery):
             f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
         )
 
-
+#######################
+#######################
 ###### SEÇENEKLER #####
 
 # Heroku Values Callbacks
@@ -1068,6 +1073,8 @@ async def PRIVATE_GROUP_BOT_API_ID(event: CallbackQuery):
     await sh(event, x, y, z)
 
 
+#######################
+#######################
 # Alive values callbacks
 @doge.bot.on(CallbackQuery(data=compile(b"IALIVE_PIC")))
 @check_owner
@@ -1284,11 +1291,15 @@ async def hloggermanuelcreate(event: CallbackQuery):
     \n`Yeni bir oluşturduğunuz veya önceden oluşturmuş olduğunuz grubunuzun kimliğini bana gönderin.`"
     y = "HLOGGER_ID"
     z = "hgloggrpc"
-    # if gvar("DEV_MODE") != True: #Yakında
-    #   return await event.answer("Birgeliştirici değilsiniz.", alert=True)
+    if gvar("DEV_MODE") != True: #Yakında
+        return await event.answer("Bir geliştirici değilsiniz.", alert=True)
     await setapi(event, x, y, z)
 
 
+#######################
+#######################
+#######################
+#######################
 # manuel FBAN grubu açma işlemi
 @doge.bot.on(CallbackQuery(data=compile(b"fgapi")))
 @check_owner
@@ -1554,6 +1565,11 @@ async def woapi(event: CallbackQuery):
     y = "WEATHER_API"
     await setapi(event, x, y)
 
+#######################
+#######################
+#######################
+#######################
+
 
 # FBAN GRUBU İÇİN OTOMATİK GRUP AÇMA / DEĞERLERİ YAZMA
 async def fgchelper(event: CallbackQuery):
@@ -1706,7 +1722,7 @@ async def tagloggeraurocreate(event: CallbackQuery):
     sgvar("TAG_LOGGER_GROUP_ID", groupid)
     await event.edit(
         f"{gvar('mention')} Sizin için bir Tag Logger grubu oluşturdum ve verileri veritabanına yazdım!",
-        buttons=get_back_button("hlogger"),
+        buttons=get_back_button("TAG_LOGGER_GROUP"),
     )
     LOGS.info("✅ TAG_LOGGER_GROUP_ID için özel bir grup başarıyla oluşturdum!")
 
