@@ -30,11 +30,11 @@ plugin_category = "misc"
 telegraph = Telegraph()
 
 # =================== CONSTANT ===================
-SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
-SPO_BIO_DISABLED = "`Spotify current music to bio is now disabled. "
-SPO_BIO_RUNNING = "`Spotify current music to bio is already running.`"
-ERROR_MSG = "`Spotify module halted, got an unexpected error.`"
-SPO_BIO_ERR = "```No option specified.```"
+SPO_BIO_ENABLED = "`Spotify mevcut müziği bio'ya yazdırılması etkinleştirildi.`"
+SPO_BIO_DISABLED = "`Spotify mevcut müziği bio'ya yazdırılması devre dışı bırakıldı`. "
+SPO_BIO_RUNNING = "`Spotify mevcut müziği bio'ya yazdırılması zaten etkin.`"
+ERROR_MSG = "`Spotify modülü durduruldu, beklenmeyen bir hata oluştu.`"
+SPO_BIO_ERR = "```Seçenek belirtilmedi.```"
 # ================================================
 
 
@@ -171,9 +171,9 @@ def get_spotify_info(TIME=5):
         image = "🔄"
         try:
             url = item["external_urls"]["spotify"]
-            url = f"[Open on Spotify]({url})"
+            url = f"[Şimdi Spotify'dan açın.]({url})"
         except Exception:
-            url = "Spotify now playing"
+            url = "Şimdi Spotify'dan oynatılıyor.'"
         nowtime = int(data["progress_ms"])
         totaltime = int(item["duration_ms"])
         if len(item["album"]["images"]) > 0:
@@ -229,23 +229,23 @@ def get_spotify_info(TIME=5):
         return arr
     except KeyError:
         print(2)
-        return "Error! Couldn't fetch the song playing on Spotify!"
+        return "Hata! Spotify'da çalan şarkı getirilemedi!"
     except JSONDecodeError:
         print(3)
-        return "I'm not listening to anything on Spotify right now."
+        return "Şu anda Spotify'da hiçbir şey dinlemiyorsun"
     except TypeError:
         print(4)
-        return "Error! Couldn't fetch the song playing on Spotify!"
+        return "Hata! Spotify'da çalan şarkı getirilemedi!"
     except Exception as e:
         print(e)
-        return "Error! Couldn't fetch the song playing on Spotify!"
+        return "Hata! Spotify'da çalan şarkı getirilemedi!"
 
 
 @doge.bot_cmd(
     pattern="spotify (on|off)",
     command=("spotifybio", plugin_category),
     info={
-        "h": "To enable or disable the Spotify current playing to bio.",
+        "h": "Bio'da oynatılan Spotify şarkı akımını etkinleştirmek veya devre dışı bırakır.",
         "u": [
             "{tr}spotify on",
             "{tr}spotify off",
@@ -277,18 +277,18 @@ async def set_biostgraph(setstbio):
     pattern="spotifymp3",
     command=("spotifymp3", plugin_category),
     info={
-        "h": "Send current Spotify playing song.",
+        "h": "Çalmakta olan Spotify şarkısını gönderir.",
         "u": "{tr}spotifymp3",
     },
 )
 async def getmp3(event):
-    dogevent = await eor(event, "I'm bringing a song I listened to on Spotify...")
+    dogevent = await eor(event, "Spotify'da dinlediğiniz şarkıyı getiriyorum...")
     try:
         await get_spotify_token()
     except Exception:
         return await edl(
             dogevent,
-            f"__You haven't set the api value. Set__`{tr}setdog SPOTIFY_DC <sp_dc>` __and__ `{tr}setdog SPOTIFY_KEY <sp_key>` __get value.",
+            f"__API değerini ayarlamadınız. Lütfen önce __`{tr}setdog SPOTIFY_DC <sp_dc keyiniz>` __ardından__ `{tr}setdog SPOTIFY_KEY <sp_keyiniz>` __yazınız.",
         )
     info = get_spotify_info()
     if isinstance(info, list) is False:

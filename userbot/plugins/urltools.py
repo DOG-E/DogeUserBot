@@ -18,27 +18,27 @@ plugin_category = "tool"
     pattern="dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
-        "h": "To get Domain Name System(dns) of the given link.",
-        "u": "{tr}dns <url/reply to url>",
+        "h": "Verilen bağlantının Alan Adı Sistemini (dns) alır.",
+        "u": "{tr}dns <url/yanıtlanan url>",
         "e": "{tr}dns google.com",
     },
 )
 async def _(event):
-    "To get Domain Name System(dns) of the given link."
+    "Verilen bağlantının Alan Adı Sistemini (dns) alır"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Either reply to link or give link as input to get data`", 5
+            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
         )
     check = url(input_str)
     if not check:
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edl(event, "`the given link is not supported`", 5)
+        return await edl(event, "`Bu link desteklenmiyor.`", 5)
     sample_url = f"https://da.gd/dns/{input_str}"
     response_api = get(sample_url).text
     if response_api:
@@ -51,77 +51,77 @@ async def _(event):
     pattern="short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
-        "h": "To short the given url.",
-        "u": "{tr}short <url/reply to url>",
+        "h": "Verilen URL'yi kısaltır.",
+        "u": "{tr}short <url/yanıtlanan url>",
         "e": "{tr}short https://github.com/DOG-E/DogeUserBot",
     },
 )
 async def _(event):
-    "shortens the given link"
+    "Verilen URL'yi kısaltır."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Either reply to link or give link as input to get data`", 5
+            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
         )
     check = url(input_str)
     if not check:
         dogstr = f"http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edl(event, "`the given link is not supported`", 5)
+        return await edl(event, "`verilen bağlantı desteklenmiyor.`", 5)
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     sample_url = f"https://da.gd/s?url={input_str}"
     response_api = get(sample_url).text
     if response_api:
         await eor(
-            event, f"Generated {response_api} for {input_str}.", link_preview=False
+            event, f"`{input_str}` bağlantısı kısaltıldı.\nYeni bağlantı: `{response_api}`", link_preview=False
         )
     else:
-        await eor(event, "`Something is wrong, please try again later.`")
+        await eor(event, "`Bir sorun var, lütfen daha sonra tekrar deneyin.`")
 
 
 @doge.bot_cmd(
     pattern="unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
-        "h": "To unshort the given dagb shorten url.",
-        "u": "{tr}unshort <url/reply to url>",
+        "h": "Verilen DagB kısaltılmış URL'sini alır.",
+        "u": "{tr}unshort <url/yanıtlayarak url>",
         "e": "{tr}unshort https://da.gd/Doge",
     },
 )
 async def _(event):
-    "To unshort the given dagb shorten url."
+    "Verilen DagB kısaltılmış URL'sini alır."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Either reply to link or give link as input to get data`", 5
+            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
         )
     check = url(input_str)
     if not check:
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edl(event, "`the given link is not supported`", 5)
+        return await edl(event, "`bu link desteklenmiyor.`", 5)
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     r = get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
         await eor(
             event,
-            f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}",
+            f"Giriş URL: `{input_str}`\nOrijinal URL: `{r.headers['Location']}`",
             link_preview=False,
         )
     else:
         await eor(
             event,
-            "Input URL {} returned status_code {}".format(input_str, r.status_code),
+            "Giriş URL'si {}, durum_kodu {} ile iptal edildi".format(input_str, r.status_code),
         )
 
 
@@ -130,25 +130,25 @@ async def _(event):
     pattern="hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={
-        "h": "To hide the url with white spaces using hyperlink.",
-        "u": "{tr}hl <url/reply to url>",
+        "h": "URL'yi köprü kullanarak boşluklarla gizler.",
+        "u": "{tr}hl <url/yanıtlayarak url>",
         "e": "{tr}hl https://da.gd/Doge",
     },
 )
 async def _(event):
-    "To hide the url with white spaces using hyperlink."
+    "URL'yi köprü kullanarak boşluklarla gizler."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Either reply to link or give link as input to get data`", 5
+            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin`", 5
         )
     check = url(input_str)
     if not check:
         dogstr = "http://" + input_str
         check = url(dogstr)
     if not check:
-        return await edl(event, "`the given link is not supported`", 5)
+        return await edl(event, "`link desteklenmiyor.`", 5)
     await eor(event, "[ㅤㅤㅤㅤㅤㅤㅤ](" + input_str + ")")

@@ -140,7 +140,7 @@ async def newpacksticker(
     rsp = await conv.get_response()
     if not verify_cond(EMOJI_SEN, rsp.text):
         await dogevent.edit(
-            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**Error:**{rsp}"
+            f"Çıkartma eklenemedi, çıkartmayı manuel olarak eklemek için @Stickers botunu kullanın.\n**Hata:**{rsp}"
         )
         return
     await conv.send_message(emoji)
@@ -191,7 +191,7 @@ async def add_to_pack(
             pack = 1
         packname = pack_name(userid, pack, is_anim)
         packnick = pack_nick(username, pack, is_anim)
-        await dogevent.edit(f"`Switching to Pack {pack} due to insufficient space`")
+        await dogevent.edit(f"`Yetersiz çıkartma paketi alanı nedeniyle {pack}'e geçiliyor`")
         await conv.send_message(packname)
         x = await conv.get_response()
         if x.text == "Invalid pack selected.":
@@ -219,7 +219,7 @@ async def add_to_pack(
     if not verify_cond(EMOJI_SEN, rsp.text):
         return await edl(
             dogevent,
-            f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**Error:**{rsp}",
+            f"Çıkartma eklenemedi, çıkartmayı manuel olarak eklemek için @Stickers botunu kullanın.\n**Hata:**{rsp}",
             15,
         )
     await conv.send_message(emoji)
@@ -237,13 +237,13 @@ async def add_to_pack(
     pattern="(kang|d[ıi]zla)(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
-        "h": "To kang a sticker.",
-        "d": "Kang's the sticker/image to the specified pack and uses the emoji('s) you picked",
-        "u": ["{tr}kang <emoji('s)> <number>", "{tr}dızla <emoji('s)> <number>"],
+        "h": "Bir çıkartmayı kendi paketinize ekler.",
+        "d": "Bu komut belirtilen pakete yanıtladığınız resmi/çıkartmayı seçtiğiniz emoji(ler) ile kulanılır.",
+        "u": ["{tr}kang <emoji(ler)> <numara>", "{tr}dızla <emoji(ler)> <numara>"],
     },
 )
 async def kang(args):  # sourcery no-metrics
-    "To kang a sticker."
+    "Bir çıkartmayı kendi paketinize ekler.."
     photo = None
     emojibypass = False
     is_anim = False
@@ -288,10 +288,10 @@ async def kang(args):  # sourcery no-metrics
             is_anim = True
             photo = 1
         else:
-            await edl(args, "`Unsupported File!`")
+            await edl(args, "`Desteklenmeyen dosya!`")
             return
     else:
-        await edl(args, "`I can't kang that...`")
+        await edl(args, "`Bunu yapamam...`")
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
@@ -302,14 +302,14 @@ async def kang(args):  # sourcery no-metrics
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
                 if char_is_emoji(splat[1][0]):
-                    return await dogevent.edit(f"check `{tr}doge stickers`")
+                    return await dogevent.edit(f"Şununla kontrol edin `{tr}doge stickers`")
                 pack = splat[1]  # User sent both
                 emoji = splat[0]
             elif char_is_emoji(splat[1][0]):
                 pack = splat[0]  # User sent both
                 emoji = splat[1]
             else:
-                return await dogevent.edit(f"check `{tr}doge stickers`")
+                return await dogevent.edit(f"Şununla kontrol edin `{tr}doge stickers`")
         elif len(splat) == 1:
             if char_is_emoji(splat[0][0]):
                 emoji = splat[0]
@@ -347,13 +347,13 @@ async def kang(args):  # sourcery no-metrics
                 )
             await edl(
                 dogevent,
-                f"`Sticker kanged successfully!\
-                    \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                f"`Çıkartma başarıyla dızZzlandı! 🐍\
+                    \nŞimdi {emoji} emojisi ile` [burada ki](t.me/addstickers/{packname}) `paketinizde!`",
                 30,
                 parse_mode="md",
             )
         else:
-            await dogevent.edit("`Brewing a new Pack...`")
+            await dogevent.edit("`Yeni paket oluşturuluyor....`")
             async with args.client.conversation(stickersbot) as conv:
                 otherpack, packname, emoji = await newpacksticker(
                     dogevent,
@@ -370,16 +370,16 @@ async def kang(args):  # sourcery no-metrics
             if otherpack:
                 await edl(
                     dogevent,
-                    f"`Sticker kanged to a Different Pack !\
-                    \nAnd Newly created pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                    f"`Farklı bir paket için çıkartma başarıyla dızZzlandı! 🐍\
+                    \nŞimdi `{emoji}` eomjisi yeni oluşturulan` [şu pakete](t.me/addstickers/{packname}) `ile dızlandı`",
                     30,
                     parse_mode="md",
                 )
             else:
                 await edl(
                     dogevent,
-                    f"`Sticker kanged successfully!\
-                    \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                    f"`Çıkartma başarıyla dızZzlandı! 🐍\
+                    \nŞimdi {emoji} emojisi ile` [burada ki](t.me/addstickers/{packname}) `paketinize dızlandı!`",
                     30,
                     parse_mode="md",
                 )
@@ -389,13 +389,13 @@ async def kang(args):  # sourcery no-metrics
     pattern="(pkang|pd[iı]zla)(?:\s|$)([\s\S]*)",
     command=("pkang", plugin_category),
     info={
-        "h": "To kang entire sticker sticker.",
-        "d": "Kang's the entire sticker pack of replied sticker to the specified pack",
-        "u": ["{tr}pkang <number>", "{tr}pdızla <number>"],
+        "h": "Tüm çıkartma paketini dızlar.",
+        "d": "Yanıtlanan çıkartmanın paketindeki tüm çıkartmaları yeni pakete dızlar.",
+        "u": ["{tr}pkang <numara>", "{tr}pdızla <numara>"],
     },
 )
 async def pack_kang(event):  # sourcery no-metrics
-    "To kang entire sticker sticker."
+    "Tüm çıkartma paketini dızlar."
     user = await event.client.get_me()
     if user.username:
         username = user.username
@@ -413,15 +413,15 @@ async def pack_kang(event):  # sourcery no-metrics
     dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
         return await edl(
-            event, "`reply to any sticker to send all stickers in that pack`"
+            event, "`bir paketteki tüm çıkartmaları dızlamak için paketteki bir çıkartmayı yanıtlayın.`"
         )
     try:
         stickerset_attr = reply.document.attributes[1]
         dogevent = await eor(
-            event, "`Fetching details of the sticker pack, please wait..`"
+            event, "`Çıkartma paketinin ayrıntıları getiriliyor, lütfen bekleyin..`"
         )
     except BaseException:
-        return await edl(event, "`This is not a sticker. Reply to a sticker.`", 5)
+        return await edl(event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5)
     try:
         get_stickerset = await event.client(
             GetStickerSetRequest(
@@ -434,7 +434,7 @@ async def pack_kang(event):  # sourcery no-metrics
     except Exception:
         return await edl(
             dogevent,
-            "`I guess this sticker is not part of any pack. So, i can't kang this sticker pack try kang for this sticker`",
+            "`Sanırım bu çıkartma herhangi bir paketin parçası değil. Bu yüzden, bu çıkartma paketini dızlayamam, bu çıkartmayı dene`",
         )
     kangst = 1
     reqd_sticker_set = await event.client(
@@ -452,7 +452,7 @@ async def pack_kang(event):  # sourcery no-metrics
         if "image" in message.mime_type.split("/"):
             await eor(
                 dogevent,
-                f"`This sticker pack is kanging now . Status of kang process: {kangst}/{noofst}`",
+                f"`Bu çıkartma paketi artık dızlanıyor. Dızlama işleminin durumu: {kangst}/{noofst}`",
             )
             photo = BytesIO()
             await event.client.download_file(message, photo)
@@ -464,7 +464,7 @@ async def pack_kang(event):  # sourcery no-metrics
         elif "tgsticker" in message.mime_type:
             await eor(
                 dogevent,
-                f"`This sticker pack is kanging now . Status of kang process: {kangst}/{noofst}`",
+                f"`Bu çıkartma paketi artık dızlanıyor. Dızlama işleminin durumu: {kangst}/{noofst}`",
             )
             await event.client.download_file(message, "AnimatedSticker.tgs")
             attributes = message.attributes
@@ -474,7 +474,7 @@ async def pack_kang(event):  # sourcery no-metrics
             is_anim = True
             photo = 1
         else:
-            await edl(dogevent, "`Unsupported File!`")
+            await edl(dogevent, "`Desteklenmeyen dosya türü!`")
             return
         if photo:
             splat = ("".join(event.text.split(maxsplit=1)[1:])).split()
@@ -486,7 +486,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 elif len(splat) > 1:
                     return await edl(
                         dogevent,
-                        "`Sorry the given name can't be used for pack or there is no pack with that name`",
+                        "`Maalesef verilen ad paket için kullanılamaz veya bu ada sahip bir paket yok!`",
                     )
             try:
                 dog = ImportChatInviteRequest(dog)
@@ -544,7 +544,7 @@ async def pack_kang(event):  # sourcery no-metrics
                 blablapacknames.append(pack)
         kangst += 1
         await sleep(2)
-    result = "`This sticker pack is kanged into the following your sticker pack(s):`\n"
+    result = "`Bu çıkartma paketi, aşağıdaki çıkartma paket(ler)inize eklendi:`\n"
     for i in enumerate(blablapacks):
         result += (
             f"  •  [pack {blablapacknames[i[0]]}](t.me/addstickers/{blablapacks[i[0]]})"
@@ -556,13 +556,13 @@ async def pack_kang(event):  # sourcery no-metrics
     pattern="gridpack(?:\s|$)([\s\S]*)",
     command=("gridpack", plugin_category),
     info={
-        "h": "To split the replied image and make sticker pack.",
+        "h": "Cevaplanan görüntüyü bölmek ve çıkartma paketi yapmak için.",
         "f": {
-            ".e": "to use custom emoji by default ▫️️ is emoji.",
+            ".e": "varsayılan olarak özel emoji kullanmak için ▫️️ emojidir.",
         },
         "u": [
-            "{tr}gridpack <packname>",
-            "{tr}gridpack .e👌 <packname>",
+            "{tr}gridpack <paket adı>",
+            "{tr}gridpack .e👌 <paket adı>",
         ],
         "e": [
             "{tr}gridpack .e👌 DogeUserBot",
@@ -570,20 +570,20 @@ async def pack_kang(event):  # sourcery no-metrics
     },
 )
 async def pic2packcmd(event):
-    "To split the replied image and make sticker pack."
+    "Cevaplanan görüntüyü bölmek ve çıkartma paketi yapmak için."
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edl(event, "__Reply to photo or sticker to make pack.__")
+        return await edl(event, "__ Çıkartma paketi yapmak için fotoğrafa veya çıkartmaya yanıt verin.__")
     if mediatype == "Sticker" and reply.document.mime_type == "application/x-tgsticker":
         return await edl(
             event,
-            "__Reply to photo or sticker to make pack. Animated sticker is not supported__",
+            "__Paket yapmak için fotoğrafa veya çıkartmaya yanıt verin. Animasyonlu çıkartma desteklenmiyor!__",
         )
     args = event.pattern_match.group(1)
     if not args:
-        return await edl(event, "__What's your packname? Pass along with cmd.__")
-    dogevent = await eor(event, "__🔪Cropping and adjusting the image...__")
+        return await edl(event, "__Paketinizin adı ne? Komu ile tekrar kullanın.__")
+    dogevent = await eor(event, "__🔪Görüntüyü kırpılıyor ve ayarlanıyor...__")
     try:
         emoji = (findall(r".e[\U00010000-\U0010ffff]+", args))[0]
         args = args.replace(emoji, "")
@@ -597,7 +597,7 @@ async def pic2packcmd(event):
     image = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if image[1] is None:
         return await edl(
-            image[0], "__Unable to extract image from the replied message.__"
+            image[0], "__Cevaplanan mesajdan resim çıkarılamıyor.__"
         )
     image = Imopen(image[1])
     w, h = image.size
@@ -630,7 +630,7 @@ async def pic2packcmd(event):
             await event.client.send_read_acknowledge(conv.chat_id)
             await sleep(1)
             i += 1
-            await dogevent.edit(f"__Making the pack.\nProgress: {i}/{len(images)}__")
+            await dogevent.edit(f"__Yeni bir paket oluşturuluyor.\nİşlem Durumu: {i}/{len(images)}__")
         await event.client.send_message(chat, "/publish")
         await newmsgres(conv, chat)
         await event.client.send_file(chat, new_img, force_document=True)
@@ -643,7 +643,7 @@ async def pic2packcmd(event):
             if stick_pack_name.startswith("https://t.me/"):
                 break
         await dogevent.edit(
-            f"__Successfully created the pack for the replied media: __[{args}]({stick_pack_name})"
+            f"__Yanıtlanan medya için paket başarıyla oluşturuldu: __[{args}]({stick_pack_name})"
         )
         await conv.mark_read()
         await conv.cancel_all()
@@ -653,27 +653,27 @@ async def pic2packcmd(event):
     pattern="stkrinfo$",
     command=("stkrinfo", plugin_category),
     info={
-        "h": "To get information about a sticker pick.",
-        "d": "Gets info about the sticker packk",
+        "h": "Bir çıkartma seçimi hakkında bilgi alır.",
+        "d": "Çıkartma paketi hakkında bilgi alır.",
         "u": "{tr}stkrinfo",
     },
 )
 async def get_pack_info(event):
-    "To get information about a sticker pick."
+    "Çıkartma paketi hakkında bilgi alır."
     if not event.is_reply:
-        return await edl(event, "`I can't fetch info from nothing, can I ?!`", 5)
+        return await edl(event, "`Hiçbir şeyden bilgi alamam, değil mi?! Bir çıkartmayı yanıtlayın.`", 5)
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await edl(event, "`Reply to a sticker to get the pack details`", 5)
+        return await edl(event, "`Paket ayrıntılarını almak için bir çıkartmayı yanıtlayın.`", 5)
     try:
         stickerset_attr = rep_msg.document.attributes[1]
         dogevent = await eor(
-            event, "`Fetching details of the sticker pack, please wait..`"
+            event, "`Çıkartma paketinin ayrıntıları getiriliyor, lütfen bekleyin..`"
         )
     except BaseException:
-        return await edl(event, "`This is not a sticker. Reply to a sticker.`", 5)
+        return await edl(event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5)
     if not isinstance(stickerset_attr, DocumentAttributeSticker):
-        return await dogevent.edit("`This is not a sticker. Reply to a sticker.`")
+        return await dogevent.edit("`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`")
     get_stickerset = await event.client(
         GetStickerSetRequest(
             InputStickerSetID(
@@ -687,12 +687,12 @@ async def get_pack_info(event):
         if document_sticker.emoticon not in pack_emojis:
             pack_emojis.append(document_sticker.emoticon)
     OUTPUT = (
-        f"**Sticker Title:** `{get_stickerset.set.title}\n`"
-        f"**Sticker Short Name:** `{get_stickerset.set.short_name}`\n"
-        f"**Official:** `{get_stickerset.set.official}`\n"
-        f"**Archived:** `{get_stickerset.set.archived}`\n"
-        f"**Stickers In Pack:** `{get_stickerset.set.count}`\n"
-        f"**Emojis In Pack:**\n{' '.join(pack_emojis)}"
+        f"**Çıkartma Başlığı:** `{get_stickerset.set.title}\n`"
+        f"**Çıkartma Kısa Başlığı:** `{get_stickerset.set.short_name}`\n"
+        f"**Resmi mi?:** `{get_stickerset.set.official}`\n"
+        f"**Arşivde mi?:** `{get_stickerset.set.archived}`\n"
+        f"**Çıkartmanın olduğu paket:** `{get_stickerset.set.count}`\n"
+        f"**Paketteki Emojisi:**\n{' '.join(pack_emojis)}"
     )
     await dogevent.edit(OUTPUT)
 
@@ -701,24 +701,24 @@ async def get_pack_info(event):
     pattern="stickers ?([\s\S]*)",
     command=("stickers", plugin_category),
     info={
-        "h": "To get list of sticker packs with given name.",
-        "d": "shows you the list of non-animated sticker packs with that name.",
-        "u": "{tr}stickers <query>",
+        "h": "Verilen ada sahip çıkartma paketlerinin listesini alır.",
+        "d": "size bu ada sahip animasyonsuz çıkartma paketlerinin listesini gösterir",
+        "u": "{tr}stickers <sorgu>",
     },
 )
 async def cb_sticker(event):
-    "To get list of sticker packs with given name."
+    "Verilen ada sahip çıkartma paketlerinin listesini alır."
     split = event.pattern_match.group(1)
     if not split:
-        return await edl(event, "`Provide some name to search for pack.`", 5)
-    dogevent = await eor(event, "`Searching sticker packs....`")
+        return await edl(event, "`Paket aramak için bir ad girin.`", 5)
+    dogevent = await eor(event, "`Çıkartma paketleri aranıyor....`")
     scraper = create_scraper()
     text = scraper.get(combot_stickers_url + split).text
     soup = BeautifulSoup(text, "lxml")
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
-        return await edl(dogevent, "`No results found:(.`", 5)
-    reply = f"**Sticker packs found for {split} are:**"
+        return await edl(dogevent, "`Sonuç bulunamadı:(.`", 5)
+    reply = f"**{split} için bulunan çıkartma paketleri şunlardır:**"
     for pack in results:
         if pack.button:
             packtitle = (pack.find("div", "sticker-pack__title")).get_text()

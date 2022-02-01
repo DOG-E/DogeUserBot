@@ -54,16 +54,16 @@ else:
     lastfm = None
 
 # =================== CONSTANT ===================
-LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
+LFM_BIO_ENABLED = "```last.fm'den bio'ya güncel müzik aktarıldı.```"
 LFM_BIO_DISABLED = (
-    "```last.fm current music to bio is now disabled. Bio reverted to default.```"
+    "```last.fm'den bio'ya güncel müzik aktarımı devre dışı. Bio varsayılana döndürüldü.```"
 )
-LFM_BIO_RUNNING = "```last.fm current music to bio is already running.```"
-LFM_BIO_ERR = "```No option specified.```"
-LFM_LOG_ENABLED = "```last.fm logging to bot log is now enabled.```"
-LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled.```"
-LFM_LOG_ERR = "```No option specified.```"
-ERROR_MSG = "```last.fm module halted, got an unexpected error.```"
+LFM_BIO_RUNNING = "```last.fm'den bio'ya güncel müzik aktarımı zaten çalışıyor.```"
+LFM_BIO_ERR = "```Seçenek belirtilmedi.```"
+LFM_LOG_ENABLED = "```bot günlüğüne last.fm günlüğü etkinleştirildi.```"
+LFM_LOG_DISABLED = "```bot günlüğüne last.fm günlüğü devre dışı bırakıldı.```"
+LFM_LOG_ERR = "```Seçenek belirtilmedi.```"
+ERROR_MSG = "```last.fm modülü durduruldu, beklenmeyen bir hata oluştu```"
 # ================================================
 
 
@@ -132,8 +132,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     lfmbio = f"🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
                 try:
                     if BOTLOG and LASTFM_.LastLog:
-                        await doge.send_message(
-                            BOTLOG_CHATID, f"Attempted to change bio to\n{lfmbio}"
+                        await doge.bot.send_message(
+                            BOTLOG_CHATID, f"**Bio şu şekilde değiştirildi:**\n`{lfmbio}`"
                         )
                     await doge(UpdateProfileRequest(about=lfmbio))
                 except AboutTooLongError:
@@ -143,8 +143,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                 await sleep(6)
                 await doge(UpdateProfileRequest(about=DEFAULT_BIO))
                 if BOTLOG and LASTFM_.LastLog:
-                    await doge.send_message(
-                        BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
+                    await doge.bot.send_message(
+                        BOTLOG_CHATID, f"**Bio eski haline döndürüldü:**\n{DEFAULT_BIO}"
                     )
         except AttributeError:
             try:
@@ -152,13 +152,13 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     await sleep(6)
                     await doge(UpdateProfileRequest(about=DEFAULT_BIO))
                     if BOTLOG and LASTFM_.LastLog:
-                        await doge.send_message(
-                            BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
+                        await doge.bot.send_message(
+                            BOTLOG_CHATID, f"**Bio eski haline döndürüldü:**\n{DEFAULT_BIO}"
                         )
             except FloodWaitError as err:
                 if BOTLOG and LASTFM_.LastLog:
-                    await doge.send_message(
-                        BOTLOG_CHATID, f"Error changing bio:\n{err}"
+                    await doge.bot.send_message(
+                        BOTLOG_CHATID, f"**Bio değiştirilirken hata oluştu:**\n{err}"
                     )
         except (
             FloodWaitError,
@@ -167,7 +167,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             AboutTooLongError,
         ) as err:
             if BOTLOG and LASTFM_.LastLog:
-                await doge.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
+                await doge.bot.send_message(BOTLOG_CHATID, f"**Bio değiştirilirken hata oluştu:**\n{err}")
         await sleep(2)
     LASTFM_.RUNNING = False
 
@@ -176,14 +176,14 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
     pattern="lastfm$",
     command=("lastfm", plugin_category),
     info={
-        "h": "To fetch scrobble data from last.fm",
-        "d": "Shows currently scrobbling track or most recent scrobbles if nothing is playing.",
+        "h": "Scrobble verilerini last.fm'den getirir.",
+        "d": "O anda izlenen parçayı, eğer hiçbir şey çalmıyorsa, en son çalan parçanın verilerini gösterir.",
         "u": "{tr}lastfm",
     },
 )
 async def last_fm(lastFM):
-    ".lastfm command, fetch scrobble data from last.fm."
-    await lastFM.edit("**⏳ Processing...**")
+    ".lastfm komutu ile, scrobble verilerini last.fm'den getirir."
+    await lastFM.edit("**⏳ İşleniyor...**")
     preview = None
     playing = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing()
     username = f"https://www.last.fm/user/{gvar('LASTFM_USERNAME')}"
@@ -200,15 +200,15 @@ async def last_fm(lastFM):
         rectrack = quote(f"{playing}")
         rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
         if image:
-            output = f"[‎]({image})[{gvar('LASTFM_USERNAME')}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[‎]({image})[{gvar('LASTFM_USERNAME')}]({username}) __şimdi şunu dinliyor:__\n\n• [{playing}]({rectrack})\n"
             preview = True
         else:
-            output = f"[{gvar('LASTFM_USERNAME')}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[{gvar('LASTFM_USERNAME')}]({username}) __şimdi şunu dinliyor:__\n\n• [{playing}]({rectrack})\n"
     else:
         recent = User(gvar("LASTFM_USERNAME"), lastfm).get_recent_tracks(limit=3)
         playing = User(gvar("LASTFM_USERNAME"), lastfm).get_now_playing()
         output = (
-            f"[{gvar('LASTFM_USERNAME')}]({username}) __was last listening to:__\n\n"
+            f"[{gvar('LASTFM_USERNAME')}]({username}) __en son şunu dinliyordu:__\n\n"
         )
         for i, track in enumerate(recent):
             LOGS.info(i)
@@ -229,13 +229,13 @@ async def last_fm(lastFM):
     pattern="now$",
     command=("now", plugin_category),
     info={
-        "h": "Send your current listening song from Lastfm/Spotify/Deezer.",
+        "h": "Dinlediğiniz şarkıyı Lastfm/Spotify/Deezer'dan gönderir.",
         "u": "{tr}now",
-        "note": "For working of this command, you need to authorize @NowPlayBot.",
+        "note": "Bu komutun çalışması için @NowPlayBot'u yetkilendirmeniz gerekir.",
     },
 )
 async def now(event):
-    "Send your current listening song."
+    "Dinlediğiniz mevcut şarkınızı gönderr."
     text = " "
     reply_to_id = await reply_id(event)
     bot_name = "@nowplaybot"
@@ -248,13 +248,13 @@ async def now(event):
     pattern="inow$",
     command=("inow", plugin_category),
     info={
-        "h": "Show your current listening song in the form of a cool image.",
+        "h": "Dinlediğiniz mevcut şarkınızı harika bir görüntü şeklinde gösterir.",
         "u": "{tr}inow",
-        "note": "For working of this command, you need to authorize @SpotiPieBot.",
+        "note": "Bu komutun çalışması için @SpotiPieBot'u yetkilendirmeniz gerekir.",
     },
 )
 async def nowimg(event):
-    "Show your current listening song."
+    "Mevcut dinleme şarkınızı gösterir."
     text = " "
     reply_to_id = await reply_id(event)
     bot_name = "@Spotipiebot"
@@ -267,7 +267,7 @@ async def nowimg(event):
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
-        "h": "To Enable or Disable the last.fm current playing to bio",
+        "h": "last.fm'i çalan şarkıy bio'da etkinleştirmek veya devre dışı bırakır.",
         "u": [
             "{tr}lastbio on",
             "{tr}lastbio off",
@@ -275,7 +275,7 @@ async def nowimg(event):
     },
 )
 async def lastbio(lfmbio):
-    "To Enable or Disable the last.fm current playing to bio"
+    "Tlast.fm'i çalan şarkıy bio'da etkinleştirmek veya devre dışı bırakır."
     arg = lfmbio.pattern_match.group(1).lower()
     if arg == "on":
         setrecursionlimit(700000)
@@ -301,7 +301,7 @@ async def lastbio(lfmbio):
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={
-        "h": "To Enable or Disable the last.fm current playing to bot log group",
+        "h": "Last.fm'in mevcut oynatmasını günlük grubuna göndermesini etkinleştirmek veya devre dışı bırakır.",
         "u": [
             "{tr}lastlog on",
             "{tr}lastlog off",
@@ -309,7 +309,7 @@ async def lastbio(lfmbio):
     },
 )
 async def lastlog(lstlog):
-    "To Enable or Disable the last.fm current playing to bot log group"
+    "Last.fm'in mevcut oynatmasını günlük grubuna göndermesini etkinleştirmek veya devre dışı bırakır"
     arg = lstlog.pattern_match.group(1).lower()
     LASTFM_.LastLog = False
     if arg == "on":
