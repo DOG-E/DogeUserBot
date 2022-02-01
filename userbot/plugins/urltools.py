@@ -31,7 +31,9 @@ async def _(event):
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
+            event,
+            "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`",
+            5,
         )
     check = url(input_str)
     if not check:
@@ -64,7 +66,9 @@ async def _(event):
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
+            event,
+            "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`",
+            5,
         )
     check = url(input_str)
     if not check:
@@ -78,7 +82,9 @@ async def _(event):
     response_api = get(sample_url).text
     if response_api:
         await eor(
-            event, f"`{input_str}` bağlantısı kısaltıldı.\nYeni bağlantı: `{response_api}`", link_preview=False
+            event,
+            f"`{input_str}` bağlantısı kısaltıldı.\nYeni bağlantı: `{response_api}`",
+            link_preview=False,
         )
     else:
         await eor(event, "`Bir sorun var, lütfen daha sonra tekrar deneyin.`")
@@ -101,7 +107,9 @@ async def _(event):
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`", 5
+            event,
+            "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin.`",
+            5,
         )
     check = url(input_str)
     if not check:
@@ -121,7 +129,9 @@ async def _(event):
     else:
         await eor(
             event,
-            "Giriş URL'si {}, durum_kodu {} ile iptal edildi".format(input_str, r.status_code),
+            "Giriş URL'si {}, durum_kodu {} ile iptal edildi".format(
+                input_str, r.status_code
+            ),
         )
 
 
@@ -143,7 +153,9 @@ async def _(event):
         input_str = reply.text
     if not input_str:
         return await edl(
-            event, "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin`", 5
+            event,
+            "`Veri almak için bağlantıya yanıt verin veya girdi olarak bağlantı verin`",
+            5,
         )
     check = url(input_str)
     if not check:

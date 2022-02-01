@@ -191,7 +191,9 @@ async def add_to_pack(
             pack = 1
         packname = pack_name(userid, pack, is_anim)
         packnick = pack_nick(username, pack, is_anim)
-        await dogevent.edit(f"`Yetersiz çıkartma paketi alanı nedeniyle {pack}'e geçiliyor`")
+        await dogevent.edit(
+            f"`Yetersiz çıkartma paketi alanı nedeniyle {pack}'e geçiliyor`"
+        )
         await conv.send_message(packname)
         x = await conv.get_response()
         if x.text == "Invalid pack selected.":
@@ -302,7 +304,9 @@ async def kang(args):  # sourcery no-metrics
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
                 if char_is_emoji(splat[1][0]):
-                    return await dogevent.edit(f"Şununla kontrol edin `{tr}doge stickers`")
+                    return await dogevent.edit(
+                        f"Şununla kontrol edin `{tr}doge stickers`"
+                    )
                 pack = splat[1]  # User sent both
                 emoji = splat[0]
             elif char_is_emoji(splat[1][0]):
@@ -413,7 +417,8 @@ async def pack_kang(event):  # sourcery no-metrics
     dog = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
         return await edl(
-            event, "`bir paketteki tüm çıkartmaları dızlamak için paketteki bir çıkartmayı yanıtlayın.`"
+            event,
+            "`bir paketteki tüm çıkartmaları dızlamak için paketteki bir çıkartmayı yanıtlayın.`",
         )
     try:
         stickerset_attr = reply.document.attributes[1]
@@ -421,7 +426,9 @@ async def pack_kang(event):  # sourcery no-metrics
             event, "`Çıkartma paketinin ayrıntıları getiriliyor, lütfen bekleyin..`"
         )
     except BaseException:
-        return await edl(event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5)
+        return await edl(
+            event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5
+        )
     try:
         get_stickerset = await event.client(
             GetStickerSetRequest(
@@ -574,7 +581,10 @@ async def pic2packcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edl(event, "__ Çıkartma paketi yapmak için fotoğrafa veya çıkartmaya yanıt verin.__")
+        return await edl(
+            event,
+            "__ Çıkartma paketi yapmak için fotoğrafa veya çıkartmaya yanıt verin.__",
+        )
     if mediatype == "Sticker" and reply.document.mime_type == "application/x-tgsticker":
         return await edl(
             event,
@@ -596,9 +606,7 @@ async def pic2packcmd(event):
     )
     image = await _dogetools.media_to_pic(dogevent, reply, noedits=True)
     if image[1] is None:
-        return await edl(
-            image[0], "__Cevaplanan mesajdan resim çıkarılamıyor.__"
-        )
+        return await edl(image[0], "__Cevaplanan mesajdan resim çıkarılamıyor.__")
     image = Imopen(image[1])
     w, h = image.size
     www = max(w, h)
@@ -630,7 +638,9 @@ async def pic2packcmd(event):
             await event.client.send_read_acknowledge(conv.chat_id)
             await sleep(1)
             i += 1
-            await dogevent.edit(f"__Yeni bir paket oluşturuluyor.\nİşlem Durumu: {i}/{len(images)}__")
+            await dogevent.edit(
+                f"__Yeni bir paket oluşturuluyor.\nİşlem Durumu: {i}/{len(images)}__"
+            )
         await event.client.send_message(chat, "/publish")
         await newmsgres(conv, chat)
         await event.client.send_file(chat, new_img, force_document=True)
@@ -661,19 +671,29 @@ async def pic2packcmd(event):
 async def get_pack_info(event):
     "Çıkartma paketi hakkında bilgi alır."
     if not event.is_reply:
-        return await edl(event, "`Hiçbir şeyden bilgi alamam, değil mi?! Bir çıkartmayı yanıtlayın.`", 5)
+        return await edl(
+            event,
+            "`Hiçbir şeyden bilgi alamam, değil mi?! Bir çıkartmayı yanıtlayın.`",
+            5,
+        )
     rep_msg = await event.get_reply_message()
     if not rep_msg.document:
-        return await edl(event, "`Paket ayrıntılarını almak için bir çıkartmayı yanıtlayın.`", 5)
+        return await edl(
+            event, "`Paket ayrıntılarını almak için bir çıkartmayı yanıtlayın.`", 5
+        )
     try:
         stickerset_attr = rep_msg.document.attributes[1]
         dogevent = await eor(
             event, "`Çıkartma paketinin ayrıntıları getiriliyor, lütfen bekleyin..`"
         )
     except BaseException:
-        return await edl(event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5)
+        return await edl(
+            event, "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`", 5
+        )
     if not isinstance(stickerset_attr, DocumentAttributeSticker):
-        return await dogevent.edit("`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`")
+        return await dogevent.edit(
+            "`Bu bir çıkartma değil. Bir çıkartmaya yanıt verin.`"
+        )
     get_stickerset = await event.client(
         GetStickerSetRequest(
             InputStickerSetID(

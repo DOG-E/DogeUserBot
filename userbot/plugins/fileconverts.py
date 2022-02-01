@@ -242,17 +242,13 @@ async def video_dogfile(event):  # sourcery no-metrics
         else:
             remove(dogfile)
             return await edl(dogevent, "`No thumb found to make it video note`", 5)
-    if (
-        mediatype
-        in [
-            "Voice",
-            "Audio",
-            "Gif",
-            "Video",
-            "Sticker",
-        ]
-        and not dogfile.endswith((".webp"))
-    ):
+    if mediatype in [
+        "Voice",
+        "Audio",
+        "Gif",
+        "Video",
+        "Sticker",
+    ] and not dogfile.endswith((".webp")):
         if osp.exists(PATH):
             c_time = time()
             attributes, mime_type = get_attributes(PATH)

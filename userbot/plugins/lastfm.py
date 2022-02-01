@@ -55,9 +55,7 @@ else:
 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm'den bio'ya güncel müzik aktarıldı.```"
-LFM_BIO_DISABLED = (
-    "```last.fm'den bio'ya güncel müzik aktarımı devre dışı. Bio varsayılana döndürüldü.```"
-)
+LFM_BIO_DISABLED = "```last.fm'den bio'ya güncel müzik aktarımı devre dışı. Bio varsayılana döndürüldü.```"
 LFM_BIO_RUNNING = "```last.fm'den bio'ya güncel müzik aktarımı zaten çalışıyor.```"
 LFM_BIO_ERR = "```Seçenek belirtilmedi.```"
 LFM_LOG_ENABLED = "```bot günlüğüne last.fm günlüğü etkinleştirildi.```"
@@ -133,7 +131,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                 try:
                     if BOTLOG and LASTFM_.LastLog:
                         await doge.bot.send_message(
-                            BOTLOG_CHATID, f"**Bio şu şekilde değiştirildi:**\n`{lfmbio}`"
+                            BOTLOG_CHATID,
+                            f"**Bio şu şekilde değiştirildi:**\n`{lfmbio}`",
                         )
                     await doge(UpdateProfileRequest(about=lfmbio))
                 except AboutTooLongError:
@@ -153,7 +152,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     await doge(UpdateProfileRequest(about=DEFAULT_BIO))
                     if BOTLOG and LASTFM_.LastLog:
                         await doge.bot.send_message(
-                            BOTLOG_CHATID, f"**Bio eski haline döndürüldü:**\n{DEFAULT_BIO}"
+                            BOTLOG_CHATID,
+                            f"**Bio eski haline döndürüldü:**\n{DEFAULT_BIO}",
                         )
             except FloodWaitError as err:
                 if BOTLOG and LASTFM_.LastLog:
@@ -167,7 +167,9 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             AboutTooLongError,
         ) as err:
             if BOTLOG and LASTFM_.LastLog:
-                await doge.bot.send_message(BOTLOG_CHATID, f"**Bio değiştirilirken hata oluştu:**\n{err}")
+                await doge.bot.send_message(
+                    BOTLOG_CHATID, f"**Bio değiştirilirken hata oluştu:**\n{err}"
+                )
         await sleep(2)
     LASTFM_.RUNNING = False
 
