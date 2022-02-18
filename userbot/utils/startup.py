@@ -78,7 +78,7 @@ async def checkid_setme():
     doge.me = await doge.get_me()
     doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
-        sgvar("CACHE_OWNER_ID", int(doge.uid))
+        #sgvar("CACHE_OWNER_ID", int(doge.uid))
         await sleep(0.5)
     try:
         await sleep(3)
