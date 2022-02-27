@@ -50,8 +50,7 @@ def progress_str(total: int, current: int) -> str:
         "Progress",
         percentage,
         "".join(
-            (gvar("FINISHED_PROGRESS_STR") or "▰")
-            for _ in range(floor(percentage / 5))
+            (gvar("FINISHED_PROGRESS_STR") or "▰") for _ in range(floor(percentage / 5))
         ),
         "".join(
             (gvar("UNFINISHED_PROGRESS_STR") or "▱")

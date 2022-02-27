@@ -225,7 +225,7 @@ async def formatJSON(outData):
     msg += f"\n\n**Tip:** {jsonData['format']}"
     msg += "\\n**Çeşitler:** "
     for g in jsonData["genres"]:
-        msg += f'{g} '
+        msg += f"{g} "
     msg += f"\n**Durum:** {jsonData['status']}"
     msg += f"\n**Bölümler:** {jsonData['episodes']}"
     msg += f"\n**Yıl:** {jsonData['startDate']['year']}"
@@ -326,9 +326,9 @@ def getBannerLink(mal, kitsu_search=True, anilistid=0):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    if image := post("https://graphql.anilist.co", json=data).json()["data"][
-        "Media"
-    ]["bannerImage"]:
+    if image := post("https://graphql.anilist.co", json=data).json()["data"]["Media"][
+        "bannerImage"
+    ]:
         return image
     return getPosterLink(mal)
 

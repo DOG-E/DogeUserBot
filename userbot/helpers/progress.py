@@ -56,7 +56,7 @@ def humanbytes(size: int) -> str:
     while size > power:
         size /= power
         raised_to_pow += 1
-    return f'{str(round(size, 2))} {dict_power_n[raised_to_pow]}B'
+    return f"{str(round(size, 2))} {dict_power_n[raised_to_pow]}B"
 
 
 def time_formatter(seconds: int) -> str:
@@ -85,7 +85,7 @@ def afk_time(seconds, short=True):
         + ((str(minutes) + (" dakika, " if not short else "dk, ")) if minutes else "")
         + ((str(seconds) + (" saniye, " if not short else "s, ")) if seconds else "")
     )
-    return f'{tmp[:-2]} önce'
+    return f"{tmp[:-2]} önce"
 
 
 def readable_time(seconds: int) -> str:
@@ -94,8 +94,8 @@ def readable_time(seconds: int) -> str:
     days, hours = divmod(hours, 24)
     return (
         (f"{int(days)} gün, " if days else "")
-        + (f'{int(hours)}:' if hours else "00:")
-        + (f'{int(minutes)}:' if minutes else "00:")
+        + (f"{int(hours)}:" if hours else "00:")
+        + (f"{int(minutes)}:" if minutes else "00:")
         + (str(int(seconds)) if seconds else "00")
     )
 

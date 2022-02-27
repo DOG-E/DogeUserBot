@@ -132,7 +132,7 @@ async def tar_file(event):
         ],
     },
 )
-async def zip_file(event):    # sourcery no-metrics
+async def zip_file(event):  # sourcery no-metrics
     "Zip dosyası açar."
     if input_str := event.pattern_match.group(1):
         path = Path(input_str)
@@ -213,7 +213,7 @@ async def zip_file(event):    # sourcery no-metrics
         ],
     },
 )
-async def untar_file(event):    # sourcery no-metrics
+async def untar_file(event):  # sourcery no-metrics
     "Tar dosyası açar."
     if input_str := event.pattern_match.group(1):
         path = Path(input_str)

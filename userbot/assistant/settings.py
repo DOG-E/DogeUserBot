@@ -748,9 +748,7 @@ async def hlogger(event):
         ],
     ]
     buttons.append(get_back_button("sscg"))
-    await event.edit(
-        "Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons
-    )
+    await event.edit("Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)
 
 
 # heroku logger özelliğini kapatma işlemi
