@@ -49,7 +49,9 @@ def main_menu():
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
     \n🐾 Yᴀʀᴅıᴍᴄı\n\
     \n◽ Doɢᴇ oғ {mention}**"
-    buttons = [(Button.inline("ℹ️️ Bɪʟɢɪ", data="check"), ), (
+    buttons = [
+        (Button.inline("ℹ️️ Bɪʟɢɪ", data="check"),),
+        (
             Button.inline(
                 f"👮‍♂️ Aᴅᴍɪɴ ({len(GRP_INFO['admin'])})",
                 data="admin_menu",
@@ -58,7 +60,8 @@ def main_menu():
                 f"🐶 Doɢᴇ ({len(GRP_INFO['bot'])})",
                 data="bot_menu",
             ),
-        ), (
+        ),
+        (
             Button.inline(
                 f"🎈 Eɢ̆ʟᴇɴᴄᴇ ({len(GRP_INFO['fun'])})",
                 data="fun_menu",
@@ -67,7 +70,8 @@ def main_menu():
                 f"🪀 Çᴇşɪᴛʟɪ ({len(GRP_INFO['misc'])})",
                 data="misc_menu",
             ),
-        ), (
+        ),
+        (
             Button.inline(
                 f"🧰 Aʀᴀç ({len(GRP_INFO['tool'])})",
                 data="tool_menu",
@@ -76,7 +80,9 @@ def main_menu():
                 f"🍑 Hᴜʙ ({len(GRP_INFO['hub'])})",
                 data="hub_menu",
             ),
-        ), (Button.inline("⛔ KAPAT ⛔", data="close"), )]
+        ),
+        (Button.inline("⛔ KAPAT ⛔", data="close"),),
+    ]
     return text, buttons
 
 
@@ -192,15 +198,22 @@ def paginate_help(
     modulo_page = page_number % max_num_pages
     if plugins:
         if len(pairs) > number_of_rows:
-            pairs = (pairs[
+            pairs = pairs[
                 modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-            ] + [(Button.inline(
+            ] + [
+                (
+                    Button.inline(
                         "⏪",
                         data=f"{prefix}_prev({modulo_page})_plugin",
-                    ), Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"), Button.inline(
+                    ),
+                    Button.inline("🐾 Mᴇɴᴜ", data="mainmenu"),
+                    Button.inline(
                         "⏩",
                         data=f"{prefix}_next({modulo_page})_plugin",
-                    )), (Button.inline("⛔ Kᴀᴘᴀᴛ", data="close"), )])
+                    ),
+                ),
+                (Button.inline("⛔ Kᴀᴘᴀᴛ", data="close"),),
+            ]
 
         else:
             pairs = pairs + [
@@ -209,7 +222,6 @@ def paginate_help(
                     Button.inline("⛔ Kᴀᴘᴀᴛ", data="close"),
                 )
             ]
-
 
     elif len(pairs) > number_of_rows:
         if category_pgno < 0:
@@ -236,7 +248,6 @@ def paginate_help(
                 Button.inline("⛔ Kᴀᴘᴀᴛ", data="close"),
             ),
         ]
-
 
     else:
         if category_pgno < 0:

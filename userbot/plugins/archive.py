@@ -65,7 +65,7 @@ async def zip_file(event):
     mone = await eor(event, "`Zipping in progress...`")
     filePaths = zipdir(input_str)
     filepath = osp.join(TMP_DOWNLOAD_DIRECTORY, osp.basename(Path(input_str)))
-    zip_file = ZipFile(f'{filepath}.zip', "w")
+    zip_file = ZipFile(f"{filepath}.zip", "w")
     with zip_file:
         for file in filePaths:
             zip_file.write(file)
@@ -127,7 +127,7 @@ async def tar_file(event):
         ],
     },
 )
-async def zip_file(event):    # sourcery no-metrics
+async def zip_file(event):  # sourcery no-metrics
     "To unpack the zip file"
     if input_str := event.pattern_match.group(1):
         path = Path(input_str)
@@ -211,7 +211,7 @@ async def zip_file(event):    # sourcery no-metrics
         ],
     },
 )
-async def untar_file(event):    # sourcery no-metrics
+async def untar_file(event):  # sourcery no-metrics
     "To unpack the tar file"
     if input_str := event.pattern_match.group(1):
         path = Path(input_str)

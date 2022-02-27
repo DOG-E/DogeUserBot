@@ -61,7 +61,7 @@ def sun(unix, ctimezone):
         ],
     },
 )
-async def get_weather(event):    # sourcery no-metrics
+async def get_weather(event):  # sourcery no-metrics
     "To get the weather report of a city."
     # if WEATHER_API is None:
     # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
@@ -75,14 +75,14 @@ async def get_weather(event):    # sourcery no-metrics
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
+            CITY = f"{newcity[0].strip()},{newcity[1].strip()}"
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
                 return await eor(event, "`Invalid Country.`")
-            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
+            CITY = f"{newcity[0].strip()},{countrycode.strip()}"
     url = (
         f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
     )
@@ -162,14 +162,14 @@ async def set_default_city(event):
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
+            CITY = f"{newcity[0].strip()},{newcity[1].strip()}"
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
                 return await eor(event, "`Invalid country.`")
-            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
+            CITY = f"{newcity[0].strip()},{countrycode.strip()}"
     url = (
         f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
     )

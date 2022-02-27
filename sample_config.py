@@ -19,8 +19,6 @@ from typing import Set
 from telethon.tl.types import ChatBannedRights
 
 
-
-
 class Config(object):
     LOGGER = True
 
@@ -109,7 +107,6 @@ class Config(object):
     DOGELOGO = None
     BOTLOG = False
     BOTLOG_CHATID = 0
-
 
 
 class Production(Config):

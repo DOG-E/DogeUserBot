@@ -141,7 +141,7 @@ alist = [
         ],
     },
 )
-async def dbsetter(event):    # sourcery no-metrics
+async def dbsetter(event):  # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)

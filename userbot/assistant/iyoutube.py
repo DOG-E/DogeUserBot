@@ -78,7 +78,6 @@ async def yt_inline(event):
             event, "**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**"
         )
 
-
     dogevent = await eor(
         event, "**🔎 Şunun için YouTube'da arama yapıyorm:** `{}`...".format(input_url)
     )
@@ -286,9 +285,7 @@ async def ytdl_callback(c_q: CallbackQuery):
             file=await get_ytthumb(search_data.get("1").get("video_id")),
             buttons=[
                 Button.url("↗️ Açᴍᴀᴋ Içɪɴ Tıᴋʟᴀʏıɴ", url=telegraph),
-                Button.inline(
-                    "📊 Dᴇᴛᴀʏʟᴀʀı Göʀ", data=f"ytdl_detail_{data_key}_{page}"
-                ),
+                Button.inline("📊 Dᴇᴛᴀʏʟᴀʀı Göʀ", data=f"ytdl_detail_{data_key}_{page}"),
             ],
         )
 

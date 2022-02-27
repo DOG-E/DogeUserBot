@@ -45,7 +45,7 @@ async def _get_file_name(path: Path, full: bool = True) -> str:
         ],
     },
 )
-async def _(event):    # sourcery no-metrics
+async def _(event):  # sourcery no-metrics
     "To download the replied telegram file"
     mone = await eor(event, "`Downloading....`")
     input_str = event.pattern_match.group(3)
@@ -70,7 +70,7 @@ async def _(event):    # sourcery no-metrics
             name += "_" + str(getattr(reply.document, "id", reply.id)) + ext
         if path and path.exists():
             if path.is_file():
-                newname = f'{str(path.stem)}_OLD'
+                newname = f"{str(path.stem)}_OLD"
                 path.rename(path.with_name(newname).with_suffix(path.suffix))
                 file_name = path
             else:
@@ -224,7 +224,7 @@ async def _(event):  # sourcery no-metrics
         name += "_" + str(getattr(reply.document, "id", reply.id)) + ext
     if path and path.exists():
         if path.is_file():
-            newname = f'{str(path.stem)}_OLD'
+            newname = f"{str(path.stem)}_OLD"
             path.rename(path.with_name(newname).with_suffix(path.suffix))
             file_name = path
         else:

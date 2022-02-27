@@ -142,7 +142,7 @@ async def bot_start(event):
         \n💬 Sana nasıl yardımcı olabilirim?**".format(
             my_mention
         )
-        buttons = [(Button.inline("🐕\u200d🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"), )]
+        buttons = [(Button.inline("🐕\u200d🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),)]
     try:
         await event.client.send_message(
             chat.id,
@@ -239,11 +239,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         if users is None:
             return
         if reply_msg := next(
-            (
-                user.message_id
-                for user in users
-                if user.chat_id == str(chat.id)
-            ),
+            (user.message_id for user in users if user.chat_id == str(chat.id)),
             None,
         ):
             await event.client.send_message(
@@ -305,11 +301,7 @@ async def handler(event):
                     LOGS.error(str(e))
         if users_1 is not None:
             reply_msg = next(
-                (
-                    user.message_id
-                    for user in users_1
-                    if user.chat_id != OWNER_ID
-                ),
+                (user.message_id for user in users_1 if user.chat_id != OWNER_ID),
                 None,
             )
 
@@ -371,9 +363,7 @@ async def send_flood_alert(user_) -> None:
     buttons = [
         (
             Button.inline("🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
-            Button.inline(
-                "➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ", data="toggle_bot-antiflood_off"
-            ),
+            Button.inline("➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ", data="toggle_bot-antiflood_off"),
         )
     ]
 

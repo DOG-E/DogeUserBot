@@ -383,7 +383,9 @@ async def plist(event):
         )
 
     else:
-        installed = "**[🐶](tg://need_update_for_some_feature/) External Plugins:**\\n\\n"
+        installed = (
+            "**[🐶](tg://need_update_for_some_feature/) External Plugins:**\\n\\n"
+        )
 
         async for plugin in event.client.iter_messages(
             PLUGIN_CHANNEL, filter=InputMessagesFilterDocument

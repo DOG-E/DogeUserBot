@@ -175,7 +175,7 @@ async def get_file_id(input_str):
         return link, "unknown"
 
 
-async def download(event, gdrive, service, uri=None):    # sourcery no-metrics
+async def download(event, gdrive, service, uri=None):  # sourcery no-metrics
     """Download files to local then upload"""
     start = datetime.now()
     reply = ""
@@ -438,9 +438,7 @@ async def gdrive_download(
                     eta = round((file_size - downloaded) / speed)
                     prog_str = "`[{0}{1}] {2}%`".format(
                         "".join("▰" for _ in range(floor(percentage / 10))),
-                        "".join(
-                            "▱" for _ in range(10 - floor(percentage / 10))
-                        ),
+                        "".join("▱" for _ in range(10 - floor(percentage / 10))),
                         round(percentage, 2),
                     )
 
@@ -652,8 +650,7 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
             eta = round((file_size - uploaded) / speed)
             prog_str = "`Uploading:`\n`[{0}{1}] {2}`".format(
                 "".join(
-                    Config.FINISHED_PROGRESS_STR
-                    for _ in range(floor(percentage / 10))
+                    Config.FINISHED_PROGRESS_STR for _ in range(floor(percentage / 10))
                 ),
                 "".join(
                     Config.UNFINISHED_PROGRESS_STR
@@ -661,7 +658,6 @@ async def upload(gdrive, service, file_path, file_name, mimeType, dir_id=None):
                 ),
                 round(percentage, 2),
             )
-
 
             current_message = (
                 "**Uploading **\n\n"
@@ -784,12 +780,9 @@ async def check_progress_for_dl(event, gid, previous):  # sourcery no-metrics
                     downloaded = percentage * int(file.total_length) / 100
                     prog_str = "**Downloading:** `[{0}{1}] {2}`".format(
                         "".join("▰" for _ in range(floor(percentage / 10))),
-                        "".join(
-                            "▱" for _ in range(10 - floor(percentage / 10))
-                        ),
+                        "".join("▱" for _ in range(10 - floor(percentage / 10))),
                         file.progress_string(),
                     )
-
 
                     msg = (
                         "**[URL - DOWNLOAD]**\n\n"
