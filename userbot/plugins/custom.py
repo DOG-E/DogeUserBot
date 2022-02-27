@@ -141,7 +141,7 @@ alist = [
         ],
     },
 )
-async def dbsetter(event):  # sourcery no-metrics
+async def dbsetter(event):    # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
@@ -170,13 +170,10 @@ async def dbsetter(event):  # sourcery no-metrics
                     username = reply.chat.username
                     msg_id = reply.id
                     vinfo = f"https://t.me/{username}/{msg_id}"
-                else:
-                    if reply.media:
-                        custom = await reply.forward_to(BOTLOG_CHATID)
-                        vinfo = f"{custom.id}"
-            elif (type(reply.media) == MessageMediaDocument) or (
-                type(reply.media) == MessageMediaPhoto
-            ):
+                elif reply.media:
+                    custom = await reply.forward_to(BOTLOG_CHATID)
+                    vinfo = f"{custom.id}"
+            elif type(reply.media) in [MessageMediaDocument, MessageMediaPhoto]:
                 await eor(event, "`Creating link...`")
                 downloaded_file_name = await event.client.download_media(
                     reply, TEMP_DIR
@@ -188,7 +185,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     vinfo = f"https://telegra.ph{media_urls[0]}"
 
                 except AttributeError:
-                    return await eor(event, f"**🚨 Eʀʀoʀ:** `While making link.`")
+                    return await eor(event, "**🚨 Eʀʀoʀ:** `While making link.`")
 
                 except TelegraphException as exc:
                     return await eor(event, f"**🚨 Eʀʀoʀ:**\n➡️ `{str(exc)}`")
@@ -292,57 +289,56 @@ async def dbsetter(event):  # sourcery no-metrics
                 f"🔮 Value of **{apiname}** is now deleted & set to default.",
                 time=20,
             )
-    else:
-        if gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") is True:
-            gvarname = vname
-            gvarinfo = vinfo
-            if cmd == "s":
-                if not gvarinfo:
-                    return await edl(
-                        event,
-                        f"⚙️ Give some values which you want to save for **{gvarname}**",
-                    )
-
-                sgvar(gvarname, gvarinfo)
-                if BOTLOG_CHATID:
-                    await doge.tgbot.send_message(
-                        BOTLOG_CHATID,
-                        f"#SET_GLOBALDATAVAR\
-                        \n**⚙️ {gvarname}** is updated newly in database as below",
-                    )
-                    await doge.tgbot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
-                await edl(
+    elif gvar("PERMISSION_TO_ALL_GLOBAL_DATA_VARIABLES") is True:
+        gvarname = vname
+        gvarinfo = vinfo
+        if cmd == "s":
+            if not gvarinfo:
+                return await edl(
                     event,
-                    f"⚙️ Value of **{gvarname}** is changed.",
+                    f"⚙️ Give some values which you want to save for **{gvarname}**",
                 )
-            if cmd == "g":
-                gvardata = gvar(gvarname)
-                await edl(event, "**I sent global data var to BOTLOG.**")
+
+            sgvar(gvarname, gvarinfo)
+            if BOTLOG_CHATID:
                 await doge.tgbot.send_message(
                     BOTLOG_CHATID,
-                    f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
+                    f"#SET_GLOBALDATAVAR\
+                        \n**⚙️ {gvarname}** is updated newly in database as below",
                 )
-            elif cmd == "d":
-                gvardata = gvar(gvarname)
-                dgvar(gvarname)
-                if BOTLOG_CHATID:
-                    await doge.tgbot.send_message(
-                        BOTLOG_CHATID,
-                        f"#DEL_GLOBALDATAVAR\
+                await doge.tgbot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
+            await edl(
+                event,
+                f"⚙️ Value of **{gvarname}** is changed.",
+            )
+        if cmd == "g":
+            gvardata = gvar(gvarname)
+            await edl(event, "**I sent global data var to BOTLOG.**")
+            await doge.tgbot.send_message(
+                BOTLOG_CHATID,
+                f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
+            )
+        elif cmd == "d":
+            gvardata = gvar(gvarname)
+            dgvar(gvarname)
+            if BOTLOG_CHATID:
+                await doge.tgbot.send_message(
+                    BOTLOG_CHATID,
+                    f"#DEL_GLOBALDATAVAR\
                         \n**{gvarname}** is deleted from database\
                         \n\
                         \n🚮 Deleted: `{gvardata}`",
-                    )
-                await edl(
-                    event,
-                    f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
-                    time=20,
                 )
-        else:
-            await eor(
+            await edl(
                 event,
-                f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**🔮 Give correct API name from the list:\n\n**{apilist}",
+                f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
+                time=20,
             )
+    else:
+        await eor(
+            event,
+            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**🔮 Give correct API name from the list:\n\n**{apilist}",
+        )
 
 
 @doge.bot_cmd(

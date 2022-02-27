@@ -28,14 +28,13 @@ async def calcc(cmd, event, text=None):
     sys.stderr = old_stderr
     evaluation = ""
     if exc:
-        evaluation = exc
+        return exc
     elif stderr:
-        evaluation = stderr
+        return stderr
     elif stdout:
-        evaluation = stdout
+        return stdout
     else:
-        evaluation = text
-    return evaluation
+        return text
 
 
 async def aexecc(code, event):

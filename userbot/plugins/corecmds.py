@@ -45,37 +45,38 @@ thumb_image_path = path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 )
 async def install(event):
     "To install an external plugin."
-    if event.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        try:
-            downloaded_file_name = await event.client.download_media(
-                reply_message,
-                "userbot/plugins/",
-            )
-            if "(" not in downloaded_file_name:
-                path1 = Path(downloaded_file_name)
-                shortname = path1.stem
-                shortestname = shortname.replace(".py", "")
-                try:
-                    load_module(shortestname)
-                except ModuleNotFoundError as mnfe:
-                    remove(downloaded_file_name)
-                    return await edl(
-                        event,
-                        f"**🚨 Eʀʀoʀ:**\
+    if not event.reply_to_msg_id:
+        return
+    reply_message = await event.get_reply_message()
+    try:
+        downloaded_file_name = await event.client.download_media(
+            reply_message,
+            "userbot/plugins/",
+        )
+        if "(" not in downloaded_file_name:
+            path1 = Path(downloaded_file_name)
+            shortname = path1.stem
+            shortestname = shortname.replace(".py", "")
+            try:
+                load_module(shortestname)
+            except ModuleNotFoundError as mnfe:
+                remove(downloaded_file_name)
+                return await edl(
+                    event,
+                    f"**🚨 Eʀʀoʀ:**\
                         \n➡️ `{mnfe}`\
                         \n\
                         \n**🦴 Try to write** `{tr}finstall` **& reply.**",
-                        15,
-                    )
+                    15,
+                )
 
-                try:
-                    await reply_message.forward_to(PLUGIN_CHANNEL)
-                except Exception:
-                    remove(downloaded_file_name)
-                    return await edl(
-                        event,
-                        f"**🚨 Eʀʀoʀ:**\
+            try:
+                await reply_message.forward_to(PLUGIN_CHANNEL)
+            except Exception:
+                remove(downloaded_file_name)
+                return await edl(
+                    event,
+                    f"**🚨 Eʀʀoʀ:**\
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
@@ -83,32 +84,32 @@ async def install(event):
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
-                        25,
-                    )
+                    25,
+                )
 
-                await edl(
-                    event,
-                    f"**🔮 Plugin installed {shortestname} successfully!\
+            await edl(
+                event,
+                f"**🔮 Plugin installed {shortestname} successfully!\
                     \n\n🐾 If you want to learn about {shortestname} you have installed, write:**\
                     \n\n`{tr}doge .p {shortestname}`",
-                    45,
-                )
-            else:
-                remove(downloaded_file_name)
-                return await edl(
-                    event,
-                    f"**🚨 Eʀʀoʀ:**\
+                45,
+            )
+        else:
+            remove(downloaded_file_name)
+            return await edl(
+                event,
+                f"**🚨 Eʀʀoʀ:**\
                     \n`👀 This plugin is already installed.`\
                     \n\n🐾 If you want to learn about {reply_message.file.name.replace('.py', '')} you have installed, write:**\
                     \n\n`{tr}doge .p {reply_message.file.name.replace('.py', '')}`",
-                    15,
-                )
-        except Exception as e:
-            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
-            try:
-                remove(downloaded_file_name)
-            except Exception:
-                pass
+                15,
+            )
+    except Exception as e:
+        await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
+        try:
+            remove(downloaded_file_name)
+        except Exception:
+            pass
 
 
 @doge.bot_cmd(
@@ -122,31 +123,32 @@ async def install(event):
 )
 async def finstall(event):
     "To force install an external plugin."
-    if event.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        try:
-            downloaded_file_name = await event.client.download_media(
-                reply_message,
-                "userbot/plugins/",
-            )
-            if "(" not in downloaded_file_name:
-                path1 = Path(downloaded_file_name)
-                shortname = path1.stem
-                shortestname = shortname.replace(".py", "")
-                try:
-                    load_module(shortestname)
-                except ModuleNotFoundError as e:
-                    install_pip(e.name)
-                    sleep(1)
-                    load_module(shortestname)
+    if not event.reply_to_msg_id:
+        return
+    reply_message = await event.get_reply_message()
+    try:
+        downloaded_file_name = await event.client.download_media(
+            reply_message,
+            "userbot/plugins/",
+        )
+        if "(" not in downloaded_file_name:
+            path1 = Path(downloaded_file_name)
+            shortname = path1.stem
+            shortestname = shortname.replace(".py", "")
+            try:
+                load_module(shortestname)
+            except ModuleNotFoundError as e:
+                install_pip(e.name)
+                sleep(1)
+                load_module(shortestname)
 
-                try:
-                    await reply_message.forward_to(PLUGIN_CHANNEL)
-                except Exception:
-                    remove(downloaded_file_name)
-                    return await edl(
-                        event,
-                        f"**🚨 Eʀʀoʀ:**\
+            try:
+                await reply_message.forward_to(PLUGIN_CHANNEL)
+            except Exception:
+                remove(downloaded_file_name)
+                return await edl(
+                    event,
+                    f"**🚨 Eʀʀoʀ:**\
                         \n**➡️ To install the plugin, you must first set a PLUGIN_CHANNEL.\
                         \n\
                         \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
@@ -154,32 +156,32 @@ async def finstall(event):
                         \n\
                         \n**or\
                         \n🐾 You can install the plugin temporarily by writing** `{tr}ptest`",
-                        25,
-                    )
+                    25,
+                )
 
-                await edl(
-                    event,
-                    f"**🔮 Plugin installed {shortestname} successfully!\
+            await edl(
+                event,
+                f"**🔮 Plugin installed {shortestname} successfully!\
                     \n\n🐾 If you want to learn about {shortestname} you have installed, write:**\
                     \n\n`{tr}doge .p {shortestname}`",
-                    45,
-                )
-            else:
-                remove(downloaded_file_name)
-                return await edl(
-                    event,
-                    f"**🚨 Eʀʀoʀ:**\
+                45,
+            )
+        else:
+            remove(downloaded_file_name)
+            return await edl(
+                event,
+                f"**🚨 Eʀʀoʀ:**\
                     \n`👀 This plugin is already installed.`\
                     \n\n🐾 If you want to learn about {reply_message.file.name.replace('.py', '')} you have installed, write:**\
                     \n\n`{tr}doge .p {reply_message.file.name.replace('.py', '')}`",
-                    15,
-                )
-        except Exception as e:
-            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
-            try:
-                remove(downloaded_file_name)
-            except Exception:
-                pass
+                15,
+            )
+    except Exception as e:
+        await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
+        try:
+            remove(downloaded_file_name)
+        except Exception:
+            pass
 
 
 @doge.bot_cmd(
@@ -194,36 +196,37 @@ async def finstall(event):
 )
 async def ptest(event):
     "To install for test an external plugin."
-    if event.reply_to_msg_id:
+    if not event.reply_to_msg_id:
+        return
+    try:
+        if not path.exists("userbot/temp_plugins/"):
+            makedirs("userbot/temp_plugins")
+        downloaded_file_name = await event.client.download_media(
+            await event.get_reply_message(),
+            "userbot/temp_plugins/",
+        )
+        path1 = Path(downloaded_file_name)
+        shortname = path1.stem
+        shortestname = shortname.replace(".py", "")
         try:
-            if not path.exists("userbot/temp_plugins/"):
-                makedirs("userbot/temp_plugins")
-            downloaded_file_name = await event.client.download_media(
-                await event.get_reply_message(),
-                "userbot/temp_plugins/",
-            )
-            path1 = Path(downloaded_file_name)
-            shortname = path1.stem
-            shortestname = shortname.replace(".py", "")
-            try:
-                load_module(shortestname)
-            except ModuleNotFoundError as e:
-                install_pip(e.name)
-                sleep(1)
-                load_module(shortestname, plugin_path="userbot/temp_plugins")
-            await edl(
-                event,
-                f"**🔮 Plugin temporary installed {shortestname} successfully!\
+            load_module(shortestname)
+        except ModuleNotFoundError as e:
+            install_pip(e.name)
+            sleep(1)
+            load_module(shortestname, plugin_path="userbot/temp_plugins")
+        await edl(
+            event,
+            f"**🔮 Plugin temporary installed {shortestname} successfully!\
                 \n\n🐾 If you want to learn about {shortestname} you have installed, write:**\
                 \n\n`{tr}doge .p {shortestname}`",
-                45,
-            )
-        except Exception as e:
-            await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
-            try:
-                remove(downloaded_file_name)
-            except Exception:
-                pass
+            45,
+        )
+    except Exception as e:
+        await edl(event, f"**🚨 Eʀʀoʀ:**\n`{e}`")
+        try:
+            remove(downloaded_file_name)
+        except Exception:
+            pass
 
 
 @doge.bot_cmd(
@@ -287,7 +290,7 @@ async def send(event):
             parse_mode="html",
         )
     else:
-        await edl(event, f"**🚨 Eʀʀoʀ:** File not found!")
+        await edl(event, "**🚨 Eʀʀoʀ:** File not found!")
 
 
 @doge.bot_cmd(
@@ -369,31 +372,30 @@ async def plist(event):
         o = f"🐾 `{(await _dogeutils.runcmd(cmd))[0]}`"
         OUTPUT = f"**[🐶](tg://need_update_for_some_feature/) Plugins:**\n{o}"
         await eor(event, OUTPUT)
-    else:
-        if PLUGIN_CHANNEL != None:
-            installed = (
-                f"**[🐶](tg://need_update_for_some_feature/) External Plugins:**\n\n"
-            )
-            async for plugin in event.client.iter_messages(
-                PLUGIN_CHANNEL, filter=InputMessagesFilterDocument
-            ):
-                try:
-                    shortname = plugin.file.name.split(".")[1]
-                except Exception:
-                    continue
-
-                if shortname == "py":
-                    installed += f"🐾 {plugin.file.name}    🐾 {plugin.file.name}\n"
-            await eor(event, installed)
-        else:
-            await edl(
-                event,
-                f"**🚨 Eʀʀoʀ:**\
+    elif PLUGIN_CHANNEL is None:
+        await edl(
+            event,
+            f"**🚨 Eʀʀoʀ:**\
                 \n**➡️ To list externally installed plugins, you must first set a PLUGIN_CHANNEL.\
                 \n\
                 \n🔮 If you want PLUGIN_CHANNEL to be set automatically;\
                 \n🦴 Write** `{tr}set var PLUGINS True`",
-            )
+        )
+
+    else:
+        installed = "**[🐶](tg://need_update_for_some_feature/) External Plugins:**\\n\\n"
+
+        async for plugin in event.client.iter_messages(
+            PLUGIN_CHANNEL, filter=InputMessagesFilterDocument
+        ):
+            try:
+                shortname = plugin.file.name.split(".")[1]
+            except Exception:
+                continue
+
+            if shortname == "py":
+                installed += f"🐾 {plugin.file.name}    🐾 {plugin.file.name}\n"
+        await eor(event, installed)
 
 
 @doge.bot_cmd(

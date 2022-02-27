@@ -50,9 +50,12 @@ def progress_str(total: int, current: int) -> str:
     return prog_arg.format(
         "Progress",
         percentage,
-        "".join((Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5)))),
         "".join(
-            (Config.UNFINISHED_PROGRESS_STR for i in range(20 - floor(percentage / 5)))
+            Config.FINISHED_PROGRESS_STR for _ in range(floor(percentage / 5))
+        ),
+        "".join(
+            Config.UNFINISHED_PROGRESS_STR
+            for _ in range(20 - floor(percentage / 5))
         ),
     )
 
@@ -81,8 +84,8 @@ async def unban_user_from_bot(user, reason, reply_to=None):
         rem_user_from_bl(user.id)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = f"**👀 Bu bottan yasaklanmıştınız.\
-        /nℹ️ Şimdi sahibime mesaj göndermeye devam edebeilirsin!**"
+    banned_msg = "**👀 Bu bottan yasaklanmıştınız.\\\x1f        /nℹ️ Şimdi sahibime mesaj göndermeye devam edebeilirsin!**"
+
     if reason is not None:
         banned_msg += f"\n**⛓ Sebep:** `{reason}`"
     await doge.tgbot.send_message(user.id, banned_msg)

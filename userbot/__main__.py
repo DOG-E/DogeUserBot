@@ -30,9 +30,9 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info(f"⏳ STARTING DOGE USERBOT 🐾")
+    LOGS.info("⏳ STARTING DOGE USERBOT 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info(f"✅ STARTUP COMPLETED 🐾")
+    LOGS.info("✅ STARTUP COMPLETED 🐾")
 except Exception as e:
     LOGS.error(f"🚨 {e}")
     exit()
@@ -71,7 +71,7 @@ async def startup_process():
     await load_plugins("plugins")
     await load_plugins("assistant")
     LOGS.info(userbot.__copyright__)
-    LOGS.info("🔐 Licensed under the terms of the " + userbot.__license__)
+    LOGS.info(f"🔐 Licensed under the terms of the {userbot.__license__}")
     LOGS.info(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\

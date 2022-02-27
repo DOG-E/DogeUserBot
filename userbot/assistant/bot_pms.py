@@ -95,12 +95,12 @@ async def bot_start(event):
     mention = f"[{chat.first_name}](tg://user?id={chat.id})"
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     first = chat.first_name
-    last = chat.last_name if chat.last_name else ""
+    last = chat.last_name or ""
     fullname = f"{first} {last}" if last else first
     username = f"@{chat.username}" if chat.username else mention
     userid = chat.id
     my_first = user.first_name
-    my_last = user.last_name if user.last_name else ""
+    my_last = user.last_name or ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
     if chat.id != OWNER_ID:
@@ -129,21 +129,20 @@ async def bot_start(event):
                 )
             )
         buttons = [
-            (Button.url(f"📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
+            (Button.url("📣 Kᴀɴᴀʟ ", "https://t.me/DogeUserBot"),),
             (
-                Button.url(f"💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
-                Button.url(f"🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
+                Button.url("💬 Sᴜᴘᴘᴏʀᴛ ", "https://t.me/DogeSup"),
+                Button.url("🧩 Pʟᴜɢɪɴ ", "https://t.me/DogePlugin"),
             ),
         ]
+
     else:
         start_msg = "**🐶 Wow!\
         \n🐾 Merhaba {}!\n\
         \n💬 Sana nasıl yardımcı olabilirim?**".format(
             my_mention
         )
-        buttons = [
-            (Button.inline(f"🐕‍🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"),),
-        ]
+        buttons = [(Button.inline("🐕\u200d🦺 ʏᴀʀᴅɪᴍ", data="mainmenu"), )]
     try:
         await event.client.send_message(
             chat.id,
@@ -239,12 +238,14 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         users = get_user_reply(event.id)
         if users is None:
             return
-        reply_msg = None
-        for user in users:
-            if user.chat_id == str(chat.id):
-                reply_msg = user.message_id
-                break
-        if reply_msg:
+        if reply_msg := next(
+            (
+                user.message_id
+                for user in users
+                if user.chat_id == str(chat.id)
+            ),
+            None,
+        ):
             await event.client.send_message(
                 OWNER_ID,
                 "**⬆️ Bu mesaj şu kullanıcı tarafından düzenlendi.** {} :\n".format(
@@ -303,11 +304,15 @@ async def handler(event):
                 except Exception as e:
                     LOGS.error(str(e))
         if users_1 is not None:
-            reply_msg = None
-            for user in users_1:
-                if user.chat_id != OWNER_ID:
-                    reply_msg = user.message_id
-                    break
+            reply_msg = next(
+                (
+                    user.message_id
+                    for user in users_1
+                    if user.chat_id != OWNER_ID
+                ),
+                None,
+            )
+
             try:
                 if reply_msg:
                     users = get_user_id(reply_msg)
@@ -343,16 +348,18 @@ async def bot_start(event):
     users = get_user_id(reply_to)
     if users is None:
         return await info_msg.edit(
-            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+            "**🚨 Hᴀᴛᴀ:**\\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
+
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
         return await info_msg.edit(
-            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+            "**🚨 Hᴀᴛᴀ:**\\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
+
     uinfo = f"**👤 Bu mesaj şu kişi tarafından gönderildi:** {_format.mentionuser(user_name, user_id)}\
             \n**ℹ️ Kullanıcı İsmi:** {user_name}\
             \n**🆔 Kullanıcı ID'si:** `{user_id}`"
@@ -363,13 +370,13 @@ async def send_flood_alert(user_) -> None:
     # sourcery no-metrics
     buttons = [
         (
-            Button.inline(f"🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
+            Button.inline("🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                f"➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ",
-                data="toggle_bot-antiflood_off",
+                "➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ", data="toggle_bot-antiflood_off"
             ),
         )
     ]
+
     found = False
     if FloodConfig.ALERT and (user_.id in FloodConfig.ALERT.keys()):
         found = True

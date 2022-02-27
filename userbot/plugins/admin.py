@@ -556,7 +556,7 @@ async def endmute(event):
     try:
         await event.client.kick_participant(event.chat_id, user_id)
     except Exception as e:
-        return await dogevent.edit(NO_PERM + f"\n{e}")
+        return await dogevent.edit(f"{NO_PERM}\n{e}")
     if reason:
         await dogevent.edit(
             f"`Kicked` [{user.first_name}](tg://user?id={user_id})`!`\nReason: {reason}"

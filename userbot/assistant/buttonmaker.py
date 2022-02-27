@@ -102,7 +102,7 @@ async def button(event):
     if not markdown_note:
         return await edl(event, "`🔲 Butonda hangi metni kullanmalıyım?`")
 
-    doginput = "Inline buttons " + markdown_note
+    doginput = f"Inline buttons {markdown_note}"
     results = await event.client.inline_query(BOT_USERNAME, doginput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()

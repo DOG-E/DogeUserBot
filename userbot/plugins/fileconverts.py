@@ -495,13 +495,9 @@ async def on_file_to_photo(event):
         "u": "{tr}gif quality ; fps(frames per second)",
     },
 )
-async def _(event):  # sourcery no-metrics
+async def _(event):    # sourcery no-metrics
     "Converts Given animated sticker to gif"
-    input_str = event.pattern_match.group(1)
-    if not input_str:
-        quality = None
-        fps = None
-    else:
+    if input_str := event.pattern_match.group(1):
         loc = input_str.split(";")
         if len(loc) > 2:
             return await edl(
@@ -537,6 +533,9 @@ async def _(event):  # sourcery no-metrics
                 quality = loc[0].strip()
             else:
                 return await edl(event, "Use quality of range 0 to 721")
+    else:
+        quality = None
+        fps = None
     dogreply = await event.get_reply_message()
     doge_event = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
     if not dogreply or not dogreply.media or not dogreply.media.document:
@@ -616,10 +615,11 @@ async def _(event):
         voice_note = False
         supports_streaming = False
         if input_str == "voice":
-            new_required_file_caption = "voice_" + str(round(time())) + ".opus"
+            new_required_file_caption = f"voice_{str(round(time()))}.opus"
             new_required_file_name = (
-                TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f'{TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}'
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",
@@ -637,10 +637,11 @@ async def _(event):
             voice_note = True
             supports_streaming = True
         elif input_str == "mp3":
-            new_required_file_caption = "mp3_" + str(round(time())) + ".mp3"
+            new_required_file_caption = f"mp3_{str(round(time()))}.mp3"
             new_required_file_name = (
-                TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f'{TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}'
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",

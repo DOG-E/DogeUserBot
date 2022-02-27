@@ -177,6 +177,6 @@ async def get_chatinfo(event, dogevent):
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edl(dogevent, f"**🚨 Eʀʀoʀ:**\n`ℹ️ Couldn't fetch the chat!`")
+            await edl(dogevent, "**🚨 Eʀʀoʀ:**\\n`ℹ️ Couldn't fetch the chat!`")
             return None
     return chat_info

@@ -33,7 +33,7 @@ async def on_plug_in_callback_query_handler(event):
                 encrypted_tcxt = message["text"]
                 reply_pop_up_alert = encrypted_tcxt
         except KeyError:
-            reply_pop_up_alert = f"🚨 Bu mesaj artık Doge sunucusunda yok."
+            reply_pop_up_alert = "🚨 Bu mesaj artık Doge sunucusunda yok."
     else:
-        reply_pop_up_alert = f"🚨 Bu mesaj artık Doge sunucusunda yok."
+        reply_pop_up_alert = "🚨 Bu mesaj artık Doge sunucusunda yok."
     await event.answer(reply_pop_up_alert, cache_time=0, alert=True)

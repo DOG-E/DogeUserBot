@@ -210,5 +210,4 @@ async def magik(photo):
     r = get(
         f"https://nekobot.xyz/api/imagegen?type=magik&image=https://telegra.ph{uphoto[0]}"
     ).json()
-    teledoge = r["message"]
-    return teledoge
+    return r["message"]

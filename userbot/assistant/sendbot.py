@@ -27,19 +27,18 @@ async def botmsg(event):
     reply_message = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     if not text:
-        if reply_message.media:
-            media = await reply_message.download_media()
-            if reply_message.text:
-                await doge.tgbot.send_file(chat, media, caption=reply_message.text)
-            else:
-                await doge.tgbot.send_file(chat, media)
-            return await event.delete()
-
-        else:
+        if not reply_message.media:
             return await edl(
                 event,
                 "__Bot üzerinden ne göndermeliyim? Bana bir metin verin ya da mesajı yanıtlayın.__",
             )
+
+        media = await reply_message.download_media()
+        if reply_message.text:
+            await doge.tgbot.send_file(chat, media, caption=reply_message.text)
+        else:
+            await doge.tgbot.send_file(chat, media)
+        return await event.delete()
 
     await doge.tgbot.send_message(chat, text, reply_to=reply_to_id)
     await event.delete()

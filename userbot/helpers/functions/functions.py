@@ -64,7 +64,7 @@ async def get_cast(casttype, movie):
             if i < 1:
                 mov_casttype += str(j)
             elif i < 5:
-                mov_casttype += ", " + str(j)
+                mov_casttype += f", {str(j)}"
             else:
                 break
             i += 1
@@ -79,7 +79,7 @@ async def get_moviecollections(movie):
         for i in movie["box office"].keys():
             result += f"\n• <b>{i}:</b> <code>{movie['box office'][i]}</code>"
     else:
-        result = f"<code>Not data</code>"
+        result = "<code>Not data</code>"
     return result
 
 
@@ -87,13 +87,13 @@ async def get_moviecollections(movie):
 def getSimilarWords(wordx, limit=5):
     similars = []
     if not path.exists("autocomplete.json"):
-        words = get(f"https://sozluk.gov.tr/autocomplete.json")
+        words = get("https://sozluk.gov.tr/autocomplete.json")
         open("autocomplete.json", "a+").write(words.text)
         words = words.json()
     else:
         words = loads(open("autocomplete.json", "r").read())
     for word in words:
-        if word["madde"].startswith(wordx) and not word["madde"] == wordx:
+        if word["madde"].startswith(wordx) and word["madde"] != wordx:
             if len(similars) > limit:
                 break
             similars.append(word["madde"])
@@ -120,7 +120,7 @@ async def getTranslate(text, **kwargs):
 
 # Credits: Robotlog - https://github.com/robotlog/SiriUserBot/blob/master/userbot/helps/forc.py#L5
 async def fsmessage(event, text, forward=False, chat=None):
-    cHat = chat if chat else event.chat_id
+    cHat = chat or event.chat_id
     if not forward:
         try:
             e = await event.client.send_message(cHat, text)
@@ -137,7 +137,7 @@ async def fsmessage(event, text, forward=False, chat=None):
 
 
 async def fsfile(event, file=None, chat=None):
-    cHat = chat if chat else event.chat_id
+    cHat = chat or event.chat_id
     try:
         e = await event.send_file(cHat, file)
     except YouBlockedUserError:
@@ -147,13 +147,13 @@ async def fsfile(event, file=None, chat=None):
 
 
 async def newmsgres(conv, chat, timeout=None):
-    if timeout:
-        response = await conv.wait_event(
+    return (
+        await conv.wait_event(
             NewMessage(incoming=True, from_users=chat), timeout=timeout
         )
-    else:
-        response = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
-    return response
+        if timeout
+        else await conv.wait_event(NewMessage(incoming=True, from_users=chat))
+    )
 
 
 async def clippy(borg, msg, chat_id, reply_to_id):
