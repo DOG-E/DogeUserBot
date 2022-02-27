@@ -274,9 +274,12 @@ async def quote_search(event):  # sourcery no-metrics
                                 pass
                 else:
                     text_lines = response.text.split("`")
-                    for fed_id in text_lines:
-                        if len(fed_id) == 36 and fed_id.count("-") == 4:
-                            fedidstoadd.append(fed_id)
+                    fedidstoadd.extend(
+                        fed_id
+                        for fed_id in text_lines
+                        if len(fed_id) == 36 and fed_id.count("-") == 4
+                    )
+
             except Exception as e:
                 await edl(
                     dogevent,
@@ -477,10 +480,11 @@ async def fetch_fedinfo(event):
             await fsmessage(event, text=f"/fedadmins {input_str}", chat=rose)
             response = await newmsgres(conv, rose)
             await dogevent.edit(
-                f"**FedID:** ```{input_str}```\n\n" + response.text
+                f"**FedID:** ```{input_str}```\n\n{response.text}"
                 if input_str
                 else response.text
             )
+
         except Exception as e:
             await edl(
                 dogevent,

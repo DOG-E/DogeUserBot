@@ -111,14 +111,16 @@ async def bot_broadcast(event):
             if count % 5 == 0:
                 try:
                     prog_ = (
-                        f"**🔊 Yayın Yapılıyor...**\n\n"
-                        + progress_str(
-                            total=bot_users_count,
-                            current=count + len(blocked_users),
+                        (
+                            "**🔊 Yayın Yapılıyor...**\\n\\n"
+                            + progress_str(
+                                total=bot_users_count,
+                                current=count + len(blocked_users),
+                            )
                         )
                         + f"\n\n• **✅ Başarılı:** `{count}`\n"
-                        + f"• **❌ Hatalı** `{len(blocked_users)}`"
-                    )
+                    ) + f"• **❌ Hatalı** `{len(blocked_users)}`"
+
                     await br_cast.edit(prog_)
                 except FloodWaitError as e:
                     await sleep(e.seconds)
@@ -126,7 +128,7 @@ async def bot_broadcast(event):
     b_info = "🔊 ➡️ <b> {} tane kullanıcı </b> için mesajı başarıyla yayınladı.".format(
         count
     )
-    if len(blocked_users) != 0:
+    if blocked_users:
         b_info += f"\n🚫 <b>{len(blocked_users)} tane kullanıcı</b> {BOT_USERNAME} botunu engellemiş ya da botla olan mesajları silmiş. Bu yüzden bot kullanıcıları listesinden silindi."
     b_info += "⏱ Tamamlanma Süresi:<code> {}</code>.".format(
         time_formatter((end_ - start_).seconds)
@@ -187,8 +189,7 @@ async def ban_botpms(event):
     if user_id == OWNER_ID:
         return await event.reply("**🚨 Seni yasaklayamam.**")
 
-    check = check_is_black_list(user.id)
-    if check:
+    if check := check_is_black_list(user.id):
         return await event.client.send_message(
             event.chat_id,
             f"🛑 #ZATEN_BANLI\

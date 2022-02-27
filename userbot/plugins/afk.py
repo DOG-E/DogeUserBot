@@ -112,7 +112,7 @@ async def afksetter(event):
                         BOTLOG_CHATID,
                         "#AFKTRUE \nSet AFK mode to True, and Reason is Not Mentioned",
                     )
-    elif media_t != "Sticker" and media_t:
+    else:
         if not BOTLOG:
             return await edl(
                 event,

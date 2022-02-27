@@ -49,7 +49,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{me.username}" if me.username else my_mention
     for trigger in filters:
-        pattern = r"( |^|[^\w])" + escape(trigger.keyword) + r"( |$|[^\w])"
+        pattern = f"( |^|[^\\w]){escape(trigger.keyword)}( |$|[^\\w])"
         if search(pattern, name, flags=IGNORECASE):
             file_media = None
             filter_msg = None
@@ -123,27 +123,26 @@ async def add_new_filter(event):
     msg = await event.get_reply_message()
     msg_id = None
     if msg and msg.media and not string:
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#FILTER\
-                    \nCHAT ID: {event.chat_id}\
-                    \nTRIGGER: {keyword}\
-                    \n\nThe following message is saved as the filter's reply data for the chat, please DON'T delete it !!",
-            )
-            msg_o = await event.client.forward_messages(
-                entity=BOTLOG_CHATID,
-                messages=msg,
-                from_peer=event.chat_id,
-                silent=True,
-            )
-            msg_id = msg_o.id
-        else:
+        if not BOTLOG:
             return await eor(
                 event,
                 "__Saving media as reply to the filter requires the__ `PRIVATE_GROUP_BOT_API_ID` __to be set.__",
             )
 
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"#FILTER\
+                    \nCHAT ID: {event.chat_id}\
+                    \nTRIGGER: {keyword}\
+                    \n\nThe following message is saved as the filter's reply data for the chat, please DON'T delete it !!",
+        )
+        msg_o = await event.client.forward_messages(
+            entity=BOTLOG_CHATID,
+            messages=msg,
+            from_peer=event.chat_id,
+            silent=True,
+        )
+        msg_id = msg_o.id
     elif msg and msg.text and not string:
         string = msg.text
     elif not string:

@@ -60,7 +60,7 @@ async def _(event):
     async with ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                return await edl(event, "`" + username + " not found`")
+                return await edl(event, f"`{username} not found`")
 
             dogevent = await eor(event, "`fetching github info...`")
             result = await request.json()
@@ -172,7 +172,7 @@ async def git_commit(file_name, mone):
             return await mone.edit("`File Already Exists`")
 
     if create_file:
-        file_name = "userbot/plugins/" + file_name
+        file_name = f"userbot/plugins/{file_name}"
         LOGS.info(file_name)
         try:
             repo.create_file(

@@ -94,7 +94,7 @@ async def thisalive(event):
             ping=ms,
         )
         if DOG_IMG:
-            DOG = [x for x in DOG_IMG.split()]
+            DOG = list(DOG_IMG.split())
             PIC = choice(DOG)
             try:
                 await event.client.send_file(

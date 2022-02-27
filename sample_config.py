@@ -64,7 +64,7 @@ class Config(object):
         "THUMB_IMAGE", "https://telegra.ph/file/6086da8c041f5de3227ed.jpg"
     )
     # Specify NO_LOAD with plugin names for not loading in userbot
-    NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
+    NO_LOAD = list(os.environ.get("NO_LOAD", "").split())
     # Specify command handler that should be used for the plugins
     # This should be a valid "regex" pattern
     CMDSET = os.environ.get("CMDSET", r".")

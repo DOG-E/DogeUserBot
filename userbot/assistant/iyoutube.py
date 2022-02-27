@@ -75,7 +75,7 @@ async def yt_inline(event):
         input_url = (reply.text).strip()
     if not input_url:
         return await edl(
-            event, f"**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**"
+            event, "**📺 Geçerli bir YouTube URL'sine girin veya cevap verin!**"
         )
 
     dogevent = await eor(
@@ -97,7 +97,7 @@ async def yt_inline(event):
         await dogevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await dogevent.edit(f"**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
+        await dogevent.edit("**🚨 Üzgünüm! Hiçbir sonuç bulamadım.**")
 
 
 @doge.tgbot.on(
@@ -270,7 +270,7 @@ async def ytdl_callback(c_q: CallbackQuery):
             parse_mode="html",
         )
     elif choosen_btn == "listall":
-        await c_q.answer(f"➡️ Görünüm olarak şu değiştirildi: 📜 Liste", alert=False)
+        await c_q.answer("➡️ Görünüm olarak şu değiştirildi: 📜 Liste", alert=False)
         list_res = "".join(
             search_data.get(vid_s).get("list_view") for vid_s in search_data
         )
@@ -284,23 +284,14 @@ async def ytdl_callback(c_q: CallbackQuery):
         await c_q.edit(
             file=await get_ytthumb(search_data.get("1").get("video_id")),
             buttons=[
-                (
-                    Button.url(
-                        f"↗️ Açᴍᴀᴋ Içɪɴ Tıᴋʟᴀʏıɴ",
-                        url=telegraph,
-                    )
-                ),
-                (
-                    Button.inline(
-                        f"📊 Dᴇᴛᴀʏʟᴀʀı Göʀ",
-                        data=f"ytdl_detail_{data_key}_{page}",
-                    )
-                ),
+                Button.url("↗️ Açᴍᴀᴋ Içɪɴ Tıᴋʟᴀʏıɴ", url=telegraph),
+                Button.inline("📊 Dᴇᴛᴀʏʟᴀʀı Göʀ", data=f"ytdl_detail_{data_key}_{page}"),
             ],
         )
+
     else:  # Detailed
         index = 1
-        await c_q.answer(f"➡️ Görünüm şu olarak değiştirildi: 📊 Detaylı", alert=False)
+        await c_q.answer("➡️ Görünüm şu olarak değiştirildi: 📊 Detaylı", alert=False)
         first = search_data.get(str(index))
         await c_q.edit(
             text=first.get("message"),
