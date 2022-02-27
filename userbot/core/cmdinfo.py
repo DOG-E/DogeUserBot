@@ -44,7 +44,7 @@ def _format_about(
         del about["d"]
 
     if "f" in about:
-        tmp_chelp += f"\n\n**🐾 Aʏᴀʀ:**"
+        tmp_chelp += "\\n\\n**🐾 Aʏᴀʀ:**"
         if isinstance(about["f"], dict):
             for f_n, f_d in about["f"].items():
                 tmp_chelp += f"\n    ▫️ `{f_n}`: __{f_d.lower()}__"
@@ -53,7 +53,7 @@ def _format_about(
         del about["f"]
 
     if "o" in about:
-        tmp_chelp += f"\n\n**🐾 Sᴇçᴇɴᴇᴋʟᴇʀ:**"
+        tmp_chelp += "\\n\\n**🐾 Sᴇçᴇɴᴇᴋʟᴇʀ:**"
         if isinstance(about["o"], dict):
             for o_n, o_d in about["o"].items():
                 tmp_chelp += f"\n    ▫️ `{o_n}`: __{o_d.lower()}__"
@@ -62,7 +62,7 @@ def _format_about(
         del about["o"]
 
     if "t" in about:
-        tmp_chelp += f"\n\n**🐾 Dᴇsᴛᴇᴋʟᴇɴᴇɴ Tüʀʟᴇʀ:**"
+        tmp_chelp += "\\n\\n**🐾 Dᴇsᴛᴇᴋʟᴇɴᴇɴ Tüʀʟᴇʀ:**"
         if isinstance(about["t"], list):
             for _opt in about["t"]:
                 tmp_chelp += f"\n    `{_opt}` ,"
@@ -71,7 +71,7 @@ def _format_about(
         del about["t"]
 
     if "u" in about:
-        tmp_chelp += f"\n\n**🐾 Kᴜʟʟᴀɴıᴍ:**"
+        tmp_chelp += "\\n\\n**🐾 Kᴜʟʟᴀɴıᴍ:**"
         if isinstance(about["u"], list):
             for ex_ in about["u"]:
                 tmp_chelp += f"\n    `{ex_}`"
@@ -80,7 +80,7 @@ def _format_about(
         del about["u"]
 
     if "e" in about:
-        tmp_chelp += f"\n\n**🐾 Öʀɴᴇᴋ:**"
+        tmp_chelp += "\\n\\n**🐾 Öʀɴᴇᴋ:**"
         if isinstance(about["e"], list):
             for ex_ in about["e"]:
                 tmp_chelp += f"\n    `{ex_}`"

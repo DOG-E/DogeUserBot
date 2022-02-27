@@ -34,7 +34,7 @@ async def t_paste(msg, title=None):
     """
     Verilen mesajı / metin / kodu telgrafa yapıştırmak için
     """
-    c = title if title else "🐶 Doge UserBot 🐾"
+    c = title or "🐶 Doge UserBot 🐾"
     try:
         t = telegraph.create_page(title=c, content=[f"{msg}"])
         response = t["url"]
@@ -86,7 +86,7 @@ async def p_paste(message, extension=None):
             "raw": f"https://pasty.lus.pm/{response['id']}/raw",
             "bin": "Pasty",
         }
-    return {"error": f"`🚨 Pasty.lus.pm'e ulaşılamıyor!`"}
+    return {"error": "`🚨 Pasty.lus.pm'e ulaşılamıyor!`"}
 
 
 async def s_paste(message, extension="txt"):
@@ -107,7 +107,7 @@ async def s_paste(message, extension="txt"):
             "raw": f"{siteurl}{response['payload']['id']}/raw",
             "bin": "Spacebin",
         }
-    return {"error": f"`🚨 SpaceBin'e ulaşılamıyor!`"}
+    return {"error": "`🚨 SpaceBin'e ulaşılamıyor!`"}
 
 
 def spaste(message, extension="txt"):
@@ -153,7 +153,7 @@ async def n_paste(message, extension=None):
             "raw": f"nekobin.com/raw/{response['result']['key']}",
             "bin": "Neko",
         }
-    return {"error": f"`🚨 Nekobin'e ulaşılamıyor!`"}
+    return {"error": "`🚨 Nekobin'e ulaşılamıyor!`"}
 
 
 async def d_paste(message, extension=None):
@@ -178,7 +178,7 @@ async def d_paste(message, extension=None):
             "raw": f"https://catbin.up.railway.app/raw/{response['key']}",
             "bin": "Dog",
         }
-    return {"error": f"`🚨 CatBin'e ulaşılamıyor!`"}
+    return {"error": "`🚨 CatBin'e ulaşılamıyor!`"}
 
 
 async def pastetext(text_to_print, pastetype=None, extension=None, title=None):

@@ -657,10 +657,7 @@ async def pin(event):
                 event, f"**Beklenmeyen bir hatayla karşılaşıldı! Hata Raporu:** {e}"
             )
     await edl(event, "**Başarıyla sabitlendi!**", 5)
-    if is_silent == True:
-        a = "Evet"
-    elif is_silent == False:
-        a = "Hayır"
+    a = "Hayır" if not is_silent else "Evet"
     if BOTLOG and not event.is_private:
         await doge.bot.send_message(
             BOTLOG_CHATID,

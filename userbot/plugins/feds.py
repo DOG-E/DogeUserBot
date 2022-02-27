@@ -151,7 +151,7 @@ async def group_fban(event):
     },
 )
 async def sfban(event):
-    msg = await eor(event, f"SüperFBan başlatılıyor...")
+    msg = await eor(event, "SüperFBan başlatılıyor...")
     inputt = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         FBAN = (await event.get_reply_message()).sender_id
@@ -167,8 +167,9 @@ async def sfban(event):
             REASON = event.text.split(maxsplit=2)[-1]
         else:
             return await msg.edit(
-                f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+                "Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
             )
+
     else:
         return await msg.edit(
             "Kullanıcı belirtilmedi! SüperFBan kullanmak için lütfen bir kullanıcı belirtin ya da bir kullanıcısın mesajını yanıtlayın!"
@@ -180,8 +181,9 @@ async def sfban(event):
         chat = int(FBAN_GROUP_ID)
     else:
         return await msg.edit(
-            f"SüperFBan özelliğini kullanmak için lütfen FBAN_GROUP_ID değeri ekleyin!"
+            "SüperFBan özelliğini kullanmak için lütfen FBAN_GROUP_ID değeri ekleyin!"
         )
+
     fedList = []
     if not fedList:
         for a in range(3):
@@ -196,9 +198,7 @@ async def sfban(event):
                         conv.chat_id, message=response, clear_mentions=True
                     )
                 except TimeoutError:
-                    return await msg.edit(
-                        f"@MissRose_Bot cevap vermiyor!",
-                    )
+                    return await msg.edit("@MissRose_Bot cevap vermiyor!")
                 await sleep(3)
                 if "make a file" in response.text or "Looks like" in response.text:
                     await response.click(0)
@@ -222,8 +222,9 @@ async def sfban(event):
                         await conv.get_edit
                     ):
                         return await msg.edit(
-                            f"@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
+                            "@MissRose_Bot kısıtlamaları yüzünden 5 dakika sonra tekrar deneyin!"
                         )
+
                     await event.client.send_read_acknowledge(
                         conv.chat_id, message=fedfile, clear_mentions=True
                     )
@@ -256,8 +257,9 @@ async def sfban(event):
         await doge.send_message(chat, "/start")
     except BaseException:
         return await msg.edit(
-            f"Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin."
+            "Veritabanınızdaki FBAN_GROUP_ID değeri hatalı! Lütfen kontrol edip düznledikten sonra tekrar deneyin."
         )
+
     await sleep(3)
     for fed in fedList:
         await event.client.send_message(chat, f"/joinfed {fed}")
@@ -379,7 +381,7 @@ async def group_unfban(event):
     },
 )
 async def sunfban(event):
-    msg = await eor(event, f"SüperUnFBan başlatılıyor..")
+    msg = await eor(event, "SüperUnFBan başlatılıyor..")
     fedList = []
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -414,20 +416,19 @@ async def sunfban(event):
                 REASON = arg[2]
             except BaseException:
                 return await msg.edit(
-                    f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+                    "Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
                 )
+
         else:
             try:
                 FBAN = arg[1]
                 REASON = " #DOGE_SUPERUNFBAN "
             except BaseException:
                 return await msg.edit(
-                    f"Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
+                    "Lütfen geçerli bir kullanıcı adı ya da kullanıcı kimliği verin!"
                 )
-    if FBAN_GROUP_ID:
-        chat = int(FBAN_GROUP_ID)
-    else:
-        chat = await event.get_chat()
+
+    chat = int(FBAN_GROUP_ID) if FBAN_GROUP_ID else await event.get_chat()
     if not fedList:
         for a in range(3):
             async with event.client.conversation(rose) as conv:
@@ -528,7 +529,7 @@ async def sunfban(event):
         ],
     },
 )
-async def quote_search(event):  # sourcery no-metrics
+async def quote_search(event):    # sourcery no-metrics
     "Add the federation to database."
     fedgroup = event.pattern_match.group(1)
     fedid = event.pattern_match.group(2)
@@ -573,9 +574,12 @@ async def quote_search(event):  # sourcery no-metrics
                                 pass
                 else:
                     text_lines = response.text.split("`")
-                    for fed_id in text_lines:
-                        if len(fed_id) == 36 and fed_id.count("-") == 4:
-                            fedidstoadd.append(fed_id)
+                    fedidstoadd.extend(
+                        fed_id
+                        for fed_id in text_lines
+                        if len(fed_id) == 36 and fed_id.count("-") == 4
+                    )
+
             except Exception as e:
                 await edl(
                     dogevent,
@@ -776,10 +780,11 @@ async def fetch_fedinfo(event):
             await fsmessage(event, text=f"/fedadmins {input_str}", chat=rose)
             response = await newmsgres(conv, rose)
             await dogevent.edit(
-                f"**FedID:** ```{input_str}```\n\n" + response.text
+                f"**FedID:** ```{input_str}```\n\n{response.text}"
                 if input_str
                 else response.text
             )
+
         except Exception as e:
             await edl(
                 dogevent,

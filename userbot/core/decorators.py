@@ -42,17 +42,17 @@ def check_owner(func):
 
 def sudo_owner(func):
     async def wrapper(event):
-        if event.sender_id and (
-            event.sender_id == int(gvar("OWNER_ID"))
-            or event.sender_id in Config.SUDO_USERS
+        if (
+            not event.sender_id
+            or event.sender_id != int(gvar("OWNER_ID"))
+            and event.sender_id not in Config.SUDO_USERS
         ):
-            try:
-                await func(event)
-            except FloodWaitError as e:
-                await sleep(e.seconds + 5)
-            except MessageNotModifiedError:
-                pass
-        else:
             return
+        try:
+            await func(event)
+        except FloodWaitError as e:
+            await sleep(e.seconds + 5)
+        except MessageNotModifiedError:
+            pass
 
     return wrapper

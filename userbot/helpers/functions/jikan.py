@@ -223,9 +223,9 @@ async def formatJSON(outData):
     link = f"https://anilist.co/anime/{jsonData['id']}"
     msg += f"[{title}]({link})"
     msg += f"\n\n**Tip:** {jsonData['format']}"
-    msg += f"\n**Çeşitler:** "
+    msg += "\\n**Çeşitler:** "
     for g in jsonData["genres"]:
-        msg += g + " "
+        msg += f'{g} '
     msg += f"\n**Durum:** {jsonData['status']}"
     msg += f"\n**Bölümler:** {jsonData['episodes']}"
     msg += f"\n**Yıl:** {jsonData['startDate']['year']}"
@@ -241,7 +241,7 @@ async def formatJSON(outData):
 def shorten(description, info="anilist.co"):
     msg = ""
     if len(description) > 700:
-        description = description[0:200] + "....."
+        description = description[:200] + "....."
         msg += f"\n**Açıklama:**\n{description} [Devamını Oku]({info})"
     else:
         msg += f"\n**Açıklama:** \n   {description}"
@@ -258,8 +258,7 @@ async def anilist_user(input_str):
     "Kullanıcı Detaylarını Anilist'den Alın"
     username = {"search": input_str}
     result = post(anilisturl, json={"query": user_query, "variables": username}).json()
-    error = result.get("errors")
-    if error:
+    if error := result.get("errors"):
         error_sts = error[0].get("message")
         return [f"{error_sts}"]
     user_data = result["data"]["User"]
@@ -327,10 +326,9 @@ def getBannerLink(mal, kitsu_search=True, anilistid=0):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    image = post("https://graphql.anilist.co", json=data).json()["data"]["Media"][
-        "bannerImage"
-    ]
-    if image:
+    if image := post("https://graphql.anilist.co", json=data).json()["data"][
+        "Media"
+    ]["bannerImage"]:
         return image
     return getPosterLink(mal)
 
@@ -339,11 +337,10 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
     jikan = jikanpy.Jikan()
     if search_type == "anime_anime":
         result = jikan.anime(mal_id)
-        trailer = result["trailer_url"]
-        if trailer:
+        if trailer := result["trailer_url"]:
             TRAILER = f"<a href='{trailer}'>🎬 Fragman</a>"
         else:
-            TRAILER = f"🎬 <i>Fragman Yok</i>"
+            TRAILER = "🎬 <i>Fragman Yok</i>"
         studio_string = ", ".join(
             studio_info["name"] for studio_info in result["studios"]
         )
@@ -386,8 +383,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         anime_data = anime_result["data"]["Media"]
         html_char = ""
         for character in anime_data["characters"]["nodes"]:
-            html_ = ""
-            html_ += "<br>"
+            html_ = "" + "<br>"
             html_ += f"""<a href="{character['siteUrl']}">"""
             html_ += f"""<img src="{character['image']['large']}"/></a>"""
             html_ += "<br>"
@@ -411,14 +407,14 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         # Telegraph Post mejik
         html_pc = ""
         html_pc += f"<h1>{native}</h1>"
-        html_pc += f"<h3>Özet:</h3>"
+        html_pc += "<h3>Özet:</h3>"
         html_pc += result["synopsis"] or "Unknown"
         html_pc += "<br>"
         if html_char:
-            html_pc += f"<h2>Ana karakterler:</h2>"
+            html_pc += "<h2>Ana karakterler:</h2>"
             html_pc += html_char
             html_pc += "<br><br>"
-        html_pc += f"<h3>Daha fazla bilgi:</h3>"
+        html_pc += "<h3>Daha fazla bilgi:</h3>"
         html_pc += f"<br><b>Stüdyolar:</b> {studios}<br>"
         html_pc += f"<a href='https://myanimelist.net/anime/{anime_malid}'>MAL'da görüntüle</a>"
         html_pc += f"<a href='{anilist_animelink}'>anilist.com'da göster</a>"

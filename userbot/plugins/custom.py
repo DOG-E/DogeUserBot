@@ -159,7 +159,7 @@ alist = [
         ],
     },
 )
-async def dbsetter(event):  # sourcery no-metrics
+async def dbsetter(event):    # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
@@ -189,13 +189,10 @@ async def dbsetter(event):  # sourcery no-metrics
                     username = reply.chat.username
                     msg_id = reply.id
                     vinfo = f"https://t.me/{username}/{msg_id}"
-                else:
-                    if reply.media:
-                        custom = await reply.forward_to(BOTLOG_CHATID)
-                        vinfo = f"{custom.id}"
-            elif (type(reply.media) == MessageMediaDocument) or (
-                type(reply.media) == MessageMediaPhoto
-            ):
+                elif reply.media:
+                    custom = await reply.forward_to(BOTLOG_CHATID)
+                    vinfo = f"{custom.id}"
+            elif type(reply.media) in [MessageMediaDocument, MessageMediaPhoto]:
                 await eor(event, "`Creating link...`")
                 downloaded_file_name = await event.client.download_media(
                     reply, TEMP_DIR
@@ -207,7 +204,7 @@ async def dbsetter(event):  # sourcery no-metrics
                     vinfo = f"https://telegra.ph{media_urls[0]}"
 
                 except AttributeError:
-                    return await eor(event, f"**🚨 Eʀʀoʀ:** `While making link.`")
+                    return await eor(event, "**🚨 Eʀʀoʀ:** `While making link.`")
 
                 except TelegraphException as exc:
                     return await eor(event, f"**🚨 Eʀʀoʀ:**\n➡️ `{str(exc)}`")
@@ -335,87 +332,86 @@ async def dbsetter(event):  # sourcery no-metrics
                 time=20,
             )
 
-    else:
-        if gvar("DEV_MOD") == "True":
-            gvarname = vname
-            gvarinfo = vinfo
-            if cmd == "s":
-                if not gvarinfo:
-                    return await edl(
-                        event,
-                        f"⚙️ Give some values which you want to save for **{gvarname}**",
-                    )
-
-                if gvarname == "OWNER_ID" or gvarname == "CACHE_OWNER_ID":
-                    return
-
-                if gvarname == "PMLOGGER" and gvarinfo == "False":
-                    sgvar("PMLOGGER", "False")
-                    dgvar("PMLOG")
-                    dgvar("PM_LOGGER_GROUP_ID")
-                elif gvarname == "PLUGINS" and gvarinfo == "False":
-                    sgvar("PLUGINS", "False")
-                else:
-                    sgvar(gvarname, gvarinfo)
-
-                if BOTLOG_CHATID:
-                    await doge.bot.send_message(
-                        BOTLOG_CHATID,
-                        f"#SET_GLOBALDATAVAR\
-                        \n**⚙️ {gvarname}** is updated newly in database as below",
-                    )
-                    await doge.bot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
-                msg = await edl(
+    elif gvar("DEV_MOD") == "True":
+        gvarname = vname
+        gvarinfo = vinfo
+        if cmd == "s":
+            if not gvarinfo:
+                return await edl(
                     event,
-                    f"⚙️ Value of **{gvarname}** is changed.",
+                    f"⚙️ Give some values which you want to save for **{gvarname}**",
                 )
-                if vname in rlist:
-                    await event.client.reload(msg)
 
-            if cmd == "g":
-                gvardata = gvar(gvarname)
-                await edl(event, "**I sent global data var to BOTLOG.**")
+            if gvarname in ["OWNER_ID", "CACHE_OWNER_ID"]:
+                return
+
+            if gvarname == "PMLOGGER" and gvarinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
+            elif gvarname == "PLUGINS" and gvarinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                sgvar(gvarname, gvarinfo)
+
+            if BOTLOG_CHATID:
                 await doge.bot.send_message(
                     BOTLOG_CHATID,
-                    f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
+                    f"#SET_GLOBALDATAVAR\
+                        \n**⚙️ {gvarname}** is updated newly in database as below",
                 )
+                await doge.bot.send_message(BOTLOG_CHATID, gvarinfo, silent=True)
+            msg = await edl(
+                event,
+                f"⚙️ Value of **{gvarname}** is changed.",
+            )
+            if vname in rlist:
+                await event.client.reload(msg)
 
-            if cmd == "d":
-                gvardata = gvar(gvarname)
-                if gvarname == "OWNER_ID" or gvarname == "CACHE_OWNER_ID":
-                    return
+        if cmd == "g":
+            gvardata = gvar(gvarname)
+            await edl(event, "**I sent global data var to BOTLOG.**")
+            await doge.bot.send_message(
+                BOTLOG_CHATID,
+                f"⚙️ Value of **{gvarname}** is  `{gvardata}`",
+            )
 
-                if gvarname == "PMLOGGER" and gvarinfo == "False":
-                    sgvar("PMLOGGER", "False")
-                    dgvar("PMLOG")
-                    dgvar("PM_LOGGER_GROUP_ID")
-                elif gvarname == "PLUGINS" and gvarinfo == "False":
-                    sgvar("PLUGINS", "False")
-                else:
-                    dgvar(gvarname)
+        if cmd == "d":
+            gvardata = gvar(gvarname)
+            if gvarname in ["OWNER_ID", "CACHE_OWNER_ID"]:
+                return
 
-                if BOTLOG_CHATID:
-                    await doge.bot.send_message(
-                        BOTLOG_CHATID,
-                        f"#DEL_GLOBALDATAVAR\
+            if gvarname == "PMLOGGER" and gvarinfo == "False":
+                sgvar("PMLOGGER", "False")
+                dgvar("PMLOG")
+                dgvar("PM_LOGGER_GROUP_ID")
+            elif gvarname == "PLUGINS" and gvarinfo == "False":
+                sgvar("PLUGINS", "False")
+            else:
+                dgvar(gvarname)
+
+            if BOTLOG_CHATID:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    f"#DEL_GLOBALDATAVAR\
                         \n**{gvarname}** is deleted from database\
                         \n\
                         \n🚮 Deleted: `{gvardata}`",
-                    )
-                msg = await edl(
-                    event,
-                    f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
-                    time=20,
                 )
-                if vname in rlist:
-                    await event.client.reload(msg)
-
-        else:
-            await eor(
+            msg = await edl(
                 event,
-                f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}\n\
-                \n**🔮 Give correct API name from the list:**\n\n{apilist}",
+                f"⚙️ Value of **{gvarname}** is now deleted & set to default.",
+                time=20,
             )
+            if vname in rlist:
+                await event.client.reload(msg)
+
+    else:
+        await eor(
+            event,
+            f"**🪀 Give correct VAR name from the list:**\n\n{vnlist}\n\
+                \n**🔮 Give correct API name from the list:**\n\n{apilist}",
+        )
 
 
 @doge.bot_cmd(

@@ -85,7 +85,7 @@ async def set_afk(event):
     global AFKMEDIA
     if not media_t:
         AFKMEDIA = None
-    elif media_t != "Sticker" and media_t:
+    elif media_t != "Sticker":
         if not BOTLOG:
             return await edl(
                 event,
@@ -102,19 +102,15 @@ async def set_afk(event):
         try:
             full = await event.client(GetFullUserRequest(int(gvar("OWNER_ID"))))
             bio = full.about
-            CACHE_AFK = "🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
-            if bio is not None:
-                if len(bio) > 55:
-                    await event.client(UpdateProfileRequest(about=CACHE_AFK))
-                    sgvar("CACHE_AFKBIO", CACHE_AFK)
-                elif len(bio) < 55:
-                    await event.client(
-                        UpdateProfileRequest(about=f"{gvar('AFKBIO')} | @DogeUserBot")
-                    )
-                    sgvar("AFKBIO", bio)
-            elif bio is None:
+            if bio is not None and len(bio) > 55 or bio is None:
+                CACHE_AFK = "🐶 @DogeUserBot Sahibim şu an AFK! 🐾"
                 await event.client(UpdateProfileRequest(about=CACHE_AFK))
                 sgvar("CACHE_AFKBIO", CACHE_AFK)
+            elif len(bio) < 55:
+                await event.client(
+                    UpdateProfileRequest(about=f"{gvar('AFKBIO')} | @DogeUserBot")
+                )
+                sgvar("AFKBIO", bio)
         except BaseException:
             pass
     if BOTLOG:

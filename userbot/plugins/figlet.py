@@ -81,8 +81,7 @@ async def figlet(event):
                 event, f"**Invalid style selected!** __Check__ `{tr}doge figlet`."
             )
 
-        result = figlet_format(deEmojify(text), font=font)
     else:
         font = choice(CMDFIG)
-        result = figlet_format(deEmojify(text), font=font)
+    result = figlet_format(deEmojify(text), font=font)
     await eor(event, f"ㅤ \n{result}", parse_mode=_format.parse_pre)

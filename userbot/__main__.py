@@ -87,7 +87,7 @@ async def startup_process():
 
     LOGS.info("🐶 %100 ~ DOGE USERBOT HAZIR!\n\n\n\n\n\n\n")
     LOGS.info(userbot.__copyright__)
-    LOGS.info(userbot.__license__ + " ile korunmaktadır.")
+    LOGS.info(f'{userbot.__license__} ile korunmaktadır.')
     LOGS.info(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\

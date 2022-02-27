@@ -292,11 +292,11 @@ async def bot_start(event):
     mention = f"[{chat.first_name}](tg://user?id={userid})"
     my_mention = gvar("mention")
     first = chat.first_name
-    last = chat.last_name if chat.last_name else ""
+    last = chat.last_name or ""
     fullname = f"{first} {last}" if last else first
     username = f"@{chat.username}" if chat.username else mention
     my_first = user.first_name
-    my_last = user.last_name if user.last_name else ""
+    my_last = user.last_name or ""
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
     customstrmsg = gvar("START_TEXT") or None
@@ -455,172 +455,181 @@ async def bot_start(event):
 
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
 async def bot_pms(event):  # sourcery no-metrics
-    if gvar("BOT_PM") != "False":
-        chat = await event.get_chat()
-        if check_is_black_list(chat.id):
+    if gvar("BOT_PM") == "False":
+        return
+    chat = await event.get_chat()
+    if check_is_black_list(chat.id):
+        return
+    if chat.id != int(gvar("OWNER_ID")):
+        msg = await event.forward_to(int(gvar("OWNER_ID")))
+        try:
+            add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
+        except Exception as e:
+            LOGS.error(f"🚨 {str(e)}")
+            if BOTLOG:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
+                        \n➡️ `{str(e)}`",
+                )
+    else:
+        if event.text.startswith("/"):
             return
-        if chat.id != int(gvar("OWNER_ID")):
-            msg = await event.forward_to(int(gvar("OWNER_ID")))
+        reply_to = await reply_id(event)
+        if reply_to is None:
+            return
+        users = get_user_id(reply_to)
+        if users is None:
+            return
+        for usr in users:
+            user_id = int(usr.chat_id)
+            reply_msg = usr.reply_id
+            user_name = usr.first_name
+            break
+        if user_id is not None:
             try:
-                add_user_to_db(msg.id, get_display_name(chat), chat.id, event.id, 0, 0)
+                if event.media:
+                    msg = await event.client.send_file(
+                        user_id, event.media, caption=event.text, reply_to=reply_msg
+                    )
+                else:
+                    msg = await event.client.send_message(
+                        user_id, event.text, reply_to=reply_msg, link_preview=False
+                    )
+            except UserIsBlockedError:
+                await doge(UnblockRequest(gvar("BOT_USERNAME")))
+                if event.media:
+                    msg = await event.client.send_file(
+                        user_id, event.media, caption=event.text, reply_to=reply_msg
+                    )
+                else:
+                    msg = await event.client.send_message(
+                        user_id, event.text, reply_to=reply_msg, link_preview=False
+                    )
+            except Exception as e:
+                return await event.reply(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
+            try:
+                add_user_to_db(
+                    reply_to, user_name, user_id, reply_msg, event.id, msg.id
+                )
             except Exception as e:
                 LOGS.error(f"🚨 {str(e)}")
                 if BOTLOG:
                     await doge.bot.send_message(
                         BOTLOG_CHATID,
                         f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
-                        \n➡️ `{str(e)}`",
-                    )
-        else:
-            if event.text.startswith("/"):
-                return
-            reply_to = await reply_id(event)
-            if reply_to is None:
-                return
-            users = get_user_id(reply_to)
-            if users is None:
-                return
-            for usr in users:
-                user_id = int(usr.chat_id)
-                reply_msg = usr.reply_id
-                user_name = usr.first_name
-                break
-            if user_id is not None:
-                try:
-                    if event.media:
-                        msg = await event.client.send_file(
-                            user_id, event.media, caption=event.text, reply_to=reply_msg
-                        )
-                    else:
-                        msg = await event.client.send_message(
-                            user_id, event.text, reply_to=reply_msg, link_preview=False
-                        )
-                except UserIsBlockedError:
-                    await doge(UnblockRequest(gvar("BOT_USERNAME")))
-                    if event.media:
-                        msg = await event.client.send_file(
-                            user_id, event.media, caption=event.text, reply_to=reply_msg
-                        )
-                    else:
-                        msg = await event.client.send_message(
-                            user_id, event.text, reply_to=reply_msg, link_preview=False
-                        )
-                except Exception as e:
-                    return await event.reply(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
-                try:
-                    add_user_to_db(
-                        reply_to, user_name, user_id, reply_msg, event.id, msg.id
-                    )
-                except Exception as e:
-                    LOGS.error(f"🚨 {str(e)}")
-                    if BOTLOG:
-                        await doge.bot.send_message(
-                            BOTLOG_CHATID,
-                            f"**🚨 Hᴀᴛᴀ:**\n`ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.`\
                             \n➡️ `{e}`",
-                        )
+                    )
 
 
 @doge.shiba_cmd(edited=True)
 async def bot_pms_edit(event):  # sourcery no-metrics
-    if gvar("BOT_PM") != "False":
-        chat = await event.get_chat()
-        if check_is_black_list(chat.id):
+    if gvar("BOT_PM") == "False":
+        return
+    chat = await event.get_chat()
+    if check_is_black_list(chat.id):
+        return
+    if chat.id != int(gvar("OWNER_ID")):
+        users = get_user_reply(event.id)
+        if users is None:
             return
-        if chat.id != int(gvar("OWNER_ID")):
-            users = get_user_reply(event.id)
+        if reply_msg := next(
+            (
+                user.message_id
+                for user in users
+                if user.chat_id == str(chat.id)
+            ),
+            None,
+        ):
+            await event.client.send_message(
+                int(gvar("OWNER_ID")),
+                "**⬆️ Bu mesaj şu kullanıcı tarafından düzenlendi.** {} :\n".format(
+                    _format.mentionuser(get_display_name(chat), chat.id)
+                ),
+                reply_to=reply_msg,
+            )
+            msg = await event.forward_to(int(gvar("OWNER_ID")))
+            try:
+                add_user_to_db(
+                    msg.id, get_display_name(chat), chat.id, event.id, 0, 0
+                )
+            except Exception as e:
+                LOGS.error(f"🚨 {str(e)}")
+                if BOTLOG:
+                    await doge.bot.send_message(
+                        BOTLOG_CHATID,
+                        f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.__\
+                            \n➡️ `{e}`",
+                    )
+    else:
+        reply_to = await reply_id(event)
+        if reply_to is not None:
+            users = get_user_id(reply_to)
+            result_id = 0
             if users is None:
                 return
-            reply_msg = None
-            for user in users:
-                if user.chat_id == str(chat.id):
-                    reply_msg = user.message_id
+            for usr in users:
+                if event.id == usr.logger_id:
+                    user_id = int(usr.chat_id)
+                    reply_msg = usr.reply_id
+                    result_id = usr.result_id
                     break
-            if reply_msg:
-                await event.client.send_message(
-                    int(gvar("OWNER_ID")),
-                    "**⬆️ Bu mesaj şu kullanıcı tarafından düzenlendi.** {} :\n".format(
-                        _format.mentionuser(get_display_name(chat), chat.id)
-                    ),
-                    reply_to=reply_msg,
-                )
-                msg = await event.forward_to(int(gvar("OWNER_ID")))
+            if result_id != 0:
                 try:
-                    add_user_to_db(
-                        msg.id, get_display_name(chat), chat.id, event.id, 0, 0
+                    await event.client.edit_message(
+                        user_id, result_id, event.text, file=event.media
                     )
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
-                    if BOTLOG:
-                        await doge.bot.send_message(
-                            BOTLOG_CHATID,
-                            f"**🚨 Hᴀᴛᴀ:**\n__ℹ️ Mesaj detaylarını veritabanında saklarken bir hata oluştu.__\
-                            \n➡️ `{e}`",
-                        )
-        else:
-            reply_to = await reply_id(event)
-            if reply_to is not None:
-                users = get_user_id(reply_to)
-                result_id = 0
-                if users is None:
-                    return
-                for usr in users:
-                    if event.id == usr.logger_id:
-                        user_id = int(usr.chat_id)
-                        reply_msg = usr.reply_id
-                        result_id = usr.result_id
-                        break
-                if result_id != 0:
-                    try:
-                        await event.client.edit_message(
-                            user_id, result_id, event.text, file=event.media
-                        )
-                    except Exception as e:
-                        LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.bot.on(MessageDeleted)
 async def handler(event):
-    if gvar("BOT_PM") != "False":
-        for msg_id in event.deleted_ids:
-            users_1 = get_user_reply(msg_id)
-            users_2 = get_user_logging(msg_id)
-            if users_2 is not None:
-                result_id = 0
-                for usr in users_2:
-                    if msg_id == usr.logger_id:
-                        user_id = int(usr.chat_id)
-                        result_id = usr.result_id
-                        break
-                if result_id != 0:
-                    try:
-                        await event.client.delete_messages(user_id, result_id)
-                    except Exception as e:
-                        LOGS.error(f"🚨 {str(e)}")
-            if users_1 is not None:
-                reply_msg = None
-                for user in users_1:
-                    if user.chat_id != int(gvar("OWNER_ID")):
-                        reply_msg = user.message_id
-                        break
+    if gvar("BOT_PM") == "False":
+        return
+    for msg_id in event.deleted_ids:
+        users_1 = get_user_reply(msg_id)
+        users_2 = get_user_logging(msg_id)
+        if users_2 is not None:
+            result_id = 0
+            for usr in users_2:
+                if msg_id == usr.logger_id:
+                    user_id = int(usr.chat_id)
+                    result_id = usr.result_id
+                    break
+            if result_id != 0:
                 try:
-                    if reply_msg:
-                        users = get_user_id(reply_msg)
-                        for usr in users:
-                            user_id = int(usr.chat_id)
-                            user_name = usr.first_name
-                            break
-                        if check_is_black_list(user_id):
-                            return
-                        await event.client.send_message(
-                            int(gvar("OWNER_ID")),
-                            "**⬆️ Bu mesaj, {} tarafından asistan botun sohbetinden silindi!**".format(
-                                _format.mentionuser(user_name, user_id)
-                            ),
-                            reply_to=reply_msg,
-                        )
+                    await event.client.delete_messages(user_id, result_id)
                 except Exception as e:
                     LOGS.error(f"🚨 {str(e)}")
+        if users_1 is not None:
+            reply_msg = next(
+                (
+                    user.message_id
+                    for user in users_1
+                    if user.chat_id != int(gvar("OWNER_ID"))
+                ),
+                None,
+            )
+
+            try:
+                if reply_msg:
+                    users = get_user_id(reply_msg)
+                    for usr in users:
+                        user_id = int(usr.chat_id)
+                        user_name = usr.first_name
+                        break
+                    if check_is_black_list(user_id):
+                        return
+                    await event.client.send_message(
+                        int(gvar("OWNER_ID")),
+                        "**⬆️ Bu mesaj, {} tarafından asistan botun sohbetinden silindi!**".format(
+                            _format.mentionuser(user_name, user_id)
+                        ),
+                        reply_to=reply_msg,
+                    )
+            except Exception as e:
+                LOGS.error(f"🚨 {str(e)}")
 
 
 @doge.shiba_cmd(pattern="^/uinfo$", from_users=int(gvar("OWNER_ID")))
@@ -638,16 +647,18 @@ async def uinfo(event):
     users = get_user_id(reply_to)
     if users is None:
         return await info_msg.edit(
-            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+            "**🚨 Hᴀᴛᴀ:**\\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
+
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
         return await info_msg.edit(
-            f"**🚨 Hᴀᴛᴀ:**\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
+            "**🚨 Hᴀᴛᴀ:**\\n🙁 'Üzgünüm! Bu kullanıcıyı veritabanımda bulamadım.`"
         )
+
     uinfo = f"**👤 Bu mesaj şu kişi tarafından gönderildi:** {_format.mentionuser(user_name, user_id)}\
             \n**ℹ️ Kullanıcı İsmi:** {user_name}\
             \n**🆔 Kullanıcı ID'si:** `{user_id}`"
@@ -658,13 +669,14 @@ async def send_flood_alert(user_) -> None:
     # sourcery no-metrics
     buttons = [
         (
-            Button.inline(f"🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
+            Button.inline("🚫 Bᴀɴ", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
                 "➖ Boᴛ AɴᴛɪFʟooᴅ'ᴜ Kᴀᴘᴀᴛ",
                 data="toggle_bot-antiflood_off",
             ),
         )
     ]
+
     found = False
     if FloodConfig.ALERT and (user_.id in FloodConfig.ALERT.keys()):
         found = True

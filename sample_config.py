@@ -19,6 +19,8 @@ from typing import Set
 from telethon.tl.types import ChatBannedRights
 
 
+
+
 class Config(object):
     LOGGER = True
 
@@ -56,7 +58,7 @@ class Config(object):
     DOGEPLUGIN = os.environ.get("DOGEPLUGIN", False)
     DOGEHUB = os.environ.get("DOGEHUB", False)
     # Specify NO_LOAD with plugin names for not loading in userbot
-    NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
+    NO_LOAD = list(os.environ.get("NO_LOAD", "").split())
     # Specify command handler that should be used for the plugins
     # This should be a valid "regex" pattern
     CMDSET = os.environ.get("CMDSET", r".")
@@ -99,6 +101,7 @@ class Config(object):
     DOGELOGO = None
     BOTLOG = False
     BOTLOG_CHATID = 0
+
 
 
 class Production(Config):

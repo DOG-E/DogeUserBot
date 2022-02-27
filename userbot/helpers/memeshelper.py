@@ -102,8 +102,7 @@ async def slap(replied_user, event, DEFAULTUSER):
     """Komik bir  tokat gibi!"""
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
-    username = replied_user.user.username
-    if username:
+    if username := replied_user.user.username:
         slapped = "@{}".format(username)
     else:
         slapped = f"[{first_name}](tg://user?id={user_id})"
