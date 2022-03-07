@@ -15,15 +15,15 @@ plugin_category = "tool"
     pattern="calc ([\s\S]*)",
     command=("calc", plugin_category),
     info={
-        "h": "To solve basic mathematics equations.",
-        "d": "Solves the given maths equation.",
-        "u": ["{tr}calc", "{tr}calc 3+5+7+8+9-1"],
+        "h": "Basit hesaplama işlemlerini yapar.",
+        "d": "Hesaplama işlemlerinizi çözün.",
+        "u": ["{tr}calc", "{tr}calc 2+2÷2"],
     },
 )
 async def calculator(event):
-    "To solve basic mathematics equations."
+    "Basit hesaplama işlemlerini yapar."
     cmd = event.text.split(" ", maxsplit=1)[1]
-    event = await eor(event, "Calculating...")
-    out = await calcc(cmd, event, "Sorry I can't find result for the given equation")
-    final_output = "**EQUATION:** `{}` \n\n **SOLUTION:** \n`{}` \n".format(cmd, out)
+    event = await eor(event, "Hesaplanıyor...")
+    out = await calcc(cmd, event, "Maalesef verilen denklem için sonuç bulamıyorum.")
+    final_output = "**DENKLEM:** `{}` \n\n **ÇÖZÜM:** \n`{}` \n".format(cmd, out)
     await event.edit(final_output)
