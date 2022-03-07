@@ -19,13 +19,13 @@ plugin_category = "bot"
     pattern="ping(a|f|$)",
     command=("ping", plugin_category),
     info={
-        "h": "Check how long it takes to ping doge!",
-        "f": {"a": "average ping", "f": "with animation"},
+        "h": "Doge'nizin pingini ölçün!",
+        "f": {"a": "ortalama ping", "f": "animasyon ile"},
         "u": ["{tr}ping", "{tr}pinga", "{tr}pingf"],
     },
 )
 async def _(event):
-    "To check ping"
+    "Doge'nizin pingini ölçün."
     flag = event.pattern_match.group(1)
     if flag == "a":
         start = datetime.now()
@@ -43,8 +43,8 @@ async def _(event):
 █▀▀ █▄█ █░▀█ █▄█ ▄\n\
 \n\
 ┏━━━━━━━━━━━━━━\n\
-  🐾 {ms} ᴀvᴀʀᴀɢᴇ ᴍs\n\
-  🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
+  🐾 {ms} Oʀᴛᴀʟᴀᴍᴀ ᴍs\n\
+  🦴 Acɪʟᴍᴀ: {uptime}\n\
 ┗━━━━━━━━━━━━━━\n\
 ┏━━━━━━━━━━━━━━\n\
   ◽ Doɢᴇ oғ {gvar('mention')}\n\
@@ -415,7 +415,7 @@ async def _(event):
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛\n\
 ‎‎‎‎‎‎‎‎‎\n\
 **🐾 {ms} ᴍs\n\
-🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
+🦴 Acɪʟᴍᴀ: {uptime}\n\
 ◽ Doɢᴇ oғ {gvar('mention')}**",
         )
     else:
@@ -431,7 +431,7 @@ async def _(event):
 \n\
 ┏━━━━━━━━━━━━━━\n\
   🐾 {ms} ᴍs\n\
-  🦴 ᴜᴘᴛɪᴍᴇ: {uptime}\n\
+  🦴 Acɪʟᴍᴀ: {uptime}\n\
 ┗━━━━━━━━━━━━━━\n\
 ┏━━━━━━━━━━━━━━\n\
   ◽ Doɢᴇ oғ {gvar('mention')}\n\
