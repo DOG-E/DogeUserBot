@@ -211,11 +211,10 @@ class DogeUserBotClient(TelegramClient):
                             markdown=False,
                             title="🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾",
                         )
-                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
-                        text += "\n\n"
+                        text = "**🐶 Doɢᴇ UsᴇʀBoᴛ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**" + "\n\n"
                         text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
-                        link = f"[BURAYA](https://t.me/DogeSup)"
+                        link = "[BURAYA](https://t.me/DogeSup)"
                         text += "__💬 Eğer isterseniz bunu bildirebilirisiniz.__"
                         text += "\n\n"
                         text += "🐾 Bu mesajı {} iletin.".format(link)
@@ -351,11 +350,10 @@ class DogeUserBotClient(TelegramClient):
                             markdown=False,
                             title="🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾",
                         )
-                        text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**"
-                        text += "\n\n"
+                        text = "**🐶 Doɢᴇ Asɪsᴛᴀɴ Hᴀᴛᴀ Rᴀᴘᴏʀᴜ 🐾**" + "\n\n"
                         text += f"**🚨 Hata Raporu:** [{new['error']}]({pastelink})"
                         text += "\n\n"
-                        link = f"[BURAYA](https://t.me/DogeSup)"
+                        link = "[BURAYA](https://t.me/DogeSup)"
                         text += "__💬 Eğer isterseniz bunu bildirebilirisiniz.__"
                         text += "\n\n"
                         text += "🐾 Bu mesajı {} iletin.".format(link)

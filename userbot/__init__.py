@@ -21,7 +21,7 @@ from .sql_helper.globals import dgvar, gvar, sgvar
 __version__ = "1.0"
 __license__ = "🔐 GNU Affero Genel Kamu Lisansı v3.0"
 __author__ = "DOG-E < https://github.com/DOG-E/DogeUserBot >"
-__copyright__ = "©️ Copyright 2021, " + __author__
+__copyright__ = f"©️ Copyright 2021, {__author__}"
 
 doge.version = __version__
 if gvar("BOT_TOKEN"):
@@ -61,15 +61,10 @@ if Config.PM_LOGGER_GROUP_ID == 0:
     else:
         Config.PM_LOGGER_GROUP_ID = int(gvar("PM_LOGGER_GROUP_ID"))
 elif str(Config.PM_LOGGER_GROUP_ID)[0] != "-":
-    Config.PM_LOGGER_GROUP_ID = int("-" + str(Config.PM_LOGGER_GROUP_ID))
+    Config.PM_LOGGER_GROUP_ID = int(f"-{str(Config.PM_LOGGER_GROUP_ID)}")
 
 
-if gvar("TAG_LOGGER_GROUP_ID"):
-    TAG_LOGGER_GROUP = gvar("TAG_LOGGER_GROUP_ID")
-else:
-    TAG_LOGGER_GROUP = Config.PM_LOGGER_GROUP_ID
-
-
+TAG_LOGGER_GROUP = gvar("TAG_LOGGER_GROUP_ID") or Config.PM_LOGGER_GROUP_ID
 # HEROKU:
 try:
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:

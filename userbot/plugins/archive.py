@@ -134,8 +134,7 @@ async def tar_file(event):
 )
 async def zip_file(event):  # sourcery no-metrics
     "Zip dosyası açar."
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         path = Path(input_str)
         if osp.exists(path):
             start = datetime.now()
@@ -216,8 +215,7 @@ async def zip_file(event):  # sourcery no-metrics
 )
 async def untar_file(event):  # sourcery no-metrics
     "Tar dosyası açar."
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         path = Path(input_str)
         if osp.exists(path):
             start = datetime.now()

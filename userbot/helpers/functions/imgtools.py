@@ -46,8 +46,8 @@ def get_warp_length(width):
 def random_color():
     number_of_colors = 2
     return [
-        "#" + "".join(choice("0123456789ABCDEF") for j in range(6))
-        for i in range(number_of_colors)
+        "#" + "".join(choice("0123456789ABCDEF") for _ in range(6))
+        for _ in range(number_of_colors)
     ]
 
 
@@ -125,7 +125,7 @@ async def crop_and_divide(img):
     (new_width, new_height) = (0, 0)
     media = []
     for _ in range(1, rows + 1):
-        for o in range(1, columns + 1):
+        for _ in range(1, columns + 1):
             mimg = img.crop(
                 (
                     new_width,
@@ -303,7 +303,7 @@ async def dogememify_helper(CNG_FONTS, topString, bottomString, filename, endnam
     bottomTextPositionY = imageSize[1] - bottomTextSize[1]
     bottomTextPosition = (bottomTextPositionX, bottomTextPositionY)
     draw = Draw(img)
-    outlineRange = int(fontSize / 15)
+    outlineRange = fontSize // 15
     for x in range(-outlineRange, outlineRange + 1):
         for y in range(-outlineRange, outlineRange + 1):
             draw.text(

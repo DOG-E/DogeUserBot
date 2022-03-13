@@ -216,8 +216,7 @@ async def bloom_pfploop():
 
 
 async def autoname_loop():
-    AUTONAMESTART = gvar("autoname") == "true"
-    while AUTONAMESTART:
+    while AUTONAMESTART := gvar("autoname") == "true":
         DM = strftime("%d-%m-%y")
         HM = strftime("%H:%M")
         DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
@@ -229,12 +228,10 @@ async def autoname_loop():
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
         await sleep((gvar("CHANGE_TIME") or "60"))
-        AUTONAMESTART = gvar("autoname") == "true"
 
 
 async def autobio_loop():
-    AUTOBIOSTART = gvar("autobio") == "true"
-    while AUTOBIOSTART:
+    while AUTOBIOSTART := gvar("autobio") == "true":
         DMY = strftime("%d.%m.%Y")
         HM = strftime("%H:%M")
         DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
@@ -246,16 +243,15 @@ async def autobio_loop():
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
         await sleep((gvar("CHANGE_TIME") or "60"))
-        AUTOBIOSTART = gvar("autobio") == "true"
 
 
 async def animeprofilepic(collection_images):
     rnd = randint(0, len(collection_images) - 1)
     pack = collection_images[rnd]
-    pc = get("http://getwallpapers.com/collection/" + pack).text
+    pc = get(f"http://getwallpapers.com/collection/{pack}").text
     f = compile(r"/\w+/full.+.jpg")
     f = f.findall(pc)
-    fy = "http://getwallpapers.com" + choice(f)
+    fy = f"http://getwallpapers.com{choice(f)}"
     if not path.exists("userbot/helpers/resources/fonts/roboto_regular.ttf"):
         urlretrieve(
             "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf",

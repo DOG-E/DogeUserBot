@@ -68,8 +68,7 @@ async def anti_spambot(event):  # sourcery no-metrics
             LOGS.info(e)
     SPAMWATCH = Client(gvar("SPAMWATCH_API"))
     if SPAMWATCH and not dogbanned:
-        ban = SPAMWATCH.get_ban(user.id)
-        if ban:
+        if ban := SPAMWATCH.get_ban(user.id):
             hmm = await event.reply(
                 f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandı."
             )

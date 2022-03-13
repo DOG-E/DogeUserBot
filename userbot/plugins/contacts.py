@@ -110,10 +110,11 @@ async def contactsaddto(event):
                 AddContactRequest(
                     id=USER.id,
                     first_name=USER.first_name,
-                    last_name=USER.last_name if USER.last_name else "ㅤ",
+                    last_name=USER.last_name or "ㅤ",
                     phone="",
                 )
             )
+
         CONTACTUSERS.append(USER.id)
         await sleep(1)
     await eor(dogevent, f"** {len(CONTACTUSERS)} random users added to my contacts!**")
@@ -128,8 +129,8 @@ async def contactsaddto(event):
     },
 )
 async def contactsclean(event):
-    await event.edit(f"**Deleting all users from contacts...**")
+    await event.edit("**Deleting all users from contacts...**")
     await event.client(
         DeleteContactsRequest(id=await event.client(GetContactsRequest(0)).users)
     )
-    await event.edit(f"**I cleared contacts!**")
+    await event.edit("**I cleared contacts!**")

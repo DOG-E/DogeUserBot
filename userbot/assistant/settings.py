@@ -63,8 +63,9 @@ async def settings(event: CallbackQuery):
     ]
     if not event.is_private and event.chat_id == BOTLOG_CHATID:
         return await event.answer(
-            f"Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=True
+            "Bu ayarları yapabilmek için bana özelden yazmalısın!", alert=True
         )
+
     elif not event.is_private:
         return
     else:
@@ -335,7 +336,7 @@ async def TAG_LOGGER_OFF(event: CallbackQuery):
     elif gvar("GRPLOG") == "True":
         sgvar("GRPLOG", "False")
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n TAG loggerözelliğiniz başarıyla kapatıldı",
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n TAG loggerözelliğiniz başarıyla kapatıldı",
             alert=True,
         )
 
@@ -355,16 +356,20 @@ async def TAG_LOGGER_ON(event: CallbackQuery):
     ]
     if gvar("GRPLOG") == "True":
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n TAG Logger özelliğiniz zaten açık!", alert=True
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n TAG Logger özelliğiniz zaten açık!",
+            alert=True,
         )
+
     elif gvar("PM_LOGGER_GROUP_ID") is None and gvar("TAG_LOGGER_GROUP_ID") is None:
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n TAG Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n TAG Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
+
         await event.edit(
-            f"""🔔 **Etiketleri kaydetme grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
+            """🔔 **Etiketleri kaydetme grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
             buttons=buttons,
         )
+
     elif (
         gvar("PM_LOGGER_GROUP_ID") is not None
         or gvar("TAG_LOGGER_GROUP_ID") is not None
@@ -385,13 +390,16 @@ async def TAG_LOGGER_GROUP_AUTO(event: CallbackQuery):
     elif gvar("TAG_LOGGER_GROUP_ID") is not None:
         try:
             a = await doge.bot.send_message(
-                int(gvar("TAG_LOGGER_GROUP_ID")), f"Tag Logger Grubu Test Mesajı!"
+                int(gvar("TAG_LOGGER_GROUP_ID")),
+                "Tag Logger Grubu Test Mesajı!",
             )
+
             await a.delete()
             return await event.edit(
-                f"Tag Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
+                "Tag Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
                 buttons=get_back_button("TAG_LOGGER_GROUP"),
             )
+
         except Exception as e:
             LOGS.warning(
                 f"Tag Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
@@ -457,7 +465,7 @@ async def PM_LOGGER_OFF(event):
     elif gvar("pmpermit") == "True":
         sgvar("HEROKULOGGER", "False")
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\ PM Permit özelliğiniz başarıyla kapatıldı",
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\ PM Permit özelliğiniz başarıyla kapatıldı",
             alert=True,
         )
 
@@ -477,17 +485,20 @@ async def PM_LOGGER_ON(event: CallbackQuery):
     ]
     if gvar("pmpermit") == "True":
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n PM Logger özelliğiniz zaten açık!", alert=True
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n PM Logger özelliğiniz zaten açık!",
+            alert=True,
         )
+
     elif gvar("PM_LOGGER_GROUP_ID") is not None and gvar("pmpermit") != "True":
         sgvar("pmpermit", True)
         return await event.answer("🐶 PM LOGGER değeriniz açıldı!", alert=True)
     elif gvar("PM_LOGGER_GROUP_ID") is None:
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n PM Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n PM Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
+
         await event.edit(
-            f"""💬 **PM için log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
+            """💬 **PM için log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
             buttons=buttons,
         )
 
@@ -504,13 +515,15 @@ async def PM_LOGGER_GROUP_AUTO(event: CallbackQuery):
     elif gvar("PM_LOGGER_GROUP_ID") is not None:
         try:
             a = await doge.bot.send_message(
-                int(gvar("PM_LOGGER_GROUP_ID")), f"PM Logger Grubu Test Mesajı!"
+                int(gvar("PM_LOGGER_GROUP_ID")), "PM Logger Grubu Test Mesajı!"
             )
+
             await a.delete()
             return await event.edit(
-                f"PM Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
+                "PM Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
                 buttons=get_back_button("PM_LOGGER_GROUP"),
             )
+
         except Exception as e:
             LOGS.warning(
                 f"PM Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
@@ -735,7 +748,7 @@ async def hlogger(event):
         ],
     ]
     buttons.append(get_back_button("sscg"))
-    await event.edit(f"Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)
+    await event.edit("Heroku Logger özelliği menünüzü özelleştirin.", buttons=buttons)
 
 
 # heroku logger özelliğini kapatma işlemi
@@ -748,7 +761,7 @@ async def hgloggeroff(event):
     if gvar("HEROKULOOGER") == "True":
         sgvar("HEROKULOGGER", "False")
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\ Heroku Logger özelliğiniz başarıyla kapatıldı",
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\ Heroku Logger özelliğiniz başarıyla kapatıldı",
             alert=True,
         )
 
@@ -770,20 +783,24 @@ async def hgloggeron(event: CallbackQuery):
     #   return await event.answer("Bir geliştirici değilsiniz.", alert=True)
     if gvar("HEROKULOGGER") == "True":
         return await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz zaten açık!", alert=True
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n Heroku Logger özelliğiniz zaten açık!",
+            alert=True,
         )
+
     if gvar("HLOGGER_ID") is None and gvar("HEROKULOGGER") == "False":
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n Heroku Logger özelliğini açmak için öncelikle bir grup ayarlamanız gerekir. Sizi grup ayarlama ekranına yönlendiriyorum..."
         )
+
         await event.edit(
-            f'📑 **Heroku log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**',
+            '📑 **Heroku log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**',
             buttons=buttons,
         )
+
     if gvar("HEROKULOGGER") == "False" and gvar("HLOOGER_ID") is not None:
         sgvar("HEROKLOGGER", "True")
         await event.answer(
-            f"🐶 Doɢᴇ UsᴇʀBoᴛ\n\n Heroku Logger özelliğiniz başarıyla etkinleştirildi! Veritabanına kayıtlı gruba Heroku Log eylemi başlatılacaktır."
+            "🐶 Doɢᴇ UsᴇʀBoᴛ\\n\\n Heroku Logger özelliğiniz başarıyla etkinleştirildi! Veritabanına kayıtlı gruba Heroku Log eylemi başlatılacaktır."
         )
 
 
@@ -801,7 +818,7 @@ async def hgloggrpc(event: CallbackQuery):
         ],
     ]
     await event.edit(
-        f'📑 **Heroku log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**',
+        '📑 **Heroku log grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`🕹 Otomatik`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**',
         buttons=buttons,
     )
 
@@ -820,13 +837,15 @@ async def hgloggerautocreate(event: CallbackQuery):
     elif gvar("HLOGGER_ID") is not None:
         try:
             a = await doge.bot.send_message(
-                int(gvar("HLOGGER_ID")), f"Heroku Logger Grubu Test Mesajı!"
+                int(gvar("HLOGGER_ID")), "Heroku Logger Grubu Test Mesajı!"
             )
+
             await a.delete()
             return await event.edit(
-                f"Heroku Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
+                "Heroku Logger için zaten kayıtlı bir grubunuz var! Grup oluşturma işlemini iptal ediyorum",
                 buttons=get_back_button("hgloggrpc"),
             )
+
         except Exception as e:
             LOGS.warning(
                 f"Heroku Logger grubuna ulaşılamadı yeni grup açılıyor... Hata Raporu: {e}"
@@ -851,9 +870,7 @@ async def fggroup(event: CallbackQuery):
         ],
     ]
     await event.edit(
-        f"""✅ **Rose için Fban grup ayarları!**
-
-**Fban grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`c`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
+        """✅ **Rose için Fban grup ayarları!**\x1f\x1f**Fban grubunuzun Doge UserBot tarafından oluşturulmasını istiyorsanız** "`c`", **kendiniz ayarlamak istiyorsanız** "`🥏 Manüel`" **yazan butona tıklayın.**""",
         buttons=buttons,
         link_preview=False,
     )
@@ -875,9 +892,10 @@ async def fggrupcreate(event: CallbackQuery):
             )
             await a.delete()
             return await event.edit(
-                f"FBan için zaten bir grubunuz var! Grup oluşturma işlemini iptal ediyorum...",
+                "FBan için zaten bir grubunuz var! Grup oluşturma işlemini iptal ediyorum...",
                 buttons=get_back_button("fgroup"),
             )
+
         except Exception:
             await event.edit(
                 f"{gvar('mention')} Veritabanına kayıtlı grubunuza erişiminiz yok. Sizin için bir FBan grubu oluşturuyorum! Lütfen bekleyin..."
@@ -899,7 +917,7 @@ async def pccreate(event: CallbackQuery):
         ],
     ]
     await event.edit(
-        f"__Gizli kanalınız için DogeUserBot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
+        "__Gizli kanalınız için DogeUserBot tarafından oluştulurulmasını isterseniz__ '✅ Evet' __düğmesine, kendiniz oluşturduğunuz bir grubu ayarlamak için__ '❎ Hayır' __düğmesine basınız.__",
         buttons=buttons,
     )
 
@@ -911,13 +929,15 @@ async def pcmanuel(event: CallbackQuery):
     if gvar("PRIVATE_CHANNEL_ID") is not None:
         try:
             a = await doge.send_message(
-                int(gvar("PRIVATE_CHANNEL_ID")), f"Gizli kanal Deneme mesajı!"
+                int(gvar("PRIVATE_CHANNEL_ID")), "Gizli kanal Deneme mesajı!"
             )
+
             await a.delete()
             return await event.edit(
-                f"Gizli Kanal özelliği için zaten hazırda bi kanalınız var! Yeni kanal açma işlemini iptal ediyorum.",
+                "Gizli Kanal özelliği için zaten hazırda bi kanalınız var! Yeni kanal açma işlemini iptal ediyorum.",
                 buttons=get_back_button("pccreate"),
             )
+
         except Exception as e:
             LOGS.warning(
                 f"Gizli kanala erişim sağlanamadı yeni kanal açılıyor... Hata Raporu: {e}"
@@ -933,7 +953,7 @@ async def pcmanuel(event: CallbackQuery):
             )
     if gvar("PRIVATE_CHANNEL_ID") is None:
         await event.edit(
-            f"Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
+            "Veritabanında kayıtlı bir Gizli Kanal değeri bulunamadı! Sizin için yeni bir Gizli Kanal oluşturuyoruM! Lütfen bekleyin..."
         )
 
 
@@ -1638,20 +1658,14 @@ async def herokuloggergroupcreate(event: CallbackQuery):
 
 # GİZLİ KANAL İÇİN OTOMATİK KANAL AÇMA İŞLEMİ
 async def privatechannel(event: CallbackQuery):
-    descript = f"🚧 BU KANALI SİLMEYİN!\n\
-    \n🗑 Eğer bu kanalı silerseniz,\
-    \n🐾 Kaydederek iletme özelliği çalışmayacaktır.\n\
-    \n🧡 @DogeUserBot"
+    descript = "🚧 BU KANALI SİLMEYİN!\\n\\\x1f    \\n🗑 Eğer bu kanalı silerseniz,\\\x1f    \\n🐾 Kaydederek iletme özelliği çalışmayacaktır.\\n\\\x1f    \\n🧡 @DogeUserBot"
+
     gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
     await sleep(0.75)
     _, channelid = await create_channel("🐾 Doɢᴇ Gɪzʟɪ Kᴀɴᴀʟ", doge, descript, gphoto)
     await sleep(0.75)
-    descmsg = f"**🚧 BU KANALI SİLMEYİN!\
-    \n🚧 BU KANALDAN AYRILMAYIN!\
-    \n🚧 BU KANALI DEĞİŞTİRMEYİN!**\n\
-    \n🗑 Eğer bu kanalı silerseniz,\
-    \n🐾 Kaydederek iletme özelliği çalışmayacaktır!\n\
-    \n**🧡 @DogeUserBot**"
+    descmsg = "**🚧 BU KANALI SİLMEYİN!\\\x1f    \\n🚧 BU KANALDAN AYRILMAYIN!\\\x1f    \\n🚧 BU KANALI DEĞİŞTİRMEYİN!**\\n\\\x1f    \\n🗑 Eğer bu kanalı silerseniz,\\\x1f    \\n🐾 Kaydederek iletme özelliği çalışmayacaktır!\\n\\\x1f    \\n**🧡 @DogeUserBot**"
+
     msg = await doge.send_message(channelid, descmsg)
     await sleep(0.25)
     await msg.pin()
@@ -1832,9 +1846,10 @@ async def ss(event: CallbackQuery, x, y, z=None):
         if "PIC" in y:
             rpic = response.message
             try:
-                if (type(rpic.media) == MessageMediaDocument) or (
-                    type(rpic.media) == MessageMediaPhoto
-                ):
+                if type(rpic.media) in [
+                    MessageMediaDocument,
+                    MessageMediaPhoto,
+                ]:
                     downloaded_file_name = await event.client.download_media(
                         rpic, TEMP_DIR
                     )

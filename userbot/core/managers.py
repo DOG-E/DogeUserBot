@@ -57,7 +57,7 @@ async def eor(
     if aslink or deflink:
         linktext = linktext or "👀 Mesaj fazla uzun olduğu için yapıştırıldı!"
         response = await paste_message(text, pastetype="t")
-        text = linktext + f" [HERE]({response})"
+        text = f"{linktext} [HERE]({response})"
         if event.sender_id in sudo_users:
             if reply_to:
                 return await reply_to.reply(text, link_preview=link_preview)

@@ -29,10 +29,11 @@ async def kakashi(event):
     "En son Magisk sürümlerini alır."
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
-        "⦁ Stabil": magisk_repo + "master/stable.json",
-        "⦁ Beta": magisk_repo + "master/beta.json",
-        "⦁ Canary": magisk_repo + "master/canary.json",
+        "⦁ Stabil": f"{magisk_repo}master/stable.json",
+        "⦁ Beta": f"{magisk_repo}master/beta.json",
+        "⦁ Canary": f"{magisk_repo}master/canary.json",
     }
+
     releases = "**En son magisk sürümleri**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
@@ -67,8 +68,7 @@ async def device_info(event):
             "certified-android-devices/master/by_device.json"
         ).text
     )
-    results = data.get(codename)
-    if results:
+    if results := data.get(codename):
         reply = f"**{codename} için arama sonucu:**\n\n"
         for item in results:
             reply += (
@@ -114,12 +114,11 @@ async def codename_info(event):
     devices = devices_lower.get(brand)
     if not devices:
         return await eor(event, f"`{brand}` `adında bir cihaz bulamadım.`")
-    results = [
+    if results := [
         i
         for i in devices
         if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
-    ]
-    if results:
+    ]:
         reply = f"**{brand} {device} için arama sonucu:**\n\n"
         if len(results) > 8:
             results = results[:8]

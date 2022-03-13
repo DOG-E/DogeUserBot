@@ -25,7 +25,7 @@ async def on_new_message(event):
     if not dogadmin:
         return
     for snip in snips:
-        pattern = r"( |^|[^\w])" + escape(snip) + r"( |$|[^\w])"
+        pattern = f"( |^|[^\\w]){escape(snip)}( |$|[^\\w])"
         if search(pattern, name, flags=IGNORECASE):
             try:
                 await event.delete()
