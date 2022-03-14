@@ -38,7 +38,7 @@ async def contactssee(event):
     "To get saved contacts info."
     await eor(
         event,
-        f"**{len((await event.client(GetContactsRequest(0))).users)} people in my contacts.**"
+        f"**{len((await event.client(GetContactsRequest(0))).users)} people in my contacts.**",
     )
 
 

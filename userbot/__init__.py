@@ -8,8 +8,8 @@
 # ================================================================
 import os
 from signal import SIGTERM, signal
-from time import time
 from sys import exit
+from time import time
 
 from heroku3 import from_key
 from requests import get as request_get

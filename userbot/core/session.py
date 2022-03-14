@@ -12,7 +12,6 @@ from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
 from ..Config import Config
-from ..sql_helper.globals import dgvar
 from .client import DogeUserBotClient
 from .logger import logging
 

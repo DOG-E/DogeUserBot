@@ -48,5 +48,7 @@ async def wiki(event):
             )
             return await eor(event, f"**Benzer sayfa bulundu:**\n\n{result}")
         except PageError:
-            return await edl(event, f"**Üzgünüm!\n\n`{match}` için herhangi bir şey bulamadım.**")
+            return await edl(
+                event, f"**Üzgünüm!\n\n`{match}` için herhangi bir şey bulamadım.**"
+            )
     await eor(event, "**Arama:**\n`" + match + "`\n\n**Sonuç:**\n" + f"__{result}__")

@@ -8,7 +8,6 @@
 # ================================================================
 from json import JSONDecodeError, loads
 from os import popen
-from random import choice
 from re import findall, search, sub
 from urllib.parse import unquote
 

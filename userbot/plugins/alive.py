@@ -109,7 +109,10 @@ async def thisalive(event):
 
 @doge.bot.on(CallbackQuery(data=compile(b"infos")))
 async def on_plug_in_callback_query_handler(event: CallbackQuery.Event):
-    if event.query.user_id == int(gvar("OWNER_ID")) or event.query.user_id in Config.SUDO_USERS:
+    if (
+        event.query.user_id == int(gvar("OWNER_ID"))
+        or event.query.user_id in Config.SUDO_USERS
+    ):
         statstext = f"🐶 Doɢᴇ UsᴇʀBoᴛ\
         \n🐾 Bɪʟɢɪ\n\
         \n🔹 Çalıştığını kontrol etmek için:\

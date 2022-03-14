@@ -99,7 +99,7 @@ async def yt_data(dog):
     params = {"format": "json", "url": dog}
     url = "https://www.youtube.com/oembed"  # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
     query_string = urlencode(params)
-    url = f'{url}?{query_string}'
+    url = f"{url}?{query_string}"
     with urlopen(url) as response:
         response_text = response.read()
         data = loads(response_text.decode())
@@ -142,7 +142,7 @@ def get_choice_by_id(choice_id, media_type: str):
     else:
         disp_str = str(choice_id)
         if media_type == "v":
-            choice_str = f'{disp_str}+(258/256/140/bestaudio[ext=m4a])/best'
+            choice_str = f"{disp_str}+(258/256/140/bestaudio[ext=m4a])/best"
         else:  # Audio
             choice_str = disp_str
     return choice_str, disp_str
@@ -238,7 +238,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
         fr_size = video.get("filesize")
         if video.get("ext") == "mp4":
             for frmt_ in qual_list:
-                if fr_note in (frmt_, f'{frmt_}60'):
+                if fr_note in (frmt_, f"{frmt_}60"):
                     qual_dict[frmt_][fr_id] = fr_size
         if video.get("acodec") != "none":
             bitrrate = int(video.get("abr", 0))

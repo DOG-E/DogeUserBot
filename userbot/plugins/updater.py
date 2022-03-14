@@ -27,7 +27,6 @@ from . import (
     HEROKU_APP,
     HEROKU_APP_NAME,
     Config,
-    dgvar,
     doge,
     edl,
     eor,
@@ -79,7 +78,9 @@ async def print_changelogs(event, changelog):
 
 async def update_requirements():
     reqs = str(
-        path.join(path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt")
+        path.join(
+            path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt"
+        )
     )
     try:
         process = await create_subprocess_shell(

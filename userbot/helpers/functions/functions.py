@@ -13,6 +13,7 @@ from uuid import uuid4
 from zipfile import ZipFile
 
 from bs4 import BeautifulSoup
+
 # _from googletrans import Translator
 from imdb import IMDb
 from requests import get

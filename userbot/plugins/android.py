@@ -29,9 +29,9 @@ async def kakashi(event):
     "En son Magisk sürümlerini alır."
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
-        "⦁ Stabil": f'{magisk_repo}master/stable.json',
-        "⦁ Beta": f'{magisk_repo}master/beta.json',
-        "⦁ Canary": f'{magisk_repo}master/canary.json',
+        "⦁ Stabil": f"{magisk_repo}master/stable.json",
+        "⦁ Beta": f"{magisk_repo}master/beta.json",
+        "⦁ Canary": f"{magisk_repo}master/canary.json",
     }
     releases = "**En son Magisk sürümleri**\n\n"
     for name, release_url in magisk_dict.items():
@@ -114,8 +114,7 @@ async def codename_info(event):
     if results := [
         i
         for i in devices
-        if i["name"].lower() == device.lower()
-        or i["model"].lower() == device.lower()
+        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
     ]:
         reply = f"`{brand}` `{device}`** için Arama Sonucu:**\n\n"
         if len(results) > 8:

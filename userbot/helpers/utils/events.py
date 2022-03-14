@@ -16,7 +16,14 @@ from telethon.errors import (
 )
 from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
-from telethon.tl.types import Channel, ChannelParticipantAdmin, ChannelParticipantCreator, Chat, MessageEntityMentionName, User
+from telethon.tl.types import (
+    Channel,
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    Chat,
+    MessageEntityMentionName,
+    User,
+)
 from telethon.utils import get_display_name
 
 from ...Config import Config
@@ -120,7 +127,9 @@ async def get_chatinfo(event, dogevent):
             await dogevent.edit("`🚨 Kanal veya grup mevcut değil!`")
             return None
         except (TypeError, ValueError) as err:
-            LOGS.info(f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}")
+            LOGS.info(
+                f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}"
+            )
             await edl(dogevent, "**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
             return None
     return chat_info

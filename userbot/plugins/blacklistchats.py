@@ -39,7 +39,9 @@ async def chat_blacklist(event):
         if gvar("blacklist_chats") is not None:
             return await edl(event, "__Zaten açık.__")
         sgvar("blacklist_chats", "true")
-        text = "__Şu andan itibaren, Doge veritabanında saklanan sohbetlerde çalışmıyor.__"
+        text = (
+            "__Şu andan itibaren, Doge veritabanında saklanan sohbetlerde çalışmıyor.__"
+        )
         if len(blkchats) != 0:
             text += "**Bot, değişiklikleri uygulamak için yeniden başlıyor. Lütfen biraz bekleyin...**"
             msg = await eor(

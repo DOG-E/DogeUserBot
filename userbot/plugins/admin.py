@@ -496,7 +496,6 @@ async def startmute(event):
                     f"**Sohbet:** {get_display_name(await event.get_chat())}\
                     \n**Sohbet ID:** `{event.chat_id}`",
                 )
-                
 
 
 @doge.bot_cmd(
@@ -519,9 +518,7 @@ async def endmute(event):
         await sleep(1)
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if not is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "**__Bu kullanıcı zaten özgürce konuşabiliyor.__**"
-            )
+            return await event.edit("**__Bu kullanıcı zaten özgürce konuşabiliyor.__**")
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
@@ -533,9 +530,7 @@ async def endmute(event):
                     BOTLOG_CHATID, "#PM_SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
         else:
-            await event.edit(
-                "**Bu kullanıcı artık özgürce konuşabilir.**"
-            )
+            await event.edit("**Bu kullanıcı artık özgürce konuşabilir.**")
         if BOTLOG:
             await doge.bot.send_message(
                 BOTLOG_CHATID,

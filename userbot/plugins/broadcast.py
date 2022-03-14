@@ -155,7 +155,9 @@ async def dogebroadcast_list(event):
         )
     chats = get_chat_broadcastlist(keyword)
     dogevent = await eor(
-        event, f"{keyword} kategorisinin bilgileri getiriliyor", parse_mode=_format.parse_pre
+        event,
+        f"{keyword} kategorisinin bilgileri getiriliyor",
+        parse_mode=_format.parse_pre,
     )
     resultlist = f"**'{keyword}' kategorisi '{no_of_chats}' sohbetlerine sahiptir ve bunlar aşağıda listelenmiştir:**\n\n"
     errorlist = ""

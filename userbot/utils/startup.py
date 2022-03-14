@@ -46,7 +46,9 @@ async def setup_bot():
         async for o in await doge(GetConfigRequest()).dc_options:
             if o.ip_address == doge.session.server_address:
                 if doge.session.dc_id != o.id:
-                    LOGS.warn(f"🛠️ Oturumdaki DC kimliği {doge.session.dc_id} ➡️ {o.id} olarak düzenlendi.")
+                    LOGS.warn(
+                        f"🛠️ Oturumdaki DC kimliği {doge.session.dc_id} ➡️ {o.id} olarak düzenlendi."
+                    )
                 doge.session.set_dc(o.id, o.ip_address, o.port)
                 doge.session.save()
                 break
@@ -61,8 +63,12 @@ async def checkid_setme():
     doge.uid = get_peer_id(doge.me)
     if gvar("OWNER_ID") is None:
         try:
-            async for msg in doge.iter_messages("DogeStatus", limit=1, filter=InputMessagesFilterPhotos):
-                stat = str(str(msg.text).split("@DogeUserBot Kurulumu: ")[1]).split("\n")
+            async for msg in doge.iter_messages(
+                "DogeStatus", limit=1, filter=InputMessagesFilterPhotos
+            ):
+                stat = str(str(msg.text).split("@DogeUserBot Kurulumu: ")[1]).split(
+                    "\n"
+                )
             if "`Açık`" in stat:
                 sgvar("CACHE_OWNER_ID", int(doge.uid))
             elif "`Kapalı`" in stat:
@@ -136,8 +142,16 @@ async def setup_assistantbot():
         sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
     LOGS.info("🦴 Sizin için @BotFather'dan asistan botu oluşturuyorum.")
-    botname = f"🐶 {gvar('ALIVE_NAME')} Asɪsᴛᴀɴ Boᴛ" if gvar("ALIVE_NAME") else f"🐶 {doge.me.first_name} Asɪsᴛᴀɴ Boᴛ"
-    botusername = f"{doge.me.username}Bot" if doge.me.username else f"Doge_{(str(doge.me.id))[5:]}_Bot"
+    botname = (
+        f"🐶 {gvar('ALIVE_NAME')} Asɪsᴛᴀɴ Boᴛ"
+        if gvar("ALIVE_NAME")
+        else f"🐶 {doge.me.first_name} Asɪsᴛᴀɴ Boᴛ"
+    )
+    botusername = (
+        f"{doge.me.username}Bot"
+        if doge.me.username
+        else f"Doge_{(str(doge.me.id))[5:]}_Bot"
+    )
     bf = "BotFather"
     try:
         await doge.send_message(bf, "/cancel")

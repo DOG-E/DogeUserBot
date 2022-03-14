@@ -458,14 +458,18 @@ async def useless(event):  # sourcery no-metrics
         if gvar("CUSTOM_PFP") is not None and gvar("CUSTOM_PFP") == "true":
             return await edl(event, "`Custom pp zaten aktif.`")
         if not list_link:
-            return await edl(event, "**Özel profil fotoğrafları için linkler ayarlanmamış.**")
+            return await edl(
+                event, "**Özel profil fotoğrafları için linkler ayarlanmamış.**"
+            )
         sgvar("CUSTOM_PFP", True)
         await edl(event, "`CustomPP başlatıldı.`")
         await custompfploop()
         return
     if flag == "l":
         if not list_link:
-            return await edl(event, "**Özel profil fotoğrafları çin, linkler ayarlanmamış.**")
+            return await edl(
+                event, "**Özel profil fotoğrafları çin, linkler ayarlanmamış.**"
+            )
         links = "**Özel profil fotoğrafları için mevcut linkler:**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
@@ -498,13 +502,17 @@ async def useless(event):  # sourcery no-metrics
         for i in plink:
             if not is_in_list("CUSTOM_PFP_LINKS", i):
                 add_to_list("CUSTOM_PFP_LINKS", i)
-        await edl(event, f"**{len(plink)} fotoğraf, başarıyla özel profil fotoğraflarına eklendi.**")
+        await edl(
+            event,
+            f"**{len(plink)} fotoğraf, başarıyla özel profil fotoğraflarına eklendi.**",
+        )
     elif flag == "r":
         for i in plink:
             if is_in_list("CUSTOM_PFP_LINKS", i):
                 rm_from_list("CUSTOM_PFP_LINKS", i)
         await edl(
-            event, f"**{len(plink)} fotoğraf başarıyla özel profil fotoğraflarından kaldırıldı.**"
+            event,
+            f"**{len(plink)} fotoğraf başarıyla özel profil fotoğraflarından kaldırıldı.**",
         )
 
 
