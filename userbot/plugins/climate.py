@@ -52,17 +52,17 @@ def sun(unix, ctimezone):
     pattern="climate(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
-        "h": "To get the weather report of a city.",
-        "d": "Shows you the weather report of a city. By default it is Istanbul, you can change it by {tr}setcity command.",
-        "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
+        "h": "Bir şehrin hava durumu raporunu alır.",
+        "d": "Size bir şehrin hava raporunu gösterir. Varsayılan olarak İstanbul'dur, {tr}setcity komutu ile değiştirebilirsiniz.",
+        "note": "Bu eklentinin çalışması için WEATHER_API değişkenini ayarlamanız gerekir, https://openweathermap.org/ adresinden değer alabilirsiniz.",
         "u": [
             "{tr}climate",
-            "{tr}climate <city name>",
+            "{tr}climate <Şehir İsmi>",
         ],
     },
 )
 async def get_weather(event):  # sourcery no-metrics
-    "To get the weather report of a city."
+    "Bir şehrin hava durumu raporunu alır."
     # if WEATHER_API is None:
     # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
@@ -75,14 +75,14 @@ async def get_weather(event):  # sourcery no-metrics
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = newcity[0].strip() + "," + newcity[1].strip()
+            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
-                return await eor(event, "`Invalid Country.`")
-            CITY = newcity[0].strip() + "," + countrycode.strip()
+                return await eor(event, "`Geçersiz Ülke`")
+            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={(gvar('WEATHER_API') or '6fded1e1c5ef3f394283e3013a597879')}"
     async with ClientSession() as _session:
         async with _session.get(url) as request:
@@ -90,7 +90,7 @@ async def get_weather(event):  # sourcery no-metrics
             requesttext = await request.text()
     result = loads(requesttext)
     if requeststatus != 200:
-        return await eor(event, "`Invalid Country.`")
+        return await eor(event, "`Geçersiz Ülke.`")
     cityname = result["name"]
     curtemp = result["main"]["temp"]
     humidity = result["main"]["humidity"]
@@ -117,16 +117,16 @@ async def get_weather(event):  # sourcery no-metrics
     mph = str(wind * 2.237).split(".")
     await eor(
         event,
-        f"🌡**Temperature:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
-        + f"🥰**Human Feeling** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
-        + f"🥶**Min. Temp.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
-        + f"🥵**Max. Temp.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
-        + f"☁️**Humidity:** `{humidity}%`\n"
-        + f"🧧**Pressure** `{pressure} hPa`\n"
-        + f"🌬**Wind:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
-        + f"⛈**Cloud:** `{cloud} %`\n"
-        + f"🌄**Sunrise:** `{sun(sunrise,ctimezone)}`\n"
-        + f"🌅**Sunset:** `{sun(sunset,ctimezone)}`\n\n\n"
+        f"🌡**Sıcaklık:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
+        + f"🥰**Hissedilen** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
+        + f"🥶**En Düşük Sıcaklık:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
+        + f"🥵**En Yüksek Sıcaklık:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
+        + f"☁️**Nem:** `{humidity}%`\n"
+        + f"🧧**Basınç** `{pressure} hPa`\n"
+        + f"🌬**Rüzgar:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
+        + f"⛈**Bulut Oranı:** `{cloud} %`\n"
+        + f"🌄**Gün Doğumu:** `{sun(sunrise,ctimezone)}`\n"
+        + f"🌅**Gün Batımı:** `{sun(sunset,ctimezone)}`\n\n\n"
         + f"**{desc}**\n"
         + f"`{cityname}, {fullc_n}`\n"
         + f"`{time}`\n",
@@ -137,17 +137,17 @@ async def get_weather(event):  # sourcery no-metrics
     pattern="setcity(?:\s|$)([\s\S]*)",
     command=("setcity", plugin_category),
     info={
-        "h": "To set default city for climate cmd",
-        "d": "Sets your default city so you can just use .weather or .climate when ever you neededwithout typing city name each time",
-        "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
+        "h": "Climate komutu için varsayılan şehri ayarlar.",
+        "d": "Varsayılan şehrinizi ayarlar, böylece her seferinde şehir adını yazmanıza gerek kalmadan .weather veya .climate'ı istediğiniz zaman kullanabilirsiniz.",
+        "note": "Bu eklentinin çalışması için WEATHER_API değişkenini ayarlamanız gerekir, https://openweathermap.org/ adresinden değer alabilirsiniz.",
         "u": [
             "{tr}climate",
-            "{tr}climate <city name>",
+            "{tr}climate <Şehir İsmi>",
         ],
     },
 )
 async def set_default_city(event):
-    "To set default city for climate/weather cmd"
+    "Climate komutu için varsayılan şehri ayarlar."
     # if WEATHER_API is None:
     # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = event.pattern_match.group(1)
@@ -160,40 +160,40 @@ async def set_default_city(event):
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = newcity[0].strip() + "," + newcity[1].strip()
+            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
-                return await eor(event, "`Invalid country.`")
-            CITY = newcity[0].strip() + "," + countrycode.strip()
+                return await eor(event, "`Geçersiz Ülke`")
+            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={(gvar('WEATHER_API') or '6fded1e1c5ef3f394283e3013a597879')}"
     request = get(url)
     result = loads(request.text)
     if request.status_code != 200:
-        return await eor(event, "`Invalid country.`")
+        return await eor(event, "`Geçersiz Ülke.`")
     sgvar("WEATHER_CITY", CITY)
     cityname = result["name"]
     country = result["sys"]["country"]
     fullc_n = c_n[f"{country}"]
-    await eor(event, f"`Set default event as {cityname}, {fullc_n}.`")
+    await eor(event, f"`Varsayılan olay {cityname}, {fullc_n} olarak ayarlandı.`")
 
 
 @doge.bot_cmd(
     pattern="weather(?:\s|$)([\s\S]*)",
     command=("weather", plugin_category),
     info={
-        "h": "To get the weather report of a city.",
-        "d": "Shows you the weather report of a city . By default it is Istanbul, you can change it by {tr}setcity command.",
+        "h": "Bir şehrin hava durumu raporunu alır.",
+        "d": "Size bir şehrin hava durumunu gösterir. Varsayılan olarak İstanbul'dur, {tr}setcity komutu ile değiştirebilirsiniz.",
         "u": [
             "{tr}weather",
-            "{tr}weather <city name>",
+            "{tr}weather <Şehir İsmi>",
         ],
     },
 )
 async def _(event):
-    "weather report today from 'wttr.in'"
+    "'wttr.in'den bugün için hava durumu raporu"
     input_str = event.pattern_match.group(1)
     if not input_str:
         input_str = gvar("WEATHER_CITY") or "Istanbul"
@@ -205,16 +205,16 @@ async def _(event):
     pattern="wttr(?:\s|$)([\s\S]*)",
     command=("wttr", plugin_category),
     info={
-        "h": "To get the weather report of a city.",
-        "d": "Shows you the weather report of a city for next 3 days . By default it is Istanbul, you can change it by {tr}setcity command.",
+        "h": "Bir şehrin hava durumu raporunu alır.",
+        "d": "Önümüzdeki 3 gün için bir şehrin hava durumunu gösterir. Varsayılan olarak İstanbul'dur, {tr}setcity komutu ile bunu değiştirebilirsiniz.",
         "u": [
             "{tr}wttr",
-            "{tr}wttr <city name>",
+            "{tr}wttr <Şehir İsmi>",
         ],
     },
 )
 async def _(event):
-    "weather report for next 3 days from 'wttr.in'"
+    "'wttr.in'den sonraki 3 gün için hava durumu raporu"
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
@@ -225,7 +225,7 @@ async def _(event):
         response_api = await response_api_zero.read()
         with BytesIO(response_api) as out_file:
             await event.reply(
-                f"**City:** `{input_str}`", file=out_file, reply_to=reply_to_id
+                f"**Şehir:** `{input_str}`", file=out_file, reply_to=reply_to_id
             )
     try:
         await event.delete()

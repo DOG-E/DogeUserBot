@@ -15,8 +15,6 @@ from . import doge, edl, gvar, logging
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
 
-PRIVATE_CHANNEL_ID = gvar("PRIVATE_CHANNEL_ID")
-
 
 class FPOST:
     def __init__(self) -> None:
@@ -40,19 +38,20 @@ async def all_groups_id(dog):
     pattern="frwd$",
     command=("frwd", plugin_category),
     info={
-        "h": "To get view counter for the message. that is will delete old message and send new message where you can see how any people saw your message",
+        "h": "Mesajı kaç kişinin gördüğünü öğrenmenize yarar.",
+        "d": "Eski mesajı siler ve kaç kişinin mesajı gördüğünü öğrenebileceğiniz yeni bir mesaj gönderir.",
         "u": "{tr}frwd",
     },
 )
 async def _(event):
-    "To get view counter for the message"
-    if PRIVATE_CHANNEL_ID is None:
+    "Mesajı kaç kişinin gördüğünü öğrenmenize yarar."
+    if gvar("PRIVATE_CHANNEL_ID") is None:
         return await edl(
             event,
-            "Please set the required environment variable `PRIVATE_CHANNEL_ID` for this plugin to work",
+            "Lütfen bu eklentinin çalışması için gerekli ortam değişkenini `prival_channel_id` olarak ayarlayın.",
         )
     try:
-        e = await event.client.get_entity(int(PRIVATE_CHANNEL_ID))
+        e = await event.client.get_entity(int(gvar("PRIVATE_CHANNEL_ID")))
     except Exception as e:
         await edl(event, str(e))
     else:

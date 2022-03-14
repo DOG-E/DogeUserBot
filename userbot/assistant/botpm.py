@@ -650,7 +650,7 @@ async def uinfo(event):
         )
     uinfo = f"**👤 Bu mesaj şu kişi tarafından gönderildi:** {_format.mentionuser(user_name, user_id)}\
             \n**ℹ️ Kullanıcı İsmi:** {user_name}\
-            \n**🆔 Kullanıcı ID'si:** `{user_id}`"
+            \n**🆔 Kullanıcı ID:** `{user_id}`"
     await info_msg.edit(uinfo)
 
 
@@ -687,7 +687,7 @@ async def send_flood_alert(user_) -> None:
     flood_msg = (
         r"**⚠️️ #FLOOD_WARNING**"
         "\n\n"
-        f"**🆔 Kullanıcı ID'si:** `{user_.id}`\n"
+        f"**🆔 Kullanıcı ID:** `{user_.id}`\n"
         f"**ℹ️ İsim:** {get_display_name(user_)}\n"
         f"**👤 Kullanıcı:** {_format.mentionuser(get_display_name(user_), user_.id)}"
         f"\n\n**🐾 Botunuz {gvar('BOT_USERNAME')}'da spam yapıyor! -> [ Flood Atılan Mesajlar ({flood_count}) ]**\n"
@@ -699,7 +699,7 @@ async def send_flood_alert(user_) -> None:
             if user_.id in Config.SUDO_USERS:
                 sudo_spam = (
                     f"**👤 Sudo Kullanıcı** {_format.mentionuser(user_.first_name, user_.id)}\
-                    \n**🆔 Kullanıcı ID'si:** `{user_.id}`\n\n"
+                    \n**🆔 Kullanıcı ID:** `{user_.id}`\n\n"
                     f"**🐾 Botunuz {gvar('BOT_USERNAME')}'da spam yapıyor!**\
                     \n\nℹ️ `{tr}doge rmsudo` komutunu kontrol edin. İsterseniz bu kullanıcıyı __Sudo Kullanıcılar__'dan kaldırabilirsiniz."
                 )
@@ -758,11 +758,11 @@ async def bot_pm_ban_cb(c_q: CallbackQuery):
         await c_q.answer(f"**🚨 Hᴀᴛᴀ:**\n➡️ `{e}`")
     else:
         await c_q.answer(
-            f"*__⏳ Kullanıcı yasaklanıyor...__ **-> Kullanıcı ID'si:** `{user_id}`",
+            f"*__⏳ Kullanıcı yasaklanıyor...__ **-> Kullanıcı ID:** `{user_id}`",
             alert=False,
         )
         await ban_user_from_bot(user, "Spamming Bot")
-        await c_q.edit(f"**✅ Yasaklandı!\n🆔 Kullanıcı ID'si:** `{user_id}`")
+        await c_q.edit(f"**✅ Yasaklandı!\n🆔 Kullanıcı ID:** `{user_id}`")
 
 
 def time_now() -> Union[float, int]:

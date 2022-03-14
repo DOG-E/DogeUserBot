@@ -15,13 +15,13 @@ plugin_category = "tool"
     pattern="scan(i)?$",
     command=("scan", plugin_category),
     info={
-        "h": "Yanıtlanan dosyaya virüs taraması yapın",
-        "f": {"i": "sonucu görüntü ile alır"},
+        "h": "Yanıtlanan dosyaya virüs taraması yapın.",
+        "f": {"i": "sonucu görüntü ile alır."},
         "u": ["{tr}scan", "{tr}scani"],
     },
 )
 async def _(event):
-    "Yanıtlanan dosyaya virüs taraması yapın"
+    "Yanıtlanan dosyaya virüs taraması yapın."
     input_str = event.pattern_match.group(1)
     if not event.reply_to_msg_id:
         return await edl(event, "```Herhangi bir mesajı yanıtlayın.```")
@@ -55,17 +55,17 @@ async def _(event):
     pattern="vscan$",
     command=("vscan", plugin_category),
     info={
-        "h": "Yanıtlanan dosyayı @DrWebBot ile tarayın",
+        "h": "Yanıtlanan dosyayı @DrWebBot ile tarayın.",
         "u": "{tr}vscan",
     },
 )
 async def vscan(event):
-    "Yanıtlanan dosyayı @DrWebBot ile tarayın"
+    "Yanıtlanan dosyayı @DrWebBot ile tarayın."
     if not event.reply_to_msg_id:
         return await edl(event, "```Herhangi bir mesajı yanıtlayın.```")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        return await edl(event, "```Bir medya mesajını yanıtlayın```")
+        return await edl(event, "```Bir medya mesajını yanıtlayın.```")
     chat = "@DrWebBot"
     dogevent = await eor(event, "`Dosyayı tarıyorum... Biraz bekle!`")
     async with event.client.conversation(chat) as conv:
@@ -74,7 +74,7 @@ async def vscan(event):
         if response.text.startswith("Forward"):
             return await edl(
                 dogevent,
-                "İleriye dönük gizlilik ayarlarınızı nazikçe devre dışı bırakır mısınız?",
+                "Bunun için iletildi gizlilik ayarınızı devre dışı bırakmanız gerekiyor.",
             )
         elif response.text.startswith("Select"):
             await event.client.send_message(chat, "English")
@@ -82,20 +82,20 @@ async def vscan(event):
             await event.client.forward_messages(chat, reply_message)
             response = await newmsgres(conv, chat)
             await dogevent.edit(
-                f"**Virüs taraması bitirildi. \nSonuçlar:** {response.message.message}"
+                f"**Virüs taraması sona erdi.\nSonuçlar:** {response.message.message}"
             )
         elif response.text.startswith("No threats"):
-            await event.edit("Virus scan ended. This file is clean. Go on!")
+            await event.edit("Virüs taraması sona erdi. Bu dosya temiz!")
         elif response.text.startswith("Still"):
-            await dogevent.edit("File is scanning...")
+            await dogevent.edit("Dosyayı tarıyorum...")
             response = await newmsgres(conv, chat)
             if response.text.startswith("No threats"):
                 await event.edit(
-                    "Virüs taraması sona erdi. **Bu dosya temiz.** Devam edebilirsiniz!"
+                    "Virüs taraması sona erdi. **Bu dosya temiz!**"
                 )
             else:
                 await event.edit(
-                    f"**Virüs taraması sona erdi. Vay canına! Bu durum tehlikeli gözüküyor.** `İndirmemeni tavsiye ederim!` \nBilgi: {response.message.message}"
+                    f"**Virüs taraması sona erdi. Vay canına! Bu durum tehlikeli gözüküyor.** `İndirmemeni tavsiye ederim!` \n**Bilgi:** {response.message.message}"
                 )
         await conv.mark_read()
         await conv.cancel_all()

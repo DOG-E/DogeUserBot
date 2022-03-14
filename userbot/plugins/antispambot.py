@@ -16,8 +16,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from telethon.utils import get_display_name
 
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
-from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, doge, eor, gvar, logging
+from . import BOTLOG, BOTLOG_CHATID, doge, eor, gvar, is_admin, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
@@ -68,10 +67,9 @@ async def anti_spambot(event):  # sourcery no-metrics
             LOGS.info(e)
     SPAMWATCH = Client(gvar("SPAMWATCH_API"))
     if SPAMWATCH and not dogbanned:
-        ban = SPAMWATCH.get_ban(user.id)
-        if ban:
+        if ban := SPAMWATCH.get_ban(user.id):
             hmm = await event.reply(
-                f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandı."
+                f"[{user.first_name}](tg://user?id={user.id}) `{ban.reason}` nedeniyle SpamWatch tarafından yasaklandın."
             )
             try:
                 await event.client.edit_permissions(

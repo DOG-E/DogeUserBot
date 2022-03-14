@@ -63,7 +63,6 @@ async def _(event):
     except Exception as e:
         LOGS.error(f"🚨 {e}")
     try:
-        dgvar("ipaddress")
         await doge.disconnect()
     except CancelledError:
         pass
@@ -87,13 +86,10 @@ async def _(event):
     await eor(event, "`Turning off bot now ...Manually turn me on later`")
     if HEROKU_APP is not None:
         try:
-            dgvar("ipaddress")
             HEROKU_APP.process_formation()["doger"].scale(0)
         except Exception:
-            dgvar("ipaddress")
             _exit(143)
     else:
-        dgvar("ipaddress")
         _exit(143)
 
 
@@ -113,8 +109,7 @@ async def _(event):
     counter = int(event.pattern_match.group(1))
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID,
-            "You put the bot to sleep for " + str(counter) + " seconds",
+            BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds"
         )
     event = await eor(event, f"`Okay, let me sleep for {counter} seconds`")
     sleep(counter)

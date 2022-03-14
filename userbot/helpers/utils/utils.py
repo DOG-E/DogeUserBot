@@ -61,6 +61,10 @@ def run_async(loop, coro):
     return run_coroutine_threadsafe(coro, loop).result()
 
 
+def runasync(func: callable):
+    return get_event_loop().run_until_complete(func)
+
+
 async def unsavegif(e, m):
     try:
         await e.client(

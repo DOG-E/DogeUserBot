@@ -144,7 +144,7 @@ def errors_handler(func):
                     \n\
                     \n----- USERBOT-HATA-RAPORU-BAŞLANGICI -----\
                     \n📅 Tarih: {d}\
-                    \n👥 Grup ID'si: {cid}\
+                    \n👥 Grup ID: {cid}\
                     \n👤 Gönderici ID: {sid}\
                     \n🔗 Mesaj Linki: {msg}\
                     \n\

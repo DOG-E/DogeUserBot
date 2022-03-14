@@ -22,8 +22,7 @@ from telethon.tl.types import (
 from telethon.utils import get_display_name
 
 from ..sql_helper.locks_sql import get_locks, is_locked, update_lock
-from ..utils import is_admin
-from . import BOTLOG, _format, doge, edl, eor, get_user_from_event, logging
+from . import BOTLOG, _format, doge, edl, eor, get_user_from_event, is_admin, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)

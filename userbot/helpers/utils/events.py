@@ -16,14 +16,13 @@ from telethon.errors import (
 )
 from telethon.tl.functions.channels import GetFullChannelRequest, JoinChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
-from telethon.tl.types import Channel, Chat, MessageEntityMentionName, User
+from telethon.tl.types import Channel, ChannelParticipantAdmin, ChannelParticipantCreator, Chat, MessageEntityMentionName, User
 from telethon.utils import get_display_name
 
 from ...Config import Config
 from ...core.events import NewMessage
 from ...core.logger import logging
 from ...core.managers import edl
-from ...sql_helper.globals import gvar
 from ..resources.constants import *
 
 LOGS = logging.getLogger(__name__)
@@ -121,10 +120,8 @@ async def get_chatinfo(event, dogevent):
             await dogevent.edit("`🚨 Kanal veya grup mevcut değil!`")
             return None
         except (TypeError, ValueError) as err:
-            LOGS.info(
-                f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}"
-            )
-            await edl(dogevent, f"**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
+            LOGS.info(f"Yürütülen işlem için kanal veya grup ID mevcut değil! HATA: {err}")
+            await edl(dogevent, "**🚨 HATA:**\n`ℹ️ Sohbeti alamadım!`")
             return None
     return chat_info
 
@@ -145,7 +142,7 @@ async def get_chat_link(
         extra = f"[{name}](tg://user?id={entity.id})"
     else:
         if hasattr(entity, "username") and entity.username is not None:
-            username = "@" + entity.username
+            username = f"@{entity.username}"
         else:
             username = entity.id
         if reply is not None:
@@ -178,6 +175,23 @@ async def reply_id(event):
     return reply_to_id
 
 
+async def is_admin(doge, chat_id, userid):
+    if not str(chat_id).startswith("-100"):
+        return False
+    try:
+        req_jo = await doge.get_permissions(chat_id, userid)
+        chat_participant = req_jo.participant
+        if isinstance(
+            chat_participant, (ChannelParticipantCreator, ChannelParticipantAdmin)
+        ):
+            return True
+    except Exception as e:
+        LOGS.error(f"🚨 {str(e)}")
+        return False
+    else:
+        return False
+
+
 async def checking(doge):
     try:
         c = JoinChannelRequest(C_G_[0])
@@ -189,12 +203,6 @@ async def checking(doge):
         await doge(g)
     except BaseException:
         pass
-
-
-def only_botlog(event):
-    if str(event.chat_id) == gvar("PRIVATE_GROUP_BOT_API_ID"):
-        return True
-    return False
 
 
 async def wowmygroup(event, msg):

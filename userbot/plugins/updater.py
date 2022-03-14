@@ -6,11 +6,9 @@
 # Lütfen GNU Affero Genel Kamu Lisansını okuyun;
 # < https://www.github.com/DOG-E/DogeUserBot/blob/DOGE/LICENSE/ >
 # ================================================================
-from asyncio import create_subprocess_shell
-from asyncio.exceptions import CancelledError
+from asyncio import CancelledError, create_subprocess_shell
 from asyncio.subprocess import PIPE
-from os import path as osp
-from os import remove
+from os import path, remove
 from sys import executable
 
 from git import Repo
@@ -28,7 +26,6 @@ from . import (
     HEROKU_API_KEY,
     HEROKU_APP,
     HEROKU_APP_NAME,
-    UPSTREAM_REPO_URL,
     Config,
     dgvar,
     doge,
@@ -82,7 +79,7 @@ async def print_changelogs(event, changelog):
 
 async def update_requirements():
     reqs = str(
-        osp.join(osp.dirname(osp.dirname(osp.dirname(__file__))), "requirements.txt")
+        path.join(path.dirname(path.dirname(path.dirname(__file__))), "requirements.txt")
     )
     try:
         process = await create_subprocess_shell(
@@ -114,16 +111,14 @@ async def push(event, repo, ups_rem, ac_br, txt):
         await event.edit("**Lütfen** `HEROKU_API_KEY` **değerini ayarlayın!**")
         repo.__del__()
         return
-    heroku_app = None
     heroku_applications = heroku.apps()
     if HEROKU_APP_NAME is None:
         await event.edit("**Lütfen** `HEROKU_APP_NAME` **değerini ayarlayın!**")
-        repo.__del__()
-        return
-    for app in heroku_applications:
-        if app.name == HEROKU_APP_NAME:
-            heroku_app = app
-            break
+        return repo.__del__()
+    heroku_app = next(
+        (app for app in heroku_applications if app.name == HEROKU_APP_NAME),
+        None,
+    )
     if heroku_app is None:
         await event.edit(f"{txt}\n\n`Heroku dyno kimlik bilgileri yanlış!`")
         return repo.__del__()
@@ -144,7 +139,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
     ups_rem.fetch(ac_br)
     repo.git.reset("--hard", "FETCH_HEAD")
     heroku_git_url = heroku_app.git_url.replace(
-        "https://", "https://api:" + HEROKU_API_KEY + "@"
+        "https://", f"https://api:{HEROKU_API_KEY}@"
     )
     if "heroku" in repo.remotes:
         remote = repo.remote("heroku")
@@ -171,7 +166,6 @@ async def push(event, repo, ups_rem, ac_br, txt):
     await event.edit(
         "`Deploy edilirken hata oluştu! Bu yüzden yeniden başlatılarak güncelleniyor!`"
     )
-    dgvar("ipaddress")
     try:
         await event.client.disconnect()
         if HEROKU_APP is not None:
@@ -201,7 +195,6 @@ async def upstream(event):
     "Botun güncel olup olmadığını kontrol eder ve günceller."
     conf = event.pattern_match.group(1).strip()
     event = await eor(event, "`Güncellemeleri kontrol ediyorum, lütfen bekleyin...`")
-    off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         return await eor(
@@ -228,7 +221,7 @@ async def upstream(event):
                 ".update pull.`"
             )
         repo = Repo.init()
-        origin = repo.create_remote("upstream", off_repo)
+        origin = repo.create_remote("upstream", Config.UPSTREAM_REPO)
         origin.fetch()
         force_update = True
         repo.create_head("DOGE-TR", origin.refs.DOGE)
@@ -245,13 +238,12 @@ async def upstream(event):
         )
         return repo.__del__()
     try:
-        repo.create_remote("upstream", off_repo)
+        repo.create_remote("upstream", Config.UPSTREAM_REPO)
     except BaseException:
         pass
     ups_rem = repo.remote("upstream")
     ups_rem.fetch(ac_br)
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
-    # Special case for deploy
     if conf == "push":
         await event.edit("`Doge güncelleniyor, lütfen bekleyin...`")
         await push(event, repo, ups_rem, ac_br, txt)

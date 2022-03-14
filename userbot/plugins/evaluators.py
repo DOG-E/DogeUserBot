@@ -8,7 +8,6 @@
 # ================================================================
 import sys
 from io import StringIO
-from os import geteuid
 from traceback import format_exc
 
 from . import BOTLOG, BOTLOG_CHATID, _dogeutils, _format, doge, edl, eor
@@ -35,11 +34,7 @@ async def _(event):
     result = str(out) + str(err)
     doguser = await event.client.get_me()
     curruser = doguser.username or "DogeUserBot"
-    uid = geteuid()
-    if uid == 0:
-        cresult = f"```{curruser}:~#``` ```{cmd}```\n```{result}```"
-    else:
-        cresult = f"```{curruser}:~$``` ```{cmd}```\n```{result}```"
+    cresult = f"```{curruser}:~$``` ```{cmd}```\n```{result}```"
     await eor(
         dogevent,
         text=cresult,
@@ -48,8 +43,7 @@ async def _(event):
     )
     if BOTLOG:
         await doge.bot.send_message(
-            BOTLOG_CHATID,
-            "Terminal command " + cmd + " was executed sucessfully.",
+            BOTLOG_CHATID, f"Terminal command {cmd} was executed sucessfully."
         )
 
 
@@ -106,8 +100,7 @@ async def _(event):
     )
     if BOTLOG:
         await doge.bot.send_message(
-            BOTLOG_CHATID,
-            "eval command " + cmd + " was executed sucessfully.",
+            BOTLOG_CHATID, f"Eval command {cmd} was executed sucessfully."
         )
 
 

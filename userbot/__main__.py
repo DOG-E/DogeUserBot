@@ -11,11 +11,10 @@ from sys import argv
 
 import userbot
 
-from . import HEROKU_APP, dgvar, doge, logging, tr
+from . import doge, logging, tr
 from .utils import (
     checkid_setme,
     customize_assistantbot,
-    ipchange,
     load_plugins,
     setup_assistantbot,
     setup_bot,
@@ -58,20 +57,7 @@ except Exception as e:
     LOGS.error(f"🚨 {e}")
 
 
-class DogCheck:
-    def __init__(self):
-        self.sucess = True
-
-
-Dogcheck = DogCheck()
-
-
 async def startup_process():
-    check = await ipchange()
-    if check is not None:
-        Dogcheck.sucess = False
-        return
-
     LOGS.info("🐾 %60 ~ YÜKLENİYOR...")
     await verifyLoggerGroup()
 
@@ -87,7 +73,7 @@ async def startup_process():
 
     LOGS.info("🐶 %100 ~ DOGE USERBOT HAZIR!\n\n\n\n\n\n\n")
     LOGS.info(userbot.__copyright__)
-    LOGS.info(userbot.__license__ + " ile korunmaktadır.")
+    LOGS.info(f"{userbot.__license__} ile korunmaktadır.")
     LOGS.info(
         f"\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\
@@ -100,23 +86,16 @@ async def startup_process():
         \n💬 Yardım için Telegram grubumuzu ziyaret edin: t.me/DogeSup\
         \n➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
     )
-
-    Dogcheck.sucess = True
     return
 
 
 doge.loop.run_until_complete(startup_process())
 
 
-if len(argv) not in (1, 3, 4):
-    dgvar("ipaddress")
-    doge.disconnect()
-elif not Dogcheck.sucess:
-    if HEROKU_APP is not None:
-        dgvar("ipaddress")
-        HEROKU_APP.restart()
-else:
+if len(argv) in {1, 3, 4}:
     try:
         doge.run_until_disconnected()
     except ConnectionError:
-        dgvar("ipaddress")
+        pass
+else:
+    doge.disconnect()

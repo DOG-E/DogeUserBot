@@ -35,7 +35,7 @@ async def _(event):
     pattern="vendor ([\s\S]*)",
     command=("vendor", plugin_category),
     info={
-        "h": "En son Vendoru alır.",
+        "h": "En son Vendor'u alır.",
         "d": "Yalnızca Xiaomi cohazları için çalışır.",
         "u": "{tr}vendor <kod adı>",
         "e": "{tr}vendor whyred",

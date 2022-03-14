@@ -66,30 +66,30 @@ async def admin_groups(hav):
 
 # Credits: Pokurt - https://github.com/pokurt/LyndaRobot/blob/7556ca0efafd357008131fa88401a8bb8057006f/lynda/modules/helper_funcs/string_handling.py#L238
 async def extract_time(dog, time_val):
-    if any(time_val.endswith(unit) for unit in ("s", "dk", "sa", "gün", "hafta")):
+    if any(time_val.endswith(unit) for unit in ("sn", "d", "s", "g", "h")):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
             await dog.edit("🚨 Geçersiz zaman değeri belirtildi.")
             return None
-        if unit == "s":
+        if unit == "sn":
             bantime = int(time() + int(time_num) * 1)
-        elif unit == "dk":
+        elif unit == "d":
             bantime = int(time() + int(time_num) * 60)
-        elif unit == "sa":
+        elif unit == "s":
             bantime = int(time() + int(time_num) * 60 * 60)
-        elif unit == "gün":
+        elif unit == "g":
             bantime = int(time() + int(time_num) * 24 * 60 * 60)
-        elif unit == "hafta":
+        elif unit == "h":
             bantime = int(time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             await dog.edit(
-                f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen s, dk, sa, gün ya da hafta iken olan değer:` `{time_val[-1]}`"
+                f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen sn, d, s, g ya da h iken olan değer:` `{time_val[-1]}`"
             )
             return None
         return bantime
     await dog.edit(
-        f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen s, dk, sa, gün ya da hafta iken olan değer:` `{time_val[-1]}`"
+        f"`🚨 Geçersiz zaman değeri belirtildi..\n⏰ Beklenen sn, d, s, g ya da h iken olan değer:` `{time_val[-1]}`"
     )
     return None
 

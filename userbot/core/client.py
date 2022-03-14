@@ -179,7 +179,7 @@ class DogeUserBotClient(TelegramClient):
                         \n\
                         \n----- USERBOT-HATA-RAPORU-BAŞLANGICI -----\
                         \n📅 Tarih: {d}\
-                        \n👥 Grup ID'si: {cid}\
+                        \n👥 Grup ID: {cid}\
                         \n👤 Gönderici ID: {sid}\
                         \n🔗 Mesaj Linki: {msg}\
                         \n\
@@ -319,7 +319,7 @@ class DogeUserBotClient(TelegramClient):
                         \n\
                         \n----- ASİSTAN-HATA-RAPORU-BAŞLANGICI -----\
                         \n📅 Tarih: {d}\
-                        \n👥 Grup ID'si: {cid}\
+                        \n👥 Grup ID: {cid}\
                         \n👤 Gönderici ID: {sid}\
                         \n🔗 Mesaj Linki: {msg}\
                         \n\

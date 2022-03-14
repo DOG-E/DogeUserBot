@@ -124,11 +124,10 @@ async def getmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(
+    if await wowmygroup(
         event,
         constants.sc_nf_rm_dg_y,
-    )
-    if flag:
+    ):
         return
 
     if not creator:
@@ -159,12 +158,10 @@ async def addmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(
+    if await wowmygroup(
         event,
-        "**🏳️‍🌈 I'M OBVIOUSLY A #CONFIRMEDGAY!\n\
-        \n💨 BECAUSE I WAS TRYING TO STEAL MEMBERS HERE.**",
-    )
-    if flag:
+        constants.sc_nf_rm_dg_y,
+    ):
         return
 
     if not creator:

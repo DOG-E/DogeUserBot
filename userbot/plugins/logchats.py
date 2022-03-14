@@ -58,19 +58,19 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                     if LOG_CHATS_.COUNT > 1:
                         await LOG_CHATS_.NEWPM.edit(
                             LOG_CHATS_.NEWPM.text.replace(
-                                "new message", f"{LOG_CHATS_.COUNT} messages"
+                                "yeni bir", f"{LOG_CHATS_.COUNT}"
                             )
                         )
                     else:
                         await LOG_CHATS_.NEWPM.edit(
                             LOG_CHATS_.NEWPM.text.replace(
-                                "new message", f"{LOG_CHATS_.COUNT} message"
+                                "yeni bir", f"{LOG_CHATS_.COUNT}"
                             )
                         )
                     LOG_CHATS_.COUNT = 0
                 LOG_CHATS_.NEWPM = await event.client.send_message(
                     PM_LOGGER_GROUP_ID,
-                    f"🪐 #PM\n👤 {_format.mentionuser(sender.first_name, sender.id)} has sent a new message \nID: `{chat.id}`",
+                    f"**🪐 #PM\n👤 {_format.mentionuser(sender.first_name, sender.id)} size yeni bir mesaj gönderdi!\n🆔 ID:** `{chat.id}`",
                 )
             try:
                 if event.message:

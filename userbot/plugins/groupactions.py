@@ -30,8 +30,7 @@ from telethon.tl.types import (
 )
 from telethon.utils import get_display_name
 
-from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, DOGEKICKME, doge, edl, eor, logging, readable_time
+from . import BOTLOG, BOTLOG_CHATID, DOGEKICKME, doge, edl, eor, is_admin, logging, readable_time
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)

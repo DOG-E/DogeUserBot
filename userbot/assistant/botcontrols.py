@@ -252,11 +252,10 @@ async def ban_botpms(event):
     if user_id == int(gvar("OWNER_ID")):
         return await event.reply("**🚨 Seni yasaklayamam.**")
 
-    check = check_is_black_list(user.id)
-    if check:
+    if check := check_is_black_list(user.id):
         return await event.client.send_message(
             event.chat_id,
-            f"🛑 #ZATEN_BANLI\
+            f"🛑 #ZATEN_BAN\
             \n➡️ Kullanıcı zaten yasaklı kullanıcılar listemde var.\
             \n**📅 Tarih:** `{check.date}`\
             \n**⛓ Sebep** `{check.reason}`",
@@ -287,7 +286,7 @@ async def ban_botpms(event):
     if not check:
         return await event.client.send_message(
             event.chat_id,
-            f"🛑 #KULLANICI_YASAKLI_DEGİL\
+            f"🛑 #KULLANICI_YASAKLI_DEĞİL\
             \n👤 {_format.mentionuser(user.first_name, user.id)} yasaklanan kullanıcılar listemde yok.",
         )
 
@@ -318,7 +317,7 @@ async def ban_starters(event):
     for user in ulist:
         msg += f"• 👤 {_format.mentionuser(user.first_name, user.chat_id)}\
                 \n   **🆔 Kullanıcı ID:** `{user.chat_id}`\
-                \n   **ℹ️ Kullnıcı Adı:** @{user.username}\
+                \n   **ℹ️ Kullanıcı Adı:** @{user.username}\
                 \n   **📅 Tarih:** __{user.date}__\
                 \n   **⛓ Sebep:** __{user.reason}__\n\n"
     await eor(event, msg)

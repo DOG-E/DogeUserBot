@@ -40,31 +40,31 @@ LOGS = logging.getLogger(__name__)
     pattern="msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
-        "h": "To message to person or to a chat.",
-        "d": "Suppose you want to message directly to a person/chat from a paticular chat. Then simply reply to a person with this cmd and text or to a text with cmd and username/userid/chatid,",
+        "h": "Kişiye veya sohbete mesaj göndermek için.",
+        "d": "Belirli bir sohbetten, istediğiniz kişiye/gruba mesaj göndermek istiyorsanız, bu komut ile birlikte kullanıcı adı/kullanıcı kimliği(id)/sohbet kimliği(id) kullanın.",
         "u": [
-            "{tr}msgto <username/userid/chatid/chatusername> reply to message",
-            "{tr}msgto <username/userid/chatid/chatusername> <text>",
+            "{tr}msgto Metni yanıtla ve bir <kullanıcı adı / İD> ver ",
+            "{tr}msgto <kullanıcı adı / İD> <metin>",
         ],
-        "e": "{tr}msgto @SohbetDoge just a testmessage",
+        "e": "{tr}msgto @SohbetDoge Naber?",
     },
 )
 async def dogebroadcast_add(event):
-    "To message to person or to a chat."
+    "Kişiye veya sohbete mesaj atmak için."
     user, reason = await get_user_from_event(event)
     reply = await event.get_reply_message()
     if not user:
         return
     if not reason and not reply:
         return await edl(
-            event, "__What should I send to the person. reply to msg or give text__"
+            event, "__Kişiye ne göndermeliyim? Metne cevap ver veya bir metin ver__"
         )
     if reply and reason and user.id != reply.sender_id:
         if BOTLOG:
             msg = await doge.bot.send_message(BOTLOG_CHATID, reason)
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                "The replied message was failed to send to the user. Confusion between to whom it should send.",
+                "Yanıtlanan ileti kullanıcıya gönderilemedi.",
                 reply_to=msg.id,
             )
         msglink = await event.client.get_msg_link(msg)
@@ -76,25 +76,25 @@ async def dogebroadcast_add(event):
         msg = await event.client.send_message(user.id, reason)
     else:
         msg = await event.client.send_message(user.id, reply)
-    await edl(event, "__Successfully sent the message.__")
+    await edl(event, "__Mesaj başarıyla gönderildi.__")
 
 
 @doge.bot_cmd(
     pattern="addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
-        "h": "Will add the specific chat to the mentioned category",
-        "u": "{tr}addto <category name>",
-        "e": "{tr}addto test",
+        "h": "Belirli sohbeti belirtilen kategoriye ekleyecektir.",
+        "u": "{tr}addto <Kategori adı>",
+        "e": "{tr}addto test.",
     },
 )
 async def dogebroadcast_add(event):
-    "To add the chat to the mentioned category"
+    "Herhangi sohbeti bir kategoriye ekleyin"
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "In which category should I add this chat",
+            "Bu sohbeti hangi kategoriye eklemeliyim?",
             parse_mode=_format.parse_pre,
         )
     keyword = doginput_str.lower()
@@ -102,13 +102,13 @@ async def dogebroadcast_add(event):
     if check:
         return await edl(
             event,
-            f"This chat is already in this category {keyword}",
+            f"Bu sohbet zaten {keyword} kategorisinde var.",
             parse_mode=_format.parse_pre,
         )
     add_to_broadcastlist(keyword, event.chat_id)
     await edl(
         event,
-        f"This chat is Now added to category {keyword}",
+        f"Sohbet başarıyla {keyword} kategorisine eklendi.",
         parse_mode=_format.parse_pre,
     )
     chat = await event.get_chat()
@@ -116,13 +116,13 @@ async def dogebroadcast_add(event):
         try:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is added to category {keyword}",
+                f"Sohbet {chat.title}, {keyword} kategorisine eklendi.",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The user {chat.first_name} is added to category {keyword}",
+                f"{chat.first_name} kullanıcısı {keyword} kategorisine eklendi",
                 parse_mode=_format.parse_pre,
             )
 
@@ -131,18 +131,18 @@ async def dogebroadcast_add(event):
     pattern="list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
-        "h": "will show the list of all chats in the given category",
-        "u": "{tr}list <category name>",
+        "h": "Verilen kategorideki tüm sohbetler gösterilecek.",
+        "u": "{tr}list <kategori adı>",
         "e": "{tr}list test",
     },
 )
 async def dogebroadcast_list(event):
-    "To list the all chats in the mentioned category."
+    "Belirtilen kategorideki tüm sohbetleri listeler."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "Which category Chats should I list ?\nCheck .listall",
+            "Hangi kategorideki Sohbetleri listelemeliyim?\n.listall yazarak kontrol edin",
             parse_mode=_format.parse_pre,
         )
     keyword = doginput_str.lower()
@@ -150,28 +150,28 @@ async def dogebroadcast_list(event):
     if no_of_chats == 0:
         return await edl(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"{keyword} adında bir kategori yok. .listall yazarak kontrol edin",
             parse_mode=_format.parse_pre,
         )
     chats = get_chat_broadcastlist(keyword)
     dogevent = await eor(
-        event, f"Fetching info of the category {keyword}", parse_mode=_format.parse_pre
+        event, f"{keyword} kategorisinin bilgileri getiriliyor", parse_mode=_format.parse_pre
     )
-    resultlist = f"**The category '{keyword}' have '{no_of_chats}' chats and these are listed below:**\n\n"
+    resultlist = f"**'{keyword}' kategorisi '{no_of_chats}' sohbetlerine sahiptir ve bunlar aşağıda listelenmiştir:**\n\n"
     errorlist = ""
     for chat in chats:
         try:
             chatinfo = await event.client.get_entity(int(chat))
             try:
                 if chatinfo.broadcast:
-                    resultlist += f" 👉 📢 **Channel** \n  •  **Name:** {chatinfo.title} \n  •  **id:** `{int(chat)}`\n\n"
+                    resultlist += f" 👉 📢 **Kanal** \n  •  **Ad:** {chatinfo.title} \n  •  **İD:** `{int(chat)}`\n\n"
                 else:
-                    resultlist += f" 👉 👥 **Group** \n  •  **Name:** {chatinfo.title} \n  •  **id:** `{int(chat)}`\n\n"
+                    resultlist += f" 👉 👥 **Grup** \n  •  **Ad:** {chatinfo.title} \n  •  **İD:** `{int(chat)}`\n\n"
             except AttributeError:
-                resultlist += f" 👉 👤 **User** \n  •  **Name:** {chatinfo.first_name} \n  •  **id:** `{int(chat)}`\n\n"
+                resultlist += f" 👉 👤 **Kullanıcı** \n  •  **Ad:** {chatinfo.first_name} \n  •  **İD:** `{int(chat)}`\n\n"
         except Exception:
-            errorlist += f" 👉 __This id {int(chat)} in database probably you may left the chat/channel or may be invalid id.\
-                            \nRemove this id from the database by using this command__ `.frmfrom {keyword} {int(chat)}` \n\n"
+            errorlist += f" 👉 __Veritabanındaki bu İD {int(chat)} muhtemelen sohbetten/kanaldan çıkmış olabilir veya geçersiz id olabilir.\
+                            \n__ `.frmfrom {keyword} {int(chat)}` komutunu kullanarak bu İD'i veritabanından kaldırın \n\n"
     finaloutput = resultlist + errorlist
     await eor(dogevent, finaloutput)
 
@@ -180,22 +180,22 @@ async def dogebroadcast_list(event):
     pattern="listall$",
     command=("listall", plugin_category),
     info={
-        "h": "Will show the list of all category names.",
+        "h": "Tüm kategori adlarının listesini gösterecektir.",
         "u": "{tr}listall",
     },
 )
 async def dogebroadcast_list(event):
-    "To list all the category names."
+    "Tüm kategori adlarını listelemek için."
     if num_broadcastlist_chats() == 0:
         return await edl(
             event,
-            "you haven't created at least one category  check info for more help",
+            "daha fazla yardım için en az bir kategori kontrol bilgisi oluşturmalısınız.",
             parse_mode=_format.parse_pre,
         )
     chats = get_broadcastlist_chats()
-    resultext = "**Here are the list of your category's:**\n\n"
+    resultext = "**İşte kategorinizin listesi:**\n\n"
     for i in chats:
-        resultext += f" 👉 `{i}` __contains {num_broadcastlist_chat(i)} chats__\n"
+        resultext += f" 👉 `{i}` __{num_broadcastlist_chat(i)} sohbet içeriyor.__\n"
     await eor(event, resultext)
 
 
@@ -203,18 +203,18 @@ async def dogebroadcast_list(event):
     pattern="sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
-        "h": "will send the replied message to all chats in the given category",
-        "u": "{tr}sendto <category name>",
+        "h": "Yanıtlanan mesajı verilen kategorideki tüm sohbetlere gönderecek.",
+        "u": "{tr}sendto <kategori adı>",
         "e": "{tr}sendto test",
     },
 )
 async def dogebroadcast_send(event):
-    "To send the message to all chats in the mentioned category."
+    "Mesajı belirtilen kategorideki tüm sohbetlere göndermek için."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "To which category should I send this message",
+            "Bu mesajı hangi kategoriye göndereyim?",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
@@ -222,7 +222,7 @@ async def dogebroadcast_send(event):
     if not reply:
         return await edl(
             event,
-            "what should I send to to this category ?",
+            "Bu kategoriye ne göndermeliyim?",
             parse_mode=_format.parse_pre,
         )
     keyword = doginput_str.lower()
@@ -231,13 +231,13 @@ async def dogebroadcast_send(event):
     if no_of_chats == 0:
         return await edl(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"{keyword} adında bir kategori yok. .listall yazarak kontrol edin.",
             parse_mode=_format.parse_pre,
         )
     chats = get_chat_broadcastlist(keyword)
     dogevent = await eor(
         event,
-        "sending this message to all groups in the category",
+        "Bu mesajı kategorideki tüm Gruplara gönderiyorum",
         parse_mode=_format.parse_pre,
     )
     try:
@@ -254,12 +254,12 @@ async def dogebroadcast_send(event):
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
         await sleep(0.5)
-    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
+    resultext = f"`Mesaj, {keyword} kategorisindeki {no_of_chats} sohbetten {i} sohbete gönderildi.`"
     await edl(dogevent, resultext)
     if BOTLOG:
         await doge.bot.send_message(
             BOTLOG_CHATID,
-            f"A message is sent to {i} chats out of {no_of_chats} chats in category {keyword}",
+            f"{keyword} kategorisindeki {no_of_chats} sohbetten {i} sohbete bir mesaj gönderildi",
             parse_mode=_format.parse_pre,
         )
 
@@ -268,18 +268,18 @@ async def dogebroadcast_send(event):
     pattern="fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
-        "h": "Will forward the replied message to all chats in the given category",
-        "u": "{tr}fwdto <category name>",
+        "h": "Cevaplanan mesajı verilen kategorideki tüm sohbetlere iletecek",
+        "u": "{tr}fwdto <kategori adı>",
         "e": "{tr}fwdto test",
     },
 )
 async def dogebroadcast_send(event):
-    "To forward the message to all chats in the mentioned category."
+    "Mesajı belirtilen kategorideki tüm sohbetlere iletmek için."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "To which category should I send this message",
+            "Bu mesajı hangi kategoriye göndereyim?",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
@@ -287,7 +287,7 @@ async def dogebroadcast_send(event):
     if not reply:
         return await edl(
             event,
-            "what should I send to to this category ?",
+            "Bu kategoriye ne göndermeliyim?",
             parse_mode=_format.parse_pre,
         )
     keyword = doginput_str.lower()
@@ -296,13 +296,13 @@ async def dogebroadcast_send(event):
     if no_of_chats == 0:
         return await edl(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"{keyword} adında bir kategori yok. .listall yazarak kontrol edin.",
             parse_mode=_format.parse_pre,
         )
     chats = get_chat_broadcastlist(keyword)
     dogevent = await eor(
         event,
-        "sending this message to all groups in the category",
+        "Bu mesajı kategorideki tüm Gruplara gönderiyorum",
         parse_mode=_format.parse_pre,
     )
     try:
@@ -319,12 +319,12 @@ async def dogebroadcast_send(event):
         except Exception as e:
             LOGS.error(f"🚨 {str(e)}")
         await sleep(0.5)
-    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
+    resultext = f"`Mesaj, {keyword} kategorisindeki {no_of_chats} sohbetten {i} sohbete gönderildi.`"
     await edl(dogevent, resultext)
     if BOTLOG:
         await doge.bot.send_message(
             BOTLOG_CHATID,
-            f"A message is forwared to {i} chats out of {no_of_chats} chats in category {keyword}",
+            f"{keyword} kategorisindeki {no_of_chats} sohbetten {i} sohbete bir mesaj iletildi",
             parse_mode=_format.parse_pre,
         )
 
@@ -333,18 +333,18 @@ async def dogebroadcast_send(event):
     pattern="rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
-        "h": "Will remove the specific chat to the mentioned category",
-        "u": "{tr}rmfrom <category name>",
+        "h": "Belirli sohbeti belirtilen kategoriden kaldıracak",
+        "u": "{tr}rmfrom <kategori adı>",
         "e": "{tr}rmfrom test",
     },
 )
 async def dogebroadcast_remove(event):
-    "To remove the chat from the mentioned category"
+    "Sohbeti belirtilen kategoriden kaldırmak için"
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "From which category should I remove this chat",
+            "Bu sohbeti hangi kategoriden kaldırmalıyım?",
             parse_mode=_format.parse_pre,
         )
     keyword = doginput_str.lower()
@@ -352,13 +352,13 @@ async def dogebroadcast_remove(event):
     if not check:
         return await edl(
             event,
-            f"This chat is not in the category {keyword}",
+            f"Bu sohbet {keyword} kategorisinde değil.",
             parse_mode=_format.parse_pre,
         )
     rm_from_broadcastlist(keyword, event.chat_id)
     await edl(
         event,
-        f"This chat is Now removed from the category {keyword}",
+        f"Bu sohbet artık {keyword} kategorisinde değil",
         parse_mode=_format.parse_pre,
     )
     chat = await event.get_chat()
@@ -366,13 +366,13 @@ async def dogebroadcast_remove(event):
         try:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is removed from category {keyword}",
+                f"Sohbet {chat.title}, {keyword} kategorisinden kaldırıldı",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The user {chat.first_name} is removed from category {keyword}",
+                f"{chat.first_name} kullanıcısı {keyword} kategorisinden kaldırıldı",
                 parse_mode=_format.parse_pre,
             )
 
@@ -381,26 +381,26 @@ async def dogebroadcast_remove(event):
     pattern="frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
-        "h": " To force remove the given chat from a category.",
+        "h": " Verilen sohbeti bir kategoriden kaldırmaya zorlamak için.",
         "d": "Suppose if you're muted or group/channel is deleted you can't send message there so you can use this cmd to the chat from that category",
-        "u": "{tr}frmfrom <category name> <chatid>",
+        "u": "{tr}frmfrom <kategori adı> <İD>",
         "e": "{tr}frmfrom test -100123456",
     },
 )
 async def dogebroadcast_remove(event):
-    "To force remove the given chat from a category."
+    "Verilen sohbeti bir kategoriden kaldırmaya zorlamak için."
     doginput_str = event.pattern_match.group(1)
     if not doginput_str:
         return await edl(
             event,
-            "From which category should I remove this chat",
+            "Bu sohbeti hangi kategoriden kaldırmalıyım?",
             parse_mode=_format.parse_pre,
         )
     args = doginput_str.split(" ")
     if len(args) != 2:
         return await edl(
             event,
-            "Use proper syntax as shown .frmfrom category_name groupid",
+            ".frmfrom kategori_adı GrupİD'de gösterildiği gibi uygun sözdizimini kullanın",
             parse_mode=_format.parse_pre,
         )
     try:
@@ -413,7 +413,7 @@ async def dogebroadcast_remove(event):
         except ValueError:
             return await edl(
                 event,
-                "Use proper syntax as shown .frmfrom category_name groupid",
+                ".frmfrom kategori_adı GrupİD'de gösterildiği gibi uygun sözdizimini kullanın",
                 parse_mode=_format.parse_pre,
             )
     keyword = keyword.lower()
@@ -421,13 +421,13 @@ async def dogebroadcast_remove(event):
     if not check:
         return await edl(
             event,
-            f"This chat {groupid} is not in the category {keyword}",
+            f"Bu sohbet {keyword} kategorisinde değil",
             parse_mode=_format.parse_pre,
         )
     rm_from_broadcastlist(keyword, groupid)
     await edl(
         event,
-        f"This chat {groupid} is Now removed from the category {keyword}",
+        f"Bu sohbet artık {keyword} kategorisinde değil",
         parse_mode=_format.parse_pre,
     )
     chat = await event.get_chat()
@@ -435,13 +435,13 @@ async def dogebroadcast_remove(event):
         try:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is removed from category {keyword}",
+                f"{chat.title} {keyword} kategorisinden kaldırıldı",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                f"The user {chat.first_name} is removed from category {keyword}",
+                f"{chat.first_name} kullanıcısı {keyword} kategorisinden kaldırıldı",
                 parse_mode=_format.parse_pre,
             )
 
@@ -450,8 +450,8 @@ async def dogebroadcast_remove(event):
     pattern="delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
-        "h": "To Deletes the category completely from database",
-        "u": "{tr}delc <category name>",
+        "h": "Kategoriyi veritabanından tamamen silmek için",
+        "u": "{tr}delc <kategori adı>",
         "e": "{tr}delc test",
     },
 )
@@ -462,14 +462,14 @@ async def dogebroadcast_delete(event):
     if check1 < 1:
         return await edl(
             event,
-            f"Are you sure that there is category {doginput_str}",
+            f"{doginput_str} kategorisi olduğundan emin misiniz?",
             parse_mode=_format.parse_pre,
         )
     try:
         del_keyword_broadcastlist(doginput_str)
         await eor(
             event,
-            f"Successfully deleted the category {doginput_str}",
+            f"{doginput_str} kategorisi başarıyla silindi",
             parse_mode=_format.parse_pre,
         )
     except Exception as e:

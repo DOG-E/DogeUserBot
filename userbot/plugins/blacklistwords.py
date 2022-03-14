@@ -11,8 +11,7 @@ from re import IGNORECASE, escape, search
 from telethon.utils import get_display_name
 
 from ..sql_helper import blacklist_sql as sql
-from ..utils import is_admin
-from . import BOTLOG_CHATID, doge, eor
+from . import BOTLOG_CHATID, doge, eor, is_admin
 
 plugin_category = "admin"
 
@@ -46,9 +45,9 @@ async def on_new_message(event):
     info={
         "h": "Karalisteye kelime ekler.",
         "d": "Verilen kelime veya kelimeler, komutu kullandığınız sohbette karalisteye eklenecek, herhangi bir kullanıcı karalistedeki kelimeyle mesaj gönderirse mesaj silinecek.",
-        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekilde [merhaba merhaba] değil, yeni bir satırda verilmelidir. [merhaba\nmerhaba] gibi olmalıdır.",
+        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekilde [merhaba merhaba] değil, yeni bir satırda verilmelidir\n[merhaba\nmerhaba] gibi olmalıdır.",
         "u": "{tr}addblacklist <kelime(ler)>",
-        "e": ["{tr}addblacklist aq", "{tr}addblacklist aq (enter) amk"],
+        "e": ["{tr}addblacklist aq", "{tr}addblacklist aq\namk"],
     },
     groups_only=True,
     require_admin=True,
@@ -74,9 +73,9 @@ async def _(event):
     info={
         "h": "Karalistedeki kelimeleri kaldırır.",
         "d": "Verilen kelime veya kelimeler, komutu kullandığınız sohbette karalisteden kaldırılacaktır.",
-        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekildee [merhaba merhaba] değil, yeni bir satırda verilmelidir. [merhaba\nmerhaba] gibi olmalıdır.",
+        "note": "Aynı anda birden fazla kelime eklemek istiyorsanız, Bu şekilde [merhaba merhaba] değil, yeni bir satırda verilmelidir,\n[merhaba\nmerhaba] gibi olmalıdır.",
         "u": "{tr}rmblacklist <kelime(ler)>",
-        "e": ["{tr}rmblacklist aq", "{tr}rmblacklist aq (enter) amk"],
+        "e": ["{tr}rmblacklist aq", "{tr}rmblacklist aq\namk"],
     },
     groups_only=True,
     require_admin=True,
@@ -116,5 +115,5 @@ async def _(event):
         for trigger in all_blacklisted:
             OUT_STR += f"👉 {trigger} \n"
     else:
-        OUT_STR = "KaraListe bulunamadı. `.addblacklist` komutu ile  karalisteye kelime eklemeye başlayın."
+        OUT_STR = "Karaliste bulunamadı. `.addblacklist` komutu ile  karalisteye kelime eklemeye başlayın."
     await eor(event, OUT_STR)

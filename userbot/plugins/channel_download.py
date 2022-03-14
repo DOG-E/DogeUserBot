@@ -20,10 +20,9 @@ plugin_category = "tool"
     pattern="getc(?:\s|$)([\s\S]*)",
     command=("getc", plugin_category),
     info={
-        "h": "To download channel media files",
-        "d": "pass username and no of latest messages to check to command \
-             so the bot will download media files from that latest no of messages to server ",
-        "u": "{tr}getc count channel_username",
+        "h": "Kanal medya dosyalarını indirir",
+        "d": "Komutu kontrol etmek için kullanıcı adını ve en son mesajların sayısını iletin. Böylece bot, medya dosyalarını bu son mesaj sayısından sunucuya indirecektir. ",
+        "u": "{tr}getc sayı channel_username",
         "e": "{tr}getc 10 @DogeUserBot",
     },
 )
@@ -36,7 +35,7 @@ async def get_media(event):
         makedirs(tempdir)
     except BaseException:
         pass
-    event = await eor(event, "`Downloading Media From this Channel.`")
+    event = await eor(event, "`Bu kanaldan medya indirir.`")
     msgs = await event.client.get_messages(channel_username, limit=int(limit))
     i = 0
     for msg in msgs:
@@ -45,7 +44,7 @@ async def get_media(event):
             await event.client.download_media(msg, tempdir)
             i += 1
             await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED:** `{i}`"
+                f"Bu kanaldan medya yükleniyor.\n**İndirildi:** `{i}`"
             )
     ps = Popen(("ls", tempdir), stdout=PIPE)
     output = check_output(("wc", "-l"), stdin=ps.stdout)
@@ -54,7 +53,7 @@ async def get_media(event):
     output = output.replace("b'", " ")
     output = output.replace("\\n'", " ")
     await event.edit(
-        f"Successfully downloaded {output} number of media files from {channel_username} to tempdir"
+        f"{channel_username} adlı kullanıcıdan geçici dizine {output} adet medya başarıyla indirildi!"
     )
 
 
@@ -62,9 +61,9 @@ async def get_media(event):
     pattern="geta(?:\s|$)([\s\S]*)",
     command=("geta", plugin_category),
     info={
-        "h": "To download channel all media files",
-        "d": "pass username to command so the bot will download all media files from that latest no of messages to server ",
-        "note": "there is limit of 3000 messages for this process to prevent API limits. that is will download all media files from latest 3000 messages",
+        "h": "Kanalın tüm medya dosyalarını indirir",
+        "d": "komuta kullanıcı adını iletin, böylece bot tüm medya dosyalarını bu en son mesaj sayısından sunucuya indirir ",
+        "note": "API limitlerini önlemek için bu işlem için 3000 mesaj sınırı vardır. bu, tüm medya dosyalarını en son 3000 mesajdan indirecektir.",
         "u": "{tr}geta channel_username",
         "e": "{tr}geta @DogeUserBot",
     },
@@ -76,7 +75,7 @@ async def get_media(event):
         makedirs(tempdir)
     except BaseException:
         pass
-    event = await eor(event, "`Downloading All Media From this Channel.`")
+    event = await eor(event, "`Tüm medyaları bu kanaldan indirir.`")
     msgs = await event.client.get_messages(channel_username, limit=3000)
     i = 0
     for msg in msgs:
@@ -85,7 +84,7 @@ async def get_media(event):
             await event.client.download_media(msg, tempdir)
             i += 1
             await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED:** `{i}`"
+                f"Bu kanaldan medya yükleniyor.\n **İndirildi:** `{i}`"
             )
     ps = Popen(("ls", tempdir), stdout=PIPE)
     output = check_output(("wc", "-l"), stdin=ps.stdout)
@@ -94,5 +93,5 @@ async def get_media(event):
     output = output.replace("b'", "")
     output = output.replace("\\n'", "")
     await event.edit(
-        f"Successfully downloaded {output} number of media files from {channel_username} to tempdir"
+        f"{channel_username} kaynağından geçici dizine {output} adet medya başarıyla indirildi!"
     )

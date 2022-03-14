@@ -18,12 +18,12 @@ plugin_category = "misc"
     pattern="wiki ([\s\S]*)",
     command=("wiki", plugin_category),
     info={
-        "h": "To get wikipedia data about query.",
-        "u": "{tr}wiki <query>",
+        "h": "Wikipedia'dan içerik getirir.",
+        "u": "{tr}wiki <sorgu>",
     },
 )
 async def wiki(event):
-    "To fetch content from Wikipedia."
+    "Wikipedia'dan içerik getirir."
     match = event.pattern_match.group(1)
     result = None
     try:
@@ -34,7 +34,7 @@ async def wiki(event):
             f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
             for lineno, i in enumerate(error, start=1)
         )
-        return await eor(event, f"**Disambiguated page found.**\n\n{result}")
+        return await eor(event, f"**Benzer sayfa bulundu:**\n\n{result}")
     except PageError:
         pass
     if not result:
@@ -46,7 +46,7 @@ async def wiki(event):
                 f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
                 for lineno, i in enumerate(error, start=1)
             )
-            return await eor(event, f"**Disambiguated page found.**\n\n{result}")
+            return await eor(event, f"**Benzer sayfa bulundu:**\n\n{result}")
         except PageError:
-            return await edl(event, f"**Sorry i Can't find any results for **`{match}`")
-    await eor(event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__")
+            return await edl(event, f"**Üzgünüm!\n\n`{match}` için herhangi bir şey bulamadım.**")
+    await eor(event, "**Arama:**\n`" + match + "`\n\n**Sonuç:**\n" + f"__{result}__")

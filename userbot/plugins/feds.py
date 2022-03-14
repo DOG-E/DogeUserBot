@@ -64,8 +64,7 @@ async def group_fban(event):
     user_id = user.id
     if user_id == event.client.uid:
         return await edl(event, "__You can't fban yourself.__")
-    flag = await wowmydev(user_id, event)
-    if flag:
+    if await wowmydev(user_id, event):
         return
     if not reason:
         return await edl(
@@ -173,8 +172,7 @@ async def sfban(event):
         return await msg.edit(
             "Kullanıcı belirtilmedi! SüperFBan kullanmak için lütfen bir kullanıcı belirtin ya da bir kullanıcısın mesajını yanıtlayın!"
         )
-    flag = await wowmydev(FBAN, event)
-    if flag:
+    if await wowmydev(FBAN, event):
         return
     if FBAN_GROUP_ID:
         chat = int(FBAN_GROUP_ID)

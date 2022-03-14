@@ -29,11 +29,11 @@ async def kakashi(event):
     "En son Magisk sürümlerini alır."
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
-        "⦁ Stabil": magisk_repo + "master/stable.json",
-        "⦁ Beta": magisk_repo + "master/beta.json",
-        "⦁ Canary": magisk_repo + "master/canary.json",
+        "⦁ Stabil": f'{magisk_repo}master/stable.json',
+        "⦁ Beta": f'{magisk_repo}master/beta.json',
+        "⦁ Canary": f'{magisk_repo}master/canary.json',
     }
-    releases = "**En son magisk sürümleri**\n\n"
+    releases = "**En son Magisk sürümleri**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
         releases += (
@@ -63,13 +63,11 @@ async def device_info(event):
             return await edl(event, f"Kullanım: {tr}device <kod_adı> veya <model>")
     data = loads(
         get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_device.json"
+            "https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json"
         ).text
     )
-    results = data.get(codename)
-    if results:
-        reply = f"**{codename} için arama sonucu:**\n\n"
+    if results := data.get(codename):
+        reply = f"**{codename} için Arama Sonucu:**\n\n"
         for item in results:
             reply += (
                 f"**Marka:** {item['brand']}\n"
@@ -102,25 +100,24 @@ async def codename_info(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"Kullanımı: {tr}dcname <marka> <cihaz>")
+        return await edl(event, f"Kullanımı: `{tr}dcname <marka> <cihaz>`")
 
     data = loads(
         get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_brand.json"
+            "https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_brand.json"
         ).text
     )
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     if not devices:
         return await eor(event, f"`{brand}` `adında bir cihaz bulamadım.`")
-    results = [
+    if results := [
         i
         for i in devices
-        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
-    ]
-    if results:
-        reply = f"**{brand} {device} için arama sonucu:**\n\n"
+        if i["name"].lower() == device.lower()
+        or i["model"].lower() == device.lower()
+    ]:
+        reply = f"`{brand}` `{device}`** için Arama Sonucu:**\n\n"
         if len(results) > 8:
             results = results[:8]
         for item in results:
@@ -130,7 +127,7 @@ async def codename_info(event):
                 f"**Model:** {item['model']}\n\n"
             )
     else:
-        reply = f"{device} için kod adı bulunamadı!\n"
+        reply = f"`{device}` için kod adında bir cihaz bulamadım!\n"
     await eor(event, reply)
 
 
@@ -154,7 +151,7 @@ async def devices_specifications(event):
         brand = textx.text.split(" ")[0]
         device = " ".join(textx.text.split(" ")[1:])
     else:
-        return await edl(event, f"Kullanımı: {tr}specs <marka> <cihaz>")
+        return await edl(event, f"Kullanımı: `{tr}specs <marka> <cihaz>`")
     all_brands = (
         BeautifulSoup(
             get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
@@ -180,7 +177,7 @@ async def devices_specifications(event):
             if device in i.text.strip().lower()
         ]
     except IndexError:
-        return await edl(event, f"{device} bulunamadı!")
+        return await edl(event, f"`{device}` `adında bir cihaz bulamadım!`")
     if len(device_page_url) > 2:
         device_page_url = device_page_url[:2]
     reply = ""
@@ -219,10 +216,10 @@ async def twrp(event):
     elif textx:
         device = textx.text.split(" ")[0]
     else:
-        return await edl(event, f"Kullanım: {tr}twrp <cihaz> <kod adı>")
+        return await edl(event, f"Kullanım: `{tr}twrp <cihaz> <kod adı>`")
     url = get(f"https://dl.twrp.me/{device}/")
     if url.status_code == 404:
-        reply = f"{device} için twrp indirmeleri bulunamadı!\n"
+        reply = f"{device} için TWRP indirmeleri bulamadım!\n"
         return await edl(event, reply)
     page = BeautifulSoup(url.content, "lxml")
     download = page.find("table").find("tr").find("a")

@@ -108,9 +108,6 @@ async def safe_check_text(msg):  # sourcery no-metrics
             or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
             or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
             or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
-            or (gvar("G_DRIVE_CLIENT_ID") and gvar("G_DRIVE_CLIENT_ID") in msg)
-            or (gvar("G_DRIVE_CLIENT_SECRET") and gvar("G_DRIVE_CLIENT_SECRET") in msg)
-            or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
             or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
             or (gvar("GITHUB_ACCESS_TOKEN") and gvar("GITHUB_ACCESS_TOKEN") in msg)
             or (
@@ -377,16 +374,16 @@ async def edit_message(
 ):
     chatid = entity
     if isinstance(chatid, InputPeerChannel):
-        chat_id = int("-100" + str(chatid.channel_id))
+        chat_id = int(f"-100{str(chatid.channel_id)}")
     elif isinstance(chatid, InputPeerChat):
-        chat_id = int("-" + str(chatid.chat_id))
+        chat_id = int(f"-{str(chatid.chat_id)}")
     elif isinstance(chatid, InputPeerUser):
         chat_id = int(chatid.user_id)
     else:
         chat_id = chatid
     if str(chat_id) == str(Config.BOTLOG_CHATID):
         return await client.editmessage(
-            entity=entity,
+            entity=chatid,
             message=message,
             text=text,
             parse_mode=parse_mode,

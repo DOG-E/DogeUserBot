@@ -43,8 +43,7 @@ async def echo(event):
     if not user:
         return
     userid = user.id
-    flag = await wowmydev(userid, event)
-    if flag:
+    if await wowmydev(userid, event):
         return
     reply_msg = await event.get_reply_message()
     chat_id = event.chat_id

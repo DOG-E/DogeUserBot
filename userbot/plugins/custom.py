@@ -91,11 +91,6 @@ rlist = [
 alist = [
     "CURRENCY_API",
     "DEEPAI_API",
-    "G_DRIVE_CLIENT_ID",
-    "G_DRIVE_CLIENT_SECRET",
-    "G_DRIVE_DATA",
-    "G_DRIVE_FOLDER_ID",
-    "G_DRIVE_INDEX_LINK",
     "GENIUS_API",
     "GITHUB_ACCESS_TOKEN",
     "GIT_REPO_NAME",

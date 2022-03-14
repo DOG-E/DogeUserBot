@@ -104,7 +104,7 @@ async def autopicloop():
             await doge(UploadProfilePhotoRequest(file))
             remove(autophoto_path)
             counter += counter
-            await sleep((gvar("CHANGE_TIME") or "60"))
+            await sleep(int(gvar("CHANGE_TIME") or 60))
         except BaseException:
             return
         AUTOPICSTART = gvar("autopic") == "true"
@@ -128,7 +128,7 @@ async def custompfploop():
             i += 1
             await doge(UploadProfilePhotoRequest(file))
             remove("donottouch.jpg")
-            await sleep((gvar("CHANGE_TIME") or "60"))
+            await sleep(int(gvar("CHANGE_TIME") or 60))
         except BaseException:
             return
         CUSTOMPICSTART = gvar("CUSTOM_PFP") == "true"
@@ -209,15 +209,14 @@ async def bloom_pfploop():
         try:
             await doge(UploadProfilePhotoRequest(file))
             remove(autophoto_path)
-            await sleep((gvar("CHANGE_TIME") or "60"))
+            await sleep(int(gvar("CHANGE_TIME") or 60))
         except BaseException:
             return
         BLOOMSTART = gvar("bloom") == "true"
 
 
 async def autoname_loop():
-    AUTONAMESTART = gvar("autoname") == "true"
-    while AUTONAMESTART:
+    while AUTONAMESTART := gvar("autoname") == "true":
         DM = strftime("%d-%m-%y")
         HM = strftime("%H:%M")
         DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
@@ -228,13 +227,11 @@ async def autoname_loop():
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
-        await sleep((gvar("CHANGE_TIME") or "60"))
-        AUTONAMESTART = gvar("autoname") == "true"
+        await sleep(int(gvar("CHANGE_TIME") or 60))
 
 
 async def autobio_loop():
-    AUTOBIOSTART = gvar("autobio") == "true"
-    while AUTOBIOSTART:
+    while AUTOBIOSTART := gvar("autobio") == "true":
         DMY = strftime("%d.%m.%Y")
         HM = strftime("%H:%M")
         DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
@@ -245,17 +242,16 @@ async def autobio_loop():
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
-        await sleep((gvar("CHANGE_TIME") or "60"))
-        AUTOBIOSTART = gvar("autobio") == "true"
+        await sleep(int(gvar("CHANGE_TIME") or 60))
 
 
 async def animeprofilepic(collection_images):
     rnd = randint(0, len(collection_images) - 1)
     pack = collection_images[rnd]
-    pc = get("http://getwallpapers.com/collection/" + pack).text
+    pc = get(f"http://getwallpapers.com/collection/{pack}").text
     f = compile(r"/\w+/full.+.jpg")
     f = f.findall(pc)
-    fy = "http://getwallpapers.com" + choice(f)
+    fy = f"http://getwallpapers.com{choice(f)}"
     if not path.exists("userbot/helpers/resources/fonts/roboto_regular.ttf"):
         urlretrieve(
             "https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/roboto_regular.ttf",
@@ -284,7 +280,7 @@ async def autopfp_start():
         i += 1
         await doge(UploadProfilePhotoRequest(file))
         await _dogeutils.runcmd("rm -rf donottouch.jpg")
-        await sleep((gvar("CHANGE_TIME") or "60"))
+        await sleep(int(gvar("CHANGE_TIME") or 60))
         AUTOPFP_START = gvar("autopfp_strings") is not None
 
 
@@ -292,20 +288,19 @@ async def autopfp_start():
     pattern="bpp$",
     command=("bpp", plugin_category),
     info={
-        "h": "Changes profile pic with random batman pics every 1 minute",
-        "d": "Changes your profile pic every 1 minute with random batman pics.\
-        If you like to change the time then set CHANGE_TIME var with time (in seconds) between each change of profilepic.",
-        "note": "To stop this do '{tr}end bpp'",
+        "h": "Bir dakika aralıklarla profil fotoğafınızı rastgele batman fotoğrafları ile değiştirir.",
+        "d": "Fotoğraf değiştirme süresini CHANGE_TIME değişkeninden ayarlayabilirsiniz.",
+        "note": "Durdurmak için '{tr}end bpp' yazın.",
         "u": "{tr}bpp",
     },
 )
 async def _(event):
-    "To set random batman profile pics"
+    "Profil resminizi rastgele batman fotoğrafları ile değiştirir."
     if gvar("autopfp_strings") is not None:
         pfp_string = gvar("autopfp_strings")[:-8]
-        return await edl(event, f"`{pfp_string} is already running.`")
+        return await edl(event, f"`{pfp_string} zaten çalışıyor.`")
     sgvar("autopfp_strings", "batmanpfp_strings")
-    await event.edit("`Starting batman Profile Pic.`")
+    await event.edit("`İşlem başlatıldı.`")
     await autopfp_start()
 
 
@@ -313,20 +308,19 @@ async def _(event):
     pattern="tpp$",
     command=("tpp", plugin_category),
     info={
-        "h": "Changes profile pic with random thor pics every 1 minute",
-        "d": "Changes your profile pic every 1 minute with random thor pics.\
-        If you like to change the time then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
-        "note": "To stop this do '{tr}end tpp'",
+        "h": "Bir dakika aralıklarla profil fotoğrafınızı rastgele thor fotoğrafları ile değiştirir.",
+        "d": "Fotoğraf değiştirme süresini CHANGE_TIME değişkeninden ayarlayabilirsiniz.",
+        "note": "Durdurmak için '{tr}end tpp' yazın.",
         "u": "{tr}tpp",
     },
 )
 async def _(event):
-    "To set random thor profile pics"
+    "Profil resminizi rastgele batman fotoğrafları ile değistirir."
     if gvar("autopfp_strings") is not None:
         pfp_string = gvar("autopfp_strings")[:-8]
-        return await edl(event, f"`{pfp_string} is already running.`")
+        return await edl(event, f"`{pfp_string} zaten çalışıyor.`")
     sgvar("autopfp_strings", "thorpfp_strings")
-    await event.edit("`Starting thor Profile Pic.`")
+    await event.edit("`İşlem başlatıldı! ✅`")
     await autopfp_start()
 
 
@@ -334,13 +328,10 @@ async def _(event):
     pattern="autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
-        "h": "Changes profile pic every 1 minute with the custom pic with time",
-        "d": "If you like to change the time interval for every new pic change \
-            then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
-        "o": "you can give integer input with cmd like 40,55,75 ..etc.\
-             So that your profile pic will rotate with that specific angle",
-        "note": "For functioning of this cmd you need to set DEFAULT_PIC var. \
-            To stop this do '{tr}end autopic'",
+        "h": "Bir dakika aralıklarla profil fotoğrafını yeniler.",
+        "d": "Fotoğaf değiştirme süresini CHANGE_TIME değişkeninden ayarlayabilirsiniz.",
+        "note": "Bu özelliği kullanmak için, DEFAULT_PIC değişkenini ayarlamalısınız. \
+            Durdurmak için '{tr}end autopic' yazın.",
         "u": [
             "{tr}autopic",
             "{tr}autopic <any integer>",
@@ -348,11 +339,11 @@ async def _(event):
     },
 )
 async def _(event):
-    "To set time on your profile pic"
+    "Bir dakika aralıklarla profil fotoğrafını yeniler."
     if gvar("DEFAULT_PIC") is None:
         return await edl(
             event,
-            "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var`",
+            "**Hata:**\n`Bu özelliği kullanmak için, DEFAULT_PIC değişkenini ayarlamalısınız.`",
         )
     downloader = SmartDL(gvar("DEFAULT_PIC"), autopic_path, progress_bar=False)
     downloader.start(blocking=False)
@@ -367,11 +358,11 @@ async def _(event):
     elif gvar("autopic_counter") is None:
         sgvar("autopic_counter", 30)
     if gvar("autopic") is not None and gvar("autopic") == "true":
-        return await edl(event, "`Autopic is already enabled`")
+        return await edl(event, "`Autopic, sahibim için başlatıldı!`")
     sgvar("autopic", True)
     if input_str:
         sgvar("autopic_counter", input_str)
-    await edl(event, "`Autopic has been started by my Master`")
+    await edl(event, "`Autopic, sahibim için başlatıldı!`")
     await autopicloop()
 
 
@@ -379,23 +370,23 @@ async def _(event):
     pattern="dpp$",
     command=("dpp", plugin_category),
     info={
-        "h": "Updates your profile pic every 1 minute with time on it",
-        "d": "Deletes old profile pic and Update profile pic with new image with time on it.\
-             You can change this image by setting DIGITAL_PIC var with telegraph image link",
-        "note": "To stop this do '{tr}end dpp'",
+        "h": "Bir dakika aralıklarla profil fotoğrafını yeniler.",
+        "d": "Bir dakika aralıklarla eski profil fotoğrafını kaldırıp, yeni profil fotoğrafı ayarlar.\
+             Bu özelliği kullanmak için DIGITAL_PIC değişkenini ayarlamalısınız.",
+        "note": "Durdurmak için ',{tr}end dpp' yazın.",
         "u": "{tr}dpp",
     },
 )
 async def _(event):
-    "To set random colour pic with time to profile pic"
+    "Bir dakika aralıklarla profil fotoğrafını yeniler."
     downloader = SmartDL(digitalpfp, digitalpic_path, progress_bar=False)
     downloader.start(blocking=False)
     while not downloader.isFinished():
         pass
     if gvar("digitalpic") is not None and gvar("digitalpic") == "true":
-        return await edl(event, "`Digitalpic is already enabled`")
+        return await edl(event, "`Digitalpic zaten aktif.`")
     sgvar("digitalpic", True)
-    await edl(event, "`Digitalpp has been started by my Master`")
+    await edl(event, "`Digitalpp sahibim için başlatıldı!`")
     await digitalpicloop()
 
 
@@ -403,29 +394,28 @@ async def _(event):
     pattern="bloom$",
     command=("bloom", plugin_category),
     info={
-        "h": "Changes profile pic every 1 minute with the random colour pic with time on it",
-        "d": "If you like to change the time interval for every new pic chnage \
-            then set CHANGE_TIME var with time(in seconds) between each change of profilepic.",
-        "note": "For functioning of this cmd you need to set DEFAULT_PIC var. \
-            To stop this do '{tr}end bloom'",
+        "h": "Profil fotoğraflarını bir dakika aralıklarla rastgele renklerle değiştirir.",
+        "d": "Fotoğaf değiştirme süresini CHANGE_TIME değişkeninden ayarlayabilirsiniz.",
+        "note": "Bu özelliği kullanmak için, DEFAULT_PIC değişkenini ayarlamalısınız. \
+            Durdurmak için '{tr}end bloom' yazın.",
         "u": "{tr}bloom",
     },
 )
 async def _(event):
-    "To set random colour pic with time to profile pic"
+    "Profil fotoğrafını rastgele renklerle değiştirir."
     if gvar("DEFAULT_PIC") is None:
         return await edl(
             event,
-            "**Error**\nFor functing of bloom you need to set DEFAULT_PIC var",
+            "**Hata:**\nBu özelliği kullanmak için, DEFAULT_PIC değişkenini ayarlamalısınız.",
         )
     downloader = SmartDL(gvar("DEFAULT_PIC"), autopic_path, progress_bar=True)
     downloader.start(blocking=False)
     while not downloader.isFinished():
         pass
     if gvar("bloom") is not None and gvar("bloom") == "true":
-        return await edl(event, "`Bloom is already enabled`")
+        return await edl(event, "`Bloom zaten aktif.`")
     sgvar("bloom", True)
-    await edl(event, "`Bloom has been started by my Master`")
+    await edl(event, "`Bloom sahibim için başlatıldı! `")
     await bloom_pfploop()
 
 
@@ -433,17 +423,17 @@ async def _(event):
     pattern="c(ustom)?pp(?: |$)([\s\S]*)",
     command=("custompp", plugin_category),
     info={
-        "h": "Set Your Custom pps",
-        "d": "Set links of pic to use them as auto profile. You can use {tr}cpp or {tr}custompp as command",
+        "h": "Özel profil fotoğrafları ayarlar.",
+        "d": "Komutu kullanmak için fotoğraf linklerini ayarlamanız lazım.",
         "f": {
-            "a": "To add links for custom pp",
-            "r": "To remove links for custom pp",
-            "l": "To get links of custom pp",
-            "s": "To stop custom pp",
+            "a": "Custom pp'a fotoğraf eklemek içindir.",
+            "r": "Custom pp'dan fotoğrafları kaldırır.",
+            "l": "Custom pp için ayarlanmış linkleri verir.",
+            "s": "Custom pp'ı durdurur.",
         },
         "u": [
-            "{tr}cpp or {tr}custompp <to start>",
-            "{tr}cpp <flags> <links(optional)>",
+            "{tr}cpp or {tr}custompp <başlatmak için>",
+            "{tr}cpp <kategori> <linkler(isteğe bağlı)>",
         ],
         "e": [
             "{tr}cpp",
@@ -455,7 +445,7 @@ async def _(event):
     },
 )
 async def useless(event):  # sourcery no-metrics
-    """Custom profile pics"""
+    """Özel profil fotoğrafları ayarlar."""
     input_str = event.pattern_match.group(2)
     ext = findall(r".\w+", input_str)
     try:
@@ -466,17 +456,17 @@ async def useless(event):  # sourcery no-metrics
     list_link = get_collection_list("CUSTOM_PFP_LINKS")
     if flag is None:
         if gvar("CUSTOM_PFP") is not None and gvar("CUSTOM_PFP") == "true":
-            return await edl(event, "`Custom pp is already enabled`")
+            return await edl(event, "`Custom pp zaten aktif.`")
         if not list_link:
-            return await edl(event, "**ಠ∀ಠ  There no links for custom pp...**")
+            return await edl(event, "**Özel profil fotoğrafları için linkler ayarlanmamış.**")
         sgvar("CUSTOM_PFP", True)
-        await edl(event, "`Starting custom pp....`")
+        await edl(event, "`CustomPP başlatıldı.`")
         await custompfploop()
         return
     if flag == "l":
         if not list_link:
-            return await edl(event, "**ಠ∀ಠ  There no links set for custom pp...**")
-        links = "**Available links for custom pp are here:**\n\n"
+            return await edl(event, "**Özel profil fotoğrafları çin, linkler ayarlanmamış.**")
+        links = "**Özel profil fotoğrafları için mevcut linkler:**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
         await edl(event, links, 60)
@@ -489,8 +479,8 @@ async def useless(event):  # sourcery no-metrics
                     await event.client.get_profile_photos("me", limit=1)
                 )
             )
-            return await edl(event, "`Custom pp has been stopped now`")
-        return await edl(event, "`Custom pp haven't enabled`")
+            return await edl(event, "`Özel pp durduruldu!`")
+        return await edl(event, "`Özel pp başlatılmadı! `")
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
@@ -508,13 +498,13 @@ async def useless(event):  # sourcery no-metrics
         for i in plink:
             if not is_in_list("CUSTOM_PFP_LINKS", i):
                 add_to_list("CUSTOM_PFP_LINKS", i)
-        await edl(event, f"**{len(plink)} pictures sucessfully added to custom pps**")
+        await edl(event, f"**{len(plink)} fotoğraf, başarıyla özel profil fotoğraflarına eklendi.**")
     elif flag == "r":
         for i in plink:
             if is_in_list("CUSTOM_PFP_LINKS", i):
                 rm_from_list("CUSTOM_PFP_LINKS", i)
         await edl(
-            event, f"**{len(plink)} pictures sucessfully removed from custom pps**"
+            event, f"**{len(plink)} fotoğraf başarıyla özel profil fotoğraflarından kaldırıldı.**"
         )
 
 
@@ -522,18 +512,18 @@ async def useless(event):  # sourcery no-metrics
     pattern="autoname$",
     command=("autoname", plugin_category),
     info={
-        "h": "Changes your name with time",
-        "d": "Updates your profile name along with time. Set AUTONAME var with your profile name,",
-        "note": "To stop this do '{tr}end autoname'",
+        "h": "Belirli bir zaman aralığında hesabın adını değiştirir.",
+        "d": "AUTONAME değişkeninden hesabın adını ayarlayabilirsiniz.",
+        "note": "Durdurmak için '{tr}end autoname' yazın.",
         "u": "{tr}autoname",
     },
 )
 async def _(event):
-    "To set your display name along with time"
+    "Belirli bir zaman aralıklarında hesabın adını değiştirir."
     if gvar("autoname") is not None and gvar("autoname") == "true":
-        return await edl(event, "`Autoname is already enabled`")
+        return await edl(event, "`Autoname zaten aktif.")
     sgvar("autoname", True)
-    await edl(event, "`Autoname has been started by my Master `")
+    await edl(event, "`Autoname sahibim için başlatıldı!")
     await autoname_loop()
 
 
@@ -541,18 +531,18 @@ async def _(event):
     pattern="autobio$",
     command=("autobio", plugin_category),
     info={
-        "h": "Changes your bio with time",
-        "d": "Updates your profile bio along with time. Set DEFAULT_BIO var with your fav bio,",
-        "note": "To stop this do '{tr}end autobio'",
+        "h": "Belirli bir zaman aralıklarında bio'yu değiştirir.",
+        "d": "DEFAULT_BIO değişkeninden istediğiniz bio'yu ayarlayabilirsiniz.",
+        "note": "Durdurmak için '{tr}end autobio' yazın.",
         "u": "{tr}autobio",
     },
 )
 async def _(event):
-    "To update your bio along with time"
+    "Belirli bir zaman aralığında bio'yu değiştirir."
     if gvar("autobio") is not None and gvar("autobio") == "true":
-        return await edl(event, "`Autobio is already enabled`")
+        return await edl(event, "`Autobio zaten aktif.`")
     sgvar("autobio", True)
-    await edl(event, "`Autobio has been started by my Master `")
+    await edl(event, "`Autobio sahibim için başlatıldı!`")
     await autobio_loop()
 
 
@@ -560,43 +550,43 @@ async def _(event):
     pattern="end ([\s\S]*)",
     command=("end", plugin_category),
     info={
-        "h": "To stop the functions of autoprofile",
-        "d": "If you want to stop autoprofile functions then use this cmd.",
+        "h": "Profil fotoğrafı değiştirme işlemini durdurur.",
+        "d": "Durdurmak istediğiniz özelliğin komutunu {tr} end <komut> olarak yazın.",
         "o": {
-            "autopic": "To stop autopic",
-            "dpp": "To stop difitalpp",
-            "bloom": "To stop bloom",
-            "autoname": "To stop autoname",
-            "autobio": "To stop autobio",
-            "tpp": "To stop thorpp",
-            "bpp": "To stop batmanpp",
+            "autopic": "Autopic özelliğini durdurur.",
+            "dpp": "Difitalpp özelliğini durdurur.",
+            "bloom": "Bloom özelliğni durdurur.",
+            "autoname": "Autoname özelliğini durdurur.",
+            "autobio": "Autobio özelliğini durdurur.",
+            "tpp": "Thorpp özelliğni durdurur.",
+            "bpp": "Batmanpp özelliğini durdurur.",
             "spam": "To stop spam",
         },
-        "u": "{tr}end <option>",
-        "e": ["{tr}end autopic"],
+        "u": "{tr}end <durdurmak istediğiniz özelliğin komutu>",
+        "e": ["{tr}end bpp"],
     },
 )
 async def _(event):  # sourcery no-metrics
-    "To stop the functions of autoprofile plugin"
+    "Atoprofile eklentisindeki özellikleri durdurur."
     input_str = event.pattern_match.group(1)
     if input_str == "tpp" and gvar("autopfp_strings") is not None:
         pfp_string = gvar("autopfp_strings")[:-8]
         if pfp_string != "tpp":
-            return await edl(event, "`Thor pp isn't started`")
+            return await edl(event, "`Thor pp başlatılmadı!`")
         await event.client(
             DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
         dgvar("autopfp_strings")
-        return await edl(event, "`Thor pp has been stopped now`")
+        return await edl(event, "`Thor pp durduruldu!`")
     if input_str == "bpp" and gvar("autopfp_strings") is not None:
         pfp_string = gvar("autopfp_strings")[:-8]
         if pfp_string != "bpp":
-            return await edl(event, "`Batman pp isn't started`")
+            return await edl(event, "`Batman pp başlatılmadı!`")
         await event.client(
             DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
         dgvar("autopfp_strings")
-        return await edl(event, "`Batman pp has been stopped now`")
+        return await edl(event, "`Batman pp durduruldu!`")
     if input_str == "autopic":
         if gvar("autopic") is not None and gvar("autopic") == "true":
             dgvar("autopic")
@@ -607,8 +597,8 @@ async def _(event):  # sourcery no-metrics
                     remove(autopic_path)
                 except BaseException:
                     return
-            return await edl(event, "`Autopic has been stopped now`")
-        return await edl(event, "`Autopic haven't enabled`")
+            return await edl(event, "`Autopic durduruldu!`")
+        return await edl(event, "`Autopic başlatılmadı!`")
     if input_str == "dpp":
         if gvar("digitalpic") is not None and gvar("digitalpic") == "true":
             dgvar("digitalpic")
@@ -617,8 +607,8 @@ async def _(event):  # sourcery no-metrics
                     await event.client.get_profile_photos("me", limit=1)
                 )
             )
-            return await edl(event, "`Digitalpp has been stopped now`")
-        return await edl(event, "`Digitalpp haven't enabled`")
+            return await edl(event, "`Digitalpp durduruldu!`")
+        return await edl(event, "`Digitalpp başlatılmadı!`")
     if input_str == "bloom":
         if gvar("bloom") is not None and gvar("bloom") == "true":
             dgvar("bloom")
@@ -629,27 +619,27 @@ async def _(event):  # sourcery no-metrics
                     remove(autopic_path)
                 except BaseException:
                     return
-            return await edl(event, "`Bloom has been stopped now`")
-        return await edl(event, "`Bloom haven't enabled`")
+            return await edl(event, "`Bloom durduruldu!`")
+        return await edl(event, "`Bloom başlatılmadı!`")
     if input_str == "autoname":
         if gvar("autoname") is not None and gvar("autoname") == "true":
             dgvar("autoname")
             DEFAULTUSER = gvar("AUTONAME") or gvar("ALIVE_NAME")
             await event.client(UpdateProfileRequest(first_name=DEFAULTUSER))
-            return await edl(event, "`Autoname has been stopped now`")
-        return await edl(event, "`Autoname haven't enabled`")
+            return await edl(event, "`Autoname durduruldu!`")
+        return await edl(event, "`Autoname başlatılmadı?`")
     if input_str == "autobio":
         if gvar("autobio") is not None and gvar("autobio") == "true":
             dgvar("autobio")
-            DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
+            DEFAULTUSERBIO = gvar("DEFAULT_BIO") or "  @DogeUserBot 🐾"
             await event.client(UpdateProfileRequest(about=DEFAULTUSERBIO))
-            return await edl(event, "`Autobio has been stopped now`")
-        return await edl(event, "`Autobio haven't enabled`")
+            return await edl(event, "`Autobio durduruldu! `")
+        return await edl(event, "`Autobio başlatılmadı! `")
     if input_str == "spam":
         if gvar("spamwork") is not None and gvar("spamwork") == "true":
             dgvar("spamwork")
-            return await edl(event, "`Spam cmd has been stopped now`")
-        return await edl(event, "`You haven't started spam`")
+            return await edl(event, "`Spam durduruldu! `")
+        return await edl(event, "`Spam başlatılmadı`")
     END_CMDS = [
         "autopic",
         "dpp",
@@ -663,7 +653,7 @@ async def _(event):  # sourcery no-metrics
     if input_str not in END_CMDS:
         await edl(
             event,
-            f"{input_str} is invalid end command. Mention clearly what should I end.",
+            f"{input_str} bu komut geçersizdir. Durdurmam için düzgün bir komut yazın.",
             parse_mode=_format.parse_pre,
         )
 

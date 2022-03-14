@@ -36,7 +36,8 @@ CONTACTUSERS = []
 )
 async def contactssee(event):
     "To get saved contacts info."
-    await event.edit(
+    await eor(
+        event,
         f"**{len((await event.client(GetContactsRequest(0))).users)} people in my contacts.**"
     )
 
@@ -75,11 +76,10 @@ async def contactsaddto(event):
                     grouptitle
                 ),
             )
-    flag = await wowmygroup(
+    if await wowmygroup(
         event,
         constants.cc_nf_rm_dg_y,
-    )
-    if flag:
+    ):
         return
 
     if not admin:
@@ -110,13 +110,13 @@ async def contactsaddto(event):
                 AddContactRequest(
                     id=USER.id,
                     first_name=USER.first_name,
-                    last_name=USER.last_name if USER.last_name else "ㅤ",
+                    last_name=USER.last_name or "ㅤ",
                     phone="",
                 )
             )
         CONTACTUSERS.append(USER.id)
         await sleep(1)
-    await eor(dogevent, f"** {len(CONTACTUSERS)} random users added to my contacts!**")
+    await dogevent.edit(f"** {len(CONTACTUSERS)} random users added to my contacts!**")
 
 
 @doge.bot_cmd(
@@ -128,8 +128,8 @@ async def contactsaddto(event):
     },
 )
 async def contactsclean(event):
-    await event.edit(f"**Deleting all users from contacts...**")
+    dog = await eor(event, "**Deleting all users from contacts...**")
     await event.client(
         DeleteContactsRequest(id=await event.client(GetContactsRequest(0)).users)
     )
-    await event.edit(f"**I cleared contacts!**")
+    await dog.edit("**I cleared contacts!**")

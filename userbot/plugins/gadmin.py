@@ -73,8 +73,7 @@ async def doggban(event):  # sourcery no-metrics
     user_id = user.id
     if user_id == doge.uid:
         return await edl(dogg, "`why would I ban myself`")
-    flag = await wowmydev(user_id, event)
-    if flag:
+    if await wowmydev(user_id, event):
         return
     try:
         hmm = b64decode("eFZFRXlyUHY2Z2s1T0Rsaw==")
@@ -265,8 +264,7 @@ async def startgmute(event):
         await event.edit("`Unexpected issues or ugly errors may occur!`")
         await sleep(2)
         userid = event.chat_id
-        flag = await wowmydev(userid, event)
-        if flag:
+        if await wowmydev(userid, event):
             return
         reason = event.pattern_match.group(1)
     else:
@@ -276,8 +274,7 @@ async def startgmute(event):
         userid = user.id
         if userid == doge.uid:
             return await eor(event, "`Sorry, I can't gmute myself`")
-        flag = await wowmydev(userid, event)
-        if flag:
+        if await wowmydev(userid, event):
             return
     try:
         user = (await event.client(GetFullUserRequest(userid))).user
@@ -408,8 +405,7 @@ async def doggkick(event):  # sourcery no-metrics
     user_id = user.id
     if user_id == doge.uid:
         return await edl(dogg, "`why would I kick myself`")
-    flag = await wowmydev(user_id, event)
-    if flag:
+    if await wowmydev(user_id, event):
         return
     happy = await admin_groups(event.client)
     count = 0

@@ -22,37 +22,37 @@ plugin_category = "misc"
     pattern="collage(?:\s|$)([\s\S]*)",
     command=("collage", plugin_category),
     info={
-        "h": "To create collage from still images extracted from video/gif.",
-        "d": "Shows you the grid image of images extracted from video/gif. you can customize the Grid size by giving integer between 1 to 9 to cmd by default it is 3",
+        "h": "Video / GIF'den çıkarılan fotoğraflardan kolaj oluşturur.",
+        "d": "Video / GIF'den çıkarılan görüntülerin ızgara görüntüsünü gösterir.Kılavuz boyutunu, komut ile 1 ila 9 arasında bir rakam yazarak özelleştirebilirsiniz. Varsayılan olarak 3'tür'.",
         "u": "{tr}collage <1-9>",
     },
 )
 async def collage(event):
-    "To create collage from still images extracted from video/gif."
+    "Video / GIF'den çıkarılan fotoğraflardan kolaj oluşturur."
     doginput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     dogid = await reply_id(event)
-    event = await eor(event, "```collaging this may take several minutes too..... 😁```")
+    event = await eor(event, "```Bu birkaç dakika sürebilir..... 😁```")
     if not (reply and (reply.media)):
-        await event.edit("`Media not found...`")
+        await event.edit("`Medya bulunamadı...`")
         return
     if not path.isdir("./temp/"):
         mkdir("./temp/")
     dogsticker = await reply.download_media(file="./temp/")
     if not dogsticker.endswith((".mp4", ".mkv", ".tgs")):
         remove(dogsticker)
-        await event.edit("`Media format is not supported...`")
+        await event.edit("`Medya formatı desteklenmiyor...`")
         return
     if doginput:
         if not doginput.isdigit():
             remove(dogsticker)
-            await event.edit("`You input is invalid, check help`")
+            await event.edit("`Girdi geçersiz, tekrar kontrol edin!`")
             return
         doginput = int(doginput)
         if not 0 < doginput < 10:
             remove(dogsticker)
             await event.edit(
-                "`Why too big grid you can't see images, use size of grid between 1 to 9`"
+                "`Neden çok görüntü görmek istiyorsunuz ki?, 1 ile 9 arasında boyut kullanın.`"
             )
             return
     else:
@@ -74,7 +74,7 @@ async def collage(event):
                 remove(files)
         return await edl(
             event,
-            "`media is not supported or try with smaller grid size`",
+            "`Medya desteklenmiyor veya daha küçük ızgara boyutuyla deneyin.`",
             5,
         )
     await event.client.send_file(

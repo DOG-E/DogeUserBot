@@ -19,7 +19,7 @@ LOGS = logging.getLogger(__name__)
 
 
 def check_owner(func):
-    async def wrapper(c_q: CallbackQuery):
+    async def wrapper(c_q: CallbackQuery.Event):
         if c_q.query.user_id and (
             c_q.query.user_id == int(gvar("OWNER_ID"))
             or c_q.query.user_id in Config.SUDO_USERS

@@ -96,7 +96,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
     info = f"**⚠️ #BOT_PM_YASAK_KALDIRILMASI**\
             \n\n👤 {_format.mentionuser(get_display_name(user), user.id)}\
             \n**ℹ️ İlk İsim:** {user.first_name}\
-            \n**🆔 Kullanıcı ID'si:** `{user.id}`"
+            \n**🆔 Kullanıcı ID:** `{user.id}`"
     if BOTLOG:
         await doge.bot.send_message(BOTLOG_CHATID, info)
     return info

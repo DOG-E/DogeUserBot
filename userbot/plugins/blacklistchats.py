@@ -26,7 +26,7 @@ LOGS = logging.getLogger(__name__)
     pattern="chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
-        "h": "Sohbet karalistesini etkinleştirin veya devre dışı bırakır.",
+        "h": "Sohbet karalistesini etkinleştirir veya devre dışı bırakır.",
         "d": "Bunu açarsanız, Doge addblackchat komutu ile veritabanında saklanan sohbetler üzerinde çalışmayacaktır. Bunu kapatırsanız, veritabanına sohbet eklemiş olsanız bile Doge o sohbette çalışmayı bırakmaz.",
         "u": "{tr}chatblacklist <on/off>",
     },
@@ -39,9 +39,9 @@ async def chat_blacklist(event):
         if gvar("blacklist_chats") is not None:
             return await edl(event, "__Zaten açık.__")
         sgvar("blacklist_chats", "true")
-        text = "__Şu andan itibaren, DogeUserBot'unuz veritabanında saklanan sohbetlerde çalışmıyor.__"
+        text = "__Şu andan itibaren, Doge veritabanında saklanan sohbetlerde çalışmıyor.__"
         if len(blkchats) != 0:
-            text += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. Lütfen biraz bekleyin...**"
+            text += "**Bot, değişiklikleri uygulamak için yeniden başlıyor. Lütfen biraz bekleyin...**"
             msg = await eor(
                 event,
                 text,
@@ -54,9 +54,9 @@ async def chat_blacklist(event):
         )
     if gvar("blacklist_chats") is not None:
         dgvar("blacklist_chats")
-        text = "__DogeUserBot'unuz bir kuş kadar özgür. Her sohbette çalışır.__"
+        text = "__Doge bir kuş kadar özgür. Her sohbette çalışır.__"
         if len(blkchats) != 0:
-            text += "**Bot, değişiklikleri uygulamak için yeniden yükleniyor. lütfen biraz bekleyin**"
+            text += "**Bot, değişiklikleri uygulamak için yeniden başlıyor. Lütfen biraz bekleyin...**"
             msg = await eor(
                 event,
                 text,
@@ -67,7 +67,7 @@ async def chat_blacklist(event):
             event,
             text,
         )
-    await edl(event, "zaten kapalıydı")
+    await edl(event, "Sohbet karalistesi zaten kapalıymış.")
 
 
 @doge.bot_cmd(

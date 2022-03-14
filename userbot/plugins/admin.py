@@ -43,15 +43,8 @@ from . import (
     wowmydev,
 )
 
-# =================== STRINGS ============
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
-
-PP_TOO_SMOL = "`Bu görüntü işlemek için çok küçük`"
-PP_ERROR = "`Görüntüyü işlerken bir hata meydana geldi.`"
-NO_PERM = "`Bunu yapabilmek için yeterli iznim yok! Bu çok üzücü (ಥ﹏ಥ)`"
-CHAT_PP_CHANGED = "`Sohbet resmi değiştirildi.`"
-INVALID_MEDIA = "`Geçersiz uzantı`"
 
 UNBAN_RIGHTS = ChatBannedRights(
     until_date=None,
@@ -69,7 +62,6 @@ UNBAN_RIGHTS = ChatBannedRights(
 
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
-# ================================================
 
 
 @doge.bot_cmd(
@@ -77,19 +69,20 @@ UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
     command=("gpic", plugin_category),
     info={
         "h": "Grup profil fotoğrafını değiştirir veya siler.",
-        "d": "Bir resmi yanıtlarak kullanırsanız o resmi grup fotoğrafı yapar.",
+        "d": "Bir resmi yanıtlarak kullanırsanız o görseli grup profil fotoğrafı yapar.",
         "f": {
             "d": "Grup fotoğrafını siler.",
         },
         "u": [
-            "{tr}gpic <bir fotoğraf yanıtlayarak>",
+            "{tr}gpic <bir fotoğraf yanıtlayın>",
             "{tr}dgpic",
         ],
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
 )
-async def set_group_photo(event):  # sourcery no-metrics
+async def set_group_photo(event):
     "Grup profil fotoğrafını değiştirir veya siler."
     flag = (event.pattern_match.group(1)).strip()
     if flag == "d":
@@ -97,8 +90,8 @@ async def set_group_photo(event):  # sourcery no-metrics
             await event.client(EditPhotoRequest(event.chat_id, InputChatPhotoEmpty()))
         except Exception as e:
             return await edl(event, f"**Hata:** `{e}`")
-        process = "silindi."
-        await edl(event, "```Grup profil resmi başarıyla silindi.```")
+        process = "sildim."
+        await edl(event, "`Grup profil resmini başarıyla sildim.`")
     else:
         replymsg = await event.get_reply_message()
         photo = None
@@ -108,7 +101,7 @@ async def set_group_photo(event):  # sourcery no-metrics
             elif "image" in replymsg.media.document.mime_type.split("/"):
                 photo = await event.client.download_file(replymsg.media.document)
             else:
-                return await edl(event, INVALID_MEDIA)
+                return await edl(event, "`Geçersiz uzantı.`")
         if photo:
             try:
                 await event.client(
@@ -116,21 +109,21 @@ async def set_group_photo(event):  # sourcery no-metrics
                         event.chat_id, await event.client.upload_file(photo)
                     )
                 )
-                await edl(event, CHAT_PP_CHANGED)
+                await edl(event, "`Sohbet resmini başarıyla değiştirdim.`")
             except PhotoCropSizeSmallError:
-                return await edl(event, PP_TOO_SMOL)
+                return await edl(event, "`Bu görsel çok küçük.`")
             except ImageProcessFailedError:
-                return await edl(event, PP_ERROR)
+                return await edl(event, "`Görseli uygularken bir hata meydana geldi.`")
             except Exception as e:
                 return await edl(event, f"**Hata:** `{str(e)}`")
-            process = "değiştirildi."
+            process = "değiştirdim."
     if BOTLOG:
         await doge.bot.send_message(
             BOTLOG_CHATID,
             "#GRUP_RESIM_DEGISIKLIGI\n"
-            f"Grup profili resmi başarıyla {process}"
+            f"Grup profil resmini başarıyla {process}"
             f"**Grup**: {get_display_name(await event.get_chat())}\
-            \n**Grup ID'si:** `{event.chat_id}`",
+            \n**Sohbet ID:** `{event.chat_id}`",
         )
 
 
@@ -141,10 +134,10 @@ async def set_group_photo(event):  # sourcery no-metrics
         "h": "Bir kişi için yönetici hakları verir.",
         "d": "Sohbetteki bir üyeye yönetici hakları sağlar.",
         "u": [
-            "{tr}promote <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}promote <ID/kullanıcı adı/yanıtlayarak> <isteğe bağlı başlık>",
+            "{tr}promote <ID/kullanıcı adı/yanıt>",
+            "{tr}promote <ID/kullanıcı adı/yanıt> <isteğe bağlı başlık>",
         ],
-        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
@@ -168,15 +161,15 @@ async def promote(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await dogevent.edit(NO_PERM)
-    await dogevent.edit("**Kullanıcı başarıyla yetkilendirildi!**")
+        return await dogevent.edit("`Bunu yapabilmek için yeterli iznim yok!`")
+    await dogevent.edit("**Kullanıcıyı başarıyla yetkilendirdim!**")
     if BOTLOG:
         await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#YETKILENDIRME\
             \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
-            \n**Grup:** {get_display_name(await event.get_chat())}\
-            \n**Grup ID'si:** `{event.chat_id}`",
+            \n**Sohbet:** {get_display_name(await event.get_chat())}\
+            \n**Sohbet ID:** `{event.chat_id}`",
         )
 
 
@@ -187,9 +180,9 @@ async def promote(event):
         "h": "Bir kişiyi yönetici listesinden çıkarır.",
         "d": "Bu kişinin bu sohbet içindeki tüm yönetici haklarını kaldırır.",
         "u": [
-            "{tr}demote <ID/kullanıcı adı/yanıtlayarak>",
+            "{tr}demote <ID/kullanıcı adı/yanıt>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız var ve ayrıca o üyenin yönetici yetkilerini düzenleyebiliyor olmanız gerekmektedir.",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
@@ -200,10 +193,9 @@ async def demote(event):
     if not user:
         return
     user_id = user.id
-    flag = await wowmydev(user_id, event)
-    if flag:
+    if await wowmydev(user_id, event):
         return
-    dogevent = await eor(event, "`Yetki düşürülüyor...`")
+    dogevent = await eor(event, "`Yetkiyi düşürüyorum...`")
     newrights = ChatAdminRights(
         add_admins=None,
         invite_users=None,
@@ -216,15 +208,15 @@ async def demote(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, newrights, rank))
     except BadRequestError:
-        return await dogevent.edit(NO_PERM)
-    await dogevent.edit("**Yetkisi başarıyla düşürüldü!**")
+        return await dogevent.edit("`Bunu yapabilmek için yeterli iznim yok!`")
+    await dogevent.edit("**Yetkiyi başarıyla düşürdüm!**")
     if BOTLOG:
         await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#YETKİSİZLENDİRME\
             \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
-            \n**Grup:** {get_display_name(await event.get_chat())}\
-            \n**Grup ID'si:** `{event.chat_id}`",
+            \n**Sohbet:** {get_display_name(await event.get_chat())}\
+            \n**Sohbet ID:** `{event.chat_id}`",
         )
 
 
@@ -232,29 +224,28 @@ async def demote(event):
     pattern="ban(?:\s|$)([\s\S]*)",
     command=("ban", plugin_category),
     info={
-        "h": "Kullanılan gruptan seçilen üyeyi yasaklar.",
-        "d": "Seçilen üye gruptan kalıcı olarak atılır ve yasağı kaldırılana kadaar geri dönemez.",
+        "h": "Gruptaki üyeni yasaklar.",
+        "d": "Seçilen üye gruptan kalıcı olarak atılır ve yasağı kaldırılana kadar geri dönemez.",
         "u": [
-            "{tr}ban <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}ban <ID/kullanıcı adı/yanıtlayarak> <sebep>",
+            "{tr}ban <ID/kullanıcı adı/yanıt>",
+            "{tr}ban <ID/kullanıcı adı/yanıt> <isteğe bağlı sebep>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız vardır.",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
 )
 async def _ban_person(event):
-    "Kullanılan gruptan seçilen üyeyi yasaklar."
+    "Gruptaki üyeyi yasaklar."
     user, reason = await get_user_from_event(event)
     if not user:
         return
     user_id = user.id
     if user_id == event.client.uid:
-        return await edl(event, "**__Kendini yasaklayamazsın.__**")
-    flag = await wowmydev(user_id, event)
-    if flag:
+        return await edl(event, "**__Kendini yasaklayamazsın!__**")
+    if await wowmydev(user_id, event):
         return
-    dogevent = await eor(event, "**Yasaklanıyor!**")
+    dogevent = await eor(event, "**Yasaklıyorum...**")
     try:
         await event.client(
             EditBannedRequest(
@@ -264,22 +255,22 @@ async def _ban_person(event):
             )
         )
     except BadRequestError:
-        return await dogevent.edit(NO_PERM)
+        return await dogevent.edit("`Bunu yapabilmek için yeterli iznim yok!`")
     try:
         reply = await event.get_reply_message()
         if reply:
             await reply.delete()
     except BadRequestError:
         return await dogevent.edit(
-            "**Mesajları silmeye hakkım yok ama yine de yasaklandı**"
+            "**Mesajları silmek için hakkım yok ama yine de onu yasakladım.**"
         )
     if reason:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user_id)}** yasaklandı!!**\n**Sebep:** `{reason}`"
+            f"{_format.mentionuser(user.first_name ,user_id)}** yasakladım!**\n**Sebep:** `{reason}`"
         )
     else:
         await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user_id)}** yasaklandı!!**"
+            f"{_format.mentionuser(user.first_name ,user_id)}** yasakladım!**"
         )
     if BOTLOG:
         if reason:
@@ -287,8 +278,8 @@ async def _ban_person(event):
                 BOTLOG_CHATID,
                 f"#YASAKLAMA\
                 \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
-                \n**Grup:** {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`\
+                \n**Sohbet:** {get_display_name(await event.get_chat())}\
+                \n**Sohbet ID:** `{event.chat_id}`\
                 \n**Sebep:** {reason}",
             )
         else:
@@ -296,8 +287,8 @@ async def _ban_person(event):
                 BOTLOG_CHATID,
                 f"#YASAKLAMA\
                 \n**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\
-                \n**Grup:** {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`",
+                \n**Sohbet:** {get_display_name(await event.get_chat())}\
+                \n**Sohbet ID:** `{event.chat_id}`",
             )
 
 
@@ -305,44 +296,59 @@ async def _ban_person(event):
     pattern="unban(?:\s|$)([\s\S]*)",
     command=("unban", plugin_category),
     info={
-        "h": "Bu komutu kullandığınız gruptaki üyenin yasağı kaldırılır.",
+        "h": "Gruptaki üyenin yasağını kaldırır.",
         "d": "Kullanıcı hesabını grubun yasaklı listesinden kaldırır.",
         "u": [
-            "{tr}unban <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}unban <ID/kullanıcı adı/yanıtlayarak> <sebep>",
+            "{tr}unban <ID/kullanıcı adı/yanıt>",
+            "{tr}unban <ID/kullanıcı adı/yanıt> <isteğe bağlı sebep>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız var",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
 )
 async def nothanos(event):
-    "Bu komutu kullandığınız gruptaki üyenin yasağı kaldırılır."
-    user, _ = await get_user_from_event(event)
+    "Gruptaki üyenin yasağını kaldırır."
+    user, reason = await get_user_from_event(event)
     if not user:
         return
-    dogevent = await eor(event, "`Yasak kaldırılıyor...`")
+    dogevent = await eor(event, "`Yasağını kaldırıyorum...`")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
-        await dogevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} **yasağı başarıyla kaldırıldı!**`"
-        )
-        if BOTLOG:
-            await doge.bot.send_message(
-                BOTLOG_CHATID,
-                "#YASAK_KALDIRMA\n"
-                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Grup:** {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`",
+        if reason:
+            await dogevent.edit(
+                f"{_format.mentionuser(user.first_name ,user.id)}** yasağını başarıyla kaldırdım!**\n**Sebep:** `{reason}`"
             )
+        else:
+            await dogevent.edit(
+                f"{_format.mentionuser(user.first_name ,user.id)}** yasağını başarıyla kaldırdım!**"
+            )
+        if BOTLOG:
+            if reason:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    f"#YASAK_KALDIRMA\
+                    \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
+                    \n**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`\
+                    \n**Sebep:** {reason}",
+                )
+            else:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    f"#YASAK_KALDIRMA\
+                    \n**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\
+                    \n**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`",
+                )
     except UserIdInvalidError:
         await dogevent.edit(
-            "**Hayatımda böyle kullanıcı görmedim, onun bir mesajını yanıtlarsan tanıyabilirim.**"
+            "**Hayatımda hiç böyle birini görmedim, onun bir mesajını yanıtlarsan tanıyabilirim.**"
         )
     except Exception as e:
         if BOTLOG:
             await dogevent.edit(
-                "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
             )
             await doge.bot.send_message(
                 BOTLOG_CHATID, "#YASAK_KALDIRMA_HATASI\n" f"**Hata:** {e}"
@@ -355,53 +361,51 @@ async def watcher(event):
         try:
             await event.delete()
         except Exception as e:
-            LOGS.error(f"🚨 Susturulmuş kullanıcının mesajı silinemedi: {str(e)}")
+            LOGS.error(f"🚨 Susturulmuş üyenin mesajını silemedim: {str(e)}")
 
 
 @doge.bot_cmd(
     pattern="mute(?:\s|$)([\s\S]*)",
     command=("mute", plugin_category),
     info={
-        "h": "Bu kullanıcının mesaj göndermesini engeller.",
-        "d": "Eğer yönetici değilse, gruptaki iznini değiştirir.\
-            ama eğer yönetici ise veya kişisel sohbette denerseniz, mesajları otomatik olarak silinir.",
+        "h": "Gruptaki üyenin mesaj göndermesini engeller.",
+        "d": "Eğer yönetici değilse, gruptaki iznini değiştirir. Eğer yönetici ise veya kişisel sohbette denerseniz, mesajları otomatik olarak silinir.",
         "u": [
-            "{tr}mute <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}mute <ID/kullanıcı adı/yanıtlayarak> <sebep>",
+            "{tr}mute <ID/kullanıcı adı/yanıt>",
+            "{tr}mute <ID/kullanıcı adı/yanıt> <isteğe bağlı sebep>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız var.",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },  # sourcery no-metrics
 )
 async def startmute(event):
-    "Bu kullanıcının mesaj göndermesini engeller."
+    "Gruptaki üyenin mesaj göndermesini engeller."
     if event.is_private:
-        await event.edit("`Mesaj gönderilmesini engelliyorum...`")
+        await event.edit("`Bu kullanıcının mesaj göndermesini engelliyorum...`")
         await sleep(2)
         await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if is_muted(event.chat_id, event.chat_id):
-            return await event.edit("**Bu kullanıcı zaten susturulmuş!**")
+            return await event.edit("**Bu kullanıcının zaten susturulmuş!**")
         if event.chat_id == doge.uid:
-            return await edl(event, "**Kendini susturamazın!**")
-        flag = await wowmydev(replied_user, event)
-        if flag:
+            return await edl(event, "**Kendini susturamazsın!**")
+        if await wowmydev(replied_user, event):
             return
         try:
             mute(event.chat_id, event.chat_id)
         except Exception as e:
             if BOTLOG:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
                 await doge.bot.send_message(
                     BOTLOG_CHATID, "#YASAK_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
         else:
-            await event.edit("**Kullanıcı başarıyla susturuldu!**\n｀-´)⊃━☆ﾟ.*･｡ﾟ **`")
+            await event.edit("**Kullanıcıyı başarıyla susturdum!**")
         if BOTLOG:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
-                "#PM_SUSTURULMASI\n"
+                "#PM_SUSTURMA\n"
                 f"**Kullanıcı:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
@@ -411,7 +415,7 @@ async def startmute(event):
         if not admin and not creator:
             return await eor(
                 event,
-                "**Yönetici hakları olmadan bir kişiyi susturamazsın Niqq.** ಥ﹏ಥ  ",
+                "**Bunu yapabilmek için yeterli iznim yok!**",
             )
         user, reason = await get_user_from_event(event)
         if not user:
@@ -419,8 +423,7 @@ async def startmute(event):
         user_id = user.id
         if user_id == doge.uid:
             return await eor(event, "**Kendini susturamazsın!**")
-        flag = await wowmydev(user_id, event)
-        if flag:
+        if await wowmydev(user_id, event):
             return
         if is_muted(user_id, event.chat_id):
             return await eor(event, "**Bu kullanıcı zaten susturulmuş!**")
@@ -436,10 +439,10 @@ async def startmute(event):
         except Exception as e:
             if BOTLOG:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
                 return await doge.bot.send_message(
-                    BOTLOG_CHATID, "#PM_SUSTURMA_HATASI\n" f"**Hata:** {e}"
+                    BOTLOG_CHATID, "#SUSTURMA_HATASI\n" f"**Hata:** {e}"
                 )
         try:
             await event.client(EditBannedRequest(event.chat_id, user_id, MUTE_RIGHTS))
@@ -448,18 +451,18 @@ async def startmute(event):
                 if chat.admin_rights.delete_messages is not True:
                     return await eor(
                         event,
-                        "**Mesaj silme izniniz yoksa bir kişiyi susturamazsınız.** ಥ﹏ಥ",
+                        "**Mesaj silme yetkim yok ve bir kişiyi susturamam.**",
                     )
             elif "creator" not in vars(chat):
                 return await eor(
                     event,
-                    "**Yönetici hakları olmadan bir kişiyi susturamazsın.** ಥ﹏ಥ  ",
+                    "**Bunu yapabilmek için yeterli yetkim yok.**",
                 )
             mute(user_id, event.chat_id)
         except Exception as e:
             if BOTLOG:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
                 return await doge.bot.send_message(
                     BOTLOG_CHATID, "#SUSTURMA_HATASI\n" f"**Hata:** {e}"
@@ -467,22 +470,33 @@ async def startmute(event):
         if reason:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name, user_id)}, {get_display_name(await event.get_chat())}** grubunda susturuldu!**\n"
-                f"`Reason:`{reason}",
+                f"{_format.mentionuser(user.first_name, user_id)} üyesini, {get_display_name(await event.get_chat())}** grubunda susturdum!**\n"
+                f"**Sebep:** `{reason}`",
             )
         else:
             await eor(
                 event,
-                f"{_format.mentionuser(user.first_name ,user_id)}, {get_display_name(await event.get_chat())}** grubunda susturuldu!**\n",
+                f"{_format.mentionuser(user.first_name ,user_id)} üyesini, {get_display_name(await event.get_chat())}** grubunda susturdum!**\n",
             )
         if BOTLOG:
-            await doge.bot.send_message(
-                BOTLOG_CHATID,
-                "#SUSTURMA\n"
-                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
-                f"**Grup:** {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`",
-            )
+            if reason:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    "#SUSTURMA\n"
+                    f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
+                    f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`\
+                    \n**Sebep:** {reason}",
+                )
+            else:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    "#SUSTURMA\n"
+                    f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
+                    f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`",
+                )
+                
 
 
 @doge.bot_cmd(
@@ -492,44 +506,44 @@ async def startmute(event):
         "h": "Kullanıcının tekrar mesaj göndermesine izin verir.",
         "d": "Mesaj göndermek için kullanıcı izinlerini değiştirir.",
         "u": [
-            "{tr}unmute <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}unmute <ID/kullanıcı adı/yanıtlayarak> <sebep>",
+            "{tr}unmute <ID/kullanıcı adı/yanıt>",
+            "{tr}unmute <ID/kullanıcı adı/yanıt> <isteğe bağlı sebep>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız var.",
-    },
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
+    },  # sourcery no-metrics
 )
 async def endmute(event):
     "Kullanıcının tekrar mesaj göndermesine izin verir."
     if event.is_private:
-        await event.edit("`Beklenmeyen sorunlar ve hatalar oluşabilir!`")
+        await event.edit("`Bu kullanıcının mesaj göndermesine izin veriyorum...`")
         await sleep(1)
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if not is_muted(event.chat_id, event.chat_id):
             return await event.edit(
-                "**__Bu kullanıcı bu sohbette zaten susturulmadı__**\n（ ^_^）o自自o（^_^ ）"
+                "**__Bu kullanıcı zaten özgürce konuşabiliyor.__**"
             )
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
             if BOTLOG:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
                 await doge.bot.send_message(
-                    BOTLOG_CHATID, "#SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
+                    BOTLOG_CHATID, "#PM_SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
         else:
             await event.edit(
-                "**Susturulma başarılı bir şekilde kaldırıldı.**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍"
+                "**Bu kullanıcı artık özgürce konuşabilir.**"
             )
         if BOTLOG:
             await doge.bot.send_message(
                 BOTLOG_CHATID,
                 "#PM_SUSTURULMA_KALDIRILMASI\n"
-                f"**User:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
+                f"**Kullanıcı:** [{replied_user.user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
-        user, _ = await get_user_from_event(event)
+        user, reason = await get_user_from_event(event)
         if not user:
             return
         try:
@@ -544,19 +558,19 @@ async def endmute(event):
         except AttributeError:
             return await eor(
                 event,
-                "**Bu kullanıcı zaten bu sohbette serbestçe konuşabiliyor.**",
+                "**Bu kullanıcı zaten bu sohbette özgürce konuşabiliyor.**",
             )
         except Exception as e:
             if BOTLOG:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
                 return await doge.bot.send_message(
                     BOTLOG_CHATID, "#SUSTURMA_KALDIRMA_HATASI\n" f"**Hata:** {e}"
                 )
             else:
                 await event.edit(
-                    "__Bir hatayla karşılaşıldı! Hata raporu Log grubunuza gönderildi. Lütfen kontrol ediniz.__"
+                    "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__"
                 )
 
         await eor(
@@ -564,13 +578,23 @@ async def endmute(event):
             f"{_format.mentionuser(user.first_name ,user.id)}, {get_display_name(await event.get_chat())} **grubunda sesi açıldı!**\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍",
         )
         if BOTLOG:
-            await doge.bot.send_message(
-                BOTLOG_CHATID,
-                "#SUSTURMA_KALDIRMA\n"
-                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Grup:** {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`",
-            )
+            if reason:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    "#SUSTURMA_KALDIRMA\n"
+                    f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+                    f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`\
+                    \n**Sebep:** {reason}",
+                )
+            else:
+                await doge.bot.send_message(
+                    BOTLOG_CHATID,
+                    "#SUSTURMA_KALDIRMA\n"
+                    f"**Kullanıcı:** [{user.first_name}](tg://user?id={user.id})\n"
+                    f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                    \n**Sohbet ID:** `{event.chat_id}`",
+                )
 
 
 @doge.bot_cmd(
@@ -580,10 +604,10 @@ async def endmute(event):
         "h": "Bir kişiyi gruptan atar.",
         "d": "Kullanıcıyı gruptan atar, böylece geri katılabilir.",
         "u": [
-            "{tr}kick <ID/kullanıcı adı/yanıtlayarak>",
-            "{tr}kick <ID/kullanıcı adı/yanıtlayarak> <sebep>",
+            "{tr}kick <ID/kullanıcı adı/yanıt>",
+            "{tr}kick <ID/kullanıcı adı/yanıt> <isteğe bağlı sebep>",
         ],
-        "note": "Bunun için uygun haklara ihtiyacınız var.",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
     groups_only=True,
     require_admin=True,
@@ -594,29 +618,39 @@ async def endmute(event):
     if not user:
         return
     user_id = user.id
-    flag = await wowmydev(user_id, event)
-    if flag:
+    if await wowmydev(user_id, event):
         return
-    dogevent = await eor(event, "`kullanıcı atılıyor...`")
+    dogevent = await eor(event, "`Kullanıcıyı atıyorum...`")
     try:
         await event.client.kick_participant(event.chat_id, user_id)
     except Exception:
-        return await dogevent.edit(NO_PERM)
+        return await dogevent.edit("`Bunu yapabilmek için yeterli iznim yok.`")
     if reason:
         await dogevent.edit(
-            f"**Atıldı:** [{user.first_name}](tg://user?id={user_id})**!**\n**Sebep:** `{reason}`"
+            f"[{user.first_name}](tg://user?id={user_id}) **buradan atıldın!**\n**Sebep:** `{reason}`"
         )
     else:
         await dogevent.edit(
-            f"**Atıldı:** [{user.first_name}](tg://user?id={user_id})**!**"
+            f"[{user.first_name}](tg://user?id={user_id}) **buradan atıldın!**"
         )
     if BOTLOG:
-        await doge.bot.send_message(
-            BOTLOG_CHATID,
-            "#GRUPTAN_ATMA\n"
-            f"USER: [{user.first_name}](tg://user?id={user_id})\n"
-            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
-        )
+        if reason:
+            await doge.bot.send_message(
+                BOTLOG_CHATID,
+                "#GRUPTAN_ATMA\n"
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
+                f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                \n**Sohbet ID:** `{event.chat_id}`\
+                \n**Sebep:** {reason}",
+            )
+        else:
+            await doge.bot.send_message(
+                BOTLOG_CHATID,
+                "#GRUPTAN_ATMA\n"
+                f"**Kullanıcı:** [{user.first_name}](tg://user?id={user_id})\n"
+                f"**Sohbet:** {get_display_name(await event.get_chat())}\
+                \n**Sohbet ID:** `{event.chat_id}`",
+            )
 
 
 @doge.bot_cmd(
@@ -624,12 +658,13 @@ async def endmute(event):
     command=("pin", plugin_category),
     info={
         "h": "Sohbette mesajı sabitler.",
-        "d": "Sohbette bunu sabitlemek için bir mesaja cevap verin.",
+        "d": "Sohbette bir mesajı sabitlemek için mesaja yanıt verin.",
         "o": {"s": "Üyelere bildirim göndererek sabitler."},
         "u": [
-            "{tr}pin <mesaj yanıtlyarak>",
-            "{tr}pin s <mesaj yanıtlyarak>",
+            "{tr}pin <yanıt>",
+            "{tr}pin s <yanıt>",
         ],
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
 )
 async def pin(event):
@@ -642,32 +677,29 @@ async def pin(event):
     try:
         await event.client.pin_message(event.chat_id, to_pin, notify=is_silent)
     except BadRequestError:
-        return await edl(event, NO_PERM, 5)
+        return await edl(event, "`Bunu yapabilmek için yeterli iznim yok.`", 5)
     except Exception as e:
         if BOTLOG:
             await edl(
                 event,
-                "**Beklenmeyen bir hatayla karşılaşıldı! Lütfen BotLog grubunuza atılmış olan hatayı kontrol edin!**",
+                "__Oops..! Bir hatayla karşılaştım! Hata raporunu Log grubunuza gönderdim. Lütfen kontrol edin.__",
             )
             return await doge.bot.send_message(
-                BOTLOG, f"Mesaj sabitlerken bir hatayla karşılaşıldı: `{e}`"
+                BOTLOG_CHATID, f"Mesaj sabitlerken bir hatayla karşılaşıldı: `{e}`"
             )
         else:
             await edl(
                 event, f"**Beklenmeyen bir hatayla karşılaşıldı! Hata Raporu:** {e}"
             )
-    await edl(event, "**Başarıyla sabitlendi!**", 5)
-    if is_silent == True:
-        a = "Evet"
-    elif is_silent == False:
-        a = "Hayır"
+    await edl(event, "**Mesajı sabitledim!**", 5)
+    a = "Hayır" if not is_silent else "Evet"
     if BOTLOG and not event.is_private:
         await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#SABİTLEME\
-                \n__Grupta mesaj başarıyla sabitlendi!__\
-                \n**Grup:** {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
-                \n**Sesli mi?**: {a}",
+            \n__Gruptaki mesajı başarıyla sabitledim!__\
+            \n**Sohbet:** {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
+            \n**Sesli**: {a}",
         )
 
 
@@ -676,13 +708,13 @@ async def pin(event):
     command=("unpin", plugin_category),
     info={
         "h": "Sohbetteki mesajları sabitten çıkarır.",
-        "d": "Sohbetteki mesajı sabitten çıkarmak için bir mesaja cevap verin.",
+        "d": "Sabitten kaldırmak istediğiniz mesajı yanıtlayın ya da hepsini kaldırmak için `{tr}unpinall` komutunu kullanın.",
         "o": {"all": "Sohbetteki tüm sabitli mesajları kaldırır."},
         "u": [
-            "{tr}unpin <yanıtlayarak>",
+            "{tr}unpin <yanıt>",
             "{tr}unpinall",
         ],
-        "note": "Grupta kullanmak istiyorsanız, bunun için uygun haklara ihtiyacınız var.",
+        "note": "Bunu yapabilmek için yeterli haklarınız olmalıdır.",
     },
 )
 async def pin(event):
@@ -692,7 +724,7 @@ async def pin(event):
     if not to_unpin and options != "all":
         return await edl(
             event,
-            f"__Sabitteen kaldırmak istediğiniz mesajı yanıtlayın ya da hepsini kaldırmak için `{tr}unpinall` komutunu kullanın.",
+            f"__Sabitten kaldırmak istediğiniz mesajı yanıtlayın ya da hepsini kaldırmak için__ `{tr}unpinall` __komutunu kullanın.__",
             5,
         )
     try:
@@ -703,21 +735,21 @@ async def pin(event):
         else:
             return await edl(
                 event,
-                f"`Mesajları sabitliden çıkarmak için sabitli bir mesaja `{tr}unpinall` ile cevap verin.",
+                f"__Sabitten kaldırmak istediğiniz mesajı yanıtlayın ya da hepsini kaldırmak için__ `{tr}unpinall` __komutunu kullanın.__",
                 5,
             )
     except BadRequestError:
-        return await edl(event, NO_PERM, 5)
+        return await edl(event, "`Bunu yapabilmek için yeterli iznim yok.`", 5)
     except Exception as e:
         return await edl(event, f"`{e}`", 5)
-    await edl(event, "**Sabitleme başarıyla kaldırıldı!", 5)
+    await edl(event, "**Sabitli mesaj(lar)ı başarıyla kaldırdım!**", 5)
     if BOTLOG and not event.is_private:
         await doge.bot.send_message(
             BOTLOG_CHATID,
             f"#SABITLEME_KALDIRMA\
-                \n**__Sabitli mesaj(lar) başarıyla sabitten kaldırıldı!__**\
-                \n**Kullanıcı:**: {get_display_name(await event.get_chat())}\
-                \n**Grup ID'si:** `{event.chat_id}`",
+            \n**__Sabitli mesaj(lar)ı başarıyla sabitten kaldırdım!__**\
+            \n**Sohbet:**: {get_display_name(await event.get_chat())}\
+            \n**Sohbet ID:** `{event.chat_id}`",
         )
 
 
@@ -725,24 +757,24 @@ async def pin(event):
     pattern="undlt( .m)?(?: |$)(\d*)?",
     command=("undlt", plugin_category),
     info={
-        "h": "Gruptaki son silinmiş mesajları alır.",
-        "d": "Gruptaki son silinmiş mesajları kontrol etmek için, varsayılan olarak 5. gösterecek. 1 ila 15 mesaj alabilirsiniz.",
-        "f": {"m": "gruptaki silinen son fotoğrafları direkt alabilir."},
+        "h": "Gruptaki son silinmiş mesajları getirir.",
+        "d": "Gruptaki son silinmiş mesajları varsayılan olarak 5 tane getirir. 1 ila 15 mesaj getirebilir.",
+        "f": {"m": "Gruptaki silinen son fotoğrafları getirir."},
         "u": [
             "{tr}undlt <sayı>",
             "{tr}undlt .m <sayı>",
         ],
         "e": [
             "{tr}undlt 7",
-            "{tr}undlt .m 7 (Bu, 7 mesajın tümünü bu mesaja cevap verecektir).",
+            "{tr}undlt .m 3",
         ],
     },
     groups_only=True,
     require_admin=True,
 )
-async def _iundlt(event):  # sourcery no-metrics
-    "Gruptaki son silinmiş mesajları alır."
-    dogevent = await eor(event, "__Son eylemler aranıyor.....__")
+async def _iundlt(event):
+    "Gruptaki son silinmiş mesajları getirir."
+    dogevent = await eor(event, "__Son eylemler aranıyor...__")
     flag = event.pattern_match.group(1)
     if event.pattern_match.group(2) != "":
         lim = int(event.pattern_match.group(2))

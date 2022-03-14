@@ -428,7 +428,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         caption += dedent(
             f"""
         🆎 <b>Tip:</b> <i>{result['type']}</i>
-        🆔 <b>MAL ID'si:</b> <i>{result['mal_id']}</i>
+        🆔 <b>MAL ID:</b> <i>{result['mal_id']}</i>
         📡 <b>Durum:</b> <i>{result['status']}</i>
         🎙️ <b>Yayınlanmış:</b> <i>{result['aired']['string']}</i>
         🔢 <b>Bölümler:</b> <i>{result['episodes']}</i>

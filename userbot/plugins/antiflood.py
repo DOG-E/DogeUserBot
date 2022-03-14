@@ -12,8 +12,7 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 
 from ..sql_helper import antiflood_sql as sql
-from ..utils import is_admin
-from . import doge, eor
+from . import doge, eor, is_admin
 
 plugin_category = "admin"
 
@@ -66,7 +65,7 @@ async def _(event):
     pattern="setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
-        "h": "Bir grupta antiflood kurun",
+        "h": "İstenmeyen postaları önlemek için bir grupta antiflood kurun.",
         "d": "Kullanıcıyı sohbete spam gönderirse uyarır ve uygun haklara sahip bir yöneticiyseniz, o grupta onu sessize alır.",
         "note": "Flood baskınını durdurmak için 999999 gibi yüksek bir değer girebilirsiniz.",
         "u": "{tr}setflood <sayı>",
@@ -78,7 +77,7 @@ async def _(event):
     require_admin=True,
 )
 async def _(event):
-    "İstenmeyen postaları önlemek için bir grupta antiflood kurun"
+    "İstenmeyen postaları önlemek için bir grupta antiflood kurun."
     input_str = event.pattern_match.group(1)
     event = await eor(event, "`Flood ayarları güncelleniyor!`")
     await sleep(2)

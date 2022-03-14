@@ -23,6 +23,7 @@ from telethon.version import __version__
 from . import (
     ALIVETEMP,
     IALIVETEMP,
+    Config,
     StartTime,
     doge,
     dogeversion,
@@ -41,7 +42,7 @@ plugin_category = "bot"
     command=("alive", plugin_category),
     info={
         "h": "Botun durumunu kontrol eder.",
-        "o": "Medyayı özelleştirmek için herhangi bi medyaya yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
+        "o": "Medyayı özelleştirmek için herhangi bir medyaya yanıtlayarak {tr}sdog ALIVE_PIC yazın.",
         "u": [
             "{tr}alive",
         ],
@@ -88,7 +89,7 @@ async def thisalive(event):
             ping=ms,
         )
         if DOG_IMG:
-            DOG = [x for x in DOG_IMG.split()]
+            DOG = list(DOG_IMG.split())
             PIC = choice(DOG)
             try:
                 await event.client.send_file(
@@ -107,12 +108,18 @@ async def thisalive(event):
 
 
 @doge.bot.on(CallbackQuery(data=compile(b"infos")))
-async def on_plug_in_callback_query_handler(event):
-    statstext = f"🐶 Doɢᴇ UsᴇʀBoᴛ\
-            \n🐾 Bɪʟɢɪ\n\
-            \n🔹 Çalıştığını kontrol etmek için:\
-            \n{tr}alive\n\
-            \n🔹 Yardım Menüsü için:\
-            \n{tr}doge"
+async def on_plug_in_callback_query_handler(event: CallbackQuery.Event):
+    if event.query.user_id == int(gvar("OWNER_ID")) or event.query.user_id in Config.SUDO_USERS:
+        statstext = f"🐶 Doɢᴇ UsᴇʀBoᴛ\
+        \n🐾 Bɪʟɢɪ\n\
+        \n🔹 Çalıştığını kontrol etmek için:\
+        \n{tr}alive\n\
+        \n🔹 Yardım Menüsü için:\
+        \n{tr}doge"
+    else:
+        statstext = "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾\n\
+        \n❤ Doge, Telegram'ı eğlenceli hale getirir ve kullanımını kolaylaştırır.\n\
+        \n🐕‍🦺 Siz de bir Doge sahibi olmak istiyorsanız,\
+        \n🐾 Botumuzu kullanabilirsiniz!"
 
-    await event.answer(statstext, cache_time=0, alert=True)
+    await event.answer(statstext, url="t.me/DogeHelperBot", alert=True)

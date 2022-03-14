@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from humanize import naturalsize
 from requests import Session, get
 
-from . import doge, edl, eor, logging
+from . import doge, edl, eor, logging, useragent
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -26,9 +26,9 @@ LOGS = logging.getLogger(__name__)
     pattern="direct(?: |$)([\s\S]*)",
     command=("direct", plugin_category),
     info={
-        "h": "To generate a direct download link from a URL.",
-        "d": "Reply to a link or paste a URL to generate a direct download link.",
-        "supported links": [
+        "h": "Bir URL'den doğrudan bir indirme bağlantısı oluşturur.",
+        "d": "Doğrudan bir indirme bağlantısı oluşturmak için bir bağlantıya cevap verin veya bir URL'yi yapıştırın.",
+        "Desteklenen Linkler": [
             "Google Drive",
             "Cloud Mail",
             "Yandex.Disk",
@@ -43,19 +43,19 @@ LOGS = logging.getLogger(__name__)
     },
 )
 async def direct_link_generator(event):
-    """To generate a direct download link from a URL."""
+    """Bir URL'den doğrudan bir indirme bağlantısı oluşturur."""
     textx = await event.get_reply_message()
     message = event.pattern_match.group(1)
     if not message:
         if textx:
             message = textx.text
         else:
-            return await edl(event, "`Usage: .direct <url>`")
-    dogevent = await eor(event, "**⏳ Processing...**")
+            return await edl(event, "**Kullanım:** `.direct <url>`")
+    dogevent = await eor(event, "**⏳ İşleniyor...**")
     reply = ""
     links = findall(r"\bhttps?://.*\.\S+", message)
     if not links:
-        reply = "`No links found!`"
+        reply = "`Bağlantı bulunamadı!`"
         await dogevent.edit(reply)
     for link in links:
         if "drive.google.com" in link:
@@ -89,7 +89,7 @@ def gdrive(url: str) -> str:
     try:
         link = findall(r"\bhttps?://drive\.google\.com\S+", url)[0]
     except IndexError:
-        reply = "`No Google drive links found`\n"
+        reply = "`Google Drive linki bulunamadı!`\n"
         return reply
     file_id = ""
     reply = ""
@@ -106,9 +106,9 @@ def gdrive(url: str) -> str:
         # In case of small file size, Google downloads directly
         dl_url = download.headers["location"]
         if "accounts.google.com" in dl_url:  # non-public file
-            reply += "`Link is not public!`\n"
+            reply += "`Bağlantı halka açık değil`\n"
             return reply
-        name = "Direct Download Link"
+        name = "Direkt İndirme Linki"
     except KeyError:
         # In case of download warning page
         page = BeautifulSoup(download.content, "lxml")
@@ -117,7 +117,7 @@ def gdrive(url: str) -> str:
         response = get(export, stream=True, allow_redirects=False, cookies=cookies)
         dl_url = response.headers["location"]
         if "accounts.google.com" in dl_url:
-            reply += "Link is not public!"
+            reply += "Bağlantı halka açık değil!"
             return reply
     reply += f"[{name}]({dl_url})\n"
     return reply
@@ -125,13 +125,13 @@ def gdrive(url: str) -> str:
 
 def zippy_share(url: str) -> str:
     """ZippyShare direct links generator
-    Based on https://github.com/LameLemon/ziggy"""
+    https://github.com/LameLemon/ziggy"""
     reply = ""
     dl_url = ""
     try:
         link = findall(r"\bhttps?://.*zippyshare\.com\S+", url)[0]
     except IndexError:
-        reply = "`No ZippyShare links found`\n"
+        reply = "`Zippyshare bağlantısı bulunamadı.`\n"
         return reply
     session = Session()
     base_url = search("http.+.com", link).group()
@@ -156,12 +156,12 @@ def zippy_share(url: str) -> str:
 
 def yandex_disk(url: str) -> str:
     """Yandex.Disk direct links generator
-    Based on https://github.com/wldhx/yadisk-direct"""
+    https://github.com/wldhx/yadisk-direct"""
     reply = ""
     try:
         link = findall(r"\bhttps?://.*yadi\.sk\S+", url)[0]
     except IndexError:
-        reply = "`No Yandex.Disk links found`\n"
+        reply = "`Yandex.Disk linki bulunamadı.`\n"
         return reply
     api = "https://cloud-api.yandex.net/v1/disk/public/resources/download?public_key={}"
     try:
@@ -169,19 +169,19 @@ def yandex_disk(url: str) -> str:
         name = dl_url.split("filename=")[1].split("&disposition")[0]
         reply += f"[{name}]({dl_url})\n"
     except KeyError:
-        reply += "`Error: File not found / Download limit reached`\n"
+        reply += "`Hata: Dosya bulunamadı / indirme sınırına ulaşıldı.`\n"
         return reply
     return reply
 
 
 def mega_dl(url: str) -> str:
     """MEGA.nz direct links generator
-    Using https://github.com/tonikelope/megadown"""
+    https://github.com/tonikelope/megadown"""
     reply = ""
     try:
         link = findall(r"\bhttps?://.*mega.*\.nz\S+", url)[0]
     except IndexError:
-        reply = "`No MEGA.nz links found`\n"
+        reply = "`MEGA.nz linki bulunamadı`\n"
         return reply
     command = f"bin/megadown -q -m {link}"
     result = popen(command).read()
@@ -189,7 +189,7 @@ def mega_dl(url: str) -> str:
         data = loads(result)
         LOGS.info(data)
     except JSONDecodeError:
-        reply += "`Error: Can't extract the link`\n"
+        reply += "`Hata: Bağlantıdan veri çıkaramıyorum.`\n"
         return reply
     dl_url = data["url"]
     name = data["file_name"]
@@ -200,12 +200,12 @@ def mega_dl(url: str) -> str:
 
 def cm_ru(url: str) -> str:
     """cloud.mail.ru direct links generator
-    Using https://github.com/JrMasterModelBuilder/cmrudl.py"""
+    https://github.com/JrMasterModelBuilder/cmrudl.py"""
     reply = ""
     try:
         link = findall(r"\bhttps?://.*cloud\.mail\.ru\S+", url)[0]
     except IndexError:
-        reply = "`No cloud.mail.ru links found`\n"
+        reply = "`cloud.mail.ru linki bulunamadı.`\n"
         return reply
     command = f"bin/cmrudl -s {link}"
     result = popen(command).read()
@@ -213,7 +213,7 @@ def cm_ru(url: str) -> str:
     try:
         data = loads(result)
     except JSONDecodeError:
-        reply += "`Error: Can't extract the link`\n"
+        reply += "`Hata: Bağlantıdan veri çıkaramıyorum.`\n"
         return reply
     dl_url = data["download"]
     name = data["file_name"]
@@ -227,7 +227,7 @@ def mediafire(url: str) -> str:
     try:
         link = findall(r"\bhttps?://.*mediafire\.com\S+", url)[0]
     except IndexError:
-        reply = "`No MediaFire links found`\n"
+        reply = "`MediaFire linki bulunamadı.`\n"
         return reply
     reply = ""
     page = BeautifulSoup(get(link).content, "lxml")
@@ -244,7 +244,7 @@ def sourceforge(url: str) -> str:
     try:
         link = findall(r"\bhttps?://.*sourceforge\.net\S+", url)[0]
     except IndexError:
-        reply = "`No SourceForge links found`\n"
+        reply = "`SourceForge linki bulunamadı.`\n"
         return reply
     file_path = findall(r"files([\s\S]*)/download", link)[0]
     reply = f"Mirrors for __{file_path.split('/')[-1]}__\n"
@@ -270,12 +270,12 @@ def osdn(url: str) -> str:
     try:
         link = findall(r"\bhttps?://.*osdn\.net\S+", url)[0]
     except IndexError:
-        reply = "`No OSDN links found`\n"
+        reply = "`OSDN linki bulunamadı.`\n"
         return reply
     page = BeautifulSoup(get(link, allow_redirects=True).content, "lxml")
     info = page.find("a", {"class": "mirror_link"})
     link = unquote(osdn_link + info["href"])
-    reply = f"Mirrors for __{link.split('/')[-1]}__\n"
+    reply = f"__{link.split('/')[-1]}__ için alternatif bağlantı\n"
     mirrors = page.find("form", {"id": "mirror-select-form"}).findAll("tr")
     for data in mirrors[1:]:
         mirror = data.find("input")["value"]
@@ -290,7 +290,7 @@ def github(url: str) -> str:
     try:
         link = findall(r"\bhttps?://.*github\.com.*releases\S+", url)[0]
     except IndexError:
-        reply = "`No GitHub Releases links found`\n"
+        reply = "`GitHub Releases linki bulanamadı.`\n"
         return reply
     reply = ""
     dl_url = ""
@@ -298,7 +298,7 @@ def github(url: str) -> str:
     try:
         dl_url = download.headers["location"]
     except KeyError:
-        reply += "`Error: Can't extract the link`\n"
+        reply += "`Hata: Bağlantıdan veri çıkaramıyorum.`\n"
     name = link.split("/")[-1]
     reply += f"[{name}]({dl_url}) "
     return reply
@@ -309,7 +309,7 @@ def androidfilehost(url: str) -> str:
     try:
         link = findall(r"\bhttps?://.*androidfilehost.*fid.*\S+", url)[0]
     except IndexError:
-        reply = "`No AFH links found`\n"
+        reply = "`AFH linki bulunamadı.`\n"
         return reply
     fid = findall(r"\?fid=([\s\S]*)", link)[0]
     session = Session()
@@ -331,7 +331,7 @@ def androidfilehost(url: str) -> str:
     data = {"submit": "submit", "action": "getdownloadmirrors", "fid": f"{fid}"}
     mirrors = None
     reply = ""
-    error = "`Error: Can't find Mirrors for the link`\n"
+    error = "`Hata: Bağlantı için alternatifler bulamıyorum.`\n"
     try:
         req = session.post(
             "https://androidfilehost.com/libs/otf/mirrors.otf.php",
@@ -350,18 +350,3 @@ def androidfilehost(url: str) -> str:
         dl_url = item["url"]
         reply += f"[{name}]({dl_url}) "
     return reply
-
-
-def useragent():
-    """
-    useragent random setter
-    """
-    useragents = BeautifulSoup(
-        get(
-            "https://developers.whatismybrowser.com/"
-            "useragents/explore/operating_system_name/android/"
-        ).content,
-        "lxml",
-    ).findAll("td", {"class": "useragent"})
-    user_agent = choice(useragents)
-    return user_agent.text

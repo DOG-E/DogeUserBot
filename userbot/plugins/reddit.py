@@ -78,11 +78,10 @@ async def reddit_fetch(event):
             captionx += "⚠️️ Post marked as SPOILER\n"
         if r["nsfw"]:
             captionx += "🔞 Post marked Adult \n"
-            flag = await wowmygroup(
+            if await wowmygroup(
                 event,
                 constants.pc_nf_rm_dg_y,
-            )
-            if flag:
+            ):
                 return
 
         await event.delete()
